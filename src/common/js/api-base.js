@@ -24,3 +24,10 @@ export function logout(){
     method: 'post'
   })
 }
+
+export function getTreeAllMenusByToken(){
+  return request({
+    url: '/menu/treeAllMenusByToken',
+    method: 'post'
+  })
+}

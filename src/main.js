@@ -22,7 +22,9 @@ router.beforeEach((to, from, next) => {
     } else {
       if(!store.getters.userInfo){
         store.dispatch('getUserInfoAction').then(()=>{
-          next()
+          store.dispatch('getUserMenu').then(()=>{
+            next()
+          })
         }).catch((err)=>{
           store.dispatch('fedLogOut').then(() => {
             Message.error(err || '权限错误，请重新登录')

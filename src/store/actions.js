@@ -1,6 +1,6 @@
 import * as types from './mutation-types'
 import {localCache,removeCache} from '@/common/js/auth'
-import {login, getUserInfo, logout} from '@/common/js/api-base'
+import {login, getUserInfo, logout, getTreeAllMenusByToken} from '@/common/js/api-base'
 
 export const loginAction = function ({commit}, userInfo) {
   return new Promise((resolve, reject) => {
@@ -29,6 +29,7 @@ export const logoutAction = function({commit}) {
   return new Promise((resolve, reject)=>{
     logout().then(response => {
       commit(types.SET_USER_INFO, null)
+      commit(types.SET_MENU, [])
       removeCache('token')
       resolve()
     }).catch(error => {
@@ -40,7 +41,19 @@ export const logoutAction = function({commit}) {
 export const fedLogOut = function({commit}){
   return new Promise(resolve => {
     commit(types.SET_USER_INFO, null)
+    commit(types.SET_MENU, [])
     removeCache('token')
     resolve()
+  })
+}
+
+export const getUserMenu = function({commit}){
+  return new Promise((resolve, reject) => {
+    getTreeAllMenusByToken().then(response => {
+      commit(types.SET_MENU, response)
+      resolve()
+    }).catch(error => {
+      reject(error)
+    })
   })
 }
