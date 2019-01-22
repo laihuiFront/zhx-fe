@@ -28,7 +28,7 @@ export const getUserInfoAction = function({commit}) {
 export const logoutAction = function({commit}) {
   return new Promise((resolve, reject)=>{
     logout().then(response => {
-      commit(types.SET_USER_INFO, null)
+      commit(types.SET_USER_INFO, {})
       commit(types.SET_MENU, [])
       removeCache('token')
       resolve()
@@ -40,7 +40,7 @@ export const logoutAction = function({commit}) {
 
 export const fedLogOut = function({commit}){
   return new Promise(resolve => {
-    commit(types.SET_USER_INFO, null)
+    commit(types.SET_USER_INFO, {})
     commit(types.SET_MENU, [])
     removeCache('token')
     resolve()
@@ -50,6 +50,7 @@ export const fedLogOut = function({commit}){
 export const getUserMenu = function({commit}){
   return new Promise((resolve, reject) => {
     getTreeAllMenusByToken().then(response => {
+      
       commit(types.SET_MENU, response)
       resolve()
     }).catch(error => {
