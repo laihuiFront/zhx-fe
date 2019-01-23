@@ -1,6 +1,8 @@
 const state = {
   userInfo: {},
-  menu:[]
+  menu:[],
+  tabMenus: [],
+  currentMenu: {}
 }
 
 export default state

@@ -23,6 +23,7 @@ router.beforeEach((to, from, next) => {
       if(!store.getters.menu.length){
         store.dispatch('getUserInfoAction').then(()=>{
           store.dispatch('getUserMenu').then(()=>{
+            store.dispatch('initPageMenu', to.path)
             next()
           })
         }).catch((err)=>{
@@ -32,6 +33,7 @@ router.beforeEach((to, from, next) => {
           })
         })
       }else{
+        store.dispatch('initPageMenu', to.path)
         next()
       }
     }

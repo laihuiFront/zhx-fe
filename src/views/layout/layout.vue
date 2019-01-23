@@ -1,8 +1,10 @@
 <template>
   <div id="layout">
-    <top-menu></top-menu>
-    <tab-menu></tab-menu>
-    <router-view/>
+    <top-menu class="top-wrap"></top-menu>
+    <tab-menu class="tab-wrap"></tab-menu>
+    <section class="page-wrap">
+      <router-view/>
+    </section>
   </div>
 </template>
 
@@ -21,6 +23,22 @@ export default {
 <style lang="scss">
 #layout{
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  .top-wrap{
+    flex: 0 0 80px;
+    height: 80px;
+  }
+  .tab-wrap{
+    flex: 0 0 35px;
+    height: 35px;
+  }
+  .page-wrap{
+    flex:1;
+    margin: 16px;
+    box-shadow: 0px 3px 9px 0px rgba(0, 0, 0, 0.36);
+	  border-radius: 5px;
+  }
 }
 </style>
 

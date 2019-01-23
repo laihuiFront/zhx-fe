@@ -1,2 +1,6 @@
 export const SET_USER_INFO = 'SET_USER_INFO'
 export const SET_MENU = 'SET_MENU'
+export const PUSH_TAB_MENUS = 'PUSH_TAB_MENUS'
+export const REMOVE_TAB_MENUS = 'REMOVE_TAB_MENUS'
+export const SET_TAB_MENUS = 'SET_TAB_MENUS'
+export const SET_CURRENT_MENU = 'SET_CURRENT_MENU'

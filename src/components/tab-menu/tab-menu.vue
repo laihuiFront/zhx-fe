@@ -1,5 +1,7 @@
 <template>
-  <section id="tab-menu">tab-menu</section>
+  <section id="tab-menu">
+    
+  </section>
 </template>
 
 <script>
@@ -10,7 +12,8 @@ export default {
 
 <style lang="scss">
 #tab-menu{
-  
+  height: 35px;
+  border: 1px solid #e8e8e8;
 }
 </style>
 
