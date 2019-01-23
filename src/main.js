@@ -20,7 +20,7 @@ router.beforeEach((to, from, next) => {
     if(to.path === '/login') {
       next({path:'/'})
     } else {
-      if(!store.getters.userInfo.userName){
+      if(!store.getters.menu.length){
         store.dispatch('getUserInfoAction').then(()=>{
           store.dispatch('getUserMenu').then(()=>{
             next()

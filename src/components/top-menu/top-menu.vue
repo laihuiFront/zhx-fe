@@ -6,23 +6,9 @@
       mode="horizontal"
       background-color="#132c51"
       text-color="#fff"
-      active-text-color="#fff">
+      active-text-color="#fff"
+      :default-active="$route.path">
         <component v-for="(item) in menu" :data="item" :is="item.children?'two-level':'one-level'" :key="item.id"></component>
-      <!-- <el-menu-item index="1">处理中心</el-menu-item>
-      <el-submenu index="2">
-        <template slot="title">我的工作台</template>
-        <el-menu-item index="2-1">选项1</el-menu-item>
-        <el-menu-item index="2-2">选项2</el-menu-item>
-        <el-menu-item index="2-3">选项3</el-menu-item>
-        <el-submenu index="2-4">
-          <template slot="title">选项4</template>
-          <el-menu-item index="2-4-1">选项1</el-menu-item>
-          <el-menu-item index="2-4-2">选项2</el-menu-item>
-          <el-menu-item index="2-4-3">选项3</el-menu-item>
-        </el-submenu>
-      </el-submenu>
-      <el-menu-item index="3" disabled>消息中心</el-menu-item>
-      <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item> -->
     </el-menu>
     <el-dropdown trigger="click" @command="handleCommand">
       <span class="el-dropdown-link">
@@ -87,17 +73,51 @@ export default {
   .el-menu-demo{
     border: 0;
     height: 80px;
+    // .el-submenu. .el-submenu__title
     .el-menu-item{
       height: 80px;
-      line-height: 80px;
-      padding: 0 15px;
+      &.is-active{
+        border-bottom: 0;
+        background: #409eff !important;
+      }
     }
     .el-submenu{
       height: 80px;
+      &.is-active{
+        .el-submenu__title{
+          border-bottom: 0;
+          background: #409eff !important;
+        }
+      }
       .el-submenu__title{
         height: 80px;
-        line-height: 80px;
       }
+    }
+    .first-wrap{
+      height: 80px;
+      padding: 16px 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      box-sizing: border-box;
+      .icon{
+        width: 24px;
+        height: 24px;
+      }
+      .text{
+        color:#fff;
+        font-size: 14px;
+        line-height: 14px;
+      }
+      .label{
+        line-height: 14px;
+        color:#fff;
+        font-size: 14px;
+      }
+    }
+    .el-submenu__icon-arrow{
+      display: none;
     }
   }
 }
