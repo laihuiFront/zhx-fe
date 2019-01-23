@@ -1,6 +1,6 @@
 <template>
   <section id="top-menu">
-    <img src="./group.png" alt="" class="logo">
+    <img src="./logo_1 .png" alt="" class="logo">
     <el-menu
       class="el-menu-demo"
       mode="horizontal"
@@ -62,7 +62,7 @@ export default {
   background: #132c51;
   .logo{
     width: 247px;
-    height: 34px;
+    height: 33px;
   }
   .el-dropdown{
     .el-dropdown-link{

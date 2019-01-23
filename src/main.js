@@ -6,6 +6,7 @@ import store from './store'
 import router from './router'
 import '@/common/scss/index'
 import ElementUI from 'element-ui';
+import { Message, MessageBox } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 import '@/common/scss/element-variables.scss'
 import { localCache } from '@/common/js/auth'
