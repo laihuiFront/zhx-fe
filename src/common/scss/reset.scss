@@ -21,6 +21,7 @@ time, mark, audio, video, input{
   font-size: 100%;
   font-weight: normal;
   vertical-align: baseline;
+  box-sizing: border-box;
   &::-webkit-scrollbar{
     background-color: #e6e8eb;
     width: 8px;
