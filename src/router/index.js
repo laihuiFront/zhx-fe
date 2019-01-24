@@ -18,13 +18,9 @@ export default new Router({
           component: () => import('@/views/home-page/home-page'),
           name: 'home-page'
         },{
-          path: 'data-case-no-import',
-          component: () => import('@/views/data-manage/data-case-no-import'),
-          name: 'data-case-no-import'
-        },{
-          path: 'data-case-imported',
+          path: 'data-case-import',
           component: () => import('@/views/data-manage/data-case-imported'),
-          name: 'data-case-imported'
+          name: 'data-case-import'
         },{
           path: 'data-batch-manage',
           component: () => import('@/views/data-manage/data-batch-manage'),
