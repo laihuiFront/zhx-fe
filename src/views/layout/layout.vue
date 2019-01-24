@@ -25,6 +25,7 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   .top-wrap{
     flex: 0 0 80px;
     height: 80px;
@@ -34,9 +35,10 @@ export default {
     height: 35px;
   }
   .page-wrap{
+    overflow: auto;
     flex:1;
     margin: 16px;
-    box-shadow: 0px 3px 9px 0px rgba(0, 0, 0, 0.36);
+    // box-shadow: 0px 3px 9px 0px rgba(0, 0, 0, 0.36);
 	  border-radius: 5px;
   }
 }
