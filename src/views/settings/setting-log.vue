@@ -1,5 +1,5 @@
 <template>
-  <div id="setting-log" class="page-wraper">
+  <div id="setting-log" class="page-wraper-sub">
     <el-form ref="form" :model="queryForm" :inline="true">
       <el-form-item>
         <el-select v-model="queryForm.url" placeholder="请选择日志类型">
