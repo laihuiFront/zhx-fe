@@ -35,3 +35,19 @@ export function getLogType(){
   })
 }
 
+export function getOperationLog(data){
+  return request({
+    url: '/operationLog/pageLogs',
+    method: 'post',
+    data
+  })
+}
+
+export function deleteLogs(ids){
+  return request({
+    url: '/operationLog/batchDelete',
+    method: 'post',
+    data: {ids}
+  })
+}
+

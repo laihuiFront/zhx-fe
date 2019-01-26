@@ -5,4 +5,23 @@
       color:#666;
     }
   }
+  .el-table__body-wrapper{
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: calc(100% - 37px);
+  }
+}
+
+.page-wraper{
+  height: 100%;
+  display: flex;
+  flex-direction: column
+}
+
+.table-wrap{
+  flex: 1;
+}
+
+.pagination-wrap{
+  margin-top: 10px;
 }
