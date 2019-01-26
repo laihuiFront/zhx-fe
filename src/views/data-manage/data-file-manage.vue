@@ -5,16 +5,16 @@
   	<div class="grid-content bg-purple">
   		<el-form :inline="true" ref="form" :model="form" label-width="80px">
    <el-form-item >
-     <el-input v-model="form.user" placeholder="请输入证件号"></el-input>
+     <el-input v-model="form.name" placeholder="请输入证件号" clearable></el-input>
   </el-form-item>
   <el-form-item >
-   <el-input v-model="form.user" placeholder="请输入姓名"></el-input>
+   <el-input v-model="form.identNo" placeholder="请输入姓名" clearable></el-input>
   </el-form-item>
    <el-form-item >
-     <el-input v-model="form.user" placeholder="请输入电话号码"></el-input>
+     <el-input v-model="form.mobile" placeholder="请输入电话号码" clearable></el-input>
   </el-form-item>
    <el-form-item >
-  <el-select v-model="value" placeholder="请输入地址">
+  <el-select v-model="value" placeholder="请输入地址" clearable>
     <el-option
       v-for="item in form.options"
       :key="item.value"
@@ -29,14 +29,16 @@
       type="daterange"
       align="right"
       unlink-panels
+      value-format="yyyyMMdd"
       range-separator="至"
       start-placeholder="开始日期"
       end-placeholder="结束日期"
+      
       >
     </el-date-picker>
   </el-form-item>
   <el-form-item>
-  <el-button type="text" icon="el-icon-search">查询</el-button> 
+  <el-button type="text" icon="el-icon-search" @click=search>查询</el-button> 
   </el-form-item>
   <el-form-item>
   <el-button type="text" icon="el-icon-refresh">重置</el-button> 
@@ -53,7 +55,9 @@
       <el-form-item>
       <el-button type="primary" @click="dialogVisible2 = true">新增</el-button>  </el-form-item>
       <el-form-item>
-      <el-button type="primary">删除</el-button>  </el-form-item>
+      <el-button type="primary" @click="open7">删除</el-button> 
+      </el-form-item>
+     
 </el-form>
   	</div>
   </el-col>
@@ -122,31 +126,30 @@
   </span>
 </el-dialog>
 <el-dialog
-  title="新增"
+  title="新增档案"
   :visible.sync="dialogVisible2"
-  width="40%"
+  width="50%"
   :before-close="handleClose">
 <el-form :inline="true" :model="dynamicValidateForm" ref="dynamicValidateForm" label-width="100px" class="demo-dynamic">
-  <el-form-item
-    prop="email"
+	<el-row :gutter="20">
+  <el-col :span="12"><div class="grid-content bg-purple">
+  	<el-form-item
     label="姓名"
-    :rules="[
-      { required: true, message: '请输入邮箱地址', trigger: 'blur' },
-      { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
-    ]"
   >
     <el-input v-model="dynamicValidateForm.email"></el-input>
   </el-form-item>
-  <el-form-item
-    prop="email"
+  </div>
+  </el-col>
+  <el-col :span="12"><div class="grid-content bg-purple">
+  	<el-form-item
     label="证件号"
-    :rules="[
-      { required: true, message: '请输入邮箱地址', trigger: 'blur' },
-      { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
-    ]"
   >
     <el-input v-model="dynamicValidateForm.email"></el-input>
   </el-form-item>
+  </div>
+  </el-col>
+</el-row>
+
 </el-form>  
 <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible2 = false">取 消</el-button>
@@ -154,24 +157,27 @@
   </span>
 </el-dialog>
   </div>
+    </div>
 </template>
 
 <script>
+	import {dataList} from '@/common/js/data-file-manage.js'
 export default {
   name: 'dataFileManage',
    data(){
     return {
-    	pickerOptions2: {
-          shortcuts: [{
-            text: '最近一周',
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit('pick', [start, end]);
-            }
-          }]
-        },
+//  	pickerOptions2: {
+//        shortcuts: [{
+//          text: '最近一周',
+//          onClick(picker) {
+//            const end = new Date();
+//            const start = new Date();
+//            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+//            picker.$emit('pick', [start, end]);
+//          }
+//        }]
+//      },
+        dynamicValidateForm:{},
         dialogVisible:false,
         dialogVisible2:false,
         tableData3:{},
@@ -195,15 +201,49 @@ export default {
           label: '北京烤鸭'
         }],
     	},
-        value7: ''
+        value7: '',
+        value:''
     }
   },
+  methods: {
+      open7() {
+        this.$confirm('是否删除?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
+      },
+      search(){
+      	console.log(this.value7)
+      }
+    },
+}
+created:{
+dataList().then(()=>{
+console.log("fasfsafsafsa") 
+})
 }
 </script>
 
 <style lang="scss">
 #data-file-manage{
-  
+  .el-dialog__header{
+  	background-color: #409eff;
+  	.el-dialog__title{
+  		color: #FFFFFF;
+  	}
+  }
 }
 </style>
 
