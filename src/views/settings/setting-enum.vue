@@ -27,9 +27,9 @@
             <span v-show="!data.isEdit">{{data.name}}</span>
             <el-switch @change="onEnableChange($event, node, data)" v-model="data.status" :active-value=1 :inactive-value=0></el-switch></span>
           <span>
-            <el-button type="text" @click="append(node, data)">添加</el-button>
-            <el-button type="text" @click="edit(node, data)">修改</el-button>
-            <el-button type="text" @click="remove(node, data)">删除</el-button>
+            <el-button v-if="node.level<=2" icon="el-icon-circle-plus" type="text" @click="append(node, data)" title="添加"></el-button>
+            <el-button icon="el-icon-edit" type="text" @click="edit(node, data)" title="修改"></el-button>
+            <el-button icon="el-icon-delete" type="text" @click="remove(node, data)" title="删除"></el-button>
           </span>
         </span>
       </el-tree>
@@ -300,6 +300,9 @@ export default {
       .tree-wrap{
         display: inline-block;
         width: 400px;
+        .el-tree-node__content{
+          height: 40px;
+        }
         .custom-tree-node {
           flex: 1;
           display: flex;
@@ -310,7 +313,6 @@ export default {
           color: #0080ff;
           .el-input{
             width: 150px;
-            height: 20px;
           }
         }
       }

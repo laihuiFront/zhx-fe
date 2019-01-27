@@ -51,3 +51,18 @@ export function deleteLogs(ids){
   })
 }
 
+export function getDepartmentTree(){
+  return request({
+    url: '/organization/treeOrganization',
+    method: 'post',
+    data:{}
+  })
+}
+
+export function saveDepartment(data){
+  return request({
+    url: '/organization/save',
+    method: 'post',
+    data
+  })
+}
