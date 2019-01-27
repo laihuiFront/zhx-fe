@@ -11,10 +11,28 @@
     <el-card class="box-card-right">
       <div slot="header" class="header">
         <span class="title">{{currentEnum.name}}</span>
-        <el-button type="primary" @click="onClickAdd">新增</el-button>
+        <el-button type="primary" v-if="currentEnum.name && currentEnum.name !== '地区'" @click="onClickAdd" >新增</el-button>
         <el-button type="primary" @click="onclickSave">保存</el-button>
       </div>
-      <div v-if="currentEnum.name && currentEnum.name === '地区'">地区</div>
+      <el-tree
+        v-if="currentEnum.name && currentEnum.name === '地区'"
+        :data="configData"
+        node-key="id"
+        :expand-on-click-node="false"
+        class="tree-wrap"
+        width="400px">
+        <span class="custom-tree-node" slot-scope="{ node, data }">
+          <span>
+            <el-input @blur="onBlurTreeInput(data)" :ref="'treeInput'+data.id" v-show="data.isEdit" clearable v-model="data.name" :placeholder="'请输入'"></el-input>
+            <span v-show="!data.isEdit">{{data.name}}</span>
+            <el-switch @change="onEnableChange($event, node, data)" v-model="data.status" :active-value=1 :inactive-value=0></el-switch></span>
+          <span>
+            <el-button v-if="node.level<=2" icon="el-icon-circle-plus" type="text" @click="append(node, data)" title="添加"></el-button>
+            <el-button icon="el-icon-edit" type="text" @click="edit(node, data)" title="修改"></el-button>
+            <el-button icon="el-icon-delete" type="text" @click="remove(node, data)" title="删除"></el-button>
+          </span>
+        </span>
+      </el-tree>
       <el-table
         v-if="currentEnum.name && currentEnum.name !== '地区'"
         :data="configData"
@@ -80,6 +98,7 @@ export default {
   watch: {
     currentEnum(newVal,OldVal) {
       if(newVal.id) {
+        this.configData = []
         getConfigList(newVal.id).then(response => this.configData = response)
       }
     }
@@ -89,56 +108,48 @@ export default {
   },
   methods: {
     onClickAdd() {
-      if(this.currentEnum.name == '地区') {
-
-      } else {
-        this.configData.unshift({
-          status:1,
-          editType: 'add'
-        })
-      }
+      this.configData.unshift({
+        id:-(new Date()).getTime()%1000000,
+        status:1,
+        editType: 'add'
+      })
     },
     onclickSave(){
-      const toSaveList = this.configData.filter(item => item.editType === 'add' || item.editType === 'edit')
-      const hasEmpty = toSaveList.some(item => {
-        if(this.currentEnum.name === '催收模板'){
-          return !(item.tempName && item.tempDescription)
-        } else {
-          return !item.tempName
+      if(this.currentEnum.name === '地区'){
+        insertConfigData(this.configData).then(()=>{
+          this.$message('保存成功')
+          getConfigList(this.currentEnum.id).then(response=>this.configData = response)
+        })
+      } else {
+        const toSaveList = this.configData.filter(item => item.editType === 'add' || item.editType === 'edit')
+        const hasEmpty = toSaveList.some(item => {
+          if(this.currentEnum.name === '催收模板'){
+            return !(item.tempName && item.tempDescription)
+          } else {
+            return !item.tempName
+          }
+        })
+        if(hasEmpty){
+          this.$message('修改或删除的配置项含有空值,请修改后重新提交')
+          return
         }
-      })
-      if(hasEmpty){
-        this.$message('修改或删除的配置项含有空值,请修改后重新提交')
-        return
+        const data = toSaveList.map((item)=>{
+          return {
+              type: 0,
+              id: item.id,
+              name: item.tempName,
+              status: item.status,
+              description: item.tempDescription,
+              parent:{
+                id: this.currentEnum.id
+              }
+            }
+        })
+        insertConfigData(data).then(()=>{
+          this.$message('保存成功')
+          getConfigList(this.currentEnum.id).then(response=>this.configData = response)
+        })
       }
-      const data = toSaveList.map((item)=>{
-        if(item.editType === 'add'){
-          return {
-            type: 0,
-            name: item.tempName,
-            status: item.status,
-            description: item.tempDescription,
-            parent:{
-              id: this.currentEnum.id
-            }
-          }
-        } else {
-          return {
-            type: 0,
-            id: item.id,
-            name: item.tempName,
-            status: item.status,
-            description: item.tempDescription,
-            parent:{
-              id: this.currentEnum.id
-            }
-          }
-        }
-      })
-      insertConfigData(data).then(()=>{
-        this.$message('保存成功')
-        getConfigList(this.currentEnum.id).then(response=>this.configData = response)
-      })
     },
     onClickEdit(row) {
       this.$set(row,'tempName',row.name)
@@ -163,6 +174,57 @@ export default {
           this.$message('配置项删除成功')
         })
       }).catch(()=>{})
+    },
+    onBlurTreeInput(data){
+      this.$set(data,'isEdit',false)
+    },
+    append(node, data){
+      const newChild = { id: -(new Date()).getTime()%1000000, name: '新节点',status: 1, isEdit:true }
+        if (!data.children) {
+          this.$set(data, 'children', [])
+        }
+        data.children.unshift(newChild)
+        this.$set(node, 'expanded', true)
+        setTimeout(()=>{
+          this.$refs['treeInput'+newChild.id].focus()
+        },200)
+    },
+    edit(node,data){
+      this.$set(data,'isEdit',true)
+      this.$nextTick(()=>{
+        this.$refs['treeInput'+data.id].focus()
+      })
+    },
+    remove(node, data){
+      this.$confirm('此操作将永久删除该地区及其子节点，是否继续？','提示',{
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(()=>{
+        deleteConfigData(data.id).then(()=>{
+          const parent = node.parent
+          const children = parent.data.children || parent.data
+          const index = children.findIndex(d => d.id === data.id)
+          children.splice(index, 1)
+          this.$message('配置项删除成功')
+        })
+      }).catch(()=>{})
+
+      
+    },
+    onEnableChange($event, node, data){
+      console.log($event)
+      this.updateTreeStatus(data, $event)
+    },
+    updateTreeStatus(data, $event){
+      this.$set(data,'status',$event)
+      if(data.children){
+        for(let i=0; i<data.children.length; i++){
+          this.updateTreeStatus(data.children[i], $event)
+        }
+      }else{
+        return
+      }
     }
   }
 }
@@ -234,6 +296,26 @@ export default {
     }
     .el-card__body{
       padding: 0;
+      text-align: center;
+      .tree-wrap{
+        display: inline-block;
+        width: 400px;
+        .el-tree-node__content{
+          height: 40px;
+        }
+        .custom-tree-node {
+          flex: 1;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          font-size: 14px;
+          padding-right: 8px;
+          color: #0080ff;
+          .el-input{
+            width: 150px;
+          }
+        }
+      }
     }
   }
 }

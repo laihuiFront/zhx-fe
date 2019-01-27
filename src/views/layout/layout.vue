@@ -38,7 +38,6 @@ export default {
     overflow: auto;
     flex:1;
     margin: 16px;
-    // box-shadow: 0px 3px 9px 0px rgba(0, 0, 0, 0.36);
 	  border-radius: 5px;
   }
 }

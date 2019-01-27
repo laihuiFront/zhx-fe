@@ -35,3 +35,34 @@ export function getLogType(){
   })
 }
 
+export function getOperationLog(data){
+  return request({
+    url: '/operationLog/pageLogs',
+    method: 'post',
+    data
+  })
+}
+
+export function deleteLogs(ids){
+  return request({
+    url: '/operationLog/batchDelete',
+    method: 'post',
+    data: {ids}
+  })
+}
+
+export function getDepartmentTree(){
+  return request({
+    url: '/organization/treeOrganization',
+    method: 'post',
+    data:{}
+  })
+}
+
+export function saveDepartment(data){
+  return request({
+    url: '/organization/save',
+    method: 'post',
+    data
+  })
+}
