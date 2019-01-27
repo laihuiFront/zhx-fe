@@ -5,7 +5,7 @@
   	<div class="grid-content bg-purple">
   		<el-form :inline="true" ref="form" :model="form" label-width="80px">
    <el-form-item >
-  <el-select v-model="value" placeholder="请选择催收区域">
+  <el-select v-model="value" placeholder="请选择催收区域" clearable>
     <el-option
       v-for="item in form.options"
       :key="item.value"
@@ -15,10 +15,10 @@
   </el-select>
   </el-form-item>
   <el-form-item >
-   <el-input v-model="form.user" placeholder="请输入批次"></el-input>
+   <el-input v-model="form.user" placeholder="请输入批次" clearable></el-input>
   </el-form-item>
    <el-form-item >
-  <el-select v-model="value" placeholder="请选择委托方">
+  <el-select v-model="value" placeholder="请选择委托方" clearable>
     <el-option
       v-for="item in form.options"
       :key="item.value"
@@ -28,7 +28,7 @@
   </el-select>
   </el-form-item>
    <el-form-item >
-  <el-select v-model="value" placeholder="请选择案件类型">
+  <el-select v-model="value" placeholder="请选择案件类型" clearable>
     <el-option
       v-for="item in form.options"
       :key="item.value"
@@ -58,7 +58,7 @@
   </el-form>
   	</div>
   </el-col>
-  <el-col :span="8">
+  <el-col :span="10">
   	<div class="grid-content bg-purple">
   <el-form :inline="true">
   		<el-form-item>
@@ -67,7 +67,17 @@
       <el-form-item>
       <el-button type="primary" @click="dialogVisible = true">新增批次</el-button>  </el-form-item>
       <el-form-item>
-      <el-button type="primary">删除批次</el-button>  </el-form-item>
+      <el-button type="primary"  @click="open7">删除批次</el-button>  </el-form-item>
+       <el-form-item >
+<el-select v-model="value" placeholder="导入" >
+    <el-option
+      v-for="item in form.options"
+      :key="item.value"
+      :label="item.label"
+      :value="item.value">
+    </el-option>
+  </el-select>
+      </el-form-item>
 </el-form>
   	</div>
   </el-col>
@@ -76,7 +86,12 @@
     ref="multipleTable"
     :data="tableData3"
     style="width: 100%"
+     @selection-change="handleSelectionChange"
   >
+  <el-table-column
+      type="selection"
+      width="55">
+    </el-table-column>
     <el-table-column
       label="批次号"
       width="120">
@@ -150,22 +165,16 @@
   <el-col :span="12">
   	<div class="grid-content bg-purple">
   	<el-form-item label="批  次  号">
-    <el-input v-model="formInline.user" placeholder="请输入批次号"></el-input>
+    <el-input v-model="formInline.user" placeholder="请输入批次号" clearable></el-input>
   </el-form-item>
   </div>
   </el-col>
   <el-col :span="12">
   	<div class="grid-content bg-purple">
-  		<el-form-item label="委  托  方">
-    <el-select v-model="value" placeholder="请选择委托方">
-    <el-option
-      v-for="item in form.options"
-      :key="item.value"
-      :label="item.label"
-      :value="item.value">
-    </el-option>
-  </el-select>
+  		<el-form-item label="回款率">
+        <el-input v-model="formInline.user" placeholder="请输入批次号" clearable></el-input>
   </el-form-item>
+  		
   	</div>
   </el-col>
 </el-row>
@@ -173,7 +182,7 @@
   <el-col :span="12">
   	<div class="grid-content bg-purple">
   	<el-form-item label="催收区域">
-<el-select v-model="value" placeholder="请选择催收区域">
+<el-select v-model="value" placeholder="请选择催收区域" clearable>
     <el-option
       v-for="item in form.options"
       :key="item.value"
@@ -186,12 +195,15 @@
   </el-col>
   <el-col :span="12">
   	<div class="grid-content bg-purple">
-  		<el-form-item label="委案日期">
-    <el-date-picker
-      v-model="value1"
-      type="date"
-      placeholder="选择日期">
-    </el-date-picker>
+  	<el-form-item label="委  托  方">
+    <el-select v-model="value" placeholder="请选择委托方" clearable>
+    <el-option
+      v-for="item in form.options"
+      :key="item.value"
+      :label="item.label"
+      :value="item.value">
+    </el-option>
+  </el-select>
   </el-form-item>
   	</div>
   </el-col>
@@ -199,7 +211,7 @@
   <el-col :span="12">
   	<div class="grid-content bg-purple">
   	<el-form-item label="案件类型">
-<el-select v-model="value" placeholder="请选择案件类型">
+<el-select v-model="value" placeholder="请选择案件类型" clearable>
     <el-option
       v-for="item in form.options"
       :key="item.value"
@@ -212,9 +224,14 @@
   </el-col>
   <el-col :span="12">
   	<div class="grid-content bg-purple">
-  		<el-form-item label="目标回款率">
-        <el-input v-model="formInline.user" placeholder="请输入批次号"></el-input>
+  			<el-form-item label="委案日期">
+    <el-date-picker
+      v-model="value1"
+      type="date"
+      placeholder="选择日期">
+    </el-date-picker>
   </el-form-item>
+  		
   	</div>
   </el-col>
 </el-row>
@@ -232,9 +249,9 @@
   </el-col> 
 </el-row>
 <el-row :gutter="24">
-  <el-col :span="18">
-  <el-form-item label="批次备注" style="width: 100%;">
-    <el-input type="textarea" v-model="formInline.user"></el-input>
+  <el-col :span="24">
+  <el-form-item label="批次备注" >
+    <el-input type="textarea" v-model="formInline.user" style="width: 200%;">></el-input>
   </el-form-item>
    </el-col>
 </el-row>
@@ -294,6 +311,24 @@ export default {
 methods: {
       resetForm(formName) {
         this.$refs[formName].resetFields();
+      },
+      open7() {
+        this.$confirm('是否删除?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
       }
     }
 }
