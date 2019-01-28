@@ -170,11 +170,11 @@
   </div>
   </el-col>
 </el-row>
-<el-row :gutter="20" class="addNewData" v-for="(domain, index) in dynamicValidateForm.telList">
+<el-row :gutter="20" class="addNewData" v-for="(domain, index) in dynamicValidateForm.telList" :key="domain.key"> 
 <el-col :span="12" ><div class="grid-content bg-purple">
   <el-form-item
     label="电话类型"
-    :key="domain.key"
+    
   >
     <el-input v-model="domain.teltype" clearable></el-input>
 
@@ -184,7 +184,6 @@
   <el-col :span="12" ><div class="grid-content bg-purple">
   <el-form-item
     label="电话号码"
-    :key="domain.key"
   >
     <el-input v-model="domain.tel" clearable></el-input>
     </el-form-item>
@@ -206,7 +205,7 @@
   </div>
   </el-col>
 </el-row>
-<el-row :gutter="20" class="addNewData" v-for="(domain, index) in dynamicValidateForm.addressList">
+<el-row :gutter="20" class="addNewData" v-for="(domain, index) in dynamicValidateForm.addressList" :key="domain.key">
   <el-col :span="12" ><div class="grid-content bg-purple">
   <el-form-item
     label="地址信息"

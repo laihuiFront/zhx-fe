@@ -48,6 +48,7 @@
       type="daterange"
       align="right"
       unlink-panels
+      value-format="yyyy-MM-dd"
       range-separator="至"
       start-placeholder="开始日期"
       end-placeholder="结束日期"
@@ -58,7 +59,7 @@
   <el-button type="text" icon="el-icon-search">查询</el-button> 
   </el-form-item>
   <el-form-item>
-  <el-button type="text" icon="el-icon-refresh">重置</el-button> 
+  <el-button type="text" icon="el-icon-refresh" @click="resetForm">重置</el-button> 
   </el-form-item>
   </el-form>
   	</div>
@@ -73,9 +74,7 @@
       <el-button type="primary" @click="dialogVisible = true">导出所有催记</el-button> 
       </el-form-item>
       <el-form-item>
-      <el-button type="primary" @click="dialogVisible2 = true">导出查询结果</el-button>  </el-form-item>
-      
-     
+      <el-button type="primary" @click="dialogVisible2 = true">导出查询结果</el-button>  </el-form-item> 
 </el-form>
   	</div>
   </el-col>
@@ -132,7 +131,23 @@
       :total="400">
     </el-pagination>
   </div>
-  </div>
+  <el-dialog
+  title="导出查询结果"
+  :visible.sync="dialogVisible2"
+  width="30%"
+  :before-close="handleClose">
+  <el-form :inline="true">
+  	<el-form-item>
+    <el-button @click="dialogVisible2 = false">按查询条件全部导出</el-button>
+    </el-form-item>
+     	<el-form-item>
+    <el-button @click="dialogVisible2 = false">按查询条件导出当前分页</el-button>
+    </el-form-item>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible2 = false">取 消</el-button>
+  </span>
+  </el-form>
+</el-dialog>
   </div>
 </template>
 
@@ -181,6 +196,9 @@ export default {
     }
   },
   methods: {
+  	resetForm(){
+  		this.form={}
+  	},
       open7() {
         this.$confirm('是否删除?', '提示', {
           confirmButtonText: '确定',
@@ -205,7 +223,10 @@ export default {
 
 <style lang="scss">
 #data-memorize-manage{
+  .el-dialog__header{
+  	background-color: #f8f8f8;
   
+  }
 }
 </style>
 
