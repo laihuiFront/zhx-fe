@@ -1,6 +1,6 @@
 <template>
   <div id="setting-log" class="page-wraper-sub">
-    <el-form ref="form" :model="queryForm" :inline="true">
+    <el-form ref="form" :model="queryForm" :inline="true" class="query-wrap">
       <el-form-item>
         <el-select v-model="queryForm.url" placeholder="请选择日志类型">
           <el-option
@@ -28,8 +28,10 @@
         </el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onClickQuery">查询</el-button>
-        <el-button type="primary" @click="onClickReset">重置</el-button>
+        <el-button icon="el-icon-search" type="text" @click="onClickQuery">查询</el-button>
+        <el-button icon="el-icon-refresh" type="text" @click="onClickReset">重置</el-button>
+      </el-form-item>
+      <el-form-item class="operation-item">
         <el-button type="primary" @click="onClickDelete">删除</el-button>
       </el-form-item>
     </el-form>
@@ -63,7 +65,7 @@
       :current-page.sync="queryForm.pageNum"
       :page-size.sync="queryForm.pageSize"
       layout="prev, pager, next, jumper,total, sizes"
-      :total="1000"
+      :total="total"
       class="pagination-wrap">
     </el-pagination>
   </div>
@@ -80,6 +82,7 @@ export default {
         pageSize: 10,
         date:[]
       },
+      total: 0,
       logTypeList:[],
       logList: [],
       deleteList:[]
@@ -128,7 +131,10 @@ export default {
         createTimeBegin: this.queryForm.date[0],
         createTimeEnd: this.queryForm.date[1]
       }
-      getOperationLog(data).then(response => this.logList = response)
+      getOperationLog(data).then(response => {
+        this.logList = response.list
+        this.total = response.total
+      })
     },
     onSelectRow(val){
       this.deleteList = val

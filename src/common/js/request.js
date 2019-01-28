@@ -7,7 +7,7 @@ import { localCache, removeCache } from '@/common/js/auth'
 // 创建axios实例
 const service = axios.create({
   // baseURL: 'http://zhx.zaijushou.xyz',
-  baseURL: 'http://116.62.124.251/',
+  baseURL: 'http://116.62.124.251/zxh',
   timeout: 10000 // 请求超时时间
 })
 

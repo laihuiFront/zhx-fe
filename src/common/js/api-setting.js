@@ -1,5 +1,4 @@
 import request from '@/common/js/request'
-//------------------枚举-------------------------------
 export function getConfigList(id = 0) {
   return request({
     url: '/sys/dictionary/select/list',
@@ -64,5 +63,25 @@ export function saveDepartment(data){
     url: '/organization/save',
     method: 'post',
     data
+  })
+}
+
+export function getRoleList(roleName){
+  return request({
+    url: '/role/listRole',
+    method: 'post',
+    data:{
+      roleName
+    }
+  })
+}
+
+export function deleteRole(id){
+  return request({
+    url: '/role/delete',
+    method: 'post',
+    data:{
+      id
+    }
   })
 }
