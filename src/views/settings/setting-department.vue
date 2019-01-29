@@ -4,10 +4,12 @@
       <el-button type="primary" @click="onClickSave" class="btn">保存</el-button>
     </div>
     <el-tree
+      v-if="departmentTree.length>0"
       ref="tree"
       :data="departmentTree"
       node-key="id"
       :expand-on-click-node="false"
+      :default-expanded-keys="[departmentTree[0].id]"
       class="tree-wrap"
       width="400px">
       <span class="custom-tree-node" slot-scope="{ node, data }">
