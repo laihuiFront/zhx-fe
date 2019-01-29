@@ -5,22 +5,22 @@
   	<div class="grid-content bg-purple">
   		<el-form :inline="true" ref="form" :model="form" label-width="80px">
    <el-form-item >
-    <el-select v-model="value" placeholder="请选择催收区域" clearable>
+    <el-select v-model="form.area" placeholder="请选择催收区域" clearable>
     <el-option
-      v-for="item in form.options"
+      v-for="item in areaList"
       :key="item.value"
-      :label="item.label"
-      :value="item.value">
+      :label="item.name"
+      :value="item.id">
     </el-option>
   </el-select>   
   </el-form-item>
   <el-form-item >
-<el-select v-model="value" placeholder="部门" clearable>
+<el-select v-model="form.dept" placeholder="部门" clearable>
     <el-option
-      v-for="item in form.options"
+      v-for="item in sectionList"
       :key="item.value"
-      :label="item.label"
-      :value="item.value">
+      :label="item.name"
+      :value="item.id">
     </el-option>
   </el-select>   </el-form-item>
    <el-form-item >
@@ -152,21 +152,12 @@
 </template>
 
 <script>
+import {areaList,sectionList} from '@/common/js/data-memorize-manage.js'
 export default {
   name: 'dataMemorizeManage',
   data(){
     return {
-    	pickerOptions2: {
-          shortcuts: [{
-            text: '最近一周',
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit('pick', [start, end]);
-            }
-          }]
-        },
+    	  areaList:[],
         dynamicValidateForm:{},
         dialogVisible:false,
         dialogVisible2:false,
@@ -217,7 +208,15 @@ export default {
           });
         });
       }
-    }
+    },
+      created() {
+          areaList().then((response)=>{
+          	this.areaList=response
+          })
+           sectionList().then((response)=>{
+          	this.sectionList=response
+          })
+},
 }
 </script>
 

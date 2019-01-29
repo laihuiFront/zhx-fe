@@ -120,7 +120,7 @@
   title="导入"
   :visible.sync="dialogVisible"
   width="30%"
-  :before-close="handleClose">
+  >
   导入
   <span slot="footer" class="dialog-footer" id="EndFooter">
     <el-button @click="dialogVisible = false">取 消</el-button>
@@ -130,8 +130,8 @@
 <el-dialog
   title="新增档案"
   :visible.sync="dialogVisible2"
-  width="60%"
-  :before-close="handleClose">
+  width="70%"
+  >
 <el-form :inline="true" :model="dynamicValidateForm" ref="dynamicValidateForm" label-width="100px" class="demo-dynamic">
 	<el-row :gutter="20">
   <el-col :span="12"><div class="grid-content bg-purple">
