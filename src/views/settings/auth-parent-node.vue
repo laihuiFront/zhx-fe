@@ -26,10 +26,12 @@ export default {
 <style lang="scss">
 .parent-item{
   .text{
+    padding-left: 12px;
     line-height: 28px;
     background: #f8f8f8;
   }
   .child-wrap{
+    padding-left: 12px;
     margin:12px 0 12px 24px;
   }
 }
