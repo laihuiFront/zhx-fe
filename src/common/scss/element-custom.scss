@@ -32,3 +32,15 @@
 .pagination-wrap{
   margin-top: 10px;
 }
+
+.dialog-wrap{
+  .el-dialog__header{
+    padding: 0 20px;
+    line-height: 60px;
+    height: 60px;
+    background: #f8f8f8;
+  }
+  .el-dialog__body{
+    padding: 30px 24px;
+  }
+}

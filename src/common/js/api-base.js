@@ -27,7 +27,7 @@ export function logout(){
 
 export function getTreeAllMenusByToken(){
   return request({
-    url: '/menu/treeAllMenusByToken',
+    url: '/menu/treeAllMenusWithButtonByToken',
     method: 'post'
   })
 }
