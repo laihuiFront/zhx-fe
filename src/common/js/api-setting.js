@@ -85,3 +85,30 @@ export function deleteRole(id){
     }
   })
 }
+
+export function listAuth(id = null){
+  return request({
+    url: '/role/listAuth',
+    method: 'post',
+    data:{
+      id
+    }
+  })
+}
+
+export function saveRole(data){
+  return request({
+    url: '/role/save',
+    method: 'post',
+    data
+  })
+}
+export function saveAuth(data){
+  return request({
+    url: '/role/auth',
+    method: 'post',
+    data
+  })
+}
+
+

@@ -30,6 +30,7 @@ export const logoutAction = function({commit}) {
     logout().then(response => {
       commit(types.SET_USER_INFO, {})
       commit(types.SET_MENU, [])
+      commit(types.SET_TAB_MENUS,[])
       removeCache('token')
       resolve()
     }).catch(error => {
@@ -42,6 +43,7 @@ export const fedLogOut = function({commit}){
   return new Promise(resolve => {
     commit(types.SET_USER_INFO, {})
     commit(types.SET_MENU, [])
+    commit(types.SET_TAB_MENUS,[])
     removeCache('token')
     resolve()
   })
@@ -64,6 +66,7 @@ export const initPageMenu = function({state, commit}, toPath) {
   const toMenu = findMenuInAll(allMenu, toPath)
   if (toMenu) {
     commit(types.SET_CURRENT_MENU, toMenu)
+    commit(types.PUSH_TAB_MENUS, allMenu[0])
     commit(types.PUSH_TAB_MENUS, toMenu)
   }
 }

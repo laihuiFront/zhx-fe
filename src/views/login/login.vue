@@ -56,16 +56,16 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100%;
-  background: #0080ff;
+  background: url('./bg.png') 100% 100%;
   .left-panel{
-    width: 403px;
-    height: 284px;
+    width: 538px;
+    height: 378px;
   }
   .form{
     margin-left: 68px;
     padding: 31px 0;
     height: 284px;
-    width: 238px;
+    width: 300px;
     background: #fff;
     border-radius: 5px;
     box-sizing: border-box;
