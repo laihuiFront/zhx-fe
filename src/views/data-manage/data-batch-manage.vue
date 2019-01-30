@@ -51,6 +51,7 @@
  <el-date-picker
       v-model="value7"
       type="daterange"
+      value-format="yyyy-MM-dd"
       align="right"
       unlink-panels
       range-separator="至"

@@ -5,22 +5,22 @@
   	<div class="grid-content bg-purple">
   		<el-form :inline="true" ref="form" :model="form" label-width="80px">
    <el-form-item >
-    <el-select v-model="value" placeholder="请选择催收区域" clearable>
+    <el-select v-model="form.area" placeholder="请选择催收区域" clearable>
     <el-option
-      v-for="item in form.options"
+      v-for="item in areaList"
       :key="item.value"
-      :label="item.label"
-      :value="item.value">
+      :label="item.name"
+      :value="item.id">
     </el-option>
   </el-select>   
   </el-form-item>
   <el-form-item >
-<el-select v-model="value" placeholder="部门" clearable>
+<el-select v-model="form.dept" placeholder="部门" clearable>
     <el-option
-      v-for="item in form.options"
+      v-for="item in sectionList"
       :key="item.value"
-      :label="item.label"
-      :value="item.value">
+      :label="item.name"
+      :value="item.id">
     </el-option>
   </el-select>   </el-form-item>
    <el-form-item >
@@ -48,6 +48,7 @@
       type="daterange"
       align="right"
       unlink-panels
+      value-format="yyyy-MM-dd"
       range-separator="至"
       start-placeholder="开始日期"
       end-placeholder="结束日期"
@@ -58,7 +59,7 @@
   <el-button type="text" icon="el-icon-search">查询</el-button> 
   </el-form-item>
   <el-form-item>
-  <el-button type="text" icon="el-icon-refresh">重置</el-button> 
+  <el-button type="text" icon="el-icon-refresh" @click="resetForm">重置</el-button> 
   </el-form-item>
   </el-form>
   	</div>
@@ -73,9 +74,7 @@
       <el-button type="primary" @click="dialogVisible = true">导出所有催记</el-button> 
       </el-form-item>
       <el-form-item>
-      <el-button type="primary" @click="dialogVisible2 = true">导出查询结果</el-button>  </el-form-item>
-      
-     
+      <el-button type="primary" @click="dialogVisible2 = true">导出查询结果</el-button>  </el-form-item> 
 </el-form>
   	</div>
   </el-col>
@@ -132,26 +131,33 @@
       :total="400">
     </el-pagination>
   </div>
-  </div>
+  <el-dialog
+  title="导出查询结果"
+  :visible.sync="dialogVisible2"
+  width="30%"
+  :before-close="handleClose">
+  <el-form :inline="true">
+  	<el-form-item>
+    <el-button @click="dialogVisible2 = false">按查询条件全部导出</el-button>
+    </el-form-item>
+     	<el-form-item>
+    <el-button @click="dialogVisible2 = false">按查询条件导出当前分页</el-button>
+    </el-form-item>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible2 = false">取 消</el-button>
+  </span>
+  </el-form>
+</el-dialog>
   </div>
 </template>
 
 <script>
+import {areaList,sectionList} from '@/common/js/data-memorize-manage.js'
 export default {
   name: 'dataMemorizeManage',
   data(){
     return {
-    	pickerOptions2: {
-          shortcuts: [{
-            text: '最近一周',
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit('pick', [start, end]);
-            }
-          }]
-        },
+    	  areaList:[],
         dynamicValidateForm:{},
         dialogVisible:false,
         dialogVisible2:false,
@@ -181,6 +187,9 @@ export default {
     }
   },
   methods: {
+  	resetForm(){
+  		this.form={}
+  	},
       open7() {
         this.$confirm('是否删除?', '提示', {
           confirmButtonText: '确定',
@@ -199,13 +208,24 @@ export default {
           });
         });
       }
-    }
+    },
+      created() {
+          areaList().then((response)=>{
+          	this.areaList=response
+          })
+           sectionList().then((response)=>{
+          	this.sectionList=response
+          })
+},
 }
 </script>
 
 <style lang="scss">
 #data-memorize-manage{
+  .el-dialog__header{
+  	background-color: #f8f8f8;
   
+  }
 }
 </style>
 
