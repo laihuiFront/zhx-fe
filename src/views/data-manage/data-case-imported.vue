@@ -8,7 +8,7 @@
   <el-select class="Newinput" v-model="form.area" placeholder="请选择催收区域" clearable>
     <el-option
       v-for="item in form.areaList"
-      :key="item.value"
+      :key="item.id"
       :label="item.name"
       :value="item.id">
     </el-option>
@@ -21,7 +21,7 @@
   <el-select v-model="form.client" filterable  placeholder="请选择委托方" clearable>
     <el-option
       v-for="item in form.clientList"
-      :key="item.value"
+      :key="item.id"
       :label="item.name"
       :value="item.id">
     </el-option>
@@ -31,7 +31,7 @@
   <el-select v-model="form.caseType" placeholder="请选择案件类型" clearable>
     <el-option
       v-for="item in form.caseTypeList"
-      :key="item.value"
+      :key="item.id"
       :label="item.name"
       :value="item.id">
     </el-option>
@@ -70,14 +70,14 @@
       <el-form-item>
       <el-button type="primary"  @click="open7">删除批次</el-button>  </el-form-item>
        <el-form-item >
-<el-select v-model="value" placeholder="导入" >
+<!--<el-select v-model="value" placeholder="导入" >
     <el-option
       v-for="item in form.options"
       :key="item.value"
       :label="item.label"
       :value="item.value">
     </el-option>
-  </el-select>
+  </el-select>-->
       </el-form-item>
 </el-form>
   	</div>
@@ -124,7 +124,7 @@
       label="总金额"
       show-overflow-tooltip>
       <template slot-scope="scope">
-        ￥{{scope.row.totalAmt}}
+        ￥{{scope.row.totalAmt ? scope.row.totalAmt : 0}}
       </template>
     </el-table-column>
     <el-table-column
@@ -191,7 +191,7 @@
 <el-select v-model="formInline.areaListId" placeholder="请选择催收区域" clearable>
     <el-option
       v-for="item in areaList"
-      :key="item.value"
+      :key="item.id"
       :label="item.name"
       :value="item.id">
     </el-option>
@@ -207,7 +207,7 @@
     <el-select v-model="formInline.client" placeholder="请选择委托方" clearable>
     <el-option
       v-for="item in clientList"
-      :key="item.value"
+      :key="item.id"
       :label="item.name"
       :value="item.id">
     </el-option>
@@ -222,7 +222,7 @@
 <el-select v-model="formInline.caseType" placeholder="请选择案件类型" clearable>
     <el-option
       v-for="item in caseTypeList"
-      :key="item.value"
+      :key="item.id"
       :label="item.name"
       :value="item.id">
     </el-option>
@@ -314,7 +314,7 @@
 <el-select v-model="messageForm.area" placeholder="请选择催收区域" clearable>
     <el-option
       v-for="item in areaList"
-      :key="item.value"
+      :key="item.id"
       :label="item.name"
       :value="item.id">
     </el-option>
@@ -330,7 +330,7 @@
     <el-select v-model="messageForm.client" placeholder="请选择委托方" clearable>
     <el-option
       v-for="item in clientList"
-      :key="item.value"
+      :key="item.id"
       :label="item.name"
       :value="item.id">
     </el-option>
@@ -345,7 +345,7 @@
 <el-select v-model="messageForm.caseType" placeholder="请选择案件类型" clearable>
     <el-option
       v-for="item in caseTypeList"
-      :key="item.value"
+      :key="item.id"
       :label="item.name"
       :value="item.id">
     </el-option>
@@ -409,7 +409,7 @@
 </template>
 
 <script>
-		import {dataList,remoweData,addData,clientList,caseTypeList,areaList} from '@/common/js/data-case-imported.js'
+		import {dataList,remoweData,addData,clientList,caseTypeList,areaList,update} from '@/common/js/data-case-imported.js'
 export default {
   name: 'dataCaseImported',
   data(){
@@ -427,7 +427,7 @@ export default {
         },
         dialogVisible:false,
         dialogVisible2:false,
-        DataList:{},
+        DataList:[],
         currentPage4: 1,
     	 form:{
     		time:[],
@@ -475,9 +475,9 @@ methods: {
       submitmsgForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-          	console.log(this.formInline)
-            addData(this.formInline).then((response)=>{
-            	this.dialogVisible=false
+          	console.log(this.messageForm)
+            update(this.messageForm).then((response)=>{
+            	this.dialogVisible2=false
             	this.search()
             	this.$message({
             type: 'success',
