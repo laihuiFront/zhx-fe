@@ -72,6 +72,10 @@
           label="员工角色">
         </el-table-column>
         <el-table-column
+          prop="position"
+          label="职位">
+        </el-table-column>
+        <el-table-column
           prop="department"
           label="部门">
         </el-table-column>
@@ -80,10 +84,10 @@
           width="200">
           <template slot-scope="scope">
             <el-button type="text" @click="onClickEdit(scope.row)">修改</el-button>
-            <el-button type="text" @click="onClickLock(scope.row)" v-if="scope.row.enable === 1">锁定</el-button>
-            <el-button type="text" @click="onClickUnLock(scope.row)" v-if="scope.row.enable === 0">解锁</el-button>
-            <el-button type="text" @click="onClickLeave(scope.row)">离职</el-button>
-            <el-button type="text" @click="onClickDelete(scope.row)">删除</el-button>
+            <el-button type="text" @click="onClickLock(scope.row)" v-if="scope.row.enable === 1 && scope.row.id !== $store.getters.userInfo.id">锁定</el-button>
+            <el-button type="text" @click="onClickUnLock(scope.row)" v-if="scope.row.enable === 0 && scope.row.id !== $store.getters.userInfo.id">解锁</el-button>
+            <el-button type="text" @click="onClickLeave(scope.row)" v-if="scope.row.id !== $store.getters.userInfo.id">离职</el-button>
+            <el-button type="text" @click="onClickDelete(scope.row)" v-if="scope.row.id !== $store.getters.userInfo.id">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -181,7 +185,7 @@
         </el-tree>
         <span slot="footer" class="footer">
           <el-button @click="$set(dialogData, 'departmentVisible' ,false)">取 消</el-button>
-          <el-button type="primary" :disabled="!dialogData.isSelectLeaf" @click="onClickSaveDept">保 存</el-button>
+          <el-button type="primary" @click="onClickSaveDept">确 定</el-button>
         </span>
       </el-dialog>
     </el-dialog>
@@ -206,7 +210,6 @@ export default {
         title: '新增权限组',
         type: 'add',
         departmentVisible:false,
-        isSelectLeaf: false,
       },
       total: 0,
       memberList: [],
@@ -252,7 +255,12 @@ export default {
       this.$set(this.dialogData, 'editVisible', true)
     },
     onClickEdit(row) {
-      
+      this.$set(this.dialogData, 'title', '修改员工')
+      this.$set(this.dialogData, 'type', 'edit')
+      getUserById(row.id).then(response => {
+        this.memberInfo = response
+        this.$set(this.dialogData, 'editVisible', true)
+      })
     },
     onClickLock(row) {
       this.$confirm('确定锁定该员工账号？','提示',{
@@ -311,7 +319,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(()=>{
-        deleteRole(row.id).then(()=>{
+        deleteMember(row.id).then(()=>{
           this.$message('员工删除成功')
           this.onClickQuery()
         })
@@ -319,19 +327,13 @@ export default {
     },
     onClickSelectDept(){
       this.$set(dialogData, 'departmentVisible' ,true)
-      this.$set(dialogData, 'isSelectLeaf' ,false)
+      this.currentDept = null
     },
     onClickDepartment(data, node){
       this.$set(this.queryForm, 'department', data.id)
     },
     onSelectDepartment(data, node){
-      if(node.isLeaf){
-        this.$set(this.dialogData, 'isSelectLeaf',true)
-        this.currentDept = data
-      } else{
-        this.$set(this.dialogData, 'isSelectLeaf',false)
-        this.currentDept = null
-      }
+      this.currentDept = data
     },
     onClickSaveDept(){
       this.$set(this.memberInfo, 'departId', this.currentDept.id)
@@ -350,7 +352,17 @@ export default {
       this.$set(this.dialogData, 'editVisible', false)
     },
     onClickSave(){
-
+      if(this.dialogData.type === 'add'){
+        addMember(this.memberInfo).then(response => {
+          this.onClickQuery()
+          this.onClickCancel()
+        })
+      } else {
+        updateMember(this.memberInfo).then(response => {
+          this.onClickQuery()
+          this.onClickCancel()
+        })
+      }
     }
   }
 }
