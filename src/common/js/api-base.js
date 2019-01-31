@@ -1,4 +1,5 @@
 import request from '@/common/js/request'
+const md5 = require('js-md5')
 
 export function login(loginName, password) {
   return request({
@@ -6,7 +7,7 @@ export function login(loginName, password) {
     method: 'post',
     data: {
       loginName,
-      password
+      password: md5(password)
     }
   })
 }
