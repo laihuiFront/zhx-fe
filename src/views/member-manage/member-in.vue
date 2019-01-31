@@ -68,16 +68,20 @@
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
-          prop="role"
-          label="员工角色">
+          prop="roleList"
+          :formatter="formatRole"
+          label="员工角色"
+          show-overflow-tooltip>
         </el-table-column>
         <el-table-column
           prop="position"
-          label="职位">
+          label="职位"
+          show-overflow-tooltip>
         </el-table-column>
         <el-table-column
           prop="department"
-          label="部门">
+          label="部门"
+          show-overflow-tooltip>
         </el-table-column>
         <el-table-column
           label="操作"
@@ -118,7 +122,7 @@
           <el-input v-model="memberInfo.department" @focus="$set(dialogData, 'departmentVisible' ,true)" placeholder="请选择部门"></el-input>
         </el-form-item>
         <el-form-item label="角色" prop="role">
-          <el-select v-model="memberInfo.role" placeholder="请选择角色">
+          <el-select v-model="memberInfo.role" multiple placeholder="请选择角色">
             <el-option
               v-for="item in roleList"
               :key="item.id"
@@ -259,6 +263,8 @@ export default {
       this.$set(this.dialogData, 'type', 'edit')
       getUserById(row.id).then(response => {
         this.memberInfo = response
+        const roleList = this.memberInfo.roleList.map(item => item.id)
+        this.$set(this.memberInfo, 'roleList', roleList)
         this.$set(this.dialogData, 'editVisible', true)
       })
     },
@@ -347,21 +353,29 @@ export default {
       }
     },
     onClickCancel(){
-      this.memberInfo = {}
+      let {...resultData} = this.memberInfo
+      resultData.roleList = resultData.roleList.map(item => {item.id})
       this.$refs['ruleForm'].resetFields()
       this.$set(this.dialogData, 'editVisible', false)
     },
     onClickSave(){
       if(this.dialogData.type === 'add'){
-        addMember(this.memberInfo).then(response => {
+        addMember(resultData).then(response => {
           this.onClickQuery()
           this.onClickCancel()
         })
       } else {
-        updateMember(this.memberInfo).then(response => {
+        updateMember(resultData).then(response => {
           this.onClickQuery()
           this.onClickCancel()
         })
+      }
+    },
+    formatRole(row,column, cellValue){
+      if(cellValue && cellValue.length > 0){
+        return cellValue.map(item => item.roleName).join('/')
+      }else{
+        return null
       }
     }
   }
