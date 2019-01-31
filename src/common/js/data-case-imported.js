@@ -35,7 +35,7 @@ return request({
 
 export const update = function(form) {
 return request({
-    url: 'dataArchive/save',
+    url: '/dataBatch/update',
     method: 'post',
     data:{
    area:form.area,//催收区域

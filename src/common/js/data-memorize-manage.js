@@ -29,6 +29,21 @@ return request({
   })
 }
 
+export const search = function(area,dept,odv,measure,pageSize,pageNum) {
+return request({
+    url: '/dataCollect/pageDataCollect',
+    method: 'post',
+    data: {
+       area:  area,
+       dept:  dept,
+       odv:  odv ,
+       measure:  measure ,
+       pageNum:pageNum ? pageNum : 1,
+       pageSize:pageSize ? pageSize : 10
+    }
+  })
+}
+
 export const addData = function(form) {
 return request({
     url: 'dataArchive/save',
@@ -90,4 +105,19 @@ return request({
   })
 }
 
+export const PersonList = function() {
+return request({
+    url: '/user/select/role ',
+    method: 'post',
+    data:{role:"催收员"}
+  })
+}
+
+export const departmentList = function() {
+return request({
+    url: '/organization/listOrganization',
+    method: 'post',
+    data:{}
+  })
+}
 
