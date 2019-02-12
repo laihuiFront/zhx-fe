@@ -336,7 +336,9 @@ export default {
       this.currentDept = null
     },
     onClickDepartment(data, node){
+
       this.$set(this.queryForm, 'department', data.id)
+      this.onClickQuery()
     },
     onSelectDepartment(data, node){
       this.currentDept = data
