@@ -4,7 +4,7 @@
     <ul class="menu-wrap">
       <li @click="gotoPage(menu)" class="menu-item" :class="{active:menu.id === currentMenu.id}" v-for="(menu) in tabMenus" :key="'tab'+menu.id">
         <span class="text">{{menu.menuLabel}}</span>
-        <i @click.stop="closeTab(menu)" class="el-icon-close"></i>
+        <i v-if="menu.menuLabel !== '首页'" @click.stop="closeTab(menu)" class="el-icon-close"></i>
       </li>
     </ul>
     <span class="right-wrap"><i class="icon el-icon-arrow-right"></i></span>
@@ -73,8 +73,8 @@ export default {
     .menu-item{
       display: inline-block;
       padding: 0 20px;
-      height: 35px;
-      line-height: 35px;
+      height: 33px;
+      line-height: 33px;
       border-right: 1px solid #e8e8e8;
       cursor: pointer;
       background: #f2f2f2;
