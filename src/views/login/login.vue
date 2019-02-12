@@ -58,8 +58,8 @@ export default {
   height: 100%;
   background: url('./bg.png') 100% 100%;
   .left-panel{
-    width: 538px;
-    height: 378px;
+    width: 50vw;
+    height: 72.5%;
   }
   .form{
     margin-left: 68px;
