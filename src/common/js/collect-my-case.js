@@ -53,3 +53,12 @@ export function markColor(data=[]) {
     data
   })
 }
+
+//申请协催
+export function addSynergy(data=[]) {
+  return request({
+    method:'post',
+    url:'/dataCase/addSynergy',
+    data
+  })
+}

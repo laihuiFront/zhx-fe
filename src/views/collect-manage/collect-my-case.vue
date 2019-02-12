@@ -2,6 +2,21 @@
   <el-tabs v-model="activeName" type="card">
     <el-tab-pane label="我的案件" name="tab1"
       ><div id="collect-my-case">
+    <el-dialog
+      title="申请协催"
+      :visible.sync="dialogVisible"
+      width="30%">
+      <el-input
+        type="textarea"
+        :autosize="{ minRows: 6, maxRows: 14}"
+        placeholder="请输入内容"
+        v-model="textarea3">
+      </el-input>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible = false;xcHandle()">确 定</el-button>
+      </span>
+    </el-dialog>
         <el-row :gutter="24">
           <el-col :span="24">
             <div class="grid-content bg-purple">
@@ -378,7 +393,7 @@
                   </el-dropdown>
                 </el-form-item>
                 <el-form-item>
-                  <el-button type="primary">申请协催</el-button>
+                  <el-button type="primary" @click="dialogVisible=true;">申请协催</el-button>
                 </el-form-item>
                 <el-form-item>
                   <span class="color_gray">列表案量:</span> <span>{{fetchData.countCase}}</span>
@@ -444,7 +459,7 @@
 <script>
 import tab2 from "./collect-status-statistics";
 import tab3 from "./collect-repayment-statistics";
-import { pageMyCase,getEnum,markColor } from "@/common/js/collect-my-case";
+import { pageMyCase,getEnum,markColor ,addSynergy} from "@/common/js/collect-my-case";
 export default {
   components: {
     tab2,
@@ -453,6 +468,8 @@ export default {
   name: "collectMyCase",
   data() {
     return {
+      dialogVisible:false,
+      textarea3: '',
       activeName: "tab1",
       //表格数据
       tableData: [],
@@ -732,8 +749,22 @@ export default {
           color
         })
         return acc;
-      },[])
+      },[]);
       markColor(data).then((data)=>{
+        this.getMainData();
+      });
+    },
+    //申请协催
+    xcHandle(){
+      if(this.multipleSelection.length==0){return;}
+      let data = this.multipleSelection.reduce((acc,item)=>{
+        acc.push({
+          id:item.id,
+          synergyContext:this.textarea3
+        })
+        return acc;
+      },[]);
+      addSynergy(data).then((data)=>{
         console.log(data)
       });
     },
