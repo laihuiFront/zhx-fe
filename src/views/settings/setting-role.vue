@@ -168,7 +168,7 @@ export default {
         roleSubmit.id = this.currentRow.id
       }
       saveRole(roleSubmit).then(response => {
-        id = this.dialogData.type === 'edit' ? this.currentRow.id : response.id
+        const id = this.dialogData.type === 'edit' ? this.currentRow.id : response.id
         saveAuth({id, menus: this.authConfig}).then(response => {
           this.$message('角色保存成功')
           this.onClickCancel()

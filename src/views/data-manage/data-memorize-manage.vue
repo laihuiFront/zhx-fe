@@ -83,7 +83,7 @@
     <el-table-column
       label="ID"
       >
-      <template slot-scope="scope">{{ scope.row.date }}</template>
+      <template slot-scope="scope">{{ scope.row.id }}</template>
     </el-table-column>
     <el-table-column
       prop="seqno"
@@ -91,7 +91,7 @@
       >
     </el-table-column>
     <el-table-column
-      prop="address"
+      prop="name"
       label="姓名"
       show-overflow-tooltip>
     </el-table-column>
@@ -101,12 +101,12 @@
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
-      prop="area"
+      prop="collectTime"
       label="催收时间"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
-      prop="address"
+      prop="targetName"
       label="对象姓名"
       show-overflow-tooltip>
     </el-table-column>
@@ -121,12 +121,12 @@
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
-      prop="address"
+      prop="mobile"
       label="电话号码"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
-      prop="address"
+      prop="collectInfo"
       label="催收记录"
       show-overflow-tooltip>
     </el-table-column><el-table-column
@@ -134,7 +134,7 @@
       label="催收结果"
       show-overflow-tooltip>
     </el-table-column><el-table-column
-      prop="address"
+      prop="method"
       label="谈判方式"
       show-overflow-tooltip>
     </el-table-column><el-table-column
@@ -154,7 +154,7 @@
                 ￥{{scope.row.reduceAmt}}
       </template>
     </el-table-column><el-table-column
-      prop="address"
+      prop="reduceStatusMsg"
       label="减免状态"
       show-overflow-tooltip>
     </el-table-column><el-table-column
@@ -162,7 +162,7 @@
       label="催收员"
       show-overflow-tooltip>
     </el-table-column><el-table-column
-      prop="odv"
+      prop="collectStatusMsg"
       label="催收状态"
       show-overflow-tooltip>
     </el-table-column>

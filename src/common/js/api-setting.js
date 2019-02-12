@@ -66,7 +66,7 @@ export function saveDepartment(data){
   })
 }
 
-export function getRoleList(roleName){
+export function getRoleList(roleName = null){
   return request({
     url: '/role/listRole',
     method: 'post',
