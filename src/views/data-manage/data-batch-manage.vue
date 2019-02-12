@@ -95,7 +95,6 @@
      @selection-change="handleSelectionChange"
   >
   <el-table-column
-  	   
       type="selection"
       width="55">
     </el-table-column>
@@ -175,7 +174,7 @@
     <el-table-column
       fixed="right"
       label="操作"
-      width="100">
+      width="180">
       <template slot-scope="scope">
         <el-button @click="handleClick(scope.row)" type="text" size="small">追加</el-button>
         <el-button type="text" size="small" @click="returnMessage(scope.row.id)">退案</el-button>
@@ -488,7 +487,7 @@ this.search()
    },
    created() {
             dataList().then((response)=>{
-            this.DataList=response
+            this.DataList=response.data
 })
               clientList().then((response)=>{
             this.form.clientList=response;
@@ -508,6 +507,7 @@ this.search()
 
 <style lang="scss">
 #data-batch-manage{
+	
   .textColor{
   	display: inline-block;
   color: #66b1ff;
