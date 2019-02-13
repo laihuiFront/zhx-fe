@@ -204,9 +204,9 @@
       @current-change="handleCurrentChange"
       :current-page="currentPage4"
       :page-sizes="[10, 20, 30, 40]"
-      :page-size="100"
+      :page-size="pages"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="400">
+      :total="total">
     </el-pagination>
   	</div></el-col>
   <el-col :span="8">
@@ -376,6 +376,8 @@ export default {
       dialogVisible2:false,
       tableData3:[],
       currentPage4: 1,
+      pages:1,
+      total:0,
     	form:{
     		time:[],
     		clientList:[],
@@ -413,7 +415,9 @@ methods: {
       	let startTime=this.form.time[0]
       	let endTime=this.form.time[1]
 dataList(this.form.area,this.form.batchNo,this.form.client,this.form.batchStatus,this.form.caseType,startTime,endTime,this.pageSize,this.pageNum).then((response)=>{
-            this.DataList=response
+            this.DataList=response.list
+            this.pages = response.pages
+            this.total = response.total
 })
       },
       returnCaseList(){
@@ -499,7 +503,9 @@ this.search()
    },
    created() {
             dataList().then((response)=>{
-            this.DataList=response
+            this.DataList=response.list
+              this.pages = response.pages
+              this.total = response.total
 })
               clientList().then((response)=>{
             this.form.clientList=response;

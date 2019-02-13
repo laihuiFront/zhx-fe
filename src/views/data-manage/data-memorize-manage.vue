@@ -195,9 +195,9 @@
       @current-change="handleCurrentChange"
       :current-page="currentPage4"
       :page-sizes="[10, 20, 30, 40]"
-      :page-size="100"
+      :page-size="pages"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="400">
+      :total="total">
     </el-pagination>
   </div>
   <el-dialog
@@ -455,6 +455,8 @@ export default {
         dialogVisible2:false,
         tableData3:[],
         currentPage4: 1,
+        pages:1,
+      total:0,
     	  form:{PersonList:[]},
     	  formInline:{
     	  	collectTime:[],
@@ -466,7 +468,9 @@ export default {
   methods: {
   	search(){
 		search(this.form.area,this.form.dept,this.form.odv,this.form.measure,this.pageSize,this.pageNum).then((response)=>{
-          	this.tableData3=response
+          	this.tableData3=response.list
+            this.pages = response.pages
+            this.total = response.total
           })
   	},
   	Listsearch(){
@@ -535,7 +539,9 @@ this.search()
     },
       created() {
       	  dataList().then((response)=>{
-          	this.tableData3=response
+          	this.tableData3=response.list
+            this.pages = response.pages
+            this.total = response.total
           })
           areaList().then((response)=>{
           	this.areaList=response
