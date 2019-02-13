@@ -139,6 +139,7 @@
     </el-table-column>
     <el-table-column
       label="操作"
+      align="center"
       show-overflow-tooltip>
        <template slot-scope="scope">
         <el-button type="text" size="small" v-if="scope.batchStatus!==0">导入</el-button>
@@ -154,9 +155,9 @@
       @current-change="handleCurrentChange"
       :current-page="currentPage4"
       :page-sizes="[10, 20, 30, 40]"
-      :page-size="10"
+      :page-size="pages"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="400">
+      :total="total">
     </el-pagination>
   </div>
   <el-dialog
@@ -417,6 +418,8 @@ export default {
     	messageForm:{},
     	areaList:[],
     	caseTypeList:[],
+      pages:1,
+      total:0,
     	clientList:[],
     	deleteList:[],
         formInline:{
@@ -508,7 +511,9 @@ methods: {
       	let startTime=this.form.time[0]
       	let endTime=this.form.time[1]
 dataList(this.form.area,this.form.batchNo,this.form.client,this.form.caseType,startTime,endTime,this.pageSize,this.pageNum).then((response)=>{
-            this.DataList=response
+            this.DataList=response.list
+            this.pages = response.pages
+            this.total = response.total
 })
       },
   handleSizeChange(val){
@@ -562,7 +567,9 @@ this.search()
     },
 created() {
             dataList().then((response)=>{
-            this.DataList=response
+            this.DataList=response.list
+              this.pages = response.pages
+              this.total = response.total
 })
               clientList().then((response)=>{
             this.form.clientList=response;

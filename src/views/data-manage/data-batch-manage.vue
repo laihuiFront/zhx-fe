@@ -186,11 +186,7 @@
     <el-table-column
       align="center"
       label="操作"
-<<<<<<< HEAD
       width="250">
-=======
-      width="180">
->>>>>>> 99fe0937c923454891bcf9d9c5314ebd25c58301
       <template slot-scope="scope">
         <el-button @click="handleClick(scope.row)" type="text" size="small">追加</el-button>
         <el-button type="text" size="small" @click="returnMessage(scope.row.id)">退案</el-button>
@@ -507,10 +503,11 @@ this.search()
    },
    created() {
             dataList().then((response)=>{
-            this.DataList=response.list
+              console.info(response.list);
+              this.DataList=response.list
               this.pages = response.pages
               this.total = response.total
-})
+            })
               clientList().then((response)=>{
             this.form.clientList=response;
             this.clientList=response;
