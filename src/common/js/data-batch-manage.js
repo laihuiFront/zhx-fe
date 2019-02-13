@@ -74,3 +74,20 @@ return request({
     data:{name:"催收区域"}
   })
 }
+
+export const update = function(form) {
+return request({
+    url: '/dataBatch/update',
+    method: 'post',
+    data:{
+   area:form.area,//催收区域
+   batchNo:form.batchNo,//批次编号
+   client:form.client,//委托方
+   caseType:form.caseType,//案件类型
+   caseTime:form.caseTime,//委案日期
+   returnTime:form.returnTime,//预计退案日期,
+   targetRate:form.targetRate,//目标回款率
+   remark:form.remark//备注
+    }
+  })
+}
