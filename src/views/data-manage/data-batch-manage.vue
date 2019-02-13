@@ -178,6 +178,8 @@
     </el-table-column>
     <el-table-column
       prop="remark"
+      min-width="180"
+      align="center"
       label="备注"
       show-overflow-tooltip>
     </el-table-column>
