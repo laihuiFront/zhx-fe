@@ -71,3 +71,22 @@ export function batchNo(data={}) {
     data
   })
 }
+
+
+//当日电催跟进量
+export function day(data={}) {
+  return request({
+    method:'post',
+    url:'/dataCollection/statistics/day',
+    data
+  })
+}
+
+//催收状况统计
+export function state(data={}) {
+  return request({
+    method:'post',
+    url:'/dataCollection/statistics/state',
+    data
+  })
+}

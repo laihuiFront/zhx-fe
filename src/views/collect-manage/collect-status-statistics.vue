@@ -16,11 +16,11 @@
             </el-date-picker>
           </el-form-item>
           <el-form-item>
-            <el-button type="text" icon="el-icon-search">查询</el-button>
+            <el-button type="text" icon="el-icon-search" @click="getMainData1()">查询</el-button>
             <el-button
               type="text"
               icon="el-icon-refresh"
-              @click="resetForm('form1')"
+              @click="resetForm('form1');getMainData1()"
             >重置</el-button
             >
           </el-form-item>
@@ -30,6 +30,8 @@
             v-for="(item, index) in tablecol_data1"
             :key="index"
             v-bind="item"
+            header-align="center"
+            align="center"
           ></el-table-column>
         </el-table>
       </el-tab-pane>
@@ -126,6 +128,7 @@
 </template>
 
 <script>
+import {day} from '@/common/js/collect-my-case';
 export default {
   name: "collectStatusStatistics",
   data() {
@@ -134,10 +137,11 @@ export default {
       form1: { val1: null },
       tableData1: [],
       tablecol_data1: [
-        { prop: "a12", label: "时段" },
-        { prop: "a12", label: "有效通电量" },
-        { prop: "a12", label: "总通电量" },
-        { prop: "a12", label: "通电案量" }
+        { prop: "dateStart", label: "开始时间" },
+        { prop: "dateEnd", label: "结束时间" },
+        { prop: "countConPhoneNum", label: "有效通电量" },
+        { prop: "countPhoneNum", label: "总通电量" },
+        { prop: "countCasePhoneNum", label: "通电案量" }
       ],
       form2:{val1:null,val2:null,val3:null},
       tableData2: [],
@@ -150,12 +154,37 @@ export default {
       tablecol_data3:[]
     };
   },
+  created(){
+    this.init();
+  },
   methods: {
+    init(){
+      this.getMainData1();
+    },
+    getMainData1(){
+      day({dateSearchStart:(!!this.form1.val1 && this.form1.val1[0])||'',dateSearchEnd:(!!this.form1.val1 && this.form1.val1[1])||''}).then((data)=>{
+        this.tableData1 = data;
+      })
+    },
     handleClick(tab, event) {
       console.log(tab, event);
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
+    },
+    transform(data,obj=[['name','label'],['id','value']]){
+      return data.reduce((acc, item) => {
+        for (let [key, tarKey] of obj) {
+          item[tarKey] = item[key];
+        }
+        acc.push(item);
+        return acc;
+      }, []);
+    },
+    getEnumHandle(name,target,transData){
+      getEnum({name}).then((data)=>{
+        this[target] = this.transform(data,transData);
+      });
     },
     querySearch(queryString, cb){
       cb([]);
