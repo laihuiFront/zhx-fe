@@ -475,6 +475,7 @@ export default {
           	this.tableData3=response.list
             this.pages = response.pages
             this.total = response.total
+
           })
   	},
   	Listsearch(){

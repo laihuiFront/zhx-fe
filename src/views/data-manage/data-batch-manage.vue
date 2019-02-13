@@ -415,6 +415,7 @@ methods: {
       	let startTime=this.form.time[0]
       	let endTime=this.form.time[1]
 dataList(this.form.area,this.form.batchNo,this.form.client,this.form.batchStatus,this.form.caseType,startTime,endTime,this.pageSize,this.pageNum).then((response)=>{
+
             this.DataList=response.list
             this.pages = response.pages
             this.total = response.total
