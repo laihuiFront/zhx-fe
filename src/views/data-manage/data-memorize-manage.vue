@@ -103,6 +103,8 @@
     <el-table-column
       prop="collectTime"
       label="催收时间"
+      width="140"
+      align="center"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
@@ -122,6 +124,8 @@
     </el-table-column>
     <el-table-column
       prop="mobile"
+      width="120"
+      align="center"
       label="电话号码"
       show-overflow-tooltip>
     </el-table-column>
@@ -132,6 +136,8 @@
     </el-table-column><el-table-column
       prop="result"
       label="催收结果"
+      min-width="160"
+      align="center"
       show-overflow-tooltip>
     </el-table-column><el-table-column
       prop="method"
@@ -140,15 +146,21 @@
     </el-table-column><el-table-column
       prop="repayTime"
       label="承诺还款日期"
+      width="140"
+      align="center"
       show-overflow-tooltip>
     </el-table-column><el-table-column
       label="承诺还款金额"
+      width="140"
+      align="center"
       show-overflow-tooltip>
       <template slot-scope="scope">
                 ￥{{scope.row.repayAmt}}
       </template>
     </el-table-column><el-table-column
       label="减免金额"
+      width="140"
+      align="center"
       show-overflow-tooltip>
       <template slot-scope="scope">
                 ￥{{scope.row.reduceAmt}}
@@ -168,6 +180,8 @@
     </el-table-column>
     <el-table-column
       label="操作"
+      width="120"
+      align="center"
       show-overflow-tooltip>
       <template slot-scope="scope">
         <el-button type="text" size="small" @click="editMessage(scope.row)">编辑</el-button>

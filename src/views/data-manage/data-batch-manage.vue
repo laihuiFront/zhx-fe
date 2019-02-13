@@ -95,12 +95,10 @@
      @selection-change="handleSelectionChange"
   >
   <el-table-column
-  	   
       type="selection"
       width="55">
     </el-table-column>
     <el-table-column
-    	fixed
     	prop="area"
       label="催收区域"
       >
@@ -123,6 +121,8 @@
     <el-table-column
       prop="address"
       label="委案日期"
+      width="140"
+      align="center"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
@@ -143,28 +143,37 @@
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
-      prop="address"
+      prop="returnTime"
       label="预计退案时间"
+      width="140"
+      align="center"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
-      prop="address"
+      prop="realReturnTime"
+      width="140"
+      align="center"
       label="实际退案时间"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
-      prop="address"
+      prop="createTime"
+      width="180"
+      align="center"
       label="录入时间"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
       prop="remark"
+      min-width="250"
+      align="center"
       label="批次备注"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
-      prop="address"
+      prop="createUser"
       label="录入人员"
+      align="center"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
@@ -173,9 +182,9 @@
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
-      fixed="right"
+      align="center"
       label="操作"
-      width="100">
+      width="250">
       <template slot-scope="scope">
         <el-button @click="handleClick(scope.row)" type="text" size="small">追加</el-button>
         <el-button type="text" size="small" @click="returnMessage(scope.row.id)">退案</el-button>
