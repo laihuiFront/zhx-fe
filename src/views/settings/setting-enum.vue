@@ -12,7 +12,7 @@
       <div slot="header" class="header">
         <span class="title">{{currentEnum.name}}</span>
         <el-button type="primary" v-if="currentEnum.name && currentEnum.name !== '地区'" @click="onClickAdd" >新增</el-button>
-        <el-button type="primary" @click="onclickSave">保存</el-button>
+        <el-button type="primary" :disabled="disableSave" @click="onclickSave">保存</el-button>
       </div>
       <el-tree
         v-if="currentEnum.name && currentEnum.name === '地区'"
@@ -25,7 +25,7 @@
           <span>
             <el-input @blur="onBlurTreeInput(data)" :ref="'treeInput'+data.id" v-show="data.isEdit" clearable v-model="data.name" :placeholder="'请输入'"></el-input>
             <span v-show="!data.isEdit">{{data.name}}</span>
-            <el-switch @change="onEnableChange($event, node, data)" v-model="data.status" :active-value=1 :inactive-value=0></el-switch></span>
+            <el-switch @change="onEnableChange($event, node, data)"  v-model="data.status" :active-value=1 :inactive-value=0></el-switch></span>
           <span>
             <el-button v-if="node.level<=2" icon="el-icon-circle-plus" type="text" @click="append(node, data)" title="添加"></el-button>
             <el-button icon="el-icon-edit" type="text" @click="edit(node, data)" title="修改"></el-button>
@@ -58,7 +58,8 @@
           prop="status"
           label="启用">
           <template slot-scope="scope">
-            <el-switch v-model="scope.row.status" :active-value="1" :inactive-value="0"></el-switch>
+            <el-switch v-if="scope.row.editType==='edit' || scope.row.editType==='add'" v-model="scope.row.tempStatus" :active-value="1" :inactive-value="0"></el-switch>
+            <el-switch v-else :disabled="false" v-model="scope.row.status" :active-value="1" :inactive-value="0"></el-switch>
           </template>
         </el-table-column>
         <el-table-column
@@ -92,6 +93,22 @@ export default {
         return this.configList[this.activeIndex]
       }else{
         return {}
+      }
+    },
+    disableSave(){
+      if(this.currentEnum.name && this.currentEnum.name === '地区'){
+        return false
+      } else {
+        if(this.configData.length){
+          const hasEditItem = this.configData.some(item => item.editType==='edit' || item.editType==='add')
+          if(hasEditItem) {
+            return false
+          }else {
+            return true
+          }
+        }else {
+          return true
+        }
       }
     }
   },
@@ -138,7 +155,7 @@ export default {
               type: 0,
               id: item.id,
               name: item.tempName,
-              status: item.status,
+              status: item.tempStatus,
               description: item.tempDescription,
               parent:{
                 id: this.currentEnum.id
@@ -154,6 +171,7 @@ export default {
     onClickEdit(row) {
       this.$set(row,'tempName',row.name)
       this.$set(row,'tempDescription',row.description)
+      this.$set(row,'tempStatus',row.status)
       this.$set(row, 'editType', 'edit')
     },
     onClickCancel(row, index) {

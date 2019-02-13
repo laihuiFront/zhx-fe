@@ -57,7 +57,7 @@ export default {
       })
     },
     append(node, data) {
-      const newChild = { id: -(new Date()).getTime()%1000000, orgName: '新节点', isEdit:true }
+      const newChild = { id: -(new Date()).getTime()%1000000, orgName: '新部门', isEdit:true }
       if (!data.children) {
         this.$set(data, 'children', [])
       }
@@ -124,6 +124,9 @@ export default {
     flex: 1;
     .el-tree-node__content{
       height: 40px;
+      &:hover{
+        background: #132c51;
+      }
     }
     .custom-tree-node {
       flex: 1;
