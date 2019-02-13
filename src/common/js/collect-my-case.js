@@ -62,3 +62,12 @@ export function addSynergy(data=[]) {
     data
   })
 }
+
+//查询批次号
+export function batchNo(data={}) {
+  return request({
+    method:'post',
+    url:'/dataBatch/selectBatchNo',
+    data
+  })
+}
