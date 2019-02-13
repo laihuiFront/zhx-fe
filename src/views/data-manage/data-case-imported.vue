@@ -441,13 +441,27 @@ export default {
 methods: {
 	deleteMessage(id){
 		let arry=[{id:id}]
-		remoweData(arry).then((response)=>{
-				this.$message({
-            type: 'success',
-            message: '删除成功!'
-          });
-          this.search()
-})
+      let _self=this
+      _self.$confirm('是否删除?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        center: true
+      }).then(() => {
+
+          remoweData(arry).then((response)=>{
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            });
+            _self.search()
+          })
+
+
+      }).catch(() => {
+
+      });
+
 	},
 	editMessage(row){
 		console.log(row)
@@ -542,10 +556,7 @@ this.search()
            }
           
         }).catch(() => {
-          _self.$message({
-            type: 'info',
-            message: '已取消删除'
-          });
+
         });
       },
     },

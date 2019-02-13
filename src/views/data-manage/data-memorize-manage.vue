@@ -17,23 +17,23 @@
   <el-form-item >
 <el-select v-model="form.dept" placeholder="部门" clearable>
     <el-option
-      v-for="item in sectionList"
+      v-for="item in departmentList"
       :key="item.id"
-      :label="item.name"
+      :label="item.orgName"
       :value="item.id">
     </el-option>
   </el-select>   </el-form-item>
    <el-form-item >
-<el-select v-model="value" placeholder="催收员" clearable>
+ <el-select v-model="form.odv" filterable  placeholder="请选择催收员" clearable>
     <el-option
-      v-for="item in form.options"
-      :key="item.id"
-      :label="item.name"
+      v-for="item in form.PersonList"
+      :key="item.createTime"
+      :label="item.userName"
       :value="item.id">
     </el-option>
   </el-select>   </el-form-item>
    <el-form-item >
-  <el-select v-model="value" placeholder="催收措施" clearable>
+  <el-select v-model="form.measure" placeholder="催收措施" clearable>
     <el-option
       v-for="item in form.options"
       :key="item.value"
@@ -46,7 +46,7 @@
   <el-button type="text" icon="el-icon-caret-bottom" @click="dialogVisible1 = true"></el-button> 
   </el-form-item>
   <el-form-item>
-  <el-button type="text" icon="el-icon-search">查询</el-button> 
+  <el-button type="text" icon="el-icon-search" @click="search">查询</el-button> 
   </el-form-item>
   <el-form-item>
   <el-button type="text" icon="el-icon-refresh" @click="resetForm">重置</el-button> 
@@ -103,6 +103,8 @@
     <el-table-column
       prop="collectTime"
       label="催收时间"
+      width="140"
+      align="center"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
@@ -122,6 +124,8 @@
     </el-table-column>
     <el-table-column
       prop="mobile"
+      width="120"
+      align="center"
       label="电话号码"
       show-overflow-tooltip>
     </el-table-column>
@@ -132,6 +136,8 @@
     </el-table-column><el-table-column
       prop="result"
       label="催收结果"
+      min-width="160"
+      align="center"
       show-overflow-tooltip>
     </el-table-column><el-table-column
       prop="method"
@@ -140,15 +146,21 @@
     </el-table-column><el-table-column
       prop="repayTime"
       label="承诺还款日期"
+      width="140"
+      align="center"
       show-overflow-tooltip>
     </el-table-column><el-table-column
       label="承诺还款金额"
+      width="140"
+      align="center"
       show-overflow-tooltip>
       <template slot-scope="scope">
                 ￥{{scope.row.repayAmt}}
       </template>
     </el-table-column><el-table-column
       label="减免金额"
+      width="140"
+      align="center"
       show-overflow-tooltip>
       <template slot-scope="scope">
                 ￥{{scope.row.reduceAmt}}
@@ -168,6 +180,8 @@
     </el-table-column>
     <el-table-column
       label="操作"
+      width="120"
+      align="center"
       show-overflow-tooltip>
       <template slot-scope="scope">
         <el-button type="text" size="small" @click="editMessage(scope.row)">编辑</el-button>
@@ -189,7 +203,7 @@
   <el-dialog
   title="查询条件"
   :visible.sync="dialogVisible1"
-  width="50%"
+  width="66%"
   >
  
 <el-form :inline="true" :model="formInline" class="demo-form-inline">
@@ -197,27 +211,48 @@
   <el-col :span="12">
   	<div class="grid-content bg-purple">
   		<el-form-item label="批次号">
-    <el-input v-model="formInline.user" placeholder="请输入批次号"></el-input>
+    <el-input v-model="formInline.batchNo" placeholder="请输入批次号"></el-input>
   </el-form-item>
   	</div></el-col>
   <el-col :span="12">
   	<div class="grid-content bg-purple">
   		  <el-form-item label="证件号">
-    <el-input v-model="formInline.user" placeholder="请输入证件号"></el-input>
+    <el-input v-model="formInline.identNo" placeholder="请输入证件号"></el-input>
   </el-form-item>
   	</div></el-col>
 </el-row>
  <el-row :gutter="20">
   <el-col :span="12">
   	<div class="grid-content bg-purple">
-  		<el-form-item label="卡号">
-    <el-input v-model="formInline.user" placeholder="请输入卡号"></el-input>
+  		<el-form-item label=" 卡  号  ">
+    <el-input v-model="formInline.cardNo" placeholder="请输入卡号"></el-input>
   </el-form-item>
   	</div></el-col>
   <el-col :span="12">
   	<div class="grid-content bg-purple">
   		  <el-form-item label="催收记录">
-    <el-input v-model="formInline.user" placeholder="请输入证件号"></el-input>
+    <el-input v-model="formInline.collectInfo" placeholder="请输入证件号"></el-input>
+  </el-form-item>
+  	</div></el-col>
+</el-row>
+<el-row :gutter="20">
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  		<el-form-item label="个案序列号">
+    <el-input v-model="formInline.seqno" placeholder="请输入个案序列号"></el-input>
+  </el-form-item>
+  	</div></el-col>
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  		  <el-form-item label="部门">
+   <el-select v-model="formInline.dept" placeholder="请选择催收区域" clearable>
+    <el-option
+      v-for="item in departmentList"
+      :key="item.id"
+      :label="item.orgName"
+      :value="item.id">
+    </el-option>
+  </el-select>
   </el-form-item>
   	</div></el-col>
 </el-row>
@@ -225,7 +260,7 @@
   <el-col :span="12">
   	<div class="grid-content bg-purple">
   		<el-form-item label="催收区域">
-   <el-select v-model="value" placeholder="请选择催收区域" clearable>
+   <el-select v-model="formInline.area" placeholder="请选择催收区域" clearable>
     <el-option
       v-for="item in areaList"
       :key="item.id"
@@ -237,8 +272,36 @@
   	</div></el-col>
   <el-col :span="12">
   	<div class="grid-content bg-purple">
+  		  <el-form-item label="催收员">
+    <el-select v-model="formInline.odv" filterable  placeholder="请选择催收员" clearable>
+    <el-option
+      v-for="item in PersonList"
+      :key="item.createTime"
+      :label="item.userName"
+      :value="item.id">
+    </el-option>
+  </el-select>
+  </el-form-item>
+  	</div></el-col>
+</el-row>
+<el-row :gutter="20">
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  		<el-form-item label="催收结果">
+   <el-select v-model="formInline.result" placeholder="请选择催收结果" clearable>
+    <el-option
+      v-for="item in EndList"
+      :key="item.id"
+      :label="item.name"
+      :value="item.id">
+    </el-option>
+  </el-select>
+  </el-form-item>
+  	</div></el-col>
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
   		  <el-form-item label="委托方">
-    <el-select v-model="form.client" filterable  placeholder="请选择委托方" clearable>
+    <el-select v-model="formInline.client" filterable  placeholder="请选择委托方" clearable>
     <el-option
       v-for="item in clientList"
       :key="item.id"
@@ -252,8 +315,8 @@
 <el-row :gutter="20">
   <el-col :span="12">
   	<div class="grid-content bg-purple">
-  		<el-form-item label="催收结果">
-   <el-select v-model="value" placeholder="请选择催收结果" clearable>
+  		<el-form-item label="催收措施">
+   <el-select v-model="formInline.measure" placeholder="请选择催收措施" clearable>
     <el-option
       v-for="item in EndList"
       :key="item.id"
@@ -265,10 +328,10 @@
   	</div></el-col>
   <el-col :span="12">
   	<div class="grid-content bg-purple">
-  		  <el-form-item label="委托方">
-    <el-select v-model="form.client" filterable  placeholder="请选择委托方" clearable>
+  		  <el-form-item label="案件状态">
+    <el-select v-model="formInline.caseStatus" filterable  placeholder="请选择案件状态" clearable>
     <el-option
-      v-for="item in clientList"
+      v-for="item in caseStatusList"
       :key="item.id"
       :label="item.name"
       :value="item.id">
@@ -277,10 +340,77 @@
   </el-form-item>
   	</div></el-col>
 </el-row>
+<el-row :gutter="20">
+	<el-col :span="10">
+  	<div class="grid-content bg-purple">
+  		<el-form-item label="标色状态">
+   <el-select v-model="formInline.color" filterable  placeholder="请选择标色状态" clearable>
+    <el-option
+      v-for="item in caseStatusList"
+      :key="item.id"
+      :label="item.name"
+      :value="item.id">
+    </el-option>
+  </el-select>
+  </el-form-item>
+  	</div></el-col>
+  <el-col :span="14">
+  	<div class="grid-content bg-purple">
+  		<el-form-item label="催收日期">
+   <el-date-picker
+      v-model="formInline.collectTime"
+      type="daterange"
+      align="right"
+       value-format="yyyy-MM-dd"
+      unlink-panels
+      range-separator="至"
+      start-placeholder="开始日期"
+      end-placeholder="结束日期"
+      >
+    </el-date-picker>
+  </el-form-item>
+  	</div></el-col>
+  	
+</el-row>
+<el-row :gutter="20">
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  		<el-form-item label="委案日期">
+   <el-date-picker
+      v-model="formInline.bailTime"
+      type="daterange"
+      align="right"
+       value-format="yyyy-MM-dd"
+      unlink-panels
+      range-separator="至"
+      start-placeholder="开始日期"
+      end-placeholder="结束日期"
+      >
+    </el-date-picker>
+  </el-form-item>
+  	</div></el-col>
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  		  <el-form-item label="预计退案日期">
+   <el-date-picker
+      v-model="formInline.expectTime"
+      type="daterange"
+      align="right"
+       value-format="yyyy-MM-dd"
+      unlink-panels
+      range-separator="至"
+      start-placeholder="开始日期"
+      end-placeholder="结束日期"
+      >
+    </el-date-picker>
+  </el-form-item>
+  	</div></el-col>
+</el-row>
+
 </el-form>
 <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible1 = false">取 消</el-button>
-    <el-button type="primary" @click="dialogVisible1 = false">确 定</el-button>
+    <el-button type="primary" @click="Listsearch">确 定</el-button>
   </span>
 </el-dialog>
   <el-dialog
@@ -304,12 +434,15 @@
 </template>
 
 <script>
-import {dataList,areaList,sectionList,caseTypeList,clientList,EndList} from '@/common/js/data-memorize-manage.js'
+import {search,dataList,areaList,caseTypeList,clientList,EndList,PersonList,departmentList} from '@/common/js/data-memorize-manage.js'
 export default {
   name: 'dataMemorizeManage',
   data(){
     return {
+    	  caseStatusList:[{name:"未退案",id:0},{name:"正常",id:1},{name:"暂停",id:2},{name:"关档",id:3},{name:"退档",id:4},{name:"全部",id:5}],
     	  EndList:[],
+    	  departmentList:[],
+    	  PersonList:[],
     	  clientList:[],
     	  caseTypeList:[],
     	  pageSize:10,
@@ -322,13 +455,32 @@ export default {
         dialogVisible2:false,
         tableData3:[],
         currentPage4: 1,
-    	  form:{
-    		user:'',
+    	  form:{PersonList:[]},
+    	  formInline:{
+    	  	collectTime:[],
+    	  	expectTime:[],
+    	  	bailTime:[]
     	  },
-    	  formInline:{},
     }
   },
   methods: {
+  	search(){
+		search(this.form.area,this.form.dept,this.form.odv,this.form.measure,this.pageSize,this.pageNum).then((response)=>{
+          	this.tableData3=response
+          })
+  	},
+  	Listsearch(){
+  let bailStartDate=this.formInline.bailTime[0]
+  let bailEndDate=this.formInline.bailTime[1]
+  let expectStartTime=this.formInline.expectTime[0]
+  let expectEndTime=this.formInline.expectTime[1]
+  let collectStartTime=this.formInline.collectTime[0]
+  let collectEndTime=this.formInline.collectTime[1]
+	dataList(this.formInline.area,this.formInline.dept,this.formInline.batchNo,this.formInline.client,this.formInline.odv,this.formInline.caseStatus,this.formInline.measure,this.formInline.result,this.formInline.identNo,this.formInline.cardNo,this.formInline.collectInfo,this.formInline.color,this.formInline.seqno,this.formInline.bailStartDate,this.formInline.bailEndDate,this.formInline.expectStartTime,this.formInline.expectEndTime,this.formInline.collectStartTime,this.formInline.collectEndTime,this.pageSize,this.pageNum).then((response)=>{
+          	this.tableData3=response
+          	this.dialogVisible1=false
+          })
+  	},
   	 	handleSelectionChange(row){
   		let _self=this
   		_self.deleteList=[]
@@ -388,9 +540,6 @@ this.search()
           areaList().then((response)=>{
           	this.areaList=response
           })
-           sectionList().then((response)=>{
-          	this.sectionList=response
-          })
             caseTypeList().then((response)=>{
           	this.caseTypeList=response
           })
@@ -399,6 +548,13 @@ this.search()
           })
             EndList().then((response)=>{
           	this.EndList=response
+          })
+             PersonList().then((response)=>{
+          	this.PersonList=response
+          	this.form.PersonList=response
+          })
+              departmentList().then((response)=>{
+          	this.departmentList=response
           })
 },
 }

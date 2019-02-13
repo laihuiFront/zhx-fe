@@ -24,8 +24,8 @@
       unlink-panels
       value-format="yyyy-MM-dd"
       range-separator="至"
-      start-placeholder="开始日期"
-      end-placeholder="结束日期"
+      start-placeholder="档案更新开始日期"
+      end-placeholder="档案更新结束日期"
       
       >
     </el-date-picker>
@@ -99,6 +99,11 @@
       	</div>
       </template>
     </el-table-column>
+     <el-table-column
+       label="档案变更日期"
+       prop="updateTime"
+       show-overflow-tooltip>
+     </el-table-column>
     <el-table-column
       prop="remark"
       label="备注"
@@ -324,10 +329,7 @@ this.search()
            }
           
         }).catch(() => {
-          _self.$message({
-            type: 'info',
-            message: '已取消删除'
-          });
+
         });
       },
       search(){

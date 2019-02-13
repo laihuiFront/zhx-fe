@@ -95,12 +95,10 @@
      @selection-change="handleSelectionChange"
   >
   <el-table-column
-  	   
       type="selection"
       width="55">
     </el-table-column>
     <el-table-column
-    	fixed
     	prop="area"
       label="催收区域"
       >
@@ -123,6 +121,8 @@
     <el-table-column
       prop="address"
       label="委案日期"
+      width="140"
+      align="center"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
@@ -143,43 +143,54 @@
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
-      prop="address"
+      prop="returnTime"
       label="预计退案时间"
+      width="140"
+      align="center"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
-      prop="address"
+      prop="realReturnTime"
+      width="140"
+      align="center"
       label="实际退案时间"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
-      prop="address"
+      prop="createTime"
+      width="180"
+      align="center"
       label="录入时间"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
       prop="remark"
+      min-width="250"
+      align="center"
       label="批次备注"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
-      prop="address"
+      prop="createUser"
       label="录入人员"
+      align="center"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
       prop="remark"
+      min-width="180"
+      align="center"
       label="备注"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
-      fixed="right"
+      align="center"
       label="操作"
-      width="100">
+      width="250">
       <template slot-scope="scope">
         <el-button @click="handleClick(scope.row)" type="text" size="small">追加</el-button>
         <el-button type="text" size="small" @click="returnMessage(scope.row.id)">退案</el-button>
-        <el-button type="text" size="small">编辑</el-button>
+        <el-button type="text" size="small" @click="editMessage(scope.row)">编辑</el-button>
         <el-button type="text" size="small" @click="deleteMessage(scope.row.id)">删除</el-button>
         <el-button type="text" size="small">导出催记</el-button>
       </template>
@@ -220,16 +231,139 @@
 </div></el-col>
 </el-row>
 </el-dialog>
+<el-dialog
+  title="修改批次"
+  :visible.sync="dialogVisible2"
+  width="55%"
+  >
+<el-form :inline="true" :model="messageForm" ref="messageForm" label-width="100px" class="demo-dynamic">
+	<el-row :gutter="24">
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  	<el-form-item label="批  次  号"	
+  			prop="batchNo"
+        :rules="{ required: true, message: '批次号不能为空', trigger: 'blur'}">
+    <el-input v-model="messageForm.batchNo" placeholder="请输入批次号" clearable></el-input>
+  </el-form-item>
+  </div>
+  </el-col>
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  		<el-form-item label="回款率">
+        <el-input v-model="messageForm.targetRate" placeholder="请输入回款率" clearable></el-input>
+  </el-form-item>
+  		
+  	</div>
+  </el-col>
+</el-row>
+<el-row :gutter="24">
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  	<el-form-item label="催收区域">
+<el-select v-model="messageForm.area" placeholder="请选择催收区域" clearable>
+    <el-option
+      v-for="item in areaList"
+      :key="item.id"
+      :label="item.name"
+      :value="item.id">
+    </el-option>
+  </el-select> 
+  	</el-form-item>
+  </div>
+  </el-col>
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  	<el-form-item label="委  托  方" 
+  		prop="client"
+    :rules="{required: true, message: '委托方不能为空', trigger: 'blur'}">
+    <el-select v-model="messageForm.client" placeholder="请选择委托方" clearable>
+    <el-option
+      v-for="item in clientList"
+      :key="item.id"
+      :label="item.name"
+      :value="item.id">
+    </el-option>
+  </el-select>
+  </el-form-item>
+  	</div>
+  </el-col>
+</el-row><el-row :gutter="24">
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  	<el-form-item label="案件类型">
+<el-select v-model="messageForm.caseType" placeholder="请选择案件类型" clearable>
+    <el-option
+      v-for="item in caseTypeList"
+      :key="item.id"
+      :label="item.name"
+      :value="item.id">
+    </el-option>
+  </el-select>   
+  	</el-form-item>
+  </div>
+  </el-col>
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  	<el-form-item label="委案日期" 
+  			prop="caseTime"
+    :rules="{required: true, message: '请选择日期', trigger: 'change'}">
+     <div class="block">
+    <el-date-picker
+      v-model="messageForm.caseTime"
+      align="right"
+      type="date"
+      placeholder="选择日期"
+      value-format="yyyy-MM-dd"
+      >
+    </el-date-picker>
+  </div>
+  </el-form-item>
+  		
+  	</div>
+  </el-col>
+</el-row>
+<el-row :gutter="24">
+  <el-col :span="15">
+  	<div class="grid-content bg-purple">
+  	<el-form-item label="预计退案日期">
+ <div class="block">
+    <el-date-picker
+      v-model="messageForm.returnTime"
+      align="right"
+      type="date"
+      placeholder="选择日期"
+      value-format="yyyy-MM-dd"
+     >
+    </el-date-picker>
+  </div>
+  	</el-form-item>
+  </div>
+  </el-col> 
+</el-row>
+<el-row :gutter="24">
+  <el-col :span="24">
+  <el-form-item label="批次备注" >
+    <el-input type="textarea" v-model="messageForm.remark" style="width: 200%;">></el-input>
+  </el-form-item>
+   </el-col>
+</el-row>
+</el-form>
 
+<span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible2 = false">取 消</el-button>
+    <el-button type="primary" @click="submitmsgForm('messageForm')">确 定</el-button>
+  </span>
+</el-dialog>
   </div>
 </template>
 
 <script>
-	import {dataList,remoweData,addData,clientList,caseTypeList,areaList,returnCase} from '@/common/js/data-batch-manage.js'
+	import {dataList,remoweData,addData,clientList,caseTypeList,areaList,returnCase,update} from '@/common/js/data-batch-manage.js'
 export default {
   name: 'dataBatchManage',
    data(){
     return {
+    	messageForm:{},
     	deleteList:[],
     	DataList:[],
     	pageSize:10,
@@ -237,11 +371,11 @@ export default {
     	areaList:[],
     	caseTypeList:[],
     	clientList:[],
-        formInline:{},
-        dialogVisible:false,
-        dialogVisible1:false,
-        tableData3:[],
-        currentPage4: 1,
+      formInline:{},
+      dialogVisible1:false,
+      dialogVisible2:false,
+      tableData3:[],
+      currentPage4: 1,
     	form:{
     		time:[],
     		clientList:[],
@@ -252,6 +386,29 @@ export default {
     }
   },
 methods: {
+	  submitmsgForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+          	console.log(this.messageForm)
+            update(this.messageForm).then((response)=>{
+            	this.dialogVisible2=false
+            	this.search()
+            	this.$message({
+            type: 'success',
+            message: '保存成功!'
+          });
+})
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
+	editMessage(row){
+		console.log(row)
+		this.dialogVisible2=true
+		this.messageForm=row
+	},
 	search(){
       	let startTime=this.form.time[0]
       	let endTime=this.form.time[1]
@@ -265,7 +422,7 @@ dataList(this.form.area,this.form.batchNo,this.form.client,this.form.batchStatus
             type: 'success',
             message: '退案成功!'
           });
-          _self.search()
+          this.search()
       })
       },
 	deleteMessage(id){
