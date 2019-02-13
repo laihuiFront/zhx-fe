@@ -494,7 +494,7 @@ methods: {
       	let startTime=this.form.time[0]
       	let endTime=this.form.time[1]
 dataList(this.form.area,this.form.batchNo,this.form.client,this.form.caseType,startTime,endTime,this.pageSize,this.pageNum).then((response)=>{
-            this.DataList=response.data
+            this.DataList=response
 })
       },
   handleSizeChange(val){
@@ -551,7 +551,7 @@ this.search()
     },
 created() {
             dataList().then((response)=>{
-            this.DataList=response.data
+            this.DataList=response
 })
               clientList().then((response)=>{
             this.form.clientList=response;
