@@ -441,13 +441,27 @@ export default {
 methods: {
 	deleteMessage(id){
 		let arry=[{id:id}]
-		remoweData(arry).then((response)=>{
-				this.$message({
-            type: 'success',
-            message: '删除成功!'
-          });
-          this.search()
-})
+      let _self=this
+      _self.$confirm('是否删除?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        center: true
+      }).then(() => {
+
+          remoweData(arry).then((response)=>{
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            });
+            _self.search()
+          })
+
+
+      }).catch(() => {
+
+      });
+
 	},
 	editMessage(row){
 		console.log(row)
@@ -494,7 +508,7 @@ methods: {
       	let startTime=this.form.time[0]
       	let endTime=this.form.time[1]
 dataList(this.form.area,this.form.batchNo,this.form.client,this.form.caseType,startTime,endTime,this.pageSize,this.pageNum).then((response)=>{
-            this.DataList=response.data
+            this.DataList=response
 })
       },
   handleSizeChange(val){
@@ -542,16 +556,13 @@ this.search()
            }
           
         }).catch(() => {
-          _self.$message({
-            type: 'info',
-            message: '已取消删除'
-          });
+
         });
       },
     },
 created() {
             dataList().then((response)=>{
-            this.DataList=response.data
+            this.DataList=response
 })
               clientList().then((response)=>{
             this.form.clientList=response;

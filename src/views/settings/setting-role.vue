@@ -9,7 +9,7 @@
         <el-button icon="el-icon-refresh" type="text" @click="onClickReset">重置</el-button>
       </el-form-item>
       <el-form-item class="operation-item">
-        <el-button type="primary" @click="onClickAdd">新增权限组</el-button>
+        <el-button type="primary" @click="onClickAdd">新增角色</el-button>
       </el-form-item>
     </el-form>
     <el-table
@@ -18,12 +18,12 @@
       class="table-wrap">
       <el-table-column
         prop="roleName"
-        label="权限组名称"
+        label="角色名称"
         width="300">
       </el-table-column>
       <el-table-column
         prop="roleDesc"
-        label="权限组描述"
+        label="角色描述"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
@@ -48,11 +48,11 @@
       :close-on-click-modal="false"
       width="50%">
       <el-form :model="roleInfo" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-        <el-form-item label="权限组名称" prop="roleName">
-          <el-input v-model="roleInfo.roleName" :disabled="dialogData.type === 'query'" placeholder="请输入权限组名称"></el-input>
+        <el-form-item label="角色名称" prop="roleName">
+          <el-input v-model="roleInfo.roleName" :disabled="dialogData.type === 'query'" placeholder="请输入角色名称"></el-input>
         </el-form-item>
-        <el-form-item label="权限组描述" prop="roleDesc">
-          <el-input type="textarea" :rows="3" :disabled="dialogData.type === 'query'" v-model="roleInfo.roleDesc" placeholder="请输入权限组描述"></el-input>
+        <el-form-item label="角色描述" prop="roleDesc">
+          <el-input type="textarea" :rows="3" :disabled="dialogData.type === 'query'" v-model="roleInfo.roleDesc" placeholder="请输入角色描述"></el-input>
         </el-form-item>
       </el-form>
       <ul class="auth-wrap">
@@ -83,16 +83,16 @@ export default {
       roleList:[],
       dialogData: {
         editVisible:false,
-        title: '新增权限组',
+        title: '新增角色',
         type: 'add'
       },
       rules:{
         roleName: [
-          { required: true, message: '请输入权限组名称', trigger: 'blur' },
-          { max: 50, message: '权限组名称不能大于50个字符', trigger: 'blur' }
+          { required: true, message: '请输入角色名称', trigger: 'blur' },
+          { max: 50, message: '角色名称不能大于50个字符', trigger: 'blur' }
         ],
         roleDesc: [
-          { max: 200, message: '权限组描述不能大于200个字符', trigger: 'blur' }
+          { max: 200, message: '角色描述不能大于200个字符', trigger: 'blur' }
         ]
       },
       roleInfo: {},
@@ -110,7 +110,7 @@ export default {
       this.queryForm = {}
     },
     onClickAdd(){
-      this.$set(this.dialogData, 'title', '新增权限组')
+      this.$set(this.dialogData, 'title', '新增角色')
       this.$set(this.dialogData, 'type', 'add')
       listAuth().then(response => {
         this.authConfig = response
@@ -122,7 +122,7 @@ export default {
         roleName: row.roleName,
         roleDesc: row.roleDesc
       }
-      this.$set(this.dialogData, 'title', '查看权限组')
+      this.$set(this.dialogData, 'title', '查看角色')
       this.$set(this.dialogData, 'type', 'query')
       listAuth(row.id).then(response => {
         this.authConfig = response
@@ -130,7 +130,7 @@ export default {
       })
     },
     onClickEdit(row){
-      this.$set(this.dialogData, 'title', '修改权限组')
+      this.$set(this.dialogData, 'title', '修改角色')
       this.$set(this.dialogData, 'type', 'edit')
       this.currentRow = row
       this.roleInfo = {

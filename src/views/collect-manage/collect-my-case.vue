@@ -42,19 +42,12 @@
                   </el-select>
                 </el-form-item>
                 <el-form-item prop="val1">
-                  <el-select
+                  <el-autocomplete
                     v-model="form.val1"
-                    filterable
-                    placeholder="请输入批次号"
-                  >
-                    <el-option
-                      v-for="item in val1_data"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
-                    >
-                    </el-option>
-                  </el-select>
+                    :fetch-suggestions="querySearch"
+                    :trigger-on-focus="false"
+                    placeholder="请输入批次号">
+                  </el-autocomplete>
                 </el-form-item>
                 <el-form-item prop="val3">
                   <el-input
@@ -71,8 +64,8 @@
                     align="right"
                     unlink-panels
                     range-separator="至"
-                    start-placeholder="跟进开始日期"
-                    end-placeholder="跟进结束日期"
+                    start-placeholder="下次跟进开始日期"
+                    end-placeholder="下次跟进结束日期"
                   >
                   </el-date-picker>
                 </el-form-item>
@@ -439,15 +432,15 @@
           <!--</el-table-column>-->
         </el-table>
         <div class="block">
-          <!--<el-pagination-->
-          <!--@size-change="handleSizeChange"-->
-          <!--@current-change="handleCurrentChange"-->
-          <!--:current-page="currentPage4"-->
-          <!--:page-sizes="[100, 200, 300, 400]"-->
-          <!--:page-size="100"-->
-          <!--layout="total, sizes, prev, pager, next, jumper"-->
-          <!--:total="400">-->
-          <!--</el-pagination>-->
+          <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="paginationData.currentPage"
+            :page-sizes="[10, 20, 30, 40]"
+            :page-size="paginationData.pageSize"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="paginationData.total">
+          </el-pagination>
         </div>
       </div></el-tab-pane
     >
@@ -459,7 +452,7 @@
 <script>
 import tab2 from "./collect-status-statistics";
 import tab3 from "./collect-repayment-statistics";
-import { pageMyCase,getEnum,markColor ,addSynergy} from "@/common/js/collect-my-case";
+import { pageMyCase,getEnum,markColor ,addSynergy,batchNo} from "@/common/js/collect-my-case";
 export default {
   components: {
     tab2,
@@ -468,6 +461,11 @@ export default {
   name: "collectMyCase",
   data() {
     return {
+      paginationData:{
+        pageSize:10,
+        total:0,
+        currentPage:1
+      },
       dialogVisible:false,
       textarea3: '',
       activeName: "tab1",
@@ -510,14 +508,14 @@ export default {
       val1_data: [],  //
       val4_data: [],  //地区
       val8_data: [],  //逾期账龄
-      // 未退案/正常/暂停/关档/退档/ 全部
+      // 未退案0/正常1/暂停2/关档3/退档4/全部5
       val9_data: [
-        { label: "全部", value: 0 },
-        { label: "未退案", value: 12 },
+        { label: "全部", value: 5 },
+        { label: "未退案", value: 0 },
         { label: "正常", value: 1 },
         { label: "暂停", value: 2 },
         { label: "关档", value: 3 },
-        { label: "退档", value: 33 }
+        { label: "退档", value: 4 }
       ],
       val10_data: [],  //催收状态
       val11_data: [],  //案件类型
@@ -691,8 +689,8 @@ export default {
         client,
         batchNo,
         seqno,
-        nextFollDateStart: val2[0],
-        nextFollDateEnd: val2[1],
+        nextFollDateStart: (!!val2 && val2[0])||'' ,
+        nextFollDateEnd: (!!val2 && val2[1])||'',
         area,
         targetName,
         idenNo,
@@ -700,26 +698,29 @@ export default {
         status,
         collectStatus,
         caseType,
-        repayTimeStart: val12[0],
-        repayTimeEnd: val12[1],
+        repayStatus,
+        repayTimeStart: (!!val12 && val12[0])||'',
+        repayTimeEnd: (!!val12 && val12[1])||'',
         moneyStart,
         moneyEnd,
         color,
         cardNo,
         archiveNo,
-        nextFollDateStart: val17[0],
-        nextFollDateEnd: val17[1],
+        lastFollDateStart: (!!val17&&val17[0])||'',
+        lastFollDateEnd: (!!val17&&val17[1])||'',
         countFollowStart,
         countFollowEnd,
         newCase,
-        expectTimeStart: val21[0],
-        expectTimeEnd: val21[1],
+        expectTimeStart: (!!val21&&val21[0])||'',
+        expectTimeEnd: (!!val21&&val21[1])||'',
         remark,
         collectionType,
         reliefStatus,
         reportStatus,
         telPhone,
-        collectMeasure
+        collectMeasure,
+        pageNum: this.paginationData.currentPage,
+        pageSize: this.paginationData.pageSize
       };
     }
   },
@@ -735,6 +736,25 @@ export default {
     this.init();
   },
   methods: {
+    //查询批次号
+    querySearch(queryString,cb){
+      batchNo({batchNo:queryString}).then((data)=>{
+        cb(data.reduce((acc,item)=>{
+          acc.push({
+            value:item.batchNo
+          })
+          return acc;
+        },[]));
+      });
+    },
+    handleCurrentChange(currentPage){
+      this.paginationData.currentPage = currentPage;
+      this.getMainData();
+    },
+    handleSizeChange(pageSize){
+      this.paginationData.pageSize = pageSize;
+      this.getMainData();
+    },
     //查询按钮
     searchHandle() {
       this.getMainData();
@@ -764,13 +784,18 @@ export default {
         })
         return acc;
       },[]);
-      addSynergy(data).then((data)=>{
-        console.log(data)
+
+      addSynergy(data).then(()=>{
+        this.$message({
+          message: '提交成功',
+          type: 'success'
+        });
       });
     },
     getMainData(){
       pageMyCase(this.realFetchFormData).then((data)=>{
         this.fetchData = data;
+        this.paginationData.total = data.total;
         this.tableData = data.list.map((item)=>{
           return Object.assign(item, {'class-name': `color_${item.color}`});
         })
@@ -824,7 +849,7 @@ export default {
 .color_BLUE {
   color: #0000FF;
 }
-.color_CHENGSE {
+.color_ORANGE {
   color: #FA8072;
 }
 .color_ZI {

@@ -20,9 +20,9 @@ export default {
   },
   methods:{
     onSelectPageChange(val){
-      if(!val){
+      if(this.data.buttonList && this.data.buttonList.length > 0) {
         this.data.buttonList.forEach( item => {
-          this.$set(item, 'select', false)
+          this.$set(item, 'select', val)
         } )
       }
     },

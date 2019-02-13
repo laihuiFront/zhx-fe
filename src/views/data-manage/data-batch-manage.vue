@@ -99,7 +99,6 @@
       width="55">
     </el-table-column>
     <el-table-column
-    	fixed
     	prop="area"
       label="催收区域"
       >
@@ -122,6 +121,8 @@
     <el-table-column
       prop="address"
       label="委案日期"
+      width="140"
+      align="center"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
@@ -142,39 +143,54 @@
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
-      prop="address"
+      prop="returnTime"
       label="预计退案时间"
+      width="140"
+      align="center"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
-      prop="address"
+      prop="realReturnTime"
+      width="140"
+      align="center"
       label="实际退案时间"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
-      prop="address"
+      prop="createTime"
+      width="180"
+      align="center"
       label="录入时间"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
       prop="remark"
+      min-width="250"
+      align="center"
       label="批次备注"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
-      prop="address"
+      prop="createUser"
       label="录入人员"
+      align="center"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
       prop="remark"
+      min-width="180"
+      align="center"
       label="备注"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
-      fixed="right"
+      align="center"
       label="操作"
+<<<<<<< HEAD
+      width="250">
+=======
       width="180">
+>>>>>>> 99fe0937c923454891bcf9d9c5314ebd25c58301
       <template slot-scope="scope">
         <el-button @click="handleClick(scope.row)" type="text" size="small">追加</el-button>
         <el-button type="text" size="small" @click="returnMessage(scope.row.id)">退案</el-button>
@@ -192,9 +208,9 @@
       @current-change="handleCurrentChange"
       :current-page="currentPage4"
       :page-sizes="[10, 20, 30, 40]"
-      :page-size="100"
+      :page-size="pages"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="400">
+      :total="total">
     </el-pagination>
   	</div></el-col>
   <el-col :span="8">
@@ -364,6 +380,8 @@ export default {
       dialogVisible2:false,
       tableData3:[],
       currentPage4: 1,
+      pages:1,
+      total:0,
     	form:{
     		time:[],
     		clientList:[],
@@ -401,7 +419,10 @@ methods: {
       	let startTime=this.form.time[0]
       	let endTime=this.form.time[1]
 dataList(this.form.area,this.form.batchNo,this.form.client,this.form.batchStatus,this.form.caseType,startTime,endTime,this.pageSize,this.pageNum).then((response)=>{
-            this.DataList=response.list 
+
+            this.DataList=response.list
+            this.pages = response.pages
+            this.total = response.total
 })
       },
       returnCaseList(){
@@ -488,6 +509,8 @@ this.search()
    created() {
             dataList().then((response)=>{
             this.DataList=response.list
+              this.pages = response.pages
+              this.total = response.total
 })
               clientList().then((response)=>{
             this.form.clientList=response;

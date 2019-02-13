@@ -24,8 +24,8 @@
       unlink-panels
       value-format="yyyy-MM-dd"
       range-separator="至"
-      start-placeholder="开始日期"
-      end-placeholder="结束日期"
+      start-placeholder="档案更新开始日期"
+      end-placeholder="档案更新结束日期"
       
       >
     </el-date-picker>
@@ -99,6 +99,11 @@
       	</div>
       </template>
     </el-table-column>
+     <el-table-column
+       label="档案变更日期"
+       prop="updateTime"
+       show-overflow-tooltip>
+     </el-table-column>
     <el-table-column
       prop="remark"
       label="备注"
@@ -111,9 +116,9 @@
       @current-change="handleCurrentChange"
       :current-page="currentPage4"
       :page-sizes="[10, 20, 30, 40]"
-      :page-size="100"
+      :page-size="pages"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="400">
+      :total="total">
     </el-pagination>
   </div>
   <el-dialog
@@ -249,6 +254,8 @@ export default {
         dialogVisible:false,
         dialogVisible2:false,
         currentPage4: 1,
+        pages:1,
+        total:0,
     	  form:{time:[]},
         DataList:[],
     }
@@ -324,10 +331,7 @@ this.search()
            }
           
         }).catch(() => {
-          _self.$message({
-            type: 'info',
-            message: '已取消删除'
-          });
+
         });
       },
       search(){
@@ -335,6 +339,8 @@ this.search()
       	let endTime=this.form.time[1]
       	 dataList(this.form.name,this.form.identNo,this.form.mobile,this.form.address,startTime,endTime,this.pageSize,this.pageNum).then((response)=>{
             this.DataList=response.list
+           this.pages = response.pages
+           this.total = response.total
 })
       },
        submitForm(formName) {
@@ -367,6 +373,8 @@ this.search()
     created() {
             dataList().then((response)=>{
             this.DataList=response.list
+              this.pages = response.pages
+              this.total = response.total
 })
 },
 }

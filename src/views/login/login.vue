@@ -8,10 +8,10 @@
       </div>
       <el-form class="login-form" autoComplete="on" :model="loginForm" ref="loginForm">
         <el-form-item>
-          <el-input autofocus v-model="loginForm.userName" placeholder="请输入用户名"></el-input>
+          <el-input size="medium" autofocus v-model="loginForm.userName" placeholder="请输入用户名"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-input type="password" v-model="loginForm.password" placeholder="请输入密码"></el-input>
+          <el-input size="medium" type="password" v-model="loginForm.password" placeholder="请输入密码"></el-input>
         </el-form-item>
         <el-form-item class="rem-pass">
           <el-checkbox>是否记住密码</el-checkbox>
@@ -64,22 +64,22 @@ export default {
   .form{
     margin-left: 68px;
     padding: 31px 0;
-    height: 284px;
-    width: 300px;
+    // height: 284px;
+    width: 400px;
     background: #fff;
     border-radius: 5px;
     box-sizing: border-box;
     .group{
       margin: 0 0 20px 18px;
-      width: 148px;
-      height: 18px;
+      width: 295px;
+      height: 34px;
     }
     .system-name{
       text-align: center;
       margin-bottom: 15px;
       img{
-        width: 132px;
-        height: 16px;
+        width: 264px;
+        height: 31px;
       }
     }
     .login-form{
