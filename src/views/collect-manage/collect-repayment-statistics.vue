@@ -2,7 +2,7 @@
   <div id="collect-repayment-statistics">
     <section class="topDataWp">
       <el-row :gutter="10">
-        <el-col :span="3"
+        <el-col :span="4"
           ><span class="topSpan">上月还款金额:</span>¥{{ topData.a1 }}</el-col
         >
         <el-col :span="3"
@@ -16,12 +16,12 @@
             topData.a1
           }}</el-col
         >
-        <el-col :span="3"
+        <el-col :span="4"
           ><span class="topSpan">上月M值(CP):</span>¥{{ topData.a1 }}</el-col
         >
       </el-row>
       <el-row :gutter="10" style="margin-top: 15px;">
-        <el-col :span="3"
+        <el-col :span="4"
           ><span class="topSpan">当月还款金额:</span>¥{{ topData.a1 }}</el-col
         >
         <el-col :span="3"
@@ -35,7 +35,7 @@
             topData.a1
           }}</el-col
         >
-        <el-col :span="3"
+        <el-col :span="4"
           ><span class="topSpan">当月M值(CP):</span>¥{{ topData.a1 }}</el-col
         >
       </el-row>
