@@ -11,18 +11,44 @@
       :expand-on-click-node="false"
       :default-expanded-keys="[departmentTree[0].id]"
       class="tree-wrap"
-      width="400px">
+      width="400px"
+    >
       <span class="custom-tree-node" slot-scope="{ node, data }">
         <span>
-          <el-input @blur="onBlurTreeInput(data)" :ref="'treeInput'+data.id" v-show="data.isEdit" clearable v-model="data.orgName" :placeholder="'请输入'"></el-input>
+          <el-input
+            @blur="onBlurTreeInput(data)"
+            :ref="'treeInput'+data.id"
+            v-show="data.isEdit"
+            clearable
+            v-model="data.orgName"
+            :placeholder="'请输入'"
+          ></el-input>
           <span v-show="!data.isEdit">{{data.orgName}}</span>
         </span>
         <span>
           <el-button type="text" icon="el-icon-circle-plus" @click="append(node, data)" title="添加"></el-button>
           <el-button type="text" icon="el-icon-edit" @click="edit(node, data)" title="修改"></el-button>
-          <el-button type="text" icon="el-icon-delete" v-if="node.level !== 1" @click="remove(node, data)" title="删除"></el-button>
-          <el-button type="text" v-if="node.previousSibling" icon="el-icon-arrow-up" title="上移" @click="upMove(node, data)"></el-button>
-          <el-button type="text" v-if="node.nextSibling" icon="el-icon-arrow-down" title="下移" @click="downMove(node, data)"></el-button>
+          <el-button
+            type="text"
+            icon="el-icon-delete"
+            v-if="node.level !== 1"
+            @click="remove(node, data)"
+            title="删除"
+          ></el-button>
+          <el-button
+            type="text"
+            v-if="node.previousSibling"
+            icon="el-icon-arrow-up"
+            title="上移"
+            @click="upMove(node, data)"
+          ></el-button>
+          <el-button
+            type="text"
+            v-if="node.nextSibling"
+            icon="el-icon-arrow-down"
+            title="下移"
+            @click="downMove(node, data)"
+          ></el-button>
         </span>
       </span>
     </el-tree>
@@ -30,76 +56,76 @@
 </template>
 
 <script>
-import {getDepartmentTree, saveDepartment} from '@/common/js/api-setting'
+import { getDepartmentTree, saveDepartment } from '@/common/js/api-setting'
 export default {
   name: 'settingDepartment',
-  data() {
+  data () {
     return {
-      departmentTree:[]
+      departmentTree: []
     }
   },
-  created(){
+  created () {
     this.initTree()
   },
   methods: {
-    initTree(){
-      getDepartmentTree().then((data)=>{
+    initTree () {
+      getDepartmentTree().then((data) => {
         this.departmentTree = data
       })
     },
-    onBlurTreeInput(data){
-      this.$set(data,'isEdit',false)
+    onBlurTreeInput (data) {
+      this.$set(data, 'isEdit', false)
     },
-    onClickSave(){
-      saveDepartment(this.departmentTree).then(()=>{
+    onClickSave () {
+      saveDepartment(this.departmentTree).then(() => {
         this.$message('部门更新成功')
         this.initTree()
       })
     },
-    append(node, data) {
-      const newChild = { id: -(new Date()).getTime()%1000000, orgName: '新部门', isEdit:true }
+    append (node, data) {
+      const newChild = { id: -(new Date()).getTime() % 1000000, orgName: '新部门', isEdit: true }
       if (!data.children) {
         this.$set(data, 'children', [])
       }
       this.$set(node, 'expanded', true)
       data.children.unshift(newChild)
-      setTimeout(()=>{
-        this.$refs['treeInput'+newChild.id].focus()
-      },200)
+      setTimeout(() => {
+        this.$refs['treeInput' + newChild.id].focus()
+      }, 200)
     },
-    edit(node,data) {
+    edit (node, data) {
       console.log(node)
-      this.$set(data,'isEdit',true)
-      this.$nextTick(()=>{
-        this.$refs['treeInput'+data.id].focus()
+      this.$set(data, 'isEdit', true)
+      this.$nextTick(() => {
+        this.$refs['treeInput' + data.id].focus()
       })
     },
-    remove(node, data) {
-      this.$confirm('确认删除？','提示',{
+    remove (node, data) {
+      this.$confirm('确认删除？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(()=>{
+      }).then(() => {
         const parent = node.parent
         const children = parent.data.children || parent.data
         const index = children.findIndex(d => d.id === data.id)
         children.splice(index, 1)
-      }).catch(()=>{})
+      }).catch(() => { })
     },
-    upMove(node, data){
+    upMove (node, data) {
       const parent = node.parent
       const children = parent.data.children || parent.data
       const index = children.findIndex(d => d.id === data.id)
-      const last = children[index-1]
+      const last = children[index - 1]
       const current = children[index]
       this.$refs['tree'].remove(current)
       this.$refs['tree'].insertBefore(current, last)
     },
-    downMove(node, data){
+    downMove (node, data) {
       const parent = node.parent
       const children = parent.data.children || parent.data
       const index = children.findIndex(d => d.id === data.id)
-      const next = children[index+1]
+      const next = children[index + 1]
       const current = children[index]
       this.$refs['tree'].remove(current)
       this.$refs['tree'].insertAfter(current, next)
@@ -109,23 +135,23 @@ export default {
 </script>
 
 <style lang="scss">
-#setting-department{
+#setting-department {
   width: 500px;
   margin-left: 50%;
   transform: translateX(-50%);
-  .header{
+  .header {
     margin-bottom: 30px;
     text-align: right;
-    .btn{
+    .btn {
       display: inline-block;
     }
   }
-  .tree-wrap{
+  .tree-wrap {
     flex: 1;
-    .el-tree-node__content{
+    .el-tree-node__content {
       height: 40px;
-      &:hover{
-        background: #132c51;
+      &:hover {
+        background: #ddd;
       }
     }
     .custom-tree-node {
@@ -136,7 +162,7 @@ export default {
       font-size: 14px;
       padding-right: 8px;
       color: #0080ff;
-      .el-input{
+      .el-input {
         width: 150px;
       }
     }
