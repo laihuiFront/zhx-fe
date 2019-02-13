@@ -334,7 +334,7 @@ this.search()
       	let startTime=this.form.time[0]
       	let endTime=this.form.time[1]
       	 dataList(this.form.name,this.form.identNo,this.form.mobile,this.form.address,startTime,endTime,this.pageSize,this.pageNum).then((response)=>{
-            this.DataList=response
+            this.DataList=response.list
 })
       },
        submitForm(formName) {
@@ -366,7 +366,7 @@ this.search()
     },
     created() {
             dataList().then((response)=>{
-            this.DataList=response
+            this.DataList=response.list
 })
 },
 }

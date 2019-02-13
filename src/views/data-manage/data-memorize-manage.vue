@@ -456,7 +456,7 @@ export default {
   methods: {
   	search(){
 		search(this.form.area,this.form.dept,this.form.odv,this.form.measure,this.pageSize,this.pageNum).then((response)=>{
-          	this.tableData3=response
+          	this.tableData3=response.list
           })
   	},
   	Listsearch(){
