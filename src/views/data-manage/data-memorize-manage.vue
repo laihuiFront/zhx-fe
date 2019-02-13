@@ -354,6 +354,8 @@
   </el-select>
   </el-form-item>
   	</div></el-col>
+</el-row>
+<el-row :gutter="20">
   <el-col :span="14">
   	<div class="grid-content bg-purple">
   		<el-form-item label="催收日期">
@@ -370,8 +372,7 @@
     </el-date-picker>
   </el-form-item>
   	</div></el-col>
-  	
-</el-row>
+ </el-row>
 <el-row :gutter="20">
   <el-col :span="12">
   	<div class="grid-content bg-purple">
@@ -389,9 +390,12 @@
     </el-date-picker>
   </el-form-item>
   	</div></el-col>
-  <el-col :span="12">
+</el-row> 	
+</el-row>
+<el-row :gutter="20">
+  <el-col :span="16">
   	<div class="grid-content bg-purple">
-  		  <el-form-item label="预计退案日期">
+  		  <el-form-item label="预计退案日期" label-width="100px">
    <el-date-picker
       v-model="formInline.expectTime"
       type="daterange"

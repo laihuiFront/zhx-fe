@@ -35,6 +35,8 @@ export default {
     height: 35px;
   }
   .page-wrap{
+  	overflow-x:hidden;
+  	overflow-y:auto;
     flex:1;
     margin: 16px;
 	  border-radius: 5px;
