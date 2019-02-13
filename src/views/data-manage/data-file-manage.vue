@@ -99,6 +99,11 @@
       	</div>
       </template>
     </el-table-column>
+     <el-table-column
+       label="档案变更日期"
+       prop="updateTime"
+       show-overflow-tooltip>
+     </el-table-column>
     <el-table-column
       prop="remark"
       label="备注"
