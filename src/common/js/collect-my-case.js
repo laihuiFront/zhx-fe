@@ -21,7 +21,7 @@ import request from '@/common/js/request';
 // color			标记颜色
 // cardNo			卡号
 // archiveNo			档案号
-// newCase			是否新分配（0-，1-是）
+// newCase			是否新分配（0-否，1-是）
 // repayStatus			还款状态
 // expectTimeStart			预计退案日开始
 // expectTimeEnd			预计退案日结束

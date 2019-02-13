@@ -700,6 +700,7 @@ export default {
         status,
         collectStatus,
         caseType,
+        repayStatus,
         repayTimeStart: val12[0],
         repayTimeEnd: val12[1],
         moneyStart,
@@ -764,8 +765,12 @@ export default {
         })
         return acc;
       },[]);
-      addSynergy(data).then((data)=>{
-        console.log(data)
+
+      addSynergy(data).then((data1)=>{
+        this.$message({
+          message: '提交成功',
+          type: 'success'
+        });
       });
     },
     getMainData(){
@@ -824,7 +829,7 @@ export default {
 .color_BLUE {
   color: #0000FF;
 }
-.color_CHENGSE {
+.color_ORANGE {
   color: #FA8072;
 }
 .color_ZI {
