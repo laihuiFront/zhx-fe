@@ -46,7 +46,7 @@ return request({
     }
   })
 }
-export const searchList = function(area,batchNo,client,caseDateStart,caseDateEnd,pageSize,pageNum) {
+export const searchList = function(area,batchNo,client,caseType,caseDateStart,caseDateEnd,pageSize,pageNum) {
 return request({
     url: '/dataCase/pageCaseList',
     method: 'post',
@@ -56,6 +56,7 @@ return request({
        caseDateEnd:caseDateEnd,
        batchNo:  batchNo ,
        client:  client ,
+       caseType: caseType,
        pageNum:pageNum ? pageNum : 1,
        pageSize:pageSize ? pageSize : 10
     }

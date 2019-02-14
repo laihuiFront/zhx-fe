@@ -143,121 +143,157 @@
     </el-table-column>
     <el-table-column
       prop="area"
+      align="center"
       label="催收区域"
       >
     </el-table-column>
     <el-table-column
       prop="collectStatus"
+      align="center"
       label="催收状态"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
       prop="batchNo"
       label="批次号"
+      align="center"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
       prop="seqNo"
+      width="140"
+      align="center"
       label="个案序列号"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
       prop="caseDate"
+      align="center"
       label="委案日期"
+      width="140"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
       prop="expectTime"
+      width="140"
+      align="center"
       label="预计退案日期"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
       prop="name"
       label="姓名"
+      align="center"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
       prop="cardNo"
+      min-width="120"
+      align="center"
       label="证件号"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
       prop="address"
+      min-width="140"
+      align="center"
       label="地区"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
       prop="cardNo"
+      min-width="140"
+      align="center"
       label="卡号"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
       prop="address"
       label="委案金额"
+      align="center"
       show-overflow-tooltip>
     </el-table-column>
      <el-table-column
       prop="balance"
+      align="center"
       label="委案余额"
       show-overflow-tooltip>
     </el-table-column>
      <el-table-column
       prop="collectDate"
+      width="140"
+      align="center"
       label="上次通电时间"
       show-overflow-tooltip>
     </el-table-column>
      <el-table-column
       prop="newCase"
       label="最新催记"
+      align="center"
       show-overflow-tooltip>
     </el-table-column>
      <el-table-column
       prop="odv"
       label="催收员"
+      align="center"
       show-overflow-tooltip>
     </el-table-column>
      <el-table-column
       prop="collectTimes"
       label="跟进次数"
+      align="center"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
       prop="distributeTime"
+      width="140"
+      align="center"
       label="分配时间"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
       prop="proRepayAmt"
       label="承诺还款金额"
+      width="160"
+      align="center"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
       prop="bankAmt"
+      width="160"
+      align="center"
       label="待银行查账金额"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
       prop="enRepayAmt"
+      width="140"
+      align="center"
       label="已还金额"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
       prop="accountAge"
       label="逾期账龄"
+      align="center"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
+      min-width="140"
       prop="distributeHistory"
       label="分配历史"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
       prop="summary"
+      min-width="180"
       label="催收小结"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
       label="操作"
+      width="160"
+      align="center"
       show-overflow-tooltip>
        <template slot-scope="scope">
         <el-button type="text" size="small">导入</el-button>
@@ -272,9 +308,9 @@
       @current-change="handleCurrentChange"
       :current-page="currentPage4"
       :page-sizes="[10, 20, 30, 40]"
-      :page-size="10"
+      :page-size="pages"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="400">
+      :total="total">
     </el-pagination>
   </div>
   <el-dialog
@@ -700,6 +736,8 @@ export default {
     	pageSize:10,
     	pageNum:1,
     	clientList:[],
+      total:0,
+      pages:1,
     	deleteList:[],
     	caseTypeList:[],
     	  areaList:[],
@@ -715,7 +753,7 @@ export default {
     	},
     	val14_data: [
         {
-          label:'黑色',
+          label:'正常',
           value:'黑'
         },
         {
@@ -745,6 +783,8 @@ methods: {
 	searchdataList(form){
 	dataList(form).then((response)=>{
           	this.tableData3=response.list
+            this.pages = response.pages
+            this.total = response.total
           	this.dialogVisible = false
           })},
 	 	handleSelectionChange(row){
@@ -758,10 +798,13 @@ methods: {
 	console.log(_self.deleteList)
 },
 	search(){
-		let caseDateStart=this.form.time[0]
-		let caseDateEnd=this.form.time[1]
-		searchList(this.form.area,this.form.batchNo,this.form.client,caseDateStart,caseDateEnd,this.pageSize,this.pageNum).then((response)=>{
+
+		let caseDateStart=this.form.time==null?"":this.form.time[0]
+		let caseDateEnd=this.form.time==null?"":this.form.time[1]
+		searchList(this.form.area,this.form.batchNo,this.form.client,this.form.caseType,caseDateStart,caseDateEnd,this.pageSize,this.pageNum).then((response)=>{
           	this.tableData3=response.list
+            this.pages = response.pages
+            this.total = response.total
           })
 	},
 	handleSizeChange(val){
@@ -798,6 +841,8 @@ this.search()
 created() {
       	  searchList().then((response)=>{
           	this.tableData3=response.list
+            this.pages = response.pages
+            this.total = response.total
           })
            areaList().then((response)=>{
           	this.areaList=response

@@ -569,6 +569,7 @@ export default {
         },
         {
           prop: "nextFollDate",
+          width:"140",
           label: "下次跟进日期"
         },
         {
@@ -589,10 +590,12 @@ export default {
         },
         {
           prop: "caseDate",
+          width:"140",
           label: "委案日期"
         },
         {
           prop: "expectTime",
+          width:"140",
           label: "预计退案日期"
         },
         {
@@ -629,14 +632,17 @@ export default {
         },
         {
           prop: "repayAmt",
+          width:"150",
           label: "承诺还款金额"
         },
         {
           prop: "bankAmt",
+          width:"150",
           label: "待银行查账金额"
         },
         {
           prop: "lastPhoneTime",
+          width:"150",
           label: "上次通电时间"
         },
         {
@@ -645,6 +651,7 @@ export default {
         },
         {
           prop: "collectInfo",
+          width:"180",
           label: "催收小结"
         }
       ],
