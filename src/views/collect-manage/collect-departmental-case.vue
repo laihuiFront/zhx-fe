@@ -1,7 +1,7 @@
 <template>
   <el-tabs v-model="activeName" type="card">
     <el-tab-pane label="部门案件" name="tab1"
-    ><div id="collect-my-case">
+    ><div id="collect-departmental-case">
       <el-dialog
         title="申请协催"
         :visible.sync="dialogVisible"
@@ -26,6 +26,38 @@
               :model="form"
               label-width="80px"
             >
+              <el-row>
+                <el-form-item prop="val31">
+                  <el-select
+                    v-model="form.val31"
+                    placeholder="请选择部门"
+                    clearable
+                  >
+                    <el-option
+                      v-for="item in val31_data"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                    >
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item prop="val32">
+                  <el-select
+                    v-model="form.val32"
+                    placeholder="请选择催收员"
+                    clearable
+                  >
+                    <el-option
+                      v-for="item in val32_data"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                    >
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+              </el-row>
               <el-form-item prop="val0">
                 <el-select
                   v-model="form.val0"
@@ -386,6 +418,16 @@
                 </el-dropdown>
               </el-form-item>
               <el-form-item>
+                <el-dropdown trigger="click" @command="modStatusHandle">
+                  <el-button type="primary" @click="">修改催收状态</el-button>
+                  <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item :command="item.id"
+                                      v-for="(item,i) in val10_data">{{item.name}}
+                    </el-dropdown-item>
+                  </el-dropdown-menu>
+                </el-dropdown>
+              </el-form-item>
+              <el-form-item>
                 <el-button type="primary" @click="dialogVisible=true;">申请协催</el-button>
               </el-form-item>
               <el-form-item>
@@ -450,7 +492,9 @@
 
 <script>
   import tab2 from "./collect-departmental-statistics";
-  import { pageMyCase,getEnum,markColor ,addSynergy,batchNo} from "@/common/js/collect-my-case";
+  import { pageMyCase,getEnum,markColor ,addSynergy,batchNo,addCollectStatus,listOrganization} from
+      "@/common/js/collect-my-case";
+  import {role} from '@/common/js/collect-departmental-case'
   export default {
     components: {
       tab2
@@ -499,7 +543,9 @@
           val27: "", //电话号码
           val28: "", //催收记录
           val29: "", //委案金额下限
-          val30: "" //跟进次数下限
+          val30: "", //跟进次数下限
+          val31: "", //部门
+          val32: "", //催收员
         },
         val0_data: [],  //委托方
         val1_data: [],  //
@@ -555,6 +601,8 @@
         ], //还款状况
         val24_data: [],  //减免状态
         val25_data: [],  //报备状态
+        val31_data: [],  //部门
+        val32_data: [],  //催收员
         tableCol_data: [
           {
             prop: "countFollow",
@@ -687,7 +735,9 @@
           val24: reliefStatus,
           val25: reportStatus,
           val27: telPhone,
-          val28: collectMeasure
+          val28: collectMeasure,
+          val31:dept,
+          val32:odv
         } = this.form;
         return {
           client,
@@ -724,7 +774,9 @@
           telPhone,
           collectMeasure,
           pageNum: this.paginationData.currentPage,
-          pageSize: this.paginationData.pageSize
+          pageSize: this.paginationData.pageSize,
+          dept,
+          odv
         };
       }
     },
@@ -765,6 +817,19 @@
       },
       rowColor({row}){
         return `color_${row.color}`;
+      },
+      modStatusHandle(id){
+        console.log(id);
+        let data = this.multipleSelection.reduce((acc,item)=>{
+          acc.push({
+            id:item.id,
+            collectStatus:id
+          })
+          return acc;
+        },[]);
+        addCollectStatus(data).then(()=>{
+          this.getMainData();
+        });
       },
       colorHandle(color){
         let data = this.multipleSelection.reduce((acc,item)=>{
@@ -835,6 +900,12 @@
         this.getEnumHandle('案件类型', 'val11_data');
         this.getEnumHandle('减免状态', 'val24_data');
         this.getEnumHandle('报备状态', 'val25_data');
+        listOrganization().then((data)=>{
+          this.val31_data = this.transform(data,[['orgName','label'],['id','value']]);
+        });
+        role({role:'催收员'}).then((data)=>{
+          this.val32_data = this.transform(data,[['userName','label'],['id','value']]);
+        })
       },
     }
   };
@@ -862,6 +933,6 @@
   .color_ZONG{
     color: #D2B48C;
   }
-  #collect-my-case {
+  #collect-departmental-case {
   }
 </style>

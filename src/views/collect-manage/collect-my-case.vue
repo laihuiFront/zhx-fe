@@ -386,6 +386,16 @@
                   </el-dropdown>
                 </el-form-item>
                 <el-form-item>
+                  <el-dropdown trigger="click" @command="modStatusHandle">
+                    <el-button type="primary" @click="">修改催收状态</el-button>
+                    <el-dropdown-menu slot="dropdown">
+                      <el-dropdown-item :command="item.id"
+                                        v-for="(item,i) in val10_data">{{item.name}}
+                      </el-dropdown-item>
+                    </el-dropdown-menu>
+                  </el-dropdown>
+                </el-form-item>
+                <el-form-item>
                   <el-button type="primary" @click="dialogVisible=true;">申请协催</el-button>
                 </el-form-item>
                 <el-form-item>
@@ -452,7 +462,7 @@
 <script>
 import tab2 from "./collect-status-statistics";
 import tab3 from "./collect-repayment-statistics";
-import { pageMyCase,getEnum,markColor ,addSynergy,batchNo} from "@/common/js/collect-my-case";
+import { pageMyCase,getEnum,markColor ,addSynergy,batchNo,addCollectStatus} from "@/common/js/collect-my-case";
 export default {
   components: {
     tab2,
@@ -727,7 +737,8 @@ export default {
         telPhone,
         collectMeasure,
         pageNum: this.paginationData.currentPage,
-        pageSize: this.paginationData.pageSize
+        pageSize: this.paginationData.pageSize,
+        sType:0
       };
     }
   },
@@ -768,6 +779,19 @@ export default {
     },
     rowColor({row}){
       return `color_${row.color}`;
+    },
+    modStatusHandle(id){
+      console.log(id);
+      let data = this.multipleSelection.reduce((acc,item)=>{
+        acc.push({
+          id:item.id,
+          collectStatus:id
+        })
+        return acc;
+      },[]);
+      addCollectStatus(data).then(()=>{
+        this.getMainData();
+      });
     },
     colorHandle(color){
       let data = this.multipleSelection.reduce((acc,item)=>{

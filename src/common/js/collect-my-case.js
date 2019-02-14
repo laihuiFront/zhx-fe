@@ -53,6 +53,15 @@ export function markColor(data=[]) {
     data
   })
 }
+//修改催收状态
+export function addCollectStatus(data=[]) {
+  return request({
+    method:'post',
+    url:'/dataCase/addCollectStatus',
+    data
+  })
+}
+
 
 //申请协催
 export function addSynergy(data=[]) {
@@ -87,6 +96,33 @@ export function state(data={}) {
   return request({
     method:'post',
     url:'/dataCollection/statistics/state',
+    data
+  })
+}
+
+//批次分类统计
+export function batch(data={}) {
+  return request({
+    method:'post',
+    url:'/dataCollection/statistics/batch',
+    data
+  })
+}
+
+//我的还款统计
+export function pay(data={}) {
+  return request({
+    method:'post',
+    url:'/dataCollection/statistics/pay',
+    data
+  })
+}
+
+//获取部门
+export function listOrganization(data={}) {
+  return request({
+    method:'post',
+    url:'/organization/listOrganization',
     data
   })
 }
