@@ -245,6 +245,10 @@ export default {
       })
     },
     onClickAdd () {
+      this.memberInfo = {
+        status: 1,
+        enable: 1
+      }
       this.$set(this.dialogData, 'title', '新增员工')
       this.$set(this.dialogData, 'type', 'add')
       this.$set(this.dialogData, 'editVisible', true)
