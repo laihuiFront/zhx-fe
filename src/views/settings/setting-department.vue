@@ -172,22 +172,22 @@ export default {
     },
     filterNode(value, data, node){
       console.log(node)
-      if(value !== data.id){
-      // if(this.showNode(node, value)){
+      // if(value !== data.id){
+      if(this.showNode(node, value)){
         return true
       }else {
         return false
       }
     },
-    // showNode(node, value){
-    //   if(node.id === value){
-    //     return false
-    //   }else if(node.level === 1){
-    //     return true
-    //   }else{
-    //     return this.showNode(node.parent, value)
-    //   }
-    // }
+    showNode(node, value){
+      if(node.data.id === value){
+        return false
+      }else if(node.level === 1){
+        return true
+      }else{
+        return this.showNode(node.parent, value)
+      }
+    }
   }
 }
 </script>
