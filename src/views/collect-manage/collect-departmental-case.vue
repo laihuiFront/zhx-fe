@@ -422,7 +422,7 @@
                   <el-button type="primary" @click="">修改催收状态</el-button>
                   <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item :command="item.id"
-                                      v-for="(item,i) in val10_data">{{item.name}}
+                                      v-for="(item,i) in val10_data" :key="i">{{item.name}}
                     </el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>

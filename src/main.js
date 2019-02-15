@@ -10,7 +10,7 @@ import { Message, MessageBox } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 import '@/common/scss/element-variables.scss'
 import { localCache } from '@/common/js/auth'
-Vue.use(ElementUI, { size: 'mini', zIndex: 3000 });
+Vue.use(ElementUI, { size: 'mini'});
 
 
 Vue.config.productionTip = false

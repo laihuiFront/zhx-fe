@@ -212,7 +212,8 @@ export default {
       return {
         client,
         batchNo,
-        accountAge
+        accountAge,
+        sType:0
       }
     },
   },
