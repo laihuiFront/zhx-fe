@@ -58,6 +58,36 @@
               </el-option>
             </el-select>
           </el-form-item>
+            <el-form-item prop="val8">
+              <el-select
+                v-model="form1.val8"
+                placeholder="请选择部门"
+                clearable
+              >
+                <el-option
+                  v-for="item in val8_data"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                >
+                </el-option>
+              </el-select>
+            </el-form-item>
+          <el-form-item prop="val9">
+            <el-select
+              v-model="form1.val9"
+              placeholder="请选择催收员"
+              clearable
+            >
+              <el-option
+                v-for="item in val9_data"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              >
+              </el-option>
+            </el-select>
+          </el-form-item>
         </el-row>
         <el-form-item prop="val2">
           <el-select v-model="form1.val2" placeholder="请选择委托方" clearable>
@@ -176,7 +206,9 @@
 </template>
 
 <script>
-import { batchNo, pay, getEnum } from "@/common/js/collect-my-case";
+import { batchNo, pay, getEnum,listOrganization } from "@/common/js/collect-my-case";
+
+import {role} from '@/common/js/collect-departmental-case'
 
 export default {
   name: "collectRepaymentStatistics",
@@ -216,7 +248,9 @@ export default {
         val4: "",
         val5: "",
         val6: "",
-        val7: ""
+        val7: "",
+        val8: "",
+        val9: "",
       },
       val1_data: [
         {
@@ -338,7 +372,9 @@ export default {
         }
       ],
       val2_data: [],
-      val4_data: []
+      val4_data: [],
+      val8_data: [],
+      val9_data: [],
     };
   },
   created() {
@@ -354,7 +390,9 @@ export default {
         val4: accountAge,
         val5,
         val6,
-        val7
+        val7,
+        val8:dept,
+        val9:odv
       } = this.form1;
       return {
         opeType,
@@ -367,7 +405,9 @@ export default {
         expectTimeEnd:(!!val6 && val6[1]) || "",
         bankTimeStart:(!!val7 && val7[0]) || "",
         bankTimeEnd:(!!val7 && val7[1]) || "",
-        sType:1
+        sType:1,
+        dept,
+        odv
       };
     }
   },
@@ -417,6 +457,12 @@ export default {
       this.getMainData();
       this.getEnumHandle("委托方", "val2_data");
       this.getEnumHandle("逾期账龄", "val4_data");
+      listOrganization().then((data)=>{
+        this.val8_data = this.transform(data,[['orgName','label'],['id','value']]);
+      });
+      role({role:'催收员'}).then((data)=>{
+        this.val9_data = this.transform(data,[['userName','label'],['id','value']]);
+      })
     }
   }
 };

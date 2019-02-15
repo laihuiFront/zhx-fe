@@ -114,7 +114,7 @@
     >
     </el-table-column>
     <el-table-column
-      prop="batchStatus"
+      prop="statusMsg"
       label="批次状态"
       show-overflow-tooltip>
     </el-table-column>

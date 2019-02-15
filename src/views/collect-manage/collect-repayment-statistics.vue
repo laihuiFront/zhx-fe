@@ -176,7 +176,7 @@
 </template>
 
 <script>
-import { batchNo, pay, getEnum } from "@/common/js/collect-my-case";
+import { batchNo, pay, getEnum,listOrganization,role } from "@/common/js/collect-my-case";
 
 export default {
   name: "collectRepaymentStatistics",
@@ -216,7 +216,9 @@ export default {
         val4: "",
         val5: "",
         val6: "",
-        val7: ""
+        val7: "",
+        val8: "",
+        val9: "",
       },
       val1_data: [
         {
@@ -338,7 +340,8 @@ export default {
         }
       ],
       val2_data: [],
-      val4_data: []
+      val4_data: [],
+      val8_data: [],  //部门
     };
   },
   created() {

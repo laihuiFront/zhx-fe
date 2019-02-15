@@ -76,12 +76,6 @@
       >
     </el-table-column>
     <el-table-column
-      label="电话类型"
-      prop="identNo"
-      show-overflow-tooltip>
-      
-    </el-table-column>
-    <el-table-column
       label="电话号码"
       show-overflow-tooltip>
       <template slot-scope="scope" >
