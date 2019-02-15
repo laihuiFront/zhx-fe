@@ -39,7 +39,7 @@
         <el-table-column prop="number" show-overflow-tooltip label="员工号"></el-table-column>
         <el-table-column prop="userName" label="员工姓名" show-overflow-tooltip></el-table-column>
         <el-table-column prop="sex" label="性别" show-overflow-tooltip width="50"></el-table-column>
-        <el-table-column prop="officePhone" label="办公电话" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="officePhone" label="座机号" show-overflow-tooltip></el-table-column>
         <el-table-column prop="mobile" label="手机" show-overflow-tooltip></el-table-column>
         <el-table-column prop="joinTime" label="入职日期" show-overflow-tooltip></el-table-column>
         <el-table-column prop="roleList" :formatter="formatRole" label="员工角色" show-overflow-tooltip></el-table-column>
@@ -137,8 +137,8 @@
         <el-form-item label="手机号" prop="mobile">
           <el-input v-model="memberInfo.mobile" placeholder="请输入手机号"></el-input>
         </el-form-item>
-        <el-form-item label="办公电话" prop="officePhone">
-          <el-input v-model="memberInfo.officePhone" placeholder="请输入办公电话"></el-input>
+        <el-form-item label="座机号" prop="officePhone">
+          <el-input v-model="memberInfo.officePhone" placeholder="请输入座机号"></el-input>
         </el-form-item>
         <el-form-item label="入职日期" prop="joinTime">
           <el-date-picker
