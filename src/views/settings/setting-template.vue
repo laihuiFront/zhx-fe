@@ -77,7 +77,7 @@ export default {
       this.editor = editorInstance;
     },
     saveContent(){
-      save({title:this.currentRow.title,context:this.editor.getAllHtml()}).then((data)=>{
+      save({id:this.currentRow.id,title:this.currentRow.title,context:this.editor.getAllHtml()}).then((data)=>{
         this.$message({
           message: '提交成功',
           type: 'success'
