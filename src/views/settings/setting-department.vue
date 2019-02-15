@@ -37,21 +37,43 @@
           ></el-button>
           <el-button
             type="text"
-            v-if="node.previousSibling"
-            icon="el-icon-arrow-up"
-            title="上移"
-            @click="upMove(node, data)"
-          ></el-button>
-          <el-button
-            type="text"
-            v-if="node.nextSibling"
-            icon="el-icon-arrow-down"
-            title="下移"
-            @click="downMove(node, data)"
+            icon="el-icon-sort"
+            title="移动"
+            @click="onClickMove(data.id)"
+            v-if="node.level !== 1"
           ></el-button>
         </span>
       </span>
     </el-tree>
+    <el-dialog
+      title="选择目标部门"
+      class="dialog-wrap"
+      :visible.sync="showDialog"
+      :close-on-click-modal="true"
+      :append-to-body="true"  
+      width="400px">
+        <el-tree
+          v-if="moveSelectDepartTree.length>0"
+          ref="treeSelect"
+          :data="moveSelectDepartTree"
+          node-key="id"
+          :expand-on-click-node="false"
+          :default-expanded-keys="[moveSelectDepartTree[0].id]"
+          @node-click="onSelectDepartment"
+          class="tree-wrap-select"
+          width="200px"
+          :filter-node-method="filterNode"
+        >
+          <span
+            class="custom-tree-node"
+            slot-scope="{ node, data }"
+          >{{data.orgName}}</span>
+      </el-tree>
+      <span slot="footer" class="footer">
+        <el-button @click="showDialog = false">取 消</el-button>
+        <el-button type="primary" @click="onClickConfirmDept">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -61,11 +83,17 @@ export default {
   name: 'settingDepartment',
   data () {
     return {
-      departmentTree: []
+      departmentTree: [],
+      moveSelectDepartTree: [],
+      showDialog: false,
+      moveId: null,
     }
   },
   created () {
     this.initTree()
+    getDepartmentTree().then((data) => {
+        this.moveSelectDepartTree = data
+    })
   },
   methods: {
     initTree () {
@@ -112,24 +140,54 @@ export default {
         children.splice(index, 1)
       }).catch(() => { })
     },
-    upMove (node, data) {
-      const parent = node.parent
-      const children = parent.data.children || parent.data
-      const index = children.findIndex(d => d.id === data.id)
-      const last = children[index - 1]
-      const current = children[index]
-      this.$refs['tree'].remove(current)
-      this.$refs['tree'].insertBefore(current, last)
+    onClickMove(id) {
+      this.moveId = id
+      this.selectDeptId = null
+      this.showDialog = true
+      this.$nextTick(()=>{
+        this.$refs['treeSelect'].filter(id)
+      })
     },
-    downMove (node, data) {
-      const parent = node.parent
-      const children = parent.data.children || parent.data
-      const index = children.findIndex(d => d.id === data.id)
-      const next = children[index + 1]
-      const current = children[index]
-      this.$refs['tree'].remove(current)
-      this.$refs['tree'].insertAfter(current, next)
+    onClickConfirmDept() {
+      if(!this.selectDeptId){
+        this.$message('请选择目标部门')
+        return
+      }
+      this.$confirm('该操作会将部门及其子部门移动到目标部门下，确认继续？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        const sourceNode = this.$refs['tree'].getNode(this.moveId)
+        const sourceData = sourceNode.data
+        const targetNode = this.$refs['tree'].getNode(this.selectDeptId)
+        sourceData.parent.id = this.selectDeptId
+        this.$refs['tree'].remove(sourceNode)
+        this.$refs['tree'].append(sourceData,targetNode)
+        this.showDialog = false
+      }).catch(() => { })
     },
+    onSelectDepartment (data) {
+      this.selectDeptId = data.id
+    },
+    filterNode(value, data, node){
+      console.log(node)
+      // if(value !== data.id){
+      if(this.showNode(node, value)){
+        return true
+      }else {
+        return false
+      }
+    },
+    showNode(node, value){
+      if(node.data.id === value){
+        return false
+      }else if(node.level === 1){
+        return true
+      }else{
+        return this.showNode(node.parent, value)
+      }
+    }
   }
 }
 </script>
@@ -167,6 +225,25 @@ export default {
       }
     }
   }
+  .tree-wrap-select{
+      width: 300px;
+      .el-dialog__body {
+        .tree-wrap-select {
+          height: 100%;
+          .el-tree-node__content {
+            height: 40px;
+          }
+          .custom-tree-node {
+            display: inline-block;
+            height: 100%;
+            flex: 1;
+            font-size: 14px;
+            padding: 0 8px 0 12px;
+            color: #0080ff;
+          }
+        }
+      }
+    }
 }
 </style>
 
