@@ -367,6 +367,7 @@ export default {
         expectTimeEnd:(!!val6 && val6[1]) || "",
         bankTimeStart:(!!val7 && val7[0]) || "",
         bankTimeEnd:(!!val7 && val7[1]) || "",
+        sType:0
       };
     }
   },
