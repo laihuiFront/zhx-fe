@@ -536,10 +536,7 @@ this.search()
            }
           
         }).catch(() => {
-          _self.$message({
-            type: 'info',
-            message: '已取消删除'
-          });
+
         });
       },
     },

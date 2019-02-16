@@ -18,8 +18,8 @@
         <el-checkbox>是否记住密码</el-checkbox>
       </div>
       <div class="btns">
-        <el-button class="item" size="medium" type="primary" @click="login">登录</el-button>
-        <el-button class="item" size="medium" @click="reset">重置</el-button>
+        <el-button class="item" size="medium" type="primary" @click="login" style="    width: 105px;">登录</el-button>
+        <el-button class="item" size="medium" @click="reset"  style="    width: 105px;">重置</el-button>
       </div>
       <!-- <el-form class="login-form" autoComplete="on" :model="loginForm" ref="loginForm">
         <el-form-item>
@@ -73,11 +73,11 @@ export default {
   height: 100%;
   background: url('./bg.png') 100% 100%;
   .left-panel{
-    width: 50vw;
-    height: 72.5%;
+    width: 52.5vw;
+    height: 75.2%;
   }
   .form{
-    margin-left: 68px;
+    margin-left: -68px;
     padding: 46px 0;
     // height: 284px;
     width: 340px;
