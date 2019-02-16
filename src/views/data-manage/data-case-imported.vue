@@ -567,7 +567,7 @@ this.search()
     },
 created() {
             dataList().then((response)=>{
-            this.DataList=response.list
+            this.DataList=response.pageInfo.list
               this.pages = response.pages
               this.total = response.total
 })

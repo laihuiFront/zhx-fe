@@ -123,12 +123,26 @@
       </el-form-item>
 </el-form>
   	</div>
+  	
+  </el-col>
+    </el-row>
+   <el-row :gutter="24">
+  <el-col :span="18">
+  	<div class="grid-content bg-purple">
+  		<span>查询结果统计：</span>
+	<span class="textColor">列表案量：</span>
+		<span class="textColor">列表金额：</span>
+			<span class="textColor">列表还款量：</span>
+				<span class="textColor">列表还款额：</span>
+  		<span class="textColor">列表CP值：</span>
+  			<span class="textColor">列表PTP值：</span>
+  	</div>
   </el-col>
    </el-row>
    <el-table
     ref="multipleTable"
     :data="tableData3"
-    style="width: 100%"
+    style="width: 100%;margin-top:10px"
      @selection-change="handleSelectionChange"
   >
   <el-table-column
@@ -890,6 +904,11 @@ created() {
 .el-dialog__header{
   	background-color: #f8f8f8;
   
+  }
+  .textColor{
+  	display: inline-block;
+  color: #66b1ff;
+
   }
 }
 </style>

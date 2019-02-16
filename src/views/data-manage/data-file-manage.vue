@@ -43,7 +43,16 @@
   	<div class="grid-content bg-purple">
   <el-form :inline="true">
   		<el-form-item>
-      <el-button type="primary" @click="dialogVisible = true">导入</el-button> 
+      <el-upload
+  class="upload-demo"
+  action="http://116.62.124.251/zxh/dataArchive/import"
+  :headers="header"
+  :show-file-list=false
+  :on-success="uploadSuccess"
+  
+  >
+  <el-button size="small" type="primary">导入</el-button>
+</el-upload>
       </el-form-item>
       <el-form-item>
       <el-button type="primary" @click="dialogVisible2 = true">新增</el-button>  </el-form-item>
@@ -229,7 +238,9 @@
 </template>
 
 <script>
-	import {dataList,remoweData,addData} from '@/common/js/data-file-manage.js'
+	import {dataList,remoweData,addData} from '@/common/js/data-file-manage.js'	
+
+
 export default {
   name: 'dataFileManage',
    data(){
@@ -252,9 +263,23 @@ export default {
         total:0,
     	  form:{time:[]},
         DataList:[],
+        header:{Authorization:localStorage.token}
     }
   },
   methods: {
+  	uploadSuccess(){
+  		this.$message({
+            type: 'success',
+            message: '导入成功!'
+          });
+           dataList().then((response)=>{
+            this.DataList=response.list
+              this.pages = response.pages
+              this.total = response.total
+})    
+  	},
+  	
+  	
   	removeDomainAddress(item) {
         var index = this.dynamicValidateForm.addressList.indexOf(item)
         if (index !== -1) {
@@ -369,7 +394,8 @@ this.search()
             this.DataList=response.list
               this.pages = response.pages
               this.total = response.total
-})
+})    
+             
 },
 }
 

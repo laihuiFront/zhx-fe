@@ -47,7 +47,7 @@
   
   </el-form-item>
   <el-form-item>
-  <el-button type="text" icon="el-icon-search" 开始统计</el-button> 
+  <el-button type="text" icon="el-icon-search" @click=dataList()>开始统计</el-button> 
   </el-form-item>
   <el-form-item>
   <el-button type="text" icon="el-icon-refresh" @click=clench>重置</el-button> 
@@ -172,7 +172,7 @@
 </template>
 
 <script>
-	import {areaList,clientList,PersonList} from '@/common/js/statistics-day.js'
+	import {areaList,clientList,PersonList,dataList} from '@/common/js/statistics-day.js'
 export default {
   name: 'statisticsDay',
   data(){
@@ -180,7 +180,10 @@ export default {
     	 currentPage4: 1,
         pages:1,
         total:100,
-    	formInline:{},
+    	formInline:{
+    		odv:[],
+    		time:[]
+    	},
     	PersonList:[],
     	areaList:[],
     	clientList:[],
@@ -206,9 +209,15 @@ export default {
  methods: {
  	handleSizeChange(val){
 	this.pageSize=val
+	              dataList(this.formInline,this.pageSize,this.pageNum).then((response)=>{
+          	this.tableData3=response
+          })
 },
 handleCurrentChange(val){
 this.pageNum=val;
+              dataList(this.formInline,this.pageSize,this.pageNum).then((response)=>{
+          	this.tableData3=response
+          })
 },
  	onSubmit(){
  		
@@ -229,13 +238,21 @@ this.pageNum=val;
              PersonList().then((response)=>{
           	this.PersonList=response
           })
+//            dataList(this.formInline).then((response)=>{
+//        	this.tableData3=response
+//        })
+//          
             
 },
  }
 </script>
 
 <style lang="scss">
-#statistics-day{}
+#statistics-day{
+	.el-form--inline .el-form-item{
+	margin-right:0px;
+}
+}
 </style>
 
 

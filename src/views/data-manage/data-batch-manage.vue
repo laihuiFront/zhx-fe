@@ -77,21 +77,22 @@
       <el-button type="primary" >导出所选批次</el-button>  </el-form-item>
       <el-form-item>
       <el-button type="primary">批量导出批次催记</el-button>  </el-form-item>
+  	
   </el-form>
   	</div>
   </el-col>
-  <!--<el-col :span="18">
+  <el-col :span="18">
   	<div class="grid-content bg-purple">
-  <el-form :inline="true">
-      
-</el-form>
+  		<span>查询结果统计：</span>
+	<span class="textColor">列表户数：{{userCount}}</span>
+  		<span class="textColor">列表金额：￥{{totalAmt}}</span>
   	</div>
-  </el-col>-->
+  </el-col>
    </el-row>
    <el-table
     ref="multipleTable"
     :data="DataList"
-    style="width: 100%"
+    style="width: 100%;margin-top: 10px;"
      @selection-change="handleSelectionChange"
   >
   <el-table-column
@@ -210,10 +211,7 @@
     </el-pagination>
   	</div></el-col>
   <el-col :span="8">
-  	<div class="grid-content bg-purple">
-  		<span class="textColor">列表户数：1111</span>
-  		<span class="textColor">列表金额：￥1111</span>
-  	</div>
+  	
   </el-col>
 </el-row>
 <el-dialog
@@ -363,6 +361,8 @@ export default {
   name: 'dataBatchManage',
    data(){
     return {
+    	userCount:'',
+    	totalAmt:'',
     	messageForm:{},
     	deleteList:[],
     	DataList:[],
@@ -416,7 +416,7 @@ methods: {
       	let endTime=this.form.time[1]
 dataList(this.form.area,this.form.batchNo,this.form.client,this.form.batchStatus,this.form.caseType,startTime,endTime,this.pageSize,this.pageNum).then((response)=>{
 
-            this.DataList=response.list
+            this.DataList=response.pageInfo.list
             this.pages = response.pages
             this.total = response.total
 })
@@ -504,10 +504,11 @@ this.search()
    },
    created() {
             dataList().then((response)=>{
-              console.info(response.list);
-              this.DataList=response.list
+              this.DataList=response.pageInfo.list
               this.pages = response.pages
               this.total = response.total
+              this.totalAmt=response.totalAmt;
+              this.userCount=response.userCount;
             })
               clientList().then((response)=>{
             this.form.clientList=response;
@@ -531,7 +532,6 @@ this.search()
   .textColor{
   	display: inline-block;
   color: #66b1ff;
-  padding-top: 8px;
   }
   .el-dialog__header{
   	background-color: #f8f8f8;
