@@ -7,7 +7,7 @@
    <el-form-item >
   <el-select class="Newinput" v-model="form.area" placeholder="请选择催收区域" clearable>
     <el-option
-      v-for="item in form.areaList"
+      v-for="item in areaList"
       :key="item.id"
       :label="item.name"
       :value="item.id">
@@ -20,7 +20,7 @@
    <el-form-item >
   <el-select v-model="form.client" filterable  placeholder="请选择委托方" clearable>
     <el-option
-      v-for="item in form.clientList"
+      v-for="item in clientList"
       :key="item.id"
       :label="item.name"
       :value="item.id">
@@ -30,7 +30,7 @@
    <el-form-item >
   <el-select v-model="form.caseType" placeholder="请选择案件类型" clearable>
     <el-option
-      v-for="item in form.caseTypeList"
+      v-for="item in caseTypeList"
       :key="item.id"
       :label="item.name"
       :value="item.id">
