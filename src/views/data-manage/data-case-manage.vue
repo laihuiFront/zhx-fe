@@ -790,7 +790,7 @@ export default {
           value:'棕'
         },
       ],
-      detailVisible: true,
+      detailVisible: false,
       detailTitle: '案件详情'
     }
   },

@@ -178,18 +178,868 @@
           </el-form>
         </div>
       </el-collapse-item>
-      <el-collapse-item title="反馈 Feedback" name="2">
-        <div>控制反馈：通过界面样式和交互动效让用户可以清晰的感知自己的操作；</div>
-        <div>页面反馈：操作后，通过页面元素的变化清晰地展现当前状态。</div>
+      <el-collapse-item title="同批次共债案件" name="2">
+        <el-table
+          :data="caseDetail.dependCase"
+          style="width: 100%"
+          class="table-wrap">
+          <el-table-column
+            prop="createTime"
+            label="个案序列号">
+          </el-table-column>
+          <el-table-column
+            prop="createTime"
+            label="卡号">
+          </el-table-column>
+          <el-table-column
+            prop="createTime"
+            label="账号">
+          </el-table-column>
+          <el-table-column
+            prop="createTime"
+            label="委案金额">
+          </el-table-column>
+          <el-table-column
+            prop="createTime"
+            label="币种">
+          </el-table-column>
+          <el-table-column
+            prop="createTime"
+            label="PTP">
+          </el-table-column>
+          <el-table-column
+            prop="createTime"
+            label="CP">
+          </el-table-column>
+          <el-table-column
+            prop="createTime"
+            label="已还款">
+          </el-table-column>
+          <el-table-column
+            prop="createTime"
+            label="逾期账龄">
+          </el-table-column>
+          <el-table-column
+            prop="createTime"
+            label="上次通电">
+          </el-table-column>
+          <el-table-column
+            prop="createTime"
+            label="通电次数">
+          </el-table-column>
+        </el-table>
       </el-collapse-item>
-      <el-collapse-item title="效率 Efficiency" name="3">
-        <div>简化流程：设计简洁直观的操作流程；</div>
-        <div>清晰明确：语言表达清晰且表意明确，让用户快速理解进而作出决策；</div>
-        <div>帮助用户识别：界面简单直白，让用户快速识别而非回忆，减少用户记忆负担。</div>
-      </el-collapse-item>
-      <el-collapse-item title="可控 Controllability" name="4">
-        <div>用户决策：根据场景可给予用户操作建议或安全提示，但不能代替用户进行决策；</div>
-        <div>结果可控：用户可以自由的进行操作，包括撤销、回退和终止当前操作等。</div>
+      <el-collapse-item title="其他信息" name="3">
+        <div class="other-wrap">
+          <div class="left-wrap">
+            <el-tabs v-model="otherActiveName" type="card" >
+              <el-tab-pane label="电话" name="1" class="tabs-wrap">
+                <div class="operation">
+                  <div class="left-oper">
+                    <el-button>标记为有效</el-button>
+                    <el-button>标记为未知</el-button>
+                    <el-button>标记为无效</el-button>
+                    <el-button>显示全部电话</el-button>
+                  </div>
+                  <div class="right-oper">
+                    <el-button type="primary">新增电话</el-button>
+                    <el-button type="primary">批量新增电话</el-button>
+                    <el-button type="primary">批量电催</el-button>
+                    <el-button type="primary">同步共债</el-button>
+                  </div>
+                </div>
+                <el-table
+                  :data="caseDetail.otherInfo.phoneList"
+                  style="width: 100%"
+                  class="table-wrap">
+                  <el-table-column
+                    type="selection"
+                    width="55">
+                  </el-table-column>
+                  <el-table-column
+                    prop="status"
+                    label="状态">
+                  </el-table-column>
+                  <el-table-column
+                    prop="phone"
+                    label="电话">
+                  </el-table-column>
+                  <el-table-column
+                    prop="name"
+                    label="姓名">
+                  </el-table-column>
+                  <el-table-column
+                    prop="rel"
+                    label="关系">
+                  </el-table-column>
+                  <el-table-column
+                    prop="type"
+                    label="类型">
+                  </el-table-column>
+                  <el-table-column
+                    prop="remark"
+                    label="备注">
+                  </el-table-column>
+                  <el-table-column
+                    label="操作"
+                    width="250">
+                    <template slot-scope="scope">
+                      <el-button type="text">历史记录</el-button>
+                      <el-button type="text">编辑</el-button>
+                      <el-button type="text">删除</el-button>
+                      <el-button type="text">停止跟进</el-button>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </el-tab-pane>
+              <el-tab-pane label="地址" name="2" class="tabs-wrap">
+                <div class="operation">
+                  <div class="left-oper">
+                    <el-button>标记为有效</el-button>
+                    <el-button>标记为未知</el-button>
+                    <el-button>标记为无效</el-button>
+                    <el-button>显示全部地址</el-button>
+                    <el-button>查看信函记录</el-button>
+                  </div>
+                </div>
+                <el-table
+                  :data="caseDetail.otherInfo.addrList"
+                  style="width: 100%"
+                  class="table-wrap">
+                  <el-table-column
+                    type="selection"
+                    width="55">
+                  </el-table-column>
+                  <el-table-column
+                    prop="status"
+                    show-overflow-tooltip
+                    label="状态">
+                  </el-table-column>
+                  <el-table-column
+                    prop="name"
+                    show-overflow-tooltip
+                    label="姓名">
+                  </el-table-column>
+                  <el-table-column
+                    prop="rel"
+                    show-overflow-tooltip
+                    label="关系">
+                  </el-table-column>
+                  <el-table-column
+                    prop="addr"
+                    show-overflow-tooltip
+                    label="地址">
+                  </el-table-column>
+                  <el-table-column
+                    prop="type"
+                    show-overflow-tooltip
+                    label="类型">
+                  </el-table-column>
+                  <el-table-column
+                    prop="remark"
+                    show-overflow-tooltip
+                    label="备注">
+                  </el-table-column>
+                  <el-table-column
+                    prop="letterTime"
+                    show-overflow-tooltip
+                    label="信函次数">
+                  </el-table-column>
+                  <el-table-column
+                    prop="visitTime"
+                    show-overflow-tooltip
+                    label="外访次数">
+                  </el-table-column>
+                </el-table>
+              </el-tab-pane>
+              <el-tab-pane label="案人数据" name="3" class="tabs-wrap">
+                <el-table
+                  :data="caseDetail.otherInfo.dataList"
+                  style="width: 100%"
+                  class="table-wrap">
+                  <el-table-column
+                    prop="name"
+                    show-overflow-tooltip
+                    label="姓名">
+                  </el-table-column>
+                  <el-table-column
+                    prop="type"
+                    show-overflow-tooltip
+                    label="信息类型">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="信息内容">
+                  </el-table-column>
+                  <el-table-column
+                    prop="remark"
+                    show-overflow-tooltip
+                    label="备注">
+                  </el-table-column>
+                  <el-table-column
+                    prop="time"
+                    show-overflow-tooltip
+                    label="导入时间">
+                  </el-table-column>
+                </el-table>
+              </el-tab-pane>
+              <el-tab-pane label="催记" name="4" class="tabs-wrap">
+                <div class="operation">
+                  <div class="left-oper">
+                    <el-radio-group v-model="memorizeType">
+                      <el-radio :label="1">本案催记</el-radio>
+                      <el-radio :label="2">同批次共债催记</el-radio>
+                      <el-radio :label="3">共债催记</el-radio>
+                      <el-radio :label="4">同卡催记</el-radio>
+                    </el-radio-group>
+                  </div>
+                  <div class="right-oper">
+                    <el-button type="primary">导出本案催记</el-button>
+                  </div>
+                </div>
+                <el-table
+                  :data="caseDetail.otherInfo.memorizeList"
+                  style="width: 100%"
+                  class="table-wrap">
+                  <el-table-column
+                    prop="type"
+                    show-overflow-tooltip
+                    label="催收措施">
+                  </el-table-column>
+                  <el-table-column
+                    prop="time"
+                    show-overflow-tooltip
+                    label="时间">
+                  </el-table-column>
+                  <el-table-column
+                    prop="name"
+                    show-overflow-tooltip
+                    label="对象姓名">
+                  </el-table-column>
+                  <el-table-column
+                    prop="rel"
+                    show-overflow-tooltip
+                    label="关系">
+                  </el-table-column>
+                  <el-table-column
+                    prop="type"
+                    show-overflow-tooltip
+                    label="电话/地址">
+                  </el-table-column>
+                  <el-table-column
+                    prop="remark"
+                    show-overflow-tooltip
+                    label="类型">
+                  </el-table-column>
+                  <el-table-column
+                    prop="remark"
+                    show-overflow-tooltip
+                    label="催收结果">
+                  </el-table-column>
+                  <el-table-column
+                    prop="remark"
+                    show-overflow-tooltip
+                    label="催收对象">
+                  </el-table-column>
+                  <el-table-column
+                    prop="remark"
+                    show-overflow-tooltip
+                    label="谈判方式">
+                  </el-table-column>
+                  <el-table-column
+                    prop="remark"
+                    show-overflow-tooltip
+                    label="承诺日期">
+                  </el-table-column>
+                  <el-table-column
+                    prop="remark"
+                    show-overflow-tooltip
+                    label="承诺金额">
+                  </el-table-column>
+                  <el-table-column
+                    prop="remark"
+                    show-overflow-tooltip
+                    label="减免金额">
+                  </el-table-column>
+                  <el-table-column
+                    prop="remark"
+                    show-overflow-tooltip
+                    label="减免状态">
+                  </el-table-column>
+                  <el-table-column
+                    prop="remark"
+                    show-overflow-tooltip
+                    label="催收人">
+                  </el-table-column>
+                  <el-table-column
+                    prop="remark"
+                    show-overflow-tooltip
+                    label="催收状态">
+                  </el-table-column>
+                  <el-table-column
+                    label="操作"
+                    fixed="right"
+                    width="100">
+                    <template slot-scope="scope">
+                      <el-button type="text">编辑</el-button>
+                      <el-button type="text">删除</el-button>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </el-tab-pane>
+              <el-tab-pane label="评语" name="5" class="tabs-wrap">
+                <el-table
+                  :data="caseDetail.otherInfo.commentList"
+                  style="width: 100%"
+                  class="table-wrap">
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="评语内容">
+                  </el-table-column>
+                  <el-table-column
+                    prop="creater"
+                    show-overflow-tooltip
+                    width="150"
+                    label="提交人">
+                  </el-table-column>
+                  <el-table-column
+                    prop="time"
+                    show-overflow-tooltip
+                    width="150"
+                    label="提交时间">
+                  </el-table-column>
+                </el-table>
+              </el-tab-pane>
+              <el-tab-pane label="外访" name="6" class="tabs-wrap">
+                <el-table
+                  :data="caseDetail.otherInfo.visitList"
+                  style="width: 100%"
+                  class="table-wrap">
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="附件">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="状态">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="姓名">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="原因">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="地址">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="外访地区">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="外访期次">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="外访时间">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="外访员">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="要求">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="外访报告">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="备注">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="申请人">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="申请时间">
+                  </el-table-column>
+                </el-table>
+              </el-tab-pane>
+              <el-tab-pane label="利息更新" name="7" class="tabs-wrap">
+                <el-table
+                  :data="caseDetail.otherInfo.rateUpdateList"
+                  style="width: 100%"
+                  class="table-wrap">
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="币种">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="总欠款金额">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="截止日期">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="本金">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="利息">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="违约金">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="滞纳金">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="超限费">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="服务费">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="年费">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="其他费用">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="表外息">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="导入时间">
+                  </el-table-column>
+                </el-table>
+              </el-tab-pane>
+              <el-tab-pane label="案件登帐" name="8" class="tabs-wrap billing-wrap">
+                <div class="first">
+                  <p>PTP记录</p>
+                  <el-table
+                    width="100%"
+                    :data="caseDetail.otherInfo.ptpList"
+                    class="table-wrap">
+                    <el-table-column
+                      prop="content"
+                      show-overflow-tooltip
+                      label="PTP金额">
+                    </el-table-column>
+                    <el-table-column
+                      prop="content"
+                      show-overflow-tooltip
+                      label="PTP时间">
+                    </el-table-column>
+                    <el-table-column
+                      prop="content"
+                      show-overflow-tooltip
+                      label="录入人">
+                    </el-table-column>
+                  </el-table>
+                </div>
+                <div class="second">
+                  <p>CP记录</p>
+                  <el-table
+                    width="100%"
+                    :data="caseDetail.otherInfo.cpList"
+                    class="table-wrap">
+                    <el-table-column
+                      prop="content"
+                      show-overflow-tooltip
+                      label="CP金额">
+                    </el-table-column>
+                    <el-table-column
+                      prop="content"
+                      show-overflow-tooltip
+                      label="CP时间">
+                    </el-table-column>
+                    <el-table-column
+                      prop="content"
+                      show-overflow-tooltip
+                      label="还款人">
+                    </el-table-column>
+                    <el-table-column
+                      prop="content"
+                      show-overflow-tooltip
+                      label="还款方式">
+                    </el-table-column>
+                    <el-table-column
+                      prop="content"
+                      show-overflow-tooltip
+                      label="确认还款">
+                    </el-table-column>
+                    <el-table-column
+                      prop="content"
+                      show-overflow-tooltip
+                      label="还款日期">
+                    </el-table-column>
+                    <el-table-column
+                      prop="content"
+                      show-overflow-tooltip
+                      label="确认时间">
+                    </el-table-column>
+                    <el-table-column
+                      prop="content"
+                      show-overflow-tooltip
+                      label="备注">
+                    </el-table-column>
+                  </el-table>
+                </div>
+              </el-tab-pane>
+              <el-tab-pane label="协催" name="9" class="tabs-wrap">
+                <div class="operation">
+                  <div class="left-oper">
+                    <el-button>全部</el-button>
+                    <el-button>待审核</el-button>
+                    <el-button>待办</el-button>
+                    <el-button>已完成</el-button>
+                    <el-button>已撤销</el-button>
+                  </div>
+                </div>
+                <el-table
+                  :data="caseDetail.otherInfo.syncList"
+                  style="width: 100%"
+                  class="table-wrap">
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="状态">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="协催类型">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="申请内容">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="申请时间">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="申请人">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="协催时间">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="协催人">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="协催结果">
+                  </el-table-column>
+                </el-table>
+              </el-tab-pane>
+              <el-tab-pane label="共债案件" name="10" class="tabs-wrap">
+                <el-table
+                  :data="caseDetail.otherInfo.dependCaseList"
+                  style="width: 100%"
+                  class="table-wrap">
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="批次号">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="个案序列号">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="委托日期">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="姓名">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="卡号">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="委托方">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="委案金额">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="催收状态">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="已还款">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="催收员">
+                  </el-table-column>
+                </el-table>
+              </el-tab-pane>
+              <el-tab-pane label="操作记录" name="11" class="tabs-wrap">
+                <el-table
+                  :data="caseDetail.otherInfo.logList"
+                  style="width: 100%"
+                  class="table-wrap">
+                  <el-table-column
+                    prop="time"
+                    width="150"
+                    show-overflow-tooltip
+                    label="时间">
+                  </el-table-column>
+                  <el-table-column
+                    prop="type"
+                    width="150"
+                    show-overflow-tooltip
+                    label="类别">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="操作内容">
+                  </el-table-column>
+                  <el-table-column
+                    prop="user"
+                    width="100"
+                    show-overflow-tooltip
+                    label="操作人">
+                  </el-table-column>
+                </el-table>
+              </el-tab-pane>
+              <el-tab-pane label="诉讼案件" name="12" class="tabs-wrap">
+                <el-table
+                  :data="caseDetail.otherInfo.litigationCaseList"
+                  style="width: 100%"
+                  class="table-wrap">
+                  <el-table-column
+                    prop="time"
+                    show-overflow-tooltip
+                    label="案件状态">
+                  </el-table-column>
+                  <el-table-column
+                    prop="type"
+                    show-overflow-tooltip
+                    label="办案进度">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="案件类型">
+                  </el-table-column>
+                  <el-table-column
+                    prop="user"
+                    show-overflow-tooltip
+                    label="客户姓名">
+                  </el-table-column>
+                  <el-table-column
+                    prop="user"
+                    show-overflow-tooltip
+                    label="委案日期">
+                  </el-table-column>
+                  <el-table-column
+                    prop="user"
+                    show-overflow-tooltip
+                    label="委托人">
+                  </el-table-column>
+                  <el-table-column
+                    prop="user"
+                    show-overflow-tooltip
+                    label="被告人">
+                  </el-table-column>
+                  <el-table-column
+                    prop="user"
+                    show-overflow-tooltip
+                    label="标的">
+                  </el-table-column>
+                  <el-table-column
+                    prop="user"
+                    show-overflow-tooltip
+                    label="费用">
+                  </el-table-column>
+                  <el-table-column
+                    prop="user"
+                    show-overflow-tooltip
+                    label="所属人">
+                  </el-table-column>
+                  <el-table-column
+                    prop="user"
+                    show-overflow-tooltip
+                    label="受案法院">
+                  </el-table-column>
+                  <el-table-column
+                    prop="user"
+                    show-overflow-tooltip
+                    label="案号">
+                  </el-table-column>
+                  <el-table-column
+                    prop="user"
+                    show-overflow-tooltip
+                    label="备注">
+                  </el-table-column>
+                  <el-table-column
+                    prop="user"
+                    fixed="right"
+                    show-overflow-tooltip
+                    label="操作">
+                  </el-table-column>
+                </el-table>
+              </el-tab-pane>
+              <el-tab-pane label="减免管理" name="13" class="tabs-wrap">
+                <div class="operation">
+                  <div class="right-oper">
+                    <el-button type="primary">添加减免申请</el-button>
+                  </div>
+                </div>
+                <el-table
+                  :data="caseDetail.otherInfo.reliefList"
+                  style="width: 100%"
+                  class="table-wrap">
+                  <el-table-column
+                    prop="time"
+                    show-overflow-tooltip
+                    label="类型">
+                  </el-table-column>
+                  <el-table-column
+                    prop="type"
+                    show-overflow-tooltip
+                    label="处理状态">
+                  </el-table-column>
+                  <el-table-column
+                    prop="content"
+                    show-overflow-tooltip
+                    label="减免/报备XX">
+                  </el-table-column>
+                  <el-table-column
+                    prop="user"
+                    show-overflow-tooltip
+                    label="申请日期">
+                  </el-table-column>
+                  <el-table-column
+                    prop="user"
+                    show-overflow-tooltip
+                    label="申请人">
+                  </el-table-column>
+                  <el-table-column
+                    prop="user"
+                    show-overflow-tooltip
+                    label="审核日期">
+                  </el-table-column>
+                  <el-table-column
+                    prop="user"
+                    show-overflow-tooltip
+                    label="提交日期">
+                  </el-table-column>
+                  <el-table-column
+                    prop="user"
+                    show-overflow-tooltip
+                    label="完成日期">
+                  </el-table-column>
+                  <el-table-column
+                    prop="user"
+                    show-overflow-tooltip
+                    label="完成人">
+                  </el-table-column>
+                  <el-table-column
+                    prop="user"
+                    show-overflow-tooltip
+                    label="减免/报备XX">
+                  </el-table-column>
+                  <el-table-column
+                    prop="user"
+                    show-overflow-tooltip
+                    label="是否报备">
+                  </el-table-column>
+                  <el-table-column
+                    prop="user"
+                    fixed="right"
+                    show-overflow-tooltip
+                    label="操作">
+                  </el-table-column>
+                </el-table>
+              </el-tab-pane>
+            </el-tabs>
+          </div>
+          <div class="right-wrap">
+            <el-card class="box-card">
+              <div slot="header" class="clearfix">
+                <span>自定义信息</span>
+                <el-button style="float: right; padding: 3px 0" type="text">保存</el-button>
+              </div>
+              <el-input type="textarea" :rows="8"  v-model="caseDetail.otherInfo.customInfo"></el-input>
+            </el-card>
+          </div>
+        </div>
       </el-collapse-item>
     </el-collapse>
   </div>
@@ -201,6 +1051,7 @@ export default {
   data() {
     return {
       activeNames: ['1'],
+      otherActiveName:'1',
       caseDetail:{
         detail:{
           name: '唐纯近',
@@ -247,8 +1098,55 @@ export default {
             user:'杨英',
             text:'222222'
           }]
+        },
+        dependCase:[],
+        otherInfo:{
+          customInfo:'',
+          phoneList:[{
+            status:'有效',
+            phone:'13599999999',
+            name:'唐龙',
+            rel:'父亲',
+            type:'手机',
+            remark:'无'
+          }],
+          addrList:[{
+            status:'有效',
+            name:'唐龙',
+            rel:'父亲',
+            addr:'四川省南充市',
+            type:'户籍地址',
+            remark:'',
+            letterTime:1,
+            visitTime:0
+          }],
+          dataList:[],
+          memorizeList:[{
+            type:'电话催收',
+            time:'2018-03-02'
+          }],
+          commentList:[{
+            content:'1111',
+            creater:'陈重',
+            time:'2017-12-12 18:27'
+          }],
+          visitList:[],
+          rateUpdateList:[],
+          ptpList:[],
+          cpList:[],
+          syncList:[],
+          dependCaseList:[],
+          logList:[{
+            time:'2018-03-05 14:35',
+            type:'案件管理',
+            content:'退案',
+            user:'田珊珊'
+          }],
+          litigationCaseList:[],
+          reliefList:[]
         }
-      }
+      },
+      memorizeType:1
     }
   }
 }
@@ -305,6 +1203,48 @@ export default {
               }
             }
           }
+        }
+      }
+    }
+  }
+  .other-wrap{
+    display: flex;
+    align-items: flex-start;
+    .left-wrap{
+      flex:1;
+      overflow: hidden;
+      .el-tabs{
+        .el-tabs__item{
+          padding: 0 8px;
+        }
+        .tabs-wrap{
+          .operation{
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+          }
+          &.billing-wrap{
+            display: flex;
+            .first{
+              width: 35%;
+            }
+            .second{
+              margin-left: 12px;
+              flex:1;
+            }
+          }
+        }
+      }
+    }
+    .right-wrap{
+      width: 250px;
+      margin-left: 20px;
+      .el-card{
+        .el-card__header{
+          padding: 10px;
+        }
+        .el-card__body{
+          padding: 10px;
         }
       }
     }
