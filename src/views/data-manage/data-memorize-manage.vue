@@ -26,7 +26,7 @@
    <el-form-item >
  <el-select v-model="form.odv" filterable  placeholder="请选择催收员" clearable>
     <el-option
-      v-for="item in form.PersonList"
+      v-for="item in PersonList"
       :key="item.createTime"
       :label="item.userName"
       :value="item.id">
@@ -35,7 +35,7 @@
    <el-form-item >
   <el-select v-model="form.measure" placeholder="催收措施" clearable>
     <el-option
-      v-for="item in form.options"
+      v-for="item in options"
       :key="item.value"
       :label="item.label"
       :value="item.value">
@@ -438,7 +438,7 @@
 </template>
 
 <script>
-import {search,dataList,areaList,caseTypeList,clientList,EndList,PersonList,departmentList} from '@/common/js/data-memorize-manage.js'
+import {search,dataList,areaList,sectionList,caseTypeList,clientList,EndList,PersonList,departmentList} from '@/common/js/data-memorize-manage.js'
 export default {
   name: 'dataMemorizeManage',
   data(){
@@ -449,6 +449,7 @@ export default {
     	  PersonList:[],
     	  clientList:[],
     	  caseTypeList:[],
+    	  sectionList:[],
     	  pageSize:10,
     	  pageNum:1,
     	  deleteList:[],
@@ -460,7 +461,7 @@ export default {
         tableData3:[],
         currentPage4: 1,
         pages:1,
-      total:0,
+        total:0,
     	  form:{PersonList:[]},
     	  formInline:{
     	  	collectTime:[],
@@ -535,10 +536,7 @@ this.search()
            }
           
         }).catch(() => {
-          _self.$message({
-            type: 'info',
-            message: '已取消删除'
-          });
+
         });
       },
     },
@@ -566,6 +564,9 @@ this.search()
           })
               departmentList().then((response)=>{
           	this.departmentList=response
+          })
+               sectionList().then((response)=>{
+          	this.sectionList=response
           })
 },
 }
