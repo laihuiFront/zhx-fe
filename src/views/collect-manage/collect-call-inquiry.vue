@@ -169,7 +169,7 @@ export default {
           prop:'name',
           label:'姓名'
         },{
-          prop:'card_no',
+          prop:'cardNo',
           label:'卡号'
         },{
           prop:'money',
@@ -178,7 +178,7 @@ export default {
           prop:'caseDate',
           label:'委案日期'
         },{
-          prop:'collectStatus',
+          prop:'collectStatusMsg',
           label:'催收状态'
         },{
           prop:'collectDate',
@@ -187,13 +187,13 @@ export default {
           prop:'proRepayAmt',
           label:'承诺还款金额'
         },{
-          prop:'en_repay_amt',
+          prop:'enRepayAmt',
           label:'已还款金额'
         },{
-          prop:'account_age',
+          prop:'accountAge',
           label:'账龄'
         },{
-          prop:'odvv',
+          prop:'odv',
           label:'催收员'
         },
       ]

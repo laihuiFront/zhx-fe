@@ -120,7 +120,7 @@
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
-      prop="address"
+      prop="caseTime"
       label="委案日期"
       width="140"
       align="center"
@@ -172,7 +172,7 @@
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
-      prop="createUser"
+      prop="creatUser"
       label="录入人员"
       align="center"
       show-overflow-tooltip>
