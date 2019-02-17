@@ -82,7 +82,7 @@
       label="催收员"
      >
     </el-table-column>
-    <el-table-column label="" align="center" v-for="(item,index) in 3">
+    <el-table-column label="" align="center">
       <el-table-column
         prop="name"
         label="有效通电"

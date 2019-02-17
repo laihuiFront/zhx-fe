@@ -18,6 +18,43 @@ return request({
   })
 }
 
+export const totalDataBatchExport = function(area,batchNo,client,batchStatus,caseType,startTime,endTime,pageSize,pageNum) {
+return request({
+    url: '/dataBatch/totalDataBatchExport',
+    method: 'post',
+    data: {
+    	batchStatus: batchStatus ? batchStatus :"",
+       area:area ? area : "",
+       batchNo:batchNo ? batchNo : "",
+       client:client ? client : "",
+       caseType:caseType ? caseType : "",
+       startTime:startTime ? startTime : "",
+       endTime:endTime ? endTime : "",
+       pageNum:pageNum ? pageNum : 1,
+       pageSize:pageSize ? pageSize : 10
+       
+    }
+  })
+}
+export const pageDataBatchExport = function(area,batchNo,client,batchStatus,caseType,startTime,endTime,pageSize,pageNum) {
+return request({
+    url: '/dataBatch/pageDataBatchExport',
+    method: 'post',
+    data: {
+    	batchStatus: batchStatus ? batchStatus :"",
+       area:area ? area : "",
+       batchNo:batchNo ? batchNo : "",
+       client:client ? client : "",
+       caseType:caseType ? caseType : "",
+       startTime:startTime ? startTime : "",
+       endTime:endTime ? endTime : "",
+       pageNum:pageNum ? pageNum : 1,
+       pageSize:pageSize ? pageSize : 10
+       
+    }
+  })
+}
+
 export const addData = function(form) {
 return request({
     url: '/dataBatch/save',
@@ -38,6 +75,21 @@ return request({
 export const remoweData = function(id) {
 return request({
     url: '/dataBatch/delete',
+    method: 'post',
+    data:id
+  })
+}
+
+export const selectDataBatchExport = function(id) {
+return request({
+    url: '/dataBatch/selectDataBatchExport',
+    method: 'post',
+    data:id
+  })
+}
+export const selectDataCollectExportByBatch = function(id) {
+return request({
+    url: '/dataBatch/selectDataCollectExportByBatch',
     method: 'post',
     data:id
   })

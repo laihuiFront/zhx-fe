@@ -8,7 +8,7 @@
     <el-select v-model="formInline.odv" multiple collapse-tags  filterable  placeholder="请选择催收员" clearable>
     <el-option
       v-for="item in PersonList"
-      :key="item.createTime"
+      :key="item.id"
       :label="item.userName"
       :value="item.id">
     </el-option>
@@ -28,7 +28,7 @@
   <el-select v-model="formInline.client" placeholder="请选择委托方" clearable>
     <el-option
       v-for="item in clientList"
-      :key="item.value"
+      :key="item.id"
       :label="item.name"
       :value="item.id">
     </el-option>

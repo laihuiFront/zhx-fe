@@ -5,7 +5,7 @@
   	<div class="grid-content bg-purple">
   		<el-form :inline="true" ref="form" :model="form" label-width="80px">
    <el-form-item >
-    <el-select v-model="form.area" placeholder="请选择催收区域" clearable>
+    <el-select v-model="formInline.area" placeholder="请选择催收区域" clearable>
     <el-option
       v-for="item in areaList"
       :key="item.id"
@@ -15,7 +15,7 @@
   </el-select>   
   </el-form-item>
   <el-form-item >
-<el-select v-model="form.dept" placeholder="部门" clearable>
+<el-select v-model="formInline.dept" placeholder="部门" clearable>
     <el-option
       v-for="item in departmentList"
       :key="item.id"
@@ -24,7 +24,7 @@
     </el-option>
   </el-select>   </el-form-item>
    <el-form-item >
- <el-select v-model="form.odv" filterable  placeholder="请选择催收员" clearable>
+ <el-select v-model="formInline.odv" filterable  placeholder="请选择催收员" clearable>
     <el-option
       v-for="item in PersonList"
       :key="item.createTime"
@@ -33,9 +33,9 @@
     </el-option>
   </el-select>   </el-form-item>
    <el-form-item >
-  <el-select v-model="form.measure" placeholder="催收措施" clearable>
+  <el-select v-model="formInline.measure" placeholder="催收措施" clearable>
     <el-option
-      v-for="item in options"
+      v-for="item in sectionList"
       :key="item.value"
       :label="item.label"
       :value="item.value">
@@ -55,7 +55,7 @@
       <el-button type="primary" @click="open7">删除催记</el-button> 
       </el-form-item>
   		<el-form-item>
-      <el-button type="primary" @click="dialogVisible = true">导出所有催记</el-button> 
+      <el-button type="primary" @click=selectDataCollectExport>导出所选催记</el-button> 
       </el-form-item>
       <el-form-item>
       <el-button type="primary" @click="dialogVisible2 = true">导出查询结果</el-button>  </el-form-item> 
@@ -71,6 +71,7 @@
   </el-col>-->
    </el-row>
    <el-table
+   	v-loading="loading"
     ref="multipleTable"
     :data="tableData3"
     tooltip-effect="dark"
@@ -424,10 +425,10 @@
  >
   <el-form :inline="true">
   	<el-form-item>
-    <el-button @click="dialogVisible2 = false">按查询条件全部导出</el-button>
+    <el-button @click=totalDataCollectExport>按查询条件全部导出</el-button>
     </el-form-item>
      	<el-form-item>
-    <el-button @click="dialogVisible2 = false">按查询条件导出当前分页</el-button>
+    <el-button @click=pageDataCollectExport>按查询条件导出当前分页</el-button>
     </el-form-item>
   <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible2 = false">取 消</el-button>
@@ -438,13 +439,15 @@
 </template>
 
 <script>
-import {search,dataList,areaList,sectionList,caseTypeList,clientList,EndList,PersonList,departmentList} from '@/common/js/data-memorize-manage.js'
+import {search,dataList,areaList,pageDataExport,selectDataExport,totalDataExport,sectionList,caseTypeList,clientList,EndList,PersonList,departmentList} from '@/common/js/data-memorize-manage.js'
 export default {
   name: 'dataMemorizeManage',
   data(){
     return {
+    	  loading:false,
     	  caseStatusList:[{name:"未退案",id:0},{name:"正常",id:1},{name:"暂停",id:2},{name:"关档",id:3},{name:"退档",id:4},{name:"全部",id:5}],
     	  EndList:[],
+    	  selectDataCollectExportList:[],
     	  departmentList:[],
     	  PersonList:[],
     	  clientList:[],
@@ -471,8 +474,50 @@ export default {
     }
   },
   methods: {
+  	selectDataCollectExport(){
+  		this.loading=true
+  		selectDataExport(this.selectDataCollectExportList).then((response)=>{
+          	this.loading=false;
+          	this.$message({
+            type: 'success',
+            message: '导出成功!'
+          });
+          })
+  	},
+  	totalDataCollectExport(){
+  		this.loading=true;
+  		 let bailStartDate=this.formInline.bailTime[0]
+  let bailEndDate=this.formInline.bailTime[1]
+  let expectStartTime=this.formInline.expectTime[0]
+  let expectEndTime=this.formInline.expectTime[1]
+  let collectStartTime=this.formInline.collectTime[0]
+  let collectEndTime=this.formInline.collectTime[1]
+  		totalDataExport(this.formInline.area,this.formInline.dept,this.formInline.batchNo,this.formInline.client,this.formInline.odv,this.formInline.caseStatus,this.formInline.measure,this.formInline.result,this.formInline.identNo,this.formInline.cardNo,this.formInline.collectInfo,this.formInline.color,this.formInline.seqno,this.formInline.bailStartDate,this.formInline.bailEndDate,this.formInline.expectStartTime,this.formInline.expectEndTime,this.formInline.collectStartTime,this.formInline.collectEndTime,this.pageSize,this.pageNum).then((response)=>{
+          	this.loading=false;
+          	this.$message({
+            type: 'success',
+            message: '导出成功!'
+          });
+          })
+  	},
+  	pageDataCollectExport(){
+  		this.loading=true;
+   let bailStartDate=this.formInline.bailTime[0]
+  let bailEndDate=this.formInline.bailTime[1]
+  let expectStartTime=this.formInline.expectTime[0]
+  let expectEndTime=this.formInline.expectTime[1]
+  let collectStartTime=this.formInline.collectTime[0]
+  let collectEndTime=this.formInline.collectTime[1]
+pageDataExport(this.formInline.area,this.formInline.dept,this.formInline.batchNo,this.formInline.client,this.formInline.odv,this.formInline.caseStatus,this.formInline.measure,this.formInline.result,this.formInline.identNo,this.formInline.cardNo,this.formInline.collectInfo,this.formInline.color,this.formInline.seqno,this.formInline.bailStartDate,this.formInline.bailEndDate,this.formInline.expectStartTime,this.formInline.expectEndTime,this.formInline.collectStartTime,this.formInline.collectEndTime,this.pageSize,this.pageNum).then((response)=>{
+          	this.loading=false;
+          	this.$message({
+            type: 'success',
+            message: '导出成功!'
+          });
+          })
+  	},
   	search(){
-		search(this.form.area,this.form.dept,this.form.odv,this.form.measure,this.pageSize,this.pageNum).then((response)=>{
+		search(this.formInline.area,this.formInline.dept,this.formInline.odv,this.formInline.measure,this.pageSize,this.pageNum).then((response)=>{
           	this.tableData3=response.list
             this.pages = response.pages
             this.total = response.total
@@ -494,12 +539,14 @@ export default {
   	 	handleSelectionChange(row){
   		let _self=this
   		_self.deleteList=[]
+  		_self.selectDataCollectExportList=[]
 	row.forEach(function(currentValue, index, arr){
 		let Object={"id":""}
 	   Object.id=currentValue.id
 	   _self.deleteList.push(Object)
+	   _self.selectDataCollectExportList.push(Object)
+	   console.log(_self.selectDataCollectExportList)
 	})
-	console.log(_self.deleteList)
 },
 handleSizeChange(val){
 	this.pageSize=val 
