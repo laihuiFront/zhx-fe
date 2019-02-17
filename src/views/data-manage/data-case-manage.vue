@@ -312,7 +312,7 @@
        <template slot-scope="scope">
         <el-button type="text" size="small">导入</el-button>
         <el-button type="text" size="small">下载</el-button>
-        <el-button type="text" size="small">编辑</el-button>
+        <el-button type="text" size="small" @click="editCase(scope.row)">编辑</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -327,6 +327,15 @@
       :total="total">
     </el-pagination>
   </div>
+  <el-dialog
+    :title="detailTitle"
+      class="dialog-wrap"
+      :visible.sync="detailVisible"
+      :close-on-click-modal="false"
+      width="90%"
+  >
+    <case-detail></case-detail>
+  </el-dialog>
   <el-dialog
   title="查询条件"
   :visible.sync="dialogVisible"
@@ -729,9 +738,13 @@
 </template>
 
 <script>
+import CaseDetail from './detail'
 	import {dataList,areaList,caseTypeList,addressList,TellList,collectStatusList,deleteStatusList,accountAgeList,clientList,EndList,PersonList,departmentList,searchList} from '@/common/js/data-case-manage.js'
 export default {
   name: 'dataCaseManage',
+  components: {
+    CaseDetail
+  },
   data(){
     return {
     	 props: {
@@ -791,6 +804,8 @@ export default {
           value:'棕'
         },
       ],
+      detailVisible: true,
+      detailTitle: '案件详情'
     }
   },
 methods: {
@@ -850,6 +865,10 @@ this.search()
             message: '已取消删除'
           });
         });
+      },
+      editCase(detail){
+        this.detailTitle = '齐飞案件详情'
+        this.detailVisible = true
       }
     },
 created() {
