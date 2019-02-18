@@ -55,7 +55,7 @@
       <el-button type="primary" @click="open7">删除催记</el-button> 
       </el-form-item>
   		<el-form-item>
-      <el-button type="primary" @click=selectDataCollectExport>导出所选催记</el-button> 
+      <el-button type="primary" @click="selectDataCollectExport">导出所选催记</el-button> 
       </el-form-item>
       <el-form-item>
       <el-button type="primary" @click="dialogVisible2 = true">导出查询结果</el-button>  </el-form-item> 
@@ -428,7 +428,7 @@
     <el-button @click=totalDataCollectExport>按查询条件全部导出</el-button>
     </el-form-item>
      	<el-form-item>
-    <el-button @click=pageDataCollectExport>按查询条件导出当前分页</el-button>
+    <el-button @click='pageDataCollectExport'>按查询条件导出当前分页</el-button>
     </el-form-item>
   <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible2 = false">取 消</el-button>

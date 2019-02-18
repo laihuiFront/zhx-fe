@@ -1,4 +1,5 @@
 import request from '@/common/js/request'
+import download from '@/common/js/download'
 export const dataList = function(area,dept,batchNo,client,odv,caseStatus,measure,result,identNo,cardNo,collectInfo,color,seqno,bailStartDate,bailEndDate,expectStartTime,expectEndTime,collectStartTime,collectEndTime,pageSize,pageNum) {
 return request({
     url: '/dataCollect/pageDataCollect',
@@ -160,9 +161,8 @@ return request({
 }
 
 export const pageDataExport = function(area,dept,batchNo,client,odv,caseStatus,measure,result,identNo,cardNo,collectInfo,color,seqno,bailStartDate,bailEndDate,expectStartTime,expectEndTime,collectStartTime,collectEndTime,pageSize,pageNum) {
-return request({
+return download({
     url: '/dataCollect/pageDataCollectExport',
-    method: 'post',
     data: {
        area:  area,
        dept:  dept,
