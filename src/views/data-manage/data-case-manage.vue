@@ -130,12 +130,12 @@
   <el-col :span="18">
   	<div class="grid-content bg-purple">
   		<span>查询结果统计：</span>
-	<span class="textColor">列表案量：</span>
-		<span class="textColor">列表金额：</span>
-			<span class="textColor">列表还款量：</span>
-				<span class="textColor">列表还款额：</span>
-  		<span class="textColor">列表CP值：</span>
-  			<span class="textColor">列表PTP值：</span>
+	<span class="textColor">列表案量：3件</span>
+		<span class="textColor">列表金额：300</span>
+			<span class="textColor">列表还款量：3</span>
+				<span class="textColor">列表还款额：26000</span>
+  		<span class="textColor">列表CP值：300</span>
+  			<span class="textColor">列表PTP值：100</span>
   	</div>
   </el-col>
    </el-row>
@@ -208,7 +208,7 @@
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
-      prop="address"
+      prop="area"
       min-width="140"
       align="center"
       label="地区"
@@ -222,7 +222,7 @@
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
-      prop="address"
+      prop="money"
       label="委案金额"
       align="center"
       show-overflow-tooltip>
@@ -804,7 +804,7 @@ export default {
           value:'棕'
         },
       ],
-      detailVisible: true,
+      detailVisible: false,
       detailTitle: '案件详情'
     }
   },

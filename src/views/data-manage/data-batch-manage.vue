@@ -68,15 +68,15 @@
   <el-button type="text" icon="el-icon-refresh" @click="resetForm('form')">重置</el-button> 
   </el-form-item>
   <el-form-item>
-      <el-button type="primary" @click="returnCaseList">批次退案</el-button>  </el-form-item>
+      <el-button type="primary" @click="returnCaseList" v-has="'批次退案'">批次退案</el-button>  </el-form-item>
       <el-form-item>
-      <el-button type="primary"  @click="open7">批次删除</el-button>  </el-form-item>
+      <el-button type="primary"  @click="open7" v-has="'批次删除'">批次删除</el-button>  </el-form-item>
       <el-form-item>
-      <el-button type="primary"  @click="dialogVisible1 = true">导出查询结果</el-button>  </el-form-item>
+      <el-button type="primary"  @click="dialogVisible1 = true" v-has="'导出查询结果'">导出查询结果</el-button>  </el-form-item>
       <el-form-item>
-      <el-button type="primary" @click=selectDataExport>导出所选批次</el-button>  </el-form-item>
+      <el-button type="primary" @click='selectDataExport' v-has="'导出所选批次'">导出所选批次</el-button>  </el-form-item>
       <el-form-item>
-      <el-button type="primary" @click=selectDataByBatch>批量导出批次催记</el-button>  </el-form-item>
+      <el-button type="primary" @click="selectDataByBatch" v-has="'批量导出批次催记'">批量导出批次催记</el-button>  </el-form-item>
   	
   </el-form>
   	</div>
@@ -121,7 +121,7 @@
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
-      prop="address"
+      prop="caseTime"
       label="委案日期"
       width="140"
       align="center"
@@ -173,7 +173,7 @@
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
-      prop="createUser"
+      prop="creatUser"
       label="录入人员"
       align="center"
       show-overflow-tooltip>
@@ -190,11 +190,11 @@
       label="操作"
       width="250">
       <template slot-scope="scope">
-        <el-button @click="handleClick(scope.row)" type="text" size="small">追加</el-button>
-        <el-button type="text" size="small" @click="returnMessage(scope.row.id)">退案</el-button>
-        <el-button type="text" size="small" @click="editMessage(scope.row)">编辑</el-button>
-        <el-button type="text" size="small" @click="deleteMessage(scope.row.id)">删除</el-button>
-        <el-button type="text" size="small">导出催记</el-button>
+        <el-button @click="handleClick(scope.row)" type="text" size="small" v-has="'追加'">追加</el-button>
+        <el-button type="text" size="small" @click="returnMessage(scope.row.id)" v-has="'退案'">退案</el-button>
+        <el-button type="text" size="small" @click="editMessage(scope.row)" v-has="'编辑'">编辑</el-button>
+        <el-button type="text" size="small" @click="deleteMessage(scope.row.id)" v-has="'删除'">删除</el-button>
+        <el-button type="text" size="small" v-has="'导出催记'">导出催记</el-button>
       </template>
     </el-table-column>
   </el-table>

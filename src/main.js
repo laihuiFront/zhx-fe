@@ -10,6 +10,7 @@ import { Message, MessageBox } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 import '@/common/scss/element-variables.scss'
 import { localCache } from '@/common/js/auth'
+import has from './common/js/directives'
 Vue.use(ElementUI, { size: 'mini'});
 
 

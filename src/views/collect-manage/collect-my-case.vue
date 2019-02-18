@@ -3,6 +3,15 @@
     <el-tab-pane label="我的案件" name="tab1"
       ><div id="collect-my-case">
     <el-dialog
+      :title="detailTitle"
+      class="dialog-wrap"
+      :visible.sync="detailVisible"
+      :close-on-click-modal="false"
+      width="90%"
+    >
+      <case-detail></case-detail>
+    </el-dialog>
+    <el-dialog
       title="申请协催"
       :visible.sync="dialogVisible"
       width="30%">
@@ -427,12 +436,22 @@
             width="55">
           </el-table-column>
           <el-table-column
+            label="个案序列号"
+            header-align="center" align="center">
+            <template slot-scope="scope">
+              <el-button style="text-decoration: underline" type="text" size="small"
+                         @click="showCase(scope.row)">{{scope
+                .row.seqno}}</el-button>
+            </template>
+          </el-table-column>
+          <el-table-column
             v-for="(item, index) in tableCol_data"
             :key="index"
             v-bind="item"
             header-align="center"
             align="center"
-          ></el-table-column>
+          >
+          </el-table-column>
           <!--<el-table-column label="操作" show-overflow-tooltip>-->
             <!--<template slot-scope="scope">-->
               <!--<el-button type="text" size="small">导入</el-button>-->
@@ -463,10 +482,12 @@
 import tab2 from "./collect-status-statistics";
 import tab3 from "./collect-repayment-statistics";
 import { pageMyCase,getEnum,markColor ,addSynergy,batchNo,addCollectStatus} from "@/common/js/collect-my-case";
+import CaseDetail from '@/views/data-manage/detail';
 export default {
   components: {
     tab2,
-    tab3
+    tab3,
+    CaseDetail
   },
   name: "collectMyCase",
   data() {
@@ -594,10 +615,7 @@ export default {
           prop: "accountAge",
           label: "逾期账龄"
         },
-        {
-          prop: "seqno",
-          label: "个案序列号"
-        },
+
         {
           prop: "caseDate",
           width:"140",
@@ -666,6 +684,8 @@ export default {
         }
       ],
       multipleSelection: [],
+      detailVisible: false,
+      detailTitle: '案件详情'
     };
   },
   computed: {
@@ -706,6 +726,8 @@ export default {
         client,
         batchNo,
         seqno,
+        caseDateStart:(!!val7 && val7[0])||'' ,
+        caseDateEnd:(!!val7 && val7[1])||'' ,
         nextFollDateStart: (!!val2 && val2[0])||'' ,
         nextFollDateEnd: (!!val2 && val2[1])||'',
         area,
@@ -831,6 +853,9 @@ export default {
           return Object.assign(item, {'class-name': `color_${item.color}`});
         })
       });
+    },
+    showCase(row){
+      this.detailVisible=true;
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
