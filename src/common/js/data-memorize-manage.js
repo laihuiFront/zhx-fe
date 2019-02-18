@@ -56,6 +56,14 @@ return request({
     }
   })
 }
+export const selectDataExport = function(id) {
+return request({
+    url: '/dataCollect/selectDataCollectExport',
+    method: 'post',
+    data:id
+  })
+}
+
 export const remoweData = function(id) {
 return request({
     url: '/dataCollect/delete',
@@ -120,4 +128,65 @@ return request({
     data:{}
   })
 }
+
+export const totalDataExport = function(area,dept,batchNo,client,odv,caseStatus,measure,result,identNo,cardNo,collectInfo,color,seqno,bailStartDate,bailEndDate,expectStartTime,expectEndTime,collectStartTime,collectEndTime,pageSize,pageNum) {
+return request({
+    url: 'dataCollect/totalDataCollectExport',
+    method: 'post',
+    data: {
+       area:  area,
+       dept:  dept,
+       batchNo:  batchNo ,
+       client:  client ,
+       odv:  odv ,
+       caseStatus:  caseStatus ,
+       measure:  measure ,
+       result:  result,
+       identNo:  identNo ,
+       cardNo:  cardNo ,
+       collectInfo:  collectInfo ,
+       color:  color ,
+       seqno:  seqno ,
+       bailStartDate:  bailStartDate ,
+       bailEndDate:  bailEndDate ,
+       expectStartTime:  expectStartTime ,
+       expectEndTime:  expectEndTime,
+       collectStartTime:  collectStartTime ,
+       collectEndTime:  collectEndTime ,
+       pageNum:pageNum ? pageNum : 1,
+       pageSize:pageSize ? pageSize : 10
+    }
+  })
+}
+
+export const pageDataExport = function(area,dept,batchNo,client,odv,caseStatus,measure,result,identNo,cardNo,collectInfo,color,seqno,bailStartDate,bailEndDate,expectStartTime,expectEndTime,collectStartTime,collectEndTime,pageSize,pageNum) {
+return request({
+    url: '/dataCollect/pageDataCollectExport',
+    method: 'post',
+    data: {
+       area:  area,
+       dept:  dept,
+       batchNo:  batchNo ,
+       client:  client ,
+       odv:  odv ,
+       caseStatus:  caseStatus ,
+       measure:  measure ,
+       result:  result,
+       identNo:  identNo ,
+       cardNo:  cardNo ,
+       collectInfo:  collectInfo ,
+       color:  color ,
+       seqno:  seqno ,
+       bailStartDate:  bailStartDate ,
+       bailEndDate:  bailEndDate ,
+       expectStartTime:  expectStartTime ,
+       expectEndTime:  expectEndTime,
+       collectStartTime:  collectStartTime ,
+       collectEndTime:  collectEndTime ,
+       pageNum:pageNum ? pageNum : 1,
+       pageSize:pageSize ? pageSize : 10
+    }
+  })
+}
+
 

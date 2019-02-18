@@ -74,9 +74,9 @@
       <el-form-item>
       <el-button type="primary"  @click="dialogVisible1 = true">导出查询结果</el-button>  </el-form-item>
       <el-form-item>
-      <el-button type="primary" >导出所选批次</el-button>  </el-form-item>
+      <el-button type="primary" @click=selectDataExport>导出所选批次</el-button>  </el-form-item>
       <el-form-item>
-      <el-button type="primary">批量导出批次催记</el-button>  </el-form-item>
+      <el-button type="primary" @click=selectDataByBatch>批量导出批次催记</el-button>  </el-form-item>
   	
   </el-form>
   	</div>
@@ -90,6 +90,7 @@
   </el-col>
    </el-row>
    <el-table
+   	v-loading="loading"
     ref="multipleTable"
     :data="DataList"
     style="width: 100%;margin-top: 10px;"
@@ -221,11 +222,11 @@
   >
   <el-row :gutter="20">
   <el-col :span="10"><div class="grid-content bg-purple"> 
-  	<el-button >按查询条件全部导出</el-button>
+  	<el-button click=totalDataExport>按查询条件全部导出</el-button>
 </div></el-col>
   <el-col :span="10">
   	<div class="grid-content bg-purple">  
-  		<el-button >按查询条件导出当前分页</el-button>
+  		<el-button click=pageDataExport>按查询条件导出当前分页</el-button>
 </div></el-col>
 </el-row>
 </el-dialog>
@@ -356,15 +357,18 @@
 </template>
 
 <script>
-	import {dataList,remoweData,addData,clientList,caseTypeList,areaList,returnCase,update} from '@/common/js/data-batch-manage.js'
+	import {dataList,remoweData,addData,selectDataCollectExportByBatch,selectDataBatchExport,pageDataBatchExport,totalDataBatchExport,clientList,caseTypeList,areaList,returnCase,update} from '@/common/js/data-batch-manage.js'
 export default {
   name: 'dataBatchManage',
    data(){
     return {
+    	loading:false,
     	userCount:'',
     	totalAmt:'',
     	messageForm:{},
     	deleteList:[],
+    	selectDataBatchExportList:[],
+    	selectDataCollectExportByBatchList:[],
     	DataList:[],
     	pageSize:10,
     	pageNum:1,
@@ -388,6 +392,51 @@ export default {
     }
   },
 methods: {
+	selectDataByBatch(){
+		debugger
+		this.loading=true
+  		selectDataBatchExport(this.selectDataCollectExportByBatchList).then((response)=>{
+          	this.loading=false;
+          	this.$message({
+            type: 'success',
+            message: '导出成功!'
+          });
+          })
+	},
+	selectDataExport(){
+		this.loading=true
+  		selectDataBatchExport(this.selectDataBatchExportList).then((response)=>{
+          	this.loading=false;
+          	this.$message({
+            type: 'success',
+            message: '导出成功!'
+          });
+          })
+	},
+	totalDataExport(){
+			this.loading=true;
+			let startTime=this.form.time[0]
+      	let endTime=this.form.time[1]
+		totalDataBatchExport(this.form.area,this.form.batchNo,this.form.client,this.form.batchStatus,this.form.caseType,startTime,endTime,this.pageSize,this.pageNum).then((response)=>{
+          	this.loading=false;
+          	this.$message({
+            type: 'success',
+            message: '导出成功!'
+          });
+          })
+	},
+	pageDataExport(){
+			this.loading=true;
+			let startTime=this.form.time[0]
+      	let endTime=this.form.time[1]
+		pageDataBatchExport(this.form.area,this.form.batchNo,this.form.client,this.form.batchStatus,this.form.caseType,startTime,endTime,this.pageSize,this.pageNum).then((response)=>{
+          	this.loading=false;
+          	this.$message({
+            type: 'success',
+            message: '导出成功!'
+          });
+          })
+	},
 	  submitmsgForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
@@ -461,10 +510,16 @@ this.search()
 		handleSelectionChange(row){
   		let _self=this
   		_self.deleteList=[]
+  		_self.selectDataCollectExportByBatchList=[];
+  		_self.selectDataBatchExportList=[];
 	row.forEach(function(currentValue, index, arr){
 		let Object={"id":""}
+		let Project={batchNo:""}
+		Project.batchNo=currentValue.batchNo
 	   Object.id=currentValue.id
 	   _self.deleteList.push(Object)
+	   _self.selectDataBatchExportList.push(Object)
+	   _self.selectDataBatchExportList.push(Project)
 	})
 	console.log(_self.deleteList)
 },
