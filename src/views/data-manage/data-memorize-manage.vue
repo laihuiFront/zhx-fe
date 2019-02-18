@@ -27,7 +27,7 @@
  <el-select v-model="formInline.odv" filterable  placeholder="请选择催收员" clearable>
     <el-option
       v-for="item in PersonList"
-      :key="item.createTime"
+      :key="item.id"
       :label="item.userName"
       :value="item.id">
     </el-option>
