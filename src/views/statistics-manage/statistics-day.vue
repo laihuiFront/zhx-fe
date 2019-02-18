@@ -70,88 +70,105 @@
      show-summary
     style="width: 100%">
     <el-table-column
-      prop="date"
+      prop="odv"
       align="center"
       label="催收员"
      >
-    </el-table-column>
-    <el-table-column label="8:00前" align="center">
+    </el-table-column>   	
+       <el-table-column label="8:00前" align="center">
       <el-table-column
-        prop="name"
+        prop="list[0].countConPhoneNum"
         label="有效通电"
         align="center"
        >
       </el-table-column>
       <el-table-column
-        prop="name"
+        prop="list[0].countPhoneNum"
         label="总通电量"
         align="center"
        >
       </el-table-column>
       <el-table-column
-        prop="name"
+        prop="list[0].countCasePhoneNum"
         label="个按量"
         align="center"
        >
       </el-table-column>
-    </el-table-column>
-    
-    <el-table-column label="8:00-12:00" align="center">
+    </el-table-column> 
+       <el-table-column label="8:00-12:00" align="center">
       <el-table-column
-        prop="name"
+        prop="list[1].countConPhoneNum"
         label="有效通电"
         align="center"
        >
       </el-table-column>
       <el-table-column
-        prop="name"
+        prop="list[1].countPhoneNum"
         label="总通电量"
         align="center"
        >
       </el-table-column>
       <el-table-column
-        prop="name"
+        prop="list[1].countCasePhoneNum"
         label="个按量"
         align="center"
        >
       </el-table-column>
-    </el-table-column>
-    <el-table-column label="12:00-18:00" align="center">
+    </el-table-column>  <el-table-column label="12:00-18:00" align="center">
       <el-table-column
-        prop="name"
+        prop="list[2].countConPhoneNum"
         label="有效通电"
         align="center"
        >
       </el-table-column>
       <el-table-column
-        prop="name"
+        prop="list[2].countPhoneNum"
         label="总通电量"
         align="center"
        >
       </el-table-column>
       <el-table-column
-        prop="name"
+        prop="list[2].countCasePhoneNum"
         label="个按量"
         align="center"
        >
       </el-table-column>
-    </el-table-column>
+    </el-table-column>  <el-table-column label="18:00以后" align="center">
+      <el-table-column
+        prop="list[3].countConPhoneNum"
+        label="有效通电"
+        align="center"
+       >
+      </el-table-column>
+      <el-table-column
+        prop="list[3].countPhoneNum"
+        label="总通电量"
+        align="center"
+       >
+      </el-table-column>
+      <el-table-column
+        prop="list[3].countCasePhoneNum"
+        label="个按量"
+        align="center"
+       >
+      </el-table-column>
+    </el-table-column> 
     <el-table-column label="合计" align="center">
       <el-table-column
-        prop="name"
+        prop="sumConPhoneNum"
         label="有效通电"
         align="center"
        >
       </el-table-column>
       <el-table-column
-        prop="name"
+        prop="sumPhoneNum"
         label="总通电量"
         align="center"
        >
       </el-table-column>
       <el-table-column
-        prop="name"
-        label="个按量"
+        prop="sumCasePhoneNum"
+        label="个案量"
         align="center"
        >
       </el-table-column>
@@ -177,6 +194,7 @@ export default {
   name: 'statisticsDay',
   data(){
     return {
+    	dataList:[],
     	 currentPage4: 1,
         pages:1,
         total:100,
@@ -238,10 +256,10 @@ this.pageNum=val;
              PersonList().then((response)=>{
           	this.PersonList=response
           })
-//            dataList(this.formInline).then((response)=>{
-//        	this.tableData3=response
-//        })
-//          
+              dataList(this.formInline).then((response)=>{
+          	this.tableData3=response.list
+          })
+            
             
 },
  }

@@ -8,7 +8,7 @@
     <el-select v-model="formInline.odv" multiple collapse-tags  filterable  placeholder="请选择催收员" clearable>
     <el-option
       v-for="item in PersonList"
-      :key="item.createTime"
+      :key="item.id"
       :label="item.userName"
       :value="item.id">
     </el-option>
@@ -77,14 +77,14 @@
      show-summary
     style="width: 100%">
     <el-table-column
-      prop="date"
+      prop="odv"
       align="center"
       label="催收员"
      >
     </el-table-column>
-    <el-table-column label="" align="center">
+    <el-table-column :label="item.area" align="center" v-for="(item,index) in dataList" key="item.area">
       <el-table-column
-        prop="name"
+        prop="list[0].area"
         label="有效通电"
         align="center"
        >
@@ -118,7 +118,7 @@
 </template>
 
 <script>
-		import {areaList,clientList,PersonList} from '@/common/js/statistics-month.js'
+		import {areaList,clientList,PersonList,dataList} from '@/common/js/statistics-month.js'
 
 export default {
   name: 'statisticsMonth',
@@ -127,6 +127,7 @@ export default {
     	 currentPage4: 1,
         pages:1,
         total:100,
+        dataList:[],
     	formInline:{time:"",time2:""},
     	PersonList:[],
     	areaList:[],
@@ -165,6 +166,22 @@ this.pageNum=val;
  	}
  },
  created() {
+ 	 dataList(this.formInline).then((response)=>{
+          	this.tableData3=response.list
+          	this.dataList=[]
+          	for(var i=0;i<=response.list[0].list.length;i++){
+           for(var j in response.list[0].list[i]) {
+           	debugger
+           	if(j==="area"){
+           		let Object={area:''}
+          		Object.area=response.list[0].list[i].area
+          		this.dataList.push(Object)
+           	}
+}
+          		
+          	}
+          	console.log(this.dataList)
+          })
           areaList().then((response)=>{
           	this.areaList=response
           })
