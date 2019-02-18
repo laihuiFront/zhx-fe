@@ -28,43 +28,28 @@ service.interceptors.request.use(config => {
 service.interceptors.response.use(
   response => {
     const res = response.data
-    // let url = window.URL.createObjectURL(new Blob([res]))
-    //     let link = document.createElement('a')
-    //     link.style.display = 'none'
-    //     link.href = url
+    const responseInfo = JSON.parse(decodeURIComponent(response.headers['response-msg-info']))
 
-    //     link.setAttribute('download', decodeURI(response.headers['content-disposition'].replace('attachment;filename=', '')))
-
-    //     document.body.appendChild(link)
-    //     link.click()
-    //     return true
-
-
-    if (res.code !== '100') {
+    if (responseInfo.code !== '100') {
       Message({
-        message: res.msg,
+        message: responseInfo.msg,
         type: 'error',
         duration: 5 * 1000
       })
 
-      if(res.code === '400'){
+      if(responseInfo.code === '400'){
         store.dispatch('fedLogOut').then(()=>{
           router.replace('/login')
         })
       }
       return Promise.reject('error')
     } else {
-        // if (!response || !response.data) {
-        //     return Promise.reject('error')
-        // }
-        // console.log(response.headers['content-disposition']);
-        // console.log(response.data);
         let url = window.URL.createObjectURL(new Blob([res]))
         let link = document.createElement('a')
         link.style.display = 'none'
         link.href = url
 
-        link.setAttribute('download', decodeURI(response.headers['content-disposition'].replace('attachment;filename=', '')))
+        link.setAttribute('download', responseInfo.data)
 
         document.body.appendChild(link)
         link.click()
