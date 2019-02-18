@@ -1,5 +1,14 @@
 <template>
   <div id="collect-call-inquiry">
+    <el-dialog
+      :title="detailTitle"
+      class="dialog-wrap"
+      :visible.sync="detailVisible"
+      :close-on-click-modal="false"
+      width="90%"
+    >
+      <case-detail></case-detail>
+    </el-dialog>
     <el-form :inline="true" ref="form1" :model="form1" label-width="80px">
       <el-form-item prop="val1">
         <el-radio-group v-model="form1.val1">
@@ -77,6 +86,15 @@
       style="width: 100%"
     >
       <el-table-column
+        label="个案序列号"
+        header-align="center" align="center">
+        <template slot-scope="scope">
+          <el-button style="text-decoration: underline" type="text" size="small"
+                     @click="showCase(scope.row)">{{scope
+            .row.seqNo}}</el-button>
+        </template>
+      </el-table-column>
+      <el-table-column
         v-for="(item, index) in tablecol_data"
         v-bind="item"
         :key="index"
@@ -122,9 +140,13 @@
 
 <script>
 import {pageCaseTel,addComment,getEnum} from '@/common/js/collect-call-inquiry.js';
+import CaseDetail from '@/views/data-manage/detail';
 
 export default {
   name: 'collectCallInquiry',
+  components:{
+    CaseDetail
+  },
   data(){
     return {
       paginationData:{
@@ -162,10 +184,6 @@ export default {
       // }]
       tablecol_data:[
         {
-          prop:'seqNo',
-          label:'个案序列号'
-        },
-        {
           prop:'name',
           label:'姓名'
         },{
@@ -196,7 +214,9 @@ export default {
           prop:'odv',
           label:'催收员'
         },
-      ]
+      ],
+      detailVisible: false,
+      detailTitle: '案件详情'
     }
   },
   computed:{
@@ -260,6 +280,9 @@ export default {
         this.paginationData.total = data.total;
         this.tableData = data.list;
       })
+    },
+    showCase(row){
+      this.detailVisible=true;
     },
     handleCurrentChange(currentPage){
       this.paginationData.currentPage = currentPage;
