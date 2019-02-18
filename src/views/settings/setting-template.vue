@@ -26,6 +26,12 @@
       title="编辑"
       :visible.sync="dialogVisible"
       width="1000px">
+      <div class="dia-top-inp">
+        <span
+          style="white-space: nowrap"><span>模板名称: </span><span style="color: red">* </span>
+        </span>&nbsp;
+        <el-input v-model="input" placeholder="请输入内容"></el-input>
+      </div>
       <div style="display: flex;">
         <div style="flex:1">
           <vue-ueditor-wrap :config="myConfig" @ready="ready" :destroy="true" v-model="msg"></vue-ueditor-wrap>
@@ -66,7 +72,8 @@ export default {
       },
       editor: {},
       modulePlaceHolder:[],
-      currentRow:{}
+      currentRow:{},
+      input:''
     }
   },
   created(){
@@ -77,7 +84,7 @@ export default {
       this.editor = editorInstance;
     },
     saveContent(){
-      save({id:this.currentRow.id,title:this.currentRow.title,context:this.editor.getAllHtml()}).then((data)=>{
+      save({id:this.currentRow.id,title:this.input,context:this.editor.getAllHtml()}).then((data)=>{
         this.$message({
           message: '提交成功',
           type: 'success'
@@ -92,6 +99,7 @@ export default {
     handleClick(currentRow){
       this.dialogVisible = true;
       this.currentRow = currentRow;
+      this.input = currentRow.title;
     },
     deleteOne({id}){
       deleteOne({id}).then(()=>{
@@ -131,6 +139,12 @@ export default {
       line-height: 33px;
       color: #D09F6D;
     }
+  }
+  .dia-top-inp{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    align-items: center;
   }
 }
 </style>
