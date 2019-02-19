@@ -179,9 +179,9 @@ this.pageNum=val;
            for(var j in response.list[0].list[i]) {
            	// debugger
            	if(j==="area"){
-           		let Object={area:''}
-          		Object.area=response.list[0].list[i].area
-          		this.dataList.push(Object)
+           		let item={area:''}
+          		item.area=response.list[0].list[i].area
+          		this.dataList.push(item)
            	}
 }
           		
