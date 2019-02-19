@@ -22,3 +22,18 @@ return request({
     data:{role:"催收员"}
   })
 }
+export const dataList = function(form,pageSize,pageNum) {
+return request({
+    url: '/statistics/collection/month',
+    method: 'post',
+    data: {
+       odvAttr:form.odv,
+       area:form.area,
+       client:form.client,
+       monthStart:form.time[0],
+       monthEnd:form.time[1],
+       pageNum:pageNum ? pageNum : 1,
+       pageSize:pageSize ? pageSize : 10
+    }
+  })
+}

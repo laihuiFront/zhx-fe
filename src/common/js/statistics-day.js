@@ -25,7 +25,7 @@ return request({
 
 export const dataList = function(form,pageSize,pageNum) {
 return request({
-    url: '/statistics/colleciton/day',
+    url: '/statistics/collection/day',
     method: 'post',
     data: {
        odv:form.odv,

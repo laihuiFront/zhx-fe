@@ -8,7 +8,7 @@
     <el-select v-model="formInline.odv" multiple collapse-tags  filterable  placeholder="请选择催收员" clearable>
     <el-option
       v-for="item in PersonList"
-      :key="item.createTime"
+      :key="item.id"
       :label="item.userName"
       :value="item.id">
     </el-option>
@@ -54,7 +54,7 @@
   
   </el-form-item>
   <el-form-item>
-  <el-button type="text" icon="el-icon-search" 开始统计</el-button> 
+  <el-button type="text" icon="el-icon-search">开始统计</el-button> 
   </el-form-item>
   <el-form-item>
   <el-button type="text" icon="el-icon-refresh" @click=clench>重置</el-button> 
@@ -77,29 +77,35 @@
      show-summary
     style="width: 100%">
     <el-table-column
-      prop="date"
+      prop="odv"
       align="center"
       label="催收员"
      >
     </el-table-column>
-    <el-table-column label="" align="center">
+    <el-table-column :label="item.area" align="center" v-for="(item,index) in dataList" :key="item.area">
       <el-table-column
-        prop="name"
         label="有效通电"
         align="center"
        >
+        <template slot-scope="scope">
+          {{ scope.row.list[index].countConPhoneNum }}
+        </template>
       </el-table-column>
       <el-table-column
-        prop="name"
         label="总通电量"
         align="center"
        >
+        <template slot-scope="scope">
+          {{ scope.row.list[index].countPhoneNum }}
+        </template>
       </el-table-column>
       <el-table-column
-        prop="name"
         label="个按量"
         align="center"
        >
+        <template slot-scope="scope">
+          {{ scope.row.list[index].countCasePhoneNum }}
+        </template>
       </el-table-column>
     </el-table-column>
   </el-table>
@@ -118,7 +124,7 @@
 </template>
 
 <script>
-		import {areaList,clientList,PersonList} from '@/common/js/statistics-month.js'
+		import {areaList,clientList,PersonList,dataList} from '@/common/js/statistics-month.js'
 
 export default {
   name: 'statisticsMonth',
@@ -127,6 +133,7 @@ export default {
     	 currentPage4: 1,
         pages:1,
         total:100,
+        dataList:[],
     	formInline:{time:"",time2:""},
     	PersonList:[],
     	areaList:[],
@@ -165,6 +172,22 @@ this.pageNum=val;
  	}
  },
  created() {
+ 	 dataList(this.formInline).then((response)=>{
+          	this.tableData3=response.list
+          	this.dataList=[]
+          	for(var i=0;i<=response.list[0].list.length;i++){
+           for(var j in response.list[0].list[i]) {
+           	// debugger
+           	if(j==="area"){
+           		let item={area:''}
+          		item.area=response.list[0].list[i].area
+          		this.dataList.push(item)
+           	}
+}
+          		
+          	}
+          	console.log(this.dataList)
+          })
           areaList().then((response)=>{
           	this.areaList=response
           })

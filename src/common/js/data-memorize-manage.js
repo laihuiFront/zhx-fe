@@ -1,5 +1,5 @@
 import request from '@/common/js/request'
-export const dataList = function(area,dept,batchNo,client,odv,caseStatus,measure,result,identNo,cardNo,collectInfo,color,seqno,bailStartDate,bailEndDate,expectStartTime,expectEndTime,collectStartTime,collectEndTime,orderBy,sort,pageSize,pageNum) {
+export const dataList = function(area,dept,batchNo,client,odv,caseStatus,measure,result,identNo,cardNo,collectInfo,color,seqno,bailStartDate,bailEndDate,expectStartTime,expectEndTime,collectStartTime,collectEndTime,pageSize,pageNum) {
 return request({
     url: '/dataCollect/pageDataCollect',
     method: 'post',
@@ -164,9 +164,8 @@ return request({
 }
 
 export const pageDataExport = function(area,dept,batchNo,client,odv,caseStatus,measure,result,identNo,cardNo,collectInfo,color,seqno,bailStartDate,bailEndDate,expectStartTime,expectEndTime,collectStartTime,collectEndTime,pageSize,pageNum) {
-return request({
+return download({
     url: '/dataCollect/pageDataCollectExport',
-    method: 'post',
     data: {
        area:  area,
        dept:  dept,
