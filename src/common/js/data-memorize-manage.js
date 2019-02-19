@@ -8,8 +8,8 @@ return request({
        area:  area,
        dept:  dept,
        batchNo:  batchNo ,
-       client:  client ,
-       odv:  odv ,
+       client:  clients ,
+       odv:  odvs ,
        caseStatus:  caseStatus ,
        measure:  measure ,
        result:  result,
@@ -32,14 +32,14 @@ return request({
   })
 }
 
-export const search = function(area,dept,odv,measure,orderBy,sort,pageSize,pageNum) {
+export const search = function(area,dept,odvs,measure,orderBy,sort,pageSize,pageNum) {
 return request({
     url: '/dataCollect/pageDataCollect',
     method: 'post',
     data: {
        area:  area,
        dept:  dept,
-       odv:  odv ,
+       odvs:  odvs ,
       orderBy:orderBy?orderBy:"id",
       sort:sort?sort:"desc",
        measure:  measure ,
@@ -134,7 +134,7 @@ return request({
   })
 }
 
-export const totalDataExport = function(area,dept,batchNo,client,odv,caseStatus,measure,result,identNo,cardNo,collectInfo,color,seqno,bailStartDate,bailEndDate,expectStartTime,expectEndTime,collectStartTime,collectEndTime,pageSize,pageNum) {
+export const totalDataExport = function(area,dept,batchNo,clients,odvs,caseStatus,measure,result,identNo,cardNo,collectInfo,color,seqno,bailStartDate,bailEndDate,expectStartTime,expectEndTime,collectStartTime,collectEndTime,pageSize,pageNum) {
 return request({
     url: 'dataCollect/totalDataCollectExport',
     method: 'post',
@@ -164,15 +164,15 @@ return request({
   })
 }
 
-export const pageDataExport = function(area,dept,batchNo,client,odv,caseStatus,measure,result,identNo,cardNo,collectInfo,color,seqno,bailStartDate,bailEndDate,expectStartTime,expectEndTime,collectStartTime,collectEndTime,pageSize,pageNum) {
+export const pageDataExport = function(area,dept,batchNo,clients,odvs,caseStatus,measure,result,identNo,cardNo,collectInfo,color,seqno,bailStartDate,bailEndDate,expectStartTime,expectEndTime,collectStartTime,collectEndTime,pageSize,pageNum) {
 return download({
     url: '/dataCollect/pageDataCollectExport',
     data: {
        area:  area,
        dept:  dept,
        batchNo:  batchNo ,
-       client:  client ,
-       odv:  odv ,
+       clients:  clients ,
+       odvs:  odvs,
        caseStatus:  caseStatus ,
        measure:  measure ,
        result:  result,

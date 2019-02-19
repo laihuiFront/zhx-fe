@@ -1,12 +1,12 @@
 import request from '@/common/js/request'
-export const dataList = function(area,batchNo,client,caseType,startTime,endTime,orderBy,sort,pageSize,pageNum) {
+export const dataList = function(area,batchNo,clients,caseType,startTime,endTime,orderBy,sort,pageSize,pageNum) {
 return request({
     url: '/dataBatch/pageDataCase',
     method: 'post',
     data: {
        area:area ? area : "",
        batchNo:batchNo ? batchNo : "",
-       client:client ? client : "",
+       clients:clients,
        caseType:caseType ? caseType : "",
        startTime:startTime ? startTime : "",
        endTime:endTime ? endTime : "",

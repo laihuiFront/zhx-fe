@@ -18,7 +18,7 @@
    <el-input v-model="form.batchNo" placeholder="请输入批次" clearable></el-input>
   </el-form-item>
    <el-form-item >
-  <el-select v-model="form.client" filterable  placeholder="请选择委托方" clearable>
+  <el-select v-model="form.clients" filterable  multiple placeholder="请选择委托方" clearable>
     <el-option
       v-for="item in clientList"
       :key="item.id"
@@ -106,7 +106,7 @@
       :sortable='true'
       label="委托方"
       :sort-orders="['ascending','descending']"
-      width="120">
+      width="140">
     </el-table-column>
     <el-table-column
       prop="statusMsg"
@@ -528,7 +528,7 @@ methods: {
       let endTime=this.form.time[1]
       let sort = order==null?"desc":order.replace("ending","")
       let orderBy = prop==null?"id":prop
-      dataList(this.form.area,this.form.batchNo,this.form.client,this.form.caseType,startTime,endTime,orderBy,sort,this.pageSize,this.pageNum).then((response)=>{
+      dataList(this.form.area,this.form.batchNo,this.form.clients,this.form.caseType,startTime,endTime,orderBy,sort,this.pageSize,this.pageNum).then((response)=>{
         this.DataList=response.pageInfo.list
         this.pages = response.pageInfo.pages
         this.total = response.pageInfo.total
@@ -537,7 +537,7 @@ methods: {
 	search(){
       	let startTime=this.form.time[0]
       	let endTime=this.form.time[1]
-dataList(this.form.area,this.form.batchNo,this.form.client,this.form.caseType,startTime,endTime,this.pageSize,this.pageNum).then((response)=>{
+dataList(this.form.area,this.form.batchNo,this.form.clients,this.form.caseType,startTime,endTime,this.pageSize,this.pageNum).then((response)=>{
             this.DataList=response.pageInfo.list
             this.pages = response.pageInfo.pages
             this.total = response.pageInfo.total

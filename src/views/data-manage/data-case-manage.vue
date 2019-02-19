@@ -18,7 +18,7 @@
    <el-input v-model="form.batchNo" placeholder="请输入批次" clearable></el-input>
   </el-form-item>
    <el-form-item >
-  <el-select v-model="form.client" placeholder="请选择委托方" clearable>
+  <el-select v-model="form.clients" filterable  multiple placeholder="请选择委托方" clearable>
     <el-option
       v-for="item in clientList"
       :key="item.id"
@@ -164,6 +164,7 @@
       align="center"
       :sortable='true'
       :sort-orders="['ascending','descending']"
+      min-width="140"
       label="催收区域"
       >
     </el-table-column>
@@ -171,6 +172,7 @@
       prop="collectStatus"
       align="center"
       :sortable='true'
+      min-width="140"
       :sort-orders="['ascending','descending']"
       label="催收状态"
       show-overflow-tooltip>
@@ -248,6 +250,7 @@
     <el-table-column
       prop="money"
       :sortable='true'
+      min-width="140"
       :sort-orders="['ascending','descending']"
       label="委案金额"
       align="center"
@@ -256,6 +259,7 @@
      <el-table-column
       prop="balance"
       :sortable='true'
+      min-width="140"
       :sort-orders="['ascending','descending']"
       align="center"
       label="委案余额"
@@ -275,6 +279,7 @@
       :sortable='true'
       :sort-orders="['ascending','descending']"
       label="最新催记"
+      min-width="140"
       align="center"
       show-overflow-tooltip>
     </el-table-column>
@@ -291,6 +296,7 @@
       :sortable='true'
       :sort-orders="['ascending','descending']"
       label="跟进次数"
+      min-width="120"
       align="center"
       show-overflow-tooltip>
     </el-table-column>
@@ -332,6 +338,7 @@
     </el-table-column>
     <el-table-column
       prop="accountAge"
+      min-width="120"
       label="逾期账龄"
       :sortable='true'
       :sort-orders="['ascending','descending']"
@@ -880,7 +887,7 @@ methods: {
 
     let caseDateStart=this.form.time==null?"":this.form.time[0]
     let caseDateEnd=this.form.time==null?"":this.form.time[1]
-    searchList(this.form.area,this.form.batchNo,this.form.client,this.form.caseType,caseDateStart,caseDateEnd,orderBy,sort,this.pageSize,this.pageNum).then((response)=>{
+    searchList(this.form.area,this.form.batchNo,this.form.clients,this.form.caseType,caseDateStart,caseDateEnd,orderBy,sort,this.pageSize,this.pageNum).then((response)=>{
       this.tableData3=response.list
       this.pages = response.pages
       this.total = response.total
@@ -895,7 +902,7 @@ methods: {
     let orderBy = "id"
 		let caseDateStart=this.form.time==null?"":this.form.time[0]
 		let caseDateEnd=this.form.time==null?"":this.form.time[1]
-		searchList(this.form.area,this.form.batchNo,this.form.client,this.form.caseType,caseDateStart,caseDateEnd,orderBy,sort,this.pageSize,this.pageNum).then((response)=>{
+		searchList(this.form.area,this.form.batchNo,this.form.clients,this.form.caseType,caseDateStart,caseDateEnd,orderBy,sort,this.pageSize,this.pageNum).then((response)=>{
           	this.tableData3=response.list
             this.pages = response.pages
             this.total = response.total
