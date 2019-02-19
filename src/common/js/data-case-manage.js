@@ -59,8 +59,8 @@ return request({
        batchNo:  batchNo ,
        client:  client ,
        caseType: caseType,
-      orderBy:orderBy,
-      sort:sort,
+      orderBy:orderBy?orderBy:"id",
+      sort:sort?sort:"desc",
        pageNum:pageNum ? pageNum : 1,
        pageSize:pageSize ? pageSize : 10
     }

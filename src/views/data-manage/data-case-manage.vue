@@ -891,10 +891,11 @@ methods: {
     this.search()
   },
 	search(){
-
+    let sort = "desc"
+    let orderBy = "id"
 		let caseDateStart=this.form.time==null?"":this.form.time[0]
 		let caseDateEnd=this.form.time==null?"":this.form.time[1]
-		searchList(this.form.area,this.form.batchNo,this.form.client,this.form.caseType,caseDateStart,caseDateEnd,this.pageSize,this.pageNum).then((response)=>{
+		searchList(this.form.area,this.form.batchNo,this.form.client,this.form.caseType,caseDateStart,caseDateEnd,orderBy,sort,this.pageSize,this.pageNum).then((response)=>{
           	this.tableData3=response.list
             this.pages = response.pages
             this.total = response.total

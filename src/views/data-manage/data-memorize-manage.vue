@@ -573,7 +573,9 @@ pageDataExport(this.formInline.area,this.formInline.dept,this.formInline.batchNo
       })
     },
   	search(){
-		search(this.formInline.area,this.formInline.dept,this.formInline.odv,this.formInline.measure,this.pageSize,this.pageNum).then((response)=>{
+      let sort = "desc"
+      let orderBy = "id"
+		search(this.formInline.area,this.formInline.dept,this.formInline.odv,this.formInline.measure,orderBy,sort,this.pageSize,this.pageNum).then((response)=>{
           	this.tableData3=response.list
             this.pages = response.pages
             this.total = response.total
