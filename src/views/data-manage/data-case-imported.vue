@@ -88,39 +88,53 @@
     :data="DataList"
     style="width: 100%"
      @selection-change="handleSelectionChange"
+    sortable="custom"
+    @sort-change="handleSort"
   >
   <el-table-column
       type="selection"
       width="55">
     </el-table-column>
     <el-table-column
+      :sortable='true'
+      :sort-orders="['ascending','descending']"
       label="批次号"
       prop="batchNo">
     </el-table-column>
     <el-table-column
       prop="client"
+      :sortable='true'
       label="委托方"
+      :sort-orders="['ascending','descending']"
       width="120">
     </el-table-column>
     <el-table-column
-      prop="address"
+      prop="statusMsg"
+      :sortable='true'
       label="批次状态"
+      :sort-orders="['ascending','descending']"
       show-overflow-tooltip>
       <template slot-scope="scope">
        {{scope.row.batchStatus==0?"未导入":scope.row.batchStatus==1?"未退案":"已退案"}}
       </template>
     </el-table-column>
     <el-table-column
+      :sortable='true'
+      :sort-orders="['ascending','descending']"
       prop="caseTime"
       label="委案日期"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
+      :sortable='true'
+      :sort-orders="['ascending','descending']"
       prop="userCount"
       label="户数"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
+      :sortable='true'
+      :sort-orders="['ascending','descending']"
       label="总金额"
       show-overflow-tooltip>
       <template slot-scope="scope">
@@ -128,6 +142,8 @@
       </template>
     </el-table-column>
     <el-table-column
+      :sortable='true'
+      :sort-orders="['ascending','descending']"
       prop="uploadTime"
       label="上传时间"
       show-overflow-tooltip>
@@ -154,7 +170,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage4"
-      :page-sizes="[10, 20, 30, 40]"
+      :page-sizes="[100, 500, 2000, 10000, 1000000]"
       :page-size="pages"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
@@ -272,7 +288,7 @@
 <el-row :gutter="24">
   <el-col :span="24">
   <el-form-item label="批次备注" >
-    <el-input type="textarea" v-model="formInline.remark" style="width: 200%;">></el-input>
+    <el-input type="textarea" v-model="formInline.remark" style="width: 200%;height: 180px;">></el-input>
   </el-form-item>
    </el-col>
 </el-row>
@@ -507,6 +523,17 @@ methods: {
           }
         });
       },
+  handleSort( {column,prop,order}){
+      let startTime=this.form.time[0]
+      let endTime=this.form.time[1]
+      let sort = order==null?"desc":order.replace("ending","")
+      let orderBy = prop==null?"id":prop
+      dataList(this.form.area,this.form.batchNo,this.form.client,this.form.caseType,startTime,endTime,orderBy,sort,this.pageSize,this.pageNum).then((response)=>{
+        this.DataList=response.pageInfo.list
+        this.pages = response.pageInfo.pages
+        this.total = response.pageInfo.total
+      })
+  },
 	search(){
       	let startTime=this.form.time[0]
       	let endTime=this.form.time[1]

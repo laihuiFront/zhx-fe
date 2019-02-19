@@ -1,5 +1,5 @@
 import request from '@/common/js/request'
-export const dataList = function(area,dept,batchNo,client,odv,caseStatus,measure,result,identNo,cardNo,collectInfo,color,seqno,bailStartDate,bailEndDate,expectStartTime,expectEndTime,collectStartTime,collectEndTime,pageSize,pageNum) {
+export const dataList = function(area,dept,batchNo,client,odv,caseStatus,measure,result,identNo,cardNo,collectInfo,color,seqno,bailStartDate,bailEndDate,expectStartTime,expectEndTime,collectStartTime,collectEndTime,orderBy,sort,pageSize,pageNum) {
 return request({
     url: '/dataCollect/pageDataCollect',
     method: 'post',
@@ -23,13 +23,15 @@ return request({
        expectEndTime:  expectEndTime,
        collectStartTime:  collectStartTime ,
        collectEndTime:  collectEndTime ,
+      orderBy:orderBy?orderBy:"id",
+      sort:sort?sort:"desc",
        pageNum:pageNum ? pageNum : 1,
        pageSize:pageSize ? pageSize : 10
     }
   })
 }
 
-export const search = function(area,dept,odv,measure,pageSize,pageNum) {
+export const search = function(area,dept,odv,measure,orderBy,sort,pageSize,pageNum) {
 return request({
     url: '/dataCollect/pageDataCollect',
     method: 'post',
@@ -37,6 +39,8 @@ return request({
        area:  area,
        dept:  dept,
        odv:  odv ,
+      orderBy:orderBy?orderBy:"id",
+      sort:sort?sort:"desc",
        measure:  measure ,
        pageNum:pageNum ? pageNum : 1,
        pageSize:pageSize ? pageSize : 10

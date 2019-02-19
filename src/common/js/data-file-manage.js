@@ -1,5 +1,5 @@
 import request from '@/common/js/request'
-export const dataList = function(name,identNo,mobile,address,startTime,endTime,pageSize,pageNum) {
+export const dataList = function(name,identNo,mobile,address,startTime,endTime,orderBy,sort,pageSize,pageNum) {
 return request({
     url: 'dataArchive/pageDataArchive',
     method: 'post',
@@ -10,6 +10,8 @@ return request({
        address:address ? address : "",
        startTime:startTime ? startTime : "",
        endTime:endTime ? endTime : "",
+      orderBy:orderBy?orderBy:"id",
+      sort:sort?sort:"desc",
        pageNum:pageNum ? pageNum : 1,
        pageSize:pageSize ? pageSize : 10
     }

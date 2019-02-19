@@ -465,7 +465,7 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="paginationData.currentPage"
-            :page-sizes="[10, 20, 30, 40]"
+            :page-sizes="[100, 500, 2000, 10000, 1000000]"
             :page-size="paginationData.pageSize"
             layout="total, sizes, prev, pager, next, jumper"
             :total="paginationData.total">

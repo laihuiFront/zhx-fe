@@ -95,6 +95,8 @@
     :data="DataList"
     style="width: 100%;margin-top: 10px;"
      @selection-change="handleSelectionChange"
+    sortable="custom"
+    @sort-change="handleSort"
   >
   <el-table-column
       type="selection"
@@ -102,21 +104,32 @@
     </el-table-column>
     <el-table-column
     	prop="area"
+      :sortable='true'
+      min-width="140"
+      :sort-orders="['ascending','descending']"
       label="催收区域"
       >
     </el-table-column>
     <el-table-column
     	prop="batchNo"
+      :sortable='true'
+      min-width="140"
+      :sort-orders="['ascending','descending']"
       label="批次号"
       >
     </el-table-column>
     <el-table-column
       prop="client"
+      :sortable='true'
+      :sort-orders="['ascending','descending']"
       label="委托方"
     >
     </el-table-column>
     <el-table-column
       prop="statusMsg"
+      :sortable='true'
+      min-width="120"
+      :sort-orders="['ascending','descending']"
       label="批次状态"
       show-overflow-tooltip>
     </el-table-column>
@@ -124,16 +137,22 @@
       prop="caseTime"
       label="委案日期"
       width="140"
+      :sortable='true'
+      :sort-orders="['ascending','descending']"
       align="center"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
       prop="userCount"
+      :sortable='true'
+      :sort-orders="['ascending','descending']"
       label="户数"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
       label="总金额"
+      :sortable='true'
+      :sort-orders="['ascending','descending']"
       show-overflow-tooltip>
       <template slot-scope="scope">
            ￥{{scope.row.totalAmt}}
@@ -142,17 +161,24 @@
    <el-table-column
       prop="caseType"
       label="案件类型"
+      :sortable='true'
+      min-width="120"
+      :sort-orders="['ascending','descending']"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
       prop="returnTime"
       label="预计退案时间"
+      :sortable='true'
+      :sort-orders="['ascending','descending']"
       width="140"
       align="center"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
       prop="realReturnTime"
+      :sortable='true'
+      :sort-orders="['ascending','descending']"
       width="140"
       align="center"
       label="实际退案时间"
@@ -161,21 +187,28 @@
     <el-table-column
       prop="createTime"
       width="180"
+      :sortable='true'
+      :sort-orders="['ascending','descending']"
       align="center"
       label="录入时间"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
-      prop="remark"
+      prop="batchRemark"
       min-width="250"
+      :sortable='true'
+      :sort-orders="['ascending','descending']"
       align="center"
       label="批次备注"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
       prop="creatUser"
+      :sortable='true'
+      :sort-orders="['ascending','descending']"
       label="录入人员"
       align="center"
+      width="140"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
@@ -205,7 +238,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage4"
-      :page-sizes="[10, 20, 30, 40]"
+      :page-sizes="[100, 500, 2000, 10000, 1000000]"
       :page-size="pages"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
@@ -460,6 +493,18 @@ methods: {
 		this.dialogVisible2=true
 		this.messageForm=row
 	},
+  handleSort( {column,prop,order}){
+    let startTime=this.form.time[0]
+    let endTime=this.form.time[1]
+    let sort = order==null?"desc":order.replace("ending","")
+    let orderBy = prop==null?"id":prop
+    dataList(this.form.area,this.form.batchNo,this.form.client,this.form.batchStatus,this.form.caseType,startTime,endTime,orderBy,sort,this.pageSize,this.pageNum).then((response)=>{
+
+      this.DataList=response.pageInfo.list
+      this.pages = response.pages
+      this.total = response.total
+    })
+  },
 	search(){
       	let startTime=this.form.time[0]
       	let endTime=this.form.time[1]

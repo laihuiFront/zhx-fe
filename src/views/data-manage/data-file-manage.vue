@@ -69,6 +69,8 @@
     :data="DataList"
     tooltip-effect="dark"
     style="width: 100%"
+    sortable="custom"
+    @sort-change="handleSort"
     @selection-change="handleSelectionChange">
     <el-table-column
       type="selection"
@@ -76,11 +78,15 @@
     </el-table-column>
     <el-table-column
       label="证件号"
+      :sortable='true'
+      :sort-orders="['ascending','descending']"
        prop="identNo"
       >
     </el-table-column>
     <el-table-column
       prop="name"
+      :sortable='true'
+      :sort-orders="['ascending','descending']"
       label="姓名"
       >
     </el-table-column>
@@ -105,6 +111,8 @@
      <el-table-column
        label="档案变更日期"
        prop="updateTime"
+       :sortable='true'
+       :sort-orders="['ascending','descending']"
        show-overflow-tooltip>
      </el-table-column>
     <el-table-column
@@ -118,7 +126,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage4"
-      :page-sizes="[10, 20, 30, 40]"
+      :page-sizes="[100, 500, 2000, 10000, 1000000]"
       :page-size="pages"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
@@ -353,6 +361,17 @@ this.search()
 
         });
       },
+    handleSort( {column,prop,order}){
+      let sort = order==null?"desc":order.replace("ending","")
+      let orderBy = prop==null?"id":prop
+      let startTime=this.form.time[0]
+      let endTime=this.form.time[1]
+      dataList(this.form.name,this.form.identNo,this.form.mobile,this.form.address,startTime,endTime,orderBy,sort,this.pageSize,this.pageNum).then((response)=>{
+        this.DataList=response.list
+        this.pages = response.pages
+        this.total = response.total
+      })
+    },
       search(){
       	let startTime=this.form.time[0]
       	let endTime=this.form.time[1]

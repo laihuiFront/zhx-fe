@@ -1,5 +1,5 @@
 import request from '@/common/js/request'
-export const dataList = function(area,batchNo,client,batchStatus,caseType,startTime,endTime,pageSize,pageNum) {
+export const dataList = function(area,batchNo,client,batchStatus,caseType,startTime,endTime,orderBy,sort,pageSize,pageNum) {
 return request({
     url: '/dataBatch/pageDataCase',
     method: 'post',
@@ -11,6 +11,8 @@ return request({
        caseType:caseType ? caseType : "",
        startTime:startTime ? startTime : "",
        endTime:endTime ? endTime : "",
+       orderBy:orderBy?orderBy:"id",
+       sort:sort?sort:"desc",
        pageNum:pageNum ? pageNum : 1,
        pageSize:pageSize ? pageSize : 10
        

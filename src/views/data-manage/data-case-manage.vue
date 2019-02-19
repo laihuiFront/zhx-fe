@@ -144,12 +144,16 @@
     :data="tableData3"
     style="width: 100%;margin-top:10px"
      @selection-change="handleSelectionChange"
+    sortable="custom"
+    @sort-change="handleSort"
   >
   <el-table-column
       type="selection"
       width="55">
     </el-table-column>
     <el-table-column
+      :sortable='true'
+      :sort-orders="['ascending','descending']"
       label="ID"
       prop="id"
       >
@@ -158,17 +162,23 @@
     <el-table-column
       prop="area"
       align="center"
+      :sortable='true'
+      :sort-orders="['ascending','descending']"
       label="催收区域"
       >
     </el-table-column>
     <el-table-column
       prop="collectStatus"
       align="center"
+      :sortable='true'
+      :sort-orders="['ascending','descending']"
       label="催收状态"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
       prop="batchNo"
+      :sortable='true'
+      :sort-orders="['ascending','descending']"
       label="批次号"
       align="center"
       show-overflow-tooltip>
@@ -176,6 +186,8 @@
     <el-table-column
       prop="seqNo"
       width="140"
+      :sortable='true'
+      :sort-orders="['ascending','descending']"
       align="center"
       label="个案序列号"
       show-overflow-tooltip>
@@ -184,24 +196,32 @@
       prop="caseDate"
       align="center"
       label="委案日期"
+      :sortable='true'
+      :sort-orders="['ascending','descending']"
       width="140"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
       prop="expectTime"
       width="140"
+      :sortable='true'
+      :sort-orders="['ascending','descending']"
       align="center"
       label="预计退案日期"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
       prop="name"
+      :sortable='true'
+      :sort-orders="['ascending','descending']"
       label="姓名"
       align="center"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
-      prop="cardNo"
+      prop="identNo"
+      :sortable='true'
+      :sort-orders="['ascending','descending']"
       min-width="120"
       align="center"
       label="证件号"
@@ -210,6 +230,8 @@
     <el-table-column
       prop="area"
       min-width="140"
+      :sortable='true'
+      :sort-orders="['ascending','descending']"
       align="center"
       label="地区"
       show-overflow-tooltip>
@@ -217,24 +239,32 @@
     <el-table-column
       prop="cardNo"
       min-width="140"
+      :sortable='true'
+      :sort-orders="['ascending','descending']"
       align="center"
       label="卡号"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
       prop="money"
+      :sortable='true'
+      :sort-orders="['ascending','descending']"
       label="委案金额"
       align="center"
       show-overflow-tooltip>
     </el-table-column>
      <el-table-column
       prop="balance"
+      :sortable='true'
+      :sort-orders="['ascending','descending']"
       align="center"
       label="委案余额"
       show-overflow-tooltip>
     </el-table-column>
      <el-table-column
       prop="collectDate"
+      :sortable='true'
+      :sort-orders="['ascending','descending']"
       width="140"
       align="center"
       label="上次通电时间"
@@ -242,18 +272,24 @@
     </el-table-column>
      <el-table-column
       prop="newCase"
+      :sortable='true'
+      :sort-orders="['ascending','descending']"
       label="最新催记"
       align="center"
       show-overflow-tooltip>
     </el-table-column>
      <el-table-column
       prop="odv"
+      :sortable='true'
+      :sort-orders="['ascending','descending']"
       label="催收员"
       align="center"
       show-overflow-tooltip>
     </el-table-column>
      <el-table-column
       prop="collectTimes"
+      :sortable='true'
+      :sort-orders="['ascending','descending']"
       label="跟进次数"
       align="center"
       show-overflow-tooltip>
@@ -262,19 +298,25 @@
       prop="distributeTime"
       width="140"
       align="center"
-      label="分配时间"
+      :sortable='true'
+      :sort-orders="['ascending','descending']"
+      label="案件分配时间"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
       prop="proRepayAmt"
       label="承诺还款金额"
       width="160"
+      :sortable='true'
+      :sort-orders="['ascending','descending']"
       align="center"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
       prop="bankAmt"
       width="160"
+      :sortable='true'
+      :sort-orders="['ascending','descending']"
       align="center"
       label="待银行查账金额"
       show-overflow-tooltip>
@@ -283,18 +325,24 @@
       prop="enRepayAmt"
       width="140"
       align="center"
+      :sortable='true'
+      :sort-orders="['ascending','descending']"
       label="已还金额"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
       prop="accountAge"
       label="逾期账龄"
+      :sortable='true'
+      :sort-orders="['ascending','descending']"
       align="center"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
       min-width="140"
       prop="distributeHistory"
+      :sortable='true'
+      :sort-orders="['ascending','descending']"
       label="分配历史"
       show-overflow-tooltip>
     </el-table-column>
@@ -321,7 +369,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage4"
-      :page-sizes="[10, 20, 30, 40]"
+      :page-sizes="[100, 500, 2000, 10000, 1000000]"
       :page-size="pages"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
@@ -826,6 +874,22 @@ methods: {
 	})
 	console.log(_self.deleteList)
 },
+  handleSort( {column,prop,order}){
+    let sort = order==null?"desc":order.replace("ending","")
+    let orderBy = prop==null?"id":prop
+
+    let caseDateStart=this.form.time==null?"":this.form.time[0]
+    let caseDateEnd=this.form.time==null?"":this.form.time[1]
+    searchList(this.form.area,this.form.batchNo,this.form.client,this.form.caseType,caseDateStart,caseDateEnd,orderBy,sort,this.pageSize,this.pageNum).then((response)=>{
+      this.tableData3=response.list
+      this.pages = response.pages
+      this.total = response.total
+    })
+  },
+  handleSizeChange(val){
+    this.pageSize=val
+    this.search()
+  },
 	search(){
 
 		let caseDateStart=this.form.time==null?"":this.form.time[0]

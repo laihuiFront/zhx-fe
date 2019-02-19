@@ -41,12 +41,14 @@ return request({
 	 collectEndDate:form.time5[1] ,
 	 expectStartTime:form.time3[0] ,//预退案时间
 	 expectEndTime:form.time3[1],
+      orderBy:form.orderBy,
+      sort:form.sort,
 	 pageNum :pageNum,
      pageSize :pageSize,
     }
   })
 }
-export const searchList = function(area,batchNo,client,caseType,caseDateStart,caseDateEnd,pageSize,pageNum) {
+export const searchList = function(area,batchNo,client,caseType,caseDateStart,caseDateEnd,orderBy,sort,pageSize,pageNum) {
 return request({
     url: '/dataCase/pageCaseList',
     method: 'post',
@@ -57,6 +59,8 @@ return request({
        batchNo:  batchNo ,
        client:  client ,
        caseType: caseType,
+      orderBy:orderBy,
+      sort:sort,
        pageNum:pageNum ? pageNum : 1,
        pageSize:pageSize ? pageSize : 10
     }
