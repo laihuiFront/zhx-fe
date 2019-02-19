@@ -1,7 +1,7 @@
 <template>
   <div id="statistics-month">
 <el-row :gutter="20">
-  <el-col :span="20">
+  <el-col :span="22">
   	<div class="grid-content bg-purple">
   		<el-form :inline="true" :model="formInline" class="demo-form-inline">
   <el-form-item >
@@ -62,7 +62,7 @@
 
 </el-form>
   	</div></el-col>
-  <el-col :span="4">
+  <el-col :span="2">
   	<div class="grid-content bg-purple">
  <el-form :inline="true"  class="demo-form-inline">
   <el-form-item>

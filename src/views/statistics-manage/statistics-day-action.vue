@@ -4,11 +4,11 @@
   <el-col :span="20">
   	<div class="grid-content bg-purple">
   		<el-form :inline="true" :model="formInline" class="demo-form-inline">
-  <el-form-item >
-    <el-select v-model="formInline.odv" filterable multiple  collapse-tags  placeholder="请选择催收员" clearable>
+   <el-form-item >
+    <el-select v-model="formInline.odv" multiple collapse-tags  filterable  placeholder="请选择催收员" clearable>
     <el-option
       v-for="item in PersonList"
-      :key="item.createTime"
+      :key="item.id"
       :label="item.userName"
       :value="item.id">
     </el-option>
@@ -70,33 +70,33 @@
    
      style="width: 100%">
     <el-table-column
-      prop="date"
+      prop="odv"
       align="center"
       label="催收员"
      >
     </el-table-column>
    <el-table-column
-      prop="name"
+      prop="countSearchNo"
       align="center"
       label="114查询无效"
      >
     </el-table-column><el-table-column
-      prop="name"
+      prop="countDX1"
       align="center"
       label="DX1"
      >
     </el-table-column><el-table-column
-      prop="name"
+      prop="countDX2"
       align="center"
       label="DX2"
      >
     </el-table-column><el-table-column
-      prop="name"
+      prop="countDX3"
       align="center"
       label="DX3"
      >
     </el-table-column><el-table-column
-      prop="name"
+      prop="countDX4"
       align="center"
       label="DX4"
      >
@@ -105,14 +105,14 @@
       label="承诺还款"
      >
      <template slot-scope="scope">
-        <el-button type="text" size="small" >{{scope.row.name}}</el-button>
+        <el-button type="text" size="small" >{{scope.row.countRepay}}</el-button>
       </template>
     </el-table-column><el-table-column
       align="center"
       label="可联系本人"
      >
      <template slot-scope="scope">
-        <el-button type="text" size="small" >{{scope.row.name}}</el-button>
+        <el-button type="text" size="small" >{{scope.row.countConSelf}}</el-button>
       </template>
     </el-table-column>
     <el-table-column
@@ -120,7 +120,7 @@
       label="可联村委"
      >
      <template slot-scope="scope">
-        <el-button type="text" size="small" >{{scope.row.name}}</el-button>
+        <el-button type="text" size="small" >{{scope.row.countConVillage}}</el-button>
       </template>
     </el-table-column>
     <el-table-column
@@ -128,7 +128,7 @@
       label="可联系第三人"
      >
      <template slot-scope="scope">
-        <el-button type="text" size="small" >{{scope.row.name}}</el-button>
+        <el-button type="text" size="small" >{{scope.row.countConThird}}</el-button>
       </template>
     </el-table-column>
     <el-table-column
@@ -136,7 +136,7 @@
       label="可联系家人"
      >
      <template slot-scope="scope">
-        <el-button type="text" size="small" >{{scope.row.name}}</el-button>
+        <el-button type="text" size="small" >{{scope.row.countConFamily}}</el-button>
       </template>
     </el-table-column>
     <el-table-column
@@ -144,7 +144,7 @@
       label="空号错号"
      >
      <template slot-scope="scope">
-        <el-button type="text" size="small" >{{scope.row.name}}</el-button>
+        <el-button type="text" size="small" >{{scope.row.countDeadNumber}}</el-button>
       </template>
     </el-table-column>
     <el-table-column
@@ -152,7 +152,7 @@
       label="网搜无效"
      >
      <template slot-scope="scope">
-        <el-button type="text" size="small" >{{scope.row.name}}</el-button>
+        <el-button type="text" size="small" >{{scope.row.countSearchInvalid}}</el-button>
       </template>
     </el-table-column>
      <el-table-column
@@ -160,7 +160,7 @@
       label="无人接听"
      >
      <template slot-scope="scope">
-        <el-button type="text" size="small" >{{scope.row.name}}</el-button>
+        <el-button type="text" size="small" >{{scope.row.countNoAnswer}}</el-button>
       </template>
     </el-table-column>
      <el-table-column
@@ -168,7 +168,7 @@
       label="无效电话"
      >
      <template slot-scope="scope">
-        <el-button type="text" size="small" >{{scope.row.name}}</el-button>
+        <el-button type="text" size="small" >{{scope.row.countInvalidCall}}</el-button>
       </template>
     </el-table-column>
     <el-table-column
@@ -195,7 +195,7 @@
 </template>
 
 <script>
-		import {areaList,clientList,PersonList} from '@/common/js/statistics-day.js'
+		import {areaList,clientList,PersonList,dataList} from '@/common/js/statistics-day-action.js'
 export default {
   name: 'statisticsDayAction',
   data(){
@@ -203,27 +203,14 @@ export default {
     	 currentPage4: 1,
         pages:1,
         total:100,
-    	formInline:{},
+    	formInline:{
+    		odv:[],
+    		time:[]
+    	},
     	PersonList:[],
     	areaList:[],
     	clientList:[],
-    	 tableData3: [{
-          date: '飞飞',
-          name:  1,
-          
-        }, {
-          date: '辉辉',
-          name:  1,
-          
-        }, {
-          date: '邱邱',
-          name:  1,
-          
-        }, {
-          date: '龙龙',
-          name:  1,
-         
-        },]
+    	 tableData3: []
     }
     },
     methods: {
@@ -251,6 +238,9 @@ this.pageNum=val;
            
              PersonList().then((response)=>{
           	this.PersonList=response
+          })
+               dataList(this.formInline).then((response)=>{
+          	this.tableData3=response.list
           })
             
 },

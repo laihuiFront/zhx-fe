@@ -68,6 +68,7 @@
   <el-table
     :data="tableData3"
      show-summary
+      :summary-method="getSummaries"
     style="width: 100%">
     <el-table-column
       prop="odv"
@@ -205,26 +206,37 @@ export default {
     	PersonList:[],
     	areaList:[],
     	clientList:[],
-    	 tableData3: [{
-          date: '2016-05-03',
-          name:  1,
-          
-        }, {
-          date: '2016-05-02',
-          name:  1,
-          
-        }, {
-          date: '2016-05-04',
-          name:  1,
-          
-        }, {
-          date: '2016-05-01',
-          name:  1,
-         
-        },]
+    	 tableData3: []
     }
 },
  methods: {
+ 	 getSummaries(param) {
+        const { columns, data } = param;
+        const sums = [];
+        columns.forEach((column, index) => {
+          if (index === 0) {
+            sums[index] = '总价';
+            return;
+          }
+          debugger
+          const values = data.map(item => Number(item[column.property]));
+          if (!values.every(value => isNaN(value))) {
+            sums[index] = values.reduce((prev, curr) => {
+              const value = Number(curr);
+              if (!isNaN(value)) {
+                return prev + curr;
+              } else {
+                return prev;
+              }
+            }, 0);
+            sums[index];
+          } else {
+            sums[index] ;
+          }
+        });
+
+        return sums;
+      },
  	handleSizeChange(val){
 	this.pageSize=val
 	              dataList(this.formInline,this.pageSize,this.pageNum).then((response)=>{

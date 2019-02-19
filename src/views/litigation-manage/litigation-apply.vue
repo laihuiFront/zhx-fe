@@ -5,10 +5,10 @@
   	<div class="grid-content bg-purple">
   		<el-form :inline="true" ref="form" :model="form" >
    <el-form-item label="案号">
-     <el-input v-model="form.identNo" placeholder="请输入案号" clearable></el-input>
+     <el-input v-model="form.legalNo" placeholder="请输入案号" clearable></el-input>
   </el-form-item>
   <el-form-item label="姓名">
-   <el-input v-model="form.name" placeholder="请输入姓名" clearable></el-input>
+   <el-input v-model="form.cstName" placeholder="请输入姓名" clearable></el-input>
   </el-form-item>
   <el-form-item>
   <el-button type="text" icon="el-icon-search" @click=search>查询</el-button> 
@@ -25,81 +25,81 @@
    </el-row>	
   	
   <el-table
-    :data="tableData3"   
+    :data="DataList"   
      style="width: 100%">
     <el-table-column
-      prop="date"
+      prop="legalStatusMsg"
       align="center"
       label="案件状态"
      >
     </el-table-column>
    <el-table-column
-      prop="name"
+      prop="progress"
       align="center"
       label="办案进度"
      >
     </el-table-column><el-table-column
-      prop="name"
+      prop="legalType"
       align="center"
       label="案件类型"
      >
     </el-table-column><el-table-column
-      prop="name"
+      prop="cstName"
       align="center"
       label="客户姓名"
      >
     </el-table-column><el-table-column
-      prop="name"
+      prop="legalDate"
       align="center"
       label="委案日期"
      >
     </el-table-column><el-table-column
-      prop="name"
+      prop="clientele"
       align="center"
       label="委托人"
      >
     </el-table-column>
     <el-table-column
-      prop="name"
+      prop="accused"
       align="center"
-      label="办案人"
+      label="被告人"
      >
     </el-table-column>
     <el-table-column
-      prop="name"
+      prop="tital"
       align="center"
       label="标的"
      >
     </el-table-column>
     <el-table-column
-      prop="name"
+      prop="cost"
       align="center"
       label="费用"
      >
     </el-table-column>
     <el-table-column
-      prop="name"
+      prop="owner"
       align="center"
       label="所属人"
      >
     </el-table-column><el-table-column
-      prop="name"
+      prop="agent"
       align="center"
       label="代理律师"
      >
     </el-table-column><el-table-column
-      prop="name"
+      prop="court"
       align="center"
       label="受案法院"
      >
     </el-table-column><el-table-column
-      prop="name"
+      prop="legalNo"
       align="center"
       label="案号"
      >
     </el-table-column>
     <el-table-column
-      prop="name"
+      prop="remark"
       align="center"
       label="备注"
      >
@@ -110,10 +110,10 @@
       width="120"
      >
      <template slot-scope="scope">
-        <el-button type="text" size="small" icon="el-icon-search" ></el-button>
-       <el-button type="text" size="small" icon="el-icon-search" ></el-button>
-       <el-button type="text" size="small" icon="el-icon-search" ></el-button>
-       <el-button type="text" size="small" icon="el-icon-search" ></el-button>
+       <el-button type="text" size="small" icon="el-icon-check" @click="checkData(scope.row.id)"></el-button>
+       <el-button type="text" size="small" icon="el-icon-message" ></el-button>
+       <el-button type="text" size="small" icon="el-icon-edit" @click="editData(scope.row.id)"></el-button>
+       <el-button type="text" size="small" icon="el-icon-delete" @click="deleteData(scope.row.id)"></el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -138,15 +138,15 @@
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   		  <el-form-item label="姓名">
-    <el-input v-model="formInline.user" placeholder="请输入姓名"></el-input>
+    <el-input v-model="formInline.cstName" placeholder="请输入姓名"></el-input>
   </el-form-item>
   	</div></el-col>
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   		<el-form-item label="案件状态">
-     <el-select v-model="formInline.status" filterable  placeholder="请选择案件状态" clearable>
+     <el-select v-model="formInline.legalStatusMsg " filterable  placeholder="请选择案件状态" clearable>
     <el-option
-      v-for="item in caseStatusList"
+      v-for="item in legalStatusMsgList"
       :key="item.id"
       :label="item.name"
       :value="item.id">
@@ -157,7 +157,7 @@
   	<el-col :span="8">
   	<div class="grid-content bg-purple">
    <el-form-item label="证件号">
-    <el-input v-model="formInline.user" placeholder="请输入证件号"></el-input>
+    <el-input v-model="formInline.identNo" placeholder="请输入证件号"></el-input>
   </el-form-item>
   	</div></el-col>
 </el-row>
@@ -166,7 +166,7 @@
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   		<el-form-item label="办案进度">
-    <el-select v-model="formInline.status" filterable  placeholder="请选择案件进度" clearable>
+    <el-select v-model="formInline.progress" filterable  placeholder="请选择案件进度" clearable>
     <el-option
       v-for="item in caseStatusList"
       :key="item.id"
@@ -179,7 +179,7 @@
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   	  <el-form-item label="案件类型">
-     <el-select v-model="formInline.status" filterable  placeholder="请选择案件类型" clearable>
+     <el-select v-model="formInline.legalType" filterable  placeholder="请选择案件类型" clearable>
     <el-option
       v-for="item in caseStatusList"
       :key="item.id"
@@ -192,7 +192,7 @@
   	<el-col :span="8">
   	<div class="grid-content bg-purple">
     <el-form-item label="标的">
-    <el-input v-model="formInline.user" placeholder="请输入标的"></el-input>
+    <el-input v-model="formInline.tital" placeholder="请输入标的"></el-input>
   </el-form-item>
   	</div></el-col>
 </el-row>
@@ -202,15 +202,15 @@
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   	<el-form-item label="委托人">
-    <el-input v-model="formInline.user" placeholder="请输入委托人"></el-input>
+    <el-input v-model="formInline.clientele" placeholder="请输入委托人"></el-input>
   </el-form-item>
   	</div></el-col>
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   	   <el-form-item label="所属人">
-     <el-select v-model="formInline.status" filterable  placeholder="请选择所属人" clearable>
+     <el-select v-model="formInline.owner" filterable  placeholder="请选择所属人" clearable>
     <el-option
-      v-for="item in caseStatusList"
+      v-for="item in PersonDataList"
       :key="item.id"
       :label="item.name"
       :value="item.id">
@@ -221,7 +221,7 @@
   	<el-col :span="8">
   	<div class="grid-content bg-purple">
     <el-form-item label="被告人">
-    <el-input v-model="formInline.user" placeholder="请输入被告人"></el-input>
+    <el-input v-model="formInline.accused" placeholder="请输入被告人"></el-input>
   </el-form-item>
   	</div></el-col>
 </el-row>
@@ -230,19 +230,19 @@
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   	  <el-form-item label="代理律师">
-    <el-input v-model="formInline.user" placeholder="请输入代理律师"></el-input>
+    <el-input v-model="formInline.agent" placeholder="请输入代理律师"></el-input>
   </el-form-item>
   	</div></el-col>
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   	    <el-form-item label="律师联系方式">
-    <el-input v-model="formInline.user" placeholder="请输入联系方式"></el-input>
+    <el-input v-model="formInline.agentTel" placeholder="请输入联系方式"></el-input>
   </el-form-item>
   	</div></el-col>
   	<el-col :span="8">
   	<div class="grid-content bg-purple">
     <el-form-item label="费用">
-    <el-input v-model="formInline.user" placeholder="请输入费用"></el-input>
+    <el-input v-model="formInline.cost" placeholder="请输入费用"></el-input>
   </el-form-item>
   	</div></el-col>
 </el-row>
@@ -253,8 +253,9 @@
   	  <el-form-item label="委案日期">
      <div class="block">
     <el-date-picker
-      v-model="value1"
+      v-model="formInline.legalDate"
       type="date"
+      value-format="yyyy-MM-dd"
       placeholder="选择日期">
     </el-date-picker>
   </div>
@@ -265,7 +266,8 @@
   	   <el-form-item label="受案日期">
      <div class="block">
     <el-date-picker
-      v-model="value1"
+    	value-format="yyyy-MM-dd"
+      v-model="formInline.filingDat"
       type="date"
       placeholder="选择日期">
     </el-date-picker>
@@ -275,54 +277,28 @@
   	<el-col :span="8">
   	<div class="grid-content bg-purple">
     <el-form-item label="受案法院">
-     <div class="block">
-    <el-date-picker
-      v-model="value1"
-      type="date"
-      placeholder="选择日期">
-    </el-date-picker>
-  </div>
+    <el-input v-model="formInline.court" placeholder="请输入法院"></el-input>
   </el-form-item>
   	</div></el-col>
 </el-row>
- 
-   <el-row :gutter="20">
-  <el-col :span="8">
-  	<div class="grid-content bg-purple">
-  	  <el-form-item label="代理律师">
-    <el-input v-model="formInline.user" placeholder="请输入代理律师"></el-input>
-  </el-form-item>
-  	</div></el-col>
-  <el-col :span="8">
-  	<div class="grid-content bg-purple">
-  	    <el-form-item label="律师联系方式">
-    <el-input v-model="formInline.user" placeholder="请输入联系方式"></el-input>
-  </el-form-item>
-  	</div></el-col>
-  	<el-col :span="8">
-  	<div class="grid-content bg-purple">
-    <el-form-item label="费用">
-    <el-input v-model="formInline.user" placeholder="请输入费用"></el-input>
-  </el-form-item>
-  	</div></el-col>
-</el-row>
+
      <el-row :gutter="20">
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   	  <el-form-item label="办案法官">
-    <el-input v-model="formInline.user" placeholder="请输入办案法官"></el-input>
+    <el-input v-model="formInline.judge" placeholder="请输入办案法官"></el-input>
   </el-form-item>
   	</div></el-col>
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   	    <el-form-item label="法官联系方式">
-    <el-input v-model="formInline.user" placeholder="请输入联系方式"></el-input>
+    <el-input v-model="formInline.judgeTel" placeholder="请输入联系方式"></el-input>
   </el-form-item>
   	</div></el-col>
   	<el-col :span="8">
   	<div class="grid-content bg-purple">
     <el-form-item label="案号">
-    <el-input v-model="formInline.user" placeholder="请输入案号"></el-input>
+    <el-input v-model="formInline.legalNo" placeholder="请输入案号"></el-input>
   </el-form-item>
   	</div></el-col>
 </el-row>
@@ -333,7 +309,8 @@
   	  <el-form-item label="首次开庭日期">
      <div class="block">
     <el-date-picker
-      v-model="value1"
+    	value-format="yyyy-MM-dd"
+      v-model="formInline.firstDate"
       type="date"
       placeholder="选择日期">
     </el-date-picker>
@@ -345,7 +322,8 @@
   	   <el-form-item label="判决日期">
      <div class="block">
     <el-date-picker
-      v-model="value1"
+    	value-format="yyyy-MM-dd"
+      v-model="formInline.judgeDate"
       type="date"
       placeholder="选择日期">
     </el-date-picker>
@@ -355,7 +333,7 @@
   	<el-col :span="8">
   	<div class="grid-content bg-purple">
     <el-form-item label="申请执行案号">
-    <el-input v-model="formInline.user" placeholder="请输入案号"></el-input>
+    <el-input v-model="formInline.exeNo" placeholder="请输入案号"></el-input>
   </el-form-item>
   	</div></el-col>
 </el-row>
@@ -366,7 +344,8 @@
   	  <el-form-item label="申请执行日期">
      <div class="block">
     <el-date-picker
-      v-model="value1"
+    	value-format="yyyy-MM-dd"
+      v-model="formInline.exeDate"
       type="date"
       placeholder="选择日期">
     </el-date-picker>
@@ -378,7 +357,8 @@
   	   <el-form-item label="执行终结日期">
      <div class="block">
     <el-date-picker
-      v-model="value1"
+    	value-format="yyyy-MM-dd"
+      v-model="formInline.exeEndDate"
       type="date"
       placeholder="选择日期">
     </el-date-picker>
@@ -390,7 +370,8 @@
       <el-form-item label="诉讼缴费日期">
      <div class="block">
     <el-date-picker
-      v-model="value1"
+    	value-format="yyyy-MM-dd"
+      v-model="formInline.costDate"
       type="date"
       placeholder="选择日期">
     </el-date-picker>
@@ -405,7 +386,8 @@
   	  <el-form-item label="保全缴费日期">
      <div class="block">
     <el-date-picker
-      v-model="value1"
+    	value-format="yyyy-MM-dd"
+      v-model="formInline.preservationDate"
       type="date"
       placeholder="选择日期">
     </el-date-picker>
@@ -415,7 +397,7 @@
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   	 <el-form-item label="送达情况">
-    <el-input v-model="formInline.user" placeholder="请输入送达"></el-input>
+    <el-input v-model="formInline.arriveInfo" placeholder="请输入送达"></el-input>
   </el-form-item>
   	</div></el-col>
   	<el-col :span="8">
@@ -428,7 +410,7 @@
   <el-col :span="16">
   	<div class="grid-content bg-purple">
   	  <el-form-item label="保全资产清单">
-    <el-input type="textarea" style="width: 280%;" v-model="formInline.desc"></el-input>
+    <el-input type="textarea" style="width: 280%;" v-model="formInline.preservationList"></el-input>
   </el-form-item>
   	</div></el-col>
 </el-row>
@@ -437,7 +419,7 @@
   <el-col :span="16">
   	<div class="grid-content bg-purple">
   	  <el-form-item label="判决书">
-    <el-input type="textarea" style="width: 280%;"  v-model="formInline.desc"></el-input>
+    <el-input type="textarea" style="width: 280%;"  v-model="formInline.judgment"></el-input>
   </el-form-item>
   	</div></el-col>
   
@@ -447,7 +429,7 @@
   <el-col :span="16">
   	<div class="grid-content bg-purple">
   	  <el-form-item label="备注">
-     <el-input type="textarea" style="width: 280%;"  v-model="formInline.desc"></el-input>
+     <el-input type="textarea" style="width: 280%;"  v-model="formInline.remark"></el-input>
   </el-form-item>
   	</div></el-col>
   
@@ -456,58 +438,120 @@
  
   <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+    <el-button type="primary" @click="SaveData">确 定</el-button>
+  </span>
+</el-dialog>
+<el-dialog
+  title="审核诉讼案件"
+  :visible.sync="dialogVisible1"
+  width="30%"
+  >
+<el-form ref="checkform" :model="form" label-width="80px">
+ 
+  <el-form-item label="审批结果">
+    <el-radio-group v-model="form.resource">
+      <el-radio label="通过"></el-radio>
+      <el-radio label="驳回"></el-radio>
+    </el-radio-group>
+  </el-form-item>
+</el-form>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible1 = false">取 消</el-button>
+    <el-button type="primary" @click="dialogVisible1 = false">确 定</el-button>
   </span>
 </el-dialog>
   </div>
 </template>
 
 <script>
+			import {dataList,remoweData,addData,PersonList} from '@/common/js/litigation-apply.js'	
+
 export default {
   name: 'litigationApply',
   	data(){
   		return{
-  			value1:'',
-  			caseStatusList:[{name:"未退案",id:0},{name:"正常",id:1},{name:"暂停",id:2},{name:"关档",id:3},{name:"退档",id:4},{name:"全部",id:5}],
+        legalStatusMsgList:[{name:"已审核",id:1},{name:"审核中",id:2},{name:"未申请",id:0}],  
+        caseStatusList:[{name:"未退案",id:0},{name:"正常",id:1},{name:"暂停",id:2},{name:"关档",id:3},{name:"退档",id:4},{name:"全部",id:5}],
   			formInline:{},
   			dialogVisible:false,
-  		form:{},
-  		 currentPage4: 1,
+  			dialogVisible1:false,
+  		  form:{},
+  		  checkform:{},
+  		  currentPage4: 1,
         pages:1,
         total:100,
-         tableData3: [{
-          date: '飞飞',
-          name:  1,
-          
-        }, {
-          date: '辉辉',
-          name:  1,
-          
-        }, {
-          date: '邱邱',
-          name:  1,
-          
-        }, {
-          date: '龙龙',
-          name:  1,
-         
-        },]
+         DataList: [],
+         PersonDataList:[]
   	}
   },
    methods: {
+   	SaveData(){
+   		addData(this.formInline).then((response)=>{
+          this.$message({
+            type: 'success',
+            message: '保存成功!'
+          });
+          this.dialogVisible=false;
+          this.search()
+          this.formInline={}
+})    
+   	},
+   	checkData(id){
+   		this.dialogVisible1=true;
+   		
+   	},
+   	editData(){
+   		
+   	},
+   	deleteData(id){
+         	let _self=this 
+        _self.$confirm('是否删除?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        }).then(() => {
+           	remoweData(id).then((response)=>{
+            _self.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+          _self.search(this.form)
+})
+        }).catch(() => {
+            _self.$message({
+            type: 'success',
+            message: '已取消删除!'
+          });
+        });  
+   	},
    	clench(){
   		this.form={}
   	},
   	search(){
-  		
+  		dataList(this.form).then((response)=>{
+            this.DataList=response.data.list
+              this.pages = response.pages
+              this.total = response.total
+})    
   	},
   		handleSizeChange(val){
-	this.pageSize=val
+	   this.pageSize=val
 },
 handleCurrentChange(val){
 this.pageNum=val;
 },
-   }
+   },
+      created() {
+              dataList(this.form).then((response)=>{
+              this.DataList=response.data.list
+              this.pages = response.pages
+              this.total = response.total
+})    
+                PersonList().then((response)=>{
+          	this.PersonDataList=response
+          })
+},
 }
 </script>
 
