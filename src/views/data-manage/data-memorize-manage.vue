@@ -24,7 +24,7 @@
     </el-option>
   </el-select>   </el-form-item>
    <el-form-item >
- <el-select v-model="formInline.odv" filterable  placeholder="请选择催收员" clearable>
+ <el-select v-model="formInline.odvs" filterable multiple  placeholder="请选择催收员" clearable>
     <el-option
       v-for="item in PersonList"
       :key="item.id"
@@ -538,7 +538,7 @@ export default {
   let expectEndTime=this.formInline.expectTime[1]
   let collectStartTime=this.formInline.collectTime[0]
   let collectEndTime=this.formInline.collectTime[1]
-  		totalDataExport(this.formInline.area,this.formInline.dept,this.formInline.batchNo,this.formInline.client,this.formInline.odv,this.formInline.caseStatus,this.formInline.measure,this.formInline.result,this.formInline.identNo,this.formInline.cardNo,this.formInline.collectInfo,this.formInline.color,this.formInline.seqno,this.formInline.bailStartDate,this.formInline.bailEndDate,this.formInline.expectStartTime,this.formInline.expectEndTime,this.formInline.collectStartTime,this.formInline.collectEndTime,this.pageSize,this.pageNum).then((response)=>{
+  		totalDataExport(this.formInline.area,this.formInline.dept,this.formInline.batchNo,this.formInline.clients,this.formInline.odvs,this.formInline.caseStatus,this.formInline.measure,this.formInline.result,this.formInline.identNo,this.formInline.cardNo,this.formInline.collectInfo,this.formInline.color,this.formInline.seqno,this.formInline.bailStartDate,this.formInline.bailEndDate,this.formInline.expectStartTime,this.formInline.expectEndTime,this.formInline.collectStartTime,this.formInline.collectEndTime,this.pageSize,this.pageNum).then((response)=>{
           	this.loading=false;
           	this.$message({
             type: 'success',
@@ -554,7 +554,7 @@ export default {
   let expectEndTime=this.formInline.expectTime[1]
   let collectStartTime=this.formInline.collectTime[0]
   let collectEndTime=this.formInline.collectTime[1]
-pageDataExport(this.formInline.area,this.formInline.dept,this.formInline.batchNo,this.formInline.client,this.formInline.odv,this.formInline.caseStatus,this.formInline.measure,this.formInline.result,this.formInline.identNo,this.formInline.cardNo,this.formInline.collectInfo,this.formInline.color,this.formInline.seqno,this.formInline.bailStartDate,this.formInline.bailEndDate,this.formInline.expectStartTime,this.formInline.expectEndTime,this.formInline.collectStartTime,this.formInline.collectEndTime,this.pageSize,this.pageNum).then((response)=>{
+pageDataExport(this.formInline.area,this.formInline.dept,this.formInline.batchNo,this.formInline.clients,this.formInline.odvs,this.formInline.caseStatus,this.formInline.measure,this.formInline.result,this.formInline.identNo,this.formInline.cardNo,this.formInline.collectInfo,this.formInline.color,this.formInline.seqno,this.formInline.bailStartDate,this.formInline.bailEndDate,this.formInline.expectStartTime,this.formInline.expectEndTime,this.formInline.collectStartTime,this.formInline.collectEndTime,this.pageSize,this.pageNum).then((response)=>{
           	this.loading=false;
           	this.$message({
             type: 'success',
@@ -565,7 +565,7 @@ pageDataExport(this.formInline.area,this.formInline.dept,this.formInline.batchNo
     handleSort( {column,prop,order}){
       let sort = order==null?"desc":order.replace("ending","")
       let orderBy = prop==null?"id":prop
-      search(this.formInline.area,this.formInline.dept,this.formInline.odv,this.formInline.measure,orderBy,sort,this.pageSize,this.pageNum).then((response)=>{
+      search(this.formInline.area,this.formInline.dept,this.formInline.odvs,this.formInline.measure,orderBy,sort,this.pageSize,this.pageNum).then((response)=>{
         this.tableData3=response.list
         this.pages = response.pages
         this.total = response.total
@@ -575,7 +575,7 @@ pageDataExport(this.formInline.area,this.formInline.dept,this.formInline.batchNo
   	search(){
       let sort = "desc"
       let orderBy = "id"
-		search(this.formInline.area,this.formInline.dept,this.formInline.odv,this.formInline.measure,orderBy,sort,this.pageSize,this.pageNum).then((response)=>{
+		search(this.formInline.area,this.formInline.dept,this.formInline.odvs,this.formInline.measure,orderBy,sort,this.pageSize,this.pageNum).then((response)=>{
           	this.tableData3=response.list
             this.pages = response.pages
             this.total = response.total
@@ -591,7 +591,7 @@ pageDataExport(this.formInline.area,this.formInline.dept,this.formInline.batchNo
       let collectEndTime=this.formInline.collectTime[1]
       let sort = order==null?"desc":order.replace("ending","")
       let orderBy = prop==null?"id":prop
-	    dataList(this.formInline.area,this.formInline.dept,this.formInline.batchNo,this.formInline.client,this.formInline.odv,this.formInline.caseStatus,this.formInline.measure,this.formInline.result,this.formInline.identNo,this.formInline.cardNo,this.formInline.collectInfo,this.formInline.color,this.formInline.seqno,this.formInline.bailStartDate,this.formInline.bailEndDate,this.formInline.expectStartTime,this.formInline.expectEndTime,this.formInline.collectStartTime,this.formInline.collectEndTime,orderBy,sort,this.pageSize,this.pageNum).then((response)=>{
+	    dataList(this.formInline.area,this.formInline.dept,this.formInline.batchNo,this.formInline.clients,this.formInline.odvs,this.formInline.caseStatus,this.formInline.measure,this.formInline.result,this.formInline.identNo,this.formInline.cardNo,this.formInline.collectInfo,this.formInline.color,this.formInline.seqno,this.formInline.bailStartDate,this.formInline.bailEndDate,this.formInline.expectStartTime,this.formInline.expectEndTime,this.formInline.collectStartTime,this.formInline.collectEndTime,orderBy,sort,this.pageSize,this.pageNum).then((response)=>{
           	this.tableData3=response
           	this.dialogVisible1=false
           })

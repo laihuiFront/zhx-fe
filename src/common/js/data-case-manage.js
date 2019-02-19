@@ -6,7 +6,7 @@ return request({
     data: {
      id :form.id,
 	 cardNo : form.cardNo,//卡号
-	 client :form.client,//委托方
+	 clients :form.clients,//委托方
 	 batchNo:form.batchNo,  //批次编号
 	 odv :form.odv, //催收员
 	 dept:form.dept,
@@ -48,7 +48,7 @@ return request({
     }
   })
 }
-export const searchList = function(area,batchNo,client,caseType,caseDateStart,caseDateEnd,orderBy,sort,pageSize,pageNum) {
+export const searchList = function(area,batchNo,clients,caseType,caseDateStart,caseDateEnd,orderBy,sort,pageSize,pageNum) {
 return request({
     url: '/dataCase/pageCaseList',
     method: 'post',
@@ -57,7 +57,7 @@ return request({
        caseDateStart:caseDateStart,
        caseDateEnd:caseDateEnd,
        batchNo:  batchNo ,
-       client:  client ,
+       clients:  clients ,
        caseType: caseType,
       orderBy:orderBy?orderBy:"id",
       sort:sort?sort:"desc",
