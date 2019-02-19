@@ -429,7 +429,9 @@
           :data="tableData"
           style="width: 100%"
           :row-class-name="rowColor"
+          :cell-style="{whiteSpace:'nowrap'}"
           @selection-change="handleSelectionChange"
+          @sort-change="sortHandle"
         >
           <el-table-column
             type="selection"
@@ -437,6 +439,10 @@
           </el-table-column>
           <el-table-column
             label="个案序列号"
+            prop="seqno"
+            sortable="custom"
+            :sort-orders="['ascending','descending']"
+            min-width="90"
             header-align="center" align="center">
             <template slot-scope="scope">
               <el-button style="text-decoration: underline" type="text" size="small"
@@ -448,6 +454,9 @@
             v-for="(item, index) in tableCol_data"
             :key="index"
             v-bind="item"
+            sortable="custom"
+            min-width="100"
+            :sort-orders="['ascending','descending']"
             header-align="center"
             align="center"
           >
@@ -685,7 +694,11 @@ export default {
       ],
       multipleSelection: [],
       detailVisible: false,
-      detailTitle: '案件详情'
+      detailTitle: '案件详情',
+      sort:{
+        orderBy: 'id',
+        sort:'desc'
+      }
     };
   },
   computed: {
@@ -760,7 +773,9 @@ export default {
         collectMeasure,
         pageNum: this.paginationData.currentPage,
         pageSize: this.paginationData.pageSize,
-        sType:0
+        sType:0,
+        orderBy: this.sort.orderBy,
+        sort: this.sort.sort,
       };
     }
   },
@@ -776,6 +791,11 @@ export default {
     this.init();
   },
   methods: {
+    sortHandle({prop,order}){
+      this.sort.sort = order.replace('ending', '');
+      this.sort.orderBy = prop;
+      this.getMainData();
+    },
     //查询批次号
     querySearch(queryString,cb){
       batchNo({batchNo:queryString}).then((data)=>{

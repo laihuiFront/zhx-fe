@@ -85,10 +85,14 @@
       tooltip-effect="dark"
       style="width: 100%"
       sortable="custom"
-      @sort-change="handleSort"
+      @sort-change="sortHandle"
     >
       <el-table-column
         label="个案序列号"
+        min-width="90"
+        prop="seqno"
+        sortable="custom"
+        :sort-orders="['ascending','descending']"
         header-align="center" align="center">
         <template slot-scope="scope">
           <el-button style="text-decoration: underline" type="text" size="small"
@@ -100,6 +104,9 @@
         v-for="(item, index) in tablecol_data"
         v-bind="item"
         :key="index"
+        min-width="90"
+        sortable="custom"
+        :sort-orders="['ascending','descending']"
         align="center"
         header-align="center"
       ></el-table-column>
@@ -218,7 +225,11 @@ export default {
         },
       ],
       detailVisible: false,
-      detailTitle: '案件详情'
+      detailTitle: '案件详情',
+      sort:{
+        orderBy: 'id',
+        sort:'desc'
+      }
     }
   },
   computed:{
@@ -256,6 +267,11 @@ export default {
     this.init();
   },
   methods:{
+    sortHandle({prop,order}){
+      this.sort.sort = order.replace('ending', '');
+      this.sort.orderBy = prop;
+      this.getMainData();
+    },
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },

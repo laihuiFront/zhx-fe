@@ -453,6 +453,7 @@
         style="width: 100%"
         :row-class-name="rowColor"
         @selection-change="handleSelectionChange"
+        @sort-change="sortHandle"
       >
         <el-table-column
           type="selection"
@@ -463,6 +464,9 @@
           :key="index"
           v-bind="item"
           header-align="center"
+          min-width="90"
+          sortable="custom"
+          :sort-orders="['ascending','descending']"
           align="center"
         ></el-table-column>
         <!--<el-table-column label="操作" show-overflow-tooltip>-->
@@ -701,6 +705,10 @@
           }
         ],
         multipleSelection: [],
+        sort:{
+          orderBy: 'id',
+          sort:'desc'
+        }
       };
     },
     computed: {
@@ -776,7 +784,9 @@
           pageNum: this.paginationData.currentPage,
           pageSize: this.paginationData.pageSize,
           dept,
-          odv
+          odv,
+          orderBy: this.sort.orderBy,
+          sort: this.sort.sort,
         };
       }
     },
@@ -792,6 +802,11 @@
       this.init();
     },
     methods: {
+      sortHandle({prop,order}){
+        this.sort.sort = order.replace('ending', '');
+        this.sort.orderBy = prop;
+        this.getMainData();
+      },
       //查询批次号
       querySearch(queryString,cb){
         batchNo({batchNo:queryString}).then((data)=>{
