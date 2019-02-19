@@ -54,7 +54,7 @@
   
   </el-form-item>
   <el-form-item>
-  <el-button type="text" icon="el-icon-search" 开始统计</el-button> 
+  <el-button type="text" icon="el-icon-search">开始统计</el-button> 
   </el-form-item>
   <el-form-item>
   <el-button type="text" icon="el-icon-refresh" @click=clench>重置</el-button> 
@@ -82,24 +82,30 @@
       label="催收员"
      >
     </el-table-column>
-    <el-table-column :label="item.area" align="center" v-for="(item,index) in dataList" key="item.area">
+    <el-table-column :label="item.area" align="center" v-for="(item,index) in dataList" :key="item.area">
       <el-table-column
-        prop="list[0].area"
         label="有效通电"
         align="center"
        >
+        <template slot-scope="scope">
+          {{ scope.row.list[index].countConPhoneNum }}
+        </template>
       </el-table-column>
       <el-table-column
-        prop="name"
         label="总通电量"
         align="center"
        >
+        <template slot-scope="scope">
+          {{ scope.row.list[index].countPhoneNum }}
+        </template>
       </el-table-column>
       <el-table-column
-        prop="name"
         label="个按量"
         align="center"
        >
+        <template slot-scope="scope">
+          {{ scope.row.list[index].countCasePhoneNum }}
+        </template>
       </el-table-column>
     </el-table-column>
   </el-table>
@@ -171,7 +177,7 @@ this.pageNum=val;
           	this.dataList=[]
           	for(var i=0;i<=response.list[0].list.length;i++){
            for(var j in response.list[0].list[i]) {
-           	debugger
+           	// debugger
            	if(j==="area"){
            		let Object={area:''}
           		Object.area=response.list[0].list[i].area
