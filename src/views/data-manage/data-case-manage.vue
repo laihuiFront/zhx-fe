@@ -1001,6 +1001,12 @@ export default {
       pages:1,
       orderBy:"id",
       sort:"desc",
+      totalCaseNum:0,
+      totalAmt:0,
+      repayNum:0,
+      repayTotalAmt:0,
+      totalCp:0,
+      totalPtp:0,
     	deleteList:[],
     	caseTypeList:[],
     	  areaList:[],
@@ -1227,9 +1233,8 @@ this.search()
     },
 created() {
       	  searchList().then((response)=>{
-          	this.tableData3=response.list
-            //this.pages = response.pages
-            this.total = response.total
+          	this.tableData3=response.pageInfo.list
+            this.total = response.pageInfo.total
           })
            areaList().then((response)=>{
           	this.areaList=response

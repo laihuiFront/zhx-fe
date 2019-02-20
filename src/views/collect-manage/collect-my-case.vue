@@ -623,7 +623,7 @@ export default {
           label: "下次跟进日期"
         },
         {
-          prop: "collectStatus",
+          prop: "collectStatusMsg",
           label: "催收状态"
         },
         {
