@@ -235,6 +235,31 @@
     </div>
   </el-col>
 </el-row>
+<el-row :gutter="20" class="addNew">
+	<el-col :span="12"><div class="grid-content bg-purple">
+  	<span>备注信息</span>
+  </el-form-item>
+  </div>
+  </el-col>
+  <el-col :span="12"><div class="grid-content bg-purple layout">
+<el-button type="text" icon="el-icon-plus" @click="addDomainremark">新增备注</el-button>  </el-form-item>
+  </div>
+  </el-col>
+</el-row>
+<el-row :gutter="20" class="addNewData" v-for="(domain, index) in dynamicValidateForm.remarksList" :key="domain.key">
+  <el-col :span="12" ><div class="grid-content bg-purple">
+  <el-form-item
+    label="备注信息"
+    :key="domain.key"
+  >
+    <el-input v-model="domain.remark" clearable></el-input>
+    </el-form-item>
+    <el-form-item>
+    <el-button type="text" @click.prevent="removeDomainremark(domain)">删除</el-button>
+  </el-form-item>
+    </div>
+  </el-col>
+</el-row>
 </el-form>  
 <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible2 = false">取 消</el-button>
@@ -265,7 +290,11 @@ export default {
         telList: [{
             teltype: '',
             tel:''
-          }],},
+          }],
+          remarksList:[{
+          	remark:''
+          }]
+        },
         dialogVisible:false,
         dialogVisible2:false,
         currentPage4: 1,
@@ -302,6 +331,12 @@ export default {
           this.dynamicValidateForm.telList.splice(index, 1)
         }
       },
+      removeDomainremark(item) {
+        var index = this.dynamicValidateForm.remarksList.indexOf(item)
+        if (index !== -1) {
+          this.dynamicValidateForm.remarksList.splice(index, 1)
+        }
+      },
       addDomainAddress() {
         this.dynamicValidateForm.addressList.push({
           address: '',
@@ -312,6 +347,12 @@ export default {
         this.dynamicValidateForm.telList.push({
           teltype: '',
           tel:'',
+          key: Date.now()
+        });
+      },
+      addDomainremark(){
+      	 this.dynamicValidateForm.remarksList.push({
+          remark:'',
           key: Date.now()
         });
       },
@@ -401,7 +442,10 @@ this.search()
         telList: [{
             teltype: '',
             tel:''
-          }],}
+          }],
+           remarksList:[{
+          	remark:''
+          }]}
 })
           } else {
             console.log('error submit!!');

@@ -26,7 +26,8 @@ return request({
     	name:form.name,
     	identNo:form.identNo,
     	telList:form.telList,
-    	addressList:form.addressList
+    	addressList:form.addressList,
+    	remarkList:form.remarksList
     }
   })
 }

@@ -36,15 +36,14 @@
   <el-select v-model="formInline.measure" placeholder="催收措施" clearable>
     <el-option
       v-for="item in sectionList"
-      :key="item.value"
+      :key="item.id"
       :label="item.label"
       :value="item.value">
     </el-option>
   </el-select>
   </el-form-item>
    <el-form-item>
-  <el-button type="text" icon="el-icon-caret-bottom" @click="dialogVisible1 = true"></el-button> 
-  </el-form-item>
+  <el-button type="text" :style="images" @click="dialogVisible1 = true"></el-button>     </el-form-item>
   <el-form-item>
   <el-button type="text" icon="el-icon-search" @click="search">查询</el-button> 
   </el-form-item>
@@ -323,7 +322,7 @@
     <el-select v-model="formInline.odv" filterable  placeholder="请选择催收员" clearable>
     <el-option
       v-for="item in PersonList"
-      :key="item.createTime"
+      :key="item.id"
       :label="item.userName"
       :value="item.id">
     </el-option>
@@ -490,6 +489,7 @@ export default {
   name: 'dataMemorizeManage',
   data(){
     return {
+    	  images:{backgroundImage: "url(" + require("./down.png") + ")",padding:"8px 5px 3px 6px"},
     	  loading:false,
     	  caseStatusList:[{name:"未退案",id:0},{name:"正常",id:1},{name:"暂停",id:2},{name:"关档",id:3},{name:"退档",id:4},{name:"全部",id:5}],
     	  EndList:[],

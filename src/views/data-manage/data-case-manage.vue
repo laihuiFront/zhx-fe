@@ -50,7 +50,7 @@
     </el-date-picker>
   </el-form-item>
   <el-form-item>
-  <el-button type="text" icon="el-icon-caret-bottom" @click="dialogVisible = true"></el-button> 
+  <el-button type="text" :style="images" @click="dialogVisible= true"></el-button>     </el-form-item>
   </el-form-item>
   <el-form-item>
   <el-button type="text" icon="el-icon-search" @click="search">查询</el-button> 
@@ -107,7 +107,7 @@
       <el-form-item>
       <el-button type="primary" >添加评语</el-button>  </el-form-item>
       <el-form-item>
-      <el-button type="primary"  @click="open7">申请协催</el-button>  </el-form-item>
+      <el-button type="primary"  >申请协催</el-button>  </el-form-item>
        <el-form-item >
 <el-dropdown>
   <el-button type="primary">
@@ -802,6 +802,7 @@ export default {
   },
   data(){
     return {
+    	  images:{backgroundImage: "url(" + require("./down.png") + ")",padding:"8px 5px 3px 6px"},
     	 props: {
           label:'name',
           value:'id',

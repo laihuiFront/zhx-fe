@@ -67,7 +67,7 @@
   <el-table
     :data="tableData3"
      show-summary
-   
+     :summary-method="getSummaries"
      style="width: 100%">
     <el-table-column
       prop="odv"
@@ -103,6 +103,7 @@
     </el-table-column><el-table-column
       align="center"
       label="承诺还款"
+      prop="countRepay"
      >
      <template slot-scope="scope">
         <el-button type="text" size="small" >{{scope.row.countRepay}}</el-button>
@@ -110,6 +111,7 @@
     </el-table-column><el-table-column
       align="center"
       label="可联系本人"
+       prop="countConSelf"
      >
      <template slot-scope="scope">
         <el-button type="text" size="small" >{{scope.row.countConSelf}}</el-button>
@@ -118,6 +120,7 @@
     <el-table-column
       align="center"
       label="可联村委"
+      prop="countConVillage"
      >
      <template slot-scope="scope">
         <el-button type="text" size="small" >{{scope.row.countConVillage}}</el-button>
@@ -126,6 +129,7 @@
     <el-table-column
       align="center"
       label="可联系第三人"
+       prop="countConThird"
      >
      <template slot-scope="scope">
         <el-button type="text" size="small" >{{scope.row.countConThird}}</el-button>
@@ -134,6 +138,7 @@
     <el-table-column
       align="center"
       label="可联系家人"
+      prop="countConFamily"
      >
      <template slot-scope="scope">
         <el-button type="text" size="small" >{{scope.row.countConFamily}}</el-button>
@@ -142,6 +147,7 @@
     <el-table-column
       align="center"
       label="空号错号"
+      prop="countDeadNumber"
      >
      <template slot-scope="scope">
         <el-button type="text" size="small" >{{scope.row.countDeadNumber}}</el-button>
@@ -150,6 +156,7 @@
     <el-table-column
       align="center"
       label="网搜无效"
+       prop="countSearchInvalid"
      >
      <template slot-scope="scope">
         <el-button type="text" size="small" >{{scope.row.countSearchInvalid}}</el-button>
@@ -158,6 +165,7 @@
      <el-table-column
       align="center"
       label="无人接听"
+      prop="countNoAnswer"
      >
      <template slot-scope="scope">
         <el-button type="text" size="small" >{{scope.row.countNoAnswer}}</el-button>
@@ -166,6 +174,7 @@
      <el-table-column
       align="center"
       label="无效电话"
+      prop="countInvalidCall"
      >
      <template slot-scope="scope">
         <el-button type="text" size="small" >{{scope.row.countInvalidCall}}</el-button>
@@ -214,6 +223,32 @@ export default {
     }
     },
     methods: {
+    	  getSummaries(param) {
+ 	     const { columns, data } = param;
+                const sums = [];
+                columns.forEach((column, index) => {
+                    if (index === 0) {
+                        sums[index] = '合计';
+                        return;
+                    }
+                    const values = data.map(item => Number(item[column.property]));
+                    if (!values.every(value => isNaN(value))) {
+                        sums[index] = values.reduce((prev, curr) => {
+                            const value = Number(curr);
+                            if (!isNaN(value)) {
+                                return prev + curr;
+                            } else {
+                                return prev;
+                            }
+                        }, 0);
+                        sums[index];
+                    } else {
+                        sums[index] = 'N/A';
+                    }
+                });
+
+                return sums;
+            },
     	handleSizeChange(val){
 	this.pageSize=val
 },
