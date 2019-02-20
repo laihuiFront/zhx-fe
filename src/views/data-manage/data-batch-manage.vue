@@ -25,10 +25,18 @@
   </el-select>
   </el-form-item>
   <el-form-item >
-   <el-input v-model="form.batchNo" placeholder="请输入批次" clearable></el-input>
+    <el-select v-model="form.batchNos" placeholder="请选择批次编号" filterable multiple clearable>
+      <el-option
+        v-for="item in form.batchList"
+        :key="item.batchNo"
+        :label="item.batchNo"
+        :value="item.batchNo">
+      </el-option>
+    </el-select>
   </el-form-item>
    <el-form-item >
-  <el-select v-model="form.client" placeholder="请选择委托方" clearable>
+  <el-select v-model="form.clients" placeholder="请选择委托方" filterable
+             multiple clearable>
     <el-option
       v-for="item in form.clientList"
       :key="item.value"
@@ -390,7 +398,7 @@
 </template>
 
 <script>
-	import {dataList,remoweData,addData,selectDataCollectExportByBatch,selectDataBatchExport,pageDataBatchExport,totalDataBatchExport,clientList,caseTypeList,areaList,returnCase,update} from '@/common/js/data-batch-manage.js'
+	import {dataList,remoweData,addData,selectDataCollectExportByBatch,selectDataBatchExport,pageDataBatchExport,totalDataBatchExport,clientList,batchList,caseTypeList,areaList,returnCase,update} from '@/common/js/data-batch-manage.js'
 export default {
   name: 'dataBatchManage',
    data(){
@@ -418,6 +426,7 @@ export default {
     	form:{
     		time:[],
     		clientList:[],
+        batchList:[],
     		areaList:[],
     		caseTypeList:[],
     		CasestatusList:[{id:0,name:"未导入"},{id:1,name:"未退案"},{id:2,name:"已退案"}]
@@ -450,7 +459,7 @@ methods: {
 			this.loading=true;
 			let startTime=this.form.time[0]
       	let endTime=this.form.time[1]
-		totalDataBatchExport(this.form.area,this.form.batchNo,this.form.client,this.form.batchStatus,this.form.caseType,startTime,endTime,this.pageSize,this.pageNum).then((response)=>{
+		totalDataBatchExport(this.form.area,this.form.batchNos,this.form.clients,this.form.batchStatus,this.form.caseType,startTime,endTime,this.pageSize,this.pageNum).then((response)=>{
           	this.loading=false;
           	this.$message({
             type: 'success',
@@ -462,7 +471,7 @@ methods: {
 			this.loading=true;
 			let startTime=this.form.time[0]
       	let endTime=this.form.time[1]
-		pageDataBatchExport(this.form.area,this.form.batchNo,this.form.client,this.form.batchStatus,this.form.caseType,startTime,endTime,this.pageSize,this.pageNum).then((response)=>{
+		pageDataBatchExport(this.form.area,this.form.batchNos,this.form.clients,this.form.batchStatus,this.form.caseType,startTime,endTime,this.pageSize,this.pageNum).then((response)=>{
           	this.loading=false;
           	this.$message({
             type: 'success',
@@ -498,7 +507,7 @@ methods: {
     let endTime=this.form.time[1]
     let sort = order==null?"desc":order.replace("ending","")
     let orderBy = prop==null?"id":prop
-    dataList(this.form.area,this.form.batchNo,this.form.client,this.form.batchStatus,this.form.caseType,startTime,endTime,orderBy,sort,this.pageSize,this.pageNum).then((response)=>{
+    dataList(this.form.area,this.form.batchNos,this.form.clients,this.form.batchStatus,this.form.caseType,startTime,endTime,orderBy,sort,this.pageSize,this.pageNum).then((response)=>{
 
       this.DataList=response.pageInfo.list
       this.pages = response.pages
@@ -508,7 +517,7 @@ methods: {
 	search(){
       	let startTime=this.form.time[0]
       	let endTime=this.form.time[1]
-dataList(this.form.area,this.form.batchNo,this.form.client,this.form.batchStatus,this.form.caseType,startTime,endTime,this.pageSize,this.pageNum).then((response)=>{
+dataList(this.form.area,this.form.batchNos,this.form.clients,this.form.batchStatus,this.form.caseType,startTime,endTime,this.pageSize,this.pageNum).then((response)=>{
 
             this.DataList=response.pageInfo.list
             this.pages = response.pages
@@ -613,8 +622,11 @@ this.search()
               clientList().then((response)=>{
             this.form.clientList=response;
             this.clientList=response;
-})      
-          caseTypeList().then((response)=>{
+})
+     batchList().then((response)=>{
+       this.form.batchList=response;
+     })
+     caseTypeList().then((response)=>{
           	this.form.caseTypeList=response
           	this.caseTypeList=response;
           })

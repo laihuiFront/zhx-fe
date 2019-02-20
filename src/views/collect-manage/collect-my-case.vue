@@ -56,7 +56,6 @@
                   <el-autocomplete
                     v-model="form.val1"
                     :fetch-suggestions="querySearch"
-                    multiple
                     :trigger-on-focus="false"
                     placeholder="请输入批次号">
                   </el-autocomplete>
