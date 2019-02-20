@@ -7,7 +7,7 @@ return request({
      idStr :form.id==null?"":form.id.replace(/\n/,","),
 	 cardNo : form.cardNo==null?"":form.cardNo.replace(/\n/,","),//卡号
 	 clients :form.clients,//委托方
-	 batchNo:form.batchNo,  //批次编号
+	 batchNos:form.batchNos,  //批次编号
 	 odv :form.odv, //催收员
 	 dept:form.dept,
 	 accountAge :form.accountAge, //逾期賬齡
@@ -48,7 +48,7 @@ return request({
     }
   })
 }
-export const searchList = function(area,batchNo,clients,caseType,caseDateStart,caseDateEnd,orderBy,sort,pageSize,pageNum) {
+export const searchList = function(area,batchNos,clients,caseType,caseDateStart,caseDateEnd,orderBy,sort,pageSize,pageNum) {
 return request({
     url: '/dataCase/pageCaseList',
     method: 'post',
@@ -56,7 +56,7 @@ return request({
        area:  area,
        caseDateStart:caseDateStart,
        caseDateEnd:caseDateEnd,
-       batchNo:  batchNo ,
+       batchNos:  batchNos ,
        clients:  clients ,
        caseType: caseType,
       orderBy:orderBy?orderBy:"id",
@@ -118,7 +118,13 @@ return request({
     data:{name:"委托方"}
   })
 }
-
+export  const batchList = function(){
+  return request({
+    url: '/dataBatch/selectBatchNo',
+    method: 'post',
+    data:{}
+  })
+}
 export const EndList = function() {
 return request({
     url: '/sys/dictionary/select/list/name',
