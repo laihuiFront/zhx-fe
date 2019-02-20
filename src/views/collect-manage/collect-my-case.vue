@@ -716,7 +716,7 @@ export default {
     realFetchFormData() {
       let {
         val0: clients,
-        val1: batchNo,
+        val1: batchNos,
         val2,
         val3: seqno,
         val4: area,
@@ -748,7 +748,7 @@ export default {
       } = this.form;
       return {
         clients,
-        batchNo,
+        batchNos,
         seqno,
         caseDateStart:(!!val7 && val7[0])||'' ,
         caseDateEnd:(!!val7 && val7[1])||'' ,

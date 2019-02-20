@@ -363,7 +363,7 @@ export default {
       let {
         val1: opeType,
         val2: clients,
-        val3: batchNo,
+        val3: batchNos,
         val4: accountAge,
         val5,
         val6,
@@ -372,7 +372,7 @@ export default {
       return {
         opeType,
         clients,
-        batchNo,
+        batchNos,
         accountAge,
         repayTimeStart: (!!val5 && val5[0]) || "",
         repayTimeEnd: (!!val5 && val5[1]) || "",

@@ -725,7 +725,7 @@
       realFetchFormData() {
         let {
           val0: clients,
-          val1: batchNo,
+          val1: batchNos,
           val2,
           val3: seqno,
           val4: area,
@@ -759,7 +759,7 @@
         } = this.form;
         return {
           clients,
-          batchNo,
+          batchNos,
           seqno,
           nextFollDateStart: (!!val2 && val2[0])||'' ,
           nextFollDateEnd: (!!val2 && val2[1])||'',

@@ -222,18 +222,18 @@ export default {
   },
   computed:{
     form2_data(){
-      let {val1:clients,val2:batchNo,val3:accountAge} = this.form2;
+      let {val1:clients,val2:batchNos,val3:accountAge} = this.form2;
       return {
         clients,
-        batchNo,
+        batchNos,
         accountAge
       }
     },
     form3_data(){
-      let {val1:clients,val2:batchNo,val3:accountAge} = this.form3;
+      let {val1:clients,val2:batchNos,val3:accountAge} = this.form3;
       return {
         clients,
-        batchNo,
+        batchNos,
         accountAge,
         sType:0
       }
