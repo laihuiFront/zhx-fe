@@ -35,16 +35,16 @@
           <el-button type="primary" @click="onClickAdd">新增员工</el-button>
         </el-form-item>
       </el-form>
-      <el-table :data="memberList" style="width: 100%" class="table-wrap">
-        <el-table-column prop="number" show-overflow-tooltip label="员工号"></el-table-column>
-        <el-table-column prop="userName" label="员工姓名" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="sex" label="性别" show-overflow-tooltip width="50"></el-table-column>
-        <el-table-column prop="officePhone" label="座机号" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="mobile" label="手机" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="joinTime" label="入职日期" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="roleList" :formatter="formatRole" label="员工角色" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="position" label="职位" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="department" label="部门" show-overflow-tooltip></el-table-column>
+      <el-table sortable="custom" @sort-change="handleSort" :data="memberList" style="width: 100%" class="table-wrap">
+        <el-table-column :sortable='true' :sort-orders="['ascending','descending']"  prop="number" show-overflow-tooltip label="员工号"></el-table-column>
+        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="userName" label="员工姓名" show-overflow-tooltip></el-table-column>
+        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="sex" label="性别" show-overflow-tooltip width="70"></el-table-column>
+        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="officePhone" label="座机号" show-overflow-tooltip></el-table-column>
+        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="mobile" label="手机" show-overflow-tooltip></el-table-column>
+        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="joinTime" label="入职日期" show-overflow-tooltip></el-table-column>
+        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="roleList" :formatter="formatRole" label="员工角色" show-overflow-tooltip></el-table-column>
+        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="position" label="职位" show-overflow-tooltip></el-table-column>
+        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="department" label="部门" show-overflow-tooltip></el-table-column>
         <el-table-column label="操作" width="200">
           <template slot-scope="scope">
             <el-button type="text" @click="onClickEdit(scope.row)">修改</el-button>
@@ -198,7 +198,9 @@ export default {
       queryForm: {
         pageNum: 1,
         pageSize: 10,
-        department: null
+        department: null,
+        orderBy:null,
+        sort:null
       },
       dialogData: {
         editVisible: false,
@@ -229,6 +231,12 @@ export default {
     })
   },
   methods: {
+    handleSort({column,prop,order}){
+      // console.log(prop,'@',order)
+      this.queryForm.orderBy = prop
+      this.queryForm.sort = order === 'ascending' ? 'asc':'desc'
+      this.onClickQuery()
+    },
     onClickQuery () {
       this.memberList = []
       const data = {
