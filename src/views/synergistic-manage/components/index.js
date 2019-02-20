@@ -1,0 +1,1 @@
+export {default as RepayRecordQuery} from './repay-record-query'
