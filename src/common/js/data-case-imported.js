@@ -1,11 +1,11 @@
 import request from '@/common/js/request'
-export const dataList = function(area,batchNo,clients,caseType,startTime,endTime,orderBy,sort,pageSize,pageNum) {
+export const dataList = function(area,batchNos,clients,caseType,startTime,endTime,orderBy,sort,pageSize,pageNum) {
 return request({
     url: '/dataBatch/pageDataCase',
     method: 'post',
     data: {
        area:area ? area : "",
-       batchNo:batchNo ? batchNo : "",
+       batchNos:batchNos,
        clients:clients,
        caseType:caseType ? caseType : "",
        startTime:startTime ? startTime : "",
@@ -76,6 +76,13 @@ return request({
   })
 }
 
+export  const batchList = function(){
+  return request({
+    url: '/dataBatch/selectBatchNo',
+    method: 'post',
+    data:{}
+  })
+}
 export const areaList = function() {
 return request({
     url: '/sys/dictionary/select/list/name',

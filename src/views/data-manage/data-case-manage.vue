@@ -15,7 +15,14 @@
   </el-select>
   </el-form-item>
   <el-form-item >
-   <el-input v-model="form.batchNo" placeholder="请输入批次" clearable></el-input>
+    <el-select v-model="form.batchNos" filterable  multiple placeholder="请输入批次" clearable>
+    <el-option
+      v-for="item in batchList"
+      :key="item.batchNo"
+      :label="item.batchNo"
+      :value="item.batchNo">
+    </el-option>
+  </el-select>
   </el-form-item>
    <el-form-item >
   <el-select v-model="form.clients" filterable  multiple placeholder="请选择委托方" clearable>
@@ -508,7 +515,15 @@
   <el-col :span="8">
   	<div class="grid-content bg-purple">
    <el-form-item label="批次号">
-  <el-input v-model="formInline.batchNo" placeholder="请输入批次号"></el-input>
+  <!--<el-input v-model="formInline.batchNo" placeholder="请输入批次号"></el-input>-->
+     <el-select v-model="formInline.batchNos" filterable  multiple placeholder="请输入批次" clearable>
+       <el-option
+         v-for="item in batchList"
+         :key="item.batchNo"
+         :label="item.batchNo"
+         :value="item.batchNo">
+       </el-option>
+     </el-select>
   </el-form-item>
   	</div></el-col>
   	<el-col :span="8">
@@ -527,7 +542,7 @@
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   		  <el-form-item label="催收员">
-    <el-select v-model="formInline.odv" filterable  placeholder="请选择催收员" clearable>
+    <el-select v-model="formInline.odv" filterable multiple placeholder="请选择催收员" clearable>
     <el-option
       v-for="item in PersonList"
       :key="item.id"
@@ -555,7 +570,7 @@
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   		  <el-form-item label="委托方">
-    <el-select v-model="formInline.client" filterable  placeholder="请选择委托方" clearable>
+    <el-select v-model="formInline.client" filterable  multiple placeholder="请选择委托方" clearable>
     <el-option
       v-for="item in clientList"
       :key="item.id"
@@ -801,7 +816,7 @@
 
 <script>
 import CaseDetail from './detail'
-	import {dataList,areaList,caseTypeList,addressList,TellList,collectStatusList,deleteStatusList,accountAgeList,clientList,EndList,PersonList,departmentList,searchList} from '@/common/js/data-case-manage.js'
+	import {dataList,areaList,batchList,caseTypeList,addressList,TellList,collectStatusList,deleteStatusList,accountAgeList,clientList,EndList,PersonList,departmentList,searchList} from '@/common/js/data-case-manage.js'
 export default {
   name: 'dataCaseManage',
   components: {
@@ -826,6 +841,7 @@ export default {
     	pageSize:10,
     	pageNum:1,
     	clientList:[],
+      batchList:[],
       total:0,
       pages:1,
       orderBy:"id",
@@ -900,7 +916,7 @@ methods: {
 
     let caseDateStart=this.form.time==null?"":this.form.time[0]
     let caseDateEnd=this.form.time==null?"":this.form.time[1]
-    searchList(this.form.area,this.form.batchNo,this.form.clients,this.form.caseType,caseDateStart,caseDateEnd,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
+    searchList(this.form.area,this.form.batchNos,this.form.clients,this.form.caseType,caseDateStart,caseDateEnd,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
       this.tableData3=response.list
       this.pages = response.pages
       this.total = response.total
@@ -914,7 +930,7 @@ methods: {
 
 		let caseDateStart=this.form.time==null?"":this.form.time[0]
 		let caseDateEnd=this.form.time==null?"":this.form.time[1]
-		searchList(this.form.area,this.form.batchNo,this.form.clients,this.form.caseType,caseDateStart,caseDateEnd,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
+		searchList(this.form.area,this.form.batchNos,this.form.clients,this.form.caseType,caseDateStart,caseDateEnd,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
           	this.tableData3=response.list
             this.pages = response.pages
             this.total = response.total
@@ -969,6 +985,9 @@ created() {
           })
             clientList().then((response)=>{
           	this.clientList=response
+          })
+          batchList().then((response)=>{
+            this.batchList=response;
           })
             EndList().then((response)=>{
           	this.EndList=response

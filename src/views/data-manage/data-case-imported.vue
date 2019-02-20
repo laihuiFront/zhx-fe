@@ -15,7 +15,14 @@
   </el-select>
   </el-form-item>
   <el-form-item >
-   <el-input v-model="form.batchNo" placeholder="请输入批次" clearable></el-input>
+    <el-select v-model="form.batchNos" filterable  multiple placeholder="请输入批次" clearable>
+      <el-option
+        v-for="item in batchList"
+        :key="item.batchNo"
+        :label="item.batchNo"
+        :value="item.batchNo">
+      </el-option>
+    </el-select>
   </el-form-item>
    <el-form-item >
   <el-select v-model="form.clients" filterable  multiple placeholder="请选择委托方" clearable>
@@ -426,7 +433,7 @@
 </template>
 
 <script>
-		import {dataList,remoweData,addData,clientList,caseTypeList,areaList,update} from '@/common/js/data-case-imported.js'
+		import {dataList,batchList,remoweData,addData,clientList,caseTypeList,areaList,update} from '@/common/js/data-case-imported.js'
 export default {
   name: 'dataCaseImported',
   data(){
@@ -439,6 +446,7 @@ export default {
       orderBy:"id",
       sort:"desc",
     	clientList:[],
+      batchList:[],
     	deleteList:[],
         formInline:{
         	batchNo:'',
@@ -530,7 +538,7 @@ methods: {
       let endTime=this.form.time[1]
       this.sort = order==null?"desc":order.replace("ending","")
       this.orderBy = prop==null?"id":prop
-      dataList(this.form.area,this.form.batchNo,this.form.clients,this.form.caseType,startTime,endTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
+      dataList(this.form.area,this.form.batchNos,this.form.clients,this.form.caseType,startTime,endTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
         this.DataList=response.pageInfo.list
         this.pages = response.pageInfo.pages
         this.total = response.pageInfo.total
@@ -540,8 +548,9 @@ methods: {
       	let startTime=this.form.time[0]
       	let endTime=this.form.time[1]
 
-dataList(this.form.area,this.form.batchNo,this.form.clients,this.form.caseType,startTime,endTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
+dataList(this.form.area,this.form.batchNos,this.form.clients,this.form.caseType,startTime,endTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
             this.DataList=response.pageInfo.list
+  console.info(response.pageInfo.pages);
             this.pages = response.pageInfo.pages
             this.total = response.pageInfo.total
 })
@@ -604,7 +613,10 @@ created() {
               clientList().then((response)=>{
             this.form.clientList=response;
             this.clientList=response;
-})      
+})
+  batchList().then((response)=>{
+    this.batchList=response;
+  })
           caseTypeList().then((response)=>{
           	this.form.caseTypeList=response
           	this.caseTypeList=response;
