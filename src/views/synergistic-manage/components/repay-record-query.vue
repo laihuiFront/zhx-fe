@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import ELTreeSelect from 'el-tree-select'
+import ELTreeSelect from '@/components/el-tree-select/elTreeSelect'
 import { getDepartmentTree } from '@/common/js/api-setting'
 export default {
   name:'repayRecordQuery',
