@@ -169,7 +169,7 @@
       >
     </el-table-column>
     <el-table-column
-      prop="collectStatus"
+      prop="collectStatusMsg"
       align="center"
       :sortable='true'
       min-width="140"
@@ -905,8 +905,8 @@ methods: {
 		let caseDateEnd=this.form.time==null?"":this.form.time[1]
 		searchList(this.form.area,this.form.batchNo,this.form.clients,this.form.caseType,caseDateStart,caseDateEnd,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
           	this.tableData3=response.list
-            this.pages = response.pages
-            this.total = response.total
+            this.pages = response.pageInfo.pages
+            this.total = response.pageInfo.total
           })
 	},
 	handleSizeChange(val){

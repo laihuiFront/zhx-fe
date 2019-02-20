@@ -598,8 +598,8 @@ this.search()
 created() {
             dataList().then((response)=>{
             this.DataList=response.pageInfo.list
-              this.pages = response.pages
-              this.total = response.total
+              this.pages = response.pageInfo.pages
+              this.total = response.pageInfo.total
 })
               clientList().then((response)=>{
             this.form.clientList=response;

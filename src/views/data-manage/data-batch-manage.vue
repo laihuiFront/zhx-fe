@@ -512,8 +512,8 @@ methods: {
     dataList(this.form.area,this.form.batchNos,this.form.clients,this.form.batchStatus,this.form.caseType,startTime,endTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
 
       this.DataList=response.pageInfo.list
-      this.pages = response.pages
-      this.total = response.total
+      this.pages = response.pageInfo.pages
+      this.total = response.pageInfo.total
     })
   },
 	search(){
@@ -522,8 +522,8 @@ methods: {
 dataList(this.form.area,this.form.batchNos,this.form.clients,this.form.batchStatus,this.form.caseType,startTime,endTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
 
             this.DataList=response.pageInfo.list
-            this.pages = response.pages
-            this.total = response.total
+            this.pages = response.pageInfo.pages
+            this.total = response.pageInfo.total
 })
       },
       returnCaseList(){
@@ -616,8 +616,8 @@ this.search()
    created() {
             dataList().then((response)=>{
               this.DataList=response.pageInfo.list
-              this.pages = response.pages
-              this.total = response.total
+              this.pages = response.pageInfo.pages
+              this.total = response.pageInfo.total
               this.totalAmt=response.totalAmt;
               this.userCount=response.userCount;
             })
