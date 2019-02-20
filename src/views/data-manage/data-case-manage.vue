@@ -828,12 +828,12 @@
       class="dialog-wrap"
       :visible.sync="detailVisible2"
       :close-on-click-modal="false"
-      width="30%"
+      width="40%"
   >
   <el-form :inline="true" :model="formInline" class="demo-form-inline" label-width="120px">
   	<div class="grid-content bg-purple">
   		<el-form-item label="添加评语">
-    <el-input type=textarea v-model="formInline.vin" placeholder="请输入评语"></el-input>
+    <el-input type=textarea style="width: 200%;" v-model="formInline.vin" placeholder="请输入评语"></el-input>
   </el-form-item>
   	</div>
   </el-form>
@@ -890,7 +890,7 @@
   	</div>
   </el-form>
   <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisible2 = false">取 消</el-button>
+    <el-button @click="dialogVisible4 = false">取 消</el-button>
     <el-button type="primary" @click=sureAddShow4>确 定</el-button>
   </span>
   </el-dialog>
@@ -916,7 +916,7 @@
   	</div>
   </el-form>
   <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisible2 = false">取 消</el-button>
+    <el-button @click="dialogVisible5 = false">取 消</el-button>
     <el-button type="primary" @click=sureAddShow5>确 定</el-button>
   </span>
   </el-dialog>
@@ -942,7 +942,7 @@
   	</div>
   </el-form>
   <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisible2 = false">取 消</el-button>
+    <el-button @click="dialogVisible6 = false">取 消</el-button>
     <el-button type="primary" @click=sureAddShow6>确 定</el-button>
   </span>
   </el-dialog>
@@ -961,7 +961,7 @@
   	</div>
   </el-form>
   <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisible2 = false">取 消</el-button>
+    <el-button @click="dialogVisible7 = false">取 消</el-button>
     <el-button type="primary" @click=sureAddShow7>确 定</el-button>
   </span>
   </el-dialog>
@@ -1052,7 +1052,8 @@ export default {
   },
 methods: {
 	handleCommand(command){
-		if(command==="a"){
+		if(this.deleteList.length>=1){
+			if(command==="a"){
 			this.detailVisible4=true
 		}else if(command==="b"){
 			this.detailVisible5=true
@@ -1061,6 +1062,13 @@ methods: {
 		}else {
 			this.detailVisible7=true
 		}
+		}else{
+			this.$message({
+            type: 'error',
+            message: '请选择数据!'
+          });
+		}
+		
 	},
 	biaose(){
 		if(this.deleteList.length>=1){
