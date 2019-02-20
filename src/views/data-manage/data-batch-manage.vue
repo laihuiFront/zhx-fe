@@ -412,6 +412,8 @@ export default {
     	selectDataCollectExportByBatchList:[],
     	DataList:[],
     	pageSize:10,
+      orderBy:"id",
+      sort:"desc",
     	pageNum:1,
     	areaList:[],
     	caseTypeList:[],
@@ -505,9 +507,9 @@ methods: {
   handleSort( {column,prop,order}){
     let startTime=this.form.time[0]
     let endTime=this.form.time[1]
-    let sort = order==null?"desc":order.replace("ending","")
-    let orderBy = prop==null?"id":prop
-    dataList(this.form.area,this.form.batchNos,this.form.clients,this.form.batchStatus,this.form.caseType,startTime,endTime,orderBy,sort,this.pageSize,this.pageNum).then((response)=>{
+    this.sort = order==null?"desc":order.replace("ending","")
+    this.orderBy = prop==null?"id":prop
+    dataList(this.form.area,this.form.batchNos,this.form.clients,this.form.batchStatus,this.form.caseType,startTime,endTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
 
       this.DataList=response.pageInfo.list
       this.pages = response.pages
@@ -517,7 +519,7 @@ methods: {
 	search(){
       	let startTime=this.form.time[0]
       	let endTime=this.form.time[1]
-dataList(this.form.area,this.form.batchNos,this.form.clients,this.form.batchStatus,this.form.caseType,startTime,endTime,this.pageSize,this.pageNum).then((response)=>{
+dataList(this.form.area,this.form.batchNos,this.form.clients,this.form.batchStatus,this.form.caseType,startTime,endTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
 
             this.DataList=response.pageInfo.list
             this.pages = response.pages
