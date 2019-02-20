@@ -62,6 +62,8 @@
                 <el-select
                   v-model="form.val0"
                   placeholder="请选择委托方"
+                  filterable
+                  multiple
                   clearable
                 >
                   <el-option
@@ -714,7 +716,7 @@
     computed: {
       realFetchFormData() {
         let {
-          val0: client,
+          val0: clients,
           val1: batchNo,
           val2,
           val3: seqno,
@@ -748,7 +750,7 @@
           val32:odv
         } = this.form;
         return {
-          client,
+          clients,
           batchNo,
           seqno,
           nextFollDateStart: (!!val2 && val2[0])||'' ,
@@ -878,6 +880,9 @@
       },
       getMainData(){
         pageMyCase(this.realFetchFormData).then((data)=>{
+          if(!data){
+            data = {total:0,list:[]}
+          }
           this.fetchData = data;
           this.paginationData.total = data.total;
           this.tableData = data.list.map((item)=>{

@@ -41,6 +41,8 @@
             <el-select
               v-model="form2.val1"
               placeholder="请选择委托方"
+              filterable
+              multiple
               clearable
             >
               <el-option
@@ -98,7 +100,9 @@
           <el-form-item prop="val1">
             <el-select
               v-model="form3.val1"
-              placeholder="请选择委托方"
+              placeholder="请选择委托方
+              filterable
+              multiple
               clearable
             >
               <el-option
@@ -200,17 +204,17 @@ export default {
   },
   computed:{
     form2_data(){
-      let {val1:client,val2:batchNo,val3:accountAge} = this.form2;
+      let {val1:clients,val2:batchNo,val3:accountAge} = this.form2;
       return {
-        client,
+        clients,
         batchNo,
         accountAge
       }
     },
     form3_data(){
-      let {val1:client,val2:batchNo,val3:accountAge} = this.form3;
+      let {val1:clients,val2:batchNo,val3:accountAge} = this.form3;
       return {
-        client,
+        clients,
         batchNo,
         accountAge,
         sType:0

@@ -60,7 +60,8 @@
           </el-form-item>
         </el-row>
         <el-form-item prop="val2">
-          <el-select v-model="form1.val2" placeholder="请选择委托方" clearable>
+          <el-select v-model="form1.val2" placeholder="请选择委托方" filterable
+                     multiple clearable>
             <el-option
               v-for="item in val2_data"
               :key="item.value"
@@ -352,7 +353,7 @@ export default {
     fetchData() {
       let {
         val1: opeType,
-        val2: client,
+        val2: clients,
         val3: batchNo,
         val4: accountAge,
         val5,
@@ -361,7 +362,7 @@ export default {
       } = this.form1;
       return {
         opeType,
-        client,
+        clients,
         batchNo,
         accountAge,
         repayTimeStart: (!!val5 && val5[0]) || "",

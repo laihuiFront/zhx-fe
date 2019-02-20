@@ -39,6 +39,8 @@
                   <el-select
                     v-model="form.val0"
                     placeholder="请选择委托方"
+                    filterable
+                    multiple
                     clearable
                   >
                     <el-option
@@ -54,6 +56,7 @@
                   <el-autocomplete
                     v-model="form.val1"
                     :fetch-suggestions="querySearch"
+                    multiple
                     :trigger-on-focus="false"
                     placeholder="请输入批次号">
                   </el-autocomplete>
@@ -442,7 +445,7 @@
             prop="seqno"
             sortable="custom"
             :sort-orders="['ascending','descending']"
-            min-width="90"
+            min-width="120"
             header-align="center" align="center">
             <template slot-scope="scope">
               <el-button style="text-decoration: underline" type="text" size="small"
@@ -665,6 +668,7 @@ export default {
         },
         {
           prop: "enRepayAmt",
+          width:"140",
           label: "已还款金额"
         },
         {
@@ -704,7 +708,7 @@ export default {
   computed: {
     realFetchFormData() {
       let {
-        val0: client,
+        val0: clients,
         val1: batchNo,
         val2,
         val3: seqno,
@@ -736,7 +740,7 @@ export default {
         val28: collectMeasure
       } = this.form;
       return {
-        client,
+        clients,
         batchNo,
         seqno,
         caseDateStart:(!!val7 && val7[0])||'' ,
@@ -867,6 +871,9 @@ export default {
     },
     getMainData(){
       pageMyCase(this.realFetchFormData).then((data)=>{
+        if(!data){
+          data = {total:0,list:[]}
+        }
         this.fetchData = data;
         this.paginationData.total = data.total;
         this.tableData = data.list.map((item)=>{
