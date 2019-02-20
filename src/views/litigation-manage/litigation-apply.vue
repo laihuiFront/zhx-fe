@@ -110,9 +110,9 @@
       width="120"
      >
      <template slot-scope="scope">
-       <el-button type="text" size="small" icon="el-icon-check" @click="checkData(scope.row.id)"></el-button>
+       <el-button type="text" size="small" icon="el-icon-check" @click="checkDatasure(scope.row.id)"></el-button>
        <el-button type="text" size="small" icon="el-icon-message" ></el-button>
-       <el-button type="text" size="small" icon="el-icon-edit" @click="editData(scope.row.id)"></el-button>
+       <el-button type="text" size="small" icon="el-icon-edit" @click="editData(scope.row)"></el-button>
        <el-button type="text" size="small" icon="el-icon-delete" @click="deleteData(scope.row.id)"></el-button>
       </template>
     </el-table-column>
@@ -129,7 +129,7 @@
     </el-pagination>
   </div>	
   	<el-dialog
-  title="新增"
+  :title="dialogTitle"
   :visible.sync="dialogVisible"
   width="90%"
   >
@@ -168,7 +168,7 @@
   		<el-form-item label="办案进度">
     <el-select v-model="formInline.progress" filterable  placeholder="请选择案件进度" clearable>
     <el-option
-      v-for="item in caseStatusList"
+      v-for="item in progressList"
       :key="item.id"
       :label="item.name"
       :value="item.id">
@@ -446,45 +446,72 @@
   :visible.sync="dialogVisible1"
   width="30%"
   >
-<el-form ref="checkform" :model="form" label-width="80px">
+<el-form ref="checkform" :model="checkform" label-width="80px">
  
   <el-form-item label="审批结果">
-    <el-radio-group v-model="form.resource">
-      <el-radio label="通过"></el-radio>
-      <el-radio label="驳回"></el-radio>
+    <el-radio-group v-model="checkform.resource">
+      <el-radio :label="1">通过</el-radio>
+      <el-radio :label="2">驳回</el-radio>
     </el-radio-group>
+  </el-form-item>
+     <el-form-item label="所属人">
+     <el-select v-model="checkform.owner" filterable  placeholder="请选择所属人" clearable>
+    <el-option
+      v-for="item in PersonDataList"
+      :key="item.id"
+      :label="item.name"
+      :value="item.id">
+    </el-option>
+     </el-select>
   </el-form-item>
 </el-form>
   <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible1 = false">取 消</el-button>
-    <el-button type="primary" @click="dialogVisible1 = false">确 定</el-button>
+    <el-button type="primary" @click="checkresource">确 定</el-button>
   </span>
 </el-dialog>
   </div>
 </template>
 
 <script>
-			import {dataList,remoweData,addData,PersonList} from '@/common/js/litigation-apply.js'	
+			import {dataList,remoweData,addData,PersonList,checkData} from '@/common/js/litigation-apply.js'	
 
 export default {
   name: 'litigationApply',
   	data(){
   		return{
+  			dialogTitle:'新增',
+  			progressList:[{name:"判决",id:1},{name:"收案",id:2}], 
         legalStatusMsgList:[{name:"已审核",id:1},{name:"审核中",id:2},{name:"未申请",id:0}],  
         caseStatusList:[{name:"未退案",id:0},{name:"正常",id:1},{name:"暂停",id:2},{name:"关档",id:3},{name:"退档",id:4},{name:"全部",id:5}],
   			formInline:{},
   			dialogVisible:false,
   			dialogVisible1:false,
   		  form:{},
-  		  checkform:{},
+  		  checkform:{
+  		  	resource:''
+  		  },
   		  currentPage4: 1,
         pages:1,
         total:100,
          DataList: [],
-         PersonDataList:[]
+         PersonDataList:[],
+         checkId:'',
   	}
   },
    methods: {
+   	checkresource(){
+   		checkData(this.checkform,this.checkId).then((response)=>{
+          this.$message({
+            type: 'success',
+            message: '审核成功!'
+          });
+          this.dialogVisible=false;
+          this.search()
+          this.formInline={}
+          this.checkId=''
+          })    
+   	},
    	SaveData(){
    		addData(this.formInline).then((response)=>{
           this.$message({
@@ -496,12 +523,14 @@ export default {
           this.formInline={}
 })    
    	},
-   	checkData(id){
+   	checkDatasure(id){
    		this.dialogVisible1=true;
-   		
+   		this.checkId=id;
    	},
-   	editData(){
-   		
+   	editData(row){
+   		this.dialogVisible=true;
+   		this.dialogTitle="修改";
+   		this.formInline=row
    	},
    	deleteData(id){
          	let _self=this 

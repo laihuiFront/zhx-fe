@@ -24,6 +24,17 @@ return request({
     }
   })
 }
+export const checkData = function(form,id) {
+return request({
+    url: '/legal/check',
+    method: 'post',
+    data:{
+    	id:id,
+    	status:form.resource,
+	    owner:form.owner 
+    }
+  })
+}
 
 export const addData = function(form) {
 return request({
