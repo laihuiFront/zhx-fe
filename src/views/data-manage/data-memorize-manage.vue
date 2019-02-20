@@ -569,7 +569,7 @@ pageDataExport(this.formInline.area,this.formInline.dept,this.formInline.batchNo
       this.orderBy = prop==null?"id":prop
       search(this.formInline.area,this.formInline.dept,this.formInline.odvs,this.formInline.measure,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
         this.tableData3=response.list
-        this.pages = response.pages
+        //this.pages = response.pages
         this.total = response.total
 
       })
@@ -578,7 +578,7 @@ pageDataExport(this.formInline.area,this.formInline.dept,this.formInline.batchNo
 
 		search(this.formInline.area,this.formInline.dept,this.formInline.odvs,this.formInline.measure,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
           	this.tableData3=response.list
-            this.pages = response.pages
+            //this.pages = response.pages
             this.total = response.total
 
           })
@@ -651,7 +651,7 @@ this.search()
       created() {
       	  dataList().then((response)=>{
           	this.tableData3=response.list
-            this.pages = response.pages
+            //this.pages = response.pages
             this.total = response.total
           })
           areaList().then((response)=>{

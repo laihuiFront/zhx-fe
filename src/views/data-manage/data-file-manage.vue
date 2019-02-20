@@ -313,7 +313,7 @@ export default {
           });
            dataList().then((response)=>{
             this.DataList=response.list
-              this.pages = response.pages
+              //this.pages = response.pages
               this.total = response.total
 })    
   	},
@@ -411,7 +411,7 @@ this.search()
       let endTime=this.form.time[1]
       dataList(this.form.name,this.form.identNo,this.form.mobile,this.form.address,startTime,endTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
         this.DataList=response.list
-        this.pages = response.pages
+        //this.pages = response.pages
         this.total = response.total
       })
     },
@@ -420,7 +420,7 @@ this.search()
       	let endTime=this.form.time[1]
       	 dataList(this.form.name,this.form.identNo,this.form.mobile,this.form.address,startTime,endTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
             this.DataList=response.list
-           this.pages = response.pages
+           //this.pages = response.pages
            this.total = response.total
 })
       },
@@ -457,7 +457,7 @@ this.search()
     created() {
             dataList().then((response)=>{
             this.DataList=response.list
-              this.pages = response.pages
+             // this.pages = response.pages
               this.total = response.total
 })    
              

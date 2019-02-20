@@ -895,7 +895,7 @@ methods: {
     this.formInline.sort = this.sort;
 	dataList(this.formInline).then((response)=>{
           	this.tableData3=response.list
-            this.pages = response.pages
+            //this.pages = response.pages
             this.total = response.total
           	this.dialogVisible = false
           })
@@ -918,7 +918,7 @@ methods: {
     let caseDateEnd=this.form.time==null?"":this.form.time[1]
     searchList(this.form.area,this.form.batchNos,this.form.clients,this.form.caseType,caseDateStart,caseDateEnd,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
       this.tableData3=response.list
-      this.pages = response.pages
+      //this.pages = response.pages
       this.total = response.total
     })
   },
@@ -932,7 +932,7 @@ methods: {
 		let caseDateEnd=this.form.time==null?"":this.form.time[1]
 		searchList(this.form.area,this.form.batchNos,this.form.clients,this.form.caseType,caseDateStart,caseDateEnd,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
           	this.tableData3=response.list
-            this.pages = response.pages
+            //this.pages = response.pages
             this.total = response.total
           })
 	},
@@ -974,7 +974,7 @@ this.search()
 created() {
       	  searchList().then((response)=>{
           	this.tableData3=response.list
-            this.pages = response.pages
+            //this.pages = response.pages
             this.total = response.total
           })
            areaList().then((response)=>{
