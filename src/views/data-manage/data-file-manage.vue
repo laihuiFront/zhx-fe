@@ -256,6 +256,8 @@ export default {
     	deleteList:[],
     	  pageNum:"",
     	  pageSize:"",
+      orderBy:"id",
+      sort:"desc",
         dynamicValidateForm:{name:"",identNo:"", 
         addressList: [{
             address: ''
@@ -362,11 +364,11 @@ this.search()
         });
       },
     handleSort( {column,prop,order}){
-      let sort = order==null?"desc":order.replace("ending","")
-      let orderBy = prop==null?"id":prop
+      this.sort = order==null?"desc":order.replace("ending","")
+      this.orderBy = prop==null?"id":prop
       let startTime=this.form.time[0]
       let endTime=this.form.time[1]
-      dataList(this.form.name,this.form.identNo,this.form.mobile,this.form.address,startTime,endTime,orderBy,sort,this.pageSize,this.pageNum).then((response)=>{
+      dataList(this.form.name,this.form.identNo,this.form.mobile,this.form.address,startTime,endTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
         this.DataList=response.list
         this.pages = response.pages
         this.total = response.total
@@ -375,7 +377,7 @@ this.search()
       search(){
       	let startTime=this.form.time[0]
       	let endTime=this.form.time[1]
-      	 dataList(this.form.name,this.form.identNo,this.form.mobile,this.form.address,startTime,endTime,this.pageSize,this.pageNum).then((response)=>{
+      	 dataList(this.form.name,this.form.identNo,this.form.mobile,this.form.address,startTime,endTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
             this.DataList=response.list
            this.pages = response.pages
            this.total = response.total

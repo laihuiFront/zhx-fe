@@ -169,7 +169,7 @@
       >
     </el-table-column>
     <el-table-column
-      prop="collectStatus"
+      prop="collectStatusMsg"
       align="center"
       :sortable='true'
       min-width="140"
@@ -820,6 +820,8 @@ export default {
     	clientList:[],
       total:0,
       pages:1,
+      orderBy:"id",
+      sort:"desc",
     	deleteList:[],
     	caseTypeList:[],
     	  areaList:[],
@@ -882,12 +884,12 @@ methods: {
 	console.log(_self.deleteList)
 },
   handleSort( {column,prop,order}){
-    let sort = order==null?"desc":order.replace("ending","")
-    let orderBy = prop==null?"id":prop
+    this.sort = order==null?"desc":order.replace("ending","")
+    this.orderBy = prop==null?"id":prop
 
     let caseDateStart=this.form.time==null?"":this.form.time[0]
     let caseDateEnd=this.form.time==null?"":this.form.time[1]
-    searchList(this.form.area,this.form.batchNo,this.form.clients,this.form.caseType,caseDateStart,caseDateEnd,orderBy,sort,this.pageSize,this.pageNum).then((response)=>{
+    searchList(this.form.area,this.form.batchNo,this.form.clients,this.form.caseType,caseDateStart,caseDateEnd,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
       this.tableData3=response.list
       this.pages = response.pages
       this.total = response.total
@@ -898,14 +900,13 @@ methods: {
     this.search()
   },
 	search(){
-    let sort = "desc"
-    let orderBy = "id"
+
 		let caseDateStart=this.form.time==null?"":this.form.time[0]
 		let caseDateEnd=this.form.time==null?"":this.form.time[1]
-		searchList(this.form.area,this.form.batchNo,this.form.clients,this.form.caseType,caseDateStart,caseDateEnd,orderBy,sort,this.pageSize,this.pageNum).then((response)=>{
+		searchList(this.form.area,this.form.batchNo,this.form.clients,this.form.caseType,caseDateStart,caseDateEnd,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
           	this.tableData3=response.list
-            this.pages = response.pages
-            this.total = response.total
+            this.pages = response.pageInfo.pages
+            this.total = response.pageInfo.total
           })
 	},
 	handleSizeChange(val){

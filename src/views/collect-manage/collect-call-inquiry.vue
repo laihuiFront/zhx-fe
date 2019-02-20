@@ -20,6 +20,8 @@
         <el-select
           v-model="form1.val2"
           placeholder="请选择委托方"
+          filterable
+          multiple
           clearable
         >
           <el-option
@@ -247,12 +249,12 @@ export default {
       //   "pageSize":2,
       // }
       let
-        {val1:queryMethod,val2:client,val3:name,val4:tel,val5:address,val6:identNo,val7:cardNo,val8:unitName} =
+        {val1:queryMethod,val2:clients,val3:name,val4:tel,val5:address,val6:identNo,val7:cardNo,val8:unitName} =
         this.form1;
       return{
         cardNo,
         queryMethod,
-        client,
+        clients,
         name,
         tel,
         address,

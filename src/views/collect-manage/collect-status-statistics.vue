@@ -41,6 +41,8 @@
             <el-select
               v-model="form2.val1"
               placeholder="请选择委托方"
+              filterable
+              multiple
               clearable
             >
               <el-option
@@ -53,12 +55,20 @@
             </el-select>
           </el-form-item>
           <el-form-item prop="val2">
-            <el-autocomplete
-              class="inline-input"
+            <el-select
               v-model="form2.val2"
-              :fetch-suggestions="querySearch"
-              placeholder="批次号"
-            ></el-autocomplete>
+              multiple
+              filterable
+              remote
+              placeholder="请输入批次号"
+              :remote-method="querySearch">
+              <el-option
+                v-for="item in val2_data_form2"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
           </el-form-item>
           <el-form-item prop="val3">
             <el-select
@@ -98,7 +108,9 @@
           <el-form-item prop="val1">
             <el-select
               v-model="form3.val1"
-              placeholder="请选择委托方"
+              placeholder="请选择委托方
+              filterable
+              multiple
               clearable
             >
               <el-option
@@ -111,12 +123,20 @@
             </el-select>
           </el-form-item>
           <el-form-item prop="val2">
-            <el-autocomplete
-              class="inline-input"
+            <el-select
               v-model="form3.val2"
-              :fetch-suggestions="querySearch"
-              placeholder="批次号"
-            ></el-autocomplete>
+              multiple
+              filterable
+              remote
+              placeholder="请输入批次号"
+              :remote-method="querySearch1">
+              <el-option
+                v-for="item in val2_data_form3"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
           </el-form-item>
           <el-form-item prop="val3">
             <el-select
@@ -172,6 +192,7 @@ export default {
         { prop: "countCasePhoneNum", label: "通电案量" }
       ],
       form2:{val1:null,val2:null,val3:null},
+      val2_data_form2: [],
       tableData2: [],
       tablecol_data2:[
         {prop:'batchNo',label:'批次号'},
@@ -182,6 +203,7 @@ export default {
       val1_data: [],//tab2 委托方
       val3_data: [],//tab2 逾期账龄
       form3:{val1:null,val2:null,val3:null},
+      val2_data_form3: [],
       tableData3: [],
       tablecol_data3:[
           {prop:'lastPaidMoney',label:'上月还款金额'},
@@ -200,18 +222,18 @@ export default {
   },
   computed:{
     form2_data(){
-      let {val1:client,val2:batchNo,val3:accountAge} = this.form2;
+      let {val1:clients,val2:batchNos,val3:accountAge} = this.form2;
       return {
-        client,
-        batchNo,
+        clients,
+        batchNos,
         accountAge
       }
     },
     form3_data(){
-      let {val1:client,val2:batchNo,val3:accountAge} = this.form3;
+      let {val1:clients,val2:batchNos,val3:accountAge} = this.form3;
       return {
-        client,
-        batchNo,
+        clients,
+        batchNos,
         accountAge,
         sType:0
       }
@@ -268,14 +290,25 @@ export default {
         this[target] = this.transform(data,transData);
       });
     },
-    querySearch(queryString, cb){
+    //查询批次号
+    querySearch(queryString){
       batchNo({batchNo:queryString}).then((data)=>{
-        cb(data.reduce((acc,item)=>{
+        this.val2_data_form2 = data.reduce((acc,item)=>{
           acc.push({
             value:item.batchNo
           })
           return acc;
-        },[]));
+        },[]);
+      });
+    },//查询批次号
+    querySearch1(queryString){
+      batchNo({batchNo:queryString}).then((data)=>{
+        this.val2_data_form3 = data.reduce((acc,item)=>{
+          acc.push({
+            value:item.batchNo
+          })
+          return acc;
+        },[]);
       });
     },
   }

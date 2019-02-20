@@ -13,23 +13,33 @@
       </el-form-item>
     </el-form>
     <el-table
+      sortable="custom" 
+      @sort-change="handleSort"
       :data="memberList"
       style="width: 100%"
       class="table-wrap">
       <el-table-column
+        :sortable='true' 
+        :sort-orders="['ascending','descending']"         
         prop="number"
         label="员工号">
       </el-table-column>
       <el-table-column
+        :sortable='true' 
+        :sort-orders="['ascending','descending']"
         prop="userName"
         label="员工姓名"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
+        :sortable='true' 
+        :sort-orders="['ascending','descending']"
         prop="department"
         label="原部门">
       </el-table-column>
       <el-table-column
+        :sortable='true' 
+        :sort-orders="['ascending','descending']"
         prop="leaveTime"
         label="离职时间">
       </el-table-column>
@@ -54,7 +64,9 @@ export default {
     return {
       queryForm: {
         pageNum: 1,
-        pageSize: 10
+        pageSize: 10,
+        orderBy:null,
+        sort:null
       },
       total: 0,
       memberList: []
@@ -64,6 +76,12 @@ export default {
     this.onClickQuery()
   },
   methods:{
+    handleSort({column,prop,order}){
+      // console.log(prop,'@',order)
+      this.queryForm.orderBy = prop
+      this.queryForm.sort = order === 'ascending' ? 'asc':'desc'
+      this.onClickQuery()
+    },
     onClickQuery() {
       this.memberList = []
       const data = {

@@ -436,6 +436,8 @@ export default {
     	caseTypeList:[],
       pages:1,
       total:0,
+      orderBy:"id",
+      sort:"desc",
     	clientList:[],
     	deleteList:[],
         formInline:{
@@ -526,9 +528,9 @@ methods: {
   handleSort( {column,prop,order}){
       let startTime=this.form.time[0]
       let endTime=this.form.time[1]
-      let sort = order==null?"desc":order.replace("ending","")
-      let orderBy = prop==null?"id":prop
-      dataList(this.form.area,this.form.batchNo,this.form.clients,this.form.caseType,startTime,endTime,orderBy,sort,this.pageSize,this.pageNum).then((response)=>{
+      this.sort = order==null?"desc":order.replace("ending","")
+      this.orderBy = prop==null?"id":prop
+      dataList(this.form.area,this.form.batchNo,this.form.clients,this.form.caseType,startTime,endTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
         this.DataList=response.pageInfo.list
         this.pages = response.pageInfo.pages
         this.total = response.pageInfo.total
@@ -537,7 +539,8 @@ methods: {
 	search(){
       	let startTime=this.form.time[0]
       	let endTime=this.form.time[1]
-dataList(this.form.area,this.form.batchNo,this.form.clients,this.form.caseType,startTime,endTime,this.pageSize,this.pageNum).then((response)=>{
+
+dataList(this.form.area,this.form.batchNo,this.form.clients,this.form.caseType,startTime,endTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
             this.DataList=response.pageInfo.list
             this.pages = response.pageInfo.pages
             this.total = response.pageInfo.total
@@ -595,8 +598,8 @@ this.search()
 created() {
             dataList().then((response)=>{
             this.DataList=response.pageInfo.list
-              this.pages = response.pages
-              this.total = response.total
+              this.pages = response.pageInfo.pages
+              this.total = response.pageInfo.total
 })
               clientList().then((response)=>{
             this.form.clientList=response;
