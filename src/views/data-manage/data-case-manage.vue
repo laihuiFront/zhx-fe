@@ -149,12 +149,12 @@
   <el-col :span="18">
   	<div class="grid-content bg-purple">
   		<span>查询结果统计：</span>
-	<span class="textColor">列表案量：3件</span>
-		<span class="textColor">列表金额：300</span>
-			<span class="textColor">列表还款量：3</span>
-				<span class="textColor">列表还款额：26000</span>
-  		<span class="textColor">列表CP值：300</span>
-  			<span class="textColor">列表PTP值：100</span>
+	<span class="textColor">列表案量：{{totalCaseNum}}件</span>
+		<span class="textColor">列表金额：{{totalAmt}}</span>
+			<span class="textColor">列表还款量：{{repayNum}}</span>
+				<span class="textColor">列表还款额：{{repayTotalAmt}}</span>
+  		<span class="textColor">列表CP值：{{totalCp}}</span>
+  			<span class="textColor">列表PTP值：{{totalPtp}}</span>
   	</div>
   </el-col>
    </el-row>
@@ -1188,9 +1188,15 @@ methods: {
     let caseDateStart=this.form.time==null?"":this.form.time[0]
     let caseDateEnd=this.form.time==null?"":this.form.time[1]
     searchList(this.form.area,this.form.batchNos,this.form.clients,this.form.caseType,caseDateStart,caseDateEnd,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
-      this.tableData3=response.list
+      this.tableData3=response.pageInfo.list
+      this.totalCaseNum=response.totalCaseNum
+      this.totalAmt = response.totalAmt
+      this.repayTotalAmt= response.repayTotalAmt
+      this.repayNum = response.repayNum
+      this.totalCp = response.totalCp
+      this.totalPtp = response.totalPtp
       //this.pages = response.pages
-      this.total = response.total
+      this.total = response.pageInfo.total
     })
   },
   handleSizeChange(val){
@@ -1202,9 +1208,15 @@ methods: {
 		let caseDateStart=this.form.time==null?"":this.form.time[0]
 		let caseDateEnd=this.form.time==null?"":this.form.time[1]
 		searchList(this.form.area,this.form.batchNos,this.form.clients,this.form.caseType,caseDateStart,caseDateEnd,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
-          	this.tableData3=response.list
+          	this.tableData3=response.pageInfo.list
+      this.totalCaseNum=response.totalCaseNum
+      this.totalAmt = response.totalAmt
+      this.repayTotalAmt= response.repayTotalAmt
+      this.repayNum = response.repayNum
+      this.totalCp = response.totalCp
+      this.totalPtp = response.totalPtp
             //this.pages = response.pages
-            this.total = response.total
+            this.total = response.pageInfo.total
           })
 	},
 	handleSizeChange(val){
@@ -1245,6 +1257,12 @@ this.search()
 created() {
       	  searchList().then((response)=>{
           	this.tableData3=response.pageInfo.list
+            this.totalCaseNum=response.totalCaseNum
+            this.totalAmt = response.totalAmt
+            this.repayTotalAmt= response.repayTotalAmt
+            this.repayNum = response.repayNum
+            this.totalCp = response.totalCp
+            this.totalPtp = response.totalPtp
             this.total = response.pageInfo.total
           })
            areaList().then((response)=>{
