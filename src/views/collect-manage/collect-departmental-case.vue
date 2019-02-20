@@ -620,6 +620,7 @@
         tableCol_data: [
           {
             prop: "countFollow",
+            width:120,
             label: "跟进次数"
           },
           {
@@ -632,19 +633,23 @@
             label: "下次跟进日期"
           },
           {
-            prop: "collectStatus",
+            prop: "collectStatusMsg",
+            width:130,
             label: "催收状态"
           },
           {
             prop: "collectionType",
+            width:130,
             label: "催收分类"
           },
           {
             prop: "accountAge",
+            width:130,
             label: "逾期账龄"
           },
           {
             prop: "seqno",
+            width:140,
             label: "个案序列号"
           },
           {
@@ -671,22 +676,27 @@
           },
           {
             prop: "money",
+            width:130,
             label: "委案金额"
           },
           {
             prop: "balance",
+            width:130,
             label: "委案余额"
           },
           {
             prop: "moneyStart",
+            width:130,
             label: "最新欠款"
           },
           {
             prop: "overDays",
+            width:130,
             label: "逾期天数"
           },
           {
             prop: "enRepayAmt",
+            width:130,
             label: "已还款金额"
           },
           {
@@ -706,6 +716,7 @@
           },
           {
             prop: "leaveDays",
+            width:130,
             label: "闲置天数"
           },
           {

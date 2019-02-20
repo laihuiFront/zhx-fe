@@ -319,7 +319,7 @@
   <el-col :span="12">
   	<div class="grid-content bg-purple">
   		  <el-form-item label="催收员">
-    <el-select v-model="formInline.odv" filterable  placeholder="请选择催收员" clearable>
+    <el-select v-model="formInline.odvs" filterable multiple placeholder="请选择催收员" clearable>
     <el-option
       v-for="item in PersonList"
       :key="item.id"
@@ -347,7 +347,7 @@
   <el-col :span="12">
   	<div class="grid-content bg-purple">
   		  <el-form-item label="委托方">
-    <el-select v-model="formInline.client" filterable  placeholder="请选择委托方" clearable>
+    <el-select v-model="formInline.clients" filterable multiple  placeholder="请选择委托方" clearable>
     <el-option
       v-for="item in clientList"
       :key="item.id"
@@ -590,10 +590,10 @@ pageDataExport(this.formInline.area,this.formInline.dept,this.formInline.batchNo
       let expectEndTime=this.formInline.expectTime[1]
       let collectStartTime=this.formInline.collectTime[0]
       let collectEndTime=this.formInline.collectTime[1]
-      let sort = order==null?"desc":order.replace("ending","")
-      let orderBy = prop==null?"id":prop
-	    dataList(this.formInline.area,this.formInline.dept,this.formInline.batchNo,this.formInline.clients,this.formInline.odvs,this.formInline.caseStatus,this.formInline.measure,this.formInline.result,this.formInline.identNo,this.formInline.cardNo,this.formInline.collectInfo,this.formInline.color,this.formInline.seqno,this.formInline.bailStartDate,this.formInline.bailEndDate,this.formInline.expectStartTime,this.formInline.expectEndTime,this.formInline.collectStartTime,this.formInline.collectEndTime,orderBy,sort,this.pageSize,this.pageNum).then((response)=>{
-          	this.tableData3=response
+
+	    dataList(this.formInline.area,this.formInline.dept,this.formInline.batchNo,this.formInline.clients,this.formInline.odvs,this.formInline.caseStatus,this.formInline.measure,this.formInline.result,this.formInline.identNo,this.formInline.cardNo,this.formInline.collectInfo,this.formInline.color,this.formInline.seqno,this.formInline.bailStartDate,this.formInline.bailEndDate,this.formInline.expectStartTime,this.formInline.expectEndTime,this.formInline.collectStartTime,this.formInline.collectEndTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
+          	this.tableData3=response.list
+        this.total=response.total
           	this.dialogVisible1=false
           })
   	},

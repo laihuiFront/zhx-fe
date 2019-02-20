@@ -1,6 +1,6 @@
 import request from '@/common/js/request'
 import download from '@/common/js/download'
-export const dataList = function(area,dept,batchNo,client,odv,caseStatus,measure,result,identNo,cardNo,collectInfo,color,seqno,bailStartDate,bailEndDate,expectStartTime,expectEndTime,collectStartTime,collectEndTime,orderBy,sort,pageSize,pageNum) {
+export const dataList = function(area,dept,batchNo,clients,odvs,caseStatus,measure,result,identNo,cardNo,collectInfo,color,seqno,bailStartDate,bailEndDate,expectStartTime,expectEndTime,collectStartTime,collectEndTime,orderBy,sort,pageSize,pageNum) {
 return request({
     url: '/dataCollect/pageDataCollect',
     method: 'post',
@@ -8,8 +8,8 @@ return request({
        area:  area,
        dept:  dept,
        batchNo:  batchNo ,
-       client:  client ,
-       odv:  odv ,
+       clients:  clients ,
+       odvs:  odvs ,
        caseStatus:  caseStatus ,
        measure:  measure ,
        result:  result,
