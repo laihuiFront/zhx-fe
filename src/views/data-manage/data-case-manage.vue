@@ -441,21 +441,21 @@
   	<div class="grid-content bg-purple">
   		<el-form-item label="姓名">
     <!--<el-input v-model="formInline.name" placeholder="请输入姓名"></el-input>-->
-        <el-input  v-model="formInline.name" placeholder="请输入姓名" style="width: 100%;" rows="4"></el-input>
+        <el-input  type="textarea" v-model="formInline.name" placeholder="请输入姓名" style="width: 100%;" rows="4"></el-input>
   </el-form-item>
   	</div></el-col>
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   		  <el-form-item label="档案号">
     <!--<el-input v-model="formInline.archiveNo" placeholder="请输入档案号"></el-input>-->
-          <el-input  v-model="formInline.archiveNo" placeholder="请输入档案号" style="width: 100%;" rows="4"></el-input>
+          <el-input  type="textarea" v-model="formInline.archiveNo" placeholder="请输入档案号" style="width: 100%;" rows="4"></el-input>
   </el-form-item>
   	</div></el-col>
   	<el-col :span="8">
   	<div class="grid-content bg-purple">
   		  <el-form-item label="账号">
    <!-- <el-input v-model="formInline.account" placeholder="请输入账号"></el-input>-->
-          <el-input  v-model="formInline.account" placeholder="请输入账号" style="width: 100%;" rows="4"></el-input>
+          <el-input  type="textarea"  v-model="formInline.account" placeholder="请输入账号" style="width: 100%;" rows="4"></el-input>
   </el-form-item>
   	</div></el-col>
 </el-row>
@@ -470,7 +470,7 @@
   	<div class="grid-content bg-purple">
   		  <el-form-item label="案件ID">
     <!--<el-input v-model="formInline.id" placeholder="请输入案件ID"></el-input>-->
-          <el-input  v-model="formInline.id" style="width: 100%;" placeholder="请输入案件ID" rows="4"></el-input>
+          <el-input  type="textarea" v-model="formInline.id" style="width: 100%;" placeholder="请输入案件ID" rows="4"></el-input>
   </el-form-item>
   	</div></el-col>
   	<el-col :span="8">
@@ -498,7 +498,7 @@
   		  <el-form-item label="卡号">
     <!--<el-input v-model="formInline.cardNo" placeholder="请输入卡号"></el-input>-->
 
-          <el-input v-model="formInline.cardNo" placeholder="请输入卡号" style="width: 100%;" rows="4"></el-input>
+          <el-input  type="textarea" v-model="formInline.cardNo" placeholder="请输入卡号" style="width: 100%;" rows="4"></el-input>
   </el-form-item>
   	</div></el-col>
 </el-row>
@@ -513,7 +513,7 @@
   	<div class="grid-content bg-purple">
   		<el-form-item label="证件号">
     <!--<el-input v-model="formInline.identNo" placeholder="请输入证件号"></el-input>-->
-        <el-input  v-model="formInline.identNo" style="width: 100%;" placeholder="请输入证件号" rows="4"></el-input>
+        <el-input  type="textarea" v-model="formInline.identNo" style="width: 100%;" placeholder="请输入证件号" rows="4"></el-input>
   </el-form-item>
   	</div></el-col>
   <el-col :span="8">
@@ -839,7 +839,7 @@
   </el-form>
   
   <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisible2 = false">取 消</el-button>
+    <el-button @click="detailVisible2 = false">取 消</el-button>
     <el-button type="primary" @click=sureAddShow>确 定</el-button>
   </span>
   
