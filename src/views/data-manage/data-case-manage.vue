@@ -421,19 +421,22 @@
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   		<el-form-item label="姓名">
-    <el-input v-model="formInline.name" placeholder="请输入姓名"></el-input>
+    <!--<el-input v-model="formInline.name" placeholder="请输入姓名"></el-input>-->
+        <el-input type="textarea" v-model="formInline.name" placeholder="请输入姓名" style="width: 100%;" rows="4"></el-input>
   </el-form-item>
   	</div></el-col>
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   		  <el-form-item label="档案号">
-    <el-input v-model="formInline.archiveNo" placeholder="请输入档案号"></el-input>
+    <!--<el-input v-model="formInline.archiveNo" placeholder="请输入档案号"></el-input>-->
+          <el-input type="textarea" v-model="formInline.archiveNo" placeholder="请输入档案号" style="width: 100%;" rows="4"></el-input>
   </el-form-item>
   	</div></el-col>
   	<el-col :span="8">
   	<div class="grid-content bg-purple">
   		  <el-form-item label="账号">
-    <el-input v-model="formInline.account" placeholder="请输入账号"></el-input>
+   <!-- <el-input v-model="formInline.account" placeholder="请输入账号"></el-input>-->
+          <el-input type="textarea" v-model="formInline.account" placeholder="请输入账号" style="width: 100%;" rows="4"></el-input>
   </el-form-item>
   	</div></el-col>
 </el-row>
@@ -447,7 +450,8 @@
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   		  <el-form-item label="案件ID">
-    <el-input v-model="formInline.id" placeholder="请输入案件ID"></el-input>
+    <!--<el-input v-model="formInline.id" placeholder="请输入案件ID"></el-input>-->
+          <el-input type="textarea" v-model="formInline.id" style="width: 100%;" placeholder="请输入案件ID" rows="4"></el-input>
   </el-form-item>
   	</div></el-col>
   	<el-col :span="8">
@@ -473,7 +477,9 @@
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   		  <el-form-item label="卡号">
-    <el-input v-model="formInline.cardNo" placeholder="请输入卡号"></el-input>
+    <!--<el-input v-model="formInline.cardNo" placeholder="请输入卡号"></el-input>-->
+
+          <el-input type="textarea" v-model="formInline.cardNo" placeholder="请输入卡号" style="width: 100%;" rows="4"></el-input>
   </el-form-item>
   	</div></el-col>
 </el-row>
@@ -487,7 +493,8 @@
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   		<el-form-item label="证件号">
-    <el-input v-model="formInline.identNo" placeholder="请输入证件号"></el-input>
+    <!--<el-input v-model="formInline.identNo" placeholder="请输入证件号"></el-input>-->
+        <el-input type="textarea" v-model="formInline.identNo" style="width: 100%;" placeholder="请输入证件号" rows="4"></el-input>
   </el-form-item>
   	</div></el-col>
   <el-col :span="8">
@@ -867,12 +874,15 @@ export default {
   },
 methods: {
 	searchdataList(form){
-	dataList(form).then((response)=>{
+	  this.formInline.orderBy = this.orderBy;
+    this.formInline.sort = this.sort;
+	dataList(this.formInline).then((response)=>{
           	this.tableData3=response.list
             this.pages = response.pages
             this.total = response.total
           	this.dialogVisible = false
-          })},
+          })
+  },
 	 	handleSelectionChange(row){
   		let _self=this
   		_self.deleteList=[]
@@ -905,8 +915,8 @@ methods: {
 		let caseDateEnd=this.form.time==null?"":this.form.time[1]
 		searchList(this.form.area,this.form.batchNo,this.form.clients,this.form.caseType,caseDateStart,caseDateEnd,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
           	this.tableData3=response.list
-            this.pages = response.pageInfo.pages
-            this.total = response.pageInfo.total
+            this.pages = response.pages
+            this.total = response.total
           })
 	},
 	handleSizeChange(val){
