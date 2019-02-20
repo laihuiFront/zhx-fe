@@ -111,6 +111,13 @@ return request({
     data:{name:"报备状态"}
   })
 }
+export const LeaveList = function() {
+return request({
+    url: '/sys/dictionary/select/list/name',
+    method: 'post',
+    data:{name:"案件重要等级"}
+  })
+}
 export const clientList = function() {
 return request({
     url: '/sys/dictionary/select/list/name',

@@ -68,22 +68,22 @@
   </el-form>
   	</div>
   </el-col>
-  <el-col :span="10">
+  <el-col :span="16">
   	<div class="grid-content bg-purple">
   <el-form :inline="true">
   	      <el-form-item >
-<el-dropdown>
-  <el-button type="primary">
+<el-dropdown @command="fenan">
+  <el-button type="primary" >
     分案<i class="el-icon-arrow-down el-icon--right"></i>
   </el-button>
   <el-dropdown-menu slot="dropdown">
-    <el-dropdown-item>快速分案</el-dropdown-item>
-    <el-dropdown-item>查询结果快速分案</el-dropdown-item>
+    <el-dropdown-item >快速分案</el-dropdown-item>
+    <el-dropdown-item >查询结果快速分案</el-dropdown-item>
   </el-dropdown-menu>
 </el-dropdown>
       </el-form-item>
             <el-form-item >
-<el-dropdown>
+<el-dropdown @command="xiecui">
   <el-button type="primary">
     案件<i class="el-icon-arrow-down el-icon--right"></i>
   </el-button>
@@ -92,30 +92,28 @@
     <el-dropdown-item>关闭案件</el-dropdown-item>
     <el-dropdown-item>退案</el-dropdown-item>
     <el-dropdown-item>恢复案件</el-dropdown-item>
-    <el-dropdown-item>添加评语</el-dropdown-item>
-    <el-dropdown-item>案件标色</el-dropdown-item>
-    <el-dropdown-item>删除案件</el-dropdown-item>
+<!--    <el-dropdown-item>案件标色</el-dropdown-item>
+-->    <el-dropdown-item>删除案件</el-dropdown-item>
   </el-dropdown-menu>
 </el-dropdown>
       </el-form-item>
             <el-form-item >
-<el-dropdown>
+<el-dropdown @command="handleCommand">
   <el-button type="primary">
     修改<i class="el-icon-arrow-down el-icon--right"></i>
   </el-button>
   <el-dropdown-menu slot="dropdown">
-    <el-dropdown-item>修改重要等级</el-dropdown-item>
-    <el-dropdown-item>修改催收状态</el-dropdown-item>
-    <el-dropdown-item>修改催收区域</el-dropdown-item>
-    <el-dropdown-item>修改M值系数</el-dropdown-item>
+    <el-dropdown-item command="a">修改重要等级</el-dropdown-item>
+    <el-dropdown-item command="b">修改催收状态</el-dropdown-item>
+    <el-dropdown-item command="c">修改催收区域</el-dropdown-item>
+    <el-dropdown-item command="d">修改M值系数</el-dropdown-item>
   </el-dropdown-menu>
 </el-dropdown>
       </el-form-item>
       <el-form-item>
-      <el-button type="primary" >添加评语</el-button>  </el-form-item>
-      <el-form-item>
-      <el-button type="primary"  >申请协催</el-button>  </el-form-item>
-       <el-form-item >
+      <el-button type="primary" @click="addshow" >添加评语</el-button>  </el-form-item>
+      <el-button type="primary"  @click="xiecui">申请协催</el-button>  </el-form-item>
+       <el-form-item >	
 <el-dropdown>
   <el-button type="primary">
     导出<i class="el-icon-arrow-down el-icon--right"></i>
@@ -125,6 +123,20 @@
     <el-dropdown-item>所选案件</el-dropdown-item>
     <el-dropdown-item>所选电话</el-dropdown-item>
     <el-dropdown-item>所选催记</el-dropdown-item>
+  </el-dropdown-menu>
+</el-dropdown>
+      </el-form-item>
+      <el-dropdown @command="biaose">
+  <el-button type="primary" >
+    案件标色<i class="el-icon-arrow-down el-icon--right"></i>
+  </el-button>
+  <el-dropdown-menu slot="dropdown">
+    <el-dropdown-item>黑色</el-dropdown-item>
+    <el-dropdown-item>红色</el-dropdown-item>
+    <el-dropdown-item>蓝色</el-dropdown-item>
+    <el-dropdown-item>橙色</el-dropdown-item>
+    <el-dropdown-item>紫色</el-dropdown-item>
+    <el-dropdown-item>棕色</el-dropdown-item>
   </el-dropdown-menu>
 </el-dropdown>
       </el-form-item>
@@ -811,12 +823,154 @@
     <el-button type="primary" @click=searchdataList>确 定</el-button>
   </span>
 </el-dialog>
+<el-dialog
+	    title="添加评语"
+      class="dialog-wrap"
+      :visible.sync="detailVisible2"
+      :close-on-click-modal="false"
+      width="30%"
+  >
+  <el-form :inline="true" :model="formInline" class="demo-form-inline" label-width="120px">
+  	<div class="grid-content bg-purple">
+  		<el-form-item label="添加评语">
+    <el-input type=textarea v-model="formInline.vin" placeholder="请输入评语"></el-input>
+  </el-form-item>
+  	</div>
+  </el-form>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible2 = false">取 消</el-button>
+    <el-button type="primary" @click=sureAddShow>确 定</el-button>
+  </span>
+  </el-dialog>
+  <el-dialog
+	    title="分案"
+      class="dialog-wrap"
+      :visible.sync="detailVisible3"
+      :close-on-click-modal="false"
+      width="30%"
+  >
+  <el-form :inline="true" :model="formInline" class="demo-form-inline" label-width="120px">
+  	<div class="grid-content bg-purple">
+  		 <el-form-item label="催收员">
+    <el-select v-model="formInline.odv" filterable multiple placeholder="请选择催收员" clearable>
+    <el-option
+      v-for="item in PersonList"
+      :key="item.id"
+      :label="item.userName"
+      :value="item.id">
+    </el-option>
+  </el-select>
+  </el-form-item>
+  	</div>
+  </el-form>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible2 = false">取 消</el-button>
+    <el-button type="primary" @click=sureAddShow1>确 定</el-button>
+  </span>
+  </el-dialog>
+  <el-dialog
+	    title="修改等级"
+      class="dialog-wrap"
+      :visible.sync="detailVisible4"
+      :close-on-click-modal="false"
+      width="30%"
+  >
+  <el-form :inline="true" :model="formInline" class="demo-form-inline" label-width="120px">
+  	<div class="grid-content bg-purple">
+  		 <el-form-item label="案件等级">
+    <el-select v-model="formInline.odv" filterable multiple placeholder="请选择案件等级" clearable>
+    <el-option
+      v-for="item in LeaveList"
+      :key="item.id"
+      :label="item.userName"
+      :value="item.id">
+    </el-option>
+  </el-select>
+  </el-form-item>
+  	</div>
+  </el-form>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible2 = false">取 消</el-button>
+    <el-button type="primary" @click=sureAddShow4>确 定</el-button>
+  </span>
+  </el-dialog>
+  <el-dialog
+	    title="修改催收状态"
+      class="dialog-wrap"
+      :visible.sync="detailVisible5"
+      :close-on-click-modal="false"
+      width="30%"
+  >
+  <el-form :inline="true" :model="formInline" class="demo-form-inline" label-width="120px">
+  	<div class="grid-content bg-purple">
+  		  <el-form-item label="催收状态">
+    <el-select v-model="formInline.collectStatus" filterable  placeholder="请选择催收状态" clearable>
+    <el-option
+      v-for="item in collectStatusList"
+      :key="item.id"
+      :label="item.name"
+      :value="item.id">
+    </el-option>
+  </el-select>
+  </el-form-item>
+  	</div>
+  </el-form>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible2 = false">取 消</el-button>
+    <el-button type="primary" @click=sureAddShow5>确 定</el-button>
+  </span>
+  </el-dialog>
+  <el-dialog
+	    title="修改催收区域"
+      class="dialog-wrap"
+      :visible.sync="detailVisible6"
+      :close-on-click-modal="false"
+      width="30%"
+  >
+  <el-form :inline="true" :model="formInline" class="demo-form-inline" label-width="120px">
+  	<div class="grid-content bg-purple">
+  			<el-form-item label="催收区域">
+   <el-select v-model="formInline.collectArea" placeholder="请选择催收区域" clearable>
+    <el-option
+      v-for="item in areaList"
+      :key="item.id"
+      :label="item.name"
+      :value="item.id">
+    </el-option>
+  </el-select>
+  </el-form-item>
+  	</div>
+  </el-form>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible2 = false">取 消</el-button>
+    <el-button type="primary" @click=sureAddShow6>确 定</el-button>
+  </span>
+  </el-dialog>
+  <el-dialog
+	    title="修改M值"
+      class="dialog-wrap"
+      :visible.sync="detailVisible7"
+      :close-on-click-modal="false"
+      width="30%"
+  >
+  <el-form :inline="true" :model="formInline" class="demo-form-inline" label-width="120px">
+  	<div class="grid-content bg-purple">
+  		 <el-form-item label="M值">
+   <el-input  v-model="formInline.id" style="width: 100%;" placeholder="请输入M值" rows="4"></el-input>
+    </el-form-item>
+  	</div>
+  </el-form>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible2 = false">取 消</el-button>
+    <el-button type="primary" @click=sureAddShow7>确 定</el-button>
+  </span>
+  </el-dialog>
   </div>
 </template>
 
 <script>
 import CaseDetail from './detail'
-	import {dataList,areaList,batchList,caseTypeList,addressList,TellList,collectStatusList,deleteStatusList,accountAgeList,clientList,EndList,PersonList,departmentList,searchList} from '@/common/js/data-case-manage.js'
+	import {dataList,LeaveList,areaList,batchList,caseTypeList,addressList,TellList,collectStatusList,deleteStatusList,accountAgeList,clientList,EndList,PersonList,departmentList,searchList} from '@/common/js/data-case-manage.js'
 export default {
   name: 'dataCaseManage',
   components: {
@@ -840,6 +994,7 @@ export default {
     	deleteStatusList:[],
     	pageSize:10,
     	pageNum:1,
+    	LeaveList:[],
     	clientList:[],
       batchList:[],
       total:0,
@@ -885,11 +1040,110 @@ export default {
           value:'棕'
         },
       ],
+      detailVisible4:false,
+      detailVisible5:false,
+      detailVisible6:false,
+      detailVisible7:false,
+      detailVisible3:false,
+      detailVisible2:false,
       detailVisible: false,
       detailTitle: '案件详情'
     }
   },
 methods: {
+	handleCommand(command){
+		if(command==="a"){
+			this.detailVisible4=true
+		}else if(command==="b"){
+			this.detailVisible5=true
+		}else if(command==="c"){
+			this.detailVisible6=true
+		}else {
+			this.detailVisible7=true
+		}
+	},
+	biaose(){
+		if(this.deleteList.length>=1){
+			this.$message({
+            type: 'success',
+            message: '操作成功!'
+          });
+		}else{
+			this.$message({
+            type: 'error',
+            message: '请选择数据!'
+          });
+		}
+	},
+	fenan(){
+		this.detailVisible3=true
+		
+	},
+	sureAddShow1(){
+		this.$message({
+            type: 'success',
+            message: '操作成功!'
+          });
+          this.detailVisible3=false
+	},
+	sureAddShow7(){
+		this.$message({
+            type: 'success',
+            message: '操作成功!'
+          });
+          this.detailVisible7=false
+	},
+	sureAddShow6(){
+		this.$message({
+            type: 'success',
+            message: '操作成功!'
+          });
+          this.detailVisible6=false
+	},
+	sureAddShow5(){
+		this.$message({
+            type: 'success',
+            message: '操作成功!'
+          });
+          this.detailVisible5=false
+	},
+	sureAddShow4(){
+		this.$message({
+            type: 'success',
+            message: '操作成功!'
+          });
+          this.detailVisible4=false
+	},
+	addshow(){
+		if(this.deleteList.length>=1){
+		this.detailVisible2=true
+			}else{
+			this.$message({
+            type: 'error',
+            message: '请选择数据!'
+          });
+		}
+	},
+	sureAddShow(){
+		this.$message({
+            type: 'success',
+            message: '操作成功!'
+          });
+          this.detailVisible2=false
+	},
+	xiecui(){
+		if(this.deleteList.length>=1){
+			this.$message({
+            type: 'success',
+            message: '操作成功!'
+          });
+		}else{
+			this.$message({
+            type: 'error',
+            message: '请选择数据!'
+          });
+		}
+	},
 	searchdataList(form){
 	  this.formInline.orderBy = this.orderBy;
     this.formInline.sort = this.sort;
@@ -1014,6 +1268,10 @@ created() {
            addressList().then((response)=>{
           	this.addressList=response
           })
+             LeaveList().then((response)=>{
+          	this.LeaveList=response
+          })
+           
 },
 }
 </script>
