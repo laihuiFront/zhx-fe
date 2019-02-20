@@ -501,6 +501,8 @@ export default {
     	  sectionList:[],
     	  pageSize:10,
     	  pageNum:1,
+        orderBy:"id",
+        sort:"desc",
     	  deleteList:[],
     	  areaList:[],
         dynamicValidateForm:{},
@@ -563,9 +565,9 @@ pageDataExport(this.formInline.area,this.formInline.dept,this.formInline.batchNo
           })
   	},
     handleSort( {column,prop,order}){
-      let sort = order==null?"desc":order.replace("ending","")
-      let orderBy = prop==null?"id":prop
-      search(this.formInline.area,this.formInline.dept,this.formInline.odvs,this.formInline.measure,orderBy,sort,this.pageSize,this.pageNum).then((response)=>{
+      this.sort = order==null?"desc":order.replace("ending","")
+      this.orderBy = prop==null?"id":prop
+      search(this.formInline.area,this.formInline.dept,this.formInline.odvs,this.formInline.measure,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
         this.tableData3=response.list
         this.pages = response.pages
         this.total = response.total
@@ -573,9 +575,8 @@ pageDataExport(this.formInline.area,this.formInline.dept,this.formInline.batchNo
       })
     },
   	search(){
-      let sort = "desc"
-      let orderBy = "id"
-		search(this.formInline.area,this.formInline.dept,this.formInline.odvs,this.formInline.measure,orderBy,sort,this.pageSize,this.pageNum).then((response)=>{
+
+		search(this.formInline.area,this.formInline.dept,this.formInline.odvs,this.formInline.measure,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
           	this.tableData3=response.list
             this.pages = response.pages
             this.total = response.total

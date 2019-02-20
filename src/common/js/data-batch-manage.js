@@ -1,13 +1,13 @@
 import request from '@/common/js/request'
-export const dataList = function(area,batchNo,client,batchStatus,caseType,startTime,endTime,orderBy,sort,pageSize,pageNum) {
+export const dataList = function(area,batchNos,clients,batchStatus,caseType,startTime,endTime,orderBy,sort,pageSize,pageNum) {
 return request({
     url: '/dataBatch/pageDataCase',
     method: 'post',
     data: {
     	batchStatus: batchStatus ? batchStatus :"",
        area:area ? area : "",
-       batchNo:batchNo ? batchNo : "",
-       client:client ? client : "",
+       batchNos:batchNos,
+       clients:clients,
        caseType:caseType ? caseType : "",
        startTime:startTime ? startTime : "",
        endTime:endTime ? endTime : "",
@@ -20,15 +20,15 @@ return request({
   })
 }
 
-export const totalDataBatchExport = function(area,batchNo,client,batchStatus,caseType,startTime,endTime,pageSize,pageNum) {
+export const totalDataBatchExport = function(area,batchNos,clients,batchStatus,caseType,startTime,endTime,pageSize,pageNum) {
 return request({
     url: '/dataBatch/totalDataBatchExport',
     method: 'post',
     data: {
     	batchStatus: batchStatus ? batchStatus :"",
        area:area ? area : "",
-       batchNo:batchNo ? batchNo : "",
-       client:client ? client : "",
+       batchNos:batchNos,
+       clients:clients,
        caseType:caseType ? caseType : "",
        startTime:startTime ? startTime : "",
        endTime:endTime ? endTime : "",
@@ -38,15 +38,15 @@ return request({
     }
   })
 }
-export const pageDataBatchExport = function(area,batchNo,client,batchStatus,caseType,startTime,endTime,pageSize,pageNum) {
+export const pageDataBatchExport = function(area,batchNos,clients,batchStatus,caseType,startTime,endTime,pageSize,pageNum) {
 return request({
     url: '/dataBatch/pageDataBatchExport',
     method: 'post',
     data: {
     	batchStatus: batchStatus ? batchStatus :"",
        area:area ? area : "",
-       batchNo:batchNo ? batchNo : "",
-       client:client ? client : "",
+       batchNos:batchNos,
+       clients:clients,
        caseType:caseType ? caseType : "",
        startTime:startTime ? startTime : "",
        endTime:endTime ? endTime : "",
@@ -120,6 +120,15 @@ return request({
     data:{name:"委托方"}
   })
 }
+
+export  const batchList = function(){
+  return request({
+    url: '/dataBatch/selectBatchNo',
+    method: 'post',
+    data:{}
+  })
+}
+
 
 export const areaList = function() {
 return request({

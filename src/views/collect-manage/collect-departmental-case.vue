@@ -62,6 +62,8 @@
                 <el-select
                   v-model="form.val0"
                   placeholder="请选择委托方"
+                  filterable
+                  multiple
                   clearable
                 >
                   <el-option
@@ -74,12 +76,20 @@
                 </el-select>
               </el-form-item>
               <el-form-item prop="val1">
-                <el-autocomplete
+                <el-select
                   v-model="form.val1"
-                  :fetch-suggestions="querySearch"
-                  :trigger-on-focus="false"
-                  placeholder="请输入批次号">
-                </el-autocomplete>
+                  multiple
+                  filterable
+                  remote
+                  placeholder="请输入批次号"
+                  :remote-method="querySearch">
+                  <el-option
+                    v-for="item in val1_data"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-select>
               </el-form-item>
               <el-form-item prop="val3">
                 <el-input
@@ -552,7 +562,7 @@
           val32: "", //催收员
         },
         val0_data: [],  //委托方
-        val1_data: [],  //
+        val1_data: [],  //批次号
         val4_data: [],  //地区
         val8_data: [],  //逾期账龄
         // 未退案0/正常1/暂停2/关档3/退档4/全部5
@@ -714,8 +724,8 @@
     computed: {
       realFetchFormData() {
         let {
-          val0: client,
-          val1: batchNo,
+          val0: clients,
+          val1: batchNos,
           val2,
           val3: seqno,
           val4: area,
@@ -748,8 +758,8 @@
           val32:odv
         } = this.form;
         return {
-          client,
-          batchNo,
+          clients,
+          batchNos,
           seqno,
           nextFollDateStart: (!!val2 && val2[0])||'' ,
           nextFollDateEnd: (!!val2 && val2[1])||'',
@@ -808,14 +818,14 @@
         this.getMainData();
       },
       //查询批次号
-      querySearch(queryString,cb){
+      querySearch(queryString){
         batchNo({batchNo:queryString}).then((data)=>{
-          cb(data.reduce((acc,item)=>{
+          this.val1_data = data.reduce((acc,item)=>{
             acc.push({
               value:item.batchNo
             })
             return acc;
-          },[]));
+          },[]);
         });
       },
       handleCurrentChange(currentPage){
@@ -878,6 +888,9 @@
       },
       getMainData(){
         pageMyCase(this.realFetchFormData).then((data)=>{
+          if(!data){
+            data = {total:0,list:[]}
+          }
           this.fetchData = data;
           this.paginationData.total = data.total;
           this.tableData = data.list.map((item)=>{
