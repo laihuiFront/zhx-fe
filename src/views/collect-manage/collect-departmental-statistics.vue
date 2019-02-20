@@ -103,12 +103,20 @@
           </el-select>
         </el-form-item>
         <el-form-item prop="val3">
-          <el-autocomplete
-            class="inline-input"
+          <el-select
             v-model="form1.val3"
-            :fetch-suggestions="querySearch"
-            placeholder="批次号"
-          ></el-autocomplete>
+            multiple
+            filterable
+            remote
+            placeholder="请输入批次号"
+            :remote-method="querySearch">
+            <el-option
+              v-for="item in val3_data"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item prop="val4">
           <el-select
@@ -254,6 +262,7 @@ export default {
         val8: "",
         val9: "",
       },
+      val3_data: [],
       val1_data: [
         {
           label: "还款记录",
@@ -418,16 +427,15 @@ export default {
       this.tablecol_data = this[`tablecol_raw${v * 1 + 1}`];
       this.getMainData();
     },
-    querySearch(queryString, cb) {
-      batchNo({ batchNo: queryString }).then(data => {
-        cb(
-          data.reduce((acc, item) => {
-            acc.push({
-              value: item.batchNo
-            });
-            return acc;
-          }, [])
-        );
+    //查询批次号
+    querySearch(queryString){
+      batchNo({batchNo:queryString}).then((data)=>{
+        this.val3_data = data.reduce((acc,item)=>{
+          acc.push({
+            value:item.batchNo
+          })
+          return acc;
+        },[]);
       });
     },
     resetForm(formName) {
