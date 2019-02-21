@@ -7,6 +7,12 @@
     <repay-record-query 
       :queryForm="queryForm">
     </repay-record-query>
+    <div class="statistics-wrap" v-if="tabName==='1'">
+      <span class="title">查询结果统计：</span>
+      <span class="item">总还款额：0</span>
+      <span class="item">总M值：0</span>
+      <span class="item">总佣金额：0</span>
+    </div>
      <el-table
       @selection-change="onSelectRow"
       :data="recordList"
@@ -78,7 +84,16 @@ export default {
 </script>
 
 <style lang="scss">
-#synergistic-repayment-record{}
+#synergistic-repayment-record{
+  .statistics-wrap{
+    margin: 12px 0 24px;
+  }
+  .item{
+    margin-right: 12px;
+    display: inline-block;
+    color: #66b1ff;
+  }
+}
 </style>
 
 
