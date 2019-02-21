@@ -35,7 +35,7 @@
       <el-table-column prop="createTime" label="备注" show-overflow-tooltip></el-table-column>
       <el-table-column prop="createTime" label="M值" show-overflow-tooltip></el-table-column>
       <el-table-column prop="createTime" label="公司佣金" show-overflow-tooltip></el-table-column>
-      <el-table-column label="操作" show-overflow-tooltip width=“100” fixed="right">
+      <el-table-column label="操作" v-if="tabName==='1'" show-overflow-tooltip width=“100” fixed="right">
         <el-button type="text">修改</el-button>
         <el-button type="text">撤销还款</el-button>
       </el-table-column>
