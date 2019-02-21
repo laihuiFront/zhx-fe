@@ -147,10 +147,13 @@
           </li>
           <li class="condition-item">
             <el-date-picker
-              v-model="queryForm.hkr"
-              type="date"
               clearable
-              placeholder="选择日期">
+              v-model="fprq"
+              value-format="yyyy-MM-dd"
+              type="daterange"
+              range-separator="至"
+              start-placeholder="分配开始日期"
+              end-placeholder="分配结束日期">
             </el-date-picker>
           </li>
         </ul>
@@ -188,6 +191,7 @@ export default {
       warq:[],
       yjtar:[],
       qrr:[],
+      fprq:[],
       elTreeParamsArea: {
           'default-expand-all': true,
           filterable: false,
