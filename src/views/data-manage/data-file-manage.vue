@@ -54,6 +54,9 @@
   <el-button size="small" type="primary">导入</el-button>
 </el-upload>
       </el-form-item>
+    <el-form-item>
+      <el-button type="primary" @click="">模板下载</el-button>
+    </el-form-item>
       <el-form-item>
       <el-button type="primary" @click="dialogVisible2 = true">新增</el-button>  </el-form-item>
       <el-form-item>
@@ -120,6 +123,14 @@
       label="备注"
       show-overflow-tooltip>
     </el-table-column>
+     <el-table-column
+       label="操作"
+       align="center"
+       show-overflow-tooltip>
+       <template slot-scope="scope">
+         <el-button type="text" size="small" @click="dialogVisible3=true">查看</el-button>
+       </template>
+     </el-table-column>
   </el-table>
   <div class="block">
   	 <el-pagination
@@ -266,7 +277,131 @@
     <el-button type="primary" @click="submitForm('dynamicValidateForm')">确 定</el-button>
   </span>
 </el-dialog>
+    <el-dialog
+      title="查看档案"
+      :visible.sync="dialogVisible3"
+      width="70%"
+    >
+      <el-form :inline="true" :model="dynamicValidateForm" ref="dynamicValidateForm" label-width="100px" class="demo-dynamic">
+        <el-row :gutter="20">
+          <el-col :span="12"><div class="grid-content bg-purple">
+            <el-form-item
+              label="姓名"
+              prop="name"
+              :rules="{
+      required: true, message: '姓名不能为空', trigger: 'blur'
+    }"
+            >
+              <el-input v-model="dynamicValidateForm.name" clearable></el-input>
+            </el-form-item>
+          </div>
+          </el-col>
+          <el-col :span="12"><div class="grid-content bg-purple">
+            <el-form-item
+              label="证件号"
+              prop="identNo"
+              :rules="{
+      required: true, message: '证件号不能为空', trigger: 'blur'
+    }"
+            >
+              <el-input v-model="dynamicValidateForm.identNo" clearable></el-input>
+            </el-form-item>
+          </div>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20" class="addNew">
+          <el-col :span="12"><div class="grid-content bg-purple">
+            <span>电话信息</span>
+            </el-form-item>
+          </div>
+          </el-col>
+          <el-col :span="12"><div class="grid-content bg-purple layout">
+            <el-button type="text" icon="el-icon-plus" @click="addDomainPhone">新增电话</el-button>  </el-form-item>
+          </div>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20" class="addNewData" v-for="(domain, index) in dynamicValidateForm.telList" :key="domain.key">
+          <el-col :span="12" ><div class="grid-content bg-purple">
+            <el-form-item
+              label="电话类型"
+
+            >
+              <el-input v-model="domain.teltype" clearable></el-input>
+
+            </el-form-item>
+          </div>
+          </el-col>
+          <el-col :span="12" ><div class="grid-content bg-purple">
+            <el-form-item
+              label="电话号码"
+            >
+              <el-input v-model="domain.tel" clearable></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="text" @click.prevent="removeDomainPhone(domain)">删除</el-button>
+
+            </el-form-item>
+          </div>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20" class="addNew">
+          <el-col :span="12"><div class="grid-content bg-purple">
+            <span>地址信息</span>
+            </el-form-item>
+          </div>
+          </el-col>
+          <el-col :span="12"><div class="grid-content bg-purple layout">
+            <el-button type="text" icon="el-icon-plus" @click="addDomainAddress">新增地址</el-button>  </el-form-item>
+          </div>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20" class="addNewData" v-for="(domain, index) in dynamicValidateForm.addressList" :key="domain.key">
+          <el-col :span="12" ><div class="grid-content bg-purple">
+            <el-form-item
+              label="地址信息"
+              :key="domain.key"
+            >
+              <el-input v-model="domain.address" clearable></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="text" @click.prevent="removeDomainAddress(domain)">删除</el-button>
+            </el-form-item>
+          </div>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20" class="addNew">
+          <el-col :span="12"><div class="grid-content bg-purple">
+            <span>备注信息</span>
+            </el-form-item>
+          </div>
+          </el-col>
+          <el-col :span="12"><div class="grid-content bg-purple layout">
+            <el-button type="text" icon="el-icon-plus" @click="addDomainremark">新增备注</el-button>  </el-form-item>
+          </div>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20" class="addNewData" v-for="(domain, index) in dynamicValidateForm.remarksList" :key="domain.key">
+          <el-col :span="12" ><div class="grid-content bg-purple">
+            <el-form-item
+              label="备注信息"
+              :key="domain.key"
+            >
+              <el-input v-model="domain.remark" clearable></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="text" @click.prevent="removeDomainremark(domain)">删除</el-button>
+            </el-form-item>
+          </div>
+          </el-col>
+        </el-row>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible3 = false">关 闭</el-button>
+
+  </span>
+    </el-dialog>
   </div>
+
     </div>
 </template>
 
@@ -279,6 +414,7 @@ export default {
    data(){
     return {
     	deleteList:[],
+      dialogVisible:false,
     	  pageNum:"",
     	  pageSize:"",
       orderBy:"id",
@@ -297,6 +433,7 @@ export default {
         },
         dialogVisible:false,
         dialogVisible2:false,
+      dialogVisible3:false,
         currentPage4: 1,
         pages:1,
         total:0,
