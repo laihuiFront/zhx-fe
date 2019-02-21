@@ -8,17 +8,17 @@
       </div>
       <div class="input-wrap">
         <img src="./user.png" alt="" class="icon">
-        <input type="text" v-model="loginForm.userName" placeholder="请输入用户名">
+        <input type="text" v-model="loginForm.userName" @keyup.enter="login" placeholder="请输入用户名">
       </div>
       <div class="input-wrap">
         <img src="./password.png" alt="" class="icon">
-        <input type="password" v-model="loginForm.password" placeholder="请输入密码">
+        <input type="password" v-model="loginForm.password" @keyup.enter="login" placeholder="请输入密码">
       </div>
       <div class="remember-pass">
         <el-checkbox>是否记住密码</el-checkbox>
       </div>
       <div class="btns">
-        <el-button class="item" size="medium" type="primary" @click="login" style="    width: 105px;">登录</el-button>
+        <el-button class="item" size="medium" type="primary" @click="login" style="    width: 105px;" >登录</el-button>
         <el-button class="item" size="medium" @click="reset"  style="    width: 105px;">重置</el-button>
       </div>
       <!-- <el-form class="login-form" autoComplete="on" :model="loginForm" ref="loginForm">
