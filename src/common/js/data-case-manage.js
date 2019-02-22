@@ -1,4 +1,5 @@
 import request from '@/common/js/request'
+import download from '@/common/js/download'
 export const dataList = function(form,pageSize,pageNum) {
   return request({
     url: '/dataCase/pageCaseList',
@@ -162,6 +163,21 @@ export const PersonList = function() {
 }
 
 export const departmentList = function() {
+  return request({
+    url: '/organization/listOrganization',
+    method: 'post',
+    data:{}
+  })
+}
+
+export const exportTotalCase = function() {
+  return request({
+    url: '/organization/listOrganization',
+    method: 'post',
+    data:{}
+  })
+}
+export const exportSelectCase = function() {
   return request({
     url: '/organization/listOrganization',
     method: 'post',
