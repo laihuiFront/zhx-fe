@@ -1,5 +1,5 @@
 <template>
-  <div id="synergistic-repayment-record">
+  <div id="synergistic-repayment-record" class="page-wraper-sub">
     <el-tabs v-model="tabName">
       <el-tab-pane label="还款记录" name="1"></el-tab-pane>
       <el-tab-pane label="已撤销" name="2"></el-tab-pane>
@@ -10,7 +10,13 @@
       <el-button type="primary" v-if="tabName==='1'">撤销还款</el-button>
       <el-button type="primary" v-if="tabName==='1'">导入还款记录</el-button>
       <el-button type="primary">导出选中数据</el-button>
-      <el-button type="primary">导出查询结果</el-button>
+      <el-dropdown trigger="click" @command="handleCommand">
+        <el-button type="primary">导出查询结果<i class="el-icon-arrow-down el-icon--right"></i></el-button>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="all">导出全部</el-dropdown-item>
+          <el-dropdown-item command="current">导出当前分页</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </repay-record-query>
     <div class="statistics-wrap" v-if="tabName==='1'">
       <span class="title">查询结果统计：</span>
@@ -31,7 +37,7 @@
       <el-table-column prop="createTime" label="个案序列号" show-overflow-tooltip></el-table-column>
       <el-table-column prop="createTime" label="委托方" show-overflow-tooltip></el-table-column>
       <el-table-column prop="createTime" label="账龄" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="违案金额" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="createTime" label="委案金额" show-overflow-tooltip></el-table-column>
       <el-table-column prop="createTime" label="CP金额" show-overflow-tooltip></el-table-column>
       <el-table-column prop="createTime" label="CP日期" show-overflow-tooltip></el-table-column>
       <el-table-column prop="createTime" label="回收催收员" show-overflow-tooltip></el-table-column>
@@ -160,7 +166,8 @@ export default {
     onSelectRow(){},
     onClickQuery(){},
     onClickCancel(){},
-    onClickSave(){}
+    onClickSave(){},
+    handleCommand(){}
   }
 }
 </script>
