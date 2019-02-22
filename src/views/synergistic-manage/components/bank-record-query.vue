@@ -124,37 +124,15 @@
           <li class="condition-item">
             <el-input v-model="queryForm.kh" clearable placeholder="请输入卡号"></el-input>
           </li>
-          <li class="condition-item">
-            <el-input v-model="queryForm.kh" clearable placeholder="请输入确认人"></el-input>
-          </li>
           <li class="condition-item half">
             <el-date-picker
               clearable
-              v-model="qrr"
+              v-model="tjsh"
               value-format="yyyy-MM-dd"
               type="daterange"
               range-separator="至"
-              start-placeholder="确认开始日期"
-              end-placeholder="确认结束日期">
-            </el-date-picker>
-          </li>
-          <li class="condition-item">
-            <el-date-picker
-              v-model="queryForm.hkr"
-              type="date"
-              clearable
-              placeholder="选择还款日期">
-            </el-date-picker>
-          </li>
-          <li class="condition-item half">
-            <el-date-picker
-              clearable
-              v-model="fprq"
-              value-format="yyyy-MM-dd"
-              type="daterange"
-              range-separator="至"
-              start-placeholder="分配开始日期"
-              end-placeholder="分配结束日期">
+              start-placeholder="提交开始日期"
+              end-placeholder="提交结束日期">
             </el-date-picker>
           </li>
         </ul>
@@ -191,8 +169,7 @@ export default {
       logTypeList:[],
       warq:[],
       yjtar:[],
-      qrr:[],
-      fprq:[],
+      tjsj:[],
       elTreeParamsArea: {
           'default-expand-all': true,
           filterable: false,

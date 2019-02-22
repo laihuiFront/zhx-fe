@@ -263,11 +263,11 @@
   >
   <el-row :gutter="20">
   <el-col :span="10"><div class="grid-content bg-purple"> 
-  	<el-button click=totalDataExport>按查询条件全部导出</el-button>
+  	<el-button @click=totalDataExport>按查询条件全部导出</el-button>
 </div></el-col>
   <el-col :span="10">
   	<div class="grid-content bg-purple">  
-  		<el-button click=pageDataExport>按查询条件导出当前分页</el-button>
+  		<el-button @click=pageDataExport>按查询条件导出当前分页</el-button>
 </div></el-col>
 </el-row>
 </el-dialog>
@@ -459,6 +459,7 @@ methods: {
 	},
 	totalDataExport(){
 			this.loading=true;
+			console.info(1111)
 			let startTime=this.form.time[0]
       	let endTime=this.form.time[1]
 		totalDataBatchExport(this.form.area,this.form.batchNos,this.form.clients,this.form.batchStatus,this.form.caseType,startTime,endTime,this.pageSize,this.pageNum).then((response)=>{
@@ -473,7 +474,7 @@ methods: {
 			this.loading=true;
 			let startTime=this.form.time[0]
       	let endTime=this.form.time[1]
-		pageDataBatchExport(this.form.area,this.form.batchNos,this.form.clients,this.form.batchStatus,this.form.caseType,startTime,endTime,this.pageSize,this.pageNum).then((response)=>{
+		pageDataBatchExport(this.form.area,this.form.batchNos,this.form.clients,this.form.batchStatus,this.form.caseType,startTime,endTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
           	this.loading=false;
           	this.$message({
             type: 'success',
@@ -575,7 +576,7 @@ this.search()
 	   Object.id=currentValue.id
 	   _self.deleteList.push(Object)
 	   _self.selectDataBatchExportList.push(Object)
-	   _self.selectDataBatchExportList.push(Project)
+	   //_self.selectDataBatchExportList.push(Project)
 	})
 	console.log(_self.deleteList)
 },

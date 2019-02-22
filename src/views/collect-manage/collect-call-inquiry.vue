@@ -270,7 +270,7 @@ export default {
   },
   methods:{
     sortHandle({prop,order}){
-      this.sort.sort = order.replace('ending', '');
+      this.sort = order.replace('ending', '');
       this.sort.orderBy = prop;
       this.getMainData();
     },
@@ -281,6 +281,8 @@ export default {
       cb([]);
     },
     getMainData(){
+      this.realFetchFormData.orderBy = this.sort.orderBy
+      this.realFetchFormData.sort = this.sort.sort
       pageCaseTel(this.realFetchFormData).then((data)=>{
         console.log(data)
         // "totalPageNum":""//总页数

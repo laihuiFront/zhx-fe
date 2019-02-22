@@ -134,7 +134,7 @@ return request({
   })
 }
 
-export const totalDataExport = function(area,dept,batchNo,clients,odvs,caseStatus,measure,result,identNo,cardNo,collectInfo,color,seqno,bailStartDate,bailEndDate,expectStartTime,expectEndTime,collectStartTime,collectEndTime,pageSize,pageNum) {
+export const totalDataExport = function(area,dept,batchNo,clients,odvs,caseStatus,measure,result,identNo,cardNo,collectInfo,color,seqno,bailStartDate,bailEndDate,expectStartTime,expectEndTime,collectStartTime,collectEndTime,orderBy,sort,pageSize,pageNum) {
 return request({
     url: 'dataCollect/totalDataCollectExport',
     method: 'post',
@@ -158,13 +158,15 @@ return request({
        expectEndTime:  expectEndTime,
        collectStartTime:  collectStartTime ,
        collectEndTime:  collectEndTime ,
+      orderBy:orderBy,
+      sort:sort,
        pageNum:pageNum ? pageNum : 1,
        pageSize:pageSize ? pageSize : 10
     }
   })
 }
 
-export const pageDataExport = function(area,dept,batchNo,clients,odvs,caseStatus,measure,result,identNo,cardNo,collectInfo,color,seqno,bailStartDate,bailEndDate,expectStartTime,expectEndTime,collectStartTime,collectEndTime,pageSize,pageNum) {
+export const pageDataExport = function(area,dept,batchNo,clients,odvs,caseStatus,measure,result,identNo,cardNo,collectInfo,color,seqno,bailStartDate,bailEndDate,expectStartTime,expectEndTime,collectStartTime,collectEndTime,orderBy,sort,pageSize,pageNum) {
 return download({
     url: '/dataCollect/pageDataCollectExport',
     data: {
@@ -187,6 +189,8 @@ return download({
        expectEndTime:  expectEndTime,
        collectStartTime:  collectStartTime ,
        collectEndTime:  collectEndTime ,
+      orderBy,
+      sort,
        pageNum:pageNum ? pageNum : 1,
        pageSize:pageSize ? pageSize : 10
     }

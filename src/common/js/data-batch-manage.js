@@ -1,4 +1,5 @@
 import request from '@/common/js/request'
+import download from '@/common/js/download'
 export const dataList = function(area,batchNos,clients,batchStatus,caseType,startTime,endTime,orderBy,sort,pageSize,pageNum) {
 return request({
     url: '/dataBatch/pageDataCase',
@@ -21,7 +22,7 @@ return request({
 }
 
 export const totalDataBatchExport = function(area,batchNos,clients,batchStatus,caseType,startTime,endTime,pageSize,pageNum) {
-return request({
+return download({
     url: '/dataBatch/totalDataBatchExport',
     method: 'post',
     data: {
@@ -38,8 +39,8 @@ return request({
     }
   })
 }
-export const pageDataBatchExport = function(area,batchNos,clients,batchStatus,caseType,startTime,endTime,pageSize,pageNum) {
-return request({
+export const pageDataBatchExport = function(area,batchNos,clients,batchStatus,caseType,startTime,endTime,orderBy,sort,pageSize,pageNum) {
+return download({
     url: '/dataBatch/pageDataBatchExport',
     method: 'post',
     data: {
@@ -50,6 +51,8 @@ return request({
        caseType:caseType ? caseType : "",
        startTime:startTime ? startTime : "",
        endTime:endTime ? endTime : "",
+      orderBy:orderBy,
+      sort:sort,
        pageNum:pageNum ? pageNum : 1,
        pageSize:pageSize ? pageSize : 10
        
@@ -83,14 +86,14 @@ return request({
 }
 
 export const selectDataBatchExport = function(id) {
-return request({
+return download({
     url: '/dataBatch/selectDataBatchExport',
     method: 'post',
     data:id
   })
 }
 export const selectDataCollectExportByBatch = function(id) {
-return request({
+return download({
     url: '/dataBatch/selectDataCollectExportByBatch',
     method: 'post',
     data:id
