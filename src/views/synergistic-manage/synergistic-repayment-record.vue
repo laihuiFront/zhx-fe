@@ -1,5 +1,5 @@
 <template>
-  <div id="synergistic-repayment-record" class="page-wraper-sub">
+  <div id="synergistic-repayment-record">
     <el-tabs v-model="tabName">
       <el-tab-pane label="还款记录" name="1"></el-tab-pane>
       <el-tab-pane label="已撤销" name="2"></el-tab-pane>
