@@ -1,10 +1,11 @@
 <template>
   <el-form id="repay-record-query" :model="queryForm" :inline="true" class="query-wrap">
     <el-form-item>
-      <el-input v-model="queryForm.userName" clearable placeholder="请输入姓名"></el-input>
+      <el-input style="width: 130px;" v-model="queryForm.userName" clearable placeholder="请输入姓名"></el-input>
     </el-form-item>
     <el-form-item>
       <e-l-TreeSelect
+          style="width: 130px;"
           ref="treeSelect"
           v-model="queryForm.qy"
           :selectParams="{'multiple': false,'clearable': true,'placeholder': '请选择区域'}"
@@ -12,7 +13,7 @@
       </e-l-TreeSelect>
     </el-form-item>
     <el-form-item>
-      <el-select clearable v-model="queryForm.wtf" placeholder="请选择批次号">
+      <el-select style="width: 150px;" clearable v-model="queryForm.wtf" placeholder="请选择批次号">
         <el-option
           v-for="item in logTypeList"
           :key="item.key"
@@ -22,7 +23,7 @@
       </el-select>
     </el-form-item>
     <el-form-item>
-      <el-select clearable v-model="queryForm.wtf" placeholder="请选择委托方">
+      <el-select style="width: 150px;" clearable v-model="queryForm.wtf" placeholder="请选择委托方">
         <el-option
           v-for="item in logTypeList"
           :key="item.key"
@@ -45,7 +46,7 @@
     <el-form-item>
       <el-popover
         placement="bottom-end"
-        width="600"
+        width="800"
         trigger="click">
         <ul class="condition-wrap">
           <li class="condition-item">
@@ -89,7 +90,7 @@
               </el-option>
             </el-select>
           </li>
-          <li class="condition-item">
+          <li class="condition-item half">
             <el-date-picker
               clearable
               v-model="yjtar"
@@ -126,7 +127,7 @@
           <li class="condition-item">
             <el-input v-model="queryForm.kh" clearable placeholder="请输入确认人"></el-input>
           </li>
-          <li class="condition-item">
+          <li class="condition-item half">
             <el-date-picker
               clearable
               v-model="qrr"
@@ -145,7 +146,7 @@
               placeholder="选择还款日期">
             </el-date-picker>
           </li>
-          <li class="condition-item">
+          <li class="condition-item half">
             <el-date-picker
               clearable
               v-model="fprq"
@@ -231,6 +232,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#repay-record-query{}
+#repay-record-query{
+}
 </style>
 

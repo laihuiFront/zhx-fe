@@ -59,3 +59,27 @@
     }
   }
 }
+
+.condition-wrap{
+  display: flex;
+  // justify-content: space-between;
+  flex-wrap: wrap;
+  .condition-item{
+    display: flex;
+    width:25%;
+    margin-bottom: 24px;
+    padding-right: 24px;
+    &.half{
+      width: 50%;
+    }
+    .el-select {
+      width: 100%;
+    }
+    .el-input{
+      width: 100%;
+    }
+    .el-date-editor{
+      width: 100%;
+    }
+  }
+}

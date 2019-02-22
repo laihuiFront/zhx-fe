@@ -6,8 +6,9 @@
     </el-tabs>
     <repay-record-query 
       :queryForm="queryForm">
-      <el-button type="primary">导入还款记录</el-button>
-      <el-button type="primary">新建还款记录</el-button>
+      <el-button type="primary" v-if="tabName==='1'">新建还款记录</el-button>
+      <el-button type="primary" v-if="tabName==='1'">撤销还款</el-button>
+      <el-button type="primary" v-if="tabName==='1'">导入还款记录</el-button>
       <el-button type="primary">导出选中数据</el-button>
       <el-button type="primary">导出查询结果</el-button>
     </repay-record-query>
@@ -47,7 +48,6 @@
       <el-table-column prop="createTime" label="公司佣金" show-overflow-tooltip></el-table-column>
       <el-table-column label="操作" v-if="tabName==='1'" show-overflow-tooltip width=“100” fixed="right">
         <el-button type="text">修改</el-button>
-        <el-button type="text">撤销还款</el-button>
       </el-table-column>
     </el-table>
     <el-pagination
@@ -144,7 +144,7 @@ export default {
       total:0,
       dialogData:{
         title:'',
-        editVisible: true
+        editVisible: false
       },
       rules: {
 
