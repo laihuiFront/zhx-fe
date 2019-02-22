@@ -3,9 +3,9 @@
   <el-row :gutter="24">
   <el-col :span="24">
   	<div class="grid-content bg-purple">
-  		<el-form :inline="true" ref="form" :model="form" label-width="80px">
+  		<el-form :inline="true" ref="form" :model="formInline" label-width="80px">
    <el-form-item >
-  <el-select v-model="form.area" placeholder="请选择催收区域" clearable>
+  <el-select v-model="formInline.area" placeholder="请选择催收区域" clearable>
     <el-option
       v-for="item in areaList"
       :key="item.id"
@@ -15,7 +15,7 @@
   </el-select>
   </el-form-item>
   <el-form-item >
-    <el-select v-model="form.batchNos" filterable  multiple placeholder="请输入批次" clearable>
+    <el-select v-model="formInline.batchNos" filterable  multiple placeholder="请输入批次" clearable>
     <el-option
       v-for="item in batchList"
       :key="item.batchNo"
@@ -25,7 +25,7 @@
   </el-select>
   </el-form-item>
    <el-form-item >
-  <el-select v-model="form.clients" filterable  multiple placeholder="请选择委托方" clearable>
+  <el-select v-model="formInline.clients" filterable  multiple placeholder="请选择委托方" clearable>
     <el-option
       v-for="item in clientList"
       :key="item.id"
@@ -35,7 +35,7 @@
   </el-select>
   </el-form-item>
    <el-form-item >
-  <el-select v-model="form.caseType" placeholder="请选择案件类型" clearable>
+  <el-select v-model="formInline.caseType" placeholder="请选择案件类型" clearable>
     <el-option
       v-for="item in caseTypeList"
       :key="item.id"
@@ -46,7 +46,7 @@
   </el-form-item>
    <el-form-item >
  <el-date-picker
-      v-model="form.time"
+      v-model="formInline.time6"
       type="daterange"
       align="right"
       unlink-panels
@@ -1205,9 +1205,9 @@ methods: {
   },
 	search(){
 
-		let caseDateStart=this.form.time==null?"":this.form.time[0]
-		let caseDateEnd=this.form.time==null?"":this.form.time[1]
-		searchList(this.form.area,this.form.batchNos,this.form.clients,this.form.caseType,caseDateStart,caseDateEnd,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
+		let caseDateStart=this.formInline.time==null?"":this.formInline.time6[0]
+		let caseDateEnd=this.formInline.time==null?"":this.formInline.time6[1]
+		searchList(this.formInline.area,this.formInline.batchNos,this.formInline.clients,this.formInline.caseType,caseDateStart,caseDateEnd,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
           	this.tableData3=response.pageInfo.list
       this.totalCaseNum=response.totalCaseNum
       this.totalAmt = response.totalAmt
@@ -1228,7 +1228,7 @@ this.pageNum=val;
 this.search()
 },
   	resetForm(){
-  		this.form={}
+  		this.formInline={time1:[],time2:[],time3:[],time4:[],time5:[],time6:[]}
   	},
    
       open7() {
