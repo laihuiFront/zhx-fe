@@ -1,4 +1,5 @@
 import request from '@/common/js/request'
+import download from '@/common/js/download'
 export const dataList = function(area,batchNos,clients,caseType,startTime,endTime,orderBy,sort,pageSize,pageNum) {
 return request({
     url: '/dataBatch/pageDataCase',
@@ -81,6 +82,15 @@ export  const batchList = function(){
     url: '/dataBatch/selectBatchNo',
     method: 'post',
     data:{}
+  })
+}
+export const downLoadZip = function() {
+  return download({
+    url: 'fileManage/download',
+    method: 'post',
+    data:{
+
+    }
   })
 }
 export const areaList = function() {

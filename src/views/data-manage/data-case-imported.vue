@@ -70,7 +70,7 @@
   	<div class="grid-content bg-purple">
   <el-form :inline="true">
   		<el-form-item>
-      <el-button type="text">导入模板下载</el-button> 
+      <el-button type="text" @click="downLoadZip">导入模板下载</el-button>
       </el-form-item>
       <el-form-item>
       <el-button type="primary" @click="dialogVisible = true">新增批次</el-button>  </el-form-item>
@@ -433,7 +433,7 @@
 </template>
 
 <script>
-		import {dataList,batchList,remoweData,addData,clientList,caseTypeList,areaList,update} from '@/common/js/data-case-imported.js'
+		import {dataList,batchList,remoweData,addData,clientList,caseTypeList,areaList,update,downLoadZip} from '@/common/js/data-case-imported.js'
 export default {
   name: 'dataCaseImported',
   data(){
@@ -492,6 +492,11 @@ methods: {
       });
 
 	},
+  downLoadZip(){
+    downLoadZip().then((response)=> {
+
+    })
+  },
 	editMessage(row){
 		console.log(row)
 		this.dialogVisible2=true
