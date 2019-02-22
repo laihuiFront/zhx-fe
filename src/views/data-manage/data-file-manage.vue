@@ -55,7 +55,7 @@
 </el-upload>
       </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="">模板下载</el-button>
+      <el-button type="primary" @click="downModule">模板下载</el-button>
     </el-form-item>
       <el-form-item>
       <el-button type="primary" @click="dialogVisible2 = true">新增</el-button>  </el-form-item>
@@ -119,9 +119,13 @@
        show-overflow-tooltip>
      </el-table-column>
     <el-table-column
-      prop="remark"
       label="备注"
       show-overflow-tooltip>
+      <template slot-scope="scope" >
+        <div v-for="(domain, index) in scope.row.remakList">
+          <span >{{domain.remark}}</span> <br />
+        </div>
+      </template>
     </el-table-column>
      <el-table-column
        label="操作"
@@ -406,7 +410,7 @@
 </template>
 
 <script>
-	import {dataList,remoweData,addData} from '@/common/js/data-file-manage.js'	
+	import {dataList,remoweData,addData,downModule} from '@/common/js/data-file-manage.js'
 
 
 export default {
@@ -552,16 +556,21 @@ this.search()
         this.total = response.total
       })
     },
+    downModule(){
+      downModule().then((response)=> {
+
+      })
+    },
       search(){
       	let startTime=this.form.time[0]
       	let endTime=this.form.time[1]
-      	 dataList(this.form.name,this.form.identNo,this.form.mobile,this.form.address,startTime,endTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
-            this.DataList=response.list
-           //this.pages = response.pages
-           this.total = response.total
-})
+        dataList(this.form.name,this.form.identNo,this.form.mobile,this.form.address,startTime,endTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
+          this.DataList=response.list
+          //this.pages = response.pages
+          this.total = response.total
+        })
       },
-       submitForm(formName) {
+       submitForm(formName){
         this.$refs[formName].validate((valid) => {
           if (valid) {
           	console.log(this.dynamicValidateForm)
@@ -589,7 +598,7 @@ this.search()
             return false;
           }
         });
-      },
+      }
     },
     created() {
             dataList().then((response)=>{
