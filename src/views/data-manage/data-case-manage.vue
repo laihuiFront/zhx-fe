@@ -119,8 +119,8 @@
                   导出<i class="el-icon-arrow-down el-icon--right"></i>
                 </el-button>
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item>查询结果</el-dropdown-item>
-                  <el-dropdown-item>所选案件</el-dropdown-item>
+                  <el-dropdown-item @click="exportTotalCase">查询结果</el-dropdown-item>
+                  <el-dropdown-item @click="exportSelectCase">所选案件</el-dropdown-item>
                   <el-dropdown-item>所选电话</el-dropdown-item>
                   <el-dropdown-item>所选催记</el-dropdown-item>
                 </el-dropdown-menu>
@@ -1092,6 +1092,11 @@
       },
       fenan(){
         this.detailVisible3=true
+      },
+      exportTotalCase(){
+
+      },
+      exportSelectCase(){
 
       },
       sureAddShow1(){
