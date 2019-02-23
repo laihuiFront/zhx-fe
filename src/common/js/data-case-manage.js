@@ -267,3 +267,38 @@ export const fenan2 = function(form,fenan) {
     }
   })
 }
+export const addImportant = function(datasList) {
+  return request({
+    url: '/dataCase/addImportant',
+    method: 'post',
+    data:datasList
+  })
+}
+export const addCollectStatus = function(datasList) {
+  return request({
+    url: '/dataCase/addCollectStatus',
+    method: 'post',
+    data:datasList
+  })
+}
+export const addCollectArea = function(datasList) {
+  return request({
+    url: '/dataCase/addCollectArea',
+    method: 'post',
+    data:datasList
+  })
+}
+export const addMValue = function(datasList) {
+  return request({
+    url: '/dataCase/addMValue',
+    method: 'post',
+    data:datasList
+  })
+}
+export const addSynergy = function(datasList) {
+  return request({
+    url: '/dataCase/addSynergy',
+    method: 'post',
+    data:datasList
+  })
+}
