@@ -496,7 +496,7 @@
      >
     </el-table-column>
    <el-table-column
-      prop="progress"
+      prop="progressMsg"
       align="center"
       label="办案进度"
      >
