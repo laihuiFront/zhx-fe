@@ -78,10 +78,13 @@
     </el-table-column>   	
        <el-table-column label="8:00前" align="center">
       <el-table-column
-        prop="list[0].countConPhoneNum"
+        prop="countConPhoneNum"
         label="有效通电"
         align="center"
        >
+        <template slot-scope="scope">
+        {{scope.row.list[0].countConPhoneNum}}
+      </template>
       </el-table-column>
       <el-table-column
         prop="list[0].countPhoneNum"
