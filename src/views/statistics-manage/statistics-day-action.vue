@@ -168,7 +168,7 @@
       prop="countNoAnswer"
      >
      <template slot-scope="scope">
-        <el-button type="text" size="small" >{{scope.row.countNoAnswer}}</el-button>
+        <el-button type="text" size="small" @click="dialogTableVisible = true">{{scope.row.countNoAnswer}}</el-button>
       </template>
     </el-table-column>
      <el-table-column
@@ -200,6 +200,30 @@
       :total="total">
     </el-pagination>
   </div>
+  <el-dialog title="收货地址" :visible.sync="dialogTableVisible"  width="80%">
+  <el-table :data="gridData">
+    <el-table-column property="date" label="通话时间" ></el-table-column>
+    <el-table-column property="name" label="通话对象" ></el-table-column>
+    <el-table-column property="address" label="电话号码"></el-table-column>
+    <el-table-column property="address" label="电话类型"></el-table-column>
+    <el-table-column property="address" label="通话内容"></el-table-column>
+    <el-table-column property="address" label="通话结果"></el-table-column>
+    <el-table-column property="address" label="承诺日期"></el-table-column>
+    <el-table-column property="address" label="承诺金额"></el-table-column>
+    <el-table-column property="address" label="催收员"></el-table-column>
+  </el-table>
+   <div class="block">
+  	 <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="currentPage4"
+      :page-sizes="[10, 20, 30, 40]"
+      :page-size="pages"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total">
+    </el-pagination>
+   </div>
+</el-dialog>
   </div>
 </template>
 
@@ -209,6 +233,7 @@ export default {
   name: 'statisticsDayAction',
   data(){
     return {
+    	dialogTableVisible:false,
     	 currentPage4: 1,
         pages:1,
         total:100,
@@ -219,7 +244,24 @@ export default {
     	PersonList:[],
     	areaList:[],
     	clientList:[],
-    	 tableData3: []
+    	 tableData3: [],
+    	  gridData: [{
+          date: '2016-05-02',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }, {
+          date: '2016-05-04',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }, {
+          date: '2016-05-01',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }, {
+          date: '2016-05-03',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }],
     }
     },
     methods: {
