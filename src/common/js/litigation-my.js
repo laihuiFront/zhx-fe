@@ -1,10 +1,10 @@
 import request from '@/common/js/request'
 export const dataList = function(form,orderBy,sort,pageSize,pageNum) {
 return request({
-    url: '/legal/pageDataCase',
+    url: '/legal/pageMyDataCase',
     method: 'post',
     data: {
-     
+       legalStatusMsg:form.legalStatusMsg,
        legalNo:form.legalNo,// 案号
 	   cstName:form.cstName,// 姓名
        orderBy:orderBy?orderBy:"id",

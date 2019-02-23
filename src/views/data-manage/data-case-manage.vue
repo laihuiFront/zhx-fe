@@ -131,12 +131,12 @@
                 案件标色<i class="el-icon-arrow-down el-icon--right"></i>
               </el-button>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item command="黑色">黑色</el-dropdown-item>
-                <el-dropdown-item command="红色">红色</el-dropdown-item>
-                <el-dropdown-item command="蓝色">蓝色</el-dropdown-item>
-                <el-dropdown-item command="橙色">橙色</el-dropdown-item>
-                <el-dropdown-item command="紫色">紫色</el-dropdown-item>
-                <el-dropdown-item command="棕色">棕色</el-dropdown-item>
+                <el-dropdown-item command="黑">黑色</el-dropdown-item>
+                <el-dropdown-item command="红">红色</el-dropdown-item>
+                <el-dropdown-item command="蓝">蓝色</el-dropdown-item>
+                <el-dropdown-item command="橙">橙色</el-dropdown-item>
+                <el-dropdown-item command="紫">紫色</el-dropdown-item>
+                <el-dropdown-item command="棕">棕色</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
             </el-form-item>

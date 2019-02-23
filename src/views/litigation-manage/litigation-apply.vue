@@ -144,7 +144,7 @@
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   		<el-form-item label="案件状态">
-     <el-select v-model="formInline.legalStatusMsg " filterable  placeholder="请选择案件状态" clearable>
+     <el-select v-model="formInline.legalStatus" filterable  placeholder="请选择案件状态" clearable>
     <el-option
       v-for="item in legalStatusMsgList"
       :key="item.id"
