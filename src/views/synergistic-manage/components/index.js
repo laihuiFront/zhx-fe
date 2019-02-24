@@ -1,2 +1,5 @@
 export {default as RepayRecordQuery} from './repay-record-query'
 export {default as BankRecordQuery} from './bank-record-query'
+export {default as SynRecordQuery} from './syn-record-query'
+export {default as LetterRecordQuery} from './letter-record-query'
+export {default as LetterApplicationQuery} from './letter-application-query'
