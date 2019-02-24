@@ -66,25 +66,86 @@
   </el-form>
   	</div>
   </el-col>
-  <el-col :span="10">
+  <el-col :span="20">
   	<div class="grid-content bg-purple">
   <el-form :inline="true">
   		<el-form-item>
-      <el-button type="text">导入模板下载</el-button> 
+      <el-button type="text" @click="downLoadZip">导入模板下载</el-button>
       </el-form-item>
       <el-form-item>
       <el-button type="primary" @click="dialogVisible = true">新增批次</el-button>  </el-form-item>
       <el-form-item>
       <el-button type="primary"  @click="open7">删除批次</el-button>  </el-form-item>
        <el-form-item >
-<!--<el-select v-model="value" placeholder="导入" >
-    <el-option
-      v-for="item in form.options"
-      :key="item.value"
-      :label="item.label"
-      :value="item.value">
-    </el-option>
-  </el-select>-->
+<el-upload
+  class="upload-demo"
+  action="http://116.62.124.251/zxh/dataCase/updateCase/import"
+  :headers="header"
+  :show-file-list=false
+  :on-success="uploadSuccess"
+  
+  >
+  <el-button size="small" type="primary">导入更新案件</el-button>
+</el-upload>
+      </el-form-item>
+       <el-form-item >
+<el-upload
+  class="upload-demo"
+  action="http://116.62.124.251/zxh/dataCase/comment/import"
+  :headers="header"
+  :show-file-list=false
+  :on-success="uploadSuccess"
+  
+  >
+  <el-button size="small" type="primary">导入案件评语</el-button>
+</el-upload>
+      </el-form-item>
+       <el-form-item >
+<el-upload
+  class="upload-demo"
+  action="http://116.62.124.251/zxh/dataCase/interest/import"
+  :headers="header"
+  :show-file-list=false
+  :on-success="uploadSuccess"
+  
+  >
+  <el-button size="small" type="primary">导入案件利息</el-button>
+</el-upload>
+      </el-form-item>
+       <el-form-item >
+<el-upload
+  class="upload-demo"
+  action="http://116.62.124.251/zxh/dataCase/tel/import"
+  :headers="header"
+  :show-file-list=false
+  :on-success="uploadSuccess"
+  
+  >
+  <el-button size="small" type="primary">导入案件电话</el-button>
+</el-upload>
+      </el-form-item>
+       <el-form-item >
+<el-upload
+  class="upload-demo"
+  action="http://116.62.124.251/zxh/dataCase/address/import"
+  :headers="header"
+  :show-file-list=false
+  :on-success="uploadSuccess"
+  
+  >
+  <el-button size="small" type="primary">导入案件地址</el-button>
+</el-upload>
+      </el-form-item>
+          <el-form-item >
+<el-upload
+  class="upload-demo"
+  action="http://116.62.124.251/zxh/dataCase/address/import"
+  :headers="header"
+  :show-file-list=false
+  :on-success="uploadSuccess"
+  >
+  <el-button size="small" type="primary">导入催收记录</el-button>
+</el-upload>
       </el-form-item>
 </el-form>
   	</div>
@@ -165,7 +226,16 @@
       align="center"
       show-overflow-tooltip>
        <template slot-scope="scope">
-        <el-button type="text" size="small" v-if="scope.batchStatus!==0">导入</el-button>
+       <el-upload
+        class="upload-demo"
+        action="http://116.62.124.251/zxh/dataCase/newCase/import"
+        :headers="header"
+        :show-file-list=false
+        :on-success="uploadSuccess"
+        :data="{batchNo:scope.row.batchNo}"
+  >
+   <el-button type="text" size="small" v-if="scope.batchStatus!==0">导入</el-button>
+</el-upload>
         <el-button type="text" size="small" v-if="scope.batchStatus==0">下载</el-button>
         <el-button type="text" size="small" @click="editMessage(scope.row)">编辑</el-button>
         <el-button type="text" size="small" @click="deleteMessage(scope.row.id)">删除</el-button>
@@ -433,11 +503,12 @@
 </template>
 
 <script>
-		import {dataList,batchList,remoweData,addData,clientList,caseTypeList,areaList,update} from '@/common/js/data-case-imported.js'
+		import {dataList,batchList,remoweData,addData,clientList,caseTypeList,areaList,update,downLoadZip} from '@/common/js/data-case-imported.js'
 export default {
   name: 'dataCaseImported',
   data(){
     return {
+    	header:{Authorization:localStorage.token},
     	messageForm:{},
     	areaList:[],
     	caseTypeList:[],
@@ -462,12 +533,23 @@ export default {
     		time:[],
     		clientList:[],
     		areaList:[],
-    		caseTypeList:[]
+    		caseTypeList:[],
     	},
        
     }
   },
 methods: {
+		uploadSuccess(){
+  		this.$message({
+            type: 'success',
+            message: '导入成功!'
+          });
+           dataList().then((response)=>{
+            this.DataList=response.pageInfo.list
+              //this.pages = response.pages
+              this.total = response.total
+})    
+  	},
 	deleteMessage(id){
 		let arry=[{id:id}]
       let _self=this
@@ -492,6 +574,11 @@ methods: {
       });
 
 	},
+  downLoadZip(){
+    downLoadZip().then((response)=> {
+
+    })
+  },
 	editMessage(row){
 		console.log(row)
 		this.dialogVisible2=true
@@ -637,6 +724,9 @@ created() {
   }
   .el-form-item .el-form-item--mini{
   	width:80%
+  }
+  .upload-demo{
+  	display: inline-block;
   }
 }
 </style>

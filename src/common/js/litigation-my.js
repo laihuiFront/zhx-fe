@@ -1,10 +1,10 @@
 import request from '@/common/js/request'
 export const dataList = function(form,orderBy,sort,pageSize,pageNum) {
 return request({
-    url: '/legal/pageDataCase',
+    url: '/legal/pageMyDataCase',
     method: 'post',
     data: {
-     
+       legalStatusMsg:form.legalStatusMsg,
        legalNo:form.legalNo,// 案号
 	   cstName:form.cstName,// 姓名
        orderBy:orderBy?orderBy:"id",
@@ -15,6 +15,21 @@ return request({
   })
 }
 
+export const dataList2 = function(form,orderBy,sort,pageSize,pageNum) {
+return request({
+    url: '/legal/pageDataCase',
+    method: 'post',
+    data: {
+       legalStatusMsg:form.legalStatusMsg,
+       legalNo:form.legalNo,// 案号
+	   cstName:form.cstName,// 姓名
+       orderBy:orderBy?orderBy:"id",
+       sort:sort?sort:"desc",
+       pageNum:pageNum ? pageNum : 1,
+       pageSize:pageSize ? pageSize : 10
+    }
+  })
+}
 export const remoweData = function(id) {
 return request({
     url: '/legal/delete',
@@ -36,13 +51,12 @@ return request({
   })
 }
 
-export const addData = function(form,id) {
+export const addData = function(form) {
 return request({
     url: '/legal/save',
     method: 'post',
     data:{
-    id:id,
-    legalStatus:form.legalStatus,// 案件状态   1 已经审核 2审核中 0未申请
+    legalStatusMsg:form.legalStatusMsg,// 案件状态   1 已经审核 2审核中 0未申请
 	identNo:form.identNo, //证件号码
 	legalType:form.legalType,// 案件類型
 	progress:form.progress,// 办案进度
@@ -83,4 +97,3 @@ return request({
     data:{role:"催收员"}
   })
 }
-

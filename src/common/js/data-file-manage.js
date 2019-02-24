@@ -1,4 +1,5 @@
 import request from '@/common/js/request'
+import download from '@/common/js/download'
 export const dataList = function(name,identNo,mobile,address,startTime,endTime,orderBy,sort,pageSize,pageNum) {
 return request({
     url: 'dataArchive/pageDataArchive',
@@ -28,6 +29,16 @@ return request({
     	telList:form.telList,
     	addressList:form.addressList,
     	remarkList:form.remarksList
+    }
+  })
+}
+
+export const downModule = function() {
+  return download({
+    url: 'fileManage/downloadArchive',
+    method: 'post',
+    data:{
+
     }
   })
 }

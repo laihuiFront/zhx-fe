@@ -17,7 +17,7 @@
   <el-button type="text" icon="el-icon-refresh" @click=clench>重置</el-button> 
   </el-form-item>
   <el-form-item>
-      <el-button type="primary" @click="dialogVisible=true">新增</el-button>  </el-form-item>    
+      <el-button type="primary" @click=addDataform>添加诉讼案件</el-button>  </el-form-item>    
 </el-form>
   </el-form>
   	</div>
@@ -111,7 +111,7 @@
      >
      <template slot-scope="scope">
        <el-button type="text" size="small" icon="el-icon-check" @click="checkDatasure(scope.row.id)"></el-button>
-       <el-button type="text" size="small" icon="el-icon-message" ></el-button>
+       <el-button type="text" size="small" icon="el-icon-message" @click="showmessage(scope.row)"></el-button>
        <el-button type="text" size="small" icon="el-icon-edit" @click="editData(scope.row)"></el-button>
        <el-button type="text" size="small" icon="el-icon-delete" @click="deleteData(scope.row.id)"></el-button>
       </template>
@@ -133,7 +133,7 @@
   :visible.sync="dialogVisible"
   width="90%"
   >
- <el-form :inline="true" :model="formInline" class="demo-form-inline" label-width="140px">
+ <el-form :inline="true" :model="formInline" class="demo-form-inline" label-width="140px" :disabled="isTrue">
  	<el-row :gutter="24">
   <el-col :span="8">
   	<div class="grid-content bg-purple">
@@ -144,7 +144,7 @@
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   		<el-form-item label="案件状态">
-     <el-select v-model="formInline.legalStatusMsg " filterable  placeholder="请选择案件状态" clearable>
+     <el-select v-model="formInline.legalStatus" filterable  placeholder="请选择案件状态" clearable>
     <el-option
       v-for="item in legalStatusMsgList"
       :key="item.id"
@@ -480,6 +480,7 @@ export default {
   name: 'litigationApply',
   	data(){
   		return{
+  			isTrue:false,
   			dialogTitle:'新增',
   			progressList:[{name:"判决",id:1},{name:"收案",id:2}], 
         legalStatusMsgList:[{name:"已审核",id:1},{name:"审核中",id:2},{name:"未申请",id:0}],  
@@ -497,9 +498,25 @@ export default {
          DataList: [],
          PersonDataList:[],
          checkId:'',
+         addId:''
   	}
   },
    methods: {
+   	showmessage(row){
+   		this.dialogVisible=true
+   		this.dialogTitle="详情"
+   		this.isTrue=true
+   		this.formInline=row
+   		
+   	},
+   	addDataform(){
+   		this.formInline={};
+   		this.dialogVisible=true
+   		this.dialogTitle="新增"
+   		this.isTrue=false
+   		this.addId=''
+   		
+   	},
    	checkresource(){
    		checkData(this.checkform,this.checkId).then((response)=>{
           this.$message({
@@ -513,7 +530,7 @@ export default {
           })    
    	},
    	SaveData(){
-   		addData(this.formInline).then((response)=>{
+   		addData(this.formInline,this.addId).then((response)=>{
           this.$message({
             type: 'success',
             message: '保存成功!'
@@ -521,6 +538,7 @@ export default {
           this.dialogVisible=false;
           this.search()
           this.formInline={}
+          this.addId=""
 })    
    	},
    	checkDatasure(id){
@@ -531,6 +549,8 @@ export default {
    		this.dialogVisible=true;
    		this.dialogTitle="修改";
    		this.formInline=row
+   		this.isTrue=false
+   		this.addId=row.id
    	},
    	deleteData(id){
          	let _self=this 

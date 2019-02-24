@@ -178,6 +178,11 @@
     <div class="grid-content bg-purple">
       <el-form :inline="true">
         <el-form-item>
+          <el-button type="primary" @click="qrHandle"
+          >批量确认信函</el-button
+          >
+        </el-form-item>
+        <el-form-item>
           <el-button type="primary" @click="cxHandle"
           >撤销信函</el-button
           >
@@ -235,13 +240,13 @@
 </el-table>
 <div class="block">
   <el-pagination
-    @size-change="handleSizeChange"
-    @current-change="handleCurrentChange"
-    :current-page="paginationData.currentPage"
-    :page-sizes="[100, 500, 2000, 10000, 1000000]"
-    :page-size="paginationData.pageSize"
-    layout="total, sizes, prev, pager, next, jumper"
-    :total="paginationData.total"
+  @size-change="handleSizeChange"
+  @current-change="handleCurrentChange"
+  :current-page="paginationData.currentPage"
+  :page-sizes="[100, 500, 2000, 10000, 1000000]"
+  :page-size="paginationData.pageSize"
+  layout="total, sizes, prev, pager, next, jumper"
+  :total="paginationData.total"
   >
   </el-pagination>
 </div></div
