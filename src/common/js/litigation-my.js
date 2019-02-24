@@ -15,6 +15,21 @@ return request({
   })
 }
 
+export const dataList2 = function(form,orderBy,sort,pageSize,pageNum) {
+return request({
+    url: '/legal/pageDataCase',
+    method: 'post',
+    data: {
+       legalStatusMsg:form.legalStatusMsg,
+       legalNo:form.legalNo,// 案号
+	   cstName:form.cstName,// 姓名
+       orderBy:orderBy?orderBy:"id",
+       sort:sort?sort:"desc",
+       pageNum:pageNum ? pageNum : 1,
+       pageSize:pageSize ? pageSize : 10
+    }
+  })
+}
 export const remoweData = function(id) {
 return request({
     url: '/legal/delete',

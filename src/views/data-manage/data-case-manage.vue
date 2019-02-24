@@ -161,6 +161,7 @@
     <el-table
       ref="multipleTable"
       :data="tableData3"
+      :row-class-name="rowColor"
       style="width: 100%;margin-top:10px"
       @selection-change="handleSelectionChange"
       sortable="custom"
@@ -1128,6 +1129,9 @@
       }
     },
     methods: {
+    	rowColor({row}){
+      return `color_${row.color}`;
+    },
     	guanlianjian(command){
     		if(this.deleteList.length>=1){
     		let datasList=[]
@@ -1515,6 +1519,9 @@
         this.totalCp = response.totalCp
         this.totalPtp = response.totalPtp
         this.total = response.pageInfo.total
+        this.tableData3 = response.pageInfo.list.map((item)=>{
+          return Object.assign(item, {'class-name': `color_${item.color}`});
+        })
       })
       areaList().then((response)=>{
         this.areaList=response
@@ -1575,5 +1582,26 @@
       color: #66b1ff;
 
     }
+    .color_gray {
+  color: #b2adb2;
+}
+.color_BLACK {
+  color: #000000;
+}
+.color_RED {
+  color: #FF0000;
+}
+.color_BLUE {
+  color: #0000FF;
+}
+.color_ORANGE {
+  color: #FA8072;
+}
+.color_ZI {
+  color: #A020F0;
+}
+.color_ZONG{
+  color: #D2B48C;
+}
   }
 </style>

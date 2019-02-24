@@ -907,7 +907,7 @@
 </template>
 
 <script>
-				import {dataList,remoweData,addData,PersonList,checkData} from '@/common/js/litigation-my.js'	
+				import {dataList,remoweData,addData,PersonList,checkData,dataList2} from '@/common/js/litigation-my.js'	
 export default {
   name: 'litigationMy',
 	data(){
@@ -1024,6 +1024,11 @@ this.pageNum=val;
 },
 created() {
               dataList(this.form).then((response)=>{
+              this.DataList=response.data.list
+              this.pages = response.pages
+              this.total = response.total
+})    
+        dataList2(this.form).then((response)=>{
               this.DataList=response.data.list
               this.pages = response.pages
               this.total = response.total
