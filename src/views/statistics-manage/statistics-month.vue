@@ -170,7 +170,6 @@ export default {
                         sums[index] = '合计';
                         return;
                     }
-                    debugger
                     const values = data.map(item => Number(item[column.property]));
                     if (!values.every(value => isNaN(value))) {
                         sums[index] = values.reduce((prev, curr) => {

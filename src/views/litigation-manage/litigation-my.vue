@@ -455,9 +455,9 @@
     <el-tab-pane label="全部诉讼案件" name="second"><el-row :gutter="24">
   <el-col :span="20">
   	<div class="grid-content bg-purple">
-  		<el-form :inline="true" ref="form" :model="form" >
+  		<el-form :inline="true" ref="form" :model="form2" >
   			<el-form-item label="案件状态">
-     <el-select v-model="form.legalStatusMsg " filterable  placeholder="请选择案件状态" clearable>
+     <el-select v-model="form2.legalStatusMsg " filterable  placeholder="请选择案件状态" clearable>
     <el-option
       v-for="item in legalStatusMsgList"
       :key="item.id"
@@ -467,13 +467,13 @@
      </el-select>
   </el-form-item>
    <el-form-item label="案号">
-     <el-input v-model="form.legalNo" placeholder="请输入案号" clearable></el-input>
+     <el-input v-model="form2.legalNo" placeholder="请输入案号" clearable></el-input>
   </el-form-item>
   <el-form-item label="姓名">
-   <el-input v-model="form.cstName" placeholder="请输入姓名" clearable></el-input>
+   <el-input v-model="form2.cstName" placeholder="请输入姓名" clearable></el-input>
   </el-form-item>
   <el-form-item>
-  <el-button type="text" icon="el-icon-search" @click=search>查询</el-button> 
+  <el-button type="text" icon="el-icon-search" @click=search2>查询</el-button> 
   </el-form-item>
   <el-form-item>
   <el-button type="text" icon="el-icon-refresh" @click=clench>重置</el-button> 
@@ -487,7 +487,7 @@
    </el-row>	
   	
   <el-table
-    :data="DataList"   
+    :data="DataList2"   
      style="width: 100%">
     <el-table-column
       prop="legalStatusMsg"
@@ -922,6 +922,7 @@ export default {
   			dialogVisible:false,
   			dialogVisible1:false,
   		  form:{},
+  		  form2:{},
   		  checkform:{
   		  	resource:''
   		  },
@@ -929,6 +930,7 @@ export default {
         pages:1,
         total:100,
          DataList: [],
+         DataList2: [],
          PersonDataList:[],
          checkId:'',
   	}
@@ -1011,7 +1013,14 @@ export default {
   	search(){
   		dataList(this.form).then((response)=>{
             this.DataList=response.data.list
-              this.pages = response.pages
+//            this.pages = response.pages
+              this.total = response.total
+})    
+  	},
+  	search2(){
+  		dataList2(this.form2).then((response)=>{
+            this.DataList2=response.data.list
+//            this.pages = response.pages
               this.total = response.total
 })    
   	},
@@ -1029,7 +1038,7 @@ created() {
               this.total = response.total
 })    
         dataList2(this.form).then((response)=>{
-              this.DataList=response.data.list
+              this.DataList2=response.data.list
               this.pages = response.pages
               this.total = response.total
 })    

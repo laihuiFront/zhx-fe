@@ -139,7 +139,7 @@
           <el-form-item >
 <el-upload
   class="upload-demo"
-  action="http://116.62.124.251/zxh/dataCase/address/import"
+  action="http://116.62.124.251/zxh/dataCollect/import"
   :headers="header"
   :show-file-list=false
   :on-success="uploadSuccess"
