@@ -171,17 +171,31 @@ export const departmentList = function() {
 }
 
 export const exportTotalCase = function() {
-  return request({
+  return download({
     url: '/organization/listOrganization',
     method: 'post',
     data:{}
   })
 }
 export const exportSelectCase = function() {
-  return request({
+  return download({
     url: '/organization/listOrganization',
     method: 'post',
     data:{}
+  })
+}
+export const selectDataCollect = function(datasList) {
+  return download({
+    url: '/dataCase/selectDataCollectExportByBatch',
+    method: 'post',
+    data:datasList
+  })
+}
+export const selectDataTel = function(datasList) {
+  return download({
+    url: '/dataCase/selectDataCaseTel',
+    method: 'post',
+    data:datasList
   })
 }
 export const fenan1 = function(datasList) {
