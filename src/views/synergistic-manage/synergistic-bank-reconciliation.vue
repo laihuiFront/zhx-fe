@@ -31,7 +31,7 @@
       <el-table-column prop="createTime" label="姓名" show-overflow-tooltip></el-table-column>
       <el-table-column prop="createTime" label="个案序列号" show-overflow-tooltip></el-table-column>
       <el-table-column prop="createTime" label="委托方" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="违案金额" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="createTime" label="委案金额" show-overflow-tooltip></el-table-column>
       <el-table-column prop="createTime" label="案件已还款" show-overflow-tooltip></el-table-column>
       <el-table-column prop="createTime" label="CP金额" show-overflow-tooltip></el-table-column>
       <el-table-column prop="createTime" label="CP日期" show-overflow-tooltip></el-table-column>
