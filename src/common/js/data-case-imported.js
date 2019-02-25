@@ -41,6 +41,7 @@ return request({
     url: '/dataBatch/update',
     method: 'post',
     data:{
+    id:form.id,
    area:form.area,//催收区域
    batchNo:form.batchNo,//批次编号
    client:form.client,//委托方

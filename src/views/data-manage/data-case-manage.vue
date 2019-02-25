@@ -864,7 +864,7 @@
   </span>
     </el-dialog>
       <el-dialog
-      title="查询条件分案"
+      title="查询结果快速分案"
       class="dialog-wrap"
       :visible.sync="detailVisible8"
       :close-on-click-modal="false"
@@ -1041,7 +1041,7 @@
       	collectStatus:'',
       	importLeave:'',
       	value12:'',
-        images:{backgroundImage: "url(" + require("./down.png") + ")",padding:"8px 5px 3px 6px"},
+        images:{background: "url(" + require("./down.png") + ") repeat-x",padding:"8px 5px 3px 6px"},
         props: {
           label:'name',
           value:'id',
@@ -1307,7 +1307,7 @@
       })
       },
        fenanchecktwo(){
-         fenan1(this.formInline,this.fenan.odv).then((response)=>{
+         fenan2(this.formInline,this.fenan.odv).then((response)=>{
        this.$message({
           type: 'success',
           message: '操作成功!'
