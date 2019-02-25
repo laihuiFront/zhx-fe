@@ -431,14 +431,259 @@
   	  <el-form-item label="备注">
      <el-input type="textarea" style="width: 280%;"  v-model="formInline.remark"></el-input>
   </el-form-item>
-  	</div></el-col>
-  
-</el-row>
+  	</div>
+  </el-col>
+  </el-row>
 </el-form>
- 
+
+
+ <div v-if=isTrue>
+<el-row :gutter="20">
+  <el-col :span="24">
+  	<div class="grid-content bg-purple addTitle" >
+  	 关联数据
+  	</div></el-col>
+</el-row>
+<el-row :gutter="20"  >
+  <el-col :span="24">
+  	 <el-tabs v-model="activeName2" type="card" @tab-click="handleClick">
+    <el-tab-pane label="办理记录" name="first">
+    	<el-row :gutter="20" style="margin-bottom: 10px;" >
+     <el-col :span="21">
+  	<div class="grid-content bg-purple" >
+  	 <span style="color: #e8e8e8;font-size: 18px;">办理记录</span>
+  	</div>
+     </el-col>
+     <el-button type="primary" @click="adddialogVisible = true"> 添加办理记录</el-button>
+       </el-row>
+    	<el-table
+      :data="handleList"
+      style="width: 100%">
+       <el-table-column
+        prop="handleDate"
+        label="办理时间"
+        width="180">
+      </el-table-column>
+      <el-table-column
+        prop="progress"
+        label="办理进度"
+        width="180">
+      </el-table-column>
+      <el-table-column
+        prop="preservationDate"
+        label="保全费缴纳时间">
+      </el-table-column>
+       <el-table-column
+        prop="preservationList"
+        label="保全资产清单">
+      </el-table-column>
+       <el-table-column
+        prop="remark"
+        label="备注">
+      </el-table-column>
+      <el-table-column
+      align="center"
+      label="操作"
+      width="120"
+     >
+     <template slot-scope="scope">
+       <el-button type="text" size="small" icon="el-icon-edit" @click="edithandleList(scope.row)"></el-button>
+       <el-button type="text" size="small" icon="el-icon-delete" @click="deletehandleList(scope.row.id)"></el-button>
+      </template>
+    </el-table-column>
+    </el-table>
+    </el-tab-pane>
+    <el-dialog
+  title="添加办理记录"
+  :visible.sync="adddialogVisible"
+  width="40%"
+  append-to-body
+  >
+ <el-form :model="ruleForm" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+ 	<el-form-item label="办案进度"
+ 		prop="progress"
+ 		:rules="{
+      required: true, message: '请选择办案进度', trigger: 'change'  
+    }">
+    <el-select v-model="ruleForm.progress" filterable  placeholder="请选择案件进度" clearable>
+    <el-option
+      v-for="item in progressList"
+      :key="item.id"
+      :label="item.name"
+      :value="item.id">
+    </el-option>
+     </el-select>
+  </el-form-item>
+   <el-form-item label="办理时间"
+   		prop="handleDate"
+ 		:rules="{
+       type: 'string', required: true, message: '请选择时间', trigger: 'change' 
+    }">
+     <div class="block">
+    <el-date-picker
+    	value-format="yyyy-MM-dd"
+      v-model="ruleForm.handleDate"
+      type="date"
+      placeholder="选择日期">
+    </el-date-picker>
+  </div>
+  </el-form-item>
+   <el-form-item label="保全费缴纳时间">
+     <div class="block">
+    <el-date-picker
+    	value-format="yyyy-MM-dd"
+      v-model="ruleForm.preservationDate"
+      type="date"
+      placeholder="选择日期">
+    </el-date-picker>
+  </div>
+  </el-form-item>
+  <el-form-item label="保全资产清单" >
+    <el-input type="textarea" v-model="ruleForm.preservationList"></el-input>
+  </el-form-item>
+    <el-form-item label="备注" >
+    <el-input type="textarea" v-model="ruleForm.remark"></el-input>
+  </el-form-item>
+</el-form>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="adddialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="submitForm1('ruleForm')">确 定</el-button>
+  </span>
+</el-dialog>
+    <el-tab-pane label="收费记录" name="second"><el-row :gutter="20" style="margin-bottom: 10px;" >
+     <el-col :span="21">
+  	<div class="grid-content bg-purple" >
+  	 <span style="color: #e8e8e8;font-size: 18px;">收费记录</span>
+  	</div>
+     </el-col>
+     <el-button type="primary" @click="add1dialogVisible = true"> 添加收费记录</el-button>
+       </el-row>
+    	<el-table
+      :data="feeList"
+      style="width: 100%">
+       <el-table-column
+        prop="fee"
+        label="收费金额"
+        width="180">
+      </el-table-column>
+      <el-table-column
+        prop="chargeDate"
+        label="收费日期"
+        width="180">
+      </el-table-column>
+      <el-table-column
+        prop="feeType"
+        label="款项类别">
+      </el-table-column>
+       <el-table-column
+        prop="feeTarget"
+        label="收费对象">
+      </el-table-column>
+      <el-table-column
+        prop="payMethod"
+        label="付款方式">
+      </el-table-column>
+      <el-table-column
+        prop="payee"
+        label="收费人">
+      </el-table-column>
+      <el-table-column
+        prop="voucher"
+        label="凭证号">
+      </el-table-column>
+       <el-table-column
+        prop="remark"
+        label="备注">
+      </el-table-column>
+      <el-table-column
+      align="center"
+      label="操作"
+      width="120"
+     >
+     <template slot-scope="scope">
+       <el-button type="text" size="small" icon="el-icon-edit" @click="editfeeList(scope.row)"></el-button>
+       <el-button type="text" size="small" icon="el-icon-delete" @click="deleteFeeList(scope.row.id)"></el-button>
+      </template>
+    </el-table-column>
+    </el-table>
+    </el-tab-pane>
+    <el-dialog
+  title="添加收费记录"
+  :visible.sync="add1dialogVisible"
+  width="70%"
+  append-to-body
+  >
+ <el-form :model="ruleForm1" ref="ruleForm1" :inline="true" label-width="180px" class="demo-ruleForm">
+ 	<el-form-item label="收费金额"   
+ 		prop="fee"
+ 		:rules="{
+      required: true, message: '收费不能为空', trigger: 'blur'
+    }">
+    <el-input v-model="ruleForm1.fee"></el-input>
+  </el-form-item>
+	<el-form-item label="收费人">
+    <el-input v-model="ruleForm1.payee"></el-input>
+  </el-form-item>
+ 	<el-form-item label="款项类别">
+    <el-select v-model="ruleForm1.feeType" filterable  placeholder="请选择款项类别" clearable>
+    <el-option
+      v-for="item in feeTypeList"
+      :key="item.id"
+      :label="item.name"
+      :value="item.id">
+    </el-option>
+     </el-select>
+  </el-form-item>
+  
+    <el-form-item label="收费日期"
+    	prop="chargeDate"
+ 		:rules="{
+       type: 'string', required: true, message: '请选择时间', trigger: 'change' 
+    }">
+     <div class="block">
+    <el-date-picker
+    	value-format="yyyy-MM-dd"
+      v-model="ruleForm1.chargeDate"
+      type="date"
+      placeholder="选择日期">
+    </el-date-picker>
+  </div>
+  </el-form-item>
+	<el-form-item label="付款方式">
+    <el-select v-model="ruleForm1.payMethod" filterable  placeholder="请选择付款方式" clearable>
+    <el-option
+      v-for="item in payMethodList"
+      :key="item.id"
+      :label="item.value"
+      :value="item.value">
+    </el-option>
+     </el-select>
+  </el-form-item>
+   <el-form-item label="收费对象">
+     <div class="block">
+       <el-input v-model="ruleForm1.feeTarget"></el-input>
+  </div>
+  </el-form-item>
+  <el-form-item label="凭证号" style="width: 80%;">
+    <el-input type="textarea" v-model="ruleForm1.voucher" style="width: 280%;"></el-input>
+  </el-form-item>
+    <el-form-item label="备注" style="width: 80%;">
+    <el-input type="textarea" v-model="ruleForm1.remark" style="width: 280%;"></el-input>
+  </el-form-item>
+</el-form>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="addd1ialogVisible = false">取 消</el-button>
+    <el-button type="primary"@click="submitForm('ruleForm1')">确 定</el-button>
+  </span>
+</el-dialog>
+</el-tab-pane>
+  </el-tabs>
+  </el-col>
+</el-row>
+</div>
   <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="SaveData">确 定</el-button>
+    <el-button type="primary" @click="SaveData" v-if=!isTrue>确 定</el-button>
   </span>
 </el-dialog>
 <el-dialog
@@ -474,12 +719,20 @@
 </template>
 
 <script>
-			import {dataList,remoweData,addData,PersonList,checkData} from '@/common/js/litigation-apply.js'	
+			import {dataList,remoweData,addData,PersonList,checkData,detaildata,saveHandle,saveFee,deleteHandle,deleteFee} from '@/common/js/litigation-apply.js'	
 
 export default {
   name: 'litigationApply',
   	data(){
   		return{
+  			payMethodList:[{id:1,value:"现金"},{id:2,value:"支票"},{id:3,value:"邮政汇款"},{id:4,value:"银行电汇"},{id:5,value:"网上支付"},{id:6,value:"其他"},],
+  			feeTypeList:[],
+  			ruleForm1:{},
+  			add1dialogVisible:false,
+  			ruleForm:{handleDate:""},
+  			adddialogVisible:false,
+  			activeName2:'first',
+  			addDataList:true,
   			isTrue:false,
   			dialogTitle:'新增',
   			progressList:[{name:"判决",id:1},{name:"收案",id:2}], 
@@ -498,16 +751,97 @@ export default {
          DataList: [],
          PersonDataList:[],
          checkId:'',
-         addId:''
+         addId:'',
+         	handleList:[],
+  				feeList:[],
+  				changeId:''
   	}
   },
    methods: {
+   	deletehandleList(id){
+   		deleteHandle(id).then((response)=>{
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+          this.showmessage(this.formInline)
+          })    
+   	},
+   	deleteFeeList(id){
+   		deleteFee(id).then((response)=>{
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+          this.showmessage(this.formInline)
+          })    
+   	},
+   	submitForm1(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.adddruleForm()
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
+   	    submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.adddruleForm1()
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
+      editfeeList(row){
+      this.ruleForm1=row
+   		this.changeId=row.id
+   		this.add1dialogVisible=true;
+      },
+   	adddruleForm1(){
+   		saveFee(this.ruleForm1,this.formInline.id,this.changeId).then((response)=>{
+          this.$message({
+            type: 'success',
+            message: '操作成功!'
+          });
+          this.add1dialogVisible=false;
+          this.showmessage(this.formInline)
+          this.ruleForm1={}
+           this.changeId=''
+          })    
+   	},
+   	edithandleList(row){
+   		this.ruleForm=row
+   		this.changeId=row.id
+   		this.adddialogVisible=true;
+   	},
+   	adddruleForm(){
+   		saveHandle(this.ruleForm,this.formInline.id,this.changeId).then((response)=>{
+          this.$message({
+            type: 'success',
+            message: '操作成功!'
+          });
+          this.adddialogVisible=false;
+          this.showmessage(this.formInline)
+          this.ruleForm={}
+          this.changeId=''
+          })    
+   	},
+   	handleClick(tab, event) {
+        console.log(tab, event);
+     },
    	showmessage(row){
-   		this.dialogVisible=true
+   		detaildata(row.id).then((response)=>{
+      this.dialogVisible=true
    		this.dialogTitle="详情"
-   		this.isTrue=true
-   		this.formInline=row
-   		
+   		this.isTrue=true 
+   		this.handleList=response.handleList
+   		this.feeList=response.feeList
+   		this.formInline=response.legalEntity
+         })    
    	},
    	addDataform(){
    		this.formInline={};
@@ -605,7 +939,13 @@ this.pageNum=val;
 </script>
 
 <style lang="scss">
-#litigation-apply{}
+#litigation-apply{
+	.addTitle{
+		padding: 10px;
+		background-color: #e3e2e2;
+	}
+	 
+}
 </style>
 
 

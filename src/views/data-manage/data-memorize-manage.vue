@@ -488,7 +488,7 @@ export default {
   name: 'dataMemorizeManage',
   data(){
     return {
-    	  images:{backgroundImage: "url(" + require("./down.png") + ")",padding:"8px 5px 3px 6px"},
+    	  images:{background: "url(" + require("./down.png") + ") repeat-x",padding:"8px 5px 3px 6px",},
     	  loading:false,
     	  caseStatusList:[{name:"未退案",id:0},{name:"正常",id:1},{name:"暂停",id:2},{name:"关档",id:3},{name:"退档",id:4},{name:"全部",id:5}],
     	  EndList:[],

@@ -1041,7 +1041,7 @@
       	collectStatus:'',
       	importLeave:'',
       	value12:'',
-        images:{backgroundImage: "url(" + require("./down.png") + ")",padding:"8px 5px 3px 6px"},
+        images:{background: "url(" + require("./down.png") + ") repeat-x",padding:"8px 5px 3px 6px"},
         props: {
           label:'name',
           value:'id',
