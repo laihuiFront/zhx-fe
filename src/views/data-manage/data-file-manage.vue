@@ -129,8 +129,7 @@
     </el-table-column>
      <el-table-column
        label="操作"
-       align="center"
-       show-overflow-tooltip>
+       align="center">
        <template slot-scope="scope">
          <el-button type="text" size="small" @click="showMessage(scope.row)">查看</el-button>
        </template>

@@ -6,10 +6,9 @@
     </el-tabs>
     <bank-record-query 
       :queryForm="queryForm">
-      <el-button type="primary" v-if="tabName==='1'">登帐</el-button>
       <el-button type="primary" v-if="tabName==='1'">作废CP</el-button>
       <el-button type="primary" v-if="tabName==='1'">导入CP</el-button>
-      <el-button type="primary" v-if="tabName==='1'">导入确认登帐</el-button>
+
       <el-button type="primary">导出选中数据</el-button>
       <el-dropdown trigger="click" @command="handleCommand">
         <el-button type="primary">导出查询结果<i class="el-icon-arrow-down el-icon--right"></i></el-button>
@@ -40,9 +39,6 @@
       <el-table-column prop="createTime" label="提交人" show-overflow-tooltip></el-table-column>
       <el-table-column prop="createTime" label="提交时间" show-overflow-tooltip></el-table-column>
       <el-table-column prop="createTime" label="备注" show-overflow-tooltip></el-table-column>
-      <el-table-column label="操作" v-if="tabName==='1'" show-overflow-tooltip width=“100” fixed="right">
-        <el-button type="text">确认登帐</el-button>
-      </el-table-column>
     </el-table>
     <el-pagination
       @size-change="onClickQuery"

@@ -224,7 +224,7 @@
     <el-table-column
       label="操作"
       align="center"
-      show-overflow-tooltip>
+      >
        <template slot-scope="scope">
        <el-upload
         class="upload-demo"
@@ -234,7 +234,7 @@
         :on-success="uploadSuccess"
         :data="{batchNo:scope.row.batchNo}"
   >
-   <el-button type="text" size="small" v-if="scope.batchStatus!==0">导入</el-button>
+
 </el-upload>
         <el-button type="text" size="small" v-if="scope.row.batchStatus==0" @click="">导入</el-button>
         <el-button type="text" size="small" v-if="scope.row.batchStatus==0" @click="downCaseModule">下载</el-button>
@@ -701,7 +701,7 @@ this.search()
 created() {
             dataList().then((response)=>{
             this.DataList=response.pageInfo.list
-              this.pages = response.pageInfo.pages
+             // this.pages = response.pageInfo.pages
               this.total = response.pageInfo.total
 })
               clientList().then((response)=>{
