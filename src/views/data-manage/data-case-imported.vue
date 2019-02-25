@@ -594,7 +594,6 @@ methods: {
 	submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-          	console.log(this.formInline)
             addData(this.formInline).then((response)=>{
             	this.dialogVisible=false
             	this.search()
@@ -602,6 +601,12 @@ methods: {
             type: 'success',
             message: '保存成功!'
           });
+          this.formInline={
+        	batchNo:'',
+        	targetRate:'',
+        	returnTime:'',
+        	caseTime:''
+        }
 })
           } else {
             console.log('error submit!!');

@@ -437,7 +437,6 @@ export default {
   },
 methods: {
 	selectDataByBatch(){
-		debugger
 		this.loading=true
   		selectDataBatchExport(this.selectDataCollectExportByBatchList).then((response)=>{
           	this.loading=false;
