@@ -391,6 +391,19 @@
                   clearable
                 ></el-input>
               </el-form-item>
+              <el-form-item prop="val33">
+                <el-date-picker
+                  v-model="form.val33"
+                  value-format="yyyy-MM-dd"
+                  type="daterange"
+                  align="right"
+                  unlink-panels
+                  range-separator="至"
+                  start-placeholder="案件分配起始日期"
+                  end-placeholder="案件分配结束日期"
+                >
+                </el-date-picker>
+              </el-form-item>
               <el-form-item>
                 <el-button
                   type="text"
@@ -560,6 +573,7 @@
           val30: "", //跟进次数下限
           val31: "", //部门
           val32: "", //催收员
+          val33: "", //案件分配
         },
         val0_data: [],  //委托方
         val1_data: [],  //批次号
@@ -766,7 +780,8 @@
           val27: telPhone,
           val28: collectMeasure,
           val31:dept,
-          val32:odv
+          val32:odv,
+          val33
         } = this.form;
         return {
           clients,
@@ -796,6 +811,8 @@
           newCase,
           expectTimeStart: (!!val21&&val21[0])||'',
           expectTimeEnd: (!!val21&&val21[1])||'',
+          caseAllotTimeStart: (!!val33 && val33[0]) || "",
+          caseAllotTimeEnd: (!!val33 && val33[1]) || "",
           remark,
           collectionType,
           reliefStatus,

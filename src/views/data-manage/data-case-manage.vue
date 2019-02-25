@@ -204,6 +204,9 @@
         label="批次号"
         align="center"
         show-overflow-tooltip>
+         <template slot-scope="scope">
+          <el-button type="text" size="small" @click="editCase(scope.row)">{{scope.row.batchNo}}</el-button>
+        </template>
       </el-table-column>
       <el-table-column
         prop="seqNo"
@@ -377,17 +380,7 @@
         label="催收小结"
         show-overflow-tooltip>
       </el-table-column>
-      <el-table-column
-        label="操作"
-        width="160"
-        align="center"
-        show-overflow-tooltip>
-        <template slot-scope="scope">
-          <el-button type="text" size="small">导入</el-button>
-          <el-button type="text" size="small">下载</el-button>
-          <el-button type="text" size="small" @click="editCase(scope.row)">编辑</el-button>
-        </template>
-      </el-table-column>
+    
     </el-table>
     <div class="block">
       <el-pagination

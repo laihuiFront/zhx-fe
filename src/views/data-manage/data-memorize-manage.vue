@@ -227,8 +227,7 @@
     <el-table-column
       label="操作"
       width="120"
-      align="center"
-      show-overflow-tooltip>
+      align="center">
       <template slot-scope="scope">
         <el-button type="text" size="small" @click="editMessage(scope.row)">编辑</el-button>
         <el-button type="text" size="small" @click="deleteMessage(scope.row.id)">删除</el-button>
