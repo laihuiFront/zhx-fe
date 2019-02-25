@@ -83,7 +83,7 @@
   :headers="header"
   :show-file-list=false
   :on-success="uploadSuccess"
-  
+
   >
   <el-button size="small" type="primary">导入更新案件</el-button>
 </el-upload>
@@ -95,7 +95,7 @@
   :headers="header"
   :show-file-list=false
   :on-success="uploadSuccess"
-  
+
   >
   <el-button size="small" type="primary">导入案件评语</el-button>
 </el-upload>
@@ -107,7 +107,7 @@
   :headers="header"
   :show-file-list=false
   :on-success="uploadSuccess"
-  
+
   >
   <el-button size="small" type="primary">导入案件利息</el-button>
 </el-upload>
@@ -119,7 +119,7 @@
   :headers="header"
   :show-file-list=false
   :on-success="uploadSuccess"
-  
+
   >
   <el-button size="small" type="primary">导入案件电话</el-button>
 </el-upload>
@@ -131,7 +131,7 @@
   :headers="header"
   :show-file-list=false
   :on-success="uploadSuccess"
-  
+
   >
   <el-button size="small" type="primary">导入案件地址</el-button>
 </el-upload>
@@ -236,7 +236,8 @@
   >
    <el-button type="text" size="small" v-if="scope.batchStatus!==0">导入</el-button>
 </el-upload>
-        <el-button type="text" size="small" v-if="scope.batchStatus==0">下载</el-button>
+        <el-button type="text" size="small" v-if="scope.row.batchStatus==0" @click="">导入</el-button>
+        <el-button type="text" size="small" v-if="scope.row.batchStatus==0" @click="downCaseModule">下载</el-button>
         <el-button type="text" size="small" @click="editMessage(scope.row)">编辑</el-button>
         <el-button type="text" size="small" @click="deleteMessage(scope.row.id)">删除</el-button>
       </template>
@@ -503,7 +504,7 @@
 </template>
 
 <script>
-		import {dataList,batchList,remoweData,addData,clientList,caseTypeList,areaList,update,downLoadZip} from '@/common/js/data-case-imported.js'
+		import {dataList,batchList,remoweData,addData,clientList,caseTypeList,areaList,update,downLoadZip,downCaseModule} from '@/common/js/data-case-imported.js'
 export default {
   name: 'dataCaseImported',
   data(){
@@ -548,7 +549,7 @@ methods: {
             this.DataList=response.pageInfo.list
               //this.pages = response.pages
               this.total = response.total
-})    
+})
   	},
 	deleteMessage(id){
 		let arry=[{id:id}]
@@ -576,6 +577,12 @@ methods: {
 	},
   downLoadZip(){
     downLoadZip().then((response)=> {
+
+    })
+  },
+  downCaseModule(){
+	  console.info(12124);
+    downCaseModule().then((response)=> {
 
     })
   },

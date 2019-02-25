@@ -114,15 +114,15 @@
               <el-button type="primary" @click="addshow" >添加评语</el-button>  </el-form-item>
             <el-button type="primary"  @click="xiecui">申请协催</el-button>  </el-form-item>
             <el-form-item >
-              <el-dropdown>
+              <el-dropdown @command="handleExport">
                 <el-button type="primary">
                   导出<i class="el-icon-arrow-down el-icon--right"></i>
                 </el-button>
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item @click="exportTotalCase">查询结果</el-dropdown-item>
-                  <el-dropdown-item @click="exportSelectCase">所选案件</el-dropdown-item>
-                  <el-dropdown-item>所选电话</el-dropdown-item>
-                  <el-dropdown-item>所选催记</el-dropdown-item>
+                  <el-dropdown-item command="exportTotalCase">查询结果</el-dropdown-item>
+                  <el-dropdown-item command="exportSelectCase">所选案件</el-dropdown-item>
+                  <el-dropdown-item command="exportTel">所选电话</el-dropdown-item>
+                  <el-dropdown-item command="exportCollect">所选催记</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </el-form-item>
@@ -1027,7 +1027,7 @@
 
 <script>
   import CaseDetail from './detail'
-  import {dataList,LeaveList,areaList,batchList,caseTypeList,addressList,TellList,collectStatusList,deleteStatusList,accountAgeList,clientList,EndList,PersonList,departmentList,searchList,fenan1,fenan2,addpingyu,caseStatus,deteleCase,colorList,addMValue,addCollectArea,addCollectStatus,addImportant,addSynergy} from '@/common/js/data-case-manage.js'
+  import {dataList,LeaveList,areaList,batchList,caseTypeList,addressList,TellList,collectStatusList,deleteStatusList,accountAgeList,clientList,EndList,PersonList,departmentList,searchList,fenan1,fenan2,addpingyu,caseStatus,deteleCase,colorList,addMValue,addCollectArea,addCollectStatus,addImportant,addSynergy,selectDataTel,selectDataCollect} from '@/common/js/data-case-manage.js'
   export default {
     name: 'dataCaseManage',
     components: {
@@ -1189,6 +1189,25 @@
         }
 
     	},
+      handleExport(command){
+    	  console.info(command)
+        if(this.deleteList.length>=1){
+          if(command==="exportTotalCase"){
+
+          }else if(command==="exportSelectCase"){
+
+          }else if(command==="exportTel"){
+            this.exportTel();
+          }else if(command==="exportCollect"){
+            this.exportCollect();
+          }
+        }else{
+          this.$message({
+            type: 'error',
+            message: '请选择数据!'
+          });
+        }
+      },
       handleCommand(command){
       	
         if(this.deleteList.length>=1){
@@ -1252,6 +1271,29 @@
       },
       exportSelectCase(){
 
+      },
+      exportTel(){
+    	  console.info(123)
+        let datasList=[]
+        for (var i=0;i<this.deleteList.length;i++){
+          let dataObject={}
+          dataObject.id=this.deleteList[i].id
+          datasList.push(dataObject)
+        }
+        selectDataTel(datasList).then((response)=>{
+
+        })
+      },
+      exportCollect(){
+        let datasList=[]
+        for (var i=0;i<this.deleteList.length;i++){
+          let dataObject={}
+          dataObject.id=this.deleteList[i].id
+          datasList.push(dataObject)
+        }
+        selectDataCollect(datasList).then((response)=>{
+
+        })
       },
        fenancheckone(){
        	let datasList=[]

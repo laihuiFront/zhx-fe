@@ -93,6 +93,16 @@ export const downLoadZip = function() {
     }
   })
 }
+export const downCaseModule = function() {
+  return download({
+    url: 'fileManage/downloadCase',
+    method: 'post',
+    data:{
+
+    }
+  })
+}
+
 export const areaList = function() {
 return request({
     url: '/sys/dictionary/select/list/name',
