@@ -127,7 +127,7 @@
       >
     </el-table-column>
     <el-table-column
-      prop="client"
+      prop="clientMsg"
       :sortable='true'
       :sort-orders="['ascending','descending']"
       label="委托方"
@@ -167,7 +167,7 @@
       </template>
     </el-table-column>
    <el-table-column
-      prop="caseType"
+      prop="caseTypeMsg"
       label="案件类型"
       :sortable='true'
       min-width="120"

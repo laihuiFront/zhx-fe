@@ -170,7 +170,7 @@
       prop="batchNo">
     </el-table-column>
     <el-table-column
-      prop="client"
+      prop="clientMsg"
       :sortable='true'
       label="委托方"
       :sort-orders="['ascending','descending']"
