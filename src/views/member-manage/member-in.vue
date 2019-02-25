@@ -253,9 +253,11 @@ export default {
       })
     },
     onClickAdd () {
+      // this.memberInfo.roleList = null
       this.memberInfo = {
         status: 1,
-        enable: 1
+        enable: 1,
+        roleList: []
       }
       this.$set(this.dialogData, 'title', '新增员工')
       this.$set(this.dialogData, 'type', 'add')

@@ -1,14 +1,14 @@
 <template>
   <div id="synergistic-repayment-record" class="page-wraper-sub">
     <el-tabs v-model="tabName">
-      <el-tab-pane label="还款记录" name="1"></el-tab-pane>
-      <el-tab-pane label="已撤销" name="2"></el-tab-pane>
+      <el-tab-pane label="还款记录" name="0"></el-tab-pane>
+      <el-tab-pane label="已撤销" name="1"></el-tab-pane>
     </el-tabs>
     <repay-record-query 
       :queryForm="queryForm">
-      <el-button type="primary" v-if="tabName==='1'">新建还款记录</el-button>
-      <el-button type="primary" v-if="tabName==='1'">撤销还款</el-button>
-      <el-button type="primary" v-if="tabName==='1'">导入还款记录</el-button>
+      <el-button type="primary" v-if="tabName==='0'">新建还款记录</el-button>
+      <el-button type="primary" v-if="tabName==='0'">撤销还款</el-button>
+      <el-button type="primary" v-if="tabName==='0'">导入还款记录</el-button>
       <el-button type="primary">导出选中数据</el-button>
       <el-dropdown trigger="click" @command="handleCommand">
         <el-button type="primary">导出查询结果<i class="el-icon-arrow-down el-icon--right"></i></el-button>
@@ -18,7 +18,7 @@
         </el-dropdown-menu>
       </el-dropdown>
     </repay-record-query>
-    <div class="statistics-wrap" v-if="tabName==='1'">
+    <div class="statistics-wrap" v-if="tabName==='0'">
       <span class="title">查询结果统计：</span>
       <span class="item">总还款额：0</span>
       <span class="item">总M值：0</span>
@@ -52,7 +52,7 @@
       <el-table-column prop="createTime" label="备注" show-overflow-tooltip></el-table-column>
       <el-table-column prop="createTime" label="M值" show-overflow-tooltip></el-table-column>
       <el-table-column prop="createTime" label="公司佣金" show-overflow-tooltip></el-table-column>
-      <el-table-column label="操作" v-if="tabName==='1'" show-overflow-tooltip width=“100” fixed="right">
+      <el-table-column label="操作" v-if="tabName==='0'" show-overflow-tooltip width=“100” fixed="right">
         <el-button type="text">修改</el-button>
       </el-table-column>
     </el-table>
@@ -145,7 +145,7 @@ export default {
   },
   data(){
     return {
-      tabName: '1',
+      tabName: '0',
       recordList: [],
       total:0,
       dialogData:{
