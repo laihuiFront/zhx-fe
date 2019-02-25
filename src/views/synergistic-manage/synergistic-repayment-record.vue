@@ -187,7 +187,7 @@ export default {
           collectionUser:{id: null},
           caseArea:{id: null},
         },
-        confirmUser:{}
+        confirmUser:{name: null}
       }
     },
     onSelectRow(){},

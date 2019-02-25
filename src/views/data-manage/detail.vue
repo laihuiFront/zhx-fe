@@ -4,172 +4,172 @@
       <el-collapse-item title="个案序列号:20171218-0157" name="1">
         <div class="items-wrap">
           <el-form
-            :model="caseDetail.detail"
+            :model="caseDetail"
             ref="ruleForm"
             label-width="100px"
             class="rule-form"
           >
             <el-form-item label="姓名">
-              <el-input v-model="caseDetail.detail.name"></el-input>
+              <el-input v-model="caseDetail.name"></el-input>
             </el-form-item>
             <el-form-item label="委托方">
-              <el-input v-model="caseDetail.detail.wtf"></el-input>
+              <el-input v-model="caseDetail.client"></el-input>
             </el-form-item>
             <el-form-item label="批次号">
-              <el-input v-model="caseDetail.detail.pch"></el-input>
+              <el-input v-model="caseDetail.pch"></el-input>
             </el-form-item>
             <el-form-item label="委案日期">
-              <el-date-picker v-model="caseDetail.detail.warq" type="date" placeholder="选择日期"></el-date-picker>
+              <el-date-picker v-model="caseDetail.warq" type="date" placeholder="选择日期"></el-date-picker>
             </el-form-item>
             <el-form-item label="证件号">
-              <el-input v-model="caseDetail.detail.zjh"></el-input>
+              <el-input v-model="caseDetail.zjh"></el-input>
             </el-form-item>
             <el-form-item label="卡号">
-              <el-input v-model="caseDetail.detail.kh"></el-input>
+              <el-input v-model="caseDetail.kh"></el-input>
             </el-form-item>
             <el-form-item label="催收状态">
-              <el-input v-model="caseDetail.detail.cszt"></el-input>
+              <el-input v-model="caseDetail.cszt"></el-input>
             </el-form-item>
             <el-form-item label="预计退案日">
-              <el-date-picker v-model="caseDetail.detail.yjtar" type="date" placeholder="选择日期"></el-date-picker>
+              <el-date-picker v-model="caseDetail.yjtar" type="date" placeholder="选择日期"></el-date-picker>
             </el-form-item>
             <el-form-item label="委案金额">
-              <el-input v-model="caseDetail.detail.warq"></el-input>
+              <el-input v-model="caseDetail.warq"></el-input>
             </el-form-item>
             <el-form-item label="人民币">
-              <el-input v-model="caseDetail.detail.rmb"></el-input>
+              <el-input v-model="caseDetail.rmb"></el-input>
             </el-form-item>
             <el-form-item label="港币">
-              <el-input v-model="caseDetail.detail.gb"></el-input>
+              <el-input v-model="caseDetail.gb"></el-input>
             </el-form-item>
             <el-form-item label="外币">
-              <el-input v-model="caseDetail.detail.wb"></el-input>
+              <el-input v-model="caseDetail.wb"></el-input>
             </el-form-item>
             <el-form-item label="已还款">
-              <el-input v-model="caseDetail.detail.yhk"></el-input>
+              <el-input v-model="caseDetail.yhk"></el-input>
             </el-form-item>
             <el-form-item label="逾期账龄">
-              <el-input v-model="caseDetail.detail.yqzl"></el-input>
+              <el-input v-model="caseDetail.yqzl"></el-input>
             </el-form-item>
             <el-form-item label="逾期天数">
-              <el-input v-model="caseDetail.detail.yqts"></el-input>
+              <el-input v-model="caseDetail.yqts"></el-input>
             </el-form-item>
             <el-form-item label="币种">
-              <el-input v-model="caseDetail.detail.bz"></el-input>
+              <el-input v-model="caseDetail.bz"></el-input>
             </el-form-item>
             <el-form-item label="最新欠款" class="half">
-              <el-input v-model="caseDetail.detail.zxqk"></el-input>
+              <el-input v-model="caseDetail.zxqk"></el-input>
             </el-form-item>
             <el-form-item label="地区">
-              <el-input v-model="caseDetail.detail.dq"></el-input>
+              <el-input v-model="caseDetail.dq"></el-input>
             </el-form-item>
             <el-form-item label="催收手别">
-              <el-input v-model="caseDetail.detail.cssb"></el-input>
+              <el-input v-model="caseDetail.cssb"></el-input>
             </el-form-item>
             <el-form-item label="本金">
-              <el-input v-model="caseDetail.detail.bj"></el-input>
+              <el-input v-model="caseDetail.bj"></el-input>
             </el-form-item>
             <el-form-item label="剩余本金">
-              <el-input v-model="caseDetail.detail.sybj"></el-input>
+              <el-input v-model="caseDetail.sybj"></el-input>
             </el-form-item>
             <el-form-item label="贷款日期">
-              <el-date-picker v-model="caseDetail.detail.dkrq" type="date" placeholder="选择日期"></el-date-picker>
+              <el-date-picker v-model="caseDetail.dkrq" type="date" placeholder="选择日期"></el-date-picker>
             </el-form-item>
             <el-form-item label="逾期期数">
-              <el-input v-model="caseDetail.detail.yqqs"></el-input>
+              <el-input v-model="caseDetail.yqqs"></el-input>
             </el-form-item>
             <el-form-item label="贷款利率">
-              <el-input v-model="caseDetail.detail.dkll"></el-input>
+              <el-input v-model="caseDetail.dkll"></el-input>
             </el-form-item>
             <el-form-item label="每月还款">
-              <el-input v-model="caseDetail.detail.myhk"></el-input>
+              <el-input v-model="caseDetail.myhk"></el-input>
             </el-form-item>
             <el-form-item label="逾期金额">
-              <el-input v-model="caseDetail.detail.yqje"></el-input>
+              <el-input v-model="caseDetail.yqje"></el-input>
             </el-form-item>
             <el-form-item label="预期本金">
-              <el-input v-model="caseDetail.detail.yqbj"></el-input>
+              <el-input v-model="caseDetail.yqbj"></el-input>
             </el-form-item>
             <el-form-item label="逾期利息">
-              <el-input v-model="caseDetail.detail.yqlx"></el-input>
+              <el-input v-model="caseDetail.yqlx"></el-input>
             </el-form-item>
             <el-form-item label="逾期罚息">
-              <el-input v-model="caseDetail.detail.yqfx"></el-input>
+              <el-input v-model="caseDetail.yqfx"></el-input>
             </el-form-item>
             <el-form-item label="违约金">
-              <el-input v-model="caseDetail.detail.wyj"></el-input>
+              <el-input v-model="caseDetail.wyj"></el-input>
             </el-form-item>
             <el-form-item label="滞纳金">
-              <el-input v-model="caseDetail.detail.znj"></el-input>
+              <el-input v-model="caseDetail.znj"></el-input>
             </el-form-item>
             <el-form-item label="手机">
-              <el-input v-model="caseDetail.detail.sj"></el-input>
+              <el-input v-model="caseDetail.sj"></el-input>
             </el-form-item>
             <el-form-item label="家庭号码">
-              <el-input v-model="caseDetail.detail.jthm"></el-input>
+              <el-input v-model="caseDetail.jthm"></el-input>
             </el-form-item>
             <el-form-item label="单位号码">
-              <el-input v-model="caseDetail.detail.dwhm"></el-input>
+              <el-input v-model="caseDetail.dwhm"></el-input>
             </el-form-item>
             <el-form-item label="家庭地址" class="whole">
-              <el-input v-model="caseDetail.detail.jtdz"></el-input>
+              <el-input v-model="caseDetail.jtdz"></el-input>
             </el-form-item>
             <el-form-item label="单位名称" class="whole">
-              <el-input v-model="caseDetail.detail.dwmc"></el-input>
+              <el-input v-model="caseDetail.dwmc"></el-input>
             </el-form-item>
             <el-form-item label="单位地址" class="whole">
-              <el-input v-model="caseDetail.detail.dwdz"></el-input>
+              <el-input v-model="caseDetail.dwdz"></el-input>
             </el-form-item>
             <el-form-item label="户籍地址" class="whole">
-              <el-input v-model="caseDetail.detail.hjdz"></el-input>
+              <el-input v-model="caseDetail.hjdz"></el-input>
             </el-form-item>
             <el-form-item label="对账单地址" class="whole">
-              <el-input v-model="caseDetail.detail.dzddz"></el-input>
+              <el-input v-model="caseDetail.dzddz"></el-input>
             </el-form-item>
             <el-form-item label="PTP金额">
-              <el-input v-model="caseDetail.detail.ptp"></el-input>
+              <el-input v-model="caseDetail.ptp"></el-input>
             </el-form-item>
             <el-form-item label="CP金额">
-              <el-input v-model="caseDetail.detail.cp"></el-input>
+              <el-input v-model="caseDetail.cp"></el-input>
             </el-form-item>
             <el-form-item label="委案期数">
-              <el-input v-model="caseDetail.detail.waqs"></el-input>
+              <el-input v-model="caseDetail.waqs"></el-input>
             </el-form-item>
             <el-form-item label="最低还款额">
-              <el-input v-model="caseDetail.detail.zdhke"></el-input>
+              <el-input v-model="caseDetail.zdhke"></el-input>
             </el-form-item>
             <el-form-item label="下次跟进日期" class="half">
-              <el-input v-model="caseDetail.detail.xcgjrq"></el-input>
+              <el-input v-model="caseDetail.xcgjrq"></el-input>
             </el-form-item>
             <el-form-item label="委托日期">
-              <el-date-picker v-model="caseDetail.detail.wtrq" type="date" placeholder="选择日期"></el-date-picker>
+              <el-date-picker v-model="caseDetail.wtrq" type="date" placeholder="选择日期"></el-date-picker>
             </el-form-item>
             <el-form-item label="跟进次数">
-              <el-input v-model="caseDetail.detail.gjcs"></el-input>
+              <el-input v-model="caseDetail.gjcs"></el-input>
             </el-form-item>
             <el-form-item label="催收区域">
-              <el-input v-model="caseDetail.detail.csqy"></el-input>
+              <el-input v-model="caseDetail.csqy"></el-input>
             </el-form-item>
             <el-form-item label="催收员">
-              <el-input v-model="caseDetail.detail.csy"></el-input>
+              <el-input v-model="caseDetail.csy"></el-input>
             </el-form-item>
             <el-form-item label="最近催记时间">
-              <el-date-picker v-model="caseDetail.detail.zjcjsj" type="datetime" placeholder="选择日期时间"></el-date-picker>
+              <el-date-picker v-model="caseDetail.zjcjsj" type="datetime" placeholder="选择日期时间"></el-date-picker>
             </el-form-item>
             <el-form-item label="最后外访">
-              <el-input v-model="caseDetail.detail.zhwf"></el-input>
+              <el-input v-model="caseDetail.zhwf"></el-input>
             </el-form-item>
             <el-form-item label="自动收回时间">
-              <el-date-picker v-model="caseDetail.detail.zdshsj" type="datetime" placeholder="选择日期时间"></el-date-picker>
+              <el-date-picker v-model="caseDetail.zdshsj" type="datetime" placeholder="选择日期时间"></el-date-picker>
             </el-form-item>
             <el-form-item label="催收小结" class="width-75">
-              <el-input v-model="caseDetail.detail.csxj"></el-input>
+              <el-input v-model="caseDetail.csxj"></el-input>
             </el-form-item>
             <el-form-item label="最新评语" class="whole">
               <div class="content-wrap">
                  <el-button size="small" type="text" icon="el-icon-plus" title="添加"></el-button>
                  <ul class="comments-wrap">
-                   <li v-for="(item) in caseDetail.detail.zxpy" :key="item.id" class="item">
+                   <li v-for="(item) in caseDetail.zxpy" :key="item.id" class="item">
                      {{item.time}} {{item.user}} : {{item.text}}
                    </li>
                  </ul>
@@ -230,6 +230,21 @@
         </el-table>
       </el-collapse-item>
       <el-collapse-item title="其他信息" name="3">
+        <div class="items-wrap">
+          <el-form
+              :model="caseDetail"
+              ref="otherForm"
+              label-width="100px"
+              class="rule-form"
+            >
+            <el-form-item label="分配时间">
+              <el-input v-model="caseDetail.distributeTime"></el-input>
+            </el-form-item>
+            <el-form-item label="分配历史">
+              <el-input v-model="caseDetail.distributeHistory"></el-input>
+            </el-form-item>
+          </el-form>
+        </div>
         <div class="other-wrap">
           <div class="left-wrap">
             <el-tabs v-model="otherActiveName" type="card" >
@@ -249,7 +264,7 @@
                   </div>
                 </div>
                 <el-table
-                  :data="caseDetail.otherInfo.phoneList"
+                  :data="caseDetail.dataCaseTelEntityList"
                   style="width: 100%"
                   class="table-wrap">
                   <el-table-column
@@ -261,7 +276,7 @@
                     label="状态">
                   </el-table-column>
                   <el-table-column
-                    prop="phone"
+                    prop="tel"
                     label="电话">
                   </el-table-column>
                   <el-table-column
@@ -269,7 +284,7 @@
                     label="姓名">
                   </el-table-column>
                   <el-table-column
-                    prop="rel"
+                    prop="relation"
                     label="关系">
                   </el-table-column>
                   <el-table-column
@@ -303,7 +318,7 @@
                   </div>
                 </div>
                 <el-table
-                  :data="caseDetail.otherInfo.addrList"
+                  :data="caseDetail.addrList"
                   style="width: 100%"
                   class="table-wrap">
                   <el-table-column
@@ -354,7 +369,7 @@
               </el-tab-pane>
               <el-tab-pane label="案人数据" name="3" class="tabs-wrap">
                 <el-table
-                  :data="caseDetail.otherInfo.dataList"
+                  :data="caseDetail.dataList"
                   style="width: 100%"
                   class="table-wrap">
                   <el-table-column
@@ -399,7 +414,7 @@
                   </div>
                 </div>
                 <el-table
-                  :data="caseDetail.otherInfo.memorizeList"
+                  :data="caseDetail.memorizeList"
                   style="width: 100%"
                   class="table-wrap">
                   <el-table-column
@@ -490,7 +505,7 @@
               </el-tab-pane>
               <el-tab-pane label="评语" name="5" class="tabs-wrap">
                 <el-table
-                  :data="caseDetail.otherInfo.commentList"
+                  :data="caseDetail.commentList"
                   style="width: 100%"
                   class="table-wrap">
                   <el-table-column
@@ -514,7 +529,7 @@
               </el-tab-pane>
               <el-tab-pane label="外访" name="6" class="tabs-wrap">
                 <el-table
-                  :data="caseDetail.otherInfo.visitList"
+                  :data="caseDetail.visitList"
                   style="width: 100%"
                   class="table-wrap">
                   <el-table-column
@@ -591,7 +606,7 @@
               </el-tab-pane>
               <el-tab-pane label="利息更新" name="7" class="tabs-wrap">
                 <el-table
-                  :data="caseDetail.otherInfo.rateUpdateList"
+                  :data="caseDetail.rateUpdateList"
                   style="width: 100%"
                   class="table-wrap">
                   <el-table-column
@@ -666,7 +681,7 @@
                   <p>PTP记录</p>
                   <el-table
                     width="100%"
-                    :data="caseDetail.otherInfo.ptpList"
+                    :data="caseDetail.ptpList"
                     class="table-wrap">
                     <el-table-column
                       prop="content"
@@ -689,7 +704,7 @@
                   <p>CP记录</p>
                   <el-table
                     width="100%"
-                    :data="caseDetail.otherInfo.cpList"
+                    :data="caseDetail.cpList"
                     class="table-wrap">
                     <el-table-column
                       prop="content"
@@ -745,7 +760,7 @@
                   </div>
                 </div>
                 <el-table
-                  :data="caseDetail.otherInfo.syncList"
+                  :data="caseDetail.syncList"
                   style="width: 100%"
                   class="table-wrap">
                   <el-table-column
@@ -792,7 +807,7 @@
               </el-tab-pane>
               <el-tab-pane label="共债案件" name="10" class="tabs-wrap">
                 <el-table
-                  :data="caseDetail.otherInfo.dependCaseList"
+                  :data="caseDetail.dependCaseList"
                   style="width: 100%"
                   class="table-wrap">
                   <el-table-column
@@ -849,7 +864,7 @@
               </el-tab-pane>
               <el-tab-pane label="操作记录" name="11" class="tabs-wrap">
                 <el-table
-                  :data="caseDetail.otherInfo.logList"
+                  :data="caseDetail.logList"
                   style="width: 100%"
                   class="table-wrap">
                   <el-table-column
@@ -879,7 +894,7 @@
               </el-tab-pane>
               <el-tab-pane label="诉讼案件" name="12" class="tabs-wrap">
                 <el-table
-                  :data="caseDetail.otherInfo.litigationCaseList"
+                  :data="caseDetail.litigationCaseList"
                   style="width: 100%"
                   class="table-wrap">
                   <el-table-column
@@ -962,7 +977,7 @@
                   </div>
                 </div>
                 <el-table
-                  :data="caseDetail.otherInfo.reliefList"
+                  :data="caseDetail.reliefList"
                   style="width: 100%"
                   class="table-wrap">
                   <el-table-column
@@ -1036,7 +1051,7 @@
                 <span>自定义信息</span>
                 <el-button style="float: right; padding: 3px 0" type="text">保存</el-button>
               </div>
-              <el-input type="textarea" :rows="8"  v-model="caseDetail.otherInfo.customInfo"></el-input>
+              <el-input type="textarea" :rows="8"  v-model="caseDetail.customInfo"></el-input>
             </el-card>
           </div>
         </div>
@@ -1046,107 +1061,28 @@
 </template>
 
 <script>
+import {getCaseDetail} from '@/common/js/api-detail'
 export default {
   name:'caseDetail',
+  props:{
+    id:{
+      type: Number,
+      default: -1
+    }
+  },
   data() {
     return {
       activeNames: ['1'],
       otherActiveName:'1',
-      caseDetail:{
-        detail:{
-          name: '唐纯近',
-          wtf:'中国银行',
-          pch:'中国银行20171228',
-          warq:'2017-12-18',
-          zjh:'512921197003068671',
-          kh:'5201088014573845',
-          cszt:'暂停催收',
-          yjtar:'2018-03-24',
-          waje:25574.91,
-          rmb:25574.91,
-          gb:0,
-          wb:0,
-          yhk:0,
-          yqzl:'3手',
-          zxqk:25574.91,
-          dq:'广东省东莞市',
-          cssb:'四档',
-          bj:16251.84,
-          sybj:15251.84,
-          yqlx:4221,
-          sj:'13926850212',
-          dwhm:'0769-88871817',
-          jtdz:'广东省东莞市',
-          dwmc:'东莞长鸿五金制品有限公司办公室',
-          dwdz:'广东省东莞市',
-          hjdz:'四川省南充市',
-          dzddz:'广东省东莞市',
-          ptp:0,
-          cp:0,
-          zdhke:20482.84,
-          gjcs:'电话 164 信函 0 外访 0',
-          csy:'张磊',
-          zjcjsj:'2018-03-02 16:29',
-          zxpy:[{
-            id: 1,
-            time:'2017-12-22 18:27',
-            user:'陈重',
-            text:'111111'
-          },{
-            id: 2,
-            time:'2017-12-22 18:31',
-            user:'杨英',
-            text:'222222'
-          }]
-        },
-        dependCase:[],
-        otherInfo:{
-          customInfo:'',
-          phoneList:[{
-            status:'有效',
-            phone:'13599999999',
-            name:'唐龙',
-            rel:'父亲',
-            type:'手机',
-            remark:'无'
-          }],
-          addrList:[{
-            status:'有效',
-            name:'唐龙',
-            rel:'父亲',
-            addr:'四川省南充市',
-            type:'户籍地址',
-            remark:'',
-            letterTime:1,
-            visitTime:0
-          }],
-          dataList:[],
-          memorizeList:[{
-            type:'电话催收',
-            time:'2018-03-02'
-          }],
-          commentList:[{
-            content:'1111',
-            creater:'陈重',
-            time:'2017-12-12 18:27'
-          }],
-          visitList:[],
-          rateUpdateList:[],
-          ptpList:[],
-          cpList:[],
-          syncList:[],
-          dependCaseList:[],
-          logList:[{
-            time:'2018-03-05 14:35',
-            type:'案件管理',
-            content:'退案',
-            user:'田珊珊'
-          }],
-          litigationCaseList:[],
-          reliefList:[]
-        }
-      },
+      caseDetail:{},
       memorizeType:1
+    }
+  },
+  methods: {
+    queryDetail(){
+      getCaseDetail(this.id).then(data => {
+        this.caseDetail = data
+      })
     }
   }
 }
@@ -1208,6 +1144,7 @@ export default {
     }
   }
   .other-wrap{
+    margin-top: 24px;
     display: flex;
     align-items: flex-start;
     .left-wrap{
