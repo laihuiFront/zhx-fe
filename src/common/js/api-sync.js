@@ -1,4 +1,5 @@
 import request from '@/common/js/request'
+import download from '@/common/js/download'
 
 export function getEnum(name) {
   return request({
@@ -50,6 +51,45 @@ export function getRepayRecordList(data){
   return request({
     url: '/repayRecord/list',
     method: 'post',
+    data
+  })
+}
+
+export function saveRepayRecord(data){
+  return request({
+    url: '/repayRecord/save',
+    method: 'post',
+    data
+  })
+}
+
+export function revokeRepayRecord(ids){
+  return request({
+    url: '/repayRecord/revoke',
+    method: 'post',
+    data:{ids}
+  })
+}
+
+export function expSelectedRepayRecord(ids){
+  return download({
+    url: '/repayRecord/selectDataExport',
+    data: {
+      ids
+    }
+  })
+}
+
+export function expAllRepayRecord(data){
+  return download({
+    url: '/repayRecord/queryDataExport',
+    data
+  })
+}
+
+export function expCurrentRepayRecord(data){
+  return download({
+    url: '/repayRecord/pageDataExport',
     data
   })
 }

@@ -6,11 +6,12 @@
     </el-tabs>
     <repay-record-query 
       @reset="onClickReset"
+      @query="onClickQuery"
       :queryForm="queryForm">
-      <el-button type="primary" v-if="queryForm.recordStatus==='0'">新建还款记录</el-button>
-      <el-button type="primary" v-if="queryForm.recordStatus==='0'">撤销还款</el-button>
+      <el-button type="primary" v-if="queryForm.recordStatus==='0'" @click="onClickAdd">新建还款记录</el-button>
+      <el-button type="primary" v-if="queryForm.recordStatus==='0'" @click="onClickBatchRevoke">撤销还款</el-button>
       <el-button type="primary" v-if="queryForm.recordStatus==='0'">导入还款记录</el-button>
-      <el-button type="primary">导出选中数据</el-button>
+      <el-button type="primary" @click="onClickExportSelectedRecord">导出选中数据</el-button>
       <el-dropdown trigger="click" @command="handleCommand">
         <el-button type="primary">导出查询结果<i class="el-icon-arrow-down el-icon--right"></i></el-button>
         <el-dropdown-menu slot="dropdown">
@@ -31,31 +32,35 @@
       style="width: 100%"
       class="table-wrap">
       <el-table-column type="selection" width="50"></el-table-column>
-      <el-table-column prop="createTime" label="批次号" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="卡号" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="证件号" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="姓名" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="个案序列号" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="委托方" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="账龄" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="委案金额" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="CP金额" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="CP日期" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="回收催收员" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="分配时间" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="还款金额" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="余额" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="还款日期" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="还款人" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="还款方式" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="确认人" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="确认时间" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="备注" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="M值" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="公司佣金" show-overflow-tooltip></el-table-column>
-      <el-table-column label="操作" v-if="queryForm.recordStatus==='0'" show-overflow-tooltip width=“100” fixed="right">
-        <el-button type="text">修改</el-button>
-      </el-table-column>
+      <el-table-column prop="dataCase.batchNo" label="批次号" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="dataCase.cardNo" label="卡号" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="dataCase.identNo" label="证件号" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="dataCase.name" label="姓名" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="dataCase.seqNo" label="个案序列号" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="dataCase.client" label="委托方" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="dataCase.overdueBillTime" label="账龄" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="dataCase.money" label="委案金额" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="bankReconciliation.cpMoney" label="CP金额" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="bankReconciliation.cpDate" label="CP日期" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="collectUser.name" label="回收催收员" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="repayMoney" label="还款金额" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="dataCase.overdueBalance" label="余额" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="repayDate" label="还款日期" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="repayUser" label="还款人" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="repayType" label="还款方式" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="confirmUser.name" label="确认人" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="confirmTime" label="确认时间" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="dataCase.mVal" label="M值" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="dataCase.commissionMoney" label="公司佣金" show-overflow-tooltip></el-table-column>
+      <el-table-column label="操作" width="100" fixed="right">
+          <template slot-scope="scope">
+            <el-button
+              type="text"
+              @click="onClickRevoke(scope.row)"
+            >撤销还款</el-button>
+          </template>
+        </el-table-column>
     </el-table>
     <el-pagination
       @size-change="onClickQuery"
@@ -81,7 +86,7 @@
         class="add-form"
       >
         <el-form-item label="对应个案" prop="dyga">
-          <el-select v-model="recordInfo.dyga" clearable placeholder="请选择对应个案">
+          <el-select v-model="recordInfo.dataCase.id" clearable placeholder="请选择对应个案">
             <!-- <el-option
               v-for="item in positionList"
               :key="item.job"
@@ -91,32 +96,32 @@
           </el-select>
         </el-form-item>
         <el-form-item label="回收催收员" prop="dyga">
-          <el-select v-model="recordInfo.dyga" clearable placeholder="请选择回收催收员">
-            <!-- <el-option
-              v-for="item in positionList"
-              :key="item.job"
-              :label="item.position"
-              :value="item.position"
-            ></el-option> -->
+          <el-select v-model="recordInfo.collectionUser.id" filterable clearable placeholder="请选择回收催收员">
+            <el-option
+              v-for="item in collectionUserList"
+              :key="item.id"
+              :label="item.userName"
+              :value="item.id"
+            ></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="还款日期" prop="dyga">
           <el-date-picker
             clearable
-            v-model="recordInfo.joinTime"
+            v-model="recordInfo.repayDate"
             type="date"
             value-format="yyyy-MM-dd"
             placeholder="请选择还款日期"
           ></el-date-picker>
         </el-form-item>
         <el-form-item label="确认还款金额" prop="dyga">
-          <el-input v-model="recordInfo.mobile" clearable placeholder="确认还款金额"></el-input>
+          <el-input v-model="recordInfo.repayMoney" clearable placeholder="确认还款金额"></el-input>
         </el-form-item>
         <el-form-item label="还款人" prop="dyga">
-           <el-input v-model="recordInfo.mobile" clearable placeholder="请输入还款人"></el-input>
+           <el-input v-model="recordInfo.repayUser" clearable placeholder="请输入还款人"></el-input>
         </el-form-item>
         <el-form-item label="还款方式" prop="dyga">
-          <el-select v-model="recordInfo.dyga" clearable placeholder="请选择还款方式">
+          <el-select v-model="recordInfo.repayType" clearable placeholder="请选择还款方式">
             <!-- <el-option
               v-for="item in positionList"
               :key="item.job"
@@ -139,7 +144,13 @@
 
 <script>
 import {RepayRecordQuery} from './components'
-import {getRepayRecordList} from '@/common/js/api-sync'
+import {getRepayRecordList, 
+        getCollectionUserList, 
+        saveRepayRecord, 
+        revokeRepayRecord,
+        expSelectedRepayRecord,
+        expAllRepayRecord,
+        expCurrentRepayRecord} from '@/common/js/api-sync'
 export default {
   name: 'synergisticRepaymentRecord',
   components:{
@@ -148,15 +159,19 @@ export default {
   data(){
     return {
       recordList: [],
+      collectionUserList: [],
       total:0,
       dialogData:{
-        title:'',
+        title:'新建还款记录',
         editVisible: false
       },
       rules: {
 
       },
-      recordInfo:{},
+      recordInfo:{
+        dataCase:{},
+        collectionUser:{}
+      },
       queryForm:{
         recordStatus: '0',
         pageNum: 1,
@@ -167,13 +182,17 @@ export default {
           caseArea:{},
         },
         confirmUser:{}
-      }
+      },
+      selectList:[]
     }
   },
   created() {
     getRepayRecordList(this.queryForm).then(data => {
       this.recordList = data.list
       this.total = data.total
+    })
+    getCollectionUserList().then(data => {
+      this.collectionUserList = data
     })
   },
   methods: {
@@ -190,11 +209,82 @@ export default {
         confirmUser:{name: null}
       }
     },
-    onSelectRow(){},
-    onClickQuery(){},
-    onClickCancel(){},
-    onClickSave(){},
-    handleCommand(){}
+    onClickQuery(){
+      getRepayRecordList(this.queryForm).then(data => {
+        this.recordList = data.list
+        this.total = data.total
+      })
+    },
+    onClickAdd(){
+      this.recordInfo = {
+        dataCase:{id:null},
+        collectionUser:{id:null}
+      }
+      this.$set(this.dialogData, 'editVisible', true)
+    },
+    onClickBatchRevoke(){
+      if(!this.selectList.length){
+        this.$message('请选择需要撤销的还款记录')
+        return
+      }
+      this.$confirm('此操作将撤销还款记录，是否继续？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        const ids = this.selectList.map(item => item.id)
+        revokeRepayRecord(ids).then(() => {
+          this.$message('还款记录撤销成功')
+          this.onClickQuery()
+        })
+      }).catch(() => { })
+    },
+    onClickRevoke(record){
+      this.$confirm('此操作将撤销该还款记录，是否继续？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        revokeRepayRecord([record.id]).then(() => {
+          this.$message('还款记录撤销成功')
+          this.onClickQuery()
+        })
+      }).catch(() => { })
+    },
+    onClickExportSelectedRecord(){
+      if(!this.selectList.length){
+        this.$message('请选择需要导出的记录')
+        return
+      }
+      const ids = this.selectList.map(item => item.id)
+      expSelectedRepayRecord(ids).then(() => {
+        this.$message('导出成功')
+      }).catch(() => { })
+    },
+    handleCommand(command){
+      if(command === 'current'){
+        expCurrentRepayRecord(this.queryForm).them(res => {
+          this.$message('导出成功')
+        })
+      }else {
+        expAllRepayRecord(this.queryForm).them(res => {
+          this.$message('导出成功')
+        })
+      }
+    },
+    onSelectRow(val){
+      this.selectList = val
+    },
+    onClickCancel(){
+      this.$set(this.dialogData, 'editVisible', false)
+    },
+    onClickSave(){
+      saveRepayRecord(this.recordInfo).then(data => {
+        this.$message('新增还款记录成功')
+        this.onClickQuery()
+        this.$set(this.dialogData, 'editVisible', false)
+      })
+    }
   }
 }
 </script>
@@ -222,6 +312,9 @@ export default {
         flex: 1;
         margin-left: 0 !important;
         .el-select {
+          width: 100%;
+        }
+        .el-date-editor{
           width: 100%;
         }
       }
