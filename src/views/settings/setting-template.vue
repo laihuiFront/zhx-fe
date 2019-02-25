@@ -1,5 +1,10 @@
 <template>
   <div id="setting-template">
+    <el-row style="margin-bottom: 15px;">
+      <el-button type="primary" style="float: right"
+                 @click="dialogVisible=true;addmodule=true;">添加信函模板
+      </el-button>
+    </el-row>
     <el-table
       :data="tableData"
       stripe
@@ -45,7 +50,8 @@
       </div>
       <span slot="footer" class="dialog-footer" style="display: flex;justify-content: center">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false;saveContent()">保 存</el-button>
+        <el-button type="primary" @click="dialogVisible = false;addmodule=false;saveContent()">保
+          存</el-button>
       </span>
     </el-dialog>
   </div>
@@ -73,8 +79,17 @@ export default {
       editor: {},
       modulePlaceHolder:[],
       currentRow:{},
-      input:''
+      input:'',
+      addmodule:false
     }
+  },
+  watch:{
+    addmodule(n){
+      if(n){
+        this.input = '';
+        this.msg = '';
+      }
+    },
   },
   created(){
     this.init();
@@ -84,12 +99,17 @@ export default {
       this.editor = editorInstance;
     },
     saveContent(){
-      save({id:this.currentRow.id,title:this.input,context:this.editor.getAllHtml()}).then((data)=>{
+      let data = {title:this.input,context:this.editor.getAllHtml()};
+      if (!this.addmodule) {
+        data.id = this.currentRow.id
+      }
+      save(data).then((data)=>{
+        this.getMainData();
         this.$message({
           message: '提交成功',
           type: 'success'
         });
-      })
+      });
     },
     getMainData(){
       list().then((data)=>{

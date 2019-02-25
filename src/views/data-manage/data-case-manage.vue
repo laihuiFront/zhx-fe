@@ -205,7 +205,7 @@
         align="center"
         show-overflow-tooltip>
          <template slot-scope="scope">
-          <el-button type="text" size="small" @click="editCase(scope.row)">{{scope.row.batchNo}}</el-button>
+          <el-button type="text" size="small" @click="editCase(scope.row.id, scope.row.name)">{{scope.row.batchNo}}</el-button>
         </template>
       </el-table-column>
       <el-table-column
@@ -400,7 +400,7 @@
       :close-on-click-modal="false"
       width="90%"
     >
-      <case-detail></case-detail>
+      <case-detail :id="detailId" ref='detail'></case-detail>
     </el-dialog>
     <el-dialog
       title="查询条件"
@@ -1028,6 +1028,7 @@
     },
     data(){
       return {
+        detailId: -1,
       	addSynergyForm:{
       		Synergytype:'',
       		value:'',
@@ -1539,9 +1540,13 @@
           });
         });
       },
-      editCase(detail){
-        this.detailTitle = '齐飞案件详情'
+      editCase(id, name){
+        this.detailTitle = name+'案件详情'
+        this.detailId = id
         this.detailVisible = true
+        this.$nextTick(()=>{
+          this.$refs.detail.queryDetail()
+        })
       }
     },
     created() {
