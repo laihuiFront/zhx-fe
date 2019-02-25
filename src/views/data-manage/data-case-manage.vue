@@ -205,7 +205,7 @@
         align="center"
         show-overflow-tooltip>
          <template slot-scope="scope">
-          <el-button type="text" size="small" @click="editCase(scope.row.id)">{{scope.row.batchNo}}</el-button>
+          <el-button type="text" size="small" @click="editCase(scope.row.id, scope.row.name)">{{scope.row.batchNo}}</el-button>
         </template>
       </el-table-column>
       <el-table-column
@@ -1540,8 +1540,8 @@
           });
         });
       },
-      editCase(id){
-        this.detailTitle = '齐飞案件详情'
+      editCase(id, name){
+        this.detailTitle = name+'案件详情'
         this.detailId = id
         this.detailVisible = true
         this.$nextTick(()=>{
