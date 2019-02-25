@@ -864,7 +864,7 @@
   </span>
     </el-dialog>
       <el-dialog
-      title="查询条件分案"
+      title="查询结果快速分案"
       class="dialog-wrap"
       :visible.sync="detailVisible8"
       :close-on-click-modal="false"
@@ -1306,7 +1306,7 @@
       })
       },
        fenanchecktwo(){
-         fenan1(this.formInline,this.fenan.odv).then((response)=>{
+         fenan2(this.formInline,this.fenan.odv).then((response)=>{
        this.$message({
           type: 'success',
           message: '操作成功!'
