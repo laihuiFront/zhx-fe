@@ -1,19 +1,19 @@
 <template>
   <el-form id="repay-record-query" :model="queryForm" :inline="true" class="query-wrap">
     <el-form-item>
-      <el-input style="width: 130px;" v-model="queryForm.userName" clearable placeholder="请输入姓名"></el-input>
+      <el-input style="width: 130px;" v-model="queryForm.dataCase.name" clearable placeholder="请输入姓名"></el-input>
     </el-form-item>
     <el-form-item>
       <e-l-TreeSelect
           style="width: 130px;"
           ref="treeSelect"
-          v-model="queryForm.qy"
+          v-model="queryForm.dataCase.collectionArea.id"
           :selectParams="{'multiple': false,'clearable': true,'placeholder': '请选择区域'}"
           :treeParams="elTreeParamsArea">
       </e-l-TreeSelect>
     </el-form-item>
     <el-form-item>
-      <el-select style="width: 150px;" clearable v-model="queryForm.wtf" placeholder="请选择批次号">
+      <el-select style="width: 150px;" clearable v-model="queryForm.dataCase.batchNo" placeholder="请选择批次号">
         <el-option
           v-for="item in logTypeList"
           :key="item.key"
@@ -23,7 +23,7 @@
       </el-select>
     </el-form-item>
     <el-form-item>
-      <el-select style="width: 150px;" clearable v-model="queryForm.wtf" placeholder="请选择委托方">
+      <el-select style="width: 150px;" clearable v-model="queryForm.dataCase.client" placeholder="请选择委托方">
         <el-option
           v-for="item in logTypeList"
           :key="item.key"
@@ -34,8 +34,9 @@
     </el-form-item>
     <el-form-item>
       <el-date-picker
+        @change="caseDateChange"
         clearable
-        v-model="warq"
+        v-model="caseDate"
         value-format="yyyy-MM-dd"
         type="daterange"
         range-separator="至"
@@ -52,13 +53,13 @@
           <li class="condition-item">
             <e-l-TreeSelect
                 ref="treeSelectDept"
-                v-model="queryForm.hsbm"
+                v-model="queryForm.dataCase.dept"
                 :selectParams="{'multiple': false,'clearable': true,'placeholder': '请选择回收部门'}"
                 :treeParams="elTreeParamsDept">
             </e-l-TreeSelect>
           </li>
           <li class="condition-item">
-            <el-select clearable v-model="queryForm.hscsy" placeholder="请选择回收催收员">
+            <el-select clearable v-model="queryForm.dataCase.collectionUser.id" placeholder="请选择回收催收员">
               <el-option
                 v-for="item in logTypeList"
                 :key="item.key"
@@ -68,7 +69,15 @@
             </el-select>
           </li>
           <li class="condition-item">
-            <el-select clearable v-model="queryForm.ajzt" placeholder="请选择案件状态">
+            <e-l-TreeSelect
+                ref="treeSelectDept"
+                v-model="queryForm.dataCase.caseArea.id"
+                :selectParams="{'multiple': false,'clearable': true,'placeholder': '请选择地区'}"
+                :treeParams="elTreeParamsDept">
+            </e-l-TreeSelect>
+          </li>
+          <li class="condition-item">
+            <el-select clearable v-model="queryForm.dataCase.status" placeholder="请选择案件状态">
               <el-option
                 v-for="item in logTypeList"
                 :key="item.key"
@@ -78,10 +87,10 @@
             </el-select>
           </li>
           <li class="condition-item">
-            <el-input v-model="queryForm.yqzl" clearable placeholder="请输入逾期账龄"></el-input>
+            <el-input v-model="queryForm.dataCase.overdueBillTime" clearable placeholder="请输入逾期账龄"></el-input>
           </li>
           <li class="condition-item">
-            <el-select v-model="queryForm.cszt" clearable placeholder="请选择催收状态">
+            <el-select v-model="queryForm.dataCase.collectStatus" clearable placeholder="请选择催收状态">
               <el-option
                 v-for="item in logTypeList"
                 :key="item.key"
@@ -92,8 +101,9 @@
           </li>
           <li class="condition-item half">
             <el-date-picker
+              @change="expectDateChange"
               clearable
-              v-model="yjtar"
+              v-model="expectDate"
               value-format="yyyy-MM-dd"
               type="daterange"
               range-separator="至"
@@ -102,7 +112,7 @@
             </el-date-picker>
           </li>
           <li class="condition-item">
-            <el-select v-model="queryForm.ajlx" placeholder="请选择案件类型">
+            <el-select v-model="queryForm.dataCase.caseType" placeholder="请选择案件类型">
               <el-option
                 clearable
                 v-for="item in logTypeList"
@@ -113,55 +123,49 @@
             </el-select>
           </li>
           <li class="condition-item">
-            <el-input v-model="queryForm.gaxlh" clearable placeholder="请输入个案序列号"></el-input>
+            <el-input v-model="queryForm.dataCase.seqNo" clearable placeholder="请输入个案序列号"></el-input>
           </li>
           <li class="condition-item">
-            <el-input v-model="queryForm.zjh" clearable placeholder="请输入证件号"></el-input>
+            <el-input v-model="queryForm.dataCase.identNo" clearable placeholder="请输入证件号"></el-input>
           </li>
           <li class="condition-item">
-            <el-input v-model="queryForm.zh" clearable placeholder="请输入账号"></el-input>
+            <el-input v-model="queryForm.dataCase.account" clearable placeholder="请输入账号"></el-input>
           </li>
           <li class="condition-item">
-            <el-input v-model="queryForm.kh" clearable placeholder="请输入卡号"></el-input>
+            <el-input v-model="queryForm.dataCase.cardNo" clearable placeholder="请输入卡号"></el-input>
           </li>
           <li class="condition-item">
-            <el-input v-model="queryForm.kh" clearable placeholder="请输入确认人"></el-input>
+            <el-input v-model="queryForm.confirmUser.name" clearable placeholder="请输入确认人"></el-input>
           </li>
           <li class="condition-item half">
             <el-date-picker
+              @change="confirmTimeChange"
               clearable
-              v-model="qrr"
-              value-format="yyyy-MM-dd"
-              type="daterange"
+              v-model="confirmTime"
+              value-format="yyyy-MM-dd HH:mm:ss"
+              type="datetimerange"
               range-separator="至"
               start-placeholder="确认开始日期"
               end-placeholder="确认结束日期">
             </el-date-picker>
           </li>
-          <li class="condition-item">
-            <el-date-picker
-              v-model="queryForm.hkr"
-              type="date"
-              clearable
-              placeholder="选择还款日期">
-            </el-date-picker>
-          </li>
           <li class="condition-item half">
             <el-date-picker
+              @change="repayDateChange"
               clearable
-              v-model="fprq"
+              v-model="repayDate"
               value-format="yyyy-MM-dd"
               type="daterange"
               range-separator="至"
-              start-placeholder="分配开始日期"
-              end-placeholder="分配结束日期">
+              start-placeholder="还款开始日期"
+              end-placeholder="还款结束日期">
             </el-date-picker>
           </li>
         </ul>
         <img src="./zhankai.png" width="12" height="12" alt="更多" slot="reference">
       </el-popover>
       <el-button icon="el-icon-search" type="text">查询</el-button>
-      <el-button icon="el-icon-refresh" type="text">重置</el-button>
+      <el-button icon="el-icon-refresh" type="text" @click="$emit('reset')">重置</el-button>
     </el-form-item>
     <el-form-item>
       <slot></slot>
@@ -189,10 +193,10 @@ export default {
   data(){
     return {
       logTypeList:[],
-      warq:[],
-      yjtar:[],
-      qrr:[],
-      fprq:[],
+      caseDate:[],
+      expectDate:[],
+      confirmTime:[],
+      repayDate:[],
       elTreeParamsArea: {
           'default-expand-all': true,
           filterable: false,
@@ -227,6 +231,45 @@ export default {
        this.$refs.treeSelectDept.treeDataUpdateFun(data)
     })
     getLogType().then((response) => this.logTypeList = response)
+  },
+  methods:{
+    caseDateChange(val){
+      console.log(val)
+      if(val){
+        this.queryForm.dataCase.caseDateStart = val[0]
+        this.queryForm.dataCase.caseDateEnd = val[1]
+      }else{
+        this.queryForm.dataCase.caseDateStart = null
+        this.queryForm.dataCase.caseDateEnd = null
+      }
+    },
+    expectDateChange(val){
+      if(val){
+        this.queryForm.dataCase.expectStartTime = val[0]
+        this.queryForm.dataCase.expectEndTime = val[1]
+      }else{
+        this.queryForm.dataCase.expectStartTime = null
+        this.queryForm.dataCase.expectEndTime = null
+      }
+    },
+    confirmTimeChange(val){
+      if(val){
+        this.queryForm.confirmTimeStart = val[0]
+        this.queryForm.confirmTimeEnd = val[1]
+      }else{
+        this.queryForm.confirmTimeStart = null
+        this.queryForm.confirmTimeEnd = null
+      }
+    },
+    repayDateChange(val){
+      if(val){
+        this.queryForm.repayDateStart = val[0]
+        this.queryForm.repayDateEnd = val[1]
+      }else{
+        this.queryForm.repayDateStart = null
+        this.queryForm.repayDateEnd = null
+      }
+    },
   }
 }
 </script>
