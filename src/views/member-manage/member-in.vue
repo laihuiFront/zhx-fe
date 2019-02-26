@@ -95,11 +95,11 @@
         label-width="100px"
         class="demo-ruleForm"
       >
-        <el-form-item label="姓名" prop="userName">
-          <el-input v-model="memberInfo.userName" placeholder="请输入姓名"></el-input>
+        <el-form-item label="用户名" prop="userName">
+          <el-input v-model="memberInfo.userName" placeholder="请输入用户名" @blur="adduserName"></el-input>
         </el-form-item>
-        <el-form-item label="员工号" prop="number">
-          <el-input v-model="memberInfo.number" placeholder="请输入员工号"></el-input>
+        <el-form-item label="账号" prop="number">
+          <el-input :disabled="isTrue" v-model="memberInfo.number" placeholder="请输入员工号"></el-input>
         </el-form-item>
         <el-form-item label="部门" prop="department">
           <el-input
@@ -189,11 +189,12 @@
 
 <script>
 import { getDepartmentTree, getRoleList } from '@/common/js/api-setting'
-import { listMember, deleteMember, changeStatus, addMember, updateMember, getUserById, getPositionList } from '@/common/js/api-member'
+import { listMember, deleteMember, changeStatus, addMember, updateMember, getUserById, getPositionList,getLoginName} from '@/common/js/api-member'
 export default {
   name: 'memberIn',
   data () {
     return {
+    	isTrue:true,
       departmentTree: [],
       queryForm: {
         pageNum: 1,
@@ -210,7 +211,7 @@ export default {
       },
       total: 0,
       memberList: [],
-      memberInfo: {},
+      memberInfo: {number:''},
       rules: {
 
       },
@@ -231,6 +232,35 @@ export default {
     })
   },
   methods: {
+  	adduserName(){
+  		if(this.memberInfo.userName){
+  			getLoginName(this.memberInfo.userName).then(response => {
+  				if(response.loginNameCount==0){
+  					console.log(response)
+  					 this.$set(this.memberInfo, 'number', response.loginName)
+  					 this.$set(this.memberInfo, 'loginNameCount', response.loginNameCount)
+  				}else{
+  					this.makeSure()
+  				}
+    })
+  		}else{
+  			return
+  		}
+  	},
+  	makeSure() {
+        this.$confirm('此用户名已重复, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.isTrue=false
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          });          
+        });
+      },
     handleSort({column,prop,order}){
       // console.log(prop,'@',order)
       this.queryForm.orderBy = prop
