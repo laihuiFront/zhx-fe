@@ -80,10 +80,10 @@
           <li class="condition-item">
             <el-select clearable v-model="queryForm.dataCase.status" filterable placeholder="请选择案件状态">
               <el-option
-                v-for="item in logTypeList"
-                :key="item.key"
-                :label="item.value"
-                :value="item.key">
+                v-for="item in statusList"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id">
               </el-option>
             </el-select>
           </li>
@@ -172,7 +172,7 @@
         </ul>
         <img src="./zhankai.png" width="12" height="12" alt="更多" slot="reference">
       </el-popover>
-      <el-button icon="el-icon-search" type="text">查询</el-button>
+      <el-button icon="el-icon-search" type="text" @click="$emit('query')">查询</el-button>
       <el-button icon="el-icon-refresh" type="text" @click="$emit('reset')">重置</el-button>
     </el-form-item>
     <el-form-item>
@@ -183,9 +183,8 @@
 
 <script>
 import ELTreeSelect from '@/components/el-tree-select/elTreeSelect'
-import {getEnum, getBatchList, getCollectionUserList} from '@/common/js/api-sync'
+import {getEnum, getBatchList, getCollectionUserList, getStatusList} from '@/common/js/api-sync'
 import { getDepartmentTree } from '@/common/js/api-setting'
-import {getLogType} from '@/common/js/api-setting'
 export default {
   name:'repayRecordQuery',
   components:{
@@ -212,6 +211,7 @@ export default {
       overdueBillTimeList:[],
       collectStatusList: [],
       caseTypeList: [],
+      statusList:[],
       elTreeParamsDept: {
         'default-expand-all': true,
           filterable: false,
@@ -234,7 +234,6 @@ export default {
               value: 'id'
           }
       },
-      logTypeList:[],
     }
   },
   created(){
@@ -257,7 +256,7 @@ export default {
       getEnum('逾期账龄').then(data => this.overdueBillTimeList = data)
       getEnum('催收状态').then(data => this.collectStatusList = data)
       getEnum('案件类型').then(data => this.caseTypeList = data)
-      getLogType().then((response) => this.logTypeList = response)
+      this.statusList = getStatusList()
     },
     caseDateChange(val){
       console.log(val)
