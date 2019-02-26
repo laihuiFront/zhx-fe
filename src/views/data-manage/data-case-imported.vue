@@ -170,7 +170,7 @@
       prop="batchNo">
     </el-table-column>
     <el-table-column
-      prop="client"
+      prop="clientMsg"
       :sortable='true'
       label="委托方"
       :sort-orders="['ascending','descending']"
@@ -589,6 +589,9 @@ methods: {
 	editMessage(row){
 		this.dialogVisible2=true
 		this.messageForm=row
+    this.messageForm.client = parseInt(row.client)
+    this.messageForm.caseType = parseInt(row.caseType)
+    this.messageForm.area = parseInt(row.area)
 	},
 	submitForm(formName) {
         this.$refs[formName].validate((valid) => {
