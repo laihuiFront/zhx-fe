@@ -99,7 +99,7 @@
           <el-input v-model="memberInfo.userName" placeholder="请输入用户名" @blur="adduserName"></el-input>
         </el-form-item>
         <el-form-item label="账号" prop="number">
-          <el-input :disabled="isTrue" v-model="memberInfo.number" placeholder="请输入员工号"></el-input>
+          <el-input :disabled="isTrue" v-model="memberInfo.number" placeholder="请输入账号"></el-input>
         </el-form-item>
         <el-form-item label="部门" prop="department">
           <el-input
@@ -240,20 +240,21 @@ export default {
   					 this.$set(this.memberInfo, 'number', response.loginName)
   					 this.$set(this.memberInfo, 'loginNameCount', response.loginNameCount)
   				}else{
-  					this.makeSure()
+  					this.makeSure(response.loginName,)
   				}
     })
   		}else{
   			return
   		}
   	},
-  	makeSure() {
-        this.$confirm('此用户名已重复, 是否继续?', '提示', {
+  	makeSure(name) {
+        this.$confirm('此用户名已重复,是否使用账号'+name+ '', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
           this.isTrue=false
+          this.$set(this.memberInfo, 'number', name)
         }).catch(() => {
           this.$message({
             type: 'info',
