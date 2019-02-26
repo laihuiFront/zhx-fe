@@ -587,9 +587,12 @@ methods: {
     })
   },
 	editMessage(row){
-		console.log(row)
+
 		this.dialogVisible2=true
 		this.messageForm=row
+    this.messageForm.client = parseInt(row.client)
+    this.messageForm.caseType = parseInt(row.caseType)
+    this.messageForm.area = parseInt(row.area)
 	},
 	submitForm(formName) {
         this.$refs[formName].validate((valid) => {

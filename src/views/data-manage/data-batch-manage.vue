@@ -111,7 +111,7 @@
       width="55">
     </el-table-column>
     <el-table-column
-    	prop="area"
+    	prop="areaMsg"
       :sortable='true'
       min-width="140"
       :sort-orders="['ascending','descending']"
@@ -503,6 +503,9 @@ methods: {
 		console.log(row)
 		this.dialogVisible2=true
 		this.messageForm=row
+    this.messageForm.client = parseInt(row.client)
+    this.messageForm.caseType = parseInt(row.caseType)
+    this.messageForm.area = parseInt(row.area)
 	},
   handleSort( {column,prop,order}){
     let startTime=this.form.time[0]
