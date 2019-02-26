@@ -1022,7 +1022,7 @@
 
 <script>
   import CaseDetail from './detail'
-  import {dataList,LeaveList,areaList,batchList,caseTypeList,addressList,TellList,collectStatusList,deleteStatusList,accountAgeList,clientList,EndList,PersonList,departmentList,searchList,fenan1,fenan2,addpingyu,caseStatus,deteleCase,colorList,addMValue,addCollectArea,addCollectStatus,addImportant,addSynergy,selectDataTel,selectDataCollect} from '@/common/js/data-case-manage.js'
+  import {dataList,LeaveList,areaList,batchList,caseTypeList,addressList,TellList,collectStatusList,deleteStatusList,accountAgeList,clientList,EndList,PersonList,departmentList,searchList,fenan1,fenan2,addpingyu,caseStatus,deteleCase,colorList,addMValue,addCollectArea,addCollectStatus,addImportant,addSynergy,selectDataTel,selectDataCollect,selectDataCaseExport,totalDataBatchExport} from '@/common/js/data-case-manage.js'
   export default {
     name: 'dataCaseManage',
     components: {
@@ -1189,9 +1189,9 @@
     	  console.info(command)
         if(this.deleteList.length>=1){
           if(command==="exportTotalCase"){
-
+            this.totalDataBatchExport()
           }else if(command==="exportSelectCase"){
-
+             this.exportSelectCase()
           }else if(command==="exportTel"){
             this.exportTel();
           }else if(command==="exportCollect"){
@@ -1263,12 +1263,23 @@
         }
       },
       exportTotalCase(){
+     totalDataBatchExport(this.formInline).then((response)=>{
 
+        })
       },
       exportSelectCase(){
+          let datasList=[]
+        for (var i=0;i<this.deleteList.length;i++){
+          let dataObject={}
+          dataObject.id=this.deleteList[i].id
+          datasList.push(dataObject)
+        }
+        selectDataCaseExport(datasList).then((response)=>{
 
+        })
       },
       exportTel(){
+
         let datasList=[]
         for (var i=0;i<this.deleteList.length;i++){
           let dataObject={}

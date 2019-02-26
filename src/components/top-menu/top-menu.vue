@@ -1,4 +1,5 @@
 <template>
+	<div>	
   <section id="top-menu">
     <img src="./logo_1 .png" alt="" class="logo">
     <el-menu
@@ -15,10 +16,30 @@
         {{userInfo.userName}}<i class="el-icon-arrow-down el-icon--right"></i>
       </span>
       <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item command="editPassword">修改密码</el-dropdown-item>
         <el-dropdown-item command="logOut">退出</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
   </section>
+  <el-dialog
+  title="修改密码"
+  :visible.sync="dialogVisible"
+  width="30%"
+>
+<el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
+  <el-form-item label="密码" prop="pass">
+    <el-input type="password" v-model="ruleForm2.pass" autocomplete="off"></el-input>
+  </el-form-item>
+  <el-form-item label="确认密码" prop="checkPass">
+    <el-input type="password" v-model="ruleForm2.checkPass" autocomplete="off"></el-input>
+  </el-form-item>
+  <el-form-item>
+  	 <el-button @click="dialogVisible = false">取消</el-button>
+    <el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>
+  </el-form-item>
+</el-form>
+</el-dialog>
+</div>
 </template>
 
 <script>
@@ -27,6 +48,55 @@ import oneLevel from './one-level'
 import twoLevel from './two-level'
 export default {
   name: 'topMenu',
+  data(){
+  	 var checkAge = (rule, value, callback) => {
+        if (!value) {
+          return callback(new Error('年龄不能为空'));
+        }
+        setTimeout(() => {
+          if (!Number.isInteger(value)) {
+            callback(new Error('请输入数字值'));
+          } else {
+            if (value < 18) {
+              callback(new Error('必须年满18岁'));
+            } else {
+              callback();
+            }
+          }
+        }, 1000);
+      };
+      var validatePass = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入密码'));
+        } else {
+          if (this.ruleForm2.checkPass !== '') {
+            this.$refs.ruleForm2.validateField('checkPass');
+          }
+          callback();
+        }
+      };
+      var validatePass2 = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请再次输入密码'));
+        } else if (value !== this.ruleForm2.pass) {
+          callback(new Error('两次输入密码不一致!'));
+        } else {
+          callback();
+        }
+      };
+  	return{
+  		dialogVisible:false,
+  		ruleForm2:{},
+  		rules2: {
+          pass: [
+            { validator: validatePass, trigger: 'blur' }
+          ],
+          checkPass: [
+            { validator: validatePass2, trigger: 'blur' }
+          ],
+        }
+  	}
+  },
   components: {
     oneLevel,
     twoLevel
@@ -43,8 +113,20 @@ export default {
         this.logoutAction().then(()=>{
           this.$router.replace({path:'/login'})
         })
+      }else if(command === 'editPassword'){
+      	this.dialogVisible=true
       }
     },
+    submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            alert('submit!');
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
     ...mapActions([
       'logoutAction'
     ])
