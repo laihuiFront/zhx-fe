@@ -10,7 +10,7 @@
   <el-form-item label="对象姓名">
     <el-input v-model="formInline.targetName" placeholder="请输入对象姓名"></el-input>
   </el-form-item>
-   <el-form-item label="催收员">
+   <!--<el-form-item label="催收员">
                 <el-select v-model="formInline.odv" filterable  placeholder="请选择催收员" clearable>
                   <el-option
                     v-for="item in PersonLists"
@@ -19,7 +19,7 @@
                     :value="item.id">
                   </el-option>
                 </el-select>
-              </el-form-item>
+              </el-form-item>-->
   <el-form-item label="催收区域">
     <el-select v-model="formInline.area" placeholder="请选择催收区域" clearable>
                 <el-option
@@ -31,7 +31,7 @@
               </el-select>
   </el-form-item>
    <el-form-item label="委托方">
-              <el-select v-model="formInline.client" filterable  multiple placeholder="请选择委托方" clearable>
+              <el-select v-model="formInline.client" filterable   placeholder="请选择委托方" clearable>
                 <el-option
                   v-for="item in clientList"
                   :key="item.id"
@@ -320,9 +320,12 @@ export default {
  			remoweDataList(this.deleteList).then((response)=>{
           this.$message({
             type: 'success',
-            message: '删除成功!'
+            message: '撤销成功!'
           });
-          dataList(this.formInline)
+         dataList(this.formInline).then((response)=>{
+          	this.tableData3=response.list
+          	this.formInline={	time1:[],time2:[],time3:[]}
+          })
           })    
  		}else{
  			this.$message({
@@ -339,15 +342,16 @@ export default {
           })
  	},
  	deteleList(id){
- 		let deteId={id:''};
- 		deteId.id=id;
- 		this.deleteList.push(deteId)
+ 		this.deleteList.push(id)
  		remoweData(this.deleteList).then((response)=>{
           this.$message({
             type: 'success',
             message: '删除成功!'
           });
-          dataList(this.formInline)
+          dataList(this.formInline).then((response)=>{
+          	this.tableData3=response.list
+          	this.formInline={	time1:[],time2:[],time3:[]}
+          })
           })    
  	},
  	 submitForm(formName) {
@@ -359,7 +363,10 @@ export default {
                  message: '新增成功!'
              });
              this.dialogVisible=false;
-          dataList(this.formInline)
+          dataList(this.formInline).then((response)=>{
+          	this.tableData3=response.list
+          	this.formInline={	time1:[],time2:[],time3:[]}
+          })
           })     
           } else {
             console.log('error submit!!');
@@ -386,9 +393,7 @@ export default {
   		let _self=this
   		_self.deleteList=[]
 	row.forEach(function(currentValue, index, arr){
-		let dataObject={"id":""}
-	   dataObject.id=currentValue.id
-	   _self.deleteList.push(dataObject)
+	   _self.deleteList.push(currentValue.id)
 	})
 	console.log(_self.deleteList)
 },
