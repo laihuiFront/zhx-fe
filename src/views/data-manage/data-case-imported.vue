@@ -581,13 +581,12 @@ methods: {
     })
   },
   downCaseModule(){
-	  console.info(12124);
+	
     downCaseModule().then((response)=> {
 
     })
   },
 	editMessage(row){
-
 		this.dialogVisible2=true
 		this.messageForm=row
     this.messageForm.client = parseInt(row.client)

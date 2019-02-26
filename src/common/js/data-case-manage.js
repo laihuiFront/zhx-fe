@@ -238,7 +238,7 @@ export const fenan2 = function(form,fenan) {
     url: '/dataCase/sendOdvByProperty',
     method: 'post',
     data: {
-    	odv:fenan.odv,
+    	odv:fenan,
       idStr :form.id==null?"":form.id.replace(/\n/,","),
       cardNo : form.cardNo==null?"":form.cardNo.replace(/\n/,","),//卡号
       clients :form.clients,//委托方

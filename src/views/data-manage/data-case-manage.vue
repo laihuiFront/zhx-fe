@@ -1308,6 +1308,7 @@
       })
       },
        fenanchecktwo(){
+       	console.log('12',this.fenan.odv)
          fenan2(this.formInline,this.fenan.odv).then((response)=>{
        this.$message({
           type: 'success',
