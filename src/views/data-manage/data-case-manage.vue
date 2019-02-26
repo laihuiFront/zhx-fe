@@ -180,7 +180,7 @@
 
       </el-table-column>
       <el-table-column
-        prop="area"
+        prop="collectArea"
         align="center"
         :sortable='true'
         :sort-orders="['ascending','descending']"
@@ -903,7 +903,7 @@
               <el-option
                 v-for="item in LeaveList"
                 :key="item.id"
-                :label="item.userName"
+                :label="item.name"
                 :value="item.id">
               </el-option>
             </el-select>
@@ -1375,7 +1375,7 @@
       sureAddShow4(){
       	let datasList=[]
        	for (var i=0;i<this.deleteList.length;i++){
-       		let dataObject={id:'',import:this.importLeave}
+       		let dataObject={id:'',important:this.importLeave}
        		dataObject.id=this.deleteList[i].id
        		datasList.push(dataObject)
        	}
