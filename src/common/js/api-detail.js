@@ -9,3 +9,11 @@ export function getCaseDetail(id) {
     }
   })
 }
+
+export const PhonetypeList = function() {
+  return request({
+    url: '/sys/dictionary/select/list/name',
+    method: 'post',
+    data:{name:"电话类型"}
+  })
+}
