@@ -235,7 +235,7 @@
         <el-button type="text" size="small" @click="returnMessage(scope.row.id)" v-has="'退案'">退案</el-button>
         <el-button type="text" size="small" @click="editMessage(scope.row)" v-has="'编辑'">编辑</el-button>
         <el-button type="text" size="small" @click="deleteMessage(scope.row.id)" v-has="'删除'">删除</el-button>
-        <el-button type="text" size="small" v-has="'导出催记'">导出催记</el-button>
+        <el-button type="text" size="small" v-has="'导出催记'" @click="exportCollect(scope.row)">导出催记</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -436,6 +436,16 @@ export default {
     }
   },
 methods: {
+  exportCollect(row){
+        var arr = [{"id":row.id}];
+    selectDataBatchExport(arr).then((response)=>{
+      this.loading=false;
+      this.$message({
+        type: 'success',
+        message: '导出成功!'
+      });
+    })
+  },
 	selectDataByBatch(){
 		this.loading=true
   		selectDataBatchExport(this.selectDataCollectExportByBatchList).then((response)=>{
