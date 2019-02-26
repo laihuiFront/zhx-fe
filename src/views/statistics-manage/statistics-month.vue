@@ -54,7 +54,7 @@
   
   </el-form-item>
   <el-form-item>
-  <el-button type="text" icon="el-icon-search">开始统计</el-button> 
+  <el-button type="text" icon="el-icon-search" @click="query()">开始统计</el-button>
   </el-form-item>
   <el-form-item>
   <el-button type="text" icon="el-icon-refresh" @click=clench>重置</el-button> 
@@ -205,7 +205,25 @@ this.pageNum=val;
  	},
  	clench(){
  		this.formInline={}
- 	}
+ 	},
+      query(){
+        dataList(this.formInline).then((response)=>{
+          this.tableData3=response.list
+          this.dataList=[]
+          for(var i=0;i<=response.list[0].list.length;i++){
+            for(var j in response.list[0].list[i]) {
+              // debugger
+              if(j==="area"){
+                let item={area:''}
+                item.area=response.list[0].list[i].area
+                this.dataList.push(item)
+              }
+            }
+
+          }
+          console.log(this.dataList)
+        })
+      }
  },
  created() {
  	 dataList(this.formInline).then((response)=>{
