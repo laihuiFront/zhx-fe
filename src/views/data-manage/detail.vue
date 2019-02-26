@@ -247,7 +247,7 @@
         </div>
         <div class="other-wrap">
           <div class="left-wrap">
-            <el-tabs v-model="otherActiveName" type="card" >
+            <el-tabs v-model="otherActiveName" type="card" @tab-click="showPanel">
               <el-tab-pane label="电话" name="1" class="tabs-wrap">
                 <div class="operation">
                   <div class="left-oper">
@@ -272,7 +272,7 @@
                     width="55">
                   </el-table-column>
                   <el-table-column
-                    prop="status"
+                    prop="telStatusMsg"
                     label="状态">
                   </el-table-column>
                   <el-table-column
@@ -307,7 +307,7 @@
                   </el-table-column>
                 </el-table>
               </el-tab-pane>
-              <el-tab-pane label="地址" name="2" class="tabs-wrap">
+              <el-tab-pane label="地址" name="2" class="tabs-wrap" >
                 <div class="operation">
                   <div class="left-oper">
                     <el-button>标记为有效</el-button>
@@ -318,7 +318,7 @@
                   </div>
                 </div>
                 <el-table
-                  :data="caseDetail.addrList"
+                  :data="addrList"
                   style="width: 100%"
                   class="table-wrap">
                   <el-table-column
@@ -336,12 +336,12 @@
                     label="姓名">
                   </el-table-column>
                   <el-table-column
-                    prop="rel"
+                    prop="relation"
                     show-overflow-tooltip
                     label="关系">
                   </el-table-column>
                   <el-table-column
-                    prop="addr"
+                    prop="address"
                     show-overflow-tooltip
                     label="地址">
                   </el-table-column>
@@ -356,20 +356,15 @@
                     label="备注">
                   </el-table-column>
                   <el-table-column
-                    prop="letterTime"
+                    prop="letterCount"
                     show-overflow-tooltip
                     label="信函次数">
-                  </el-table-column>
-                  <el-table-column
-                    prop="visitTime"
-                    show-overflow-tooltip
-                    label="外访次数">
                   </el-table-column>
                 </el-table>
               </el-tab-pane>
               <el-tab-pane label="案人数据" name="3" class="tabs-wrap">
                 <el-table
-                  :data="caseDetail.dataList"
+                  :data="dataList"
                   style="width: 100%"
                   class="table-wrap">
                   <el-table-column
@@ -378,12 +373,12 @@
                     label="姓名">
                   </el-table-column>
                   <el-table-column
-                    prop="type"
+                    prop="msgType"
                     show-overflow-tooltip
                     label="信息类型">
                   </el-table-column>
                   <el-table-column
-                    prop="content"
+                    prop="msgContext"
                     show-overflow-tooltip
                     label="信息内容">
                   </el-table-column>
@@ -393,7 +388,7 @@
                     label="备注">
                   </el-table-column>
                   <el-table-column
-                    prop="time"
+                    prop="createTime"
                     show-overflow-tooltip
                     label="导入时间">
                   </el-table-column>
@@ -993,7 +988,7 @@
                   <el-table-column
                     prop="content"
                     show-overflow-tooltip
-                    label="减免/报备XX">
+                    label="减免/报备状态">
                   </el-table-column>
                   <el-table-column
                     prop="user"
@@ -1028,7 +1023,7 @@
                   <el-table-column
                     prop="user"
                     show-overflow-tooltip
-                    label="减免/报备XX">
+                    label="减免/报备结果">
                   </el-table-column>
                   <el-table-column
                     prop="user"
@@ -1061,7 +1056,7 @@
 </template>
 
 <script>
-import {getCaseDetail} from '@/common/js/api-detail'
+import {getCaseDetail,getAddressDetail,getArchiveDetail} from '@/common/js/api-detail'
 export default {
   name:'caseDetail',
   props:{
@@ -1072,6 +1067,8 @@ export default {
   },
   data() {
     return {
+      addrList:[],//地址
+      dataList:[],//案人信息
       activeNames: ['1'],
       otherActiveName:'1',
       caseDetail:{},
@@ -1083,6 +1080,18 @@ export default {
       getCaseDetail(this.id).then(data => {
         this.caseDetail = data
       })
+    },
+    showPanel(tab,e){
+      var ind = tab.index;
+      if (ind == 1){
+        getAddressDetail(this.id).then(data => {
+          this.addrList = data
+        })
+      }else if (ind == 2){
+        getArchiveDetail(this.id).then(data => {
+          this.dataList = data
+        })
+      }
     }
   }
 }

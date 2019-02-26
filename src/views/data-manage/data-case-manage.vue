@@ -165,6 +165,7 @@
       style="width: 100%;margin-top:10px"
       @selection-change="handleSelectionChange"
       sortable="custom"
+      @row-dblclick="showDetail"
       @sort-change="handleSort"
     >
       <el-table-column
@@ -204,9 +205,7 @@
         label="批次号"
         align="center"
         show-overflow-tooltip>
-         <template slot-scope="scope">
-          <el-button type="text" size="small" @click="editCase(scope.row.id, scope.row.name)">{{scope.row.batchNo}}</el-button>
-        </template>
+
       </el-table-column>
       <el-table-column
         prop="seqNo"
@@ -216,6 +215,9 @@
         align="center"
         label="个案序列号"
         show-overflow-tooltip>
+        <template slot-scope="scope">
+          <el-button type="text" size="small" @click="editCase(scope.row.id, scope.row.name)">{{scope.row.seqNo}}</el-button>
+        </template>
       </el-table-column>
       <el-table-column
         prop="caseDate"
@@ -1011,7 +1013,7 @@
         </div>
       </el-form>
       <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisible7 = false">取 消</el-button>
+    <el-button @click="detailVisible9 = false">取 消</el-button>
     <el-button type="primary" @click=addSynergyFormType>确 定</el-button>
   </span>
     </el-dialog>
@@ -1267,7 +1269,6 @@
 
       },
       exportTel(){
-    	  console.info(123)
         let datasList=[]
         for (var i=0;i<this.deleteList.length;i++){
           let dataObject={}
@@ -1539,6 +1540,14 @@
             message: '已取消删除'
           });
         });
+      },
+      showDetail(row){
+        this.detailTitle = name+'案件详情'
+        this.detailId = row.id
+        this.detailVisible = true
+        this.$nextTick(()=>{
+          this.$refs.detail.queryDetail()
+        })
       },
       editCase(id, name){
         this.detailTitle = name+'案件详情'
