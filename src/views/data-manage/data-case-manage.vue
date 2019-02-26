@@ -180,7 +180,7 @@
 
       </el-table-column>
       <el-table-column
-        prop="area"
+        prop="collectArea"
         align="center"
         :sortable='true'
         :sort-orders="['ascending','descending']"
@@ -903,7 +903,7 @@
               <el-option
                 v-for="item in LeaveList"
                 :key="item.id"
-                :label="item.userName"
+                :label="item.name"
                 :value="item.id">
               </el-option>
             </el-select>
