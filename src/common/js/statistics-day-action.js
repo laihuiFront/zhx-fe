@@ -38,3 +38,18 @@ return request({
     }
   })
 }
+
+export const messageList = function(row,form,pageSize,pageNum) {
+return request({
+    url: '/statistics/collection/tel/info',
+    method: 'post',
+    data: {
+      odv:row.row.odv,
+      collectionResult:row.column.label,
+      dateStart:form.time[0],
+      dateEnd:form.time[1],
+      pageNum:pageNum ? pageNum : 1,
+      pageSize:pageSize ? pageSize : 10
+    }
+  })
+}
