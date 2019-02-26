@@ -1307,6 +1307,7 @@
       })
       },
        fenanchecktwo(){
+       	console.log('12',this.fenan.odv)
          fenan2(this.formInline,this.fenan.odv).then((response)=>{
        this.$message({
           type: 'success',
@@ -1375,7 +1376,7 @@
       sureAddShow4(){
       	let datasList=[]
        	for (var i=0;i<this.deleteList.length;i++){
-       		let dataObject={id:'',import:this.importLeave}
+       		let dataObject={id:'',important:this.importLeave}
        		dataObject.id=this.deleteList[i].id
        		datasList.push(dataObject)
        	}
