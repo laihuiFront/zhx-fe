@@ -57,7 +57,7 @@
               </el-date-picker>
             </el-form-item>
             <el-form-item>
-              <el-button type="text" :style="images" @click="dialogVisible= true"></el-button>     </el-form-item>
+              <el-button type="text" class='bacImg' :style="images" @click="dialogVisible= true"></el-button>     </el-form-item>
             </el-form-item>
             <el-form-item>
               <el-button type="text" icon="el-icon-search" @click="search">查询</el-button>
@@ -167,6 +167,7 @@
       sortable="custom"
       @row-dblclick="showDetail"
       @sort-change="handleSort"
+      height="350"
     >
       <el-table-column
         type="selection"
@@ -1634,8 +1635,10 @@
 
 <style lang="scss">
   #data-case-manage{
+  	.el-form-item--mini .el-form-item__content, .el-form-item--mini .el-form-item__labe
     .el-form--inline .el-form-item{
-      margin-right:0px;
+      margin-right:-10px;
+      line-height: 21px;
     }
     .el-dialog__header{
       background-color: #f8f8f8;

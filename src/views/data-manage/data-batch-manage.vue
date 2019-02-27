@@ -105,6 +105,7 @@
      @selection-change="handleSelectionChange"
     sortable="custom"
     @sort-change="handleSort"
+    height="350"
   >
   <el-table-column
       type="selection"

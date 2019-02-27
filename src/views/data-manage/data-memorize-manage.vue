@@ -70,6 +70,7 @@
   </el-col>-->
    </el-row>
    <el-table
+   	height="350"
    	v-loading="loading"
     ref="multipleTable"
     :data="tableData3"
@@ -685,6 +686,10 @@ this.search()
   	background-color: #f8f8f8;
   
   }
+  .el-form-item--mini .el-form-item__content, .el-form-item--mini .el-form-item__labe
+    .el-form--inline .el-form-item{
+      line-height: 21px;
+    }
 }
 </style>
 
