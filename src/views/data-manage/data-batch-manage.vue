@@ -571,13 +571,21 @@ dataList(this.form.area,this.form.batchNos,this.form.clients,this.form.batchStat
 })
       },
       returnCaseList(){
-      	returnCase(this.deleteList).then((response)=>{
+      	if(this.deleteList.length>0){
+      		returnCase(this.deleteList).then((response)=>{
             this.$message({
             type: 'success',
             message: '退案成功!'
           });
           this.search()
       })
+      	}else{
+      		 this.$message({
+            type: 'error',
+            message: '请选择退案数据!'
+          });
+      	}
+      	
       },
 	deleteMessage(id){
 		let arry=[{id:id}]
@@ -643,35 +651,31 @@ this.search()
       resetForm(formName) {
         this.$refs[formName].resetFields();
       },
-      open7() {
+       open7() {
       	let _self=this 
-        _self.$confirm('是否删除?', '提示', {
+      	if(_self.deleteList.length>0){
+      		_self.$confirm('是否删除?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning',
           center: true
         }).then(() => {
-           if(_self.deleteList.length>0){
            	remoweData(this.deleteList).then((response)=>{
             _self.$message({
             type: 'success',
             message: '删除成功!'
           });
           _self.search()
-})
-           }else{
+}) 
+        }).catch(() => {
+
+        });
+      	} else{
            	_self.$message({
             type: 'info',
             message: '请选择需要删除的数据!'
           });
-           }
-          
-        }).catch(() => {
-          _self.$message({
-            type: 'info',
-            message: '已取消删除'
-          });
-        });
+          }
       },
    },
    created() {

@@ -49,26 +49,11 @@
 import {mapGetters, mapActions} from 'vuex'
 import oneLevel from './one-level'
 import twoLevel from './two-level'
+ import {resetPassword} from '@/store/actions.js';
 export default {
   name: 'topMenu',
   data(){
-  	 var checkAge = (rule, value, callback) => {
-        if (!value) {
-          return callback(new Error('年龄不能为空'));
-        }
-        setTimeout(() => {
-          if (!Number.isInteger(value)) {
-            callback(new Error('请输入数字值'));
-          } else {
-            if (value < 18) {
-              callback(new Error('必须年满18岁'));
-            } else {
-              callback();
-            }
-          }
-        }, 1000);
-      };
-      var validatePass = (rule, value, callback) => {
+     var validatePass = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入密码'));
         } else {
@@ -124,7 +109,7 @@ export default {
         this.$refs[formName].validate((valid) => {
           if (valid) {
             console.info(this.ruleForm2);
-            this.resetPassword(this.ruleForm2);
+            resetPassword(this.ruleForm2);
           } else {
             console.log('error submit!!');
             return false;
@@ -133,7 +118,7 @@ export default {
       },
     ...mapActions([
       'logoutAction',
-      'resetPassword'
+     
     ])
   }
 }
