@@ -1,13 +1,15 @@
 <template>
   <div id="synergistic-bank-reconciliation" class="page-wraper-sub">
-    <el-tabs v-model="tabName">
-      <el-tab-pane label="待银行对帐" name="1"></el-tab-pane>
-      <el-tab-pane label="已作废" name="2"></el-tab-pane>
+    <el-tabs v-model="queryForm.status">
+      <el-tab-pane label="待银行对帐" name="0"></el-tab-pane>
+      <el-tab-pane label="已作废" name="1"></el-tab-pane>
     </el-tabs>
     <bank-record-query 
+      @reset="onClickReset"
+      @query="onClickQuery"
       :queryForm="queryForm">
-      <el-button type="primary" v-if="tabName==='1'">作废CP</el-button>
-      <el-button type="primary" v-if="tabName==='1'">导入CP</el-button>
+      <el-button type="primary" v-if="queryForm.status==='0'">作废CP</el-button>
+      <el-button type="primary" v-if="queryForm.status==='0'">导入CP</el-button>
 
       <el-button type="primary">导出选中数据</el-button>
       <el-dropdown trigger="click" @command="handleCommand">
@@ -119,7 +121,6 @@ export default {
   },
   data(){
     return {
-      tabName:'1',
       recordList: [],
       total:0,
       dialogData:{
@@ -131,12 +132,30 @@ export default {
       },
       recordInfo:{},
       queryForm:{
+        status: '0',
         pageNum: 1,
         pageSize: 10,
+        dataCase: {
+          collectionArea:{},
+          collectionUser:{},
+          caseArea:{},
+        },
       }
     }
   },
   methods: {
+    onClickReset(){
+      this.queryForm = {
+        status: this.queryForm.status,
+        pageNum: this.queryForm.pageNum,
+        pageSize: this.queryForm.pageSize,
+        dataCase: {
+          collectionArea:{id: null},
+          collectionUser:{id: null},
+          caseArea:{id: null},
+        }
+      }
+    },
     onSelectRow(){},
     onClickQuery(){},
     onClickCancel(){},
