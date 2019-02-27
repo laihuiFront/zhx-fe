@@ -895,9 +895,9 @@
             <el-card class="box-card">
               <div slot="header" class="clearfix">
                 <span>自定义信息</span>
-                <el-button style="float: right; padding: 3px 0" type="text">保存</el-button>
+                <el-button style="float: right; padding: 3px 0" type="text" @click="saveSelfInfo">保存</el-button>
               </div>
-              <el-input type="textarea" :rows="8"  v-model="caseDetail.customInfo"></el-input>
+              <el-input type="textarea" :rows="8"  v-model="caseDetail.selfInfo"></el-input>
             </el-card>
           </div>
         </div>
@@ -930,7 +930,7 @@
             </el-select>
           </el-form-item>
            <el-form-item label="状态">
-            <el-select v-model="formInline.status" placeholder="请选择状态" clearable>
+            <el-select v-model="formInline.telStatus" placeholder="请选择状态" clearable>
               <el-option
                 v-for="item in statusList"
                 :key="item.id"
@@ -945,7 +945,7 @@
 </el-form>
   <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+    <el-button type="primary" @click="saveTel">确 定</el-button>
   </span>
 </el-dialog>
   </div>
@@ -953,7 +953,12 @@
 
 <script>
 
-import {getCaseDetail,getAddressDetail,getArchiveDetail,PhonetypeList} from '@/common/js/api-detail'
+import {getCaseDetail,
+        getAddressDetail,
+        getArchiveDetail,
+        PhonetypeList,
+        updateRemark,
+        saveCaseTel} from '@/common/js/api-detail'
 
 export default {
   name:'caseDetail',
@@ -966,7 +971,7 @@ export default {
   data() {
     return {
 
-    	dialogVisible:false,
+      dialogVisible:false,
     	formInline:{},
     	PhonetypeList:[],
       memorizeList:[],//催記
@@ -983,7 +988,32 @@ export default {
     }
   },
   methods: {
+    saveSelfInfo(){
+      updateRemark({
+        id: this.id,
+        remark: this.caseDetail.selfInfo
+      }).then(res=>{
+        this.$message('修改自定义信息成功')
+      })
+    },
+    saveTel(){
+      let result = this.formInline
+      result.caseId = this.id
+      if(this.phoneEditType === 'add'){
+        result.id = 0
+      }
+      saveCaseTel(result).then(res=>{
+        if(this.phoneEditType === 'add'){
+          this.$message('新增电话成功')
+        }else{
+          this.$message('修改电话成功')
+        }
+        this.dialogVisible = false
+      })
+    },
   	addPhone(){
+      this.formInline = {}
+      this.phoneEditType = 'add'
   		this.dialogVisible=true
   	},
     queryDetail(){

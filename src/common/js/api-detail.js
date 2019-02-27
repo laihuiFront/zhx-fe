@@ -82,3 +82,19 @@ export function getSynergyDetail(id) {
     }
   })
 }
+
+export function updateRemark(data){
+  return request({
+    url: '/dataCase/updateRemak',
+    method: 'post',
+    data
+  })
+}
+
+export function saveCaseTel(data){
+  return request({
+    url: '/dataCase/saveCaseTel',
+    method: 'post',
+    data
+  })
+}
