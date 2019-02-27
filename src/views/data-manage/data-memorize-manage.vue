@@ -523,13 +523,21 @@ export default {
   methods: {
   	selectDataCollectExport(){
   		this.loading=true
-  		selectDataExport(this.selectDataCollectExportList).then((response)=>{
-          	this.loading=false;
-          	this.$message({
+      if(this.selectDataCollectExportList.length>=1) {
+        selectDataExport(this.selectDataCollectExportList).then((response) => {
+          this.loading = false;
+          this.$message({
             type: 'success',
             message: '导出成功!'
           });
-          })
+        })
+      }else{
+        this.loading = false;
+        this.$message({
+          type: 'info',
+          message: '请选择数据!'
+        });
+      }
   	},
   	totalDataCollectExport(){
   		this.loading=true;

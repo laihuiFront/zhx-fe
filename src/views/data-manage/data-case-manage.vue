@@ -1275,7 +1275,7 @@
           })
         }else{
           this.$message({
-            type: 'error',
+            type: 'info',
             message: '请选择数据!'
           });
         }
@@ -1284,25 +1284,42 @@
       exportTel(){
 
         let datasList=[]
-        for (var i=0;i<this.deleteList.length;i++){
-          let dataObject={}
-          dataObject.id=this.deleteList[i].id
-          datasList.push(dataObject)
-        }
-        selectDataTel(datasList).then((response)=>{
+        let _self = this;
+        if(this.deleteList.length>=1) {
+          for (var i = 0; i < this.deleteList.length; i++) {
+            let dataObject = {}
+            dataObject.id = this.deleteList[i].id
+            datasList.push(dataObject)
+          }
 
-        })
+          selectDataTel(datasList).then((response) => {
+
+          })
+        }else{
+          _self.$message({
+            type: 'info',
+            message: '请选择需要导出的数据!'
+          });
+        }
       },
       exportCollect(){
         let datasList=[]
-        for (var i=0;i<this.deleteList.length;i++){
-          let dataObject={}
-          dataObject.id=this.deleteList[i].id
-          datasList.push(dataObject)
-        }
-        selectDataCollect(datasList).then((response)=>{
+        let _self = this;
+        if(this.deleteList.length>=1) {
+          for (var i=0;i<this.deleteList.length;i++){
+            let dataObject={}
+            dataObject.id=this.deleteList[i].id
+            datasList.push(dataObject)
+          }
+          selectDataCollect(datasList).then((response)=>{
 
-        })
+          })
+        }else{
+          _self.$message({
+            type: 'info',
+            message: '请选择需要导出的数据!'
+          });
+        }
       },
        fenancheckone(){
        	let datasList=[]

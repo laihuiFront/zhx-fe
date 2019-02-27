@@ -539,8 +539,9 @@ export default {
     }
   },
 methods: {
-		uploadSuccess(){
-  		this.$message({
+		uploadSuccess(res,file,fileList){
+      if (res.code ==100){
+  		    this.$message({
             type: 'success',
             message: '导入成功!'
           });
@@ -548,7 +549,13 @@ methods: {
             this.DataList=response.pageInfo.list
               //this.pages = response.pages
               this.total = response.total
-})
+          })
+      }else{
+        this.$message({
+          type: 'error',
+          message: res.msg
+        });
+      }
   	},
 	deleteMessage(id){
 		let arry=[{id:id}]
@@ -671,7 +678,7 @@ this.search()
 	   Object.id=currentValue.id
 	   _self.deleteList.push(Object)
 	})
-	console.log(_self.deleteList)
+
 },
       resetForm(formName) {
         this.form={time:[]};
@@ -707,7 +714,6 @@ this.search()
 created() {
             dataList().then((response)=>{
             this.DataList=response.pageInfo.list
-             // this.pages = response.pageInfo.pages
               this.total = response.pageInfo.total
 })
               clientList().then((response)=>{
