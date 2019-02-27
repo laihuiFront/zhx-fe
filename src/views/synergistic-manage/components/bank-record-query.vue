@@ -208,16 +208,16 @@ export default {
           }
       },
       elTreeParamsArea: {
-          'default-expand-all': true,
+        'default-expand-all': true,
           filterable: false,
           'check-strictly': true,
           data: [],
           props: {
-              children: 'children',
-              label: 'orgName',
+            children: 'children',
+              label: 'name',
               value: 'id'
           }
-      }
+      },
       
     }
   },
@@ -264,11 +264,11 @@ export default {
     },
     submitTimeChange(val){
       if(val){
-        this.queryForm.dataCase.submitTimeStart = val[0]
-        this.queryForm.dataCase.submitTimeEnd = val[1]
+        this.queryForm.submitTimeStart = val[0]
+        this.queryForm.submitTimeEnd = val[1]
       }else{
-        this.queryForm.dataCase.submitTimeStart = null
-        this.queryForm.dataCase.submitTimeEnd = null
+        this.queryForm.submitTimeStart = null
+        this.queryForm.submitTimeEnd = null
       }
     }
   }

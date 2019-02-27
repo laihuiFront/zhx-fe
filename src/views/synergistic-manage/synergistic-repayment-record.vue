@@ -53,14 +53,14 @@
       <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
       <el-table-column prop="dataCase.mVal" label="M值" show-overflow-tooltip></el-table-column>
       <el-table-column prop="dataCase.commissionMoney" label="公司佣金" show-overflow-tooltip></el-table-column>
-      <el-table-column label="操作" width="100" fixed="right">
-          <template slot-scope="scope">
-            <el-button
-              type="text"
-              @click="onClickRevoke(scope.row)"
-            >撤销还款</el-button>
-          </template>
-        </el-table-column>
+      <el-table-column label="操作" width="100" fixed="right" v-if="queryForm.recordStatus==='0'">
+        <template slot-scope="scope">
+          <el-button
+            type="text"
+            @click="onClickRevoke(scope.row)"
+          >撤销还款</el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <el-pagination
       @size-change="onClickQuery"
@@ -86,13 +86,19 @@
         class="add-form"
       >
         <el-form-item label="对应个案" prop="dyga">
-          <el-select v-model="recordInfo.dataCase.id" clearable placeholder="请选择对应个案">
-            <!-- <el-option
-              v-for="item in positionList"
-              :key="item.job"
-              :label="item.position"
-              :value="item.position"
-            ></el-option> -->
+          <el-select
+            v-model="recordInfo.dataCase.id"
+            filterable
+            remote
+            placeholder="请选择对应个案"
+            :remote-method="seqNoQuery"
+            :loading="loadingSeqNo">
+            <el-option
+              v-for="item in seqNoList"
+              :key="item.id"
+              :label="item.seqNo"
+              :value="item.id">
+            </el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="回收催收员" prop="dyga">
@@ -122,12 +128,12 @@
         </el-form-item>
         <el-form-item label="还款方式" prop="dyga">
           <el-select v-model="recordInfo.repayType" clearable placeholder="请选择还款方式">
-            <!-- <el-option
-              v-for="item in positionList"
-              :key="item.job"
-              :label="item.position"
-              :value="item.position"
-            ></el-option> -->
+            <el-option
+              v-for="item in repayTypeList"
+              :key="item.code"
+              :label="item.typeName"
+              :value="item.code"
+            ></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="备注" prop="dyga" class="whole">
@@ -150,7 +156,9 @@ import {getRepayRecordList,
         revokeRepayRecord,
         expSelectedRepayRecord,
         expAllRepayRecord,
-        expCurrentRepayRecord} from '@/common/js/api-sync'
+        expCurrentRepayRecord,
+        getSeqNoList,
+        getRepayTypeList} from '@/common/js/api-sync'
 export default {
   name: 'synergisticRepaymentRecord',
   components:{
@@ -183,7 +191,10 @@ export default {
         },
         confirmUser:{}
       },
-      selectList:[]
+      loadingSeqNo: false,
+      seqNoList: [],
+      selectList:[],
+      repayTypeList:[]
     }
   },
   created() {
@@ -194,6 +205,11 @@ export default {
     getCollectionUserList().then(data => {
       this.collectionUserList = data
     })
+    getRepayTypeList().then(data=>{
+      this.repayTypeList = data
+    })
+
+    this.seqNoQuery()
   },
   methods: {
     onClickReset(){
@@ -283,6 +299,16 @@ export default {
         this.$message('新增还款记录成功')
         this.onClickQuery()
         this.$set(this.dialogData, 'editVisible', false)
+      })
+    },
+    seqNoQuery(query){
+      this.loadingSeqNo = true
+      getSeqNoList({
+        seqNo: query,
+        pageNum: 20
+      }).then(data => {
+        this.seqNoList = data.list
+        this.loadingSeqNo = false
       })
     }
   }

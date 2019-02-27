@@ -9,6 +9,13 @@ export function getEnum(name) {
   })
 }
 
+export function getRepayTypeList(){
+  return request({
+    method: 'post',
+    url:'/bankReconciliation/listRepayType'
+  })
+}
+
 export  function getBatchList(){
   return request({
     url: '/dataBatch/selectBatchNo',
@@ -22,6 +29,14 @@ export function getCollectionUserList() {
     url: '/user/select/role ',
     method: 'post',
     data:{role:"催收员 "}
+  })
+}
+
+export function getSeqNoList(data) {
+  return request({
+    url: '/dataCase/pageSeqNos',
+    method: 'post',
+    data
   })
 }
 
@@ -90,6 +105,14 @@ export function expAllRepayRecord(data){
 export function expCurrentRepayRecord(data){
   return download({
     url: '/repayRecord/pageDataExport',
+    data
+  })
+}
+
+export function getBankReconList(data){
+  return request({
+    url: '/bankReconciliation/list',
+    method: 'post',
     data
   })
 }

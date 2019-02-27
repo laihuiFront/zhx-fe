@@ -10,7 +10,8 @@
       :queryForm="queryForm">
       <el-button type="primary" v-if="queryForm.status==='0'">作废CP</el-button>
       <el-button type="primary" v-if="queryForm.status==='0'">导入CP</el-button>
-
+      <el-button type="primary" v-if="queryForm.status==='0'">登帐</el-button>
+      <el-button type="primary" v-if="queryForm.status==='0'">导入确认登帐</el-button>
       <el-button type="primary">导出选中数据</el-button>
       <el-dropdown trigger="click" @command="handleCommand">
         <el-button type="primary">导出查询结果<i class="el-icon-arrow-down el-icon--right"></i></el-button>
@@ -26,21 +27,31 @@
       style="width: 100%"
       class="table-wrap">
       <el-table-column type="selection" width="50"></el-table-column>
-      <el-table-column prop="createTime" label="批次号" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="卡号" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="证件号" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="姓名" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="个案序列号" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="委托方" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="委案金额" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="案件已还款" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="CP金额" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="CP日期" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="还款人" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="还款方式" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="提交人" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="提交时间" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="备注" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="dataCase.batchNo" label="批次号" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="dataCase.cardNo" label="卡号" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="dataCase.identNo" label="证件号" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="dataCase.name" label="姓名" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="dataCase.seqNo" label="个案序列号" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="dataCase.client" label="委托方" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="dataCase.money" label="委案金额" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="dataCase.repayMoney" label="案件已还款" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="cpMoney" label="CP金额" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="cpDate" label="CP日期" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="repayUser" label="还款人" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="repayType" label="还款方式" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="submitUser.name" label="提交人" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="submitTime" label="提交时间" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
+      <el-table-column label="操作" width="100" fixed="right" v-if="queryForm.status==='0'">
+        <template slot-scope="scope">
+          <el-button
+            type="text"
+          >确认登帐</el-button>
+          <el-button
+            type="text"
+          >作废CP</el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <el-pagination
       @size-change="onClickQuery"
@@ -114,6 +125,7 @@
 
 <script>
 import {BankRecordQuery} from './components'
+import {getBankReconList} from '@/common/js/api-sync'
 export default {
   name: 'synergisticBankReconciliation',
   components:{
@@ -143,6 +155,12 @@ export default {
       }
     }
   },
+  created() {
+    getBankReconList(this.queryForm).then(data => {
+      this.recordList = data.list
+      this.total = data.total
+    })
+  },
   methods: {
     onClickReset(){
       this.queryForm = {
@@ -156,8 +174,13 @@ export default {
         }
       }
     },
+    onClickQuery(){
+      getBankReconList(this.queryForm).then(data => {
+        this.recordList = data.list
+        this.total = data.total
+      })
+    },
     onSelectRow(){},
-    onClickQuery(){},
     onClickCancel(){},
     onClickSave(){},
     handleCommand(){}
