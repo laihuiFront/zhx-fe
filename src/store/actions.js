@@ -1,6 +1,7 @@
 import * as types from './mutation-types'
 import {localCache,removeCache} from '@/common/js/auth'
 import {login, getUserInfo, logout, getTreeAllMenusByToken} from '@/common/js/api-base'
+import request from '@/common/js/request';
 
 export const loginAction = function ({commit}, userInfo) {
   return new Promise((resolve, reject) => {
@@ -69,6 +70,14 @@ export const initPageMenu = function({state, commit}, toPath) {
     commit(types.PUSH_TAB_MENUS, allMenu[0])
     commit(types.PUSH_TAB_MENUS, toMenu)
   }
+}
+
+export function resetPassword(data) {
+  return request({
+    method:'post',
+    url:'/user/passwordReset',
+    data
+  })
 }
 
 // 根据路由查找对应的菜单对象

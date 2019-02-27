@@ -10,160 +10,160 @@
             class="rule-form"
           >
             <el-form-item label="姓名">
-              <el-input v-model="caseDetail.name"></el-input>
+              <el-input v-model="caseDetail.name" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="委托方">
-              <el-input v-model="caseDetail.client"></el-input>
+              <el-input v-model="caseDetail.client" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="批次号">
-              <el-input v-model="caseDetail.pch"></el-input>
+              <el-input v-model="caseDetail.pch" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="委案日期">
-              <el-date-picker v-model="caseDetail.warq" type="date" placeholder="选择日期"></el-date-picker>
+              <el-date-picker v-model="caseDetail.warq" type="date" :disabled="true"  placeholder="选择日期"></el-date-picker>
             </el-form-item>
             <el-form-item label="证件号">
-              <el-input v-model="caseDetail.zjh"></el-input>
+              <el-input v-model="caseDetail.zjh" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="卡号">
-              <el-input v-model="caseDetail.kh"></el-input>
+              <el-input v-model="caseDetail.kh" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="催收状态">
-              <el-input v-model="caseDetail.cszt"></el-input>
+              <el-input v-model="caseDetail.cszt" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="预计退案日">
-              <el-date-picker v-model="caseDetail.yjtar" type="date" placeholder="选择日期"></el-date-picker>
+              <el-date-picker v-model="caseDetail.yjtar" type="date" :disabled="true"  placeholder="选择日期"></el-date-picker>
             </el-form-item>
             <el-form-item label="委案金额">
-              <el-input v-model="caseDetail.warq"></el-input>
+              <el-input v-model="caseDetail.warq" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="人民币">
-              <el-input v-model="caseDetail.rmb"></el-input>
+              <el-input v-model="caseDetail.rmb" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="港币">
-              <el-input v-model="caseDetail.gb"></el-input>
+              <el-input v-model="caseDetail.gb" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="外币">
-              <el-input v-model="caseDetail.wb"></el-input>
+              <el-input v-model="caseDetail.wb" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="已还款">
-              <el-input v-model="caseDetail.yhk"></el-input>
+              <el-input v-model="caseDetail.yhk" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="逾期账龄">
-              <el-input v-model="caseDetail.yqzl"></el-input>
+              <el-input v-model="caseDetail.yqzl" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="逾期天数">
-              <el-input v-model="caseDetail.yqts"></el-input>
+              <el-input v-model="caseDetail.yqts" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="币种">
-              <el-input v-model="caseDetail.bz"></el-input>
+              <el-input v-model="caseDetail.bz" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="最新欠款" class="half">
-              <el-input v-model="caseDetail.zxqk"></el-input>
+              <el-input v-model="caseDetail.zxqk" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="地区">
-              <el-input v-model="caseDetail.dq"></el-input>
+              <el-input v-model="caseDetail.dq" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="催收手别">
-              <el-input v-model="caseDetail.cssb"></el-input>
+              <el-input v-model="caseDetail.cssb" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="本金">
-              <el-input v-model="caseDetail.bj"></el-input>
+              <el-input v-model="caseDetail.bj" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="剩余本金">
-              <el-input v-model="caseDetail.sybj"></el-input>
+              <el-input v-model="caseDetail.sybj" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="贷款日期">
-              <el-date-picker v-model="caseDetail.dkrq" type="date" placeholder="选择日期"></el-date-picker>
+              <el-date-picker v-model="caseDetail.dkrq" type="date" placeholder="选择日期" :disabled="true" ></el-date-picker>
             </el-form-item>
             <el-form-item label="逾期期数">
-              <el-input v-model="caseDetail.yqqs"></el-input>
+              <el-input v-model="caseDetail.yqqs" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="贷款利率">
-              <el-input v-model="caseDetail.dkll"></el-input>
+              <el-input v-model="caseDetail.dkll" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="每月还款">
-              <el-input v-model="caseDetail.myhk"></el-input>
+              <el-input v-model="caseDetail.myhk" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="逾期金额">
-              <el-input v-model="caseDetail.yqje"></el-input>
+              <el-input v-model="caseDetail.yqje" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="预期本金">
-              <el-input v-model="caseDetail.yqbj"></el-input>
+              <el-input v-model="caseDetail.yqbj" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="逾期利息">
-              <el-input v-model="caseDetail.yqlx"></el-input>
+              <el-input v-model="caseDetail.yqlx" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="逾期罚息">
-              <el-input v-model="caseDetail.yqfx"></el-input>
+              <el-input v-model="caseDetail.yqfx" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="违约金">
-              <el-input v-model="caseDetail.wyj"></el-input>
+              <el-input v-model="caseDetail.wyj" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="滞纳金">
-              <el-input v-model="caseDetail.znj"></el-input>
+              <el-input v-model="caseDetail.znj" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="手机">
-              <el-input v-model="caseDetail.sj"></el-input>
+              <el-input v-model="caseDetail.sj" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="家庭号码">
-              <el-input v-model="caseDetail.jthm"></el-input>
+              <el-input v-model="caseDetail.jthm" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="单位号码">
-              <el-input v-model="caseDetail.dwhm"></el-input>
+              <el-input v-model="caseDetail.dwhm" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="家庭地址" class="whole">
-              <el-input v-model="caseDetail.jtdz"></el-input>
+              <el-input v-model="caseDetail.jtdz" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="单位名称" class="whole">
-              <el-input v-model="caseDetail.dwmc"></el-input>
+              <el-input v-model="caseDetail.dwmc" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="单位地址" class="whole">
-              <el-input v-model="caseDetail.dwdz"></el-input>
+              <el-input v-model="caseDetail.dwdz" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="户籍地址" class="whole">
-              <el-input v-model="caseDetail.hjdz"></el-input>
+              <el-input v-model="caseDetail.hjdz" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="对账单地址" class="whole">
-              <el-input v-model="caseDetail.dzddz"></el-input>
+              <el-input v-model="caseDetail.dzddz" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="PTP金额">
-              <el-input v-model="caseDetail.ptp"></el-input>
+              <el-input v-model="caseDetail.ptp" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="CP金额">
-              <el-input v-model="caseDetail.cp"></el-input>
+              <el-input v-model="caseDetail.cp" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="委案期数">
-              <el-input v-model="caseDetail.waqs"></el-input>
+              <el-input v-model="caseDetail.waqs" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="最低还款额">
-              <el-input v-model="caseDetail.zdhke"></el-input>
+              <el-input v-model="caseDetail.zdhke" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="下次跟进日期" class="half">
-              <el-input v-model="caseDetail.xcgjrq"></el-input>
+              <el-input v-model="caseDetail.xcgjrq" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="委托日期">
-              <el-date-picker v-model="caseDetail.wtrq" type="date" placeholder="选择日期"></el-date-picker>
+              <el-date-picker v-model="caseDetail.wtrq" type="date" :disabled="true"  placeholder="选择日期"></el-date-picker>
             </el-form-item>
             <el-form-item label="跟进次数">
-              <el-input v-model="caseDetail.gjcs"></el-input>
+              <el-input v-model="caseDetail.gjcs" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="催收区域">
-              <el-input v-model="caseDetail.csqy"></el-input>
+              <el-input v-model="caseDetail.csqy" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="催收员">
-              <el-input v-model="caseDetail.csy"></el-input>
+              <el-input v-model="caseDetail.csy" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="最近催记时间">
-              <el-date-picker v-model="caseDetail.zjcjsj" type="datetime" placeholder="选择日期时间"></el-date-picker>
+              <el-date-picker v-model="caseDetail.zjcjsj" :disabled="true"  type="datetime" placeholder="选择日期时间"></el-date-picker>
             </el-form-item>
             <el-form-item label="最后外访">
-              <el-input v-model="caseDetail.zhwf"></el-input>
+              <el-input v-model="caseDetail.zhwf" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="自动收回时间">
-              <el-date-picker v-model="caseDetail.zdshsj" type="datetime" placeholder="选择日期时间"></el-date-picker>
+              <el-date-picker v-model="caseDetail.zdshsj" type="datetime" :disabled="true"  placeholder="选择日期时间"></el-date-picker>
             </el-form-item>
             <el-form-item label="催收小结" class="width-75">
-              <el-input v-model="caseDetail.csxj"></el-input>
+              <el-input v-model="caseDetail.csxj" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="最新评语" class="whole">
               <div class="content-wrap">
@@ -238,10 +238,10 @@
               class="rule-form"
             >
             <el-form-item label="分配时间">
-              <el-input v-model="caseDetail.distributeTime"></el-input>
+              <el-input v-model="caseDetail.distributeTime" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="分配历史">
-              <el-input v-model="caseDetail.distributeHistory"></el-input>
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
             </el-form-item>
           </el-form>
         </div>
@@ -409,66 +409,66 @@
                   </div>
                 </div>
                 <el-table
-                  :data="caseDetail.memorizeList"
+                  :data="memorizeList"
                   style="width: 100%"
                   class="table-wrap">
                   <el-table-column
-                    prop="type"
+                    prop="measure"
                     show-overflow-tooltip
                     label="催收措施">
                   </el-table-column>
                   <el-table-column
-                    prop="time"
+                    prop="collectTime"
                     show-overflow-tooltip
                     label="时间">
                   </el-table-column>
                   <el-table-column
-                    prop="name"
+                    prop="targetName"
                     show-overflow-tooltip
                     label="对象姓名">
                   </el-table-column>
                   <el-table-column
-                    prop="rel"
+                    prop="relation"
                     show-overflow-tooltip
                     label="关系">
                   </el-table-column>
                   <el-table-column
-                    prop="type"
+                    prop="telPhone"
                     show-overflow-tooltip
                     label="电话/地址">
                   </el-table-column>
                   <el-table-column
-                    prop="remark"
+                    prop="collectionType"
                     show-overflow-tooltip
                     label="类型">
                   </el-table-column>
                   <el-table-column
-                    prop="remark"
+                    prop="result"
                     show-overflow-tooltip
                     label="催收结果">
                   </el-table-column>
                   <el-table-column
-                    prop="remark"
+                    prop="targetName"
                     show-overflow-tooltip
                     label="催收对象">
                   </el-table-column>
                   <el-table-column
-                    prop="remark"
+                    prop="method"
                     show-overflow-tooltip
                     label="谈判方式">
                   </el-table-column>
                   <el-table-column
-                    prop="remark"
+                    prop="repayTime"
                     show-overflow-tooltip
                     label="承诺日期">
                   </el-table-column>
                   <el-table-column
-                    prop="remark"
+                    prop="repayAmt"
                     show-overflow-tooltip
                     label="承诺金额">
                   </el-table-column>
                   <el-table-column
-                    prop="remark"
+                    prop="reduceAmt"
                     show-overflow-tooltip
                     label="减免金额">
                   </el-table-column>
@@ -478,12 +478,12 @@
                     label="减免状态">
                   </el-table-column>
                   <el-table-column
-                    prop="remark"
+                    prop="odv"
                     show-overflow-tooltip
                     label="催收人">
                   </el-table-column>
                   <el-table-column
-                    prop="remark"
+                    prop="collectStatus"
                     show-overflow-tooltip
                     label="催收状态">
                   </el-table-column>
@@ -500,167 +500,90 @@
               </el-tab-pane>
               <el-tab-pane label="评语" name="5" class="tabs-wrap">
                 <el-table
-                  :data="caseDetail.commentList"
+                  :data="commentList"
                   style="width: 100%"
                   class="table-wrap">
                   <el-table-column
-                    prop="content"
+                    prop="comment"
                     show-overflow-tooltip
                     label="评语内容">
                   </el-table-column>
                   <el-table-column
-                    prop="creater"
+                    prop="creatUserName"
                     show-overflow-tooltip
                     width="150"
                     label="提交人">
                   </el-table-column>
                   <el-table-column
-                    prop="time"
+                    prop="createTime"
                     show-overflow-tooltip
                     width="150"
                     label="提交时间">
                   </el-table-column>
                 </el-table>
               </el-tab-pane>
-              <el-tab-pane label="外访" name="6" class="tabs-wrap">
-                <el-table
-                  :data="caseDetail.visitList"
-                  style="width: 100%"
-                  class="table-wrap">
-                  <el-table-column
-                    prop="content"
-                    show-overflow-tooltip
-                    label="附件">
-                  </el-table-column>
-                  <el-table-column
-                    prop="content"
-                    show-overflow-tooltip
-                    label="状态">
-                  </el-table-column>
-                  <el-table-column
-                    prop="content"
-                    show-overflow-tooltip
-                    label="姓名">
-                  </el-table-column>
-                  <el-table-column
-                    prop="content"
-                    show-overflow-tooltip
-                    label="原因">
-                  </el-table-column>
-                  <el-table-column
-                    prop="content"
-                    show-overflow-tooltip
-                    label="地址">
-                  </el-table-column>
-                  <el-table-column
-                    prop="content"
-                    show-overflow-tooltip
-                    label="外访地区">
-                  </el-table-column>
-                  <el-table-column
-                    prop="content"
-                    show-overflow-tooltip
-                    label="外访期次">
-                  </el-table-column>
-                  <el-table-column
-                    prop="content"
-                    show-overflow-tooltip
-                    label="外访时间">
-                  </el-table-column>
-                  <el-table-column
-                    prop="content"
-                    show-overflow-tooltip
-                    label="外访员">
-                  </el-table-column>
-                  <el-table-column
-                    prop="content"
-                    show-overflow-tooltip
-                    label="要求">
-                  </el-table-column>
-                  <el-table-column
-                    prop="content"
-                    show-overflow-tooltip
-                    label="外访报告">
-                  </el-table-column>
-                  <el-table-column
-                    prop="content"
-                    show-overflow-tooltip
-                    label="备注">
-                  </el-table-column>
-                  <el-table-column
-                    prop="content"
-                    show-overflow-tooltip
-                    label="申请人">
-                  </el-table-column>
-                  <el-table-column
-                    prop="content"
-                    show-overflow-tooltip
-                    label="申请时间">
-                  </el-table-column>
-                </el-table>
-              </el-tab-pane>
               <el-tab-pane label="利息更新" name="7" class="tabs-wrap">
                 <el-table
-                  :data="caseDetail.rateUpdateList"
+                  :data="rateUpdateList"
                   style="width: 100%"
                   class="table-wrap">
                   <el-table-column
-                    prop="content"
+                    prop="currency"
                     show-overflow-tooltip
                     label="币种">
                   </el-table-column>
                   <el-table-column
-                    prop="content"
+                    prop="lastestDebt"
                     show-overflow-tooltip
                     label="总欠款金额">
                   </el-table-column>
                   <el-table-column
-                    prop="content"
+                    prop="endDate"
                     show-overflow-tooltip
                     label="截止日期">
                   </el-table-column>
                   <el-table-column
-                    prop="content"
+                    prop="principal"
                     show-overflow-tooltip
                     label="本金">
                   </el-table-column>
                   <el-table-column
-                    prop="content"
+                    prop="interest"
                     show-overflow-tooltip
                     label="利息">
                   </el-table-column>
                   <el-table-column
-                    prop="content"
+                    prop="penalty"
                     show-overflow-tooltip
                     label="违约金">
                   </el-table-column>
                   <el-table-column
-                    prop="content"
+                    prop="lateFee"
                     show-overflow-tooltip
                     label="滞纳金">
                   </el-table-column>
                   <el-table-column
-                    prop="content"
+                    prop="overrunFee"
                     show-overflow-tooltip
                     label="超限费">
                   </el-table-column>
                   <el-table-column
-                    prop="content"
+                    prop="serivceFee"
                     show-overflow-tooltip
                     label="服务费">
                   </el-table-column>
                   <el-table-column
-                    prop="content"
+                    prop="yearFee"
                     show-overflow-tooltip
                     label="年费">
                   </el-table-column>
                   <el-table-column
-                    prop="content"
+                    prop="elseFee"
                     show-overflow-tooltip
                     label="其他费用">
                   </el-table-column>
                   <el-table-column
-                    prop="content"
+                    prop="sheetFee"
                     show-overflow-tooltip
                     label="表外息">
                   </el-table-column>
@@ -671,79 +594,7 @@
                   </el-table-column>
                 </el-table>
               </el-tab-pane>
-              <el-tab-pane label="案件登帐" name="8" class="tabs-wrap billing-wrap">
-                <div class="first">
-                  <p>PTP记录</p>
-                  <el-table
-                    width="100%"
-                    :data="caseDetail.ptpList"
-                    class="table-wrap">
-                    <el-table-column
-                      prop="content"
-                      show-overflow-tooltip
-                      label="PTP金额">
-                    </el-table-column>
-                    <el-table-column
-                      prop="content"
-                      show-overflow-tooltip
-                      label="PTP时间">
-                    </el-table-column>
-                    <el-table-column
-                      prop="content"
-                      show-overflow-tooltip
-                      label="录入人">
-                    </el-table-column>
-                  </el-table>
-                </div>
-                <div class="second">
-                  <p>CP记录</p>
-                  <el-table
-                    width="100%"
-                    :data="caseDetail.cpList"
-                    class="table-wrap">
-                    <el-table-column
-                      prop="content"
-                      show-overflow-tooltip
-                      label="CP金额">
-                    </el-table-column>
-                    <el-table-column
-                      prop="content"
-                      show-overflow-tooltip
-                      label="CP时间">
-                    </el-table-column>
-                    <el-table-column
-                      prop="content"
-                      show-overflow-tooltip
-                      label="还款人">
-                    </el-table-column>
-                    <el-table-column
-                      prop="content"
-                      show-overflow-tooltip
-                      label="还款方式">
-                    </el-table-column>
-                    <el-table-column
-                      prop="content"
-                      show-overflow-tooltip
-                      label="确认还款">
-                    </el-table-column>
-                    <el-table-column
-                      prop="content"
-                      show-overflow-tooltip
-                      label="还款日期">
-                    </el-table-column>
-                    <el-table-column
-                      prop="content"
-                      show-overflow-tooltip
-                      label="确认时间">
-                    </el-table-column>
-                    <el-table-column
-                      prop="content"
-                      show-overflow-tooltip
-                      label="备注">
-                    </el-table-column>
-                  </el-table>
-                </div>
-              </el-tab-pane>
+
               <el-tab-pane label="协催" name="9" class="tabs-wrap">
                 <div class="operation">
                   <div class="left-oper">
@@ -755,7 +606,7 @@
                   </div>
                 </div>
                 <el-table
-                  :data="caseDetail.syncList"
+                  :data="syncList"
                   style="width: 100%"
                   class="table-wrap">
                   <el-table-column
@@ -1118,11 +969,13 @@ export default {
     	dialogVisible:false,
     	formInline:{},
     	PhonetypeList:[],
-
+      memorizeList:[],//催記
+      commentList:[],//评语
       addrList:[],//地址
       dataList:[],//案人信息
-
-      activeNames: ['1'],
+      rateUpdateList:[],//利息
+      syncList:[],//协催
+      activeNames: ['1','3'],
       otherActiveName:'1',
       caseDetail:{},
       memorizeType:1,
@@ -1147,6 +1000,22 @@ export default {
       }else if (ind == 2){
         getArchiveDetail(this.id).then(data => {
           this.dataList = data
+        })
+      }else if(ind == 3){//催記
+        getArchiveDetail(this.id).then(data => {
+          this.memorizeList = data
+        })
+      }else if (ind == 4){//评语
+        getCommentDetail(this.id).then(data => {
+          this.commentList = data
+        })
+      }else if (ind == 5){//利息
+        getInterestDetail(this.id).then(data => {
+          this.rateUpdateList = data
+        })
+      }else if (ind == 6){//协催
+        getSynergyDetail(this.id).then(data => {
+          this.syncList = data
         })
       }
     }

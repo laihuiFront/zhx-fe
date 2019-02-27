@@ -15,7 +15,7 @@
   </el-select>
   </el-form-item>
   <el-form-item >
-    <el-select v-model="form.batchNos" filterable  multiple placeholder="请输入批次" clearable>
+    <el-select v-model="form.batchNos" filterable  multiple placeholder="请输入批次号" clearable>
       <el-option
         v-for="item in batchList"
         :key="item.batchNo"
@@ -235,7 +235,7 @@
         :on-success="uploadSuccess"
         :data="{batchNo:scope.row.batchNo}"
   >
-        <el-button type="text" size="small" v-if="scope.row.batchStatus==0">导入</el-button>
+        <el-button type="text" size="small">导入</el-button>
 </el-upload>
         <el-button type="text" size="small" v-if="scope.row.batchStatus==0" @click="downCaseModule">下载</el-button>
         <el-button type="text" size="small" @click="editMessage(scope.row)">编辑</el-button>
@@ -540,8 +540,9 @@ export default {
     }
   },
 methods: {
-		uploadSuccess(){
-  		this.$message({
+		uploadSuccess(res,file,fileList){
+      if (res.code ==100){
+  		    this.$message({
             type: 'success',
             message: '导入成功!'
           });
@@ -549,7 +550,13 @@ methods: {
             this.DataList=response.pageInfo.list
               //this.pages = response.pages
               this.total = response.total
-})
+          })
+      }else{
+        this.$message({
+          type: 'error',
+          message: res.msg
+        });
+      }
   	},
 	deleteMessage(id){
 		let arry=[{id:id}]
@@ -672,7 +679,7 @@ this.search()
 	   Object.id=currentValue.id
 	   _self.deleteList.push(Object)
 	})
-	console.log(_self.deleteList)
+
 },
       resetForm(formName) {
         this.form={time:[]};
@@ -708,7 +715,6 @@ this.search()
 created() {
             dataList().then((response)=>{
             this.DataList=response.pageInfo.list
-             // this.pages = response.pageInfo.pages
               this.total = response.pageInfo.total
 })
               clientList().then((response)=>{

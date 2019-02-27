@@ -22,7 +22,7 @@
     <div class="right-wrap page-wraper-sub">
       <el-form ref="form" :model="queryForm" :inline="true" class="query-wrap">
         <el-form-item>
-          <el-input v-model="queryForm.number" clearable placeholder="请输入员工号"></el-input>
+          <el-input v-model="queryForm.number" clearable placeholder="请输入账号"></el-input>
         </el-form-item>
         <el-form-item>
           <el-input v-model="queryForm.userName" clearable placeholder="请输入员工姓名"></el-input>
@@ -36,8 +36,8 @@
         </el-form-item>
       </el-form>
       <el-table sortable="custom" @sort-change="handleSort" :data="memberList" style="width: 100%" class="table-wrap">
-        <el-table-column :sortable='true' :sort-orders="['ascending','descending']"  prop="number" show-overflow-tooltip label="员工号"></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="userName" label="员工姓名" show-overflow-tooltip></el-table-column>
+        <el-table-column :sortable='true' :sort-orders="['ascending','descending']"  prop="number" show-overflow-tooltip label="账号"></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="sex" label="性别" show-overflow-tooltip width="70"></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="officePhone" label="座机号" show-overflow-tooltip></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="mobile" label="手机" show-overflow-tooltip></el-table-column>

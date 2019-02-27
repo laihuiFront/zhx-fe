@@ -27,6 +27,9 @@
   width="30%"
 >
 <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
+  <el-form-item label="旧密码" prop="pass">
+    <el-input type="password" v-model="ruleForm2.oldPassword" autocomplete="off"></el-input>
+  </el-form-item>
   <el-form-item label="密码" prop="pass">
     <el-input type="password" v-model="ruleForm2.pass" autocomplete="off"></el-input>
   </el-form-item>
@@ -120,7 +123,8 @@ export default {
     submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
+            console.info(this.ruleForm2);
+            this.resetPassword(this.ruleForm2);
           } else {
             console.log('error submit!!');
             return false;
@@ -128,7 +132,8 @@ export default {
         });
       },
     ...mapActions([
-      'logoutAction'
+      'logoutAction',
+      'resetPassword'
     ])
   }
 }

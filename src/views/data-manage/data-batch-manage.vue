@@ -232,7 +232,16 @@
       label="操作"
       width="250">
       <template slot-scope="scope">
-        <el-button @click="handleClick(scope.row)" type="text" size="small" v-has="'追加'">追加</el-button>
+        <el-upload
+          class="upload-demo"
+          action="http://116.62.124.251/zxh/dataCase/newCase/import"
+          :headers="header"
+          :show-file-list=false
+          :on-success="uploadSuccess"
+          :data="{batchNo:scope.row.batchNo}"
+        >
+          <el-button type="text" size="small" v-has="'追加'">追加</el-button>
+        </el-upload>
         <el-button type="text" size="small" @click="returnMessage(scope.row.id)" v-has="'退案'">退案</el-button>
         <el-button type="text" size="small" @click="editMessage(scope.row)" v-has="'编辑'">编辑</el-button>
         <el-button type="text" size="small" @click="deleteMessage(scope.row.id)" v-has="'删除'">删除</el-button>
@@ -404,6 +413,7 @@ export default {
   name: 'dataBatchManage',
    data(){
     return {
+      header:{Authorization:localStorage.token},
     	loading:false,
     	userCount:'',
     	totalAmt:'',
@@ -449,16 +459,27 @@ methods: {
   },
 	selectDataByBatch(){
 		this.loading=true
-  		selectDataBatchExport(this.selectDataCollectExportByBatchList).then((response)=>{
-          	this.loading=false;
-          	this.$message({
-            type: 'success',
-            message: '导出成功!'
-          });
-          })
+    let _self = this;
+    if (this.selectDataCollectExportByBatchList.length>0) {
+      selectDataBatchExport(this.selectDataCollectExportByBatchList).then((response) => {
+        this.loading = false;
+        this.$message({
+          type: 'success',
+          message: '导出成功!'
+        });
+      })
+    }else{
+      this.loading=false;
+      _self.$message({
+        type: 'info',
+        message: '请选择需要导出的数据!'
+      });
+    }
 	},
 	selectDataExport(){
 		this.loading=true
+    let _self = this;
+    if (this.selectDataBatchExportList.length>0){
   		selectDataBatchExport(this.selectDataBatchExportList).then((response)=>{
           	this.loading=false;
           	this.$message({
@@ -466,7 +487,16 @@ methods: {
             message: '导出成功!'
           });
           })
+    }else{
+      this.loading=false;
+      _self.$message({
+        type: 'info',
+        message: '请选择需要导出的数据!'
+      });
+
+    }
 	},
+
 	totalDataExport(){
 			this.loading=true;
 			console.info(1111)
@@ -573,6 +603,23 @@ dataList(this.form.area,this.form.batchNos,this.form.clients,this.form.batchStat
 	this.pageSize=val
 	this.search()
 },
+  uploadSuccess(res,file,fileList){
+    if (res.code ==100){
+      this.$message({
+        type: 'success',
+        message: '导入成功!'
+      });
+      dataList().then((response)=>{
+        this.DataList=response.pageInfo.list
+        this.total = response.total
+      })
+    }else{
+      this.$message({
+        type: 'error',
+        message: res.msg
+      });
+    }
+  },
 handleCurrentChange(val){
 this.pageNum=val;
 this.search()
