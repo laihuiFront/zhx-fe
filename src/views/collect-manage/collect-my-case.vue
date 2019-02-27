@@ -204,13 +204,6 @@
                   >
                   </el-date-picker>
                 </el-form-item>
-                <el-form-item prop="val13">
-                  <el-input
-                    v-model="form.val13"
-                    placeholder="委案金额上限"
-                    clearable
-                  ></el-input>
-                </el-form-item>
                 <el-form-item prop="val29">
                   <el-input
                     v-model="form.val29"
@@ -218,6 +211,14 @@
                     clearable
                   ></el-input>
                 </el-form-item>
+                <el-form-item prop="val13">
+                  <el-input
+                    v-model="form.val13"
+                    placeholder="委案金额上限"
+                    clearable
+                  ></el-input>
+                </el-form-item>
+
                 <el-form-item prop="val14">
                   <el-select
                     v-model="form.val14"

@@ -108,18 +108,18 @@
           <el-form-item prop="val1">
             <el-select
               v-model="form3.val1"
-              placeholder="请选择委托方
+              placeholder="请选择委托方"
               filterable
               multiple
               clearable
             >
               <el-option
                 v-for="item in val1_data"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              >
-              </el-option>
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+            >
+            </el-option>
             </el-select>
           </el-form-item>
           <el-form-item prop="val2">

@@ -15,7 +15,7 @@
   </el-select>
   </el-form-item>
   <el-form-item >
-    <el-select v-model="form.batchNos" filterable  multiple placeholder="请输入批次" clearable>
+    <el-select v-model="form.batchNos" filterable  multiple placeholder="请输入批次号" clearable>
       <el-option
         v-for="item in batchList"
         :key="item.batchNo"
@@ -234,7 +234,7 @@
         :on-success="uploadSuccess"
         :data="{batchNo:scope.row.batchNo}"
   >
-        <el-button type="text" size="small" v-if="scope.row.batchStatus==0">导入</el-button>
+        <el-button type="text" size="small">导入</el-button>
 </el-upload>
         <el-button type="text" size="small" v-if="scope.row.batchStatus==0" @click="downCaseModule">下载</el-button>
         <el-button type="text" size="small" @click="editMessage(scope.row)">编辑</el-button>

@@ -1122,7 +1122,7 @@ export default {
       addrList:[],//地址
       dataList:[],//案人信息
 
-      activeNames: ['1'],
+      activeNames: ['1','3'],
       otherActiveName:'1',
       caseDetail:{},
       memorizeType:1,

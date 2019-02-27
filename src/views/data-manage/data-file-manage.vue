@@ -538,31 +538,33 @@ this.search()
     	  this.form={time:[]}
   	},
       open7() {
-      	let _self=this 
-        _self.$confirm('是否删除?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning',
-          center: true
-        }).then(() => {
-           if(_self.deleteList.length>0){
-           	remoweData(this.deleteList).then((response)=>{
-            _self.$message({
-            type: 'success',
-            message: '删除成功!'
+      	let _self=this
+        if(_self.deleteList.length>0){
+          _self.$confirm('是否删除?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning',
+            center: true
+          }).then(() => {
+            remoweData(this.deleteList).then((response)=>{
+              _self.$message({
+                type: 'success',
+                message: '删除成功!'
+              });
+              _self.search()
+            })
+
+          }).catch(() => {
+
           });
-          _self.search()
-})
-           }else{
-           	_self.$message({
+        }else{
+          _self.$message({
             type: 'info',
             message: '请选择需要删除的数据!'
           });
-           }
-          
-        }).catch(() => {
+        }
 
-        });
+
       },
     handleSort( {column,prop,order}){
       this.sort = order==null?"desc":order.replace("ending","")
