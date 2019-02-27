@@ -953,7 +953,7 @@
 
 <script>
 
-import {getCaseDetail,getAddressDetail,getArchiveDetail,PhonetypeList} from '@/common/js/api-detail'
+import {getCaseDetail,getAddressDetail,getArchiveDetail,getCollectDetail,PhonetypeList,getCommentDetail,getInterestDetail,getSynergyDetail} from '@/common/js/api-detail'
 
 export default {
   name:'caseDetail',
@@ -1002,7 +1002,8 @@ export default {
           this.dataList = data
         })
       }else if(ind == 3){//催記
-        getArchiveDetail(this.id).then(data => {
+        getCollectDetail(this.id,1).then(data => {
+          console.info(data)
           this.memorizeList = data
         })
       }else if (ind == 4){//评语
