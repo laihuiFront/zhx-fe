@@ -67,6 +67,7 @@
   
   <el-table
     :data="tableData3"
+    height="350"
      show-summary
      :summary-method="getSummaries"
     style="width: 100%">

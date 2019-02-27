@@ -41,12 +41,13 @@ export function getArchiveDetail(id) {
 }
 
 //催記
-export function getCollectDetail(id) {
+export function getCollectDetail(id,type) {
   return request({
     url: '/dataCollect/detailCollect',
     method: 'post',
     data: {
-      id
+      caseId:id,
+      detaiType:type
     }
   })
 }

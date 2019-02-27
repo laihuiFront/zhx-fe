@@ -956,7 +956,9 @@
 import {getCaseDetail,
         getAddressDetail,
         getArchiveDetail,
+        getCollectDetail,
         PhonetypeList,
+        getCommentDetail,getInterestDetail,getSynergyDetail,
         updateRemark,
         saveCaseTel} from '@/common/js/api-detail'
 
@@ -1032,7 +1034,8 @@ export default {
           this.dataList = data
         })
       }else if(ind == 3){//催記
-        getArchiveDetail(this.id).then(data => {
+        getCollectDetail(this.id,1).then(data => {
+          console.info(data)
           this.memorizeList = data
         })
       }else if (ind == 4){//评语

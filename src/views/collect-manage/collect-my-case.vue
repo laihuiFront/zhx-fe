@@ -471,6 +471,7 @@
           style="width: 100%"
           :row-class-name="rowColor"
           :cell-style="{ whiteSpace: 'nowrap' }"
+          @row-dblclick="showDetail"
           @selection-change="handleSelectionChange"
           @sort-change="sortHandle"
         >
@@ -940,6 +941,11 @@ export default {
     },
     showCase(row) {
       this.detailVisible = true;
+    },
+    showDetail(row){
+
+      this.detailVisible = true
+
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();

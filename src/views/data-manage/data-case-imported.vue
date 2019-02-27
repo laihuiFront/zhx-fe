@@ -158,6 +158,7 @@
      @selection-change="handleSelectionChange"
     sortable="custom"
     @sort-change="handleSort"
+    height="350"
   >
   <el-table-column
       type="selection"
@@ -531,9 +532,8 @@ export default {
         currentPage4: 1,
     	 form:{
     		time:[],
-    		clientList:[],
-    		areaList:[],
-    		caseTypeList:[],
+    		clients:[],
+    		batchNos:[],
     	},
        
     }
@@ -594,10 +594,18 @@ methods: {
   },
 	editMessage(row){
 		this.dialogVisible2=true
+		console.log(row)
 		this.messageForm=row
-    this.messageForm.client = parseInt(row.client)
-    this.messageForm.caseType = parseInt(row.caseType)
-    this.messageForm.area = parseInt(row.area)
+		if(this.messageForm.client ){
+			this.messageForm.client = parseInt(row.client)
+		}
+		if(this.messageForm.caseType ){
+			this.messageForm.caseType = parseInt(row.caseType)
+		}
+		if(this.messageForm.area ){
+			this.messageForm.area = parseInt(row.area)
+		}
+
 	},
 	submitForm(formName) {
         this.$refs[formName].validate((valid) => {
@@ -605,6 +613,9 @@ methods: {
             addData(this.formInline).then((response)=>{
             	this.dialogVisible=false
             	this.search()
+            	 batchList().then((response)=>{
+    this.batchList=response;
+  })
             	this.$message({
             type: 'success',
             message: '保存成功!'
@@ -628,6 +639,9 @@ methods: {
           	console.log(this.messageForm)
             update(this.messageForm).then((response)=>{
             	this.dialogVisible2=false
+            	 batchList().then((response)=>{
+    this.batchList=response;
+  })
             	this.search()
             	this.$message({
             type: 'success',
@@ -681,34 +695,37 @@ this.search()
 
 },
       resetForm(formName) {
-        this.form={time:[]};
+        this. form={
+    		time:[],
+    		clients:[],
+    		batchNos:[]
+    	}
       },
       open7() {
       	let _self=this 
-        _self.$confirm('是否删除?', '提示', {
+      	if(_self.deleteList.length>0){
+      		_self.$confirm('是否删除?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning',
           center: true
         }).then(() => {
-           if(_self.deleteList.length>0){
            	remoweData(this.deleteList).then((response)=>{
             _self.$message({
             type: 'success',
             message: '删除成功!'
           });
           _self.search()
-})
-           }else{
+}) 
+        }).catch(() => {
+
+        });
+      	} else{
            	_self.$message({
             type: 'info',
             message: '请选择需要删除的数据!'
           });
-           }
-          
-        }).catch(() => {
-
-        });
+          }
       },
     },
 created() {

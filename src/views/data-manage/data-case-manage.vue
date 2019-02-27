@@ -57,7 +57,7 @@
               </el-date-picker>
             </el-form-item>
             <el-form-item>
-              <el-button type="text" :style="images" @click="dialogVisible= true"></el-button>     </el-form-item>
+              <el-button type="text" class='bacImg' :style="images" @click="dialogVisible= true"></el-button>     </el-form-item>
             </el-form-item>
             <el-form-item>
               <el-button type="text" icon="el-icon-search" @click="search">查询</el-button>
@@ -167,6 +167,7 @@
       sortable="custom"
       @row-dblclick="showDetail"
       @sort-change="handleSort"
+      height="350"
     >
       <el-table-column
         type="selection"
@@ -1017,6 +1018,21 @@
     <el-button type="primary" @click=addSynergyFormType>确 定</el-button>
   </span>
     </el-dialog>
+    <el-dialog
+  title="导出查询结果"
+  :visible.sync="dialogVisibleCase"
+  width="30%"
+  >
+  <el-row :gutter="20">
+  <el-col :span="10"><div class="grid-content bg-purple"> 
+  	<el-button @click=totalDataExport>按查询条件全部导出</el-button>
+</div></el-col>
+  <el-col :span="10">
+  	<div class="grid-content bg-purple">  
+  		<el-button @click=pageDataExport>按查询条件导出当前分页</el-button>
+</div></el-col>
+</el-row>
+</el-dialog>
   </div>
 </template>
 
@@ -1030,6 +1046,7 @@
     },
     data(){
       return {
+      	dialogVisibleCase:false,
         detailId: -1,
       	addSynergyForm:{
       		Synergytype:'',
@@ -1189,7 +1206,7 @@
     	  console.info(command,this.deleteList.length)
 
           if(command==="exportTotalCase"){
-            this.exportTotalCase()
+          	this.dialogVisibleCase=true
           }else if(command==="exportSelectCase"){
              this.exportSelectCase()
           }else if(command==="exportTel"){
@@ -1257,11 +1274,26 @@
         	 this.detailVisible8=true
         }
       },
-      exportTotalCase(){
-        totalDataBatchExport(this.formInline).then((response)=>{
-
-        })
-      },
+    totalDataExport(){
+			let startTime=this.formInline.time[0]
+      	let endTime=this.formInline.time[1]
+		totalDataBatchExport(this.formInline.area,this.formInline.batchNos,this.formInline.clients,this.formInline.batchStatus,this.formInline.caseType,startTime,endTime,this.pageSize,this.pageNum).then((response)=>{
+          	this.$message({
+            type: 'success',
+            message: '导出成功!'
+          });
+          })
+	},
+		pageDataExport(){
+			let startTime=this.formInline.time[0]
+      	let endTime=this.formInline.time[1]
+		pageDataBatchExport(this.formInline.area,this.formInline.batchNos,this.formInline.clients,this.formInline.batchStatus,this.formInline.caseType,startTime,endTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
+          	this.$message({
+            type: 'success',
+            message: '导出成功!'
+          });
+          })
+	},
       exportSelectCase(){
           let datasList=[]
         if(this.deleteList.length>=1){
@@ -1651,8 +1683,10 @@
 
 <style lang="scss">
   #data-case-manage{
+  	.el-form-item--mini .el-form-item__content, .el-form-item--mini .el-form-item__labe
     .el-form--inline .el-form-item{
-      margin-right:0px;
+      margin-right:-10px;
+      line-height: 21px;
     }
     .el-dialog__header{
       background-color: #f8f8f8;
