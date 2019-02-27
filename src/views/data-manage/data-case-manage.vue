@@ -1551,8 +1551,8 @@
         this.pageNum=val;
         this.search()
       },
-      resetForm(){
-        this.form={}
+      resetForm(formName) {
+        this.$refs[formName].resetFields();
       },
 
       open7() {

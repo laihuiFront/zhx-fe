@@ -40,3 +40,45 @@ export function getArchiveDetail(id) {
   })
 }
 
+//催記
+export function getCollectDetail(id) {
+  return request({
+    url: '/dataCollect/detailCollect',
+    method: 'post',
+    data: {
+      id
+    }
+  })
+}
+//评语
+export function getCommentDetail(id) {
+  return request({
+    url: '/dataCase/listComment',
+    method: 'post',
+    data: {
+      id
+    }
+  })
+}
+
+//利息
+export function getInterestDetail(id) {
+  return request({
+    url: '/dataCase/listInterest',
+    method: 'post',
+    data: {
+      id
+    }
+  })
+}
+
+//评语
+export function getSynergyDetail(id) {
+  return request({
+    url: '/dataCase/listSynergy',
+    method: 'post',
+    data: {
+      id
+    }
+  })
+}
