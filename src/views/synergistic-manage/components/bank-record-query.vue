@@ -142,31 +142,16 @@
           <li class="condition-item">
             <el-input v-model="queryForm.dataCase.cardNo" clearable placeholder="请输入卡号"></el-input>
           </li>
-          <li class="condition-item">
-            <el-input v-model="queryForm.confirmUser.name" clearable placeholder="请输入确认人"></el-input>
-          </li>
           <li class="condition-item half">
             <el-date-picker
-              @change="confirmTimeChange"
+              @change="submitTimeChange"
               clearable
-              v-model="confirmTime"
-              value-format="yyyy-MM-dd HH:mm:ss"
-              type="datetimerange"
-              range-separator="至"
-              start-placeholder="确认开始日期"
-              end-placeholder="确认结束日期">
-            </el-date-picker>
-          </li>
-          <li class="condition-item half">
-            <el-date-picker
-              @change="repayDateChange"
-              clearable
-              v-model="repayDate"
+              v-model="submitTime"
               value-format="yyyy-MM-dd"
               type="daterange"
               range-separator="至"
-              start-placeholder="还款开始日期"
-              end-placeholder="还款结束日期">
+              start-placeholder="提交开始日期"
+              end-placeholder="提交结束日期">
             </el-date-picker>
           </li>
         </ul>
@@ -201,24 +186,23 @@ export default {
   data(){
     return {
       caseDate:[],
-      expectDate:[],
-      confirmTime:[],
-      repayDate:[],
+      expectDate: [],
+      submitTime: [],
       collectionAreaList:[],
       batchList:[],
-      clientList:[],
-      collectionUserList:[],
-      overdueBillTimeList:[],
+      clientList: [],
+      collectionUserList: [],
+      statusList: [],
+      overdueBillTimeList: [],
       collectStatusList: [],
       caseTypeList: [],
-      statusList:[],
       elTreeParamsDept: {
-        'default-expand-all': true,
+          'default-expand-all': true,
           filterable: false,
           'check-strictly': true,
           data: [],
           props: {
-            children: 'children',
+              children: 'children',
               label: 'orgName',
               value: 'id'
           }
@@ -234,12 +218,13 @@ export default {
               value: 'id'
           }
       },
+      
     }
   },
   created(){
-      this.initPage()
+    this.initPage()
   },
-  methods:{
+  methods: {
     initPage(){
       getEnum('催收区域').then(data => this.collectionAreaList = data)
       getBatchList().then(data=> this.batchList = data)
@@ -253,10 +238,10 @@ export default {
         this.$refs.treeSelectArea.treeDataUpdateFun(data)
       })
       getCollectionUserList().then(data => this.collectionUserList = data)
+      this.statusList = getStatusList()
       getEnum('逾期账龄').then(data => this.overdueBillTimeList = data)
       getEnum('催收状态').then(data => this.collectStatusList = data)
       getEnum('案件类型').then(data => this.caseTypeList = data)
-      this.statusList = getStatusList()
     },
     caseDateChange(val){
       console.log(val)
@@ -277,24 +262,15 @@ export default {
         this.queryForm.dataCase.expectEndTime = null
       }
     },
-    confirmTimeChange(val){
+    submitTimeChange(val){
       if(val){
-        this.queryForm.confirmTimeStart = val[0]
-        this.queryForm.confirmTimeEnd = val[1]
+        this.queryForm.submitTimeStart = val[0]
+        this.queryForm.submitTimeEnd = val[1]
       }else{
-        this.queryForm.confirmTimeStart = null
-        this.queryForm.confirmTimeEnd = null
+        this.queryForm.submitTimeStart = null
+        this.queryForm.submitTimeEnd = null
       }
-    },
-    repayDateChange(val){
-      if(val){
-        this.queryForm.repayDateStart = val[0]
-        this.queryForm.repayDateEnd = val[1]
-      }else{
-        this.queryForm.repayDateStart = null
-        this.queryForm.repayDateEnd = null
-      }
-    },
+    }
   }
 }
 </script>

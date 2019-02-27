@@ -1,10 +1,10 @@
 import request from '@/common/js/request'
 export const dataList = function(form,orderBy,sort,pageSize,pageNum) {
 return request({
-    url: '/legal/pageDataCase',
+    url: '/legal/pageMyDataCase',
     method: 'post',
     data: {
-     
+       legalStatusMsg:form.legalStatusMsg,
        legalNo:form.legalNo,// 案号
 	   cstName:form.cstName,// 姓名
        orderBy:orderBy?orderBy:"id",
@@ -15,6 +15,21 @@ return request({
   })
 }
 
+export const dataList2 = function(form,orderBy,sort,pageSize,pageNum) {
+return request({
+    url: '/legal/pageDataCase',
+    method: 'post',
+    data: {
+       legalStatusMsg:form.legalStatusMsg,
+       legalNo:form.legalNo,// 案号
+	   cstName:form.cstName,// 姓名
+       orderBy:orderBy?orderBy:"id",
+       sort:sort?sort:"desc",
+       pageNum:pageNum ? pageNum : 1,
+       pageSize:pageSize ? pageSize : 10
+    }
+  })
+}
 export const remoweData = function(id) {
 return request({
     url: '/legal/delete',
@@ -36,13 +51,12 @@ return request({
   })
 }
 
-export const addData = function(form,id) {
+export const addData = function(form) {
 return request({
     url: '/legal/save',
     method: 'post',
     data:{
-    id:id,
-    legalStatus:form.legalStatus,// 案件状态   1 已经审核 2审核中 0未申请
+    legalStatusMsg:form.legalStatusMsg,// 案件状态   1 已经审核 2审核中 0未申请
 	identNo:form.identNo, //证件号码
 	legalType:form.legalType,// 案件類型
 	progress:form.progress,// 办案进度
@@ -81,68 +95,5 @@ return request({
     url: '/user/select/role ',
     method: 'post',
     data:{role:"催收员"}
-  })
-}
-
-export const detaildata = function(id) {
-return request({
-    url: '/legal/detail',
-    method: 'post',
-    data: {
-       id:id,
-    }
-  })
-}
-export const deleteHandle = function(id) {
-return request({
-    url: '/legal/deleteHandle',
-    method: 'post',
-    data: {
-       id:id,
-    }
-  })
-}
-export const deleteFee = function(id) {
-return request({
-    url: '/legal/deleteFee',
-    method: 'post',
-    data: {
-       id:id,
-    }
-  })
-}
-
-export const saveHandle = function(form, legalId,id) {
-return request({
-    url: '/legal/saveHandle',
-    method: 'post',
-    data: {
-       id:id,
-       legalId: legalId,
-	   progress:form.progress,//办理进度
-	   handleDate:form.handleDate,// 办理时间
-	   preservationDate:form.preservationDate,//保全费缴纳时间
-	   preservationList:form.preservationList,// 保全资产清单
-	   remark:form.remark//备注
-    }
-  })
-}
-
-export const saveFee = function(form,legalId,id) {
-return request({
-    url: '/legal/saveFee',
-    method: 'post',
-    data: {
-    	id:id,
-       legalId:id,
-	   fee:form.fee,//办理进度
-	   chargeDate:form.chargeDate,// 办理时间
-	   feeType:form.feeType,//保全费缴纳时间
-	   feeTarget:form.feeTarget,// 保全资产清单
-	   payMethod:form.payMethod,//保全费缴纳时间
-	   payee:form.payee,// 保全资产清单
-	   voucher :form.voucher ,// 保全资产清单
-	   remark:form.remark//备注
-    }
   })
 }

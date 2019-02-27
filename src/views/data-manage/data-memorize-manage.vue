@@ -227,8 +227,7 @@
     <el-table-column
       label="操作"
       width="120"
-      align="center"
-      show-overflow-tooltip>
+      align="center">
       <template slot-scope="scope">
         <el-button type="text" size="small" @click="editMessage(scope.row)">编辑</el-button>
         <el-button type="text" size="small" @click="deleteMessage(scope.row.id)">删除</el-button>
@@ -489,7 +488,7 @@ export default {
   name: 'dataMemorizeManage',
   data(){
     return {
-    	  images:{backgroundImage: "url(" + require("./down.png") + ")",padding:"8px 5px 3px 6px"},
+    	  images:{background: "url(" + require("./down.png") + ") repeat-x",padding:"8px 5px 3px 6px",},
     	  loading:false,
     	  caseStatusList:[{name:"未退案",id:0},{name:"正常",id:1},{name:"暂停",id:2},{name:"关档",id:3},{name:"退档",id:4},{name:"全部",id:5}],
     	  EndList:[],
@@ -524,13 +523,21 @@ export default {
   methods: {
   	selectDataCollectExport(){
   		this.loading=true
-  		selectDataExport(this.selectDataCollectExportList).then((response)=>{
-          	this.loading=false;
-          	this.$message({
+      if(this.selectDataCollectExportList.length>=1) {
+        selectDataExport(this.selectDataCollectExportList).then((response) => {
+          this.loading = false;
+          this.$message({
             type: 'success',
             message: '导出成功!'
           });
-          })
+        })
+      }else{
+        this.loading = false;
+        this.$message({
+          type: 'info',
+          message: '请选择数据!'
+        });
+      }
   	},
   	totalDataCollectExport(){
   		this.loading=true;

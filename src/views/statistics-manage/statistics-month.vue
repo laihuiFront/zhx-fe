@@ -54,7 +54,7 @@
   
   </el-form-item>
   <el-form-item>
-  <el-button type="text" icon="el-icon-search">开始统计</el-button> 
+  <el-button type="text" icon="el-icon-search" @click="query()">开始统计</el-button>
   </el-form-item>
   <el-form-item>
   <el-button type="text" icon="el-icon-refresh" @click=clench>重置</el-button> 
@@ -87,7 +87,7 @@
       <el-table-column
         label="有效通电"
         align="center"
-        prop="list[index].countConPhoneNum"
+        prop="countConPhoneNum"
        >
         <template slot-scope="scope">
           {{ scope.row.list[index].countConPhoneNum }}
@@ -96,7 +96,7 @@
       <el-table-column
         label="总通电量"
         align="center"
-        prop="list[index].countPhoneNum"
+        prop="countPhoneNum"
        >
         <template slot-scope="scope">
           {{ scope.row.list[index].countPhoneNum }}
@@ -165,13 +165,18 @@ export default {
     	  getSummaries(param) {
  	     const { columns, data } = param;
                 const sums = [];
+
                 columns.forEach((column, index) => {
+
                     if (index === 0) {
                         sums[index] = '合计';
                         return;
                     }
-                    const values = data.map(item => Number(item[column.property]));
+
+                    const values = data[index-1].list.map(item => Number(item[column.property]));
+
                     if (!values.every(value => isNaN(value))) {
+
                         sums[index] = values.reduce((prev, curr) => {
                             const value = Number(curr);
                             if (!isNaN(value)) {
@@ -180,8 +185,9 @@ export default {
                                 return prev;
                             }
                         }, 0);
-                        sums[index] += ' 元';
+                        sums[index] += ' ';
                     } else {
+
                         sums[index] = 'N/A';
                     }
                 });
@@ -199,7 +205,25 @@ this.pageNum=val;
  	},
  	clench(){
  		this.formInline={}
- 	}
+ 	},
+      query(){
+        dataList(this.formInline).then((response)=>{
+          this.tableData3=response.list
+          this.dataList=[]
+          for(var i=0;i<=response.list[0].list.length;i++){
+            for(var j in response.list[0].list[i]) {
+              // debugger
+              if(j==="area"){
+                let item={area:''}
+                item.area=response.list[0].list[i].area
+                this.dataList.push(item)
+              }
+            }
+
+          }
+          console.log(this.dataList)
+        })
+      }
  },
  created() {
  	 dataList(this.formInline).then((response)=>{

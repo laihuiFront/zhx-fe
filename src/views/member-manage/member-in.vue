@@ -22,7 +22,7 @@
     <div class="right-wrap page-wraper-sub">
       <el-form ref="form" :model="queryForm" :inline="true" class="query-wrap">
         <el-form-item>
-          <el-input v-model="queryForm.number" clearable placeholder="请输入员工号"></el-input>
+          <el-input v-model="queryForm.number" clearable placeholder="请输入账号"></el-input>
         </el-form-item>
         <el-form-item>
           <el-input v-model="queryForm.userName" clearable placeholder="请输入员工姓名"></el-input>
@@ -36,8 +36,8 @@
         </el-form-item>
       </el-form>
       <el-table sortable="custom" @sort-change="handleSort" :data="memberList" style="width: 100%" class="table-wrap">
-        <el-table-column :sortable='true' :sort-orders="['ascending','descending']"  prop="number" show-overflow-tooltip label="员工号"></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="userName" label="员工姓名" show-overflow-tooltip></el-table-column>
+        <el-table-column :sortable='true' :sort-orders="['ascending','descending']"  prop="number" show-overflow-tooltip label="账号"></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="sex" label="性别" show-overflow-tooltip width="70"></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="officePhone" label="座机号" show-overflow-tooltip></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="mobile" label="手机" show-overflow-tooltip></el-table-column>
@@ -95,11 +95,11 @@
         label-width="100px"
         class="demo-ruleForm"
       >
-        <el-form-item label="姓名" prop="userName">
-          <el-input v-model="memberInfo.userName" placeholder="请输入姓名"></el-input>
+        <el-form-item label="用户名" prop="userName">
+          <el-input v-model="memberInfo.userName" placeholder="请输入用户名" @blur="adduserName"></el-input>
         </el-form-item>
-        <el-form-item label="员工号" prop="number">
-          <el-input v-model="memberInfo.number" placeholder="请输入员工号"></el-input>
+        <el-form-item label="账号" prop="number">
+          <el-input :disabled="isTrue" v-model="memberInfo.number" placeholder="请输入账号"></el-input>
         </el-form-item>
         <el-form-item label="部门" prop="department">
           <el-input
@@ -189,11 +189,12 @@
 
 <script>
 import { getDepartmentTree, getRoleList } from '@/common/js/api-setting'
-import { listMember, deleteMember, changeStatus, addMember, updateMember, getUserById, getPositionList } from '@/common/js/api-member'
+import { listMember, deleteMember, changeStatus, addMember, updateMember, getUserById, getPositionList,getLoginName} from '@/common/js/api-member'
 export default {
   name: 'memberIn',
   data () {
     return {
+    	isTrue:true,
       departmentTree: [],
       queryForm: {
         pageNum: 1,
@@ -210,7 +211,7 @@ export default {
       },
       total: 0,
       memberList: [],
-      memberInfo: {},
+      memberInfo: {number:''},
       rules: {
 
       },
@@ -231,6 +232,37 @@ export default {
     })
   },
   methods: {
+  	adduserName(){
+  		if(this.memberInfo.userName){
+  			getLoginName(this.memberInfo.userName).then(response => {
+  				if(response.loginNameCount==0){
+  					console.log(response)
+  					 this.$set(this.memberInfo, 'number', response.loginName)
+  					 this.$set(this.memberInfo, 'loginNameCount', response.loginNameCount)
+  				}else{
+  					this.makeSure(response.loginName,)
+  				}
+    })
+  		}else{
+  			return
+  		}
+  	},
+  	makeSure(name) {
+        this.$confirm('此用户名已重复,是否使用账号'+name+ '', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.isTrue=true
+          this.$set(this.memberInfo, 'number', name)
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          });
+          this.isTrue=false
+        });
+      },
     handleSort({column,prop,order}){
       // console.log(prop,'@',order)
       this.queryForm.orderBy = prop
@@ -253,9 +285,11 @@ export default {
       })
     },
     onClickAdd () {
+      // this.memberInfo.roleList = null
       this.memberInfo = {
         status: 1,
-        enable: 1
+        enable: 1,
+        roleList: []
       }
       this.$set(this.dialogData, 'title', '新增员工')
       this.$set(this.dialogData, 'type', 'add')

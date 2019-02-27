@@ -1,4 +1,5 @@
 import request from '@/common/js/request'
+import download from '@/common/js/download'
 export const dataList = function(area,batchNos,clients,caseType,startTime,endTime,orderBy,sort,pageSize,pageNum) {
 return request({
     url: '/dataBatch/pageDataCase',
@@ -40,6 +41,7 @@ return request({
     url: '/dataBatch/update',
     method: 'post',
     data:{
+    id:form.id,
    area:form.area,//催收区域
    batchNo:form.batchNo,//批次编号
    client:form.client,//委托方
@@ -83,6 +85,25 @@ export  const batchList = function(){
     data:{}
   })
 }
+export const downLoadZip = function() {
+  return download({
+    url: 'fileManage/download',
+    method: 'post',
+    data:{
+
+    }
+  })
+}
+export const downCaseModule = function() {
+  return download({
+    url: 'fileManage/downloadCase',
+    method: 'post',
+    data:{
+
+    }
+  })
+}
+
 export const areaList = function() {
 return request({
     url: '/sys/dictionary/select/list/name',

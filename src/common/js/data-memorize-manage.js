@@ -62,7 +62,7 @@ return request({
   })
 }
 export const selectDataExport = function(id) {
-return request({
+return download({
     url: '/dataCollect/selectDataCollectExport',
     method: 'post',
     data:id
@@ -135,15 +135,15 @@ return request({
 }
 
 export const totalDataExport = function(area,dept,batchNo,clients,odvs,caseStatus,measure,result,identNo,cardNo,collectInfo,color,seqno,bailStartDate,bailEndDate,expectStartTime,expectEndTime,collectStartTime,collectEndTime,orderBy,sort,pageSize,pageNum) {
-return request({
+return download({
     url: 'dataCollect/totalDataCollectExport',
     method: 'post',
     data: {
        area:  area,
        dept:  dept,
        batchNo:  batchNo ,
-       client:  client ,
-       odv:  odv ,
+       client:  clients ,
+       odv:  odvs ,
        caseStatus:  caseStatus ,
        measure:  measure ,
        result:  result,

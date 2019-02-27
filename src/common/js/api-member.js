@@ -18,6 +18,16 @@ export function deleteMember(id) {
   })
 }
 
+export function getLoginName(name) {
+  return request({
+    url: '/user/getLoginName',
+    method: 'post',
+    data: {
+     userName:name
+    }
+  })
+}
+
 export function changeStatus(data){
   return request({
     url: '/user/update/status',

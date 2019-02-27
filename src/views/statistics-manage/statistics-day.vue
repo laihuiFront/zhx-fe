@@ -47,7 +47,7 @@
   
   </el-form-item>
   <el-form-item>
-  <el-button type="text" icon="el-icon-search" @click=dataList()>开始统计</el-button> 
+  <el-button type="text" icon="el-icon-search" @click=query()>开始统计</el-button>
   </el-form-item>
   <el-form-item>
   <el-button type="text" icon="el-icon-refresh" @click=clench>重置</el-button> 
@@ -78,10 +78,13 @@
     </el-table-column>   	
        <el-table-column label="8:00前" align="center">
       <el-table-column
-        prop="list[0].countConPhoneNum"
+        prop="countConPhoneNum"
         label="有效通电"
         align="center"
        >
+        <template slot-scope="scope">
+        {{scope.row.list[0].countConPhoneNum}}
+      </template>
       </el-table-column>
       <el-table-column
         prop="list[0].countPhoneNum"
@@ -253,7 +256,12 @@ this.pageNum=val;
  	},
  	clench(){
  		this.formInline={}
- 	}
+ 	},
+   query(){
+     dataList(this.formInline).then((response)=>{
+       this.tableData3=response.list
+     })
+   }
  },
  created() {
           areaList().then((response)=>{

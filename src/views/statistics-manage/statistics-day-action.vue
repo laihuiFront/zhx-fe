@@ -106,7 +106,7 @@
       prop="countRepay"
      >
      <template slot-scope="scope">
-        <el-button type="text" size="small" >{{scope.row.countRepay}}</el-button>
+        <el-button type="text" size="small" @click="showMessage(scope)">{{scope.row.countRepay}}</el-button>
       </template>
     </el-table-column><el-table-column
       align="center"
@@ -114,7 +114,7 @@
        prop="countConSelf"
      >
      <template slot-scope="scope">
-        <el-button type="text" size="small" >{{scope.row.countConSelf}}</el-button>
+        <el-button type="text" size="small" @click="showMessage(scope)">{{scope.row.countConSelf}}</el-button>
       </template>
     </el-table-column>
     <el-table-column
@@ -123,7 +123,7 @@
       prop="countConVillage"
      >
      <template slot-scope="scope">
-        <el-button type="text" size="small" >{{scope.row.countConVillage}}</el-button>
+        <el-button type="text" size="small" @click="showMessage(scope)">{{scope.row.countConVillage}}</el-button>
       </template>
     </el-table-column>
     <el-table-column
@@ -132,7 +132,7 @@
        prop="countConThird"
      >
      <template slot-scope="scope">
-        <el-button type="text" size="small" >{{scope.row.countConThird}}</el-button>
+        <el-button type="text" size="small" @click="showMessage(scope)">{{scope.row.countConThird}}</el-button>
       </template>
     </el-table-column>
     <el-table-column
@@ -141,7 +141,7 @@
       prop="countConFamily"
      >
      <template slot-scope="scope">
-        <el-button type="text" size="small" >{{scope.row.countConFamily}}</el-button>
+        <el-button type="text" size="small" @click="showMessage(scope)">{{scope.row.countConFamily}}</el-button>
       </template>
     </el-table-column>
     <el-table-column
@@ -150,7 +150,7 @@
       prop="countDeadNumber"
      >
      <template slot-scope="scope">
-        <el-button type="text" size="small" >{{scope.row.countDeadNumber}}</el-button>
+        <el-button type="text" size="small" @click="showMessage(scope)">{{scope.row.countDeadNumber}}</el-button>
       </template>
     </el-table-column>
     <el-table-column
@@ -159,7 +159,7 @@
        prop="countSearchInvalid"
      >
      <template slot-scope="scope">
-        <el-button type="text" size="small" >{{scope.row.countSearchInvalid}}</el-button>
+        <el-button type="text" size="small" @click="showMessage(scope)">{{scope.row.countSearchInvalid}}</el-button>
       </template>
     </el-table-column>
      <el-table-column
@@ -168,7 +168,7 @@
       prop="countNoAnswer"
      >
      <template slot-scope="scope">
-        <el-button type="text" size="small" >{{scope.row.countNoAnswer}}</el-button>
+        <el-button type="text" size="small" @click="showMessage(scope)">{{scope.row.countNoAnswer}}</el-button>
       </template>
     </el-table-column>
      <el-table-column
@@ -177,7 +177,7 @@
       prop="countInvalidCall"
      >
      <template slot-scope="scope">
-        <el-button type="text" size="small" >{{scope.row.countInvalidCall}}</el-button>
+        <el-button type="text" size="small" @click="showMessage(scope)" >{{scope.row.countInvalidCall}}</el-button>
       </template>
     </el-table-column>
     <el-table-column
@@ -200,15 +200,41 @@
       :total="total">
     </el-pagination>
   </div>
+  <el-dialog :title="dialogTitle" :visible.sync="dialogTableVisible"  width="80%">
+  <el-table :data="gridData">
+    <el-table-column property="date" label="通话时间" ></el-table-column>
+    <el-table-column property="name" label="通话对象" ></el-table-column>
+    <el-table-column property="address" label="电话号码"></el-table-column>
+    <el-table-column property="address" label="电话类型"></el-table-column>
+    <el-table-column property="address" label="通话内容"></el-table-column>
+    <el-table-column property="address" label="通话结果"></el-table-column>
+    <el-table-column property="address" label="承诺日期"></el-table-column>
+    <el-table-column property="address" label="承诺金额"></el-table-column>
+    <el-table-column property="address" label="催收员"></el-table-column>
+  </el-table>
+   <div class="block">
+  	 <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="currentPage4"
+      :page-sizes="[10, 20, 30, 40]"
+      :page-size="pages"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total">
+    </el-pagination>
+   </div>
+</el-dialog>
   </div>
 </template>
 
 <script>
-		import {areaList,clientList,PersonList,dataList} from '@/common/js/statistics-day-action.js'
+		import {areaList,clientList,PersonList,dataList,messageList} from '@/common/js/statistics-day-action.js'
 export default {
   name: 'statisticsDayAction',
   data(){
     return {
+    	dialogTitle:'',
+    	dialogTableVisible:false,
     	 currentPage4: 1,
         pages:1,
         total:100,
@@ -219,10 +245,35 @@ export default {
     	PersonList:[],
     	areaList:[],
     	clientList:[],
-    	 tableData3: []
+    	 tableData3: [],
+    	  gridData: [{
+          date: '2016-05-02',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }, {
+          date: '2016-05-04',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }, {
+          date: '2016-05-01',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }, {
+          date: '2016-05-03',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }],
     }
     },
     methods: {
+    	showMessage(row){
+    		this.dialogTableVisible=true
+    		this.dialogTitle=row.column.label
+    		messageList(row,this.formInline).then((response)=>{
+          	this.gridData=response
+          })
+    		
+    	},
     	  getSummaries(param) {
  	     const { columns, data } = param;
                 const sums = [];
@@ -283,6 +334,11 @@ this.pageNum=val;
 </script>
 
 <style lang="scss">
-#statistics-day-action{}
+#statistics-day-action{
+	.el-dialog__header{
+  	background-color: #f8f8f8;
+  
+  }
+}
 </style>
 

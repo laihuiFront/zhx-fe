@@ -2,30 +2,35 @@
   <el-tabs v-model="activeName" type="card">
     <el-tab-pane label="我的案件" name="tab1"
       ><div id="collect-my-case">
-    <el-dialog
-      :title="detailTitle"
-      class="dialog-wrap"
-      :visible.sync="detailVisible"
-      :close-on-click-modal="false"
-      width="90%"
-    >
-      <case-detail></case-detail>
-    </el-dialog>
-    <el-dialog
-      title="申请协催"
-      :visible.sync="dialogVisible"
-      width="30%">
-      <el-input
-        type="textarea"
-        :autosize="{ minRows: 6, maxRows: 14}"
-        placeholder="请输入内容"
-        v-model="textarea3">
-      </el-input>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false;xcHandle()">确 定</el-button>
-      </span>
-    </el-dialog>
+        <el-dialog
+          :title="detailTitle"
+          class="dialog-wrap"
+          :visible.sync="detailVisible"
+          :close-on-click-modal="false"
+          width="90%"
+        >
+          <case-detail></case-detail>
+        </el-dialog>
+        <el-dialog title="申请协催" :visible.sync="dialogVisible" width="30%">
+          <el-input
+            type="textarea"
+            :autosize="{ minRows: 6, maxRows: 14 }"
+            placeholder="请输入内容"
+            v-model="textarea3"
+          >
+          </el-input>
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible = false">取 消</el-button>
+            <el-button
+              type="primary"
+              @click="
+                dialogVisible = false;
+                xcHandle();
+              "
+              >确 定</el-button
+            >
+          </span>
+        </el-dialog>
         <el-row :gutter="24">
           <el-col :span="24">
             <div class="grid-content bg-purple">
@@ -59,12 +64,14 @@
                     filterable
                     remote
                     placeholder="请输入批次号"
-                    :remote-method="querySearch">
+                    :remote-method="querySearch"
+                  >
                     <el-option
                       v-for="item in val1_data"
                       :key="item.value"
                       :label="item.label"
-                      :value="item.value">
+                      :value="item.value"
+                    >
                     </el-option>
                   </el-select>
                 </el-form-item>
@@ -197,13 +204,6 @@
                   >
                   </el-date-picker>
                 </el-form-item>
-                <el-form-item prop="val13">
-                  <el-input
-                    v-model="form.val13"
-                    placeholder="委案金额上限"
-                    clearable
-                  ></el-input>
-                </el-form-item>
                 <el-form-item prop="val29">
                   <el-input
                     v-model="form.val29"
@@ -211,6 +211,14 @@
                     clearable
                   ></el-input>
                 </el-form-item>
+                <el-form-item prop="val13">
+                  <el-input
+                    v-model="form.val13"
+                    placeholder="委案金额上限"
+                    clearable
+                  ></el-input>
+                </el-form-item>
+
                 <el-form-item prop="val14">
                   <el-select
                     v-model="form.val14"
@@ -368,6 +376,19 @@
                     clearable
                   ></el-input>
                 </el-form-item>
+                <el-form-item prop="val31">
+                  <el-date-picker
+                    v-model="form.val31"
+                    value-format="yyyy-MM-dd"
+                    type="daterange"
+                    align="right"
+                    unlink-panels
+                    range-separator="至"
+                    start-placeholder="案件分配起始日期"
+                    end-placeholder="案件分配结束日期"
+                  >
+                  </el-date-picker>
+                </el-form-item>
                 <el-form-item>
                   <el-button
                     type="text"
@@ -390,45 +411,55 @@
           <el-col :span="22">
             <div class="grid-content bg-purple">
               <el-form :inline="true">
-
                 <el-form-item>
                   <el-dropdown trigger="click" @command="colorHandle">
-                  <el-button type="primary">案件标色</el-button>
-                  <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item command="黑">黑色</el-dropdown-item>
-                    <el-dropdown-item command="红">红色</el-dropdown-item>
-                    <el-dropdown-item command="蓝">蓝色</el-dropdown-item>
-                    <el-dropdown-item command="橙">橙色</el-dropdown-item>
-                    <el-dropdown-item command="紫">紫色</el-dropdown-item>
-                    <el-dropdown-item command="棕">棕色</el-dropdown-item>
-                  </el-dropdown-menu>
+                    <el-button type="primary">案件标色</el-button>
+                    <el-dropdown-menu slot="dropdown">
+                      <el-dropdown-item command="黑">黑色</el-dropdown-item>
+                      <el-dropdown-item command="红">红色</el-dropdown-item>
+                      <el-dropdown-item command="蓝">蓝色</el-dropdown-item>
+                      <el-dropdown-item command="橙">橙色</el-dropdown-item>
+                      <el-dropdown-item command="紫">紫色</el-dropdown-item>
+                      <el-dropdown-item command="棕">棕色</el-dropdown-item>
+                    </el-dropdown-menu>
                   </el-dropdown>
                 </el-form-item>
                 <el-form-item>
                   <el-dropdown trigger="click" @command="modStatusHandle">
                     <el-button type="primary" @click="">修改催收状态</el-button>
                     <el-dropdown-menu slot="dropdown">
-                      <el-dropdown-item :command="item.id"
-                                        v-for="(item,i) in val10_data" :key="i">{{item.name}}
+                      <el-dropdown-item
+                        :command="item.id"
+                        v-for="(item, i) in val10_data"
+                        :key="i"
+                        >{{ item.name }}
                       </el-dropdown-item>
                     </el-dropdown-menu>
                   </el-dropdown>
                 </el-form-item>
                 <el-form-item>
-                  <el-button type="primary" @click="dialogVisible=true;">申请协催</el-button>
+                  <el-button type="primary" @click="dialogVisible = true"
+                    >申请协催</el-button
+                  >
                 </el-form-item>
                 <el-form-item>
-                  <span class="color_gray">列表案量:</span> <span>{{fetchData.countCase}}</span>
-                </el-form-item><el-form-item>
-                <span class="color_gray">列表金额:</span> <span>{{fetchData.sumMoney}}</span>
-                </el-form-item><el-form-item>
-                <span class="color_gray">列表还款案量:</span> <span>{{fetchData.countCasePay}}</span>
-                </el-form-item><el-form-item>
-                <span class="color_gray">列表还款数额:</span> <span>{{fetchData.sumPayMoney}}</span>
-                </el-form-item><el-form-item>
-                <span class="color_gray">列表CP值:</span> <span>{{fetchData.sumRepay}}</span>
-                </el-form-item><el-form-item>
-                <span class="color_gray">列表PTP值:</span> <span>{{fetchData.sumBank}}</span>
+                  <span class="color_gray">列表案量:</span>
+                  <span>{{ fetchData.countCase }}</span> </el-form-item
+                ><el-form-item>
+                  <span class="color_gray">列表金额:</span>
+                  <span>{{ fetchData.sumMoney }}</span> </el-form-item
+                ><el-form-item>
+                  <span class="color_gray">列表还款案量:</span>
+                  <span>{{ fetchData.countCasePay }}</span> </el-form-item
+                ><el-form-item>
+                  <span class="color_gray">列表还款数额:</span>
+                  <span>{{ fetchData.sumPayMoney }}</span> </el-form-item
+                ><el-form-item>
+                  <span class="color_gray">列表CP值:</span>
+                  <span>{{ fetchData.sumRepay }}</span> </el-form-item
+                ><el-form-item>
+                  <span class="color_gray">列表PTP值:</span>
+                  <span>{{ fetchData.sumBank }}</span>
                 </el-form-item>
               </el-form>
             </div>
@@ -439,25 +470,28 @@
           :data="tableData"
           style="width: 100%"
           :row-class-name="rowColor"
-          :cell-style="{whiteSpace:'nowrap'}"
+          :cell-style="{ whiteSpace: 'nowrap' }"
           @selection-change="handleSelectionChange"
           @sort-change="sortHandle"
         >
-          <el-table-column
-            type="selection"
-            width="55">
-          </el-table-column>
+          <el-table-column type="selection" width="55"> </el-table-column>
           <el-table-column
             label="个案序列号"
             prop="seqno"
             sortable="custom"
-            :sort-orders="['ascending','descending']"
+            :sort-orders="['ascending', 'descending']"
             min-width="120"
-            header-align="center" align="center">
+            header-align="center"
+            align="center"
+          >
             <template slot-scope="scope">
-              <el-button style="text-decoration: underline" type="text" size="small"
-                         @click="showCase(scope.row)">{{scope
-                .row.seqno}}</el-button>
+              <el-button
+                style="text-decoration: underline"
+                type="text"
+                size="small"
+                @click="showCase(scope.row)"
+                >{{ scope.row.seqno }}</el-button
+              >
             </template>
           </el-table-column>
           <el-table-column
@@ -466,17 +500,17 @@
             v-bind="item"
             sortable="custom"
             min-width="100"
-            :sort-orders="['ascending','descending']"
+            :sort-orders="['ascending', 'descending']"
             header-align="center"
             align="center"
           >
           </el-table-column>
           <!--<el-table-column label="操作" show-overflow-tooltip>-->
-            <!--<template slot-scope="scope">-->
-              <!--<el-button type="text" size="small">导入</el-button>-->
-              <!--<el-button type="text" size="small">下载</el-button>-->
-              <!--<el-button type="text" size="small">编辑</el-button>-->
-            <!--</template>-->
+          <!--<template slot-scope="scope">-->
+          <!--<el-button type="text" size="small">导入</el-button>-->
+          <!--<el-button type="text" size="small">下载</el-button>-->
+          <!--<el-button type="text" size="small">编辑</el-button>-->
+          <!--</template>-->
           <!--</el-table-column>-->
         </el-table>
         <div class="block">
@@ -484,14 +518,14 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="paginationData.currentPage"
-            :page-sizes="[100, 500, 2000, 10000, 1000000]"
+            :page-sizes="[10, 20, 50, 100]"
             :page-size="paginationData.pageSize"
             layout="total, sizes, prev, pager, next, jumper"
-            :total="paginationData.total">
+            :total="paginationData.total"
+          >
           </el-pagination>
-        </div>
-      </div></el-tab-pane
-    >
+        </div></div
+    ></el-tab-pane>
     <el-tab-pane label="催收状况统计" name="tab2"> <tab2></tab2> </el-tab-pane>
     <el-tab-pane label="我的还款统计" name="tab3"> <tab3></tab3> </el-tab-pane>
   </el-tabs>
@@ -500,8 +534,15 @@
 <script>
 import tab2 from "./collect-status-statistics";
 import tab3 from "./collect-repayment-statistics";
-import { pageMyCase,getEnum,markColor ,addSynergy,batchNo,addCollectStatus} from "@/common/js/collect-my-case";
-import CaseDetail from '@/views/data-manage/detail';
+import {
+  pageMyCase,
+  getEnum,
+  markColor,
+  addSynergy,
+  batchNo,
+  addCollectStatus
+} from "@/common/js/collect-my-case";
+import CaseDetail from "@/views/data-manage/detail";
 export default {
   components: {
     tab2,
@@ -511,13 +552,13 @@ export default {
   name: "collectMyCase",
   data() {
     return {
-      paginationData:{
-        pageSize:10,
-        total:0,
-        currentPage:1
+      paginationData: {
+        pageSize: 10,
+        total: 0,
+        currentPage: 1
       },
-      dialogVisible:false,
-      textarea3: '',
+      dialogVisible: false,
+      textarea3: "",
       activeName: "tab1",
       //表格数据
       tableData: [],
@@ -552,12 +593,13 @@ export default {
         val27: "", //电话号码
         val28: "", //催收记录
         val29: "", //委案金额下限
-        val30: "" //跟进次数下限
+        val30: "", //跟进次数下限
+        val31: "", //案件分配
       },
-      val0_data: [],  //委托方
-      val1_data: [],  //批次号
-      val4_data: [],  //地区
-      val8_data: [],  //逾期账龄
+      val0_data: [], //委托方
+      val1_data: [], //批次号
+      val4_data: [], //地区
+      val8_data: [], //逾期账龄
       // 未退案0/正常1/暂停2/关档3/退档4/全部5
       val9_data: [
         { label: "全部", value: 5 },
@@ -567,47 +609,47 @@ export default {
         { label: "关档", value: 3 },
         { label: "退档", value: 4 }
       ],
-      val10_data: [],  //催收状态
-      val11_data: [],  //案件类型
+      val10_data: [], //催收状态
+      val11_data: [], //案件类型
       val14_data: [
         {
-          label:'黑色',
-          value:'黑'
+          label: "黑色",
+          value: "黑"
         },
         {
-          label:'红色',
-          value:'红'
+          label: "红色",
+          value: "红"
         },
         {
-          label:'蓝色',
-          value:'蓝'
+          label: "蓝色",
+          value: "蓝"
         },
         {
-          label:'橙色',
-          value:'橙'
+          label: "橙色",
+          value: "橙"
         },
         {
-          label:'紫色',
-          value:'紫'
+          label: "紫色",
+          value: "紫"
         },
         {
-          label:'棕色',
-          value:'棕'
-        },
-      ],   //标色状态
+          label: "棕色",
+          value: "棕"
+        }
+      ], //标色状态
       val19_data: [{ label: "是", value: 1 }, { label: "否", value: 0 }],
       val20_data: [
         {
-          label:'已结清',
-          value:1
+          label: "已结清",
+          value: 1
         },
         {
-          label:'未结清',
-          value:0
+          label: "未结清",
+          value: 0
         }
       ], //还款状况
-      val24_data: [],  //减免状态
-      val25_data: [],  //报备状态
+      val24_data: [], //减免状态
+      val25_data: [], //报备状态
       tableCol_data: [
         {
           prop: "countFollow",
@@ -619,7 +661,7 @@ export default {
         },
         {
           prop: "nextFollDate",
-          width:"140",
+          width: "140",
           label: "下次跟进日期"
         },
         {
@@ -637,12 +679,12 @@ export default {
 
         {
           prop: "caseDate",
-          width:"140",
+          width: "140",
           label: "委案日期"
         },
         {
           prop: "expectTime",
-          width:"140",
+          width: "140",
           label: "预计退案日期"
         },
         {
@@ -675,40 +717,43 @@ export default {
         },
         {
           prop: "enRepayAmt",
-          width:"140",
+          width: "140",
           label: "已还款金额"
         },
         {
           prop: "repayAmt",
-          width:"150",
+          width: "150",
           label: "承诺还款金额"
         },
         {
           prop: "bankAmt",
-          width:"150",
+          width: "150",
           label: "待银行查账金额"
         },
         {
           prop: "lastPhoneTime",
-          width:"150",
+          width: "150",
           label: "上次通电时间"
         },
         {
           prop: "leaveDays",
           label: "闲置天数"
+        },{
+          prop: "caseAllotTime",
+          label: "案件分配日期"
         },
         {
           prop: "collectInfo",
-          width:"180",
+          width: "180",
           label: "催收小结"
         }
       ],
       multipleSelection: [],
       detailVisible: false,
-      detailTitle: '案件详情',
-      sort:{
-        orderBy: 'id',
-        sort:'desc'
+      detailTitle: "案件详情",
+      sort: {
+        orderBy: "id",
+        sort: "desc"
       }
     };
   },
@@ -734,8 +779,8 @@ export default {
         val15: cardNo,
         val16: archiveNo,
         val17,
-        val18:countFollowStart,
-        val30:countFollowEnd,
+        val18: countFollowStart,
+        val30: countFollowEnd,
         val19: newCase,
         val20: repayStatus,
         val21,
@@ -744,16 +789,17 @@ export default {
         val24: reliefStatus,
         val25: reportStatus,
         val27: telPhone,
-        val28: collectMeasure
+        val28: collectMeasure,
+        val31
       } = this.form;
       return {
         clients,
         batchNos,
         seqno,
-        caseDateStart:(!!val7 && val7[0])||'' ,
-        caseDateEnd:(!!val7 && val7[1])||'' ,
-        nextFollDateStart: (!!val2 && val2[0])||'' ,
-        nextFollDateEnd: (!!val2 && val2[1])||'',
+        caseDateStart: (!!val7 && val7[0]) || "",
+        caseDateEnd: (!!val7 && val7[1]) || "",
+        nextFollDateStart: (!!val2 && val2[0]) || "",
+        nextFollDateEnd: (!!val2 && val2[1]) || "",
         area,
         targetName,
         idenNo,
@@ -762,20 +808,22 @@ export default {
         collectStatus,
         caseType,
         repayStatus,
-        repayTimeStart: (!!val12 && val12[0])||'',
-        repayTimeEnd: (!!val12 && val12[1])||'',
+        repayTimeStart: (!!val12 && val12[0]) || "",
+        repayTimeEnd: (!!val12 && val12[1]) || "",
         moneyStart,
         moneyEnd,
         color,
         cardNo,
         archiveNo,
-        lastFollDateStart: (!!val17&&val17[0])||'',
-        lastFollDateEnd: (!!val17&&val17[1])||'',
+        lastFollDateStart: (!!val17 && val17[0]) || "",
+        lastFollDateEnd: (!!val17 && val17[1]) || "",
         countFollowStart,
         countFollowEnd,
         newCase,
-        expectTimeStart: (!!val21&&val21[0])||'',
-        expectTimeEnd: (!!val21&&val21[1])||'',
+        expectTimeStart: (!!val21 && val21[0]) || "",
+        expectTimeEnd: (!!val21 && val21[1]) || "",
+        caseAllotTimeStart: (!!val31 && val31[0]) || "",
+        caseAllotTimeEnd: (!!val31 && val31[1]) || "",
         remark,
         collectionType,
         reliefStatus,
@@ -784,9 +832,9 @@ export default {
         collectMeasure,
         pageNum: this.paginationData.currentPage,
         pageSize: this.paginationData.pageSize,
-        sType:0,
+        sType: 0,
         orderBy: this.sort.orderBy,
-        sort: this.sort.sort,
+        sort: this.sort.sort
       };
     }
   },
@@ -798,31 +846,31 @@ export default {
       deep: true
     }
   },
-  created(){
+  created() {
     this.init();
   },
   methods: {
-    sortHandle({prop,order}){
-      this.sort.sort = order.replace('ending', '');
+    sortHandle({ prop, order }) {
+      this.sort.sort = order.replace("ending", "");
       this.sort.orderBy = prop;
       this.getMainData();
     },
     //查询批次号
-    querySearch(queryString){
-      batchNo({batchNo:queryString}).then((data)=>{
-        this.val1_data = data.reduce((acc,item)=>{
+    querySearch(queryString) {
+      batchNo({ batchNo: queryString }).then(data => {
+        this.val1_data = data.reduce((acc, item) => {
           acc.push({
-            value:item.batchNo
-          })
+            value: item.batchNo
+          });
           return acc;
-        },[]);
+        }, []);
       });
     },
-    handleCurrentChange(currentPage){
+    handleCurrentChange(currentPage) {
       this.paginationData.currentPage = currentPage;
       this.getMainData();
     },
-    handleSizeChange(pageSize){
+    handleSizeChange(pageSize) {
       this.paginationData.pageSize = pageSize;
       this.getMainData();
     },
@@ -830,66 +878,68 @@ export default {
     searchHandle() {
       this.getMainData();
     },
-    rowColor({row}){
+    rowColor({ row }) {
       return `color_${row.color}`;
     },
-    modStatusHandle(id){
+    modStatusHandle(id) {
       console.log(id);
-      let data = this.multipleSelection.reduce((acc,item)=>{
+      let data = this.multipleSelection.reduce((acc, item) => {
         acc.push({
-          id:item.id,
-          collectStatus:id
-        })
+          id: item.id,
+          collectStatus: id
+        });
         return acc;
-      },[]);
-      addCollectStatus(data).then(()=>{
+      }, []);
+      addCollectStatus(data).then(() => {
         this.getMainData();
       });
     },
-    colorHandle(color){
-      let data = this.multipleSelection.reduce((acc,item)=>{
+    colorHandle(color) {
+      let data = this.multipleSelection.reduce((acc, item) => {
         acc.push({
-          id:item.id,
+          id: item.id,
           color
-        })
+        });
         return acc;
-      },[]);
-      markColor(data).then((data)=>{
+      }, []);
+      markColor(data).then(data => {
         this.getMainData();
       });
     },
     //申请协催
-    xcHandle(){
-      if(this.multipleSelection.length==0){return;}
-      let data = this.multipleSelection.reduce((acc,item)=>{
+    xcHandle() {
+      if (this.multipleSelection.length == 0) {
+        return;
+      }
+      let data = this.multipleSelection.reduce((acc, item) => {
         acc.push({
-          id:item.id,
-          synergyContext:this.textarea3
-        })
+          id: item.id,
+          synergyContext: this.textarea3
+        });
         return acc;
-      },[]);
+      }, []);
 
-      addSynergy(data).then(()=>{
+      addSynergy(data).then(() => {
         this.$message({
-          message: '提交成功',
-          type: 'success'
+          message: "提交成功",
+          type: "success"
         });
       });
     },
-    getMainData(){
-      pageMyCase(this.realFetchFormData).then((data)=>{
-        if(!data){
-          data = {total:0,list:[]}
+    getMainData() {
+      pageMyCase(this.realFetchFormData).then(data => {
+        if (!data) {
+          data = { total: 0, list: [] };
         }
         this.fetchData = data;
         this.paginationData.total = data.total;
-        this.tableData = data.list.map((item)=>{
-          return Object.assign(item, {'class-name': `color_${item.color}`});
-        })
+        this.tableData = data.list.map(item => {
+          return Object.assign(item, { "class-name": `color_${item.color}` });
+        });
       });
     },
-    showCase(row){
-      this.detailVisible=true;
+    showCase(row) {
+      this.detailVisible = true;
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
@@ -898,7 +948,7 @@ export default {
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
-    transform(data,obj=[['name','label'],['id','value']]){
+    transform(data, obj = [["name", "label"], ["id", "value"]]) {
       return data.reduce((acc, item) => {
         for (let [key, tarKey] of obj) {
           item[tarKey] = item[key];
@@ -907,21 +957,21 @@ export default {
         return acc;
       }, []);
     },
-    getEnumHandle(name,target,transData){
-      getEnum({name}).then((data)=>{
-        this[target] = this.transform(data,transData);
+    getEnumHandle(name, target, transData) {
+      getEnum({ name }).then(data => {
+        this[target] = this.transform(data, transData);
       });
     },
-    init(){
+    init() {
       this.getMainData();
-      this.getEnumHandle('委托方', 'val0_data');
-      this.getEnumHandle('地区', 'val4_data');
-      this.getEnumHandle('逾期账龄', 'val8_data');
-      this.getEnumHandle('催收状态', 'val10_data');
-      this.getEnumHandle('案件类型', 'val11_data');
-      this.getEnumHandle('减免状态', 'val24_data');
-      this.getEnumHandle('报备状态', 'val25_data');
-    },
+      this.getEnumHandle("委托方", "val0_data");
+      this.getEnumHandle("地区", "val4_data");
+      this.getEnumHandle("逾期账龄", "val8_data");
+      this.getEnumHandle("催收状态", "val10_data");
+      this.getEnumHandle("案件类型", "val11_data");
+      this.getEnumHandle("减免状态", "val24_data");
+      this.getEnumHandle("报备状态", "val25_data");
+    }
   }
 };
 </script>
@@ -934,19 +984,19 @@ export default {
   color: #000000;
 }
 .color_RED {
-  color: #FF0000;
+  color: #ff0000;
 }
 .color_BLUE {
-  color: #0000FF;
+  color: #0000ff;
 }
 .color_ORANGE {
-  color: #FA8072;
+  color: #fa8072;
 }
 .color_ZI {
-  color: #A020F0;
+  color: #a020f0;
 }
-.color_ZONG{
-  color: #D2B48C;
+.color_ZONG {
+  color: #d2b48c;
 }
 #collect-my-case {
 }

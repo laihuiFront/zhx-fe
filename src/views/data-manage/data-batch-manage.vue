@@ -111,7 +111,7 @@
       width="55">
     </el-table-column>
     <el-table-column
-    	prop="area"
+    	prop="areaMsg"
       :sortable='true'
       min-width="140"
       :sort-orders="['ascending','descending']"
@@ -127,7 +127,7 @@
       >
     </el-table-column>
     <el-table-column
-      prop="client"
+      prop="clientMsg"
       :sortable='true'
       :sort-orders="['ascending','descending']"
       label="委托方"
@@ -167,7 +167,7 @@
       </template>
     </el-table-column>
    <el-table-column
-      prop="caseType"
+      prop="caseTypeMsg"
       label="案件类型"
       :sortable='true'
       min-width="120"
@@ -231,11 +231,20 @@
       label="操作"
       width="250">
       <template slot-scope="scope">
-        <el-button @click="handleClick(scope.row)" type="text" size="small" v-has="'追加'">追加</el-button>
+        <el-upload
+          class="upload-demo"
+          action="http://116.62.124.251/zxh/dataCase/newCase/import"
+          :headers="header"
+          :show-file-list=false
+          :on-success="uploadSuccess"
+          :data="{batchNo:scope.row.batchNo}"
+        >
+          <el-button type="text" size="small" v-has="'追加'">追加</el-button>
+        </el-upload>
         <el-button type="text" size="small" @click="returnMessage(scope.row.id)" v-has="'退案'">退案</el-button>
         <el-button type="text" size="small" @click="editMessage(scope.row)" v-has="'编辑'">编辑</el-button>
         <el-button type="text" size="small" @click="deleteMessage(scope.row.id)" v-has="'删除'">删除</el-button>
-        <el-button type="text" size="small" v-has="'导出催记'">导出催记</el-button>
+        <el-button type="text" size="small" v-has="'导出催记'" @click="exportCollect(scope.row)">导出催记</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -263,11 +272,11 @@
   >
   <el-row :gutter="20">
   <el-col :span="10"><div class="grid-content bg-purple"> 
-  	<el-button click=totalDataExport>按查询条件全部导出</el-button>
+  	<el-button @click=totalDataExport>按查询条件全部导出</el-button>
 </div></el-col>
   <el-col :span="10">
   	<div class="grid-content bg-purple">  
-  		<el-button click=pageDataExport>按查询条件导出当前分页</el-button>
+  		<el-button @click=pageDataExport>按查询条件导出当前分页</el-button>
 </div></el-col>
 </el-row>
 </el-dialog>
@@ -403,6 +412,7 @@ export default {
   name: 'dataBatchManage',
    data(){
     return {
+      header:{Authorization:localStorage.token},
     	loading:false,
     	userCount:'',
     	totalAmt:'',
@@ -436,19 +446,39 @@ export default {
     }
   },
 methods: {
+  exportCollect(row){
+        var arr = [{"id":row.id}];
+    selectDataBatchExport(arr).then((response)=>{
+      this.loading=false;
+      this.$message({
+        type: 'success',
+        message: '导出成功!'
+      });
+    })
+  },
 	selectDataByBatch(){
-		debugger
 		this.loading=true
-  		selectDataBatchExport(this.selectDataCollectExportByBatchList).then((response)=>{
-          	this.loading=false;
-          	this.$message({
-            type: 'success',
-            message: '导出成功!'
-          });
-          })
+    let _self = this;
+    if (this.selectDataCollectExportByBatchList.length>0) {
+      selectDataBatchExport(this.selectDataCollectExportByBatchList).then((response) => {
+        this.loading = false;
+        this.$message({
+          type: 'success',
+          message: '导出成功!'
+        });
+      })
+    }else{
+      this.loading=false;
+      _self.$message({
+        type: 'info',
+        message: '请选择需要导出的数据!'
+      });
+    }
 	},
 	selectDataExport(){
 		this.loading=true
+    let _self = this;
+    if (this.selectDataBatchExportList.length>0){
   		selectDataBatchExport(this.selectDataBatchExportList).then((response)=>{
           	this.loading=false;
           	this.$message({
@@ -456,9 +486,19 @@ methods: {
             message: '导出成功!'
           });
           })
+    }else{
+      this.loading=false;
+      _self.$message({
+        type: 'info',
+        message: '请选择需要导出的数据!'
+      });
+
+    }
 	},
+
 	totalDataExport(){
 			this.loading=true;
+			console.info(1111)
 			let startTime=this.form.time[0]
       	let endTime=this.form.time[1]
 		totalDataBatchExport(this.form.area,this.form.batchNos,this.form.clients,this.form.batchStatus,this.form.caseType,startTime,endTime,this.pageSize,this.pageNum).then((response)=>{
@@ -473,7 +513,7 @@ methods: {
 			this.loading=true;
 			let startTime=this.form.time[0]
       	let endTime=this.form.time[1]
-		pageDataBatchExport(this.form.area,this.form.batchNos,this.form.clients,this.form.batchStatus,this.form.caseType,startTime,endTime,this.pageSize,this.pageNum).then((response)=>{
+		pageDataBatchExport(this.form.area,this.form.batchNos,this.form.clients,this.form.batchStatus,this.form.caseType,startTime,endTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
           	this.loading=false;
           	this.$message({
             type: 'success',
@@ -503,6 +543,9 @@ methods: {
 		console.log(row)
 		this.dialogVisible2=true
 		this.messageForm=row
+    this.messageForm.client = parseInt(row.client)
+    this.messageForm.caseType = parseInt(row.caseType)
+    this.messageForm.area = parseInt(row.area)
 	},
   handleSort( {column,prop,order}){
     let startTime=this.form.time[0]
@@ -559,6 +602,23 @@ dataList(this.form.area,this.form.batchNos,this.form.clients,this.form.batchStat
 	this.pageSize=val
 	this.search()
 },
+  uploadSuccess(res,file,fileList){
+    if (res.code ==100){
+      this.$message({
+        type: 'success',
+        message: '导入成功!'
+      });
+      dataList().then((response)=>{
+        this.DataList=response.pageInfo.list
+        this.total = response.total
+      })
+    }else{
+      this.$message({
+        type: 'error',
+        message: res.msg
+      });
+    }
+  },
 handleCurrentChange(val){
 this.pageNum=val;
 this.search()
@@ -575,7 +635,7 @@ this.search()
 	   Object.id=currentValue.id
 	   _self.deleteList.push(Object)
 	   _self.selectDataBatchExportList.push(Object)
-	   _self.selectDataBatchExportList.push(Project)
+	   //_self.selectDataBatchExportList.push(Project)
 	})
 	console.log(_self.deleteList)
 },
