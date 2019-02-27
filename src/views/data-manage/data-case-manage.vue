@@ -1022,7 +1022,7 @@
 
 <script>
   import CaseDetail from './detail'
-  import {dataList,LeaveList,areaList,batchList,caseTypeList,addressList,TellList,collectStatusList,deleteStatusList,accountAgeList,clientList,EndList,PersonList,departmentList,searchList,fenan1,fenan2,addpingyu,caseStatus,deteleCase,colorList,addMValue,addCollectArea,addCollectStatus,addImportant,addSynergy,selectDataTel,selectDataCollect} from '@/common/js/data-case-manage.js'
+  import {dataList,LeaveList,areaList,batchList,caseTypeList,addressList,TellList,collectStatusList,deleteStatusList,accountAgeList,clientList,EndList,PersonList,departmentList,searchList,fenan1,fenan2,addpingyu,caseStatus,deteleCase,colorList,addMValue,addCollectArea,addCollectStatus,addImportant,addSynergy,selectDataTel,selectDataCollect,selectDataCaseExport,totalDataBatchExport} from '@/common/js/data-case-manage.js'
   export default {
     name: 'dataCaseManage',
     components: {
@@ -1186,23 +1186,18 @@
 
     	},
       handleExport(command){
-    	  console.info(command)
-        if(this.deleteList.length>=1){
+    	  console.info(command,this.deleteList.length)
+
           if(command==="exportTotalCase"){
-
+            this.exportTotalCase()
           }else if(command==="exportSelectCase"){
-
+             this.exportSelectCase()
           }else if(command==="exportTel"){
             this.exportTel();
           }else if(command==="exportCollect"){
             this.exportCollect();
           }
-        }else{
-          this.$message({
-            type: 'error',
-            message: '请选择数据!'
-          });
-        }
+
       },
       handleCommand(command){
       	
@@ -1263,12 +1258,31 @@
         }
       },
       exportTotalCase(){
+        totalDataBatchExport(this.formInline).then((response)=>{
 
+        })
       },
       exportSelectCase(){
+          let datasList=[]
+        if(this.deleteList.length>=1){
+          for (var i=0;i<this.deleteList.length;i++){
+            let dataObject={}
+            dataObject.id=this.deleteList[i].id
+            datasList.push(dataObject)
+          }
+          selectDataCaseExport(datasList).then((response)=>{
+
+          })
+        }else{
+          this.$message({
+            type: 'error',
+            message: '请选择数据!'
+          });
+        }
 
       },
       exportTel(){
+
         let datasList=[]
         for (var i=0;i<this.deleteList.length;i++){
           let dataObject={}
@@ -1308,6 +1322,7 @@
       })
       },
        fenanchecktwo(){
+       	console.log('12',this.fenan.odv)
          fenan2(this.formInline,this.fenan.odv).then((response)=>{
        this.$message({
           type: 'success',

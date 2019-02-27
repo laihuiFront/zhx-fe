@@ -257,7 +257,7 @@
                     <el-button>显示全部电话</el-button>
                   </div>
                   <div class="right-oper">
-                    <el-button type="primary">新增电话</el-button>
+                    <el-button type="primary" @click="addPhone">新增电话</el-button>
                     <el-button type="primary">批量新增电话</el-button>
                     <el-button type="primary">批量电催</el-button>
                     <el-button type="primary">同步共债</el-button>
@@ -1052,11 +1052,58 @@
         </div>
       </el-collapse-item>
     </el-collapse>
+    <el-dialog
+  title="新增电话"
+  :visible.sync="dialogVisible"
+  width="45%"
+  append-to-body
+  >
+ <el-form :inline="true" :model="formInline" class="demo-form-inline">
+  <el-form-item label="姓名">
+    <el-input v-model="formInline.name" placeholder="请输入姓名"></el-input>
+  </el-form-item>
+、  <el-form-item label="关系">
+    <el-input v-model="formInline.relation" placeholder="请输入关系"></el-input>
+  </el-form-item>
+  、  <el-form-item label="电话">
+    <el-input v-model="formInline.tel" placeholder="请输入电话"></el-input>
+  </el-form-item>
+  <el-form-item label="分类">
+            <el-select v-model="formInline.type" placeholder="请选择分类" clearable>
+              <el-option
+                v-for="item in PhonetypeList"
+                :key="item.id"
+                :label="item.name"
+                :value="item.name">
+              </el-option>
+            </el-select>
+          </el-form-item>
+           <el-form-item label="状态">
+            <el-select v-model="formInline.status" placeholder="请选择状态" clearable>
+              <el-option
+                v-for="item in statusList"
+                :key="item.id"
+                :label="item.name"
+                :value="item.name">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="备注" style="width: 90%;">
+            <el-input type="textarea" v-model="formInline.remark" style="width: 180%;"></el-input>
+          </el-form-item>
+</el-form>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+  </span>
+</el-dialog>
   </div>
 </template>
 
 <script>
-import {getCaseDetail,getAddressDetail,getArchiveDetail} from '@/common/js/api-detail'
+
+import {getCaseDetail,getAddressDetail,getArchiveDetail,PhonetypeList} from '@/common/js/api-detail'
+
 export default {
   name:'caseDetail',
   props:{
@@ -1067,15 +1114,25 @@ export default {
   },
   data() {
     return {
+
+    	dialogVisible:false,
+    	formInline:{},
+    	PhonetypeList:[],
+
       addrList:[],//地址
       dataList:[],//案人信息
+
       activeNames: ['1'],
       otherActiveName:'1',
       caseDetail:{},
-      memorizeType:1
+      memorizeType:1,
+      statusList:[{name:"有效",id:1,},{name:"无效",id:2,},{name:"未知",id:3,},]
     }
   },
   methods: {
+  	addPhone(){
+  		this.dialogVisible=true
+  	},
     queryDetail(){
       getCaseDetail(this.id).then(data => {
         this.caseDetail = data
@@ -1093,6 +1150,11 @@ export default {
         })
       }
     }
+  },
+  created() {
+  	PhonetypeList().then((response)=>{
+        this.PhonetypeList=response
+      })
   }
 }
 </script>
