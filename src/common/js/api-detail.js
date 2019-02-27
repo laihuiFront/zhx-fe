@@ -9,3 +9,23 @@ export function getCaseDetail(id) {
     }
   })
 }
+//地址
+export function getAddressDetail(id) {
+  return request({
+    url: '/dataCase/detail/addressList',
+    method: 'post',
+    data: {
+      id
+    }
+  })
+}
+//案人信息
+export function getArchiveDetail(id) {
+  return request({
+    url: '/dataArchive/findAll',
+    method: 'post',
+    data: {
+      id
+    }
+  })
+}
