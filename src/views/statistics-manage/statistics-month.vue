@@ -75,6 +75,7 @@
   <el-table
     :data="tableData3"
      show-summary
+     height="350"
      :summary-method="getSummaries"
     style="width: 100%">
     <el-table-column

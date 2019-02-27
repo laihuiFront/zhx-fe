@@ -72,11 +72,14 @@ export const initPageMenu = function({state, commit}, toPath) {
   }
 }
 
-export function resetPassword(data) {
+export function resetPassword(form) {
   return request({
     method:'post',
     url:'/user/passwordReset',
-    data
+    data:{
+    	oldPassword:form.oldPassword,
+    	password:form.pass
+    }
   })
 }
 
