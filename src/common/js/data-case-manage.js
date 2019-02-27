@@ -325,7 +325,7 @@ export const addSynergy = function(datasList) {
   })
 }
 export const totalDataBatchExport = function(form) {
-  return request({
+  return download({
     url: '/dataCase/totalDataBatchExport',
     method: 'post',
     data: {

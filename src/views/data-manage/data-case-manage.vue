@@ -1186,10 +1186,10 @@
 
     	},
       handleExport(command){
-    	  console.info(command)
-        if(this.deleteList.length>=1){
+    	  console.info(command,this.deleteList.length)
+
           if(command==="exportTotalCase"){
-            this.totalDataBatchExport()
+            this.exportTotalCase()
           }else if(command==="exportSelectCase"){
              this.exportSelectCase()
           }else if(command==="exportTel"){
@@ -1197,12 +1197,7 @@
           }else if(command==="exportCollect"){
             this.exportCollect();
           }
-        }else{
-          this.$message({
-            type: 'error',
-            message: '请选择数据!'
-          });
-        }
+
       },
       handleCommand(command){
       	
@@ -1263,20 +1258,28 @@
         }
       },
       exportTotalCase(){
-     totalDataBatchExport(this.formInline).then((response)=>{
+        totalDataBatchExport(this.formInline).then((response)=>{
 
         })
       },
       exportSelectCase(){
           let datasList=[]
-        for (var i=0;i<this.deleteList.length;i++){
-          let dataObject={}
-          dataObject.id=this.deleteList[i].id
-          datasList.push(dataObject)
-        }
-        selectDataCaseExport(datasList).then((response)=>{
+        if(this.deleteList.length>=1){
+          for (var i=0;i<this.deleteList.length;i++){
+            let dataObject={}
+            dataObject.id=this.deleteList[i].id
+            datasList.push(dataObject)
+          }
+          selectDataCaseExport(datasList).then((response)=>{
 
-        })
+          })
+        }else{
+          this.$message({
+            type: 'error',
+            message: '请选择数据!'
+          });
+        }
+
       },
       exportTel(){
 

@@ -253,13 +253,14 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.isTrue=false
+          this.isTrue=true
           this.$set(this.memberInfo, 'number', name)
         }).catch(() => {
           this.$message({
             type: 'info',
             message: '已取消'
-          });          
+          });
+          this.isTrue=false
         });
       },
     handleSort({column,prop,order}){
