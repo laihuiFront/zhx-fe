@@ -99,3 +99,43 @@ export function saveCaseTel(data){
     data
   })
 }
+
+export function getTelList(id){
+  return request({
+    url: '/dataCase/detail/telList',
+    method: 'post',
+    data:{id}
+  })
+}
+
+export function delTel(id){
+  return request({
+    url: '/dataCase/delCaseTel',
+    method: 'post',
+    data:{id}
+  })
+}
+
+export function updateTelStatus(data){
+  return request({
+    url: '/tel/updateStatus',
+    method: 'post',
+    data
+  })
+}
+
+export function addComment(data){
+  return request({
+    url: '/dataCase/addComment',
+    method: 'post',
+    data
+  })
+}
+
+export function listComment(id){
+  return request({
+    url: '/dataCase/listComment',
+    method: 'post',
+    data:{id}
+  })
+}

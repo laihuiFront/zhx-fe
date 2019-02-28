@@ -167,10 +167,29 @@
             </el-form-item>
             <el-form-item label="最新评语" class="whole">
               <div class="content-wrap">
-                 <el-button size="small" type="text" icon="el-icon-plus" title="添加"></el-button>
+                <el-popover
+                  placement="bottom-start"
+                  title="添加评语"
+                  width="400"
+                  trigger="click"
+                  v-model="addCommentVisible">
+                  <div>
+                    <el-input
+                      type="textarea"
+                      :rows="4"
+                      placeholder="请输入评语"
+                      v-model="commentAddContent">
+                    </el-input>
+                  </div>
+                  <div style="text-align: right; margin-top: 12px">
+                    <el-button size="mini" type="text" @click="addCommentVisible = false">取消</el-button>
+                    <el-button type="primary" size="mini" @click="onClickAddComment">确定</el-button>
+                  </div>
+                 <el-button size="small" type="text" icon="el-icon-plus" title="添加" slot="reference"></el-button>
+                </el-popover>
                  <ul class="comments-wrap">
-                   <li v-for="(item) in caseDetail.zxpy" :key="item.id" class="item">
-                     {{item.time}} {{item.user}} : {{item.text}}
+                   <li v-for="(item) in commentList" :key="item.id" class="item">
+                     {{item.createTime}} {{item.creatUserName}} : {{item.comment}}
                    </li>
                  </ul>
               </div>
@@ -251,9 +270,9 @@
               <el-tab-pane label="电话" name="1" class="tabs-wrap">
                 <div class="operation">
                   <div class="left-oper">
-                    <el-button>标记为有效</el-button>
-                    <el-button>标记为未知</el-button>
-                    <el-button>标记为无效</el-button>
+                    <el-button @click="changePhoneStatus('有效')">标记为有效</el-button>
+                    <el-button @click="changePhoneStatus('未知')">标记为未知</el-button>
+                    <el-button @click="changePhoneStatus('无效')">标记为无效</el-button>
                     <el-button>显示全部电话</el-button>
                   </div>
                   <div class="right-oper">
@@ -264,6 +283,7 @@
                   </div>
                 </div>
                 <el-table
+                  @selection-change="onSelectPhoneRow"
                   :data="caseDetail.dataCaseTelEntityList"
                   style="width: 100%"
                   class="table-wrap">
@@ -288,7 +308,7 @@
                     label="关系">
                   </el-table-column>
                   <el-table-column
-                    prop="type"
+                    prop="typeMsg"
                     label="类型">
                   </el-table-column>
                   <el-table-column
@@ -300,8 +320,8 @@
                     width="250">
                     <template slot-scope="scope">
                       <el-button type="text">历史记录</el-button>
-                      <el-button type="text">编辑</el-button>
-                      <el-button type="text">删除</el-button>
+                      <el-button type="text" @click="editPhone(scope.row)">编辑</el-button>
+                      <el-button type="text" @click="deleteTel(scope.row.id)">删除</el-button>
                       <el-button type="text">停止跟进</el-button>
                     </template>
                   </el-table-column>
@@ -913,10 +933,10 @@
   <el-form-item label="姓名">
     <el-input v-model="formInline.name" placeholder="请输入姓名"></el-input>
   </el-form-item>
-、  <el-form-item label="关系">
+  <el-form-item label="关系">
     <el-input v-model="formInline.relation" placeholder="请输入关系"></el-input>
   </el-form-item>
-  、  <el-form-item label="电话">
+    <el-form-item label="电话">
     <el-input v-model="formInline.tel" placeholder="请输入电话"></el-input>
   </el-form-item>
   <el-form-item label="分类">
@@ -925,12 +945,12 @@
                 v-for="item in PhonetypeList"
                 :key="item.id"
                 :label="item.name"
-                :value="item.name">
+                :value="item.id+''">
               </el-option>
             </el-select>
           </el-form-item>
            <el-form-item label="状态">
-            <el-select v-model="formInline.telStatus" placeholder="请选择状态" clearable>
+            <el-select v-model="formInline.telStatusMsg" placeholder="请选择状态" clearable>
               <el-option
                 v-for="item in statusList"
                 :key="item.id"
@@ -960,7 +980,12 @@ import {getCaseDetail,
         PhonetypeList,
         getCommentDetail,getInterestDetail,getSynergyDetail,
         updateRemark,
-        saveCaseTel} from '@/common/js/api-detail'
+        saveCaseTel,
+        getTelList,
+        delTel,
+        updateTelStatus,
+        addComment,
+        listComment} from '@/common/js/api-detail'
 
 export default {
   name:'caseDetail',
@@ -972,7 +997,8 @@ export default {
   },
   data() {
     return {
-
+      addCommentVisible:false,
+      commentAddContent:null,
       dialogVisible:false,
     	formInline:{},
     	PhonetypeList:[],
@@ -986,7 +1012,8 @@ export default {
       otherActiveName:'1',
       caseDetail:{},
       memorizeType:1,
-      statusList:[{name:"有效",id:1,},{name:"无效",id:2,},{name:"未知",id:3,},]
+      statusList:[{name:"有效",id:1,},{name:"无效",id:2,},{name:"未知",id:3,}],
+      phoneSelectList: []
     }
   },
   methods: {
@@ -1006,8 +1033,15 @@ export default {
       }
       saveCaseTel(result).then(res=>{
         if(this.phoneEditType === 'add'){
+          // this.caseDetail.dataCaseTelEntityList.push(res)
+          getTelList(this.id).then(data=>{
+            this.$set(this.caseDetail,'dataCaseTelEntityList',data)
+          })
           this.$message('新增电话成功')
         }else{
+          getTelList(this.id).then(data=>{
+            this.$set(this.caseDetail,'dataCaseTelEntityList',data)
+          })
           this.$message('修改电话成功')
         }
         this.dialogVisible = false
@@ -1017,7 +1051,69 @@ export default {
       this.formInline = {}
       this.phoneEditType = 'add'
   		this.dialogVisible=true
-  	},
+    },
+    editPhone(phone, index){
+      this.formInline = {...phone}
+      this.phoneEditType = 'edit'
+      this.dialogVisible = true
+    },
+    deleteTel(id){
+      this.$confirm('此操作将删除该电话且无法恢复,是否继续？', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          delTel(id).then(res=>{
+            getTelList(this.id).then(data=>{
+              this.$set(this.caseDetail,'dataCaseTelEntityList',data)
+            })
+            this.$message('删除电话成功')
+          })
+        }).catch(() => {
+          
+        });
+    },
+    changePhoneStatus(status){
+      if(!this.phoneSelectList.length){
+        this.$message('请勾选需要修改的电话号码')
+        return
+      }
+
+      this.$confirm('确认修改电话状态？','提示',{
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(()=>{
+        const data = this.phoneSelectList.map(item => {
+          return {
+            id: item.id,
+            telStatusMsg: status
+          }
+        })
+        updateTelStatus(data).then(()=>{
+          getTelList(this.id).then(data=>{
+            this.$set(this.caseDetail,'dataCaseTelEntityList',data)
+          })
+          this.$message('电话状态修改成功')
+        })
+      }).catch(()=>{})
+    },
+    onClickAddComment(){
+      if(!this.commentAddContent){
+        this.$message('请输入评语内容')
+        return
+      }
+      addComment([{
+        id: this.id,
+        comment: this.commentAddContent
+      }]).then(res => {
+        this.$message('评语添加成功')
+        getCommentDetail(this.id).then(data => {
+          this.commentList = data
+          this.addCommentVisible = false
+        })
+      })
+    },
     queryDetail(){
       getCaseDetail(this.id).then(data => {
         this.caseDetail = data
@@ -1051,12 +1147,18 @@ export default {
           this.syncList = data
         })
       }
+    },
+    onSelectPhoneRow(val){
+      this.phoneSelectList = val
     }
   },
   created() {
   	PhonetypeList().then((response)=>{
         this.PhonetypeList=response
       })
+    getCommentDetail(this.id).then(data => {
+      this.commentList = data
+    })
   }
 }
 </script>
