@@ -83,3 +83,10 @@
     }
   }
 }
+
+input{
+  color: #000 !important;
+  &::placeholder{
+    color: #d1d1d1 !important;
+  }
+}
