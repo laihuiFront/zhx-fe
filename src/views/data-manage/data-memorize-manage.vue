@@ -302,7 +302,7 @@
 </template>
 
 <script>
-import {search,dataList,areaList,pageDataExport,selectDataExport,totalDataExport,sectionList,caseTypeList,clientList,EndList,PersonList,departmentList,deleteDataCollectRecord,updateDataCollectRecord} from '@/common/js/data-memorize-manage.js'
+import {search,dataList,areaList,pageDataExport,selectDataExport,totalDataExport,sectionList,remoweData,caseTypeList,clientList,EndList,PersonList,departmentList,deleteDataCollectRecord,updateDataCollectRecord} from '@/common/js/data-memorize-manage.js'
 export default {
   name: 'dataMemorizeManage',
   data(){
@@ -459,8 +459,8 @@ pageDataExport(this.formInline.area,this.formInline.dept,this.formInline.batchNo
   		let _self=this
   		_self.deleteList=[]
   		_self.selectDataCollectExportList=[]
-	row.forEach(function(currentValue, index, arr){
-		let Object={"id":""}
+	    row.forEach(function(currentValue, index, arr){
+		  let Object={"id":""}
 	   Object.id=currentValue.id
 	   _self.deleteList.push(Object)
 	   _self.selectDataCollectExportList.push(Object)
@@ -486,8 +486,10 @@ this.search()
           type: 'warning',
           center: true
         }).then(() => {
+          console.info(1)
            if(_self.deleteList.length>0){
-           	remoweData(this.deleteList).then((response)=>{
+             console.info(2)
+           	remoweData(_self.deleteList).then((response)=>{
             _self.$message({
             type: 'success',
             message: '删除成功!'

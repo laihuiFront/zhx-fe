@@ -16,145 +16,145 @@
               <el-input v-model="caseDetail.client" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="批次号">
-              <el-input v-model="caseDetail.pch" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.batchNo" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="委案日期">
-              <el-date-picker v-model="caseDetail.warq" type="date" :disabled="true"  placeholder="选择日期"></el-date-picker>
+              <el-date-picker v-model="caseDetail.caseDate" type="date" :disabled="true"  placeholder="选择日期"></el-date-picker>
             </el-form-item>
             <el-form-item label="证件号">
-              <el-input v-model="caseDetail.zjh" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.identNo" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="卡号">
-              <el-input v-model="caseDetail.kh" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.cardNo" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="催收状态">
-              <el-input v-model="caseDetail.cszt" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.collectStatus" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="预计退案日">
-              <el-date-picker v-model="caseDetail.yjtar" type="date" :disabled="true"  placeholder="选择日期"></el-date-picker>
+              <el-date-picker v-model="caseDetail.expectTime" type="date" :disabled="true"  placeholder="选择日期"></el-date-picker>
             </el-form-item>
             <el-form-item label="委案金额">
-              <el-input v-model="caseDetail.warq" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.money" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="人民币">
               <el-input v-model="caseDetail.rmb" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="港币">
-              <el-input v-model="caseDetail.gb" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.hkd" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="外币">
-              <el-input v-model="caseDetail.wb" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.foreignCurrency" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="已还款">
-              <el-input v-model="caseDetail.yhk" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.enRepayAmt" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="逾期账龄">
-              <el-input v-model="caseDetail.yqzl" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.accountAge" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="逾期天数">
-              <el-input v-model="caseDetail.yqts" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.overdueDays" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="币种">
-              <el-input v-model="caseDetail.bz" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.currencyType" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="最新欠款" class="half">
-              <el-input v-model="caseDetail.zxqk" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.latestOverdueMoney" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="地区">
-              <el-input v-model="caseDetail.dq" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.area" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="催收手别">
-              <el-input v-model="caseDetail.cssb" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.collectHand" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="本金">
-              <el-input v-model="caseDetail.bj" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.principle" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="剩余本金">
-              <el-input v-model="caseDetail.sybj" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.residualPrinciple" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="贷款日期">
-              <el-date-picker v-model="caseDetail.dkrq" type="date" placeholder="选择日期" :disabled="true" ></el-date-picker>
+              <el-date-picker v-model="caseDetail.loanDate" type="date" placeholder="选择日期" :disabled="true" ></el-date-picker>
             </el-form-item>
             <el-form-item label="逾期期数">
-              <el-input v-model="caseDetail.yqqs" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.overduePeriods" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="贷款利率">
-              <el-input v-model="caseDetail.dkll" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.loanRate" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="每月还款">
-              <el-input v-model="caseDetail.myhk" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.monthlyRepayments" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="逾期金额">
-              <el-input v-model="caseDetail.yqje" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.overdueMoney" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="预期本金">
-              <el-input v-model="caseDetail.yqbj" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.overduePrinciple" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="逾期利息">
-              <el-input v-model="caseDetail.yqlx" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.overdueInterest" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="逾期罚息">
-              <el-input v-model="caseDetail.yqfx" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.overdueDefaultInterest" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="违约金">
-              <el-input v-model="caseDetail.wyj" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.penalty" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="滞纳金">
-              <el-input v-model="caseDetail.znj" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.lateFee" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="手机">
-              <el-input v-model="caseDetail.sj" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.tel" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="家庭号码">
-              <el-input v-model="caseDetail.jthm" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.homeTelNumber" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="单位号码">
-              <el-input v-model="caseDetail.dwhm" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.unitTelNumber" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="家庭地址" class="whole">
-              <el-input v-model="caseDetail.jtdz" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.homeAddress" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="单位名称" class="whole">
-              <el-input v-model="caseDetail.dwmc" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.unitName" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="单位地址" class="whole">
-              <el-input v-model="caseDetail.dwdz" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.unitAddress" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="户籍地址" class="whole">
-              <el-input v-model="caseDetail.hjdz" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.censusRegisterAddress" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="对账单地址" class="whole">
-              <el-input v-model="caseDetail.dzddz" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.statementAddress" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="PTP金额">
-              <el-input v-model="caseDetail.ptp" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.proRepayAmt" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="CP金额">
-              <el-input v-model="caseDetail.cp" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.bankAmt" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="委案期数">
-              <el-input v-model="caseDetail.waqs" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.entrustPeriods" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="最低还款额">
-              <el-input v-model="caseDetail.zdhke" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.minimumPayment" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="下次跟进日期" class="half">
-              <el-input v-model="caseDetail.xcgjrq" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.nextFollowDate" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="委托日期">
-              <el-date-picker v-model="caseDetail.wtrq" type="date" :disabled="true"  placeholder="选择日期"></el-date-picker>
+              <el-date-picker v-model="caseDetail.caseDate" type="date" :disabled="true"  placeholder="选择日期"></el-date-picker>
             </el-form-item>
             <el-form-item label="跟进次数">
-              <el-input v-model="caseDetail.gjcs" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.collectTimes" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="催收区域">
-              <el-input v-model="caseDetail.csqy" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.collectArea" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="催收员">
-              <el-input v-model="caseDetail.csy" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.odv" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="最近催记时间">
-              <el-date-picker v-model="caseDetail.zjcjsj" :disabled="true"  type="datetime" placeholder="选择日期时间"></el-date-picker>
+              <el-date-picker v-model="caseDetail.latestCollectMomorize" :disabled="true"  type="datetime" placeholder="选择日期时间"></el-date-picker>
             </el-form-item>
             <el-form-item label="最后外访">
               <el-input v-model="caseDetail.zhwf" :disabled="true" ></el-input>
@@ -163,7 +163,7 @@
               <el-date-picker v-model="caseDetail.zdshsj" type="datetime" :disabled="true"  placeholder="选择日期时间"></el-date-picker>
             </el-form-item>
             <el-form-item label="催收小结" class="width-75">
-              <el-input v-model="caseDetail.csxj" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.collectInfo" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="最新评语" class="whole">
               <div class="content-wrap">
@@ -262,8 +262,289 @@
             <el-form-item label="分配历史">
               <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
             </el-form-item>
+            <el-form-item label="家庭邮编">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="单位邮编">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="对账邮编">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="户籍邮编">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="账号">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="开户行">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="主副卡">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="副卡卡人">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="未出账金额">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="账单日">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="账单周期">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="固定额度">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="最后消费日">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="最后消费日">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="逾期日期">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="曾逾期次数">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="保证金">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="超限费">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="公司佣金">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="还款期限">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="逾期管理费">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="信用额度">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="信贷分类">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="拖欠级别">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="账户名称">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="已还期数">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="催收分类">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="贷款截止日">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="生日">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="年龄">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="QQ">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="邮箱">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="职位">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="部门">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="商品">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="商户">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="申请单号">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="档案号">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="社保电脑号">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="社保卡号">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人1姓名">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人1证件">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人1家庭电话">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人1单位电话">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人1手机">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人1单位">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人1地址">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="">
+
+            </el-form-item>
+            <el-form-item label="联系人2姓名">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人2证件">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人2家庭电话">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人2单位电话">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人2手机">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人2单位">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人2地址">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="">
+            </el-form-item>
+            <el-form-item label="联系人3姓名">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人3证件">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人3家庭电话">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人3单位电话">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人3手机">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人3单位">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人3地址">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="">
+            </el-form-item>
+            <el-form-item label="联系人4姓名">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人4证件">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人4家庭电话">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人4单位电话">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人4手机">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人4单位">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人4地址">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="">
+            </el-form-item>
+            <el-form-item label="联系人5姓名">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人5证件">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人5家庭电话">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人5单位电话">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人5手机">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人5单位">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人5地址">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="">
+
+            </el-form-item>
+            <el-form-item label="联系人6姓名">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人6证件">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人6家庭电话">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人6单位电话">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人6手机">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人6单位">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人6地址">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="原催收记录">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="备注1">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="备注2">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="备注3">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="备注4">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="备注5">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="备注6">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
           </el-form>
         </div>
+      </el-collapse-item>
+      <el-collapse-item title="" name="4">
         <div class="other-wrap">
           <div class="left-wrap">
             <el-tabs v-model="otherActiveName" type="card" @tab-click="showPanel">
@@ -1008,7 +1289,7 @@ export default {
       dataList:[],//案人信息
       rateUpdateList:[],//利息
       syncList:[],//协催
-      activeNames: ['1','3'],
+      activeNames: ['1','4'],
       otherActiveName:'1',
       caseDetail:{},
       memorizeType:1,

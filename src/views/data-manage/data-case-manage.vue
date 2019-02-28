@@ -149,12 +149,12 @@
       <el-col :span="18">
         <div class="grid-content bg-purple">
           <span>查询结果统计：</span>
-          <span class="textColor">列表案量：{{totalCaseNum}}件</span>
-          <span class="textColor">列表金额：{{totalAmt}}</span>
-          <span class="textColor">列表还款量：{{repayNum}}</span>
-          <span class="textColor">列表还款额：{{repayTotalAmt}}</span>
-          <span class="textColor">列表CP值：{{totalCp}}</span>
-          <span class="textColor">列表PTP值：{{totalPtp}}</span>
+          <span class="textColor">列表案量:{{totalCaseNum}}件, </span>
+          <span class="textColor"> 列表金额:{{totalAmt}}, </span>
+          <span class="textColor"> 列表还款量:{{repayNum}}, </span>
+          <span class="textColor"> 列表还款额:{{repayTotalAmt}}, </span>
+          <span class="textColor"> 列表CP值:{{totalCp}}, </span>
+          <span class="textColor"> 列表PTP值:{{totalPtp}}</span>
         </div>
       </el-col>
     </el-row>
@@ -1284,6 +1284,17 @@
           });
           })
 	},
+      formatMoney(value,places, symbol, thousand, decimal) {
+        places = !isNaN(places = Math.abs(places)) ? places : 2;
+        symbol = symbol !== undefined ? symbol : "¥";
+        thousand = thousand || ",";
+        decimal = decimal || ".";
+        var number = value,
+          negative = number < 0 ? "-" : "",
+          i = parseInt(number = Math.abs(+number || 0).toFixed(places), 10) + "",
+          j = (j = i.length) > 3 ? j % 3 : 0;
+        return symbol + negative + (j ? i.substr(0, j) + thousand : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousand) + (places ? decimal + Math.abs(number - i).toFixed(places).slice(2) : "");
+      },
 		pageDataExport(){
 			let startTime=this.formInline.time[0]
       	let endTime=this.formInline.time[1]
@@ -1514,11 +1525,11 @@
         this.formInline.sort = this.sort;
         dataList(this.formInline).then((response)=>{
           this.totalCaseNum=response.totalCaseNum
-          this.totalAmt = response.totalAmt
-          this.repayTotalAmt= response.repayTotalAmt
+          this.totalAmt = this.formatMoney(response.totalAmt,0, "￥")
+          this.repayTotalAmt= this.formatMoney(response.repayTotalAmt,0, "￥")
           this.repayNum = response.repayNum
-          this.totalCp = response.totalCp
-          this.totalPtp = response.totalPtp
+          this.totalCp = this.formatMoney(response.totalCp,0, "￥")
+          this.totalPtp = this.formatMoney(response.totalPtp,0, "￥")
           this.tableData3=response.pageInfo.list
           //this.pages = response.pages
           this.total = response.pageInfo.total
@@ -1543,11 +1554,11 @@
         let caseDateEnd=this.formInline.time6==null?"":this.formInline.time6[1]
         searchList(this.formInline.area,this.formInline.batchNos,this.formInline.clients,this.formInline.caseType,caseDateStart,caseDateEnd,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
           this.totalCaseNum=response.totalCaseNum
-          this.totalAmt = response.totalAmt
-          this.repayTotalAmt= response.repayTotalAmt
+          this.totalAmt = this.formatMoney(response.totalAmt,0, "￥")
+          this.repayTotalAmt= this.formatMoney(response.repayTotalAmt,0, "￥")
           this.repayNum = response.repayNum
-          this.totalCp = response.totalCp
-          this.totalPtp = response.totalPtp
+          this.totalCp = this.formatMoney(response.totalCp,0, "￥")
+          this.totalPtp = this.formatMoney(response.totalPtp,0, "￥")
           this.tableData3=response.pageInfo.list
 
           //this.pages = response.pages
@@ -1564,11 +1575,11 @@
         let caseDateEnd=this.formInline.time6==null?"":this.formInline.time6[1]
         searchList(this.formInline.area,this.formInline.batchNos,this.formInline.clients,this.formInline.caseType,caseDateStart,caseDateEnd,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
           this.totalCaseNum=response.totalCaseNum
-          this.totalAmt = response.totalAmt
-          this.repayTotalAmt= response.repayTotalAmt
+          this.totalAmt = this.formatMoney(response.totalAmt,0, "￥")
+          this.repayTotalAmt= this.formatMoney(response.repayTotalAmt,0, "￥")
           this.repayNum = response.repayNum
-          this.totalCp = response.totalCp
-          this.totalPtp = response.totalPtp
+          this.totalCp = this.formatMoney(response.totalCp,0, "￥")
+          this.totalPtp = this.formatMoney(response.totalPtp,0, "￥")
           this.tableData3=response.pageInfo.list
 
           //this.pages = response.pages
@@ -1626,11 +1637,11 @@
       searchList().then((response)=>{
         this.tableData3=response.pageInfo.list
         this.totalCaseNum=response.totalCaseNum
-        this.totalAmt = response.totalAmt
-        this.repayTotalAmt= response.repayTotalAmt
+        this.totalAmt = this.formatMoney(response.totalAmt,0, "￥")
+        this.repayTotalAmt= this.formatMoney(response.repayTotalAmt,0, "￥")
         this.repayNum = response.repayNum
-        this.totalCp = response.totalCp
-        this.totalPtp = response.totalPtp
+        this.totalCp = this.formatMoney(response.totalCp,0, "￥")
+        this.totalPtp = this.formatMoney(response.totalPtp,0, "￥")
         this.total = response.pageInfo.total
         this.tableData3 = response.pageInfo.list.map((item)=>{
           return Object.assign(item, {'class-name': `color_${item.color}`});

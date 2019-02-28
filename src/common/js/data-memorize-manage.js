@@ -69,11 +69,11 @@ return download({
   })
 }
 
-export const remoweData = function(id) {
+export const remoweData = function(ids) {
 return request({
     url: '/dataCollect/delete',
     method: 'post',
-    data:id
+    data:ids
   })
 }
 

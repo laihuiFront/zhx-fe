@@ -92,8 +92,8 @@
   <el-col :span="18">
   	<div class="grid-content bg-purple">
   		<span>查询结果统计：</span>
-	<span class="textColor">列表户数：{{userCount}}</span>
-  		<span class="textColor">列表金额：￥{{totalAmt}}</span>
+	<span class="textColor">列表户数:{{userCount}}, </span>
+  		<span class="textColor"> 列表金额:{{totalAmt}}</span>
   	</div>
   </el-col>
    </el-row>
@@ -566,6 +566,8 @@ methods: {
 dataList(this.form.area,this.form.batchNos,this.form.clients,this.form.batchStatus,this.form.caseType,startTime,endTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
 
             this.DataList=response.pageInfo.list
+            this.total = response.pageInfo.total
+            this.totalAmt=this.formatMoney(response.totalAmt,0, "￥");
             //this.pages = response.pageInfo.pages
             this.total = response.pageInfo.total
 })
@@ -611,14 +613,28 @@ dataList(this.form.area,this.form.batchNos,this.form.clients,this.form.batchStat
 	this.pageSize=val
 	this.search()
 },
+  formatMoney(value,places, symbol, thousand, decimal) {
+    places = !isNaN(places = Math.abs(places)) ? places : 2;
+    symbol = symbol !== undefined ? symbol : "¥";
+    thousand = thousand || ",";
+    decimal = decimal || ".";
+    var number = value,
+      negative = number < 0 ? "-" : "",
+      i = parseInt(number = Math.abs(+number || 0).toFixed(places), 10) + "",
+      j = (j = i.length) > 3 ? j % 3 : 0;
+    return symbol + negative + (j ? i.substr(0, j) + thousand : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousand) + (places ? decimal + Math.abs(number - i).toFixed(places).slice(2) : "");
+  },
   uploadSuccess(res,file,fileList){
+    console.info(res)
     if (res.code ==100){
       this.$message({
         type: 'success',
-        message: '导入成功!'
+        message: res.msg
       });
       dataList().then((response)=>{
         this.DataList=response.pageInfo.list
+        this.total = response.pageInfo.total
+        this.totalAmt=this.formatMoney(response.totalAmt,0, "￥");
         this.total = response.total
       })
     }else{
@@ -683,7 +699,7 @@ this.search()
               this.DataList=response.pageInfo.list
               //this.pages = response.pageInfo.pages
               this.total = response.pageInfo.total
-              this.totalAmt=response.totalAmt;
+              this.totalAmt=this.formatMoney(response.totalAmt,0, "￥");
               this.userCount=response.userCount;
             })
               clientList().then((response)=>{
