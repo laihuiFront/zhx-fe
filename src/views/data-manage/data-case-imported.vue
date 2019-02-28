@@ -237,7 +237,7 @@
   >
         <el-button type="text" size="small">导入</el-button>
 </el-upload>
-        <el-button type="text" size="small" v-if="scope.row.batchStatus==0" @click="downCaseModule">下载</el-button>
+        <el-button type="text" size="small" v-if="scope.row.batchStatus==0" @click="downCaseModule(scope.row)">下载</el-button>
         <el-button type="text" size="small" @click="editMessage(scope.row)">编辑</el-button>
         <el-button type="text" size="small" @click="deleteMessage(scope.row.id)">删除</el-button>
       </template>
@@ -586,9 +586,9 @@ methods: {
 
     })
   },
-  downCaseModule(){
-	
-    downCaseModule().then((response)=> {
+  downCaseModule(row){
+
+    downCaseModule(row.batchNo).then((response)=> {
 
     })
   },
