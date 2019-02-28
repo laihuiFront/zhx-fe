@@ -454,17 +454,23 @@
                 <el-button type="primary" @click="dialogVisible=true;">申请协催</el-button>
               </el-form-item>
               <el-form-item>
-                <span class="color_gray">列表案量:</span> <span>{{fetchData.countCase}}</span>
-              </el-form-item><el-form-item>
-              <span class="color_gray">列表金额:</span> <span>{{fetchData.sumMoney}}</span>
-            </el-form-item><el-form-item>
-              <span class="color_gray">列表还款案量:</span> <span>{{fetchData.countCasePay}}</span>
-            </el-form-item><el-form-item>
-              <span class="color_gray">列表还款数额:</span> <span>{{fetchData.sumPayMoney}}</span>
-            </el-form-item><el-form-item>
-              <span class="color_gray">列表CP值:</span> <span>{{fetchData.sumRepay}}</span>
-            </el-form-item><el-form-item>
-              <span class="color_gray">列表PTP值:</span> <span>{{fetchData.sumBank}}</span>
+                <span class="color_gray">列表案量:</span>
+                <span>{{ fetchData.countCase }}, </span> </el-form-item
+              ><el-form-item>
+              <span class="color_gray"> 列表金额:</span>
+              <span>{{ fetchData.sumMoney }}, </span> </el-form-item
+            ><el-form-item>
+              <span class="color_gray"> 列表还款案量:</span>
+              <span>{{ fetchData.countCasePay }}, </span> </el-form-item
+            ><el-form-item>
+              <span class="color_gray"> 列表还款数额:</span>
+              <span>{{ fetchData.sumPayMoney }}, </span> </el-form-item
+            ><el-form-item>
+              <span class="color_gray"> 列表CP值:</span>
+              <span>{{ fetchData.sumRepay }}, </span> </el-form-item
+            ><el-form-item>
+              <span class="color_gray"> 列表PTP值:</span>
+              <span>{{ fetchData.sumBank }} </span>
             </el-form-item>
             </el-form>
           </div>
@@ -840,6 +846,17 @@
       this.init();
     },
     methods: {
+      formatMoney(value,places, symbol, thousand, decimal) {
+        places = !isNaN(places = Math.abs(places)) ? places : 2;
+        symbol = symbol !== undefined ? symbol : "¥";
+        thousand = thousand || ",";
+        decimal = decimal || ".";
+        var number = value,
+          negative = number < 0 ? "-" : "",
+          i = parseInt(number = Math.abs(+number || 0).toFixed(places), 10) + "",
+          j = (j = i.length) > 3 ? j % 3 : 0;
+        return symbol + negative + (j ? i.substr(0, j) + thousand : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousand) + (places ? decimal + Math.abs(number - i).toFixed(places).slice(2) : "");
+      },
       sortHandle({prop,order}){
         this.sort.sort = order.replace('ending', '');
         this.sort.orderBy = prop;
@@ -921,6 +938,10 @@
           }
           this.fetchData = data;
           this.paginationData.total = data.total;
+          this.fetchData.sumMoney = this.formatMoney(data.sumMoney,0, "￥")
+          this.fetchData.sumPayMoney = this.formatMoney(data.sumPayMoney,0, "￥")
+          this.fetchData.sumRepay =  this.formatMoney(data.sumRepay,0, "￥")
+          this.fetchData.sumBank = this.formatMoney(data.sumBank,0, "￥")
           this.tableData = data.list.map((item)=>{
             return Object.assign(item, {'class-name': `color_${item.color}`});
           })

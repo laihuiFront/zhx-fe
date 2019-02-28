@@ -3,40 +3,40 @@
     <section class="topDataWp">
       <el-row :gutter="10">
         <el-col :span="4"
-          ><span class="topSpan">上月还款金额:</span>¥{{ topData.lastPaidMoney }}</el-col
+          ><span class="topSpan">上月还款金额:</span>{{ topData.lastPaidMoney }}</el-col
         >
         <el-col :span="3"
-          ><span class="topSpan">上月PTP值:</span>¥{{ topData.lastRepayAmt }}</el-col
+          ><span class="topSpan">上月PTP值:</span>{{ topData.lastRepayAmt }}</el-col
         >
         <el-col :span="3"
-          ><span class="topSpan">上月CP值:</span>¥{{ topData.lastBankAmt }}</el-col
+          ><span class="topSpan">上月CP值:</span>{{ topData.lastBankAmt }}</el-col
         >
         <el-col :span="4"
-          ><span class="topSpan">上月M值(已还款):</span>¥{{
+          ><span class="topSpan">上月M值(已还款):</span>{{
             topData.lastRepaidAmt
           }}</el-col
         >
         <el-col :span="4"
-          ><span class="topSpan">上月M值(CP):</span>¥{{ topData.lastRepaidBankAmt }}</el-col
+          ><span class="topSpan">上月M值(CP):</span>{{ topData.lastRepaidBankAmt }}</el-col
         >
       </el-row>
       <el-row :gutter="10" style="margin-top: 15px;">
         <el-col :span="4"
-          ><span class="topSpan">当月还款金额:</span>¥{{ topData.thisPaidMoney }}</el-col
+          ><span class="topSpan">当月还款金额:</span>{{ topData.thisPaidMoney }}</el-col
         >
         <el-col :span="3"
-          ><span class="topSpan">当月PTP值:</span>¥{{ topData.thisRepayAmt }}</el-col
+          ><span class="topSpan">当月PTP值:</span>{{ topData.thisRepayAmt }}</el-col
         >
         <el-col :span="3"
-          ><span class="topSpan">当月CP值:</span>¥{{ topData.thisBankAmt }}</el-col
+          ><span class="topSpan">当月CP值:</span>{{ topData.thisBankAmt }}</el-col
         >
         <el-col :span="4"
-          ><span class="topSpan">当月M值(已还款):</span>¥{{
+          ><span class="topSpan">当月M值(已还款):</span>{{
             topData.thisRepaidAmt
           }}</el-col
         >
         <el-col :span="4"
-          ><span class="topSpan">当月M值(CP):</span>¥{{ topData.thisRepaidBankAmt }}</el-col
+          ><span class="topSpan">当月M值(CP):</span>{{ topData.thisRepaidBankAmt }}</el-col
         >
       </el-row>
     </section>
@@ -156,15 +156,15 @@
       <div style="padding-bottom: 20px;">
         <span style="color:#CAA460;">查询结果统计:</span>
         <span class="" v-if="form1.val1 == 0">
-          <span>列表还款金额: ¥ {{ topData.paidMoney }}, </span>
-          <span>还款M值金额: ¥ {{ topData.repaidAmt }}</span>
+          <span>列表还款金额: {{ topData.paidMoney }}, </span>
+          <span>还款M值金额: {{ topData.repaidAmt }}</span>
         </span>
         <span class="" v-if="form1.val1 == 1">
-          <span>列表CP金额: ¥ {{ topData.bankAmtC }}, </span>
-          <span>CPM值金额: ¥ {{ topData.repaidBankAmt }}</span>
+          <span>列表CP金额: {{ topData.bankAmtC }}, </span>
+          <span>CPM值金额: {{ topData.repaidBankAmt }}</span>
         </span>
         <span class="" v-if="form1.val1 == 2">
-          <span>列表PTP金额: ¥ {{ topData.repayAmtP }} </span>
+          <span>列表PTP金额: {{ topData.repayAmtP }} </span>
         </span>
       </div>
       <el-table
@@ -385,6 +385,17 @@ export default {
     }
   },
   methods: {
+    formatMoney(value,places, symbol, thousand, decimal) {
+      places = !isNaN(places = Math.abs(places)) ? places : 2;
+      symbol = symbol !== undefined ? symbol : "¥";
+      thousand = thousand || ",";
+      decimal = decimal || ".";
+      var number = value,
+        negative = number < 0 ? "-" : "",
+        i = parseInt(number = Math.abs(+number || 0).toFixed(places), 10) + "",
+        j = (j = i.length) > 3 ? j % 3 : 0;
+      return symbol + negative + (j ? i.substr(0, j) + thousand : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousand) + (places ? decimal + Math.abs(number - i).toFixed(places).slice(2) : "");
+    },
     modeChange(v) {
       this.tablecol_data = this[`tablecol_raw${v * 1 + 1}`];
       this.getMainData();
@@ -423,6 +434,22 @@ export default {
       pay(this.fetchData).then(data => {
         this.tableData = data.list;
         this.topData = data;
+        this.topData.lastPaidMoney = this.formatMoney(data.lastPaidMoney,0, "￥")
+        this.topData.repayAmtP = this.formatMoney(data.repayAmtP,0, "￥")
+        this.topData.repaidBankAmt = this.formatMoney(data.repaidBankAmt,0, "￥")
+        this.topData.bankAmtC = this.formatMoney(data.bankAmtC,0, "￥")
+        this.topData.paidMoney = this.formatMoney(data.paidMoney,0, "￥")
+        this.topData.repaidAmt = this.formatMoney(data.repaidAmt,0, "￥")
+        this.topData.thisRepaidBankAmt = this.formatMoney(data.thisRepaidBankAmt,0, "￥")
+        this.topData.thisRepaidAmt = this.formatMoney(data.thisRepaidAmt,0, "￥")
+        this.topData.thisPaidMoney = this.formatMoney(data.thisPaidMoney,0, "￥")
+        this.topData.thisRepayAmt = this.formatMoney(data.thisRepayAmt,0, "￥")
+        this.topData.thisBankAmt = this.formatMoney(data.thisBankAmt,0, "￥")
+        this.topData.lastRepaidBankAmt = this.formatMoney(data.lastRepaidBankAmt,0, "￥")
+        this.topData.lastRepayAmt = this.formatMoney(data.lastRepayAmt,0, "￥")
+        this.topData.lastBankAmt = this.formatMoney(data.lastBankAmt,0, "￥")
+        this.topData.lastRepaidAmt = this.formatMoney(data.lastRepaidAmt,0, "￥")
+
       });
     },
     init() {

@@ -108,7 +108,13 @@ export default {
     submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            console.info(this.ruleForm2);
+            resetPassword(this.ruleForm2).then((response)=>{
+              this.$message({
+                type: 'success',
+                message: '修改密码成功!'
+              });
+              this.dialogVisible = false;
+            })
             resetPassword(this.ruleForm2);
           } else {
             console.log('error submit!!');
