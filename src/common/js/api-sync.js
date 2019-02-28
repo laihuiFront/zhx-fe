@@ -26,7 +26,7 @@ export  function getBatchList(){
 
 export function getCollectionUserList() {
   return request({
-    url: '/user/select/role ',
+    url: '/user/select/roleList',
     method: 'post',
     data:{role:"催收员 "}
   })
