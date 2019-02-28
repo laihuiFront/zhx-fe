@@ -196,5 +196,19 @@ return download({
     }
   })
 }
+export function deleteDataCollectRecord(data){
+  return request({
+    url: '/dataCollect/delete',
+    data,
+    method: 'post'
+  })
+}
 
+export function updateDataCollectRecord(data){
+  return request({
+    url: '/dataCollection/update',
+    data,
+    method: 'post'
+  })
+}
 

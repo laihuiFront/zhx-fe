@@ -70,7 +70,6 @@
   </el-col>-->
    </el-row>
    <el-table
-   	height="350"
    	v-loading="loading"
     ref="multipleTable"
     :data="tableData3"
@@ -228,6 +227,7 @@
     <el-table-column
       label="操作"
       width="120"
+      fixed="right"
       align="center">
       <template slot-scope="scope">
         <el-button type="text" size="small" @click="editMessage(scope.row)">编辑</el-button>
@@ -247,222 +247,40 @@
     </el-pagination>
   </div>
   <el-dialog
-  title="查询条件"
-  :visible.sync="dialogVisible1"
-  width="66%"
-  >
- 
-<el-form :inline="true" :model="formInline" class="demo-form-inline">
-	 <el-row :gutter="20">
-  <el-col :span="12">
-  	<div class="grid-content bg-purple">
-  		<el-form-item label="批次号">
-    <el-input v-model="formInline.batchNo" placeholder="请输入批次号"></el-input>
-  </el-form-item>
-  	</div></el-col>
-  <el-col :span="12">
-  	<div class="grid-content bg-purple">
-  		  <el-form-item label="证件号">
-    <el-input v-model="formInline.identNo" placeholder="请输入证件号"></el-input>
-  </el-form-item>
-  	</div></el-col>
-</el-row>
- <el-row :gutter="20">
-  <el-col :span="12">
-  	<div class="grid-content bg-purple">
-  		<el-form-item label=" 卡  号  ">
-    <el-input v-model="formInline.cardNo" placeholder="请输入卡号"></el-input>
-  </el-form-item>
-  	</div></el-col>
-  <el-col :span="12">
-  	<div class="grid-content bg-purple">
-  		  <el-form-item label="催收记录">
-    <el-input v-model="formInline.collectInfo" placeholder="请输入证件号"></el-input>
-  </el-form-item>
-  	</div></el-col>
-</el-row>
-<el-row :gutter="20">
-  <el-col :span="12">
-  	<div class="grid-content bg-purple">
-  		<el-form-item label="个案序列号">
-    <el-input v-model="formInline.seqno" placeholder="请输入个案序列号"></el-input>
-  </el-form-item>
-  	</div></el-col>
-  <el-col :span="12">
-  	<div class="grid-content bg-purple">
-  		  <el-form-item label="部门">
-   <el-select v-model="formInline.dept" placeholder="请选择催收区域" clearable>
-    <el-option
-      v-for="item in departmentList"
-      :key="item.id"
-      :label="item.orgName"
-      :value="item.id">
-    </el-option>
-  </el-select>
-  </el-form-item>
-  	</div></el-col>
-</el-row>
- <el-row :gutter="20">
-  <el-col :span="12">
-  	<div class="grid-content bg-purple">
-  		<el-form-item label="催收区域">
-   <el-select v-model="formInline.area" placeholder="请选择催收区域" clearable>
-    <el-option
-      v-for="item in areaList"
-      :key="item.id"
-      :label="item.name"
-      :value="item.id">
-    </el-option>
-  </el-select>
-  </el-form-item>
-  	</div></el-col>
-  <el-col :span="12">
-  	<div class="grid-content bg-purple">
-  		  <el-form-item label="催收员">
-    <el-select v-model="formInline.odvs" filterable multiple placeholder="请选择催收员" clearable>
-    <el-option
-      v-for="item in PersonList"
-      :key="item.id"
-      :label="item.userName"
-      :value="item.id">
-    </el-option>
-  </el-select>
-  </el-form-item>
-  	</div></el-col>
-</el-row>
-<el-row :gutter="20">
-  <el-col :span="12">
-  	<div class="grid-content bg-purple">
-  		<el-form-item label="催收结果">
-   <el-select v-model="formInline.result" placeholder="请选择催收结果" clearable>
-    <el-option
-      v-for="item in EndList"
-      :key="item.id"
-      :label="item.name"
-      :value="item.id">
-    </el-option>
-  </el-select>
-  </el-form-item>
-  	</div></el-col>
-  <el-col :span="12">
-  	<div class="grid-content bg-purple">
-  		  <el-form-item label="委托方">
-    <el-select v-model="formInline.clients" filterable multiple  placeholder="请选择委托方" clearable>
-    <el-option
-      v-for="item in clientList"
-      :key="item.id"
-      :label="item.name"
-      :value="item.id">
-    </el-option>
-  </el-select>
-  </el-form-item>
-  	</div></el-col>
-</el-row>
-<el-row :gutter="20">
-  <el-col :span="12">
-  	<div class="grid-content bg-purple">
-  		<el-form-item label="催收措施">
-   <el-select v-model="formInline.measure" placeholder="请选择催收措施" clearable>
-    <el-option
-      v-for="item in EndList"
-      :key="item.id"
-      :label="item.name"
-      :value="item.id">
-    </el-option>
-  </el-select>
-  </el-form-item>
-  	</div></el-col>
-  <el-col :span="12">
-  	<div class="grid-content bg-purple">
-  		  <el-form-item label="案件状态">
-    <el-select v-model="formInline.caseStatus" filterable  placeholder="请选择案件状态" clearable>
-    <el-option
-      v-for="item in caseStatusList"
-      :key="item.id"
-      :label="item.name"
-      :value="item.id">
-    </el-option>
-  </el-select>
-  </el-form-item>
-  	</div></el-col>
-</el-row>
-<el-row :gutter="20">
-	<el-col :span="10">
-  	<div class="grid-content bg-purple">
-  		<el-form-item label="标色状态">
-   <el-select v-model="formInline.color" filterable  placeholder="请选择标色状态" clearable>
-    <el-option
-      v-for="item in caseStatusList"
-      :key="item.id"
-      :label="item.name"
-      :value="item.id">
-    </el-option>
-  </el-select>
-  </el-form-item>
-  	</div></el-col>
-</el-row>
-<el-row :gutter="20">
-  <el-col :span="14">
-  	<div class="grid-content bg-purple">
-  		<el-form-item label="催收日期">
-   <el-date-picker
-      v-model="formInline.collectTime"
-      type="daterange"
-      align="right"
-       value-format="yyyy-MM-dd"
-      unlink-panels
-      range-separator="至"
-      start-placeholder="开始日期"
-      end-placeholder="结束日期"
+      title="编辑催记记录"
+      class="dialog-wrap"
+      :visible.sync="dialogVisible1"
+      :close-on-click-modal="false"
+      width="50%"
+    >
+      <el-form
+        :model="recordInfo"
+        ref="ruleForm"
+        label-width="100px"
+        class="demo-ruleForm"
       >
-    </el-date-picker>
-  </el-form-item>
-  	</div></el-col>
- </el-row>
-<el-row :gutter="20">
-  <el-col :span="12">
-  	<div class="grid-content bg-purple">
-  		<el-form-item label="委案日期">
-   <el-date-picker
-      v-model="formInline.bailTime"
-      type="daterange"
-      align="right"
-       value-format="yyyy-MM-dd"
-      unlink-panels
-      range-separator="至"
-      start-placeholder="开始日期"
-      end-placeholder="结束日期"
-      >
-    </el-date-picker>
-  </el-form-item>
-  	</div></el-col>
-</el-row> 	
-</el-row>
-<el-row :gutter="20">
-  <el-col :span="16">
-  	<div class="grid-content bg-purple">
-  		  <el-form-item label="预计退案日期" label-width="100px">
-   <el-date-picker
-      v-model="formInline.expectTime"
-      type="daterange"
-      align="right"
-       value-format="yyyy-MM-dd"
-      unlink-panels
-      range-separator="至"
-      start-placeholder="开始日期"
-      end-placeholder="结束日期"
-      >
-    </el-date-picker>
-  </el-form-item>
-  	</div></el-col>
-</el-row>
-
-</el-form>
-<span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisible1 = false">取 消</el-button>
-    <el-button type="primary" @click="Listsearch">确 定</el-button>
-  </span>
-</el-dialog>
+        <el-form-item label="催收时间" prop="createTime">
+          <el-date-picker
+            v-model="recordInfo.collectTime"
+            value-format="yyyy-MM-dd HH:mm:ss"
+            type="datetime"
+            placeholder="选择日期时间">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="催收结果" prop="result">
+          <el-input
+            type="textarea"
+            :rows="4"
+            placeholder="请输入内容"
+            v-model="recordInfo.result">
+          </el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="footer">
+        <el-button @click="onClickCancel">取 消</el-button>
+        <el-button type="primary" @click="onClickSave">保 存</el-button>
+      </span>
+    </el-dialog>
   <el-dialog
   title="导出查询结果"
   :visible.sync="dialogVisible2"
@@ -484,7 +302,7 @@
 </template>
 
 <script>
-import {search,dataList,areaList,pageDataExport,selectDataExport,totalDataExport,sectionList,caseTypeList,clientList,EndList,PersonList,departmentList} from '@/common/js/data-memorize-manage.js'
+import {search,dataList,areaList,pageDataExport,selectDataExport,totalDataExport,sectionList,caseTypeList,clientList,EndList,PersonList,departmentList,deleteDataCollectRecord,updateDataCollectRecord} from '@/common/js/data-memorize-manage.js'
 export default {
   name: 'dataMemorizeManage',
   data(){
@@ -499,7 +317,7 @@ export default {
     	  clientList:[],
     	  caseTypeList:[],
     	  sectionList:[],
-    	  pageSize:10,
+    	  pageSize:100,
     	  pageNum:1,
         orderBy:"id",
         sort:"desc",
@@ -509,6 +327,7 @@ export default {
         dialogVisible:false,
          dialogVisible1:false,
         dialogVisible2:false,
+        recordInfo:{},
         tableData3:[],
         currentPage4: 1,
         pages:1,
@@ -522,6 +341,37 @@ export default {
     }
   },
   methods: {
+    editMessage(record){
+      this.recordInfo = {
+        id: record.id,
+        result: record.result,
+        collectTime: record.collectTime
+      }
+      this.dialogVisible1 = true
+    },
+    onClickCancel(){
+      this.dialogVisible1 = false
+    },
+    onClickSave(){
+      updateDataCollectRecord(this.recordInfo).then(res=>{
+        this.$message('修改记录成功成功')
+        this.search()
+        this.dialogVisible1 = false
+      })
+    },
+    deleteMessage(id){
+      this.$confirm('此操作将永久删除改记录,是否继续', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          deleteDataCollectRecord([{id}]).then(res=>{
+            this.$message('删除成功')
+            this.search()
+          })
+        }).catch(() => {
+        });
+    },
   	selectDataCollectExport(){
   		this.loading=true
       if(this.selectDataCollectExportList.length>=1) {
@@ -657,7 +507,7 @@ this.search()
       },
     },
       created() {
-      	  dataList().then((response)=>{
+      	  dataList(this.formInline.area,this.formInline.dept,this.formInline.batchNo,this.formInline.clients,this.formInline.odvs,this.formInline.caseStatus,this.formInline.measure,this.formInline.result,this.formInline.identNo,this.formInline.cardNo,this.formInline.collectInfo,this.formInline.color,this.formInline.seqno,this.formInline.bailStartDate,this.formInline.bailEndDate,this.formInline.expectStartTime,this.formInline.expectEndTime,this.formInline.collectStartTime,this.formInline.collectEndTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
           	this.tableData3=response.list
             //this.pages = response.pages
             this.total = response.total
@@ -698,6 +548,25 @@ this.search()
     .el-form--inline .el-form-item{
       line-height: 21px;
     }
+  .dialog-wrap {
+    .el-dialog__body {
+      .el-form {
+        display: flex;
+        flex-wrap: wrap;
+        .el-form-item {
+          display: flex;
+          width: 100%;
+          .el-form-item__content {
+            flex: 1;
+            margin-left: 0 !important;
+            .el-select {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 </style>
 
