@@ -310,6 +310,237 @@
             <el-form-item label="曾逾期次数">
               <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
             </el-form-item>
+            <el-form-item label="保证金">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="超限费">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="公司佣金">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="还款期限">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="逾期管理费">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="信用额度">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="信贷分类">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="拖欠级别">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="账户名称">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="已还期数">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="催收分类">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="贷款截止日">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="生日">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="年龄">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="QQ">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="邮箱">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="职位">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="部门">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="商品">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="商户">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="申请单号">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="档案号">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="社保电脑号">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="社保卡号">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人1姓名">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人1证件">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人1家庭电话">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人1单位电话">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人1手机">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人1单位">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人1地址">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="">
+
+            </el-form-item>
+            <el-form-item label="联系人2姓名">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人2证件">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人2家庭电话">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人2单位电话">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人2手机">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人2单位">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人2地址">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="">
+            </el-form-item>
+            <el-form-item label="联系人3姓名">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人3证件">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人3家庭电话">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人3单位电话">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人3手机">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人3单位">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人3地址">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="">
+            </el-form-item>
+            <el-form-item label="联系人4姓名">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人4证件">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人4家庭电话">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人4单位电话">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人4手机">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人4单位">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人4地址">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="">
+            </el-form-item>
+            <el-form-item label="联系人5姓名">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人5证件">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人5家庭电话">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人5单位电话">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人5手机">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人5单位">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人5地址">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="">
+
+            </el-form-item>
+            <el-form-item label="联系人6姓名">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人6证件">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人6家庭电话">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人6单位电话">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人6手机">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人6单位">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人6地址">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="原催收记录">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="备注1">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="备注2">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="备注3">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="备注4">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="备注5">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
+            <el-form-item label="备注6">
+              <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
+            </el-form-item>
           </el-form>
         </div>
       </el-collapse-item>
