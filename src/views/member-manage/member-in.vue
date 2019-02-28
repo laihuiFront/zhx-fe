@@ -216,7 +216,8 @@ export default {
 
       },
       roleList: [],
-      positionList: []
+      positionList: [],
+      returnName: null
     }
   },
   created () {
@@ -238,9 +239,11 @@ export default {
   				if(response.loginNameCount==0){
   					console.log(response)
   					 this.$set(this.memberInfo, 'number', response.loginName)
-  					 this.$set(this.memberInfo, 'loginNameCount', response.loginNameCount)
+             this.$set(this.memberInfo, 'loginNameCount', response.loginNameCount)
+             this.returnName = response.userName
   				}else{
-  					this.makeSure(response.loginName,)
+            this.makeSure(response.loginName)
+            this.returnName = response.userName
   				}
     })
   		}else{
@@ -396,18 +399,45 @@ export default {
       this.$set(this.dialogData, 'editVisible', false)
     },
     onClickSave () {
-      let { ...resultData } = this.memberInfo
-      resultData.roleList = resultData.roleList.map(item => { return { id: item } })
-      if (this.dialogData.type === 'add') {
-        addMember(resultData).then(response => {
-          this.onClickQuery()
-          this.onClickCancel()
+      if(this.returnName && this.returnName !== this.memberInfo.userName){
+        this.$confirm(`已有用户名相同的员工,是否用${this.returnName}替换${this.memberInfo.userName}`, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.memberInfo.userName = this.returnName
+          this.returnName = null
+          let { ...resultData } = this.memberInfo
+          resultData.roleList = resultData.roleList.map(item => { return { id: item } })
+          if (this.dialogData.type === 'add') {
+            addMember(resultData).then(response => {
+              this.onClickQuery()
+              this.onClickCancel()
+            })
+          } else {
+            updateMember(resultData).then(response => {
+              this.onClickQuery()
+              this.onClickCancel()
+            })
+          }
+        }).catch(() => { 
+
         })
-      } else {
-        updateMember(resultData).then(response => {
-          this.onClickQuery()
-          this.onClickCancel()
-        })
+      }else{
+          this.returnName = null
+          let { ...resultData } = this.memberInfo
+          resultData.roleList = resultData.roleList.map(item => { return { id: item } })
+          if (this.dialogData.type === 'add') {
+            addMember(resultData).then(response => {
+              this.onClickQuery()
+              this.onClickCancel()
+            })
+          } else {
+            updateMember(resultData).then(response => {
+              this.onClickQuery()
+              this.onClickCancel()
+            })
+          }
       }
     },
     formatRole (row, column, cellValue) {
