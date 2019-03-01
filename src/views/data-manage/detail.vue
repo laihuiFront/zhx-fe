@@ -1203,6 +1203,117 @@
           </div>
         </div>
       </el-collapse-item>
+      <el-collapse-item title="催记信息" name="5">
+        <div class="memorize-wrap">
+          <div class="left-panel">
+            <el-form
+              :model="batchForm"
+              ref="ruleForm"
+              label-width="100px"
+              class="demo-ruleForm"
+            >
+              <el-form-item label="催收时间" prop="phone">
+                <el-input v-model="batchForm.phone" placeholder="请输入电话号码"></el-input>
+              </el-form-item>
+              <el-form-item label="姓名" prop="name">
+                <el-input v-model="batchForm.name" placeholder="请输入姓名"></el-input>
+              </el-form-item>
+              <el-form-item label="关系" prop="rel">
+                <el-input v-model="batchForm.rel" placeholder="请输入关系"></el-input>
+              </el-form-item>
+              <el-form-item label="谈判方式" prop="tpfs">
+                <el-select v-model="batchForm.tpfs" placeholder="请选择谈判方式">
+                  <el-option
+                    v-for="item in tpfsList"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="催收模板" prop="csmb">
+                <el-select v-model="batchForm.csmb" placeholder="请选择催收模板">
+                  <el-option
+                    v-for="item in csmbList"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="催收结果" prop="csjg">
+                <el-select v-model="batchForm.csjg" placeholder="请选择催收结果">
+                  <el-option
+                    v-for="item in csjgList"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="通话记录" prop="thjl" class="whole">
+                <el-input
+                  type="textarea"
+                  :rows="4"
+                  placeholder="请输入通话记录"
+                  v-model="batchForm.thjl">
+                </el-input>
+              </el-form-item>
+              <el-form-item label="催收状态" prop="cszt">
+                <el-select v-model="batchForm.cszt" placeholder="请选择催收结果">
+                  <el-option
+                    v-for="item in csztList"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label=" " prop="cszt">
+                <el-checkbox v-model="batchForm.status">更新批次共债案件催收状态</el-checkbox>
+              </el-form-item>
+              <el-form-item label="减免金额" prop="jmje">
+                <el-input v-model="batchForm.jmje" placeholder="请输入减免金额"></el-input>
+              </el-form-item>
+              <el-form-item label="减免状态" prop="jmzt">
+                <el-select v-model="batchForm.jmzt" placeholder="请选择减免状态">
+                  <el-option
+                    v-for="item in jmztList"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="下次跟进日期" prop="time">
+                <el-date-picker
+                  v-model="batchForm.time"
+                  type="date"
+                  value-format="yyyy-MM-dd"
+                  placeholder="请选择下次跟进日期"
+                ></el-date-picker>
+              </el-form-item>
+            </el-form>
+            <div class="operation">
+              <el-button type="primary">保存</el-button>
+              <el-button >清空</el-button>
+            </div>
+          </div>
+          <div class="right-panel">
+            <p class="title">同批次共债催记</p>
+            <el-table
+              :data="syncMemorizeList"
+              style="width: 100%"
+              class="table-wrap">
+              <el-table-column prop="dataCase.batchNo" width="80" label="时间" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="dataCase.cardNo" width="70" label="对象姓名" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="dataCase.identNo" width="50" label="关系" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="dataCase.name" width="120" label="电话/地址" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="dataCase.seqNo" label="催收记录" show-overflow-tooltip></el-table-column>
+            </el-table>
+          </div>
+        </div>
+      </el-collapse-item>
     </el-collapse>
     <el-dialog
   title="新增电话"
@@ -1267,6 +1378,7 @@ import {getCaseDetail,
         updateTelStatus,
         addComment,
         listComment} from '@/common/js/api-detail'
+import {getEnum} from '@/common/js/api-sync'
 
 export default {
   name:'caseDetail',
@@ -1282,7 +1394,8 @@ export default {
       commentAddContent:null,
       dialogVisible:false,
     	formInline:{},
-    	PhonetypeList:[],
+      PhonetypeList:[],
+      syncMemorizeList:[],
       memorizeList:[],//催記
       commentList:[],//评语
       addrList:[],//地址
@@ -1294,7 +1407,13 @@ export default {
       caseDetail:{},
       memorizeType:1,
       statusList:[{name:"有效",id:1,},{name:"无效",id:2,},{name:"未知",id:3,}],
-      phoneSelectList: []
+      phoneSelectList: [],
+      batchForm:{},
+      tpfsList:[],
+      csmbList:[],
+      csjgList:[],
+      csztList:[],
+      jmztList:[]
     }
   },
   methods: {
@@ -1399,6 +1518,27 @@ export default {
       getCaseDetail(this.id).then(data => {
         this.caseDetail = data
       })
+      PhonetypeList().then((response)=>{
+        this.PhonetypeList=response
+      })
+      getCommentDetail(this.id).then(data => {
+        this.commentList = data
+      })
+      getEnum('谈判方式').then(data=>{
+        this.tpfsList = data
+      })
+      getEnum('催收模板').then(data=>{
+        this.csmbList = data
+      })
+      getEnum('催收结果').then(data=>{
+        this.csjgList = data
+      })
+      getEnum('催收状态').then(data=>{
+        this.csztList = data
+      })
+      getEnum('减免状态').then(data=>{
+        this.jmztList = data
+      })
     },
     showPanel(tab,e){
       var ind = tab.index;
@@ -1434,12 +1574,7 @@ export default {
     }
   },
   created() {
-  	PhonetypeList().then((response)=>{
-        this.PhonetypeList=response
-      })
-    getCommentDetail(this.id).then(data => {
-      this.commentList = data
-    })
+  	
   }
 }
 </script>
@@ -1540,6 +1675,45 @@ export default {
           padding: 10px;
         }
       }
+    }
+  }
+  .memorize-wrap{
+    display: flex;
+    .left-panel{
+      padding: 12px;
+      flex:1;
+      margin-right: 24px;
+      border: 1px solid #d1d1d1;
+      box-sizing: border-box;
+      .el-form {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        .el-form-item {
+          display: flex;
+          width: 50%;
+          &.whole{
+            width: 100%;
+          }
+          .el-form-item__content {
+            flex: 1;
+            margin-left: 0 !important;
+            .el-select {
+              width: 100%;
+            }
+            .el-date-editor{
+              width: 100%;
+            }
+          }
+        }
+      }
+      .operation{
+        margin-top: 20px;
+        text-align: center;
+      }
+    }
+    .right-panel{
+      flex: 1;
     }
   }
 }
