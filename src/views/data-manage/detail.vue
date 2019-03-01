@@ -578,7 +578,7 @@
                       </div>
                       <el-button type="primary" slot="reference">批量新增电话</el-button>
                     </el-popover>
-                    <el-button type="primary">批量电催</el-button>
+                    <!-- <el-button type="primary">批量电催</el-button> -->
                     <el-button type="primary">同步共债</el-button>
                   </div>
                 </div>
