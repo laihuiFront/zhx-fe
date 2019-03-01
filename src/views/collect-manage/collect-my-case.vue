@@ -468,6 +468,7 @@
         <el-table
           ref="multipleTable"
           :data="tableData"
+          height="190"
           style="width: 100%"
           :row-class-name="rowColor"
           :cell-style="{ whiteSpace: 'nowrap' }"
@@ -519,7 +520,7 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="paginationData.currentPage"
-            :page-sizes="[10, 20, 50, 100]"
+            :page-sizes="[100, 500, 2000, 10000,1000000]"
             :page-size="paginationData.pageSize"
             layout="total, sizes, prev, pager, next, jumper"
             :total="paginationData.total"

@@ -158,7 +158,7 @@
      @selection-change="handleSelectionChange"
     sortable="custom"
     @sort-change="handleSort"
-    height="350"
+    height="470"
   >
   <el-table-column
       type="selection"

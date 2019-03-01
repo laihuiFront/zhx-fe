@@ -1,7 +1,7 @@
 <template>
   <div id="case-detail">
     <el-collapse v-model="activeNames">
-      <el-collapse-item title="个案序列号:20171218-0157" name="1">
+      <el-collapse-item :title="'个案序列号: '+caseDetail.seqNo" name="1">
         <div class="items-wrap">
           <el-form
             :model="caseDetail"
@@ -10,7 +10,7 @@
             class="rule-form"
           >
             <el-form-item label="姓名">
-              <el-input v-model="caseDetail.name" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.name" :disabled="true"></el-input>
             </el-form-item>
             <el-form-item label="委托方">
               <el-input v-model="caseDetail.client" :disabled="true" ></el-input>

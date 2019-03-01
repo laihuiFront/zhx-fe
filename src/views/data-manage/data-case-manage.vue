@@ -167,7 +167,7 @@
       sortable="custom"
       @row-dblclick="showDetail"
       @sort-change="handleSort"
-      height="350"
+      height="450"
     >
       <el-table-column
         type="selection"
@@ -1074,7 +1074,7 @@
         accountAgeList:[],
         collectStatusList:[],
         deleteStatusList:[],
-        pageSize:10,
+        pageSize:100,
         pageNum:1,
         LeaveList:[],
         clientList:[],

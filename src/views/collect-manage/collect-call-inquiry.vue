@@ -87,6 +87,7 @@
       tooltip-effect="dark"
       style="width: 100%"
       sortable="custom"
+      height="470"
       @sort-change="sortHandle"
     >
       <el-table-column

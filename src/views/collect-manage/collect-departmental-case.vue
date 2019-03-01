@@ -480,6 +480,7 @@
         ref="multipleTable"
         :data="tableData"
         style="width: 100%"
+        height="140"
         :row-class-name="rowColor"
         @selection-change="handleSelectionChange"
         @sort-change="sortHandle"

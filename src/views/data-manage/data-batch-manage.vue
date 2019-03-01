@@ -105,7 +105,7 @@
      @selection-change="handleSelectionChange"
     sortable="custom"
     @sort-change="handleSort"
-    height="350"
+    height="450"
   >
   <el-table-column
       type="selection"
@@ -422,7 +422,7 @@ export default {
     	selectDataBatchExportList:[],
     	selectDataCollectExportByBatchList:[],
     	DataList:[],
-    	pageSize:10,
+    	pageSize:100,
       orderBy:"id",
       sort:"desc",
     	pageNum:1,
