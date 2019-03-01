@@ -558,7 +558,26 @@
                   </div>
                   <div class="right-oper">
                     <el-button type="primary" @click="addPhone">新增电话</el-button>
-                    <el-button type="primary">批量新增电话</el-button>
+                    <el-popover
+                      placement="bottom-end"
+                      title="批量新增电话"
+                      width="500"
+                      trigger="click"
+                      v-model="batchAddTelVisible">
+                      <div>
+                        <el-input
+                          type="textarea"
+                          :rows="4"
+                          placeholder="请按照'关系-姓名-电话'的格式输入,多个条目以/隔开"
+                          v-model="batchAddTelContent">
+                        </el-input>
+                      </div>
+                      <div style="text-align: right; margin-top: 12px">
+                        <el-button size="mini" type="text" @click="batchAddTelVisible = false">取消</el-button>
+                        <el-button type="primary" size="mini" @click="onClickBatchAddTel">确定</el-button>
+                      </div>
+                      <el-button type="primary" slot="reference">批量新增电话</el-button>
+                    </el-popover>
                     <el-button type="primary">批量电催</el-button>
                     <el-button type="primary">同步共债</el-button>
                   </div>
@@ -1377,7 +1396,8 @@ import {getCaseDetail,
         delTel,
         updateTelStatus,
         addComment,
-        listComment} from '@/common/js/api-detail'
+        listComment,
+        addBatchCaseTel} from '@/common/js/api-detail'
 import {getEnum} from '@/common/js/api-sync'
 
 export default {
@@ -1413,7 +1433,9 @@ export default {
       csmbList:[],
       csjgList:[],
       csztList:[],
-      jmztList:[]
+      jmztList:[],
+      batchAddTelVisible:false,
+      batchAddTelContent: null
     }
   },
   methods: {
@@ -1511,6 +1533,23 @@ export default {
         getCommentDetail(this.id).then(data => {
           this.commentList = data
           this.addCommentVisible = false
+        })
+      })
+    },
+    onClickBatchAddTel(){
+      if(!this.batchAddTelContent){
+        this.$message('请输入评语内容')
+        return
+      }
+      addBatchCaseTel({
+        caseId: this.id,
+        remark: this.batchAddTelContent
+      }).then(res => {
+        this.$message('电话添加成功')
+        getTelList(this.id).then(data=>{
+          this.$set(this.caseDetail,'dataCaseTelEntityList',data)
+          this.batchAddTelContent = null
+          this.batchAddTelVisible = false
         })
       })
     },

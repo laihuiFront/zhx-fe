@@ -139,3 +139,11 @@ export function listComment(id){
     data:{id}
   })
 }
+
+export function addBatchCaseTel(data){
+  return request({
+    url: 'dataCase/addBatchCaseTel',
+    method: 'post',
+    data
+  })
+}
