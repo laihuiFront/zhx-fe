@@ -1,3 +1,12 @@
 @import "./reset";
 @import "./base";
-@import "./element-custom"
+@import "./element-custom";
+
+/*#app .el-select__tags {
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 200px;
+}
+#app .el-input__inner{
+  height: auto !important;
+}*/

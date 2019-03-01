@@ -764,6 +764,7 @@ created() {
   .upload-demo{
   	display: inline-block;
   }
+
 }
 </style>
 
