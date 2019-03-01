@@ -636,6 +636,9 @@
                     <el-button>显示全部地址</el-button>
                     <el-button>查看信函记录</el-button>
                   </div>
+                  <div class="right-oper">
+                    <el-button type="primary">新增地址</el-button>
+                  </div>
                 </div>
                 <el-table
                   :data="addrList"
@@ -679,6 +682,14 @@
                     prop="letterCount"
                     show-overflow-tooltip
                     label="信函次数">
+                  </el-table-column>
+                  <el-table-column
+                    label="操作"
+                    width="100">
+                    <template slot-scope="scope">
+                      <el-button type="text">编辑</el-button>
+                      <el-button type="text">删除</el-button>
+                    </template>
                   </el-table-column>
                 </el-table>
               </el-tab-pane>
