@@ -68,7 +68,7 @@
   </el-col>
    </el-row>
    <el-table
-   	height="350"
+     height="470"
     ref="multipleTable"
     :data="DataList"
     tooltip-effect="dark"

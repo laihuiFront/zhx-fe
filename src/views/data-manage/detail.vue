@@ -10,7 +10,7 @@
             class="rule-form"
           >
             <el-form-item label="姓名">
-              <el-input v-model="caseDetail.name" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.name" :disabled="true"></el-input>
             </el-form-item>
             <el-form-item label="委托方">
               <el-input v-model="caseDetail.client" :disabled="true" ></el-input>

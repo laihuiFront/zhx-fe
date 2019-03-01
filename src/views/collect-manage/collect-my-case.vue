@@ -468,6 +468,7 @@
         <el-table
           ref="multipleTable"
           :data="tableData"
+          height="190"
           style="width: 100%"
           :row-class-name="rowColor"
           :cell-style="{ whiteSpace: 'nowrap' }"

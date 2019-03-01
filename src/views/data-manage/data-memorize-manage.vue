@@ -75,6 +75,7 @@
     :data="tableData3"
     tooltip-effect="dark"
     style="width: 100%"
+    height="530"
     sortable="custom"
     @sort-change="handleSort"
     @selection-change="handleSelectionChange">

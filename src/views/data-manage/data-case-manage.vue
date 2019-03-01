@@ -167,7 +167,7 @@
       sortable="custom"
       @row-dblclick="showDetail"
       @sort-change="handleSort"
-      height="350"
+      height="450"
     >
       <el-table-column
         type="selection"
