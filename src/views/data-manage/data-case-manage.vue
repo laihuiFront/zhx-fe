@@ -18,7 +18,7 @@
               <el-select v-model="formInline.batchNos" filterable  multiple placeholder="请输入批次" clearable>
                 <el-option
                   v-for="item in batchList"
-                  :key="item.batchNo"
+                  :key="item.id"
                   :label="item.batchNo"
                   :value="item.batchNo">
                 </el-option>
