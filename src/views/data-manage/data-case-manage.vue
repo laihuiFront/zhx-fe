@@ -1074,7 +1074,7 @@
         accountAgeList:[],
         collectStatusList:[],
         deleteStatusList:[],
-        pageSize:10,
+        pageSize:100,
         pageNum:1,
         LeaveList:[],
         clientList:[],

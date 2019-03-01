@@ -1,7 +1,7 @@
 <template>
   <div id="case-detail">
     <el-collapse v-model="activeNames">
-      <el-collapse-item title="个案序列号:20171218-0157" name="1">
+      <el-collapse-item :title="'个案序列号: '+caseDetail.seqNo" name="1">
         <div class="items-wrap">
           <el-form
             :model="caseDetail"

@@ -422,7 +422,7 @@ export default {
     	selectDataBatchExportList:[],
     	selectDataCollectExportByBatchList:[],
     	DataList:[],
-    	pageSize:10,
+    	pageSize:100,
       orderBy:"id",
       sort:"desc",
     	pageNum:1,

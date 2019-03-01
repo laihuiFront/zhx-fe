@@ -15,7 +15,7 @@ return request({
        orderBy:orderBy?orderBy:"id",
        sort:sort?sort:"desc",
        pageNum:pageNum ? pageNum : 1,
-       pageSize:pageSize ? pageSize : 10
+       pageSize:pageSize ? pageSize : 100
        
     }
   })
@@ -34,7 +34,7 @@ return download({
        startTime:startTime ? startTime : "",
        endTime:endTime ? endTime : "",
        pageNum:pageNum ? pageNum : 1,
-       pageSize:pageSize ? pageSize : 10
+       pageSize:pageSize ? pageSize : 100
        
     }
   })
@@ -54,7 +54,7 @@ return download({
       orderBy:orderBy,
       sort:sort,
        pageNum:pageNum ? pageNum : 1,
-       pageSize:pageSize ? pageSize : 10
+       pageSize:pageSize ? pageSize : 100
        
     }
   })
