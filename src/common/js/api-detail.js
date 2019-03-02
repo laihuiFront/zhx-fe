@@ -243,3 +243,11 @@ export function pageDataFile(caseId){
     data:{caseId}
   })
 }
+
+export function getLegalList(caseId){
+  return request({
+    url: '/legal/listLegal',
+    method: 'post',
+    data:{caseId}
+  })
+}

@@ -549,7 +549,7 @@
                   trigger="click"
                   v-model="uploadVisible">
                   <el-table :data="uploadFileList" :show-header="false">
-                    <el-table-column width="150" property="fileName" label="文件名"></el-table-column>
+                    <el-table-column width="150" prop="fileName" label="文件名"></el-table-column>
                   </el-table>
                   <el-button type="text"  class="upload-btn" slot="reference">附件列表</el-button>
                 </el-popover>
@@ -1136,79 +1136,73 @@
               </el-tab-pane>
               <el-tab-pane label="诉讼案件" name="12" class="tabs-wrap">
                 <el-table
-                  :data="caseDetail.litigationCaseList"
+                  :data="legalList"
                   style="width: 100%"
                   class="table-wrap">
                   <el-table-column
-                    prop="time"
+                    prop="legalStatusMsg"
                     show-overflow-tooltip
                     label="案件状态">
                   </el-table-column>
                   <el-table-column
-                    prop="type"
+                    prop="progressMsg "
                     show-overflow-tooltip
                     label="办案进度">
                   </el-table-column>
                   <el-table-column
-                    prop="content"
+                    prop="legalType"
                     show-overflow-tooltip
                     label="案件类型">
                   </el-table-column>
                   <el-table-column
-                    prop="user"
+                    prop="cstName"
                     show-overflow-tooltip
                     label="客户姓名">
                   </el-table-column>
                   <el-table-column
-                    prop="user"
+                    prop="legalDate"
                     show-overflow-tooltip
                     label="委案日期">
                   </el-table-column>
                   <el-table-column
-                    prop="user"
+                    prop="clientele"
                     show-overflow-tooltip
                     label="委托人">
                   </el-table-column>
                   <el-table-column
-                    prop="user"
+                    prop="accused"
                     show-overflow-tooltip
                     label="被告人">
                   </el-table-column>
                   <el-table-column
-                    prop="user"
+                    prop="tital"
                     show-overflow-tooltip
                     label="标的">
                   </el-table-column>
                   <el-table-column
-                    prop="user"
+                    prop="cost"
                     show-overflow-tooltip
                     label="费用">
                   </el-table-column>
                   <el-table-column
-                    prop="user"
+                    prop="owner"
                     show-overflow-tooltip
                     label="所属人">
                   </el-table-column>
                   <el-table-column
-                    prop="user"
+                    prop="court"
                     show-overflow-tooltip
                     label="受案法院">
                   </el-table-column>
                   <el-table-column
-                    prop="user"
+                    prop="legalNo"
                     show-overflow-tooltip
                     label="案号">
                   </el-table-column>
                   <el-table-column
-                    prop="user"
+                    prop="remark"
                     show-overflow-tooltip
                     label="备注">
-                  </el-table-column>
-                  <el-table-column
-                    prop="user"
-                    fixed="right"
-                    show-overflow-tooltip
-                    label="操作">
                   </el-table-column>
                 </el-table>
               </el-tab-pane>
@@ -1564,7 +1558,8 @@ import {getCaseDetail,
         dataCollectionSave,
         addLetter,
         getReduceApplyList,
-        pageDataFile} from '@/common/js/api-detail'
+        pageDataFile,
+        getLegalList} from '@/common/js/api-detail'
 import {getEnum} from '@/common/js/api-sync'
 
 export default {
@@ -1616,6 +1611,7 @@ export default {
       uploadVisible:false,
       uploadFileList:[],
       header:{Authorization:localStorage.token},
+      legalList:[]
 
     }
   },
@@ -1988,7 +1984,9 @@ export default {
           this.logList = data
         })
       }else if(ind == 9){//诉讼案件
-
+        getLegalList(this.id).then(data=>{
+          this.legalList = data.data
+        })
       }else if(ind == 10){//减免管理
         getReduceApplyList(this.id).then(data=>{
           this.reduceApplyList = data
