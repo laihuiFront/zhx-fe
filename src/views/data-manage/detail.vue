@@ -548,22 +548,22 @@
                   width="500"
                   trigger="click"
                   v-model="uploadVisible">
-                  <el-table :data="uploadFileList" :show-header="false">
-                    <el-table-column width="150" prop="fileName" label="文件名"></el-table-column>
+                  <el-upload
+                    class="upload-demo upload-btn"
+                    action="http://116.62.124.251/zxh/dataLFile/pageDataFile"
+                    :headers="header"
+                    :show-file-list=false
+                    :on-success="uploadSuccess"
+                    :data="{caseId:id}"
+                    name='file'
+                    >
+                    <el-button style="position:absolute;top:10px;right:10px;"  size="mini" type="primary">上传附件</el-button>
+                  </el-upload>
+                  <el-table :data="uploadFileList" width="100%" :show-header="false">
+                    <el-table-column prop="fileName" label="文件名"></el-table-column>
                   </el-table>
                   <el-button type="text"  class="upload-btn" slot="reference">附件列表</el-button>
                 </el-popover>
-                <el-upload
-                  class="upload-demo upload-btn"
-                  action="http://116.62.124.251/zxh/dataLFile/pageDataFile"
-                  :headers="header"
-                  :show-file-list=false
-                  :on-success="uploadSuccess"
-                  :data="{caseId:id}"
-                  name='file'
-                  >
-                  <el-button  size="small" type="text">上传附件</el-button>
-                </el-upload>
             </el-form-item>
           </el-form>
         </div>
