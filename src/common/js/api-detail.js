@@ -124,6 +124,14 @@ export function updateTelStatus(data){
   })
 }
 
+export function synchroSameTel(id){
+  return request({
+    url: 'dataCase/synchroSameTel',
+    method: 'post',
+    data:{id}
+  })
+}
+
 export function addComment(data){
   return request({
     url: '/dataCase/addComment',
@@ -145,5 +153,61 @@ export function addBatchCaseTel(data){
     url: 'dataCase/addBatchCaseTel',
     method: 'post',
     data
+  })
+}
+
+export function saveCaseAddress(data){
+  return request({
+    url: '/dataCase/saveCaseAddress',
+    method: 'post',
+    data
+  })
+}
+
+export function delAddr(id){
+  return request({
+    url: '/dataCase/delCaseAddress',
+    method: 'post',
+    data:{id}
+  })
+}
+
+export function updateAddrStatus(data){
+  return request({
+    url: 'address/updateStatus',
+    method: 'post',
+    data
+  })
+}
+
+export function pageDataLog(data){
+  return request({
+    url: 'dataLog/pageDataLog',
+    method: 'post',
+    data
+  })
+}
+
+export function updateDataLog(data){
+  return request({
+    url: '/dataLog/update',
+    method: 'post',
+    data
+  })
+}
+
+export function delDataLog(id){
+  return request({
+    url: '/dataLog/delete',
+    method: 'post',
+    data:{id}
+  })
+}
+
+export function sameCaseList(id){
+  return request({
+    url: '/dataCase/sameCaseList',
+    method: 'post',
+    data:{id}
   })
 }

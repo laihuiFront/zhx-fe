@@ -579,7 +579,7 @@
                       <el-button type="primary" slot="reference">批量新增电话</el-button>
                     </el-popover>
                     <!-- <el-button type="primary">批量电催</el-button> -->
-                    <el-button type="primary">同步共债</el-button>
+                    <el-button type="primary" @click="_synchroSameTel">同步共债</el-button>
                   </div>
                 </div>
                 <el-table
@@ -630,17 +630,18 @@
               <el-tab-pane label="地址" name="2" class="tabs-wrap" >
                 <div class="operation">
                   <div class="left-oper">
-                    <el-button>标记为有效</el-button>
-                    <el-button>标记为未知</el-button>
-                    <el-button>标记为无效</el-button>
+                    <el-button @click="changeAddrStatus('有效')">标记为有效</el-button>
+                    <el-button @click="changeAddrStatus('未知')">标记为未知</el-button>
+                    <el-button @click="changeAddrStatus('无效')">标记为无效</el-button>
                     <el-button>显示全部地址</el-button>
                     <el-button>查看信函记录</el-button>
                   </div>
                   <div class="right-oper">
-                    <el-button type="primary">新增地址</el-button>
+                    <el-button type="primary" @click="addAddr">新增地址</el-button>
                   </div>
                 </div>
                 <el-table
+                  @selection-change="onSelectAddrRow"
                   :data="addrList"
                   style="width: 100%"
                   class="table-wrap">
@@ -687,8 +688,8 @@
                     label="操作"
                     width="100">
                     <template slot-scope="scope">
-                      <el-button type="text">编辑</el-button>
-                      <el-button type="text">删除</el-button>
+                      <el-button type="text" @click="editAddr(scope.row)">编辑</el-button>
+                      <el-button type="text" @click="deleteAddr(scope.row.id)">删除</el-button>
                     </template>
                   </el-table-column>
                 </el-table>
@@ -984,56 +985,56 @@
               </el-tab-pane>
               <el-tab-pane label="共债案件" name="10" class="tabs-wrap">
                 <el-table
-                  :data="caseDetail.dependCaseList"
+                  :data="caseSameList"
                   style="width: 100%"
                   class="table-wrap">
                   <el-table-column
-                    prop="content"
+                    prop="batchNo"
                     show-overflow-tooltip
                     label="批次号">
                   </el-table-column>
                   <el-table-column
-                    prop="content"
+                    prop="seqNo"
                     show-overflow-tooltip
                     label="个案序列号">
                   </el-table-column>
                   <el-table-column
-                    prop="content"
+                    prop="caseDate"
                     show-overflow-tooltip
                     label="委托日期">
                   </el-table-column>
                   <el-table-column
-                    prop="content"
+                    prop="name"
                     show-overflow-tooltip
                     label="姓名">
                   </el-table-column>
                   <el-table-column
-                    prop="content"
+                    prop="cardNo"
                     show-overflow-tooltip
                     label="卡号">
                   </el-table-column>
                   <el-table-column
-                    prop="content"
+                    prop="client"
                     show-overflow-tooltip
                     label="委托方">
                   </el-table-column>
                   <el-table-column
-                    prop="content"
+                    prop="money"
                     show-overflow-tooltip
                     label="委案金额">
                   </el-table-column>
                   <el-table-column
-                    prop="content"
+                    prop="collectStatus"
                     show-overflow-tooltip
                     label="催收状态">
                   </el-table-column>
                   <el-table-column
-                    prop="content"
+                    prop="enRepayAmt"
                     show-overflow-tooltip
                     label="已还款">
                   </el-table-column>
                   <el-table-column
-                    prop="content"
+                    prop="odv"
                     show-overflow-tooltip
                     label="催收员">
                   </el-table-column>
@@ -1041,11 +1042,11 @@
               </el-tab-pane>
               <el-tab-pane label="操作记录" name="11" class="tabs-wrap">
                 <el-table
-                  :data="caseDetail.logList"
+                  :data="logList"
                   style="width: 100%"
                   class="table-wrap">
                   <el-table-column
-                    prop="time"
+                    prop="opTime"
                     width="150"
                     show-overflow-tooltip
                     label="时间">
@@ -1057,15 +1058,42 @@
                     label="类别">
                   </el-table-column>
                   <el-table-column
-                    prop="content"
+                    prop="context"
                     show-overflow-tooltip
                     label="操作内容">
                   </el-table-column>
                   <el-table-column
-                    prop="user"
+                    prop="operName"
                     width="100"
                     show-overflow-tooltip
                     label="操作人">
+                  </el-table-column>
+                  <el-table-column
+                    label="操作"
+                    width="100">
+                    <template slot-scope="scope">
+                      <el-popover
+                        placement="bottom-end"
+                        trigger="manual"
+                        title="编辑操作记录"
+                        width="500"
+                        v-model="scope.row.editLogVisible">
+                        <div>
+                          <el-input
+                            type="textarea"
+                            :rows="4"
+                            placeholder="请输入操作记录"
+                            v-model="scope.row.editContext">
+                          </el-input>
+                        </div>
+                        <div style="text-align: right; margin-top: 12px">
+                          <el-button size="mini" type="text" @click="$set(scope.row, 'editLogVisible', false)">取消</el-button>
+                          <el-button type="primary" size="mini" @click="onClickSaveLog">确定</el-button>
+                        </div>
+                        <el-button type="text" @click="editLog(scope.row)" slot="reference">编辑</el-button>
+                      </el-popover>
+                      <el-button type="text" @click="_deleteLog(scope.row.id)">删除</el-button>
+                    </template>
                   </el-table-column>
                 </el-table>
               </el-tab-pane>
@@ -1346,50 +1374,95 @@
       </el-collapse-item>
     </el-collapse>
     <el-dialog
-  title="新增电话"
-  :visible.sync="dialogVisible"
-  width="45%"
-  append-to-body
-  >
- <el-form :inline="true" :model="formInline" class="demo-form-inline">
-  <el-form-item label="姓名">
-    <el-input v-model="formInline.name" placeholder="请输入姓名"></el-input>
-  </el-form-item>
-  <el-form-item label="关系">
-    <el-input v-model="formInline.relation" placeholder="请输入关系"></el-input>
-  </el-form-item>
-    <el-form-item label="电话">
-    <el-input v-model="formInline.tel" placeholder="请输入电话"></el-input>
-  </el-form-item>
-  <el-form-item label="分类">
-            <el-select v-model="formInline.type" placeholder="请选择分类" clearable>
-              <el-option
-                v-for="item in PhonetypeList"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id+''">
-              </el-option>
-            </el-select>
-          </el-form-item>
-           <el-form-item label="状态">
-            <el-select v-model="formInline.telStatusMsg" placeholder="请选择状态" clearable>
-              <el-option
-                v-for="item in statusList"
-                :key="item.id"
-                :label="item.name"
-                :value="item.name">
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="备注" style="width: 90%;">
-            <el-input type="textarea" v-model="formInline.remark" style="width: 180%;"></el-input>
-          </el-form-item>
-</el-form>
-  <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="saveTel">确 定</el-button>
-  </span>
-</el-dialog>
+      title="新增/编辑电话"
+      :visible.sync="dialogVisible"
+      width="45%"
+      append-to-body
+      >
+      <el-form :inline="true" :model="formInline" class="demo-form-inline">
+        <el-form-item label="姓名">
+          <el-input v-model="formInline.name" placeholder="请输入姓名"></el-input>
+        </el-form-item>
+        <el-form-item label="关系">
+          <el-input v-model="formInline.relation" placeholder="请输入关系"></el-input>
+        </el-form-item>
+        <el-form-item label="电话">
+          <el-input v-model="formInline.tel" placeholder="请输入电话"></el-input>
+        </el-form-item>
+        <el-form-item label="分类">
+          <el-select v-model="formInline.type" placeholder="请选择分类" clearable>
+            <el-option
+              v-for="item in PhonetypeList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id+''">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="状态">
+          <el-select v-model="formInline.telStatusMsg" placeholder="请选择状态" clearable>
+            <el-option
+              v-for="item in statusList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.name">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="备注" style="width: 90%;">
+          <el-input type="textarea" v-model="formInline.remark" style="width: 180%;"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="saveTel">确 定</el-button>
+      </span>
+    </el-dialog>
+    <el-dialog
+      title="新增/编辑地址"
+      :visible.sync="dialogAddrVisible"
+      width="45%"
+      append-to-body
+      class="addr-dialog-wrap"
+      >
+      <el-form :inline="true" :model="addressInfo" class="address-form" label-width="50px">
+        <el-form-item label="姓名">
+          <el-input v-model="addressInfo.name" placeholder="请输入姓名"></el-input>
+        </el-form-item>
+        <el-form-item label="关系">
+          <el-input v-model="addressInfo.relation" placeholder="请输入关系"></el-input>
+        </el-form-item>
+        <el-form-item label="地址" class="whole">
+          <el-input v-model="addressInfo.address" placeholder="请输入关系"></el-input>
+        </el-form-item>
+        <el-form-item label="类型">
+          <el-select v-model="addressInfo.type" placeholder="请选择分类" clearable>
+            <el-option key="1" label="单位地址" value="单位地址"></el-option>
+            <el-option key="2" label="家庭地址" value="家庭地址"></el-option>
+            <el-option key="3" label="对账单地址" value="对账单地址"></el-option>
+            <el-option key="4" label="户籍地址" value="户籍地址"></el-option>
+            <el-option key="5" label="其他地址" value="其他地址"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="状态">
+          <el-select v-model="addressInfo.status" placeholder="请选择状态" clearable>
+            <el-option
+              v-for="item in statusList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.name">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="备注" class="whole">
+          <el-input type="textarea" v-model="addressInfo.remark"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogAddrVisible = false">取 消</el-button>
+        <el-button type="primary" @click="saveAddr">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -1408,7 +1481,13 @@ import {getCaseDetail,
         updateTelStatus,
         addComment,
         listComment,
-        addBatchCaseTel} from '@/common/js/api-detail'
+        addBatchCaseTel,
+        saveCaseAddress,
+        delAddr,
+        updateAddrStatus,
+        synchroSameTel,
+        pageDataLog,updateDataLog,delDataLog,
+        sameCaseList} from '@/common/js/api-detail'
 import {getEnum} from '@/common/js/api-sync'
 
 export default {
@@ -1446,10 +1525,47 @@ export default {
       csztList:[],
       jmztList:[],
       batchAddTelVisible:false,
-      batchAddTelContent: null
+      batchAddTelContent: null,
+      dialogAddrVisible: false,
+      addressInfo:{},
+      addrSelectList:[],
+      logList:[],
+      caseSameList:[]
     }
   },
   methods: {
+    _deleteLog(id){
+      this.$confirm('此操作将删除该操作记录且无法恢复,是否继续？', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          delDataLog(id).then(res=>{
+            pageDataLog({caseId:this.id, type:''}).then(data=>{
+              this.logList = data
+            })
+            this.$message('操作记录删除成功')
+          })
+        }).catch(() => {
+          
+        });
+    },
+    editLog(row){
+      this.editLogRow = row
+      this.$set(row, 'editContext', row.context)
+      this.$set(row, 'editLogVisible', true)
+    },
+    onClickSaveLog(){
+      updateDataLog({
+        id: this.editLogRow.id,
+        context: this.editLogRow.editContext
+      }).then(res =>{
+        pageDataLog({caseId:this.id, type:''}).then(data=>{
+          this.logList = data
+        })
+        this.$message('操作记录修改成功')
+      })
+    },
     saveSelfInfo(){
       updateRemark({
         id: this.id,
@@ -1457,6 +1573,79 @@ export default {
       }).then(res=>{
         this.$message('修改自定义信息成功')
       })
+    },
+    addAddr(){
+      this.addressInfo = {}
+      this.addrEditType = 'add'
+  		this.dialogAddrVisible=true
+    },
+    editAddr(addr, index){
+      this.addressInfo = {...addr}
+      this.addrEditType = 'edit'
+      this.dialogAddrVisible = true
+    },
+    saveAddr(){
+      let result = this.addressInfo
+      result.caseId = this.id
+      if(this.addrEditType === 'add'){
+        result.id = 0
+      }
+      saveCaseAddress(result).then(res=>{
+        if(this.addrEditType === 'add'){
+          // this.caseDetail.dataCaseTelEntityList.push(res)
+          getAddressDetail(this.id).then(data=>{
+            this.addrList = data
+          })
+          this.$message('新增地址成功')
+        }else{
+          getAddressDetail(this.id).then(data=>{
+            this.addrList = data
+          })
+          this.$message('修改地址成功')
+        }
+        this.dialogAddrVisible = false
+      })
+    },
+    deleteAddr(id){
+      this.$confirm('此操作将删除该地址且无法恢复,是否继续？', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          delAddr(id).then(res=>{
+            getAddressDetail(this.id).then(data=>{
+               this.addrList = data
+            })
+            this.$message('删除地址成功')
+          })
+        }).catch(() => {
+          
+        });
+    },
+    changeAddrStatus(status){
+      if(!this.addrSelectList.length){
+        this.$message('请勾选需要修改的地址')
+        return
+      }
+
+      this.$confirm('确认修改地址状态？','提示',{
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(()=>{
+        const data = this.addrSelectList.map(item => {
+          return {
+            id: item.id,
+            status: status
+          }
+        })
+        updateAddrStatus(data).then(()=>{
+          getAddressDetail(this.id).then(data=>{
+            this.addrList = data
+          })
+          this.$message('地址状态修改成功')
+        })
+      }).catch(()=>{})
     },
     saveTel(){
       let result = this.formInline
@@ -1501,6 +1690,19 @@ export default {
               this.$set(this.caseDetail,'dataCaseTelEntityList',data)
             })
             this.$message('删除电话成功')
+          })
+        }).catch(() => {
+          
+        });
+    },
+    _synchroSameTel(){
+      this.$confirm('确认同步共债？', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          synchroSameTel(this.id).then(res=>{
+            this.$message('同步共债成功')
           })
         }).catch(() => {
           
@@ -1617,10 +1819,26 @@ export default {
         getSynergyDetail(this.id).then(data => {
           this.syncList = data
         })
+      }else if(ind == 7){//共债案件
+        sameCaseList(this.id).then(data=>{
+          this.caseSameList = data
+        })
+      }else if(ind == 8){//操作记录
+        pageDataLog({
+          caseId: this.id,
+          type:''
+        }).then(data=>{
+          this.logList = data
+        })
+      }else if(ind == 9){//减免管理
+
       }
     },
     onSelectPhoneRow(val){
       this.phoneSelectList = val
+    },
+    onSelectAddrRow(val){
+      this.addrSelectList = val
     }
   },
   created() {
@@ -1767,5 +1985,28 @@ export default {
     }
   }
 }
+.addr-dialog-wrap {
+    .el-dialog__body {
+      .el-form {
+        display: flex;
+        flex-wrap: wrap;
+        .el-form-item {
+          display: flex;
+          width: 50%;
+          margin-right: 0;
+          &.whole{
+            width: 100%;
+          }
+          .el-form-item__content {
+            flex: 1;
+            margin-left: 0 !important;
+            .el-select {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
 </style>
 
