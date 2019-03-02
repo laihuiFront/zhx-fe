@@ -211,3 +211,35 @@ export function sameCaseList(id){
     data:{id}
   })
 }
+
+export function dataCollectionSave(data){
+  return request({
+    url: '/dataCollection/save',
+    method: 'post',
+    data
+  })
+}
+
+export function addLetter(data){
+  return request({
+    url: '/letter/addLetter',
+    method: 'post',
+    data
+  })
+}
+
+export function getReduceApplyList(id){
+  return request({
+    url: '/reduce/apply/select/id',
+    method: 'post',
+    data:{id}
+  })
+}
+
+export function pageDataFile(caseId){
+  return request({
+    url: 'dataLFile/pageDataFile',
+    method: 'post',
+    data:{caseId}
+  })
+}

@@ -541,6 +541,30 @@
             <el-form-item label="备注6">
               <el-input v-model="caseDetail.distributeHistory" :disabled="true" ></el-input>
             </el-form-item>
+            <el-form-item label="附件" class="upload-wrap">
+                <el-popover
+                  placement="right"
+                  title="附件列表"
+                  width="500"
+                  trigger="click"
+                  v-model="uploadVisible">
+                  <el-table :data="uploadFileList" :show-header="false">
+                    <el-table-column width="150" property="fileName" label="文件名"></el-table-column>
+                  </el-table>
+                  <el-button type="text"  class="upload-btn" slot="reference">附件列表</el-button>
+                </el-popover>
+                <el-upload
+                  class="upload-demo upload-btn"
+                  action="http://116.62.124.251/zxh/dataLFile/pageDataFile"
+                  :headers="header"
+                  :show-file-list=false
+                  :on-success="uploadSuccess"
+                  :data="{caseId:id}"
+                  name='file'
+                  >
+                  <el-button  size="small" type="text">上传附件</el-button>
+                </el-upload>
+            </el-form-item>
           </el-form>
         </div>
       </el-collapse-item>
@@ -686,8 +710,9 @@
                   </el-table-column>
                   <el-table-column
                     label="操作"
-                    width="100">
+                    width="150">
                     <template slot-scope="scope">
+                      <el-button type="text" @click="applyLetter(scope.row)">申请信函</el-button>
                       <el-button type="text" @click="editAddr(scope.row)">编辑</el-button>
                       <el-button type="text" @click="deleteAddr(scope.row.id)">删除</el-button>
                     </template>
@@ -729,7 +754,7 @@
               <el-tab-pane label="催记" name="4" class="tabs-wrap">
                 <div class="operation">
                   <div class="left-oper">
-                    <el-radio-group v-model="memorizeType">
+                    <el-radio-group v-model="memorizeType" @change='memorizeTypeChange'>
                       <el-radio :label="1">本案催记</el-radio>
                       <el-radio :label="2">同批次共债催记</el-radio>
                       <el-radio :label="3">共债催记</el-radio>
@@ -930,11 +955,13 @@
               <el-tab-pane label="协催" name="9" class="tabs-wrap">
                 <div class="operation">
                   <div class="left-oper">
-                    <el-button>全部</el-button>
-                    <el-button>待审核</el-button>
-                    <el-button>待办</el-button>
-                    <el-button>已完成</el-button>
-                    <el-button>已撤销</el-button>
+                    <el-radio-group v-model="syncType" @change='syncTypeChange'>
+                      <el-radio :label="1">全部</el-radio>
+                      <el-radio :label="2">待审核</el-radio>
+                      <el-radio :label="3">待办</el-radio>
+                      <el-radio :label="4">已完成</el-radio>
+                      <el-radio :label="5">已撤销</el-radio>
+                    </el-radio-group>
                   </div>
                 </div>
                 <el-table
@@ -1041,6 +1068,16 @@
                 </el-table>
               </el-tab-pane>
               <el-tab-pane label="操作记录" name="11" class="tabs-wrap">
+                <div class="operation">
+                  <div class="left-oper">
+                    <el-radio-group v-model="logType" @change='logTypeChange'>
+                      <el-radio label="">全部</el-radio>
+                      <el-radio label="电话催收">电话催收</el-radio>
+                      <el-radio label="电话管理">电话管理</el-radio>
+                      <el-radio label="案件管理">案件管理</el-radio>
+                    </el-radio-group>
+                  </div>
+                </div>
                 <el-table
                   :data="logList"
                   style="width: 100%"
@@ -1270,17 +1307,17 @@
               label-width="100px"
               class="demo-ruleForm"
             >
-              <el-form-item label="催收时间" prop="phone">
-                <el-input v-model="batchForm.phone" placeholder="请输入电话号码"></el-input>
+              <el-form-item label="电话" prop="telPhone">
+                <el-input v-model="batchForm.telPhone" placeholder="请输入电话号码"></el-input>
               </el-form-item>
-              <el-form-item label="姓名" prop="name">
-                <el-input v-model="batchForm.name" placeholder="请输入姓名"></el-input>
+              <el-form-item label="姓名" prop="targetName">
+                <el-input v-model="batchForm.targetName" placeholder="请输入姓名"></el-input>
               </el-form-item>
-              <el-form-item label="关系" prop="rel">
-                <el-input v-model="batchForm.rel" placeholder="请输入关系"></el-input>
+              <el-form-item label="关系" prop="relation">
+                <el-input v-model="batchForm.relation" placeholder="请输入关系"></el-input>
               </el-form-item>
-              <el-form-item label="谈判方式" prop="tpfs">
-                <el-select v-model="batchForm.tpfs" placeholder="请选择谈判方式">
+              <el-form-item label="谈判方式" prop="method">
+                <el-select v-model="batchForm.method" placeholder="请选择谈判方式">
                   <el-option
                     v-for="item in tpfsList"
                     :key="item.id"
@@ -1289,8 +1326,8 @@
                   ></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="催收模板" prop="csmb">
-                <el-select v-model="batchForm.csmb" placeholder="请选择催收模板">
+              <el-form-item label="催收模板" prop="module">
+                <el-select v-model="batchForm.module" placeholder="请选择催收模板">
                   <el-option
                     v-for="item in csmbList"
                     :key="item.id"
@@ -1299,8 +1336,8 @@
                   ></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="催收结果" prop="csjg">
-                <el-select v-model="batchForm.csjg" placeholder="请选择催收结果">
+              <el-form-item label="催收结果" prop="result">
+                <el-select v-model="batchForm.result" placeholder="请选择催收结果">
                   <el-option
                     v-for="item in csjgList"
                     :key="item.id"
@@ -1309,16 +1346,16 @@
                   ></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="通话记录" prop="thjl" class="whole">
+              <el-form-item label="通话记录" prop="collectInfo" class="whole">
                 <el-input
                   type="textarea"
                   :rows="4"
                   placeholder="请输入通话记录"
-                  v-model="batchForm.thjl">
+                  v-model="batchForm.collectInfo">
                 </el-input>
               </el-form-item>
-              <el-form-item label="催收状态" prop="cszt">
-                <el-select v-model="batchForm.cszt" placeholder="请选择催收结果">
+              <el-form-item label="催收状态" prop="collectStatus">
+                <el-select v-model="batchForm.collectStatus" placeholder="请选择催收结果">
                   <el-option
                     v-for="item in csztList"
                     :key="item.id"
@@ -1328,13 +1365,13 @@
                 </el-select>
               </el-form-item>
               <el-form-item label=" " prop="cszt">
-                <el-checkbox v-model="batchForm.status">更新批次共债案件催收状态</el-checkbox>
+                <el-checkbox v-model="batchForm.sType" :true-label='1' :false-label="0">更新批次共债案件催收状态</el-checkbox>
               </el-form-item>
-              <el-form-item label="减免金额" prop="jmje">
-                <el-input v-model="batchForm.jmje" placeholder="请输入减免金额"></el-input>
+              <el-form-item label="减免金额" prop="reduceAmt">
+                <el-input v-model="batchForm.reduceAmt" placeholder="请输入减免金额"></el-input>
               </el-form-item>
-              <el-form-item label="减免状态" prop="jmzt">
-                <el-select v-model="batchForm.jmzt" placeholder="请选择减免状态">
+              <el-form-item label="减免状态" prop="reduceStatus">
+                <el-select v-model="batchForm.reduceStatus" placeholder="请选择减免状态">
                   <el-option
                     v-for="item in jmztList"
                     :key="item.id"
@@ -1343,9 +1380,9 @@
                   ></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="下次跟进日期" prop="time">
+              <el-form-item label="下次跟进日期" prop="nextFollDate">
                 <el-date-picker
-                  v-model="batchForm.time"
+                  v-model="batchForm.nextFollDate"
                   type="date"
                   value-format="yyyy-MM-dd"
                   placeholder="请选择下次跟进日期"
@@ -1353,8 +1390,8 @@
               </el-form-item>
             </el-form>
             <div class="operation">
-              <el-button type="primary">保存</el-button>
-              <el-button >清空</el-button>
+              <el-button type="primary" @click="onClickSaveCollection">保存</el-button>
+              <el-button @click="batchForm={sType:0}">清空</el-button>
             </div>
           </div>
           <div class="right-panel">
@@ -1463,6 +1500,42 @@
         <el-button type="primary" @click="saveAddr">确 定</el-button>
       </span>
     </el-dialog>
+    <el-dialog
+      title="新增/编辑地址"
+      :visible.sync="dialogLetterVisible"
+      width="45%"
+      append-to-body
+      class="addr-dialog-wrap"
+      >
+      <el-form :inline="true" :model="letterInfo" class="address-form" label-width="80px">
+        <el-form-item label="地址" class="whole">
+          <el-input :disabled="true" v-model="letterInfo.address" placeholder="请输入关系"></el-input>
+        </el-form-item>
+        <el-form-item label="模板">
+          <el-select v-model="letterInfo.module" placeholder="请选择状态" clearable>
+            <el-option
+              v-for="item in csmbList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="期次">
+          <el-input :disabled="true" v-model="letterInfo.periods"></el-input>
+        </el-form-item>
+        <el-form-item label="联系人">
+          <el-input v-model="letterInfo.relationer" placeholder="请输入联系人"></el-input>
+        </el-form-item>
+        <el-form-item label="申请内容" class="whole">
+          <el-input type="textarea" v-model="letterInfo.applyContext"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogLetterVisible = false">取 消</el-button>
+        <el-button type="primary" @click="saveApplyLetter">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -1487,7 +1560,11 @@ import {getCaseDetail,
         updateAddrStatus,
         synchroSameTel,
         pageDataLog,updateDataLog,delDataLog,
-        sameCaseList} from '@/common/js/api-detail'
+        sameCaseList,
+        dataCollectionSave,
+        addLetter,
+        getReduceApplyList,
+        pageDataFile} from '@/common/js/api-detail'
 import {getEnum} from '@/common/js/api-sync'
 
 export default {
@@ -1518,7 +1595,7 @@ export default {
       memorizeType:1,
       statusList:[{name:"有效",id:1,},{name:"无效",id:2,},{name:"未知",id:3,}],
       phoneSelectList: [],
-      batchForm:{},
+      batchForm:{sType:0},
       tpfsList:[],
       csmbList:[],
       csjgList:[],
@@ -1529,11 +1606,65 @@ export default {
       dialogAddrVisible: false,
       addressInfo:{},
       addrSelectList:[],
+      logType:'',
       logList:[],
-      caseSameList:[]
+      caseSameList:[],
+      dialogLetterVisible:false,
+      letterInfo:{},
+      syncType:1,
+      reduceApplyList:[],
+      uploadVisible:false,
+      uploadFileList:[],
+      header:{Authorization:localStorage.token},
+
     }
   },
   methods: {
+    uploadSuccess(res,file,fileList){
+      if (res.code ==100){
+  		    this.$message({
+            type: 'success',
+            message: res.msg
+          });
+           pageDataFile(this.id).then((response)=>{
+            this.uploadFileList=response
+          })
+      }else{
+        this.$message({
+          type: 'error',
+          message: res.msg
+        });
+      }
+  	},
+    logTypeChange(val){
+      pageDataLog({
+          caseId: this.id,
+          type:val
+        }).then(data=>{
+          this.logList = data
+        })
+    },
+    syncTypeChange(val){
+      getSynergyDetail(this.id).then(data => {
+        this.syncList = data
+      })
+    },
+    memorizeTypeChange(val){
+      getCollectDetail(this.id,val).then(data => {
+        console.info(data)
+        this.memorizeList = data
+      })
+    },
+    onClickSaveCollection(){
+      this.batchForm.caseId = this.id
+      dataCollectionSave(this.batchForm).then((data)=>{
+        this.$message('新增催收记录成功')
+        getCollectDetail(this.id,1).then(data => {
+          console.info(data)
+          this.memorizeList = data
+        })
+      })
+    },
     _deleteLog(id){
       this.$confirm('此操作将删除该操作记录且无法恢复,是否继续？', {
           confirmButtonText: '确定',
@@ -1541,7 +1672,7 @@ export default {
           type: 'warning'
         }).then(() => {
           delDataLog(id).then(res=>{
-            pageDataLog({caseId:this.id, type:''}).then(data=>{
+            pageDataLog({caseId:this.id, type:this.logType}).then(data=>{
               this.logList = data
             })
             this.$message('操作记录删除成功')
@@ -1560,7 +1691,7 @@ export default {
         id: this.editLogRow.id,
         context: this.editLogRow.editContext
       }).then(res =>{
-        pageDataLog({caseId:this.id, type:''}).then(data=>{
+        pageDataLog({caseId:this.id, type:this.logType}).then(data=>{
           this.logList = data
         })
         this.$message('操作记录修改成功')
@@ -1572,6 +1703,25 @@ export default {
         remark: this.caseDetail.selfInfo
       }).then(res=>{
         this.$message('修改自定义信息成功')
+      })
+    },
+    applyLetter(row){
+      // letterCount
+      this.letterInfo = {
+        caseId: this.id,
+        addressId: row.id,
+        periods: row.letterCount + 1,
+        address: row.address
+      }
+      this.dialogLetterVisible = true
+    },
+    saveApplyLetter(){
+      addLetter(this.letterInfo).then(data=>{
+        getAddressDetail(this.id).then(data=>{
+          this.addrList = data
+        })
+        this.$message('信函申请提交成功')
+        this.dialogLetterVisible = false
       })
     },
     addAddr(){
@@ -1767,6 +1917,7 @@ export default {
       })
     },
     queryDetail(){
+      this.otherActiveName = '1'
       getCaseDetail(this.id).then(data => {
         this.caseDetail = data
       })
@@ -1791,6 +1942,9 @@ export default {
       getEnum('减免状态').then(data=>{
         this.jmztList = data
       })
+      pageDataFile(this.id).then((response)=>{
+        this.uploadFileList=response
+      })
     },
     showPanel(tab,e){
       var ind = tab.index;
@@ -1803,6 +1957,7 @@ export default {
           this.dataList = data
         })
       }else if(ind == 3){//催記
+        this.memorizeType = 1
         getCollectDetail(this.id,1).then(data => {
           console.info(data)
           this.memorizeList = data
@@ -1816,6 +1971,7 @@ export default {
           this.rateUpdateList = data
         })
       }else if (ind == 6){//协催
+        this.syncType = 1
         getSynergyDetail(this.id).then(data => {
           this.syncList = data
         })
@@ -1824,14 +1980,19 @@ export default {
           this.caseSameList = data
         })
       }else if(ind == 8){//操作记录
+        this.logType = ''
         pageDataLog({
           caseId: this.id,
           type:''
         }).then(data=>{
           this.logList = data
         })
-      }else if(ind == 9){//减免管理
+      }else if(ind == 9){//诉讼案件
 
+      }else if(ind == 10){//减免管理
+        getReduceApplyList(this.id).then(data=>{
+          this.reduceApplyList = data
+        })
       }
     },
     onSelectPhoneRow(val){
@@ -2006,6 +2167,11 @@ export default {
           }
         }
       }
+    }
+  }
+  .upload-wrap{
+    .upload-btn{
+      display: inline-block;
     }
   }
 </style>
