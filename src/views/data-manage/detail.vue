@@ -577,7 +577,7 @@
                     <el-button @click="changePhoneStatus('有效')">标记为有效</el-button>
                     <el-button @click="changePhoneStatus('未知')">标记为未知</el-button>
                     <el-button @click="changePhoneStatus('无效')">标记为无效</el-button>
-                    <el-button>显示全部电话</el-button>
+                    <el-button @click="showAllTel">显示全部电话</el-button>
                   </div>
                   <div class="right-oper">
                     <el-button type="primary" @click="addPhone">新增电话</el-button>
@@ -656,7 +656,7 @@
                     <el-button @click="changeAddrStatus('有效')">标记为有效</el-button>
                     <el-button @click="changeAddrStatus('未知')">标记为未知</el-button>
                     <el-button @click="changeAddrStatus('无效')">标记为无效</el-button>
-                    <el-button>显示全部地址</el-button>
+                    <el-button @click="saveAddr">显示全部地址</el-button>
                     <el-button>查看信函记录</el-button>
                   </div>
                   <div class="right-oper">
@@ -1729,6 +1729,11 @@ export default {
       this.addrEditType = 'edit'
       this.dialogAddrVisible = true
     },
+    showAllAddr(){
+      getAddressDetail(this.id).then(data=>{
+        this.addrList = data
+      })
+    },
     saveAddr(){
       let result = this.addressInfo
       result.caseId = this.id
@@ -1791,6 +1796,11 @@ export default {
           this.$message('地址状态修改成功')
         })
       }).catch(()=>{})
+    },
+    showAllTel(){
+      getTelList(this.id).then(data=>{
+        this.$set(this.caseDetail,'dataCaseTelEntityList',data)
+      })
     },
     saveTel(){
       let result = this.formInline
