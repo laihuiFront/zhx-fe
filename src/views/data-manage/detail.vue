@@ -555,12 +555,11 @@
                 </el-popover>
                 <el-upload
                   class="upload-demo upload-btn"
-                  action="http://116.62.124.251/zxh/dataLFile/pageDataFile"
+                  action="http://116.62.124.251/zxh/dataFile/save/import"
                   :headers="header"
                   :show-file-list=false
                   :on-success="uploadSuccess"
                   :data="{caseId:id}"
-                  name='file'
                   >
                   <el-button  size="small" type="text">上传附件</el-button>
                 </el-upload>

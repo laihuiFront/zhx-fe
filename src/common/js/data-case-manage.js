@@ -63,7 +63,7 @@ export const searchList = function(area,batchNos,clients,caseType,caseDateStart,
       orderBy:orderBy?orderBy:"id",
       sort:sort?sort:"desc",
       pageNum:pageNum ? pageNum : 1,
-      pageSize:pageSize ? pageSize : 10
+      pageSize:pageSize ? pageSize : 100
     }
   })
 }
