@@ -116,3 +116,73 @@ export function getBankReconList(data){
     data
   })
 }
+
+export function cancelBankRecon(ids){
+  return request({
+    url: '/bankReconciliation/cancel',
+    method: 'post',
+    data:{ids}
+  })
+}
+
+export function expSelectedBankReconRecord(ids){
+  return download({
+    url: '/bankReconciliation/selectDataExport',
+    data: {
+      ids
+    }
+  })
+}
+
+export function expAllBankReconRecord(data){
+  return download({
+    url: '/bankReconciliation/queryDataExport',
+    data
+  })
+}
+
+export function expCurrentBankReconRecord(data){
+  return download({
+    url: '/bankReconciliation/pageDataExport',
+    data
+  })
+}
+
+export function getSynergisticRecordList(data){
+  return request({
+    url: '/synergistic/list',
+    method: 'post',
+    data
+  })
+}
+
+export function expAllSynergisticRecord(data){
+  return download({
+    url: '/synergistic/queryDataExport',
+    data
+  })
+}
+
+export function expCurrentSynergisticRecord(data){
+  return download({
+    url: '/synergistic/approve',
+    data
+  })
+}
+
+export function approveSynergisticRecord(data){
+  return request({
+    url: '/synergistic/list',
+    method: 'post',
+    data
+  })
+}
+
+export function finishSynergisticRecord(data){
+  return request({
+    url: '/synergistic/finish',
+    method: 'post',
+    data
+  })
+}
+

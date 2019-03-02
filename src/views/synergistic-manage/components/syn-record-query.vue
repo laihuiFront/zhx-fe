@@ -1,41 +1,43 @@
 <template>
   <el-form id="syn-record-query" :model="queryForm" :inline="true" class="query-wrap">
     <el-form-item>
-      <el-input style="width: 130px;" v-model="queryForm.userName" clearable placeholder="请输入姓名"></el-input>
+      <el-input style="width: 130px;" v-model="queryForm.dataCase.name" clearable placeholder="请输入姓名"></el-input>
     </el-form-item>
     <el-form-item>
-      <e-l-TreeSelect
-          style="width: 130px;"
-          ref="treeSelect"
-          v-model="queryForm.qy"
-          :selectParams="{'multiple': false,'clearable': true,'placeholder': '请选择区域'}"
-          :treeParams="elTreeParamsArea">
-      </e-l-TreeSelect>
-    </el-form-item>
-    <el-form-item>
-      <el-select style="width: 150px;" clearable v-model="queryForm.wtf" placeholder="请选择批次号">
+      <el-select style="width: 150px;" clearable v-model="queryForm.dataCase.collectionArea.id" filterable placeholder="请选择催收区域">
         <el-option
-          v-for="item in logTypeList"
-          :key="item.key"
-          :label="item.value"
-          :value="item.key">
+          v-for="item in collectionAreaList"
+          :key="item.id"
+          :label="item.name"
+          :value="item.id">
         </el-option>
       </el-select>
     </el-form-item>
     <el-form-item>
-      <el-select style="width: 150px;" clearable v-model="queryForm.wtf" placeholder="请选择委托方">
+      <el-select style="width: 150px;" v-model="queryForm.dataCase.batchNo" filterable placeholder="请选择批次" clearable>
         <el-option
-          v-for="item in logTypeList"
-          :key="item.key"
-          :label="item.value"
-          :value="item.key">
+          v-for="item in batchList"
+          :key="item.id"
+          :label="item.batchNo"
+          :value="item.batchNo">
+        </el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item>
+      <el-select style="width: 150px;" clearable v-model="queryForm.dataCase.client" filterable placeholder="请选择委托方">
+        <el-option
+          v-for="item in clientList"
+          :key="item.id"
+          :label="item.name"
+          :value="item.id">
         </el-option>
       </el-select>
     </el-form-item>
     <el-form-item>
       <el-date-picker
+        @change="caseDateChange"
         clearable
-        v-model="warq"
+        v-model="caseDate"
         value-format="yyyy-MM-dd"
         type="daterange"
         range-separator="至"
@@ -50,72 +52,65 @@
         trigger="click">
         <ul class="condition-wrap">
           <li class="condition-item">
-            <el-select clearable v-model="queryForm.hscsy" placeholder="请选择回收催收员">
+            <el-select clearable v-model="queryForm.dataCase.status" filterable placeholder="请选择案件状态">
               <el-option
-                v-for="item in logTypeList"
-                :key="item.key"
-                :label="item.value"
-                :value="item.key">
+                v-for="item in statusList"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id">
               </el-option>
             </el-select>
           </li>
           <li class="condition-item">
-            <el-select clearable v-model="queryForm.ajzt" placeholder="请选择案件状态">
+            <el-select v-model="queryForm.dataCase.collectStatus" filterable clearable placeholder="请选择催收状态">
               <el-option
-                v-for="item in logTypeList"
-                :key="item.key"
-                :label="item.value"
-                :value="item.key">
+                v-for="item in collectStatusList"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id">
               </el-option>
             </el-select>
           </li>
           <li class="condition-item">
-            <el-select v-model="queryForm.cszt" clearable placeholder="请选择催收状态">
+            <el-select v-model="queryForm.synergisticType" filterable clearable placeholder="请选择协催类型">
               <el-option
-                v-for="item in logTypeList"
-                :key="item.key"
-                :label="item.value"
-                :value="item.key">
-              </el-option>
-            </el-select>
-          </li>
-          <li class="condition-item">
-            <el-select v-model="queryForm.ajlx" placeholder="请选择协催类型">
-              <el-option
-                clearable
-                v-for="item in logTypeList"
-                :key="item.key"
-                :label="item.value"
-                :value="item.key">
+                v-for="item in synergisticTypeList"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id">
               </el-option>
             </el-select>
           </li>
           <li class="condition-item half">
-            <el-input v-model="queryForm.gaxlh" clearable placeholder="委案金额下限"></el-input> 至
-            <el-input v-model="queryForm.gaxlh" clearable placeholder="请委案金额上限"></el-input>
+            <el-input v-model="queryForm.dataCase.moneyStart" clearable placeholder="委案金额下限"></el-input> 至
+            <el-input v-model="queryForm.dataCase.moneyEnd" clearable placeholder="请委案金额上限"></el-input>
           </li>
           <li class="condition-item">
-            <el-input v-model="queryForm.gaxlh" clearable placeholder="请输入个案序列号"></el-input>
+            <el-input v-model="queryForm.dataCase.seqNo" clearable placeholder="请输入个案序列号"></el-input>
           </li>
           <li class="condition-item">
-            <el-input v-model="queryForm.zjh" clearable placeholder="请输入证件号"></el-input>
+            <el-input v-model="queryForm.dataCase.identNo" clearable placeholder="请输入证件号"></el-input>
+          </li>
+          <li class="condition-item">
+            <el-input v-model="queryForm.applyUser.name" clearable placeholder="请输入申请人"></el-input>
           </li>
           <li class="condition-item half">
             <el-date-picker
+              @change="applyTimeChange"
               clearable
-              v-model="tjsh"
+              v-model="applyTime"
               value-format="yyyy-MM-dd"
               type="daterange"
               range-separator="至"
-              start-placeholder="申请开始日期"
-              end-placeholder="申请结束日期">
+              start-placeholder="委案开始日期"
+              end-placeholder="委案结束日期">
             </el-date-picker>
           </li>
         </ul>
         <img src="./zhankai.png" width="12" height="12" alt="更多" slot="reference">
       </el-popover>
-      <el-button icon="el-icon-search" type="text">查询</el-button>
-      <el-button icon="el-icon-refresh" type="text">重置</el-button>
+      <el-button icon="el-icon-search" type="text" @click="$emit('query')">查询</el-button>
+      <el-button icon="el-icon-refresh" type="text" @click="$emit('reset')">重置</el-button>
     </el-form-item>
     <el-form-item>
       <slot></slot>
@@ -124,14 +119,9 @@
 </template>
 
 <script>
-import ELTreeSelect from '@/components/el-tree-select/elTreeSelect'
-import { getDepartmentTree } from '@/common/js/api-setting'
-import {getLogType} from '@/common/js/api-setting'
+import {getEnum,getBatchList,getStatusList} from '@/common/js/api-sync'
 export default {
   name:'repayRecordQuery',
-  components:{
-    ELTreeSelect,
-  },
   props:{
     queryForm:{
       type:Object,
@@ -142,44 +132,48 @@ export default {
   },
   data(){
     return {
-      logTypeList:[],
-      warq:[],
-      yjtar:[],
-      tjsj:[],
-      elTreeParamsArea: {
-          'default-expand-all': true,
-          filterable: false,
-          'check-strictly': true,
-          data: [],
-          props: {
-              children: 'children',
-              label: 'orgName',
-              value: 'id'
-          }
-      },
-      elTreeParamsDept: {
-          'default-expand-all': true,
-          filterable: false,
-          'check-strictly': true,
-          data: [],
-          props: {
-              children: 'children',
-              label: 'orgName',
-              value: 'id'
-          }
-      }
+      caseDate:[],
+      applyTime:[],
+      collectionAreaList: [],
+      batchList:[],
+      clientList:[],
+      statusList: [],
+      collectStatusList:[],
+      synergisticTypeList:[]
     }
   },
   created(){
-    getDepartmentTree().then(data => {
-      this.$set(this.elTreeParamsArea, 'data', data)
-       this.$refs.treeSelect.treeDataUpdateFun(data)
-    })
-    getDepartmentTree().then(data => {
-      this.$set(this.elTreeParamsDept, 'data', data)
-       this.$refs.treeSelectDept.treeDataUpdateFun(data)
-    })
-    getLogType().then((response) => this.logTypeList = response)
+    this.initPage()
+  },
+  methods:{
+    initPage(){
+      getEnum('催收区域').then(data => this.collectionAreaList = data)
+      getBatchList().then(data=> this.batchList = data)
+      getEnum('委托方').then(data => this.clientList = data)
+      this.statusList = getStatusList()
+      getEnum('催收状态').then(data => this.collectStatusList = data)
+      getEnum('协催类型').then(data => this.synergisticTypeList = data)
+    },
+    caseDateChange(val){
+      console.log(val)
+      if(val){
+        this.queryForm.dataCase.caseDateStart = val[0]
+        this.queryForm.dataCase.caseDateEnd = val[1]
+      }else{
+        this.queryForm.dataCase.caseDateStart = null
+        this.queryForm.dataCase.caseDateEnd = null
+      }
+    },
+    applyTimeChange(val){
+      console.log(val)
+      if(val){
+        this.queryForm.applyTimeStart = val[0]
+        this.queryForm.applyTimeEnd = val[1]
+      }else{
+        this.queryForm.applyTimeStart = null
+        this.queryForm.applyTimeEnd = null
+      }
+    },
   }
 }
 </script>

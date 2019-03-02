@@ -17,7 +17,7 @@
       <el-select style="width: 150px;" v-model="queryForm.dataCase.batchNo" filterable placeholder="请选择批次" clearable>
         <el-option
           v-for="item in batchList"
-          :key="item.batchNo"
+          :key="item.id"
           :label="item.batchNo"
           :value="item.batchNo">
         </el-option>

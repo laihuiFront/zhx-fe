@@ -1,6 +1,8 @@
 <template>
   <div id="synergistic-record" class="page-wraper-sub">
     <syn-record-query 
+      @reset="onClickReset"
+      @query="onClickQuery"
       :queryForm="queryForm">
       <el-dropdown trigger="click" @command="handleCommand">
         <el-button type="primary">导出查询结果<i class="el-icon-arrow-down el-icon--right"></i></el-button>
@@ -14,19 +16,19 @@
       :data="recordList"
       style="width: 100%"
       class="table-wrap">
-      <el-table-column prop="createTime" label="协催类型" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="催收状态" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="个案序列号" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="证件号" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="姓名" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="委案金额" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="还款金额" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="申请内容" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="申请时间" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="催收员" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="协催时间" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="协催人" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="协催结果" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="synergisticType" label="协催类型" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="dataCase.collectStatus" label="催收状态" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="dataCase.seqNo" label="个案序列号" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="dataCase.identNo" label="证件号" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="dataCase.name" label="姓名" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="dataCase.money" label="委案金额" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="dataCase.repayMoney" label="还款金额" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="applyContent" label="申请内容" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="applyTime" label="申请时间" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="applyUser.userName" label="催收员" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="synergisticTime" label="协催时间" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="synergisticUser.name" label="协催人" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="synergisticResult" label="协催结果" show-overflow-tooltip></el-table-column>
     </el-table>
     <el-pagination
       @size-change="onClickQuery"
@@ -42,6 +44,7 @@
 
 <script>
 import {SynRecordQuery} from './components'
+import {getSynergisticRecordList,expAllSynergisticRecord,expCurrentSynergisticRecord} from '@/common/js/api-sync'
 export default {
   name: 'synergisticRecord',
   components:{
@@ -54,12 +57,48 @@ export default {
       queryForm:{
         pageNum: 1,
         pageSize: 10,
+        applyStatus:1,
+        finishStatus:1,
+        dataCase:{
+          collectionArea:{},
+        },
+        applyUser:{}
       }
     }
   },
+  created() {
+    this.onClickQuery()
+  },
   methods: {
-    onClickQuery(){},
-    handleCommand(){}
+    onClickReset(){
+      this.queryForm = {
+        pageNum: this.queryForm.pageNum,
+        pageSize: this.queryForm.pageSize,
+        applyStatus:1,
+        finishStatus:1,
+        dataCase: {
+          collectionArea:{id: null},
+        },
+        applyUser:{name:null}
+      }
+    },
+    onClickQuery(){
+      getSynergisticRecordList(this.queryForm).then(data => {
+        this.recordList = data.list
+        this.total = data.total
+      })
+    },
+    handleCommand(command){
+      if(command === 'current'){
+        expCurrentSynergisticRecord(this.queryForm).them(res => {
+          this.$message('导出成功')
+        })
+      }else {
+        expAllSynergisticRecord(this.queryForm).them(res => {
+          this.$message('导出成功')
+        })
+      }
+    },
   }
 }
 </script>

@@ -8,11 +8,11 @@
       @reset="onClickReset"
       @query="onClickQuery"
       :queryForm="queryForm">
-      <el-button type="primary" v-if="queryForm.status==='0'">作废CP</el-button>
+      <el-button type="primary" v-if="queryForm.status==='0'" @click="onClickBatchCancelBankRecon">作废CP</el-button>
       <el-button type="primary" v-if="queryForm.status==='0'">导入CP</el-button>
       <el-button type="primary" v-if="queryForm.status==='0'">登帐</el-button>
       <el-button type="primary" v-if="queryForm.status==='0'">导入确认登帐</el-button>
-      <el-button type="primary">导出选中数据</el-button>
+      <el-button type="primary" @click="onClickExportSelectedRecord">导出选中数据</el-button>
       <el-dropdown trigger="click" @command="handleCommand">
         <el-button type="primary">导出查询结果<i class="el-icon-arrow-down el-icon--right"></i></el-button>
         <el-dropdown-menu slot="dropdown">
@@ -49,6 +49,7 @@
           >确认登帐</el-button>
           <el-button
             type="text"
+            @click="onClicCancelBankRecon(scope.row.id)"
           >作废CP</el-button>
         </template>
       </el-table-column>
@@ -125,7 +126,7 @@
 
 <script>
 import {BankRecordQuery} from './components'
-import {getBankReconList} from '@/common/js/api-sync'
+import {getBankReconList,cancelBankRecon,expSelectedBankReconRecord,expAllBankReconRecord,expCurrentBankReconRecord} from '@/common/js/api-sync'
 export default {
   name: 'synergisticBankReconciliation',
   components:{
@@ -152,7 +153,8 @@ export default {
           collectionUser:{},
           caseArea:{},
         },
-      }
+      },
+      selectList:[]
     }
   },
   created() {
@@ -180,10 +182,61 @@ export default {
         this.total = data.total
       })
     },
-    onSelectRow(){},
+    onClickBatchCancelBankRecon(){
+      if(!this.selectList.length){
+        this.$message('请选择需要作废记录')
+        return
+      }
+      this.$confirm('此操作将作废记录，是否继续？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        const ids = this.selectList.map(item => item.id)
+        cancelBankRecon(ids).then(() => {
+          this.$message('作废CP成功')
+          this.onClickQuery()
+        })
+      }).catch(() => { })
+    },
+    onClicCancelBankRecon(id){
+      this.$confirm('此操作将作废记录，是否继续？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        cancelBankRecon([id]).then(() => {
+          this.$message('作废CP成功')
+          this.onClickQuery()
+        })
+      }).catch(() => { })
+    },
+    onClickExportSelectedRecord(){
+      if(!this.selectList.length){
+        this.$message('请选择需要导出的记录')
+        return
+      }
+      const ids = this.selectList.map(item => item.id)
+      expSelectedBankReconRecord(ids).then(() => {
+        this.$message('导出成功')
+      }).catch(() => { })
+    },
+    onSelectRow(val){
+      this.selectList = val
+    },
     onClickCancel(){},
     onClickSave(){},
-    handleCommand(){}
+    handleCommand(){
+      if(command === 'current'){
+        expCurrentBankReconRecord(this.queryForm).them(res => {
+          this.$message('导出成功')
+        })
+      }else {
+        expAllBankReconRecord(this.queryForm).them(res => {
+          this.$message('导出成功')
+        })
+      }
+    }
   }
 }
 </script>
