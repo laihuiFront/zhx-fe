@@ -44,7 +44,7 @@ return request({
       sort:sort?sort:"desc",
        measure:  measure ,
        pageNum:pageNum ? pageNum : 1,
-       pageSize:pageSize ? pageSize : 10
+       pageSize:pageSize ? pageSize : 100
     }
   })
 }
@@ -161,7 +161,7 @@ return download({
       orderBy:orderBy,
       sort:sort,
        pageNum:pageNum ? pageNum : 1,
-       pageSize:pageSize ? pageSize : 10
+       pageSize:pageSize ? pageSize : 100
     }
   })
 }
@@ -192,7 +192,7 @@ return download({
       orderBy,
       sort,
        pageNum:pageNum ? pageNum : 1,
-       pageSize:pageSize ? pageSize : 10
+       pageSize:pageSize ? pageSize : 100
     }
   })
 }

@@ -555,7 +555,6 @@
                     :show-file-list=false
                     :on-success="uploadSuccess"
                     :data="{caseId:id}"
-                    name='file'
                     >
                     <el-button style="position:absolute;top:10px;right:10px;"  size="mini" type="primary">上传附件</el-button>
                   </el-upload>

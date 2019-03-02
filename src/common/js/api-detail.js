@@ -73,7 +73,7 @@ export function getInterestDetail(id) {
   })
 }
 
-//评语
+//协催
 export function getSynergyDetail(id) {
   return request({
     url: '/dataCase/listSynergy',
@@ -243,6 +243,7 @@ export function pageDataFile(caseId){
     data:{caseId}
   })
 }
+
 
 export function getLegalList(caseId){
   return request({
