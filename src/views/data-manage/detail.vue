@@ -550,7 +550,7 @@
                   v-model="uploadVisible">
                   <el-upload
                     class="upload-demo upload-btn"
-                    action="http://116.62.124.251/zxh/dataLFile/pageDataFile"
+                    action="http://116.62.124.251/zxh/dataFile/save/import"
                     :headers="header"
                     :show-file-list=false
                     :on-success="uploadSuccess"
