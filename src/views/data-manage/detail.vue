@@ -203,47 +203,47 @@
           style="width: 100%"
           class="table-wrap">
           <el-table-column
-            prop="createTime"
+            prop="seqNo"
             label="个案序列号">
           </el-table-column>
           <el-table-column
-            prop="createTime"
+            prop="cardNo"
             label="卡号">
           </el-table-column>
           <el-table-column
-            prop="createTime"
+            prop="account"
             label="账号">
           </el-table-column>
           <el-table-column
-            prop="createTime"
+            prop="money"
             label="委案金额">
           </el-table-column>
           <el-table-column
-            prop="createTime"
+            prop="currencyType"
             label="币种">
           </el-table-column>
           <el-table-column
-            prop="createTime"
+            prop="proRepayAmt"
             label="PTP">
           </el-table-column>
           <el-table-column
-            prop="createTime"
+            prop="bankAmt"
             label="CP">
           </el-table-column>
           <el-table-column
-            prop="createTime"
+            prop="enRepayAmt"
             label="已还款">
           </el-table-column>
           <el-table-column
-            prop="createTime"
+            prop="accountAge"
             label="逾期账龄">
           </el-table-column>
           <el-table-column
-            prop="createTime"
+            prop="collectDate"
             label="上次通电">
           </el-table-column>
           <el-table-column
-            prop="createTime"
+            prop="collectTimes"
             label="通电次数">
           </el-table-column>
         </el-table>

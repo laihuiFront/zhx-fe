@@ -1,4 +1,4 @@
-2<template>
+<template>
   <div id="data-case-manage">
     <el-row :gutter="24">
       <el-col :span="24">

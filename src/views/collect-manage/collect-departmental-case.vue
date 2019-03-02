@@ -453,24 +453,33 @@
               <el-form-item>
                 <el-button type="primary" @click="dialogVisible=true;">申请协催</el-button>
               </el-form-item>
+            </el-form>
+          </div>
+        </el-col>
+        <el-col :span="22">
+          <div class="grid-content bg-purple">
+            <el-form :inline="true">
               <el-form-item>
-                <span class="color_gray">列表案量:</span>
-                <span>{{ fetchData.countCase }}, </span> </el-form-item
+                <span class="color_gray" style="display: inline-block; color: black;font-size: 16px;">查询结果统计：</span>
+              </el-form-item>
+              <el-form-item>
+                <span class="color_gray" style="display: inline-block; color: #66b1ff;font-size: 16px;">列表案量:</span>
+                <span style="display: inline-block; color: #66b1ff;font-size: 16px;">{{ fetchData.countCase }}, </span> </el-form-item
               ><el-form-item>
-              <span class="color_gray"> 列表金额:</span>
-              <span>{{ fetchData.sumMoney }}, </span> </el-form-item
+              <span class="color_gray" style="display: inline-block; color: #66b1ff;font-size: 16px;"> 列表金额:</span>
+              <span style="display: inline-block; color: #66b1ff;font-size: 16px;">{{ fetchData.sumMoney }}, </span> </el-form-item
             ><el-form-item>
-              <span class="color_gray"> 列表还款案量:</span>
-              <span>{{ fetchData.countCasePay }}, </span> </el-form-item
+              <span class="color_gray" style="display: inline-block; color: #66b1ff;font-size: 16px;"> 列表还款案量:</span>
+              <span style="display: inline-block; color: #66b1ff;font-size: 16px;">{{ fetchData.countCasePay }}, </span> </el-form-item
             ><el-form-item>
-              <span class="color_gray"> 列表还款数额:</span>
-              <span>{{ fetchData.sumPayMoney }}, </span> </el-form-item
+              <span class="color_gray" style="display: inline-block; color: #66b1ff;font-size: 16px;"> 列表还款数额:</span>
+              <span style="display: inline-block; color: #66b1ff;font-size: 16px;">{{ fetchData.sumPayMoney }}, </span> </el-form-item
             ><el-form-item>
-              <span class="color_gray"> 列表CP值:</span>
-              <span>{{ fetchData.sumRepay }}, </span> </el-form-item
+              <span class="color_gray" style="display: inline-block; color: #66b1ff;font-size: 16px;"> 列表CP值:</span>
+              <span style="display: inline-block; color: #66b1ff;font-size: 16px;">{{ fetchData.sumRepay }}, </span> </el-form-item
             ><el-form-item>
-              <span class="color_gray"> 列表PTP值:</span>
-              <span>{{ fetchData.sumBank }} </span>
+              <span class="color_gray" style="display: inline-block; color: #66b1ff;font-size: 16px;"> 列表PTP值:</span>
+              <span style="display: inline-block; color: #66b1ff;font-size: 16px;">{{ fetchData.sumBank }} </span>
             </el-form-item>
             </el-form>
           </div>
@@ -480,7 +489,7 @@
         ref="multipleTable"
         :data="tableData"
         style="width: 100%"
-        height="140"
+        height="300"
         :row-class-name="rowColor"
         @selection-change="handleSelectionChange"
         @sort-change="sortHandle"
@@ -537,7 +546,7 @@
     data() {
       return {
         paginationData:{
-          pageSize:10,
+          pageSize:100,
           total:0,
           currentPage:1
         },

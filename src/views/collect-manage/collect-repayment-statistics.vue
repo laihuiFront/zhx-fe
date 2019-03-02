@@ -154,17 +154,17 @@
     </section>
     <section class="table-wrap">
       <div style="padding-bottom: 20px;">
-        <span style="color:#CAA460;">查询结果统计:</span>
+        <span style="color: black;font-size: 16px;">查询结果统计:</span>
         <span class="" v-if="form1.val1 == 0">
-          <span>列表还款金额: {{ topData.paidMoney }}, </span>
-          <span>还款M值金额: {{ topData.repaidAmt }}</span>
+          <span style="color: #66b1ff;font-size: 16px;">列表还款金额: {{ topData.paidMoney }}, </span>
+          <span style="color: #66b1ff;font-size: 16px;">还款M值金额: {{ topData.repaidAmt }}</span>
         </span>
         <span class="" v-if="form1.val1 == 1">
-          <span>列表CP金额: {{ topData.bankAmtC }}, </span>
-          <span>CPM值金额: {{ topData.repaidBankAmt }}</span>
+          <span style="color: #66b1ff;font-size: 16px;">列表CP金额: {{ topData.bankAmtC }}, </span>
+          <span style="color: #66b1ff;font-size: 16px;">CPM值金额: {{ topData.repaidBankAmt }}</span>
         </span>
         <span class="" v-if="form1.val1 == 2">
-          <span>列表PTP金额: {{ topData.repayAmtP }} </span>
+          <span style="color: #66b1ff;font-size: 16px;">列表PTP金额: {{ topData.repayAmtP }} </span>
         </span>
       </div>
       <el-table
