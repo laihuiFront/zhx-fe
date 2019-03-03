@@ -77,6 +77,7 @@
       :current-page.sync="queryForm.pageNum"
       :page-size.sync="queryForm.pageSize"
       layout="prev, pager, next, jumper,total, sizes"
+      :page-sizes="[100, 500, 2000, 10000, 1000000]"
       :total="total"
       class="pagination-wrap"
     ></el-pagination>
@@ -193,7 +194,7 @@ export default {
       queryForm:{
         recordStatus: '0',
         pageNum: 1,
-        pageSize: 10,
+        pageSize: 100,
         dataCase: {
           collectionArea:{},
           collectionUser:{},

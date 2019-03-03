@@ -109,6 +109,7 @@
       @current-change="onClickQuery"
       :current-page.sync="queryForm.pageNum"
       :page-size.sync="queryForm.pageSize"
+      :page-sizes="[100, 500, 2000, 10000, 1000000]"
       layout="prev, pager, next, jumper,total, sizes"
       :total="total"
       class="pagination-wrap"
@@ -131,7 +132,7 @@ export default {
       total:0,
       queryForm:{
         pageNum: 1,
-        pageSize: 10,
+        pageSize: 100,
         applyStatus:0,
         finishStatus:0,
         synergisticType:{},

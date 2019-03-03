@@ -132,7 +132,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage4"
-      :page-sizes="[10, 20, 30, 40]"
+      :page-sizes="[100, 500, 2000, 10000, 1000000]"
       :page-size="pages"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
@@ -583,7 +583,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage4"
-      :page-sizes="[10, 20, 30, 40]"
+      :page-sizes="[100, 500, 2000, 10000, 1000000]"
       :page-size="pages"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
@@ -1013,14 +1013,12 @@ export default {
   	search(){
   		dataList(this.form).then((response)=>{
             this.DataList=response.data.list
-//            this.pages = response.pages
               this.total = response.total
 })    
   	},
   	search2(){
   		dataList2(this.form2).then((response)=>{
             this.DataList2=response.data.list
-//            this.pages = response.pages
               this.total = response.total
 })    
   	},
@@ -1034,12 +1032,12 @@ this.pageNum=val;
 created() {
               dataList(this.form).then((response)=>{
               this.DataList=response.data.list
-              this.pages = response.pages
+             // this.pages = response.pages
               this.total = response.total
 })    
         dataList2(this.form).then((response)=>{
               this.DataList2=response.data.list
-              this.pages = response.pages
+             // this.pages = response.pages
               this.total = response.total
 })    
                 PersonList().then((response)=>{
