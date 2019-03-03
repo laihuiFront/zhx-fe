@@ -1,6 +1,6 @@
 <template>
   <div id="synergistic-bank-reconciliation" class="page-wraper-sub">
-    <el-tabs v-model="queryForm.status">
+    <el-tabs v-model="queryForm.status" @tab-click="onClickQuery">
       <el-tab-pane label="待银行对帐" name="0"></el-tab-pane>
       <el-tab-pane label="已作废" name="1"></el-tab-pane>
     </el-tabs>
@@ -9,9 +9,16 @@
       @query="onClickQuery"
       :queryForm="queryForm">
       <el-button type="primary" v-if="queryForm.status==='0'" @click="onClickBatchCancelBankRecon">作废CP</el-button>
-      <el-button type="primary" v-if="queryForm.status==='0'">导入CP</el-button>
-      <el-button type="primary" v-if="queryForm.status==='0'">登帐</el-button>
-      <el-button type="primary" v-if="queryForm.status==='0'">导入确认登帐</el-button>
+      <el-upload
+        class="upload-demo upload-btn"
+        action="http://116.62.124.251/zxh/bankReconciliation/cpImport"
+        :headers="header"
+        :show-file-list="false"
+        :on-success="uploadSuccess"
+        style="display:inline-block;margin-left:5x;" 
+        >
+        <el-button type="primary" v-if="queryForm.status==='0'">导入CP</el-button>
+      </el-upload>
       <el-button type="primary" @click="onClickExportSelectedRecord">导出选中数据</el-button>
       <el-dropdown trigger="click" @command="handleCommand">
         <el-button type="primary">导出查询结果<i class="el-icon-arrow-down el-icon--right"></i></el-button>
@@ -42,11 +49,8 @@
       <el-table-column prop="submitUser.name" label="提交人" show-overflow-tooltip></el-table-column>
       <el-table-column prop="submitTime" label="提交时间" show-overflow-tooltip></el-table-column>
       <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
-      <el-table-column label="操作" width="100" fixed="right" v-if="queryForm.status==='0'">
+      <el-table-column label="操作" width="100" v-if="queryForm.status==='0'">
         <template slot-scope="scope">
-          <el-button
-            type="text"
-          >确认登帐</el-button>
           <el-button
             type="text"
             @click="onClicCancelBankRecon(scope.row.id)"
@@ -134,6 +138,7 @@ export default {
   },
   data(){
     return {
+      header:{Authorization:localStorage.token},
       recordList: [],
       total:0,
       dialogData:{
@@ -164,6 +169,20 @@ export default {
     })
   },
   methods: {
+     uploadSuccess(res,file,fileList){
+      if (res.code ==100){
+  		    this.$message({
+            type: 'success',
+            message: res.msg
+          });
+           this.onClickQuery()
+      }else{
+        this.$message({
+          type: 'error',
+          message: res.msg
+        });
+      }
+  	},
     onClickReset(){
       this.queryForm = {
         status: this.queryForm.status,

@@ -165,14 +165,14 @@ export function expAllSynergisticRecord(data){
 
 export function expCurrentSynergisticRecord(data){
   return download({
-    url: '/synergistic/approve',
+    url: '/synergistic/pageDataExport',
     data
   })
 }
 
 export function approveSynergisticRecord(data){
   return request({
-    url: '/synergistic/list',
+    url: '/synergistic/approve',
     method: 'post',
     data
   })

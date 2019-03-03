@@ -1,9 +1,6 @@
 <template>
   <el-form id="syn-record-query" :model="queryForm" :inline="true" class="query-wrap">
     <el-form-item>
-      <el-input style="width: 130px;" v-model="queryForm.dataCase.name" clearable placeholder="请输入姓名"></el-input>
-    </el-form-item>
-    <el-form-item>
       <el-select style="width: 150px;" clearable v-model="queryForm.dataCase.collectionArea.id" filterable placeholder="请选择催收区域">
         <el-option
           v-for="item in collectionAreaList"
@@ -72,7 +69,7 @@
             </el-select>
           </li>
           <li class="condition-item">
-            <el-select v-model="queryForm.synergisticType" filterable clearable placeholder="请选择协催类型">
+            <el-select v-model="queryForm.synergisticType.name" filterable clearable placeholder="请选择协催类型">
               <el-option
                 v-for="item in synergisticTypeList"
                 :key="item.id"
@@ -86,10 +83,13 @@
             <el-input v-model="queryForm.dataCase.moneyEnd" clearable placeholder="请委案金额上限"></el-input>
           </li>
           <li class="condition-item">
-            <el-input v-model="queryForm.dataCase.seqNo" clearable placeholder="请输入个案序列号"></el-input>
+            <el-input v-model="names" @change="namesChange" type="textarea" :rows="3" clearable placeholder="请输入姓名"></el-input>
           </li>
           <li class="condition-item">
-            <el-input v-model="queryForm.dataCase.identNo" clearable placeholder="请输入证件号"></el-input>
+            <el-input v-model="seqNos" @change="seqNosChange" type="textarea" :rows="3" clearable placeholder="请输入个案序列号"></el-input>
+          </li>
+          <li class="condition-item">
+            <el-input v-model="identNos" @change="identNosChange" type="textarea" :rows="3" clearable placeholder="请输入证件号"></el-input>
           </li>
           <li class="condition-item">
             <el-input v-model="queryForm.applyUser.name" clearable placeholder="请输入申请人"></el-input>
@@ -139,7 +139,10 @@ export default {
       clientList:[],
       statusList: [],
       collectStatusList:[],
-      synergisticTypeList:[]
+      synergisticTypeList:[],
+      names:null,
+      seqNos:null,
+      identNos:null
     }
   },
   created(){
@@ -153,6 +156,28 @@ export default {
       this.statusList = getStatusList()
       getEnum('催收状态').then(data => this.collectStatusList = data)
       getEnum('协催类型').then(data => this.synergisticTypeList = data)
+    },
+    namesChange(val){
+      console.log(val)
+      if(val){
+        this.queryForm.dataCase.names = val.split('\n')
+      }else{
+        this.queryForm.dataCase.names = null
+      }
+    },
+    seqNosChange(val){
+      if(val){
+        this.queryForm.dataCase.seqNos = val.split('\n')
+      }else{
+        this.queryForm.dataCase.seqNos = null
+      }
+    },
+    identNosChange(val){
+      if(val){
+        this.queryForm.dataCase.identNos = val.split('\n')
+      }else{
+        this.queryForm.dataCase.identNos = null
+      }
     },
     caseDateChange(val){
       console.log(val)

@@ -59,6 +59,7 @@ export default {
         pageSize: 10,
         applyStatus:1,
         finishStatus:1,
+        synergisticType:{},
         dataCase:{
           collectionArea:{},
         },
@@ -76,6 +77,7 @@ export default {
         pageSize: this.queryForm.pageSize,
         applyStatus:1,
         finishStatus:1,
+        synergisticType:{name:null},
         dataCase: {
           collectionArea:{id: null},
         },

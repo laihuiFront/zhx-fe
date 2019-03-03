@@ -131,16 +131,16 @@
             </el-select>
           </li>
           <li class="condition-item">
-            <el-input v-model="queryForm.dataCase.seqNo" clearable placeholder="请输入个案序列号"></el-input>
+            <el-input v-model="seqNos" @change="seqNosChange" type="textarea" :rows="3" clearable placeholder="请输入个案序列号"></el-input>
           </li>
           <li class="condition-item">
-            <el-input v-model="queryForm.dataCase.identNo" clearable placeholder="请输入证件号"></el-input>
+            <el-input v-model="identNos" @change="identNosChange" type="textarea" :rows="3"  clearable placeholder="请输入证件号"></el-input>
           </li>
           <li class="condition-item">
-            <el-input v-model="queryForm.dataCase.account" clearable placeholder="请输入账号"></el-input>
+            <el-input v-model="accounts" @change="accountsChange" type="textarea" :rows="3" clearable placeholder="请输入账号"></el-input>
           </li>
           <li class="condition-item">
-            <el-input v-model="queryForm.dataCase.cardNo" clearable placeholder="请输入卡号"></el-input>
+            <el-input v-model="cardNos" @change="cardNosChange" type="textarea" :rows="3" clearable placeholder="请输入卡号"></el-input>
           </li>
           <li class="condition-item">
             <el-input v-model="queryForm.confirmUser.name" clearable placeholder="请输入确认人"></el-input>
@@ -200,6 +200,10 @@ export default {
   },
   data(){
     return {
+      seqNos:null,
+      identNos:null,
+      accounts:null,
+      cardNos: null,
       caseDate:[],
       expectDate:[],
       confirmTime:[],
@@ -257,6 +261,34 @@ export default {
       getEnum('催收状态').then(data => this.collectStatusList = data)
       getEnum('案件类型').then(data => this.caseTypeList = data)
       this.statusList = getStatusList()
+    },
+    seqNosChange(val){
+      if(val){
+        this.queryForm.dataCase.seqNos = val.split('\n')
+      }else{
+        this.queryForm.dataCase.seqNos = null
+      }
+    },
+    identNosChange(val){
+      if(val){
+        this.queryForm.dataCase.identNos = val.split('\n')
+      }else{
+        this.queryForm.dataCase.identNos = null
+      }
+    },
+    accountsChange(val){
+      if(val){
+        this.queryForm.dataCase.accounts = val.split('\n')
+      }else{
+        this.queryForm.dataCase.accounts = null
+      }
+    },
+    cardNosChange(val){
+      if(val){
+        this.queryForm.dataCase.cardNos = val.split('\n')
+      }else{
+        this.queryForm.dataCase.cardNos = null
+      }
     },
     caseDateChange(val){
       console.log(val)

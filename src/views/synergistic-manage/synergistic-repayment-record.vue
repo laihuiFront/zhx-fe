@@ -1,6 +1,6 @@
 <template>
   <div id="synergistic-repayment-record" class="page-wraper-sub">
-    <el-tabs v-model="queryForm.recordStatus">
+    <el-tabs v-model="queryForm.recordStatus" @tab-click="onClickQuery">
       <el-tab-pane label="还款记录" name="0"></el-tab-pane>
       <el-tab-pane label="已撤销" name="1"></el-tab-pane>
     </el-tabs>
@@ -10,7 +10,16 @@
       :queryForm="queryForm">
       <el-button type="primary" v-if="queryForm.recordStatus==='0'" @click="onClickAdd">新建还款记录</el-button>
       <el-button type="primary" v-if="queryForm.recordStatus==='0'" @click="onClickBatchRevoke">撤销还款</el-button>
-      <el-button type="primary" v-if="queryForm.recordStatus==='0'">导入还款记录</el-button>
+      <el-upload
+        class="upload-demo upload-btn"
+        action="http://116.62.124.251/zxh/repayRecord/recordImport"
+        :headers="header"
+        :show-file-list="false"
+        :on-success="uploadSuccess"
+        style="display:inline-block;margin-left:5x;" 
+        >
+        <el-button type="primary" v-if="queryForm.recordStatus==='0'">导入还款记录</el-button>
+      </el-upload>
       <el-button type="primary" @click="onClickExportSelectedRecord">导出选中数据</el-button>
       <el-dropdown trigger="click" @command="handleCommand">
         <el-button type="primary">导出查询结果<i class="el-icon-arrow-down el-icon--right"></i></el-button>
@@ -166,6 +175,7 @@ export default {
   },
   data(){
     return {
+      header:{Authorization:localStorage.token},
       recordList: [],
       collectionUserList: [],
       total:0,
@@ -212,6 +222,20 @@ export default {
     this.seqNoQuery()
   },
   methods: {
+    uploadSuccess(res,file,fileList){
+      if (res.code ==100){
+  		    this.$message({
+            type: 'success',
+            message: res.msg
+          });
+           this.onClickQuery()
+      }else{
+        this.$message({
+          type: 'error',
+          message: res.msg
+        });
+      }
+  	},
     onClickReset(){
       this.queryForm = {
         recordStatus: this.queryForm.recordStatus,
