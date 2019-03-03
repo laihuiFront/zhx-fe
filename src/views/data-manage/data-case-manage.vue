@@ -1186,13 +1186,24 @@
         this.search()
       })
           }else {
-            deteleCase(this.deleteList).then((response)=>{
-              this.$message({
-             type: 'success',
-             message: '删除成功!'
-          });
-        this.search()
-      })
+            this.$confirm('是否删除?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning',
+              center: true
+            }).then(() => {
+              deteleCase(this.deleteList).then((response)=>{
+                this.$message({
+                  type: 'success',
+                  message: '删除成功!'
+                });
+                this.search()
+              })
+            }).catch(() => {
+
+            });
+
+
           }
         }else{
           this.$message({
@@ -1610,10 +1621,7 @@
             message: '删除成功!'
           });
         }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          });
+
         });
       },
       showDetail(row){
