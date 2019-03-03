@@ -9,7 +9,7 @@
       :close-on-click-modal="false"
       width="90%"
     >
-      <case-detail></case-detail>
+      <case-detail :id="detailId" ref='detail'></case-detail>
     </el-dialog>
     <el-dialog
       title="同意协催"
@@ -200,6 +200,7 @@
           style="width: 100%"
           :cell-style="{ whiteSpace: 'nowrap' }"
           @selection-change="handleSelectionChange"
+          @row-dblclick="showCase"
           @sort-change="sortHandle"
         >
           <el-table-column type="selection" width="55"> </el-table-column>
@@ -264,7 +265,8 @@
 import { pageMyCase,getEnum,markColor ,addSynergy,batchNo,addCollectStatus} from "@/common/js/collect-my-case";
 import {list as moduleList,confirmSynergy,cancelLetter,pageDataLetter} from
     '@/common/js/synergistic-letter-application.js';
-import CaseDetail from '@/views/data-manage/detail';
+//import CaseDetail from '@/views/data-manage/detail';
+const CaseDetail = () => import('@/views/data-manage/detail');
 import tab2 from './synergistic-letter-application-2.vue';
 export default {
   name: "synergisticLetterApplication",
@@ -402,7 +404,9 @@ export default {
         sort: "desc"
       },
       detailVisible: false,
-      detailTitle: '案件详情',
+      detailId:-1,
+      detailTitle: "案件详情",
+
     };
   },
   computed: {
@@ -457,7 +461,12 @@ export default {
   },
   methods: {
     showCase(row){
-      this.detailVisible=true;
+      this.detailTitle = row.name+'案件详情'
+      this.detailId = row.id
+      this.detailVisible = true
+      this.$nextTick(()=>{
+        this.$refs.detail.queryDetail()
+      })
     },
     sortHandle({ prop, order }) {
       this.sort.sort = order.replace("ending", "");

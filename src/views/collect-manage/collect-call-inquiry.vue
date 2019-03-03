@@ -7,7 +7,7 @@
       :close-on-click-modal="false"
       width="90%"
     >
-      <case-detail></case-detail>
+      <case-detail :id="detailId" ref='detail'></case-detail>
     </el-dialog>
     <el-form :inline="true" ref="form1" :model="form1" label-width="80px">
       <el-form-item prop="val1">
@@ -88,6 +88,7 @@
       style="width: 100%"
       sortable="custom"
       height="470"
+      @row-dblclick="showCase"
       @sort-change="sortHandle"
     >
       <el-table-column
@@ -152,8 +153,8 @@
 
 <script>
 import {pageCaseTel,addComment,getEnum} from '@/common/js/collect-call-inquiry.js';
-import CaseDetail from '@/views/data-manage/detail';
-
+//import CaseDetail from '@/views/data-manage/detail';
+const CaseDetail = () => import('@/views/data-manage/detail');
 export default {
   name: 'collectCallInquiry',
   components:{
@@ -229,6 +230,7 @@ export default {
       ],
       detailVisible: false,
       detailTitle: '案件详情',
+      detailId:-1,
       sort:{
         orderBy: 'id',
         sort:'desc'
@@ -305,7 +307,12 @@ export default {
       })
     },
     showCase(row){
-      this.detailVisible=true;
+      this.detailTitle = row.name+'案件详情'
+      this.detailId = row.id
+      this.detailVisible = true
+      this.$nextTick(()=>{
+        this.$refs.detail.queryDetail()
+      })
     },
     handleCurrentChange(currentPage){
       this.paginationData.currentPage = currentPage;

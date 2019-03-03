@@ -228,7 +228,6 @@
     <el-table-column
       label="操作"
       width="120"
-      fixed="right"
       align="center">
       <template slot-scope="scope">
         <el-button type="text" size="small" @click="editMessage(scope.row)">编辑</el-button>
