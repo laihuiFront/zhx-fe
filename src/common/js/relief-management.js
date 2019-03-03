@@ -65,7 +65,7 @@ export const dataList = function(form,pageSize,pageNum) {
       reduceValidTimeStart:form.time2[0],
       reduceValidTimeEnd:form.time2[1],
       pageNum:pageNum ? pageNum : 1,
-      pageSize:pageSize ? pageSize : 10
+      pageSize:pageSize ? pageSize : 100
     }
   })
 }

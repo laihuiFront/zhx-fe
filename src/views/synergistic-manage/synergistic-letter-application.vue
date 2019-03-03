@@ -277,7 +277,7 @@ export default {
   data() {
     return {
       paginationData: {
-        pageSize: 10,
+        pageSize: 100,
         total: 0,
         currentPage: 1
       },
