@@ -9,7 +9,7 @@
           :close-on-click-modal="false"
           width="90%"
         >
-          <case-detail></case-detail>
+          <case-detail :id="detailId" ref='detail'></case-detail>
         </el-dialog>
         <el-dialog title="申请协催" :visible.sync="dialogVisible" width="30%">
           <el-input
@@ -553,7 +553,8 @@ import {
   batchNo,
   addCollectStatus
 } from "@/common/js/collect-my-case";
-import CaseDetail from "@/views/data-manage/detail";
+//import CaseDetail from "@/views/data-manage/detail";
+const CaseDetail = () => import('@/views/data-manage/detail');
 export default {
   components: {
     tab2,
@@ -761,6 +762,7 @@ export default {
       ],
       multipleSelection: [],
       detailVisible: false,
+       detailId:-1,
       detailTitle: "案件详情",
       sort: {
         orderBy: "id",
@@ -965,11 +967,21 @@ export default {
       return symbol + negative + (j ? i.substr(0, j) + thousand : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousand) + (places ? decimal + Math.abs(number - i).toFixed(places).slice(2) : "");
     },
     showCase(row) {
-      this.detailVisible = true;
+      this.detailTitle = row.name+'案件详情'
+      this.detailId = row.id
+      this.detailVisible = true
+      this.$nextTick(()=>{
+        this.$refs.detail.queryDetail()
+      })
     },
     showDetail(row){
 
+      this.detailTitle = row.name+'案件详情'
+      this.detailId = row.id
       this.detailVisible = true
+      this.$nextTick(()=>{
+        this.$refs.detail.queryDetail()
+      })
 
     },
     resetForm(formName) {

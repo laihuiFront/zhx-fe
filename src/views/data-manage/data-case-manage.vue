@@ -1037,7 +1037,8 @@
 </template>
 
 <script>
-  import CaseDetail from './detail'
+  //import CaseDetail from './detail'
+  const CaseDetail = () => import('@/views/data-manage/detail');
   import {dataList,LeaveList,areaList,batchList,caseTypeList,addressList,TellList,collectStatusList,deleteStatusList,accountAgeList,clientList,EndList,PersonList,departmentList,searchList,fenan1,fenan2,addpingyu,caseStatus,deteleCase,colorList,addMValue,addCollectArea,addCollectStatus,addImportant,addSynergy,selectDataTel,selectDataCollect,selectDataCaseExport,totalDataBatchExport} from '@/common/js/data-case-manage.js'
   export default {
     name: 'dataCaseManage',
@@ -1625,7 +1626,7 @@
         });
       },
       showDetail(row){
-        this.detailTitle = name+'案件详情'
+        this.detailTitle = row.name+'案件详情'
         this.detailId = row.id
         this.detailVisible = true
         this.$nextTick(()=>{

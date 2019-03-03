@@ -3,6 +3,15 @@
     <el-tab-pane label="部门案件" name="tab1"
     ><div id="collect-departmental-case">
       <el-dialog
+        :title="detailTitle"
+        class="dialog-wrap"
+        :visible.sync="detailVisible"
+        :close-on-click-modal="false"
+        width="90%"
+      >
+        <case-detail :id="detailId" ref='detail'></case-detail>
+      </el-dialog>
+      <el-dialog
         title="申请协催"
         :visible.sync="dialogVisible"
         width="30%">
@@ -492,11 +501,32 @@
         height="300"
         :row-class-name="rowColor"
         @selection-change="handleSelectionChange"
+        @row-dblclick="showCase"
         @sort-change="sortHandle"
       >
         <el-table-column
           type="selection"
           width="55">
+        </el-table-column>
+        <el-table-column
+          label="个案序列号"
+          prop="seqno"
+          sortable="custom"
+          :sort-orders="['ascending', 'descending']"
+          min-width="120"
+          header-align="center"
+          @row-dblclick="showCase"
+          align="center"
+        >
+          <template slot-scope="scope">
+            <el-button
+              style="text-decoration: underline"
+              type="text"
+              size="small"
+              @click="showCase(scope.row)"
+            >{{ scope.row.seqno }}</el-button
+            >
+          </template>
         </el-table-column>
         <el-table-column
           v-for="(item, index) in tableCol_data"
@@ -538,9 +568,11 @@
   import { pageMyCase,getEnum,markColor ,addSynergy,batchNo,addCollectStatus,listOrganization} from
       "@/common/js/collect-my-case";
   import {role} from '@/common/js/collect-departmental-case'
+  const CaseDetail = () => import('@/views/data-manage/detail');
   export default {
     components: {
-      tab2
+      tab2,
+      CaseDetail
     },
     name: "collectMyCase",
     data() {
@@ -553,6 +585,9 @@
         dialogVisible:false,
         textarea3: '',
         activeName: "tab1",
+        detailId:-1,
+        detailTitle:'',
+        detailVisible: false,
         //表格数据
         tableData: [],
         fetchData: {},
@@ -677,11 +712,11 @@
             width:130,
             label: "逾期账龄"
           },
-          {
+         /* {
             prop: "seqno",
             width:140,
             label: "个案序列号"
-          },
+          },*/
           {
             prop: "caseDate",
             width:"140",
@@ -856,6 +891,14 @@
       this.init();
     },
     methods: {
+      showCase(row) {
+        this.detailTitle = row.name+'案件详情'
+        this.detailId = row.id
+        this.detailVisible = true
+        this.$nextTick(()=>{
+          this.$refs.detail.queryDetail()
+        })
+      },
       formatMoney(value,places, symbol, thousand, decimal) {
         places = !isNaN(places = Math.abs(places)) ? places : 2;
         symbol = symbol !== undefined ? symbol : "¥";
