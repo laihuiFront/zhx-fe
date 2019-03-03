@@ -7,7 +7,7 @@
   :close-on-click-modal="false"
   width="90%"
 >
-  <case-detail></case-detail>
+  <case-detail :id="detailId" ref='detail'></case-detail>
 </el-dialog>
 <el-dialog
   title="同意协催"
@@ -104,13 +104,6 @@
             clearable
           ></el-input>
         </el-form-item>
-        <el-form-item prop="val6">
-          <el-input
-            v-model="form.val6"
-            placeholder="委案金额上限"
-            clearable
-          ></el-input>
-        </el-form-item>
         <el-form-item prop="val7">
           <el-input
             v-model="form.val7"
@@ -118,6 +111,14 @@
             clearable
           ></el-input>
         </el-form-item>
+        <el-form-item prop="val6">
+          <el-input
+            v-model="form.val6"
+            placeholder="委案金额上限"
+            clearable
+          ></el-input>
+        </el-form-item>
+
         <el-form-item prop="val8">
           <el-input
             v-model="form.val8"
@@ -271,6 +272,7 @@ export default {
       //表格数据
       tableData: [],
       fetchData: {},
+      detailId:-1,
       form: {
         val0: null, //委托方
         val1: null, //批次号
@@ -443,7 +445,11 @@ export default {
   },
   methods: {
     showCase(row){
+      this.detailId = row.caseId
       this.detailVisible=true;
+      this.$nextTick(()=>{
+        this.$refs.detail.queryDetail()
+      })
     },
     sortHandle({ prop, order }) {
       this.sort.sort = order.replace("ending", "");
