@@ -1,6 +1,6 @@
 <template>
   <div id="synergistic-application" class="page-wraper-sub">
-    <el-tabs v-model="queryForm.applyStatus">
+    <el-tabs v-model="queryForm.applyStatus" @tab-click="onClickQuery">
       <el-tab-pane label="协催申请" name="0"></el-tab-pane>
       <el-tab-pane label="待办协催" name="1"></el-tab-pane>
     </el-tabs>
@@ -8,37 +8,57 @@
       @reset="onClickReset"
       @query="onClickQuery"
       :queryForm="queryForm">
-      <el-button type="primary" v-if="queryForm.applyStatus==='0'" @click="onClickBatchApprove(1)">同意协催</el-button>
-      <el-popover
-        v-if="queryForm.applyStatus==='1'"
-        placement="bottom-start"
-        trigger="manual"
-        title="编辑操作记录"
-        width="500"
-        v-model="finishVisible">
-        <div>
-          <el-input
-            type="textarea"
-            :rows="4"
-            placeholder="请输入结果"
-            v-model="finishContent">
-          </el-input>
-        </div>
-        <div style="text-align: right; margin-top: 12px">
-          <el-button size="mini" type="text" @click="finishVisible=false">取消</el-button>
-          <el-button type="primary" size="mini" @click="onClickBatchSaveFinish">确定</el-button>
-        </div>
-        <el-button type="primary"  slot="reference" @click="onclickBatchFinish">完成协催</el-button>
-      </el-popover>
-      
-      <el-button type="primary" @click="onClickBatchApprove(-1)">撤销协催</el-button>
-      <el-dropdown trigger="click" @command="handleCommand" v-if="queryForm.applyStatus==='1'">
-        <el-button type="primary">导出查询结果<i class="el-icon-arrow-down el-icon--right"></i></el-button>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item command="all">导出全部</el-dropdown-item>
-          <el-dropdown-item command="current">导出当前分页</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+        <el-button type="primary" v-if="queryForm.applyStatus==='0'" @click="onClickBatchApprove(1)">同意协催</el-button>
+        <el-popover
+          v-if="queryForm.applyStatus==='1'"
+          placement="bottom-start"
+          trigger="manual"
+          title="编辑操作记录"
+          width="500"
+          v-model="finishVisible">
+          <div>
+            <el-input
+              type="textarea"
+              :rows="4"
+              placeholder="请输入结果"
+              v-model="finishContent">
+            </el-input>
+          </div>
+          <div style="text-align: right; margin-top: 12px">
+            <el-button size="mini" type="text" @click="finishVisible=false">取消</el-button>
+            <el-button type="primary" size="mini" @click="onClickBatchSaveFinish">确定</el-button>
+          </div>
+          <el-button type="primary"  slot="reference" @click="onclickBatchFinish">完成协催</el-button>
+        </el-popover>
+        
+        <el-button type="primary" @click="onClickBatchApprove(-1)">撤销协催</el-button>
+        <el-upload
+          class="upload-demo upload-btn"
+          action="http://116.62.124.251/zxh/synergistic/finishedSynergisticImport"
+          :headers="header"
+          :show-file-list="false"
+          :on-success="uploadSuccess"
+          style="display:inline-block;margin-left:5x;" 
+          >
+          <el-button type="primary">导入完成待办协催</el-button>
+        </el-upload>
+        <el-upload
+          class="upload-demo upload-btn"
+          action="http://116.62.124.251/zxh/synergistic/synergisticRecordImport"
+          :headers="header"
+          :show-file-list="false"
+          :on-success="uploadSuccess"
+          style="display:inline-block;margin-left:5x;" 
+          >
+          <el-button type="primary">导入协催记录</el-button>
+        </el-upload>
+        <el-dropdown trigger="click" @command="handleCommand" v-if="queryForm.applyStatus==='1'">
+          <el-button type="primary">导出查询结果<i class="el-icon-arrow-down el-icon--right"></i></el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="all">导出全部</el-dropdown-item>
+            <el-dropdown-item command="current">导出当前分页</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
     </syn-record-query>
     <el-table
       @selection-change="onSelectRow"
@@ -56,30 +76,32 @@
       <el-table-column prop="applyContent" label="申请内容" show-overflow-tooltip></el-table-column>
       <el-table-column prop="applyTime" label="申请时间" show-overflow-tooltip></el-table-column>
       <el-table-column prop="applyUser.userName" label="催收员" show-overflow-tooltip></el-table-column>
-      <el-table-column label="操作" show-overflow-tooltip width=“100” fixed="right">
-        <el-button type="text" v-if="queryForm.applyStatus==='0'" @click="onClickApprove(scope.row, 1)">同意协催</el-button>
-        <el-popover
-          v-if="queryForm.applyStatus==='1'"
-          placement="bottom-end"
-          trigger="click"
-          title="编辑操作记录"
-          width="500"
-          v-model="scope.row.finishVisible">
-          <div>
-            <el-input
-              type="textarea"
-              :rows="4"
-              placeholder="请输入结果"
-              v-model="scope.row.finishContent">
-            </el-input>
-          </div>
-          <div style="text-align: right; margin-top: 12px">
-            <el-button size="mini" type="text" @click="$set(scope.row, 'finishVisible',false)">取消</el-button>
-            <el-button type="primary" size="mini" @click="onClickSaveFinish(scope.row)">确定</el-button>
-          </div>
-          <el-button type="text"  slot="reference">完成协催</el-button>
-        </el-popover>
-        <el-button type="text" @click="onClickApprove(scope.row, -1)">撤销协催</el-button>
+      <el-table-column label="操作" show-overflow-tooltip width="150">
+        <template slot-scope="scope">
+          <el-button type="text" v-if="queryForm.applyStatus==='0'" @click="onClickApprove(scope.row, 1)">同意协催</el-button>
+          <el-popover
+            v-if="queryForm.applyStatus==='1'"
+            placement="bottom-end"
+            trigger="click"
+            title="编辑操作记录"
+            width="500"
+            v-model="scope.row.finishVisible">
+            <div>
+              <el-input
+                type="textarea"
+                :rows="4"
+                placeholder="请输入结果"
+                v-model="scope.row.finishContent">
+              </el-input>
+            </div>
+            <div style="text-align: right; margin-top: 12px">
+              <el-button size="mini" type="text" @click="$set(scope.row, 'finishVisible',false)">取消</el-button>
+              <el-button type="primary" size="mini" @click="onClickSaveFinish(scope.row)">确定</el-button>
+            </div>
+            <el-button type="text"  slot="reference">完成协催</el-button>
+          </el-popover>
+          <el-button type="text" @click="onClickApprove(scope.row, -1)">撤销协催</el-button>
+        </template>
       </el-table-column>
     </el-table>
     <el-pagination
@@ -104,6 +126,7 @@ export default {
   },
   data(){
     return {
+      header:{Authorization:localStorage.token},
       recordList: [],
       total:0,
       queryForm:{
@@ -111,6 +134,7 @@ export default {
         pageSize: 10,
         applyStatus:0,
         finishStatus:0,
+        synergisticType:{},
         dataCase:{
           collectionArea:{},
         },
@@ -125,12 +149,27 @@ export default {
     this.onClickQuery()
   },
   methods: {
+    uploadSuccess(res,file,fileList){
+      if (res.code ==100){
+  		    this.$message({
+            type: 'success',
+            message: res.msg
+          });
+           this.onClickQuery()
+      }else{
+        this.$message({
+          type: 'error',
+          message: res.msg
+        });
+      }
+  	},
     onClickReset(){
       this.queryForm = {
         pageNum: this.queryForm.pageNum,
         pageSize: this.queryForm.pageSize,
         applyStatus:this.queryForm.applyStatus,
         finishStatus:0,
+        synergisticType:{name:null},
         dataCase: {
           collectionArea:{id: null},
         },
@@ -138,6 +177,7 @@ export default {
       }
     },
     onClickQuery(){
+      this.recordList = []
       getSynergisticRecordList(this.queryForm).then(data => {
         this.recordList = data.list
         this.total = data.total
@@ -210,7 +250,7 @@ export default {
         type: 'warning'
       }).then(() => {
         finishSynergisticRecord({
-          ids:[id],
+          ids:[row.id],
           finishStatus: 1,
           synergisticResult:row.finishContent
         }).then(data=>{
