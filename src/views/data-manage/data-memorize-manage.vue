@@ -43,7 +43,7 @@
   </el-select>
   </el-form-item>
    <el-form-item>
-  <el-button type="text" :style="images" @click="dialogVisible1 = true"></el-button>     </el-form-item>
+  <el-button type="text" :style="images" @click="dialogVisible = true"></el-button>     </el-form-item>
   <el-form-item>
   <el-button type="text" icon="el-icon-search" @click="search">查询</el-button> 
   </el-form-item>
@@ -281,22 +281,237 @@
         <el-button type="primary" @click="onClickSave">保 存</el-button>
       </span>
     </el-dialog>
-  <el-dialog
-  title="导出查询结果"
-  :visible.sync="dialogVisible2"
-  width="30%"
- >
-  <el-form :inline="true">
-  	<el-form-item>
-    <el-button @click=totalDataCollectExport>按查询条件全部导出</el-button>
-    </el-form-item>
-     	<el-form-item>
-    <el-button @click='pageDataCollectExport'>按查询条件导出当前分页</el-button>
-    </el-form-item>
-  <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisible2 = false">取 消</el-button>
+    
+ <el-dialog
+  title="查询条件"
+  :visible.sync="dialogVisible"
+  width="66%"
+  >
+
+<el-form :inline="true" :model="formInline" class="demo-form-inline">
+	
+	 <el-row :gutter="20">
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  		<el-form-item label="批次号">
+    <el-input v-model="formInline.batchNo" placeholder="请输入批次号"></el-input>
+  </el-form-item>
+  	</div>
+  </el-col>
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  		  <el-form-item label="证件号">
+    <el-input v-model="formInline.identNo" placeholder="请输入证件号"></el-input>
+  </el-form-item>
+  	</div>
+  </el-col>
+</el-row>
+
+
+ <el-row :gutter="20">
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  		<el-form-item label=" 卡  号  ">
+    <el-input v-model="formInline.cardNo" placeholder="请输入卡号"></el-input>
+  </el-form-item>
+  	</div>
+  </el-col>
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  		  <el-form-item label="催收记录">
+    <el-input v-model="formInline.collectInfo" placeholder="请输入催收记录"></el-input>
+  </el-form-item>
+  	</div>
+  </el-col>
+</el-row>
+
+
+<el-row :gutter="20">
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  		<el-form-item label="个案序列号">
+    <el-input v-model="formInline.seqno" placeholder="请输入个案序列号"></el-input>
+  </el-form-item>
+  	</div>
+  </el-col>
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  		  <el-form-item label="部门">
+   <el-select v-model="formInline.dept" placeholder="请选择催收区域" clearable>
+    <el-option
+      v-for="item in departmentList"
+      :key="item.id"
+      :label="item.orgName"
+      :value="item.id">
+    </el-option>
+  </el-select>
+  </el-form-item>
+  	</div></el-col>
+</el-row>
+
+
+ <el-row :gutter="20">
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  		<el-form-item label="催收区域">
+   <el-select v-model="formInline.area" placeholder="请选择催收区域" clearable>
+    <el-option
+      v-for="item in areaList"
+      :key="item.id"
+      :label="item.name"
+      :value="item.id">
+    </el-option>
+  </el-select>
+  </el-form-item>
+  	</div></el-col>
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  		  <el-form-item label="催收员">
+    <el-select v-model="formInline.odv" filterable  placeholder="请选择催收员" clearable>
+    <el-option
+      v-for="item in PersonList"
+      :key="item.createTime"
+      :label="item.userName"
+      :value="item.id">
+    </el-option>
+  </el-select>
+  </el-form-item>
+  	</div></el-col>
+</el-row>
+
+<el-row :gutter="20">
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  		<el-form-item label="催收结果">
+   <el-select v-model="formInline.result" placeholder="请选择催收结果" clearable>
+    <el-option
+      v-for="item in EndList"
+      :key="item.id"
+      :label="item.name"
+      :value="item.id">
+    </el-option>
+  </el-select>
+  </el-form-item>
+  	</div></el-col>
+ <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  		<el-form-item label="催收结果">
+   <el-select v-model="formInline.client" placeholder="请选择催收结果" clearable>
+    <el-option
+      v-for="item in clientList"
+      :key="item.id"
+      :label="item.name"
+      :value="item.id">
+    </el-option>
+  </el-select>
+  </el-form-item>
+  	</div></el-col>
+  </el-row>
+  
+  
+<el-row :gutter="20">
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  		<el-form-item label="催收措施">
+   <el-select v-model="formInline.measure" placeholder="请选择催收措施" clearable>
+    <el-option
+      v-for="item in EndList"
+      :key="item.id"
+      :label="item.name"
+      :value="item.id">
+      </el-option>
+  </el-select>
+  </el-form-item>
+  	</div></el-col>
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  		  <el-form-item label="案件状态">
+    <el-select v-model="formInline.caseStatus" filterable  placeholder="请选择案件状态" clearable>
+    <el-option
+      v-for="item in caseStatusList"
+      :key="item.id"
+      :label="item.name"
+      :value="item.id">
+      </el-option>
+  </el-select>
+  </el-form-item>
+  	</div></el-col>
+</el-row>
+
+<el-row :gutter="20">
+	<el-col :span="10">
+  	<div class="grid-content bg-purple">
+  		<el-form-item label="标色状态">
+   <el-select v-model="formInline.color" filterable  placeholder="请选择标色状态" clearable>
+    <el-option
+      v-for="item in caseStatusList"
+      :key="item.id"
+      :label="item.name"
+      :value="item.id">
+    </el-option>
+  </el-select>
+  </el-form-item>
+  	</div></el-col>
+  <el-col :span="14">
+  	<div class="grid-content bg-purple">
+  		<el-form-item label="催收日期">
+   <el-date-picker
+      v-model="formInline.collectTime"
+      type="daterange"
+      align="right"
+       value-format="yyyy-MM-dd"
+      unlink-panels
+      range-separator="至"
+      start-placeholder="开始日期"
+      end-placeholder="结束日期"
+      >
+    </el-date-picker>
+  </el-form-item>
+  	</div></el-col>
+
+</el-row>
+
+
+<el-row :gutter="20">
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  		<el-form-item label="委案日期">
+   <el-date-picker
+      v-model="formInline.bailTime"
+      type="daterange"
+      align="right"
+       value-format="yyyy-MM-dd"
+      unlink-panels
+      range-separator="至"
+      start-placeholder="开始日期"
+      end-placeholder="结束日期"
+      >
+    </el-date-picker>
+  </el-form-item>
+  	</div></el-col>
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  		  <el-form-item label="预计退案日期">
+   <el-date-picker
+      v-model="formInline.expectTime"
+      type="daterange"
+      align="right"
+       value-format="yyyy-MM-dd"
+      unlink-panels
+      range-separator="至"
+      start-placeholder="开始日期"
+      end-placeholder="结束日期"
+      >
+    </el-date-picker>
+  </el-form-item>
+  	</div></el-col>
+</el-row>
+
+</el-form>
+<span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="Listsearch">确 定</el-button>
   </span>
-  </el-form>
 </el-dialog>
   </div>
 </template>
@@ -452,7 +667,7 @@ pageDataExport(this.formInline.area,this.formInline.dept,this.formInline.batchNo
 	    dataList(this.formInline.area,this.formInline.dept,this.formInline.batchNo,this.formInline.clients,this.formInline.odvs,this.formInline.caseStatus,this.formInline.measure,this.formInline.result,this.formInline.identNo,this.formInline.cardNo,this.formInline.collectInfo,this.formInline.color,this.formInline.seqno,this.formInline.bailStartDate,this.formInline.bailEndDate,this.formInline.expectStartTime,this.formInline.expectEndTime,this.formInline.collectStartTime,this.formInline.collectEndTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
           	this.tableData3=response.list
         this.total=response.total
-          	this.dialogVisible1=false
+          	this.dialogVisible=false
           })
   	},
   	 	handleSelectionChange(row){

@@ -115,17 +115,140 @@
   <el-form-item>
     <el-button type="primary" @click=clear>重置</el-button>
   </el-form-item>
-   <el-form-item>
-    <el-button type="primary" @click=addData>新增减免</el-button>
+   <el-form-item v-show="istrue1">
+    <el-button type="primary" @click=addData >新增减免</el-button>
   </el-form-item>
-  <el-form-item>
-    <el-button type="primary" @click=moreDataList>批量撤销</el-button>
+  <el-form-item v-show="istrue2">
+    <el-button type="primary" @click=moreDataList >批量撤销</el-button>
   </el-form-item>
-  <el-form-item>
-    <el-button type="primary" >导出减免结果</el-button>
+   <el-form-item v-show="istrue3">
+    <el-button type="primary" @click=moreDataList >批量审核</el-button>
+  </el-form-item>
+   <el-form-item v-show="istrue4">
+    <el-button type="primary" @click=moreDataList >批量下载附件</el-button>
+  </el-form-item>
+  <el-form-item v-show="istrue5">
+    <el-button type="primary"  >导出减免结果</el-button>
   </el-form-item>
 </el-form>
-<el-table
+ <el-tabs v-model="activeName2" type="card" @tab-click="handleClick">
+    <el-tab-pane label="待审核" name="first"><el-table
+      ref="multipleTable"
+      :data="tableData3"
+      style="width: 100%;"
+      @selection-change="handleSelectionChange"
+     
+    >
+      <el-table-column
+      	fixed
+        type="selection"
+        width="55">
+      </el-table-column>
+      <el-table-column
+        prop="seqno"
+        align="center"
+        label="个人序列号"
+      >
+      </el-table-column>
+      <el-table-column
+        prop="targetName"
+        align="center"
+       label="案人姓名"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="collectStatus"
+        align="center"
+        label="催收状态"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="accountAge"
+        align="center"
+        label="委案金额"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="completeTime"
+       align="center"
+        label="完成时间"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="completeUser"
+        label="完成人"
+        align="center"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="approveRepayAmt"
+      align="center"
+        label="批复还款金额"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="reduceValidTime"
+      align="center"
+        label="有效日期"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="reduceStatus" 
+        align="center"
+        label="减免状态"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="reduceResult"
+      label="减免结果"
+        align="center"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="enRepayAmt"
+      align="center"
+        label="实际还款金额"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="reduceUpdateTime"
+        align="center"
+        label="减免状态更新时间"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="newCase"
+        label="附件"
+        align="center"
+        show-overflow-tooltip>
+      </el-table-column>
+  
+      <el-table-column
+        label="操作"
+         fixed="right"
+         width="170"
+        show-overflow-tooltip>
+        <template slot-scope="scope">
+        <el-button type="text" size="small" @click="showMessage(scope.row)">审核</el-button>
+        <el-button type="text" size="small" @click="showMessage(scope.row)">查看</el-button>
+        <el-button type="text" size="small" @click="showMessage(scope.row)">修改</el-button>
+           <el-button type="text" size="small" @click="deteleList(scope.row.id)">删除</el-button>
+       </template>
+      </el-table-column>
+    
+    </el-table>
+    <div class="block">
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currentPage4"
+        :page-sizes="[100, 500, 2000, 10000, 1000000]"
+        :page-size="pages"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total">
+      </el-pagination>
+    </div></el-tab-pane>
+    <el-tab-pane label="已审核" name="second"><el-table
       ref="multipleTable"
       :data="tableData3"
       style="width: 100%;"
@@ -235,7 +358,121 @@
         layout="total, sizes, prev, pager, next, jumper"
         :total="total">
       </el-pagination>
-    </div>
+    </div></el-tab-pane>
+    <el-tab-pane label="已完成" name="third"><el-table
+      ref="multipleTable"
+      :data="tableData3"
+      style="width: 100%;"
+      @selection-change="handleSelectionChange"
+     
+    >
+      <el-table-column
+        type="selection"
+        width="55">
+      </el-table-column>
+      <el-table-column
+        prop="seqno"
+        align="center"
+        label="个人序列号"
+      >
+      </el-table-column>
+      <el-table-column
+        prop="targetName"
+        align="center"
+       label="案人姓名"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="collectStatus"
+        align="center"
+        label="催收状态"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="accountAge"
+        align="center"
+        label="委案金额"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="completeTime"
+       align="center"
+        label="完成时间"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="completeUser"
+        label="完成人"
+        align="center"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="approveRepayAmt"
+      align="center"
+        label="批复还款金额"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="reduceValidTime"
+      align="center"
+        label="有效日期"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="reduceStatus" 
+        align="center"
+        label="减免状态"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="reduceResult"
+      label="减免结果"
+        align="center"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="enRepayAmt"
+      align="center"
+        label="实际还款金额"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="reduceUpdateTime"
+        align="center"
+        label="减免状态更新时间"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="newCase"
+        label="附件"
+        align="center"
+        show-overflow-tooltip>
+      </el-table-column>
+  
+      <el-table-column
+        label="操作"
+        width="120"
+        show-overflow-tooltip>
+        <template slot-scope="scope">
+         <el-button type="text" size="small" @click="showMessage(scope.row)">查看</el-button>
+           <el-button type="text" size="small" @click="deteleList(scope.row.id)">下载附件</el-button>
+       </template>
+      </el-table-column>
+    
+    </el-table>
+    <div class="block">
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currentPage4"
+        :page-sizes="[100, 500, 2000, 10000, 1000000]"
+        :page-size="pages"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total">
+      </el-pagination>
+    </div></el-tab-pane>
+  </el-tabs>
+
     <el-dialog
   :title="dialogTitle"
   :visible.sync="dialogVisible"
@@ -284,6 +521,12 @@ export default {
   name: 'reliefManagement',
   data(){
     return {
+    	istrue1:true,
+    	istrue2:false,
+    	istrue3:true,
+    	istrue4:true,
+    	istrue5:false,
+    	activeName2:"first",
     	dialogTitle:'新增减免',
     	ruleForm:{
     		reduceValidTime:'',
@@ -310,6 +553,26 @@ export default {
     }
 },
  methods: {
+ 	handleClick(tab, event) {
+       if(this.activeName2==="first"){
+	     this.istrue1=true
+    	this.istrue2=false
+    	this.istrue3=true
+    	this.istrue4=true
+    	this.istrue5=false
+       } else if(this.activeName2==="second"){
+       	 this.istrue1=false
+    	   this.istrue2=true
+        	this.istrue3=false
+        	this.istrue4=false
+    	   this.istrue5=true
+       } else{
+       	this.istrue1=false
+    	   this.istrue2=false
+        	this.istrue3=false
+        	this.istrue4=true
+    	   this.istrue5=false
+       }   },
  	showMessage(row){
  		this.ruleForm=row
  		this.dialogTitle="修改减免"
