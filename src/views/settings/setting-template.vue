@@ -7,6 +7,7 @@
     </el-row>
     <el-table
       :data="tableData"
+      border stripe
       stripe
       style="width: 100%">
       <el-table-column

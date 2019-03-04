@@ -37,6 +37,7 @@
     </el-form>
     <el-table
       @selection-change="onSelectRow"
+      border stripe
       :data="logList"
       style="width: 100%"
       class="table-wrap">

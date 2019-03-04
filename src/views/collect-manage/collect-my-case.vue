@@ -261,13 +261,6 @@
                   >
                   </el-date-picker>
                 </el-form-item>
-                <el-form-item prop="val18">
-                  <el-input
-                    v-model="form.val18"
-                    placeholder="跟进次数上限"
-                    clearable
-                  ></el-input>
-                </el-form-item>
                 <el-form-item prop="val30">
                   <el-input
                     v-model="form.val30"
@@ -275,6 +268,14 @@
                     clearable
                   ></el-input>
                 </el-form-item>
+                <el-form-item prop="val18">
+                  <el-input
+                    v-model="form.val18"
+                    placeholder="跟进次数上限"
+                    clearable
+                  ></el-input>
+                </el-form-item>
+
                 <el-form-item prop="val19">
                   <el-select
                     v-model="form.val19"
@@ -379,7 +380,7 @@
                 <el-form-item prop="val31">
                   <el-date-picker
                     v-model="form.val31"
-                    value-format="yyyy-MM-dd"
+                    value-format="yyyy-MM-dd HH:ss"
                     type="daterange"
                     align="right"
                     unlink-panels
@@ -720,6 +721,9 @@ export default {
         {
           prop: "balance",
           label: "委案余额"
+        },{
+          prop: "caseAllotTime",
+          label: "案件分配日期"
         },
         {
           prop: "moneyStart",
@@ -752,9 +756,6 @@ export default {
         {
           prop: "leaveDays",
           label: "闲置天数"
-        },{
-          prop: "caseAllotTime",
-          label: "案件分配日期"
         },
         {
           prop: "collectInfo",
