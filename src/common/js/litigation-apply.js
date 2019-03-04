@@ -46,7 +46,6 @@ return request({
 	identNo:form.identNo, //证件号码
 	legalType:form.legalType,// 案件類型
 	progress:form.progress,// 办案进度
-	legalType:form.legalType,//案件類型
 	cstName:form.cstName, //客户姓名
 	legalDate:form.legalDate, //委案日期
 	clientele:form.clientele,// 委托人

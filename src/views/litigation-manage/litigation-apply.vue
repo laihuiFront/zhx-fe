@@ -34,12 +34,12 @@
      >
     </el-table-column>
    <el-table-column
-      prop="progress"
+      prop="progressMsg"
       align="center"
       label="办案进度"
      >
     </el-table-column><el-table-column
-      prop="legalType"
+      prop="legalTypeMsg"
       align="center"
       label="案件类型"
      >

@@ -462,7 +462,7 @@ export default {
   methods: {
     showCase(row){
       this.detailTitle = row.name+'案件详情'
-      this.detailId = row.id
+      this.detailId = row.caseId
       this.detailVisible = true
       this.$nextTick(()=>{
         this.$refs.detail.queryDetail()
