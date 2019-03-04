@@ -405,7 +405,8 @@
               <el-form-item prop="val33">
                 <el-date-picker
                   v-model="form.val33"
-                  value-format="yyyy-MM-dd HH:mm"
+                  value-format="yyyy-MM-dd"
+                  format="yyyy-MM-dd"
                   type="daterange"
                   align="right"
                   unlink-panels
@@ -754,7 +755,8 @@
             label: "委案余额"
           },{
             prop: "caseAllotTime",
-            label: "案件分配日期"
+            width:140,
+            label: "案件分配时间"
           },
           {
             prop: "moneyStart",
