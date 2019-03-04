@@ -2,13 +2,13 @@
   <div id="collect-repayment-statistics">
     <section class="topDataWp">
       <el-row :gutter="10">
-        <el-col :span="4"
+        <el-col :span="3"
           ><span class="topSpan">上月还款金额:</span>{{ topData.lastPaidMoney }}</el-col
         >
-        <el-col :span="3"
+        <el-col :span="4"
           ><span class="topSpan">上月承诺还款金额:</span>{{ topData.lastRepayAmt }}</el-col
         >
-        <el-col :span="3"
+        <el-col :span="4"
           ><span class="topSpan">上月待银行查账金额:</span>{{ topData.lastBankAmt }}</el-col
         >
         <el-col :span="4"
@@ -21,13 +21,13 @@
         >
       </el-row>
       <el-row :gutter="10" style="margin-top: 15px;">
-        <el-col :span="4"
+        <el-col :span="3"
           ><span class="topSpan">当月还款金额:</span>{{ topData.thisPaidMoney }}</el-col
         >
-        <el-col :span="3"
+        <el-col :span="4"
           ><span class="topSpan">当月承诺还款金额:</span>{{ topData.thisRepayAmt }}</el-col
         >
-        <el-col :span="3"
+        <el-col :span="4"
           ><span class="topSpan">当月待银行查账金额:</span>{{ topData.thisBankAmt }}</el-col
         >
         <el-col :span="4"
