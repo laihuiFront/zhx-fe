@@ -15,7 +15,7 @@
   </el-select>
   </el-form-item>
   <el-form-item >
-    <el-select v-model="form.batchNos" filterable  multiple placeholder="请输入批次号" clearable>
+    <el-select v-model="form.batchNos" filterable collapse-tags  multiple placeholder="请输入批次号" clearable>
       <el-option
         v-for="item in batchList"
         :key="item.batchNo"
@@ -25,7 +25,7 @@
     </el-select>
   </el-form-item>
    <el-form-item >
-  <el-select v-model="form.clients" filterable  multiple placeholder="请选择委托方" clearable>
+  <el-select v-model="form.clients" filterable collapse-tags  multiple placeholder="请选择委托方" clearable>
     <el-option
       v-for="item in clientList"
       :key="item.id"
@@ -83,6 +83,7 @@
   :headers="header"
   :show-file-list=false
   :on-success="uploadSuccess"
+  :on-progress="onProgress"
 
   >
   <el-button size="small" type="primary">导入更新案件</el-button>
@@ -95,6 +96,7 @@
   :headers="header"
   :show-file-list=false
   :on-success="uploadSuccess"
+  :on-progress="onProgress"
 
   >
   <el-button size="small" type="primary">导入案件评语</el-button>
@@ -107,6 +109,7 @@
   :headers="header"
   :show-file-list=false
   :on-success="uploadSuccess"
+  :on-progress="onProgress"
 
   >
   <el-button size="small" type="primary">导入案件利息</el-button>
@@ -119,6 +122,7 @@
   :headers="header"
   :show-file-list=false
   :on-success="uploadSuccess"
+  :on-progress="onProgress"
 
   >
   <el-button size="small" type="primary">导入案件电话</el-button>
@@ -131,6 +135,7 @@
   :headers="header"
   :show-file-list=false
   :on-success="uploadSuccess"
+  :on-progress="onProgress"
 
   >
   <el-button size="small" type="primary">导入案件地址</el-button>
@@ -143,6 +148,7 @@
   :headers="header"
   :show-file-list=false
   :on-success="uploadSuccess"
+  :on-progress="onProgress"
   >
   <el-button size="small" type="primary">导入催收记录</el-button>
 </el-upload>
@@ -152,6 +158,10 @@
   </el-col>
    </el-row>
    <el-table
+   	  v-loading="loading2"
+    element-loading-text="拼命加载中"
+    element-loading-spinner="el-icon-loading"
+    element-loading-background="rgba(0, 0, 0, 0.8)"
     ref="multipleTable"
     :data="DataList"
     border
@@ -501,6 +511,15 @@
     <el-button @click="dialogVisible2 = false">取 消</el-button>
     <el-button type="primary" @click="submitmsgForm('messageForm')">确 定</el-button>
   </span>
+</el-dialog><el-dialog
+  title="提示"
+  :visible.sync="ImportdialogVisible"
+  width="30%"
+  >
+  <span>{{ImportMsg}}</span>
+  <span slot="footer" class="dialog-footer">
+    <el-button type="primary" @click=ImportdialogVisibleWay >确 定</el-button>
+  </span>
 </el-dialog>
   </div>
 </template>
@@ -511,6 +530,9 @@ export default {
   name: 'dataCaseImported',
   data(){
     return {
+    	ImportdialogVisible:false,
+    	ImportMsg:'',
+    	loading2:false,
     	header:{Authorization:localStorage.token},
     	messageForm:{},
     	areaList:[],
@@ -541,6 +563,13 @@ export default {
     }
   },
 methods: {
+	ImportdialogVisibleWay(){
+		this.loading2=false
+		this.ImportdialogVisible=false
+	},
+	onProgress(){
+		this.loading2=true
+	},
 		uploadSuccess(res,file,fileList){
       if (res.code ==100){
   		    this.$message({
@@ -551,12 +580,16 @@ methods: {
             this.DataList=response.pageInfo.list
               //this.pages = response.pages
               this.total = response.total
+              this.loading2=false
           })
+      }else if(res.code ==800){
+        this.ImportdialogVisible=true
+        this.ImportMsg= res.msg
       }else{
-        this.$message({
-          type: 'error',
-          message: res.msg
-        });
+      	this.$message({
+            type: 'error',
+            message: res.msg
+          });
       }
   	},
 	deleteMessage(id){

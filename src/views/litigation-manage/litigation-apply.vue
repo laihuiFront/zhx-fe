@@ -699,18 +699,26 @@
   >
 <el-form ref="checkform" :model="checkform" label-width="80px">
  
-  <el-form-item label="审批结果">
+  <el-form-item label="审批结果"
+  	 prop="resource"
+ 		:rules="{
+      required: true, message: '请选择审批结果', trigger: 'change'  
+    }">
     <el-radio-group v-model="checkform.resource">
       <el-radio :label="1">通过</el-radio>
       <el-radio :label="2">驳回</el-radio>
     </el-radio-group>
   </el-form-item>
-     <el-form-item label="所属人">
+     <el-form-item label="所属人"
+     	 prop="owner"
+ 		:rules="{
+     required: true, message: '请选择所属人', trigger: 'change' 
+    }">
      <el-select v-model="checkform.owner" filterable  placeholder="请选择所属人" clearable>
     <el-option
       v-for="item in PersonDataList"
       :key="item.id"
-      :label="item.name"
+      :label="item.userName"
       :value="item.id">
     </el-option>
      </el-select>
@@ -718,7 +726,7 @@
 </el-form>
   <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible1 = false">取 消</el-button>
-    <el-button type="primary" @click="checkresource">确 定</el-button>
+    <el-button type="primary" @click="submitFormCheck('checkform')">确 定</el-button>
   </span>
 </el-dialog>
   </div>
@@ -764,6 +772,16 @@ export default {
   	}
   },
    methods: {
+   	  submitFormCheck(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+          this.checkresource()
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
    	deletehandleList(id){
    		deleteHandle(id).then((response)=>{
           this.$message({
@@ -863,7 +881,7 @@ export default {
             type: 'success',
             message: '审核成功!'
           });
-          this.dialogVisible=false;
+          this.dialogVisible1=false;
           this.search()
           this.formInline={}
           this.checkId=''

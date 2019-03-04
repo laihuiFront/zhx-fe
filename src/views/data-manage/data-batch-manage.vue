@@ -25,7 +25,7 @@
   </el-select>
   </el-form-item>
   <el-form-item >
-    <el-select v-model="form.batchNos" placeholder="请选择批次编号" filterable multiple clearable>
+    <el-select v-model="form.batchNos" placeholder="请选择批次编号" filterable multiple collapse-tags clearable>
       <el-option
         v-for="item in form.batchList"
         :key="item.batchNo"
@@ -36,7 +36,7 @@
   </el-form-item>
    <el-form-item >
   <el-select v-model="form.clients" placeholder="请选择委托方" filterable
-             multiple clearable>
+             multiple clearable collapse-tags>
     <el-option
       v-for="item in form.clientList"
       :key="item.value"
@@ -73,7 +73,7 @@
   <el-button type="text" icon="el-icon-search" @click="search">查询</el-button> 
   </el-form-item>
   <el-form-item>
-  <el-button type="text" icon="el-icon-refresh" @click="resetForm('form')">重置</el-button> 
+  <el-button type="text" icon="el-icon-refresh" @click=resetForm>重置</el-button> 
   </el-form-item>
   <el-form-item>
       <el-button type="primary" @click="returnCaseList" v-has="'批次退案'">批次退案</el-button>  </el-form-item>
@@ -99,6 +99,9 @@
    </el-row>
    <el-table
    	v-loading="loading"
+   	 element-loading-text="拼命加载中"
+    element-loading-spinner="el-icon-loading"
+    element-loading-background="rgba(0, 0, 0, 0.8)"
     ref="multipleTable"
     :data="DataList"
     border
@@ -440,10 +443,8 @@ export default {
       total:0,
     	form:{
     		time:[],
-    		clientList:[],
-        batchList:[],
-    		areaList:[],
-    		caseTypeList:[],
+    		batchNos:[],
+        clients:[],
     		CasestatusList:[{id:0,name:"未导入"},{id:1,name:"未退案"},{id:2,name:"已退案"}]
     	},
     }
@@ -662,12 +663,17 @@ this.search()
 	   Object.id=currentValue.id
 	   _self.deleteList.push(Object)
 	   _self.selectDataBatchExportList.push(Object)
-	   //_self.selectDataBatchExportList.push(Project)
+//	   _self.selectDataCollectExportByBatchList.push(Project)
 	})
 	console.log(_self.deleteList)
 },
-      resetForm(formName) {
-        this.$refs[formName].resetFields();
+      resetForm() {
+        this.form={
+    		time:[],
+    		batchNos:[],
+        clients:[],
+    		CasestatusList:[{id:0,name:"未导入"},{id:1,name:"未退案"},{id:2,name:"已退案"}]
+    	}
       },
        open7() {
       	let _self=this 

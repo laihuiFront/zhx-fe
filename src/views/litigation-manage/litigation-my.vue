@@ -142,6 +142,7 @@
   </div>	
   	<el-dialog
   :title="dialogTitle"
+  append-to-body
   :visible.sync="dialogVisible"
   width="90%"
   >
@@ -595,6 +596,7 @@
   </div>	
   	<el-dialog
   :title="dialogTitle"
+  append-to-body
   :visible.sync="dialogVisible"
   width="90%"
   >
