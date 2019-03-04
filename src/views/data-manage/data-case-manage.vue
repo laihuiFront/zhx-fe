@@ -154,7 +154,7 @@
           <span class="textColor"> 列表还款量:{{repayNum}}, </span>
           <span class="textColor"> 列表还款额:{{repayTotalAmt}}, </span>
           <span class="textColor"> 列表待银行查账金额:{{totalCp}}, </span>
-          <span class="textColor"> 列表PTP值:{{totalPtp}}</span>
+          <span class="textColor"> 列表承诺还款金额:{{totalPtp}}</span>
         </div>
       </el-col>
     </el-row>
@@ -206,6 +206,7 @@
         :sortable='true'
         :sort-orders="['ascending','descending']"
         label="批次号"
+        min-width="120"
         align="center"
         show-overflow-tooltip>
 

@@ -132,6 +132,7 @@
     <el-table-column
       prop="clientMsg"
       :sortable='true'
+      min-width="120"
       :sort-orders="['ascending','descending']"
       label="委托方"
     >
@@ -162,6 +163,7 @@
     </el-table-column>
     <el-table-column
       label="总金额"
+      min-width="120"
       :sortable='true'
       :sort-orders="['ascending','descending']"
       show-overflow-tooltip>

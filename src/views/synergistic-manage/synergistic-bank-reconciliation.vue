@@ -8,7 +8,7 @@
       @reset="onClickReset"
       @query="onClickQuery"
       :queryForm="queryForm">
-      <el-button type="primary" v-if="queryForm.status==='0'" @click="onClickBatchCancelBankRecon">作废CP</el-button>
+      <el-button type="primary" v-if="queryForm.status==='0'" @click="onClickBatchCancelBankRecon">作废待银行查账金额</el-button>
       <el-upload
         class="upload-demo upload-btn"
         action="http://116.62.124.251/zxh/bankReconciliation/cpImport"
