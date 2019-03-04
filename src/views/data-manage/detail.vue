@@ -129,7 +129,7 @@
             <el-form-item label="PTP金额">
               <el-input v-model="caseDetail.proRepayAmt" :disabled="true" ></el-input>
             </el-form-item>
-            <el-form-item label="CP金额">
+            <el-form-item label="待银行查账金额">
               <el-input v-model="caseDetail.bankAmt" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="委案期数">
@@ -229,7 +229,7 @@
           </el-table-column>
           <el-table-column
             prop="bankAmt"
-            label="CP">
+            label="待银行查账金额">
           </el-table-column>
           <el-table-column
             prop="enRepayAmt"

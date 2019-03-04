@@ -209,13 +209,13 @@ export default {
       tableData3: [],
       tablecol_data3:[
           {prop:'lastPaidMoney',label:'上月还款金额'},
-          {prop:'lastBankAmt',label:'上月銀行对账金额-CP'},
-          {prop:'lastRepayAmt',label:'上月承諾还款金额-PTP'},
-          {prop:'lastRepaidAmt',label:'上月已还款金额的提成金额（M）'},
-          {prop:'lastRepaidBankAmt',label:'上月银行查账金额的提成金额（M）'},
+          {prop:'lastBankAmt',label:'上月銀行对账金额'},
+          {prop:'lastRepayAmt',label:'上月承諾还款金额'},
+          {prop:'lastRepaidAmt',label:'上月已还款金额的提成金额'},
+          {prop:'lastRepaidBankAmt',label:'上月银行查账金额的提成金额'},
           {prop:'thisPaidMoney',label:'本月还款金额'},
-          {prop:'thisBankAmt',label:'本月銀行对账金额-CP'},
-          {prop:'thisRepayAmt',label:'本月承諾还款金额-PTP'},
+          {prop:'thisBankAmt',label:'本月銀行对账金额'},
+          {prop:'thisRepayAmt',label:'本月承諾还款金额'},
         ]
       };
   },

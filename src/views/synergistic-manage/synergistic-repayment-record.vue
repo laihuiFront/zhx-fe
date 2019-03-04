@@ -51,8 +51,8 @@
       <el-table-column prop="dataCase.client" label="委托方" show-overflow-tooltip></el-table-column>
       <el-table-column prop="dataCase.overdueBillTime" label="账龄" show-overflow-tooltip></el-table-column>
       <el-table-column prop="dataCase.money" label="委案金额" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="bankReconciliation.cpMoney" label="CP金额" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="bankReconciliation.cpDate" label="CP日期" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="bankReconciliation.cpMoney" label="待银行查账金额" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="bankReconciliation.cpDate" label="待银行查账日期" show-overflow-tooltip></el-table-column>
       <el-table-column prop="collectUser.name" label="回收催收员" show-overflow-tooltip></el-table-column>
       <el-table-column prop="repayMoney" label="还款金额" show-overflow-tooltip></el-table-column>
       <el-table-column prop="dataCase.overdueBalance" label="余额" show-overflow-tooltip></el-table-column>
