@@ -200,6 +200,7 @@
       <el-collapse-item title="同批次共债案件" name="2">
         <el-table
           :data="dependCase"
+          border stripe
           style="width: 100%"
           class="table-wrap">
           <el-table-column
@@ -558,7 +559,7 @@
                     >
                     <el-button style="position:absolute;top:10px;right:10px;"  size="mini" type="primary">上传附件</el-button>
                   </el-upload>
-                  <el-table :data="uploadFileList" width="100%" :show-header="false">
+                  <el-table :data="uploadFileList"  border stripe  width="100%" :show-header="false">
                     <el-table-column prop="fileName" label="文件名"></el-table-column>
                   </el-table>
                   <el-button type="text"  class="upload-btn" slot="reference">附件列表</el-button>
@@ -607,6 +608,7 @@
                 </div>
                 <el-table
                   @selection-change="onSelectPhoneRow"
+                  border stripe
                   :data="caseDetail.dataCaseTelEntityList"
                   style="width: 100%"
                   class="table-wrap">
@@ -665,6 +667,7 @@
                 </div>
                 <el-table
                   v-if="letterVisible2"
+                  border stripe
                   @selection-change="onSelectAddrRow"
                   :data="addrList"
                   style="width: 100%"
@@ -721,6 +724,7 @@
                 </el-table>
                 <el-table
                   :data="letterList"
+                  border stripe
                   v-if="letterVisible"
                   style="width: 100%"
                   class="table-wrap">
@@ -783,6 +787,7 @@
               <el-tab-pane label="案人数据" name="3" class="tabs-wrap">
                 <el-table
                   :data="dataList"
+                  border stripe
                   style="width: 100%"
                   class="table-wrap">
                   <el-table-column
@@ -829,6 +834,7 @@
                 <el-table
                   :data="memorizeList"
                   style="width: 100%"
+                  border stripe
                   class="table-wrap">
                   <el-table-column
                     prop="measure"
@@ -919,6 +925,7 @@
               <el-tab-pane label="评语" name="5" class="tabs-wrap">
                 <el-table
                   :data="commentList"
+                  border stripe
                   style="width: 100%"
                   class="table-wrap">
                   <el-table-column
@@ -943,6 +950,7 @@
               <el-tab-pane label="利息更新" name="7" class="tabs-wrap">
                 <el-table
                   :data="rateUpdateList"
+                  border stripe
                   style="width: 100%"
                   class="table-wrap">
                   <el-table-column
@@ -1028,6 +1036,7 @@
                 <el-table
                   :data="syncList"
                   style="width: 100%"
+                  border stripe
                   class="table-wrap">
                   <el-table-column
                     prop="content"
@@ -1075,6 +1084,7 @@
                 <el-table
                   :data="caseSameList"
                   style="width: 100%"
+                  border stripe
                   class="table-wrap">
                   <el-table-column
                     prop="batchNo"
@@ -1141,6 +1151,7 @@
                 </div>
                 <el-table
                   :data="logList"
+                  border stripe
                   style="width: 100%"
                   class="table-wrap">
                   <el-table-column
@@ -1197,6 +1208,7 @@
               </el-tab-pane>
               <el-tab-pane label="诉讼案件" name="12" class="tabs-wrap">
                 <el-table
+                  border stripe
                   :data="legalList"
                   style="width: 100%"
                   class="table-wrap">
@@ -1276,6 +1288,7 @@
                 <el-table
                   :data="caseDetail.reliefList"
                   style="width: 100%"
+                  border stripe
                   class="table-wrap">
                   <el-table-column
                     prop="time"
@@ -1454,6 +1467,7 @@
             <el-table
               :data="syncMemorizeList"
               style="width: 100%"
+              border stripe
               class="table-wrap">
               <el-table-column prop="dataCase.batchNo" width="80" label="时间" show-overflow-tooltip></el-table-column>
               <el-table-column prop="dataCase.cardNo" width="70" label="对象姓名" show-overflow-tooltip></el-table-column>

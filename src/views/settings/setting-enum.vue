@@ -63,6 +63,7 @@
       </el-tree>
       <el-table
         v-if="currentEnum.name && currentEnum.name !== '地区'"
+        border stripe
         :data="configData"
         style="width: 100%"
       >

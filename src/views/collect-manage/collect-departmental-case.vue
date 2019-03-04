@@ -229,13 +229,6 @@
                 >
                 </el-date-picker>
               </el-form-item>
-              <el-form-item prop="val13">
-                <el-input
-                  v-model="form.val13"
-                  placeholder="委案金额上限"
-                  clearable
-                ></el-input>
-              </el-form-item>
               <el-form-item prop="val29">
                 <el-input
                   v-model="form.val29"
@@ -243,6 +236,14 @@
                   clearable
                 ></el-input>
               </el-form-item>
+              <el-form-item prop="val13">
+                <el-input
+                  v-model="form.val13"
+                  placeholder="委案金额上限"
+                  clearable
+                ></el-input>
+              </el-form-item>
+
               <el-form-item prop="val14">
                 <el-select
                   v-model="form.val14"
@@ -285,13 +286,6 @@
                 >
                 </el-date-picker>
               </el-form-item>
-              <el-form-item prop="val18">
-                <el-input
-                  v-model="form.val18"
-                  placeholder="跟进次数上限"
-                  clearable
-                ></el-input>
-              </el-form-item>
               <el-form-item prop="val30">
                 <el-input
                   v-model="form.val30"
@@ -299,6 +293,14 @@
                   clearable
                 ></el-input>
               </el-form-item>
+              <el-form-item prop="val18">
+                <el-input
+                  v-model="form.val18"
+                  placeholder="跟进次数上限"
+                  clearable
+                ></el-input>
+              </el-form-item>
+
               <el-form-item prop="val19">
                 <el-select
                   v-model="form.val19"
@@ -403,7 +405,7 @@
               <el-form-item prop="val33">
                 <el-date-picker
                   v-model="form.val33"
-                  value-format="yyyy-MM-dd"
+                  value-format="yyyy-MM-dd HH:mm"
                   type="daterange"
                   align="right"
                   unlink-panels
@@ -750,6 +752,9 @@
             prop: "balance",
             width:130,
             label: "委案余额"
+          },{
+            prop: "caseAllotTime",
+            label: "案件分配日期"
           },
           {
             prop: "moneyStart",
