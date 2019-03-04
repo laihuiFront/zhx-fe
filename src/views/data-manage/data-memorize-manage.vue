@@ -24,7 +24,7 @@
                 </el-option>
               </el-select>   </el-form-item>
             <el-form-item >
-              <el-select v-model="formInline.odvs" filterable multiple  placeholder="请选择催收员" clearable>
+              <el-select v-model="formInline.odvs" filterable collapse-tags multiple  placeholder="请选择催收员" clearable>
                 <el-option
                   v-for="item in PersonList"
                   :key="item.id"

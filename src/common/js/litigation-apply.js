@@ -133,7 +133,7 @@ return request({
     method: 'post',
     data: {
     	id:id,
-       legalId:id,
+       legalId:legalId,
 	   fee:form.fee,//办理进度
 	   chargeDate:form.chargeDate,// 办理时间
 	   feeType:form.feeType,//保全费缴纳时间

@@ -15,7 +15,7 @@
               </el-select>
             </el-form-item>
             <el-form-item >
-              <el-select v-model="formInline.batchNos" filterable  multiple placeholder="请输入批次" clearable>
+              <el-select v-model="formInline.batchNos" filterable collapse-tags  multiple placeholder="请输入批次" clearable>
                 <el-option
                   v-for="item in batchList"
                   :key="item.id"
@@ -25,7 +25,7 @@
               </el-select>
             </el-form-item>
             <el-form-item >
-              <el-select v-model="formInline.clients" filterable  multiple placeholder="请选择委托方" clearable>
+              <el-select v-model="formInline.clients" filterable collapse-tags  multiple placeholder="请选择委托方" clearable>
                 <el-option
                   v-for="item in clientList"
                   :key="item.id"
@@ -63,7 +63,7 @@
               <el-button type="text" icon="el-icon-search" @click="search">查询</el-button>
             </el-form-item>
             <el-form-item>
-              <el-button type="text" icon="el-icon-refresh" @click="resetForm('form')">重置</el-button>
+              <el-button type="text" icon="el-icon-refresh" @click=resetFormInline>重置</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -526,7 +526,7 @@
             <div class="grid-content bg-purple">
               <el-form-item label="批次号">
                 <!--<el-input v-model="formInline.batchNo" placeholder="请输入批次号"></el-input>-->
-                <el-select v-model="formInline.batchNos" filterable  multiple placeholder="请输入批次" clearable>
+                <el-select v-model="formInline.batchNos" filterable collapse-tags  multiple placeholder="请输入批次" clearable>
                   <el-option
                     v-for="item in batchList"
                     :key="item.batchNo"
@@ -552,7 +552,7 @@
           <el-col :span="8">
             <div class="grid-content bg-purple">
               <el-form-item label="催收员">
-                <el-select v-model="formInline.odv" filterable multiple placeholder="请选择催收员" clearable>
+                <el-select v-model="formInline.odv" filterable collapse-tags multiple placeholder="请选择催收员" clearable>
                   <el-option
                     v-for="item in PersonList"
                     :key="item.id"
@@ -580,7 +580,7 @@
           <el-col :span="8">
             <div class="grid-content bg-purple">
               <el-form-item label="委托方">
-                <el-select v-model="formInline.client" filterable  multiple placeholder="请选择委托方" clearable>
+                <el-select v-model="formInline.client" filterable collapse-tags  multiple placeholder="请选择委托方" clearable>
                   <el-option
                     v-for="item in clientList"
                     :key="item.id"
@@ -1096,7 +1096,7 @@
         deleteList:[],
         caseTypeList:[],
         areaList:[],
-        formInline:{time1:[],time2:[],time3:[],time4:[],time5:[],time6:[]},
+        formInline:{batchNos:[],clients:[],time1:[],time2:[],time3:[],time4:[],time5:[],time6:[]},
         dialogVisible:false,
         tableData3:[],
         currentPage4: 1,
@@ -1609,8 +1609,8 @@
         this.pageNum=val;
         this.search()
       },
-      resetForm(formName) {
-        this.$refs[formName].resetFields();
+      resetFormInline() {
+        this.formInline={batchNos:[],clients:[],time1:[],time2:[],time3:[],time4:[],time5:[],time6:[]}
       },
 
       open7() {
