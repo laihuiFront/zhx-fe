@@ -170,6 +170,8 @@
       <el-table
         ref="multipleTable"
         :data="tableData"
+        border
+        stripe
         tooltip-effect="dark"
         style="width: 100%"
         @selection-change="handleSelectionChange"

@@ -13,7 +13,9 @@
       </el-form-item>
     </el-form>
     <el-table
-      sortable="custom" 
+      sortable="custom"
+      border
+      stripe
       @sort-change="handleSort"
       :data="memberList"
       style="width: 100%"

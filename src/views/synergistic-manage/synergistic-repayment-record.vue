@@ -37,6 +37,8 @@
     </div>
      <el-table
       @selection-change="onSelectRow"
+      border
+      stripe
       :data="recordList"
       style="width: 100%"
       class="table-wrap">

@@ -14,6 +14,8 @@
     </syn-record-query>
     <el-table
       :data="recordList"
+      border
+      stripe
       style="width: 100%"
       class="table-wrap">
       <el-table-column prop="synergisticType" label="协催类型" show-overflow-tooltip></el-table-column>

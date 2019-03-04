@@ -74,6 +74,8 @@
   
   <el-table
     :data="tableData3"
+    border
+    stripe
      show-summary
      height="350"
      :summary-method="getSummaries"

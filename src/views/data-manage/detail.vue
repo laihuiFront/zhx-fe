@@ -651,19 +651,20 @@
                 </el-table>
               </el-tab-pane>
               <el-tab-pane label="地址" name="2" class="tabs-wrap" >
-                <div class="operation">
+                <div class="operation"  v-if="letterVisible2">
                   <div class="left-oper">
                     <el-button @click="changeAddrStatus('有效')">标记为有效</el-button>
                     <el-button @click="changeAddrStatus('未知')">标记为未知</el-button>
                     <el-button @click="changeAddrStatus('无效')">标记为无效</el-button>
                     <el-button @click="saveAddr">显示全部地址</el-button>
-                    <el-button>查看信函记录</el-button>
+                    <el-button @click="showLetterList">查看信函记录</el-button>
                   </div>
                   <div class="right-oper">
                     <el-button type="primary" @click="addAddr">新增地址</el-button>
                   </div>
                 </div>
                 <el-table
+                  v-if="letterVisible2"
                   @selection-change="onSelectAddrRow"
                   :data="addrList"
                   style="width: 100%"
@@ -709,12 +710,73 @@
                   </el-table-column>
                   <el-table-column
                     label="操作"
+                    v-if="letterVisible2"
                     width="150">
                     <template slot-scope="scope">
                       <el-button type="text" @click="applyLetter(scope.row)">申请信函</el-button>
                       <el-button type="text" @click="editAddr(scope.row)">编辑</el-button>
                       <el-button type="text" @click="deleteAddr(scope.row.id)">删除</el-button>
                     </template>
+                  </el-table-column>
+                </el-table>
+                <el-table
+                  :data="letterList"
+                  v-if="letterVisible"
+                  style="width: 100%"
+                  class="table-wrap">
+                  <el-table-column
+                    type="selection"
+                    width="55">
+                  </el-table-column>
+                  <el-table-column
+                    prop="status"
+                    show-overflow-tooltip
+                    label="状态">
+                  </el-table-column>
+                  <el-table-column
+                    prop="address"
+                    show-overflow-tooltip
+                    label="地址">
+                  </el-table-column>
+                  <el-table-column
+                    prop="applyContext"
+                    show-overflow-tooltip
+                    label="申请内容">
+                  </el-table-column>
+                  <el-table-column
+                    prop="addressType"
+                    show-overflow-tooltip
+                    label="地址类型">
+                  </el-table-column>
+                  <el-table-column
+                    prop="letterType"
+                    show-overflow-tooltip
+                    label="信函类别">
+                  </el-table-column>
+                  <el-table-column
+                    prop="applyDate"
+                    show-overflow-tooltip
+                    label="申请时间">
+                  </el-table-column>
+                  <el-table-column
+                    prop="applyer"
+                    show-overflow-tooltip
+                    label="申请人">
+                  </el-table-column>
+                  <el-table-column
+                    prop="synergyer"
+                    show-overflow-tooltip
+                    label="协催人">
+                  </el-table-column>
+                  <el-table-column
+                    prop="synergyDate"
+                    show-overflow-tooltip
+                    label="协催时间">
+                  </el-table-column>
+                  <el-table-column
+                    prop="synergyResult"
+                    show-overflow-tooltip
+                    label="协催结果">
                   </el-table-column>
                 </el-table>
               </el-tab-pane>
@@ -1536,6 +1598,7 @@
 
 import {getCaseDetail,
         getAddressDetail,
+        getLetterList,
         getArchiveDetail,
         getCollectDetail,
         PhonetypeList,
@@ -1575,12 +1638,15 @@ export default {
       addCommentVisible:false,
       commentAddContent:null,
       dialogVisible:false,
+      letterVisible:false,
+      letterVisible2:true,
     	formInline:{},
       PhonetypeList:[],
       syncMemorizeList:[],
       memorizeList:[],//催記
       commentList:[],//评语
       addrList:[],//地址
+      letterList:[],//信函记录
       dataList:[],//案人信息
       rateUpdateList:[],//利息
       syncList:[],//协催
@@ -1652,6 +1718,7 @@ export default {
         this.memorizeList = data
       })
     },
+
     onClickSaveCollection(){
       this.batchForm.caseId = this.id
       dataCollectionSave(this.batchForm).then((data)=>{
@@ -1719,6 +1786,14 @@ export default {
         })
         this.$message('信函申请提交成功')
         this.dialogLetterVisible = false
+      })
+    },
+
+    showLetterList(){
+      getLetterList(this.id).then(data=>{
+        this.letterList = data;
+        this.letterVisible = true;
+        this.letterVisible2 = false;
       })
     },
     addAddr(){

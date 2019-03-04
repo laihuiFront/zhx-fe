@@ -161,6 +161,8 @@
     <el-table
       ref="multipleTable"
       :data="tableData3"
+      border
+      stripe
       :row-class-name="rowColor"
       style="width: 100%;margin-top:10px"
       @selection-change="handleSelectionChange"

@@ -497,6 +497,8 @@
       <el-table
         ref="multipleTable"
         :data="tableData"
+        border
+        stripe
         style="width: 100%"
         height="300"
         :row-class-name="rowColor"

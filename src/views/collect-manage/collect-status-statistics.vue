@@ -95,7 +95,8 @@
             >
           </el-form-item>
         </el-form>
-        <el-table :data="tableData2" style="width: 100%">
+        <el-table :data="tableData2" border
+                  stripe style="width: 100%">
           <el-table-column
             v-for="(item, index) in tablecol_data2"
             :key="index"
@@ -163,7 +164,8 @@
             >
           </el-form-item>
         </el-form>
-        <el-table :data="tableData2" style="width: 100%">
+        <el-table :data="tableData2" border
+                  stripe style="width: 100%">
           <el-table-column
             v-for="(item, index) in tablecol_data2"
             :key="index"

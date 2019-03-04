@@ -20,7 +20,15 @@ export function getSameBatchCase(id) {
   })
 }
 
-
+export function getLetterList(id) {
+  return request({
+    url: '/letter/getLetterListByCaseId',
+    method: 'post',
+    data: {
+      "caseId":id
+    }
+  })
+}
 export const PhonetypeList = function() {
   return request({
     url: '/sys/dictionary/select/list/name',

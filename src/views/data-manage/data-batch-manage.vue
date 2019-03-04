@@ -101,6 +101,8 @@
    	v-loading="loading"
     ref="multipleTable"
     :data="DataList"
+    border
+    stripe
     style="width: 100%;margin-top: 10px;"
      @selection-change="handleSelectionChange"
     sortable="custom"
@@ -232,7 +234,7 @@
       label="操作"
       width="250">
       <template slot-scope="scope">
-        <el-upload
+        <!--<el-upload
           class="upload-demo"
           action="http://116.62.124.251/zxh/dataCase/newCase/import"
           :headers="header"
@@ -241,7 +243,7 @@
           :data="{batchNo:scope.row.batchNo}"
         >
           <el-button type="text" size="small" v-has="'追加'">追加</el-button>
-        </el-upload>
+        </el-upload>-->
         <el-button type="text" size="small" @click="returnMessage(scope.row.id)" v-has="'退案'">退案</el-button>
         <el-button type="text" size="small" @click="editMessage(scope.row)" v-has="'编辑'">编辑</el-button>
         <el-button type="text" size="small" @click="deleteMessage(scope.row.id)" v-has="'删除'">删除</el-button>

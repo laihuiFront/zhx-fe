@@ -85,6 +85,8 @@
     <el-table
       :data="tableData"
       tooltip-effect="dark"
+      border
+      stripe
       style="width: 100%"
       sortable="custom"
       height="470"

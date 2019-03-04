@@ -36,7 +36,9 @@
    </el-row>	
   	
   <el-table
-    :data="DataList"   
+    :data="DataList"
+    border
+    stripe
      style="width: 100%">
     <el-table-column
       prop="legalStatusMsg"
@@ -487,7 +489,9 @@
    </el-row>	
   	
   <el-table
-    :data="DataList2"   
+    :data="DataList2"
+    border
+    stripe
      style="width: 100%">
     <el-table-column
       prop="legalStatusMsg"

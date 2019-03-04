@@ -54,7 +54,8 @@
           <el-button>同意协催</el-button>
           <el-button>撤销协催</el-button>
         </div>
-        <el-table :data="tableData" tooltip-effect="dark" style="width: 100%">
+        <el-table :data="tableData" border
+                  stripe tooltip-effect="dark" style="width: 100%">
           <el-table-column
             v-for="(item, index) in tablecol_data"
             v-bind="item"
@@ -119,7 +120,8 @@
           <el-button>同意协催</el-button>
           <el-button>撤销协催</el-button>
         </div>
-        <el-table :data="tableData" tooltip-effect="dark" style="width: 100%">
+        <el-table :data="tableData" border
+                  stripe tooltip-effect="dark" style="width: 100%">
           <el-table-column
             v-for="(item, index) in tablecol_data"
             v-bind="item"
@@ -184,7 +186,8 @@
           <el-button>同意协催</el-button>
           <el-button>撤销协催</el-button>
         </div>
-        <el-table :data="tableData" tooltip-effect="dark" style="width: 100%">
+        <el-table :data="tableData" border
+                  stripe tooltip-effect="dark" style="width: 100%">
           <el-table-column
             v-for="(item, index) in tablecol_data"
             v-bind="item"

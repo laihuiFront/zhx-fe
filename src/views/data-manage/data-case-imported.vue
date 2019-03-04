@@ -154,6 +154,8 @@
    <el-table
     ref="multipleTable"
     :data="DataList"
+    border
+    stripe
     style="width: 100%"
      @selection-change="handleSelectionChange"
     sortable="custom"

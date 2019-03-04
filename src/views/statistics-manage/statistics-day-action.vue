@@ -66,6 +66,8 @@
 </el-row>
   <el-table
     :data="tableData3"
+    border
+    stripe
      show-summary
      height="350"
      :summary-method="getSummaries"
@@ -202,7 +204,8 @@
     </el-pagination>
   </div>
   <el-dialog :title="dialogTitle" :visible.sync="dialogTableVisible"  width="80%">
-  <el-table :data="gridData">
+  <el-table :data="gridData" border
+            stripe>
     <el-table-column property="date" label="通话时间" ></el-table-column>
     <el-table-column property="name" label="通话对象" ></el-table-column>
     <el-table-column property="address" label="电话号码"></el-table-column>

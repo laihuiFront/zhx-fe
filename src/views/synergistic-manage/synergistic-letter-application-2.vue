@@ -194,6 +194,8 @@
 <el-table
   ref="multipleTable"
   :data="tableData"
+  border
+  stripe
   style="width: 100%"
   :cell-style="{ whiteSpace: 'nowrap' }"
   @selection-change="handleSelectionChange"
