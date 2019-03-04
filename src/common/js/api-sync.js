@@ -70,6 +70,15 @@ export function getRepayRecordList(data){
   })
 }
 
+export function getRepayRecordQuerySum(data){
+  return request({
+    url: '/repayRecord/querySum',
+    method: 'post',
+    data
+  })
+}
+
+
 export function saveRepayRecord(data){
   return request({
     url: '/repayRecord/save',
