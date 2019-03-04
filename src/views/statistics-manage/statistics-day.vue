@@ -53,7 +53,6 @@
     :data="tableData3"
     border
     stripe
-    height="350"
      show-summary
      :summary-method="getSummaries"
     style="width: 100%"
