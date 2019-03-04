@@ -262,6 +262,9 @@ export default {
         this.recordList = data.list
         this.total = data.total
       })
+      getRepayRecordQuerySum(this.queryForm).then(data=>{
+        this.sumForm = data
+      })
     },
     onClickAdd(){
       this.recordInfo = {
