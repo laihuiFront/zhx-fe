@@ -153,7 +153,7 @@
           <span class="textColor"> 列表金额:{{totalAmt}}, </span>
           <span class="textColor"> 列表还款量:{{repayNum}}, </span>
           <span class="textColor"> 列表还款额:{{repayTotalAmt}}, </span>
-          <span class="textColor"> 列表CP值:{{totalCp}}, </span>
+          <span class="textColor"> 列表待银行查账金额:{{totalCp}}, </span>
           <span class="textColor"> 列表PTP值:{{totalPtp}}</span>
         </div>
       </el-col>

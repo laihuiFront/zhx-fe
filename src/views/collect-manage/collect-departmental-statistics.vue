@@ -9,15 +9,15 @@
         ><span class="topSpan">上月PTP值:</span> {{ topData.lastRepayAmt }}</el-col
         >
         <el-col :span="3"
-        ><span class="topSpan">上月CP值:</span> {{ topData.lastBankAmt }}</el-col
+        ><span class="topSpan">上月待银行查账金额:</span> {{ topData.lastBankAmt }}</el-col
         >
         <el-col :span="4"
-        ><span class="topSpan">上月M值(已还款):</span>¥{{
+        ><span class="topSpan">上月提成(已还款):</span>¥{{
           topData.lastRepaidAmt
           }}</el-col
         >
         <el-col :span="4"
-        ><span class="topSpan">上月M值(CP):</span> {{ topData.lastRepaidBankAmt }}</el-col
+        ><span class="topSpan">上月提成(待银行查账金额):</span> {{ topData.lastRepaidBankAmt }}</el-col
         >
       </el-row>
       <el-row :gutter="10" style="margin-top: 15px;">
@@ -25,18 +25,18 @@
         ><span class="topSpan">当月还款金额:</span> {{ topData.thisPaidMoney }}</el-col
         >
         <el-col :span="3"
-        ><span class="topSpan">当月PTP值:</span> {{ topData.thisRepayAmt }}</el-col
+        ><span class="topSpan">当月承诺还款金额:</span> {{ topData.thisRepayAmt }}</el-col
         >
         <el-col :span="3"
-        ><span class="topSpan">当月CP值:</span> {{ topData.thisBankAmt }}</el-col
+        ><span class="topSpan">当月待银行查账金额:</span> {{ topData.thisBankAmt }}</el-col
         >
         <el-col :span="4"
-        ><span class="topSpan">当月M值(已还款):</span>{{
+        ><span class="topSpan">当月提成(已还款):</span>{{
           topData.thisRepaidAmt
           }}</el-col
         >
         <el-col :span="4"
-        ><span class="topSpan">当月M值(CP):</span>{{ topData.thisRepaidBankAmt }}</el-col
+        ><span class="topSpan">当月提成(待银行查账金额):</span>{{ topData.thisRepaidBankAmt }}</el-col
         >
       </el-row>
     </section>
@@ -154,8 +154,8 @@
             align="right"
             unlink-panels
             range-separator="至"
-            start-placeholder="CP起始日期"
-            end-placeholder="CP结束日期"
+            start-placeholder="待银行查账金额起始日期"
+            end-placeholder="待银行查账金额结束日期"
           >
           </el-date-picker>
         </el-form-item>
@@ -188,14 +188,14 @@
         <span style="color: black;font-size: 16px;">查询结果统计:</span>
         <span class="" v-if="form1.val1 == 0">
           <span style="color: #66b1ff;font-size: 16px;">列表还款金额: {{ topData.paidMoney }}, </span>
-          <span style="color: #66b1ff;font-size: 16px;"> 还款M值金额: {{ topData.repaidAmt }} </span>
+          <span style="color: #66b1ff;font-size: 16px;"> 还款提成金额: {{ topData.repaidAmt }} </span>
         </span>
         <span class="" v-if="form1.val1 == 1">
-          <span style="color: #66b1ff;font-size: 16px;"> 列表CP金额: {{ topData.bankAmtC }}, </span>
-          <span style="color: #66b1ff;font-size: 16px;"> CPM值金额: {{ topData.repaidBankAmt }} </span>
+          <span style="color: #66b1ff;font-size: 16px;"> 列表待银行查账金额: {{ topData.bankAmtC }}, </span>
+          <span style="color: #66b1ff;font-size: 16px;"> 待银行查账提成金额: {{ topData.repaidBankAmt }} </span>
         </span>
         <span class="" v-if="form1.val1 == 2">
-          <span style="color: #66b1ff;font-size: 16px;"> 列表PTP金额: {{ topData.repayAmtP }} </span>
+          <span style="color: #66b1ff;font-size: 16px;"> 列表承诺还款金额: {{ topData.repayAmtP }} </span>
         </span>
       </div>
       <el-table
@@ -271,11 +271,11 @@ export default {
           value: "0"
         },
         {
-          label: "CP记录",
+          label: "待银行查账记录",
           value: "1"
         },
         {
-          label: "PTP记录",
+          label: "承诺还款记录",
           value: "2"
         }
       ],
@@ -286,19 +286,19 @@ export default {
       tablecol_raw1: [
         ...tablecol_common,
         {
-          label: "M值系数",
+          label: "提成系数",
           prop: "mVal"
         },
         {
-          label: "CP金额",
+          label: "待银行查账金额",
           prop: "bankAmt"
         },
         {
-          label: "CP日期",
+          label: "待银行查账日期",
           prop: "bankTime"
         },
         {
-          label: "CPM值",
+          label: "待银行查账提成金额",
           prop: "repaidAmtM"
         },
         {
@@ -310,7 +310,7 @@ export default {
           prop: "picih"
         },
         {
-          label: "还款M值",
+          label: "还款提成值",
           prop: "repaidBankAmtM"
         },
         {
@@ -337,19 +337,19 @@ export default {
       tablecol_raw2: [
         ...tablecol_common,
         {
-          label: "M值系数",
+          label: "提成系数",
           prop: "mVal"
         },
         {
-          label: "CP金额",
+          label: "待银行查账金额",
           prop: "bankAmt"
         },
         {
-          label: "CP日期",
+          label: "待银行查账日期",
           prop: "bankTime"
         },
         {
-          label: "CPM值",
+          label: "待银行查账提成金额",
           prop: "repaidAmtM"
         },
         {
@@ -368,15 +368,15 @@ export default {
       tablecol_raw3: [
         ...tablecol_common,
         {
-          label: "M值系数",
+          label: "提成系数",
           prop: "mVal"
         },
         {
-          label: "PTP金额",
+          label: "承诺还款金额",
           prop: "repayAmt"
         },
         {
-          label: "PTP日期",
+          label: "承诺还款日期",
           prop: "repayTime"
         },
         {

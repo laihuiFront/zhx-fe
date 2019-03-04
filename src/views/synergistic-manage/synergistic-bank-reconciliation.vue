@@ -17,7 +17,7 @@
         :on-success="uploadSuccess"
         style="display:inline-block;margin-left:5x;" 
         >
-        <el-button type="primary" v-if="queryForm.status==='0'">导入CP</el-button>
+        <el-button type="primary" v-if="queryForm.status==='0'">导入待银行查账</el-button>
       </el-upload>
       <el-button type="primary" @click="onClickExportSelectedRecord">导出选中数据</el-button>
       <el-dropdown trigger="click" @command="handleCommand">
@@ -44,8 +44,8 @@
       <el-table-column prop="dataCase.client" label="委托方" show-overflow-tooltip></el-table-column>
       <el-table-column prop="dataCase.money" label="委案金额" show-overflow-tooltip></el-table-column>
       <el-table-column prop="dataCase.repayMoney" label="案件已还款" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="cpMoney" label="CP金额" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="cpDate" label="CP日期" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="cpMoney" label="待银行查账金额" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="cpDate" label="待银行查账日期" show-overflow-tooltip></el-table-column>
       <el-table-column prop="repayUser" label="还款人" show-overflow-tooltip></el-table-column>
       <el-table-column prop="repayType" label="还款方式" show-overflow-tooltip></el-table-column>
       <el-table-column prop="submitUser.name" label="提交人" show-overflow-tooltip></el-table-column>
@@ -56,7 +56,7 @@
           <el-button
             type="text"
             @click="onClicCancelBankRecon(scope.row.id)"
-          >作废CP</el-button>
+          >作废待银行查账</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -216,7 +216,7 @@ export default {
       }).then(() => {
         const ids = this.selectList.map(item => item.id)
         cancelBankRecon(ids).then(() => {
-          this.$message('作废CP成功')
+          this.$message('作废待银行查账成功')
           this.onClickQuery()
         })
       }).catch(() => { })
@@ -228,7 +228,7 @@ export default {
         type: 'warning'
       }).then(() => {
         cancelBankRecon([id]).then(() => {
-          this.$message('作废CP成功')
+          this.$message('作废待银行查账成功')
           this.onClickQuery()
         })
       }).catch(() => { })
