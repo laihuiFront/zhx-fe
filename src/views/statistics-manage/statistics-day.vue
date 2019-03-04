@@ -41,8 +41,8 @@
         </el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-button type="text" icon="el-icon-search" @click=query()>开始统计</el-button>
-        <el-button type="text" icon="el-icon-refresh" @click=clench>重置</el-button> 
+        <el-button type="text" icon="el-icon-search" @click="query">开始统计</el-button>
+        <el-button type="text" icon="el-icon-refresh" @click="clench">重置</el-button> 
       </el-form-item>
       <el-form-item class="operation-item">
         <el-button type="primary" @click="onSubmit">导出查询结果</el-button>
@@ -166,12 +166,13 @@
     </el-table-column>
   </el-table>
   <el-pagination
+      class="pagination-wrap"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage4"
       :page-sizes="[10, 20, 30, 40]"
       :page-size="pages"
-      layout="total, sizes, prev, pager, next, jumper"
+      layout="prev, pager, next, jumper,total, sizes"
       :total="total">
     </el-pagination>
   </div>

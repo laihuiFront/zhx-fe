@@ -1,69 +1,53 @@
 <template>
-  <div id="statistics-day-action">
-  	<el-row :gutter="20">
-  <el-col :span="20">
-  	<div class="grid-content bg-purple">
-  		<el-form :inline="true" :model="formInline" class="demo-form-inline">
-   <el-form-item >
-    <el-select v-model="formInline.odv" multiple collapse-tags  filterable  placeholder="请选择催收员" clearable>
-    <el-option
-      v-for="item in PersonList"
-      :key="item.id"
-      :label="item.userName"
-      :value="item.id">
-    </el-option>
-  </el-select> 
-  </el-form-item>
-  <el-form-item>
-    <el-select v-model="formInline.area" placeholder="请选择催收区域" clearable>
-    <el-option
-      v-for="item in areaList"
-      :key="item.id"
-      :label="item.name"
-      :value="item.id">
-    </el-option>
-  </el-select>   
-  </el-form-item>
-  <el-form-item >
-  <el-select v-model="formInline.client" placeholder="请选择委托方" clearable>
-    <el-option
-      v-for="item in clientList"
-      :key="item.value"
-      :label="item.name"
-      :value="item.id">
-    </el-option>
-  </el-select>
-  </el-form-item>
-  <el-form-item >
-   <div class="block">
-    <el-date-picker
-      v-model="formInline.time"
-      type="daterange"
-      range-separator="至"
-      start-placeholder="催收开始日期"
-      end-placeholder="催收结束日期">
-    </el-date-picker>
-  </div>
-  
-  </el-form-item>
-  <el-form-item>
-  <el-button type="text" icon="el-icon-search" 开始统计</el-button> 
-  </el-form-item>
-  <el-form-item>
-  <el-button type="text" icon="el-icon-refresh" @click=clench>重置</el-button> 
-  </el-form-item>
-
-</el-form>
-  	</div></el-col>
-  <el-col :span="4">
-  	<div class="grid-content bg-purple">
- <el-form :inline="true"  class="demo-form-inline">
-  <el-form-item>
-    <el-button type="primary" @click="onSubmit">导出查询结果</el-button>
-  </el-form-item>
-</el-form>
-  	</div></el-col>
-</el-row>
+  <div id="statistics-day-action" class="page-wraper-sub">
+    <el-form ref="form" :model="formInline" :inline="true" class="query-wrap">
+      <el-form-item>
+        <el-select v-model="formInline.odv" multiple collapse-tags  filterable  placeholder="请选择催收员" clearable>
+          <el-option
+            v-for="item in PersonList"
+            :key="item.id"
+            :label="item.userName"
+            :value="item.id">
+          </el-option>
+        </el-select> 
+      </el-form-item>
+      <el-form-item>
+        <el-select v-model="formInline.area" placeholder="请选择催收区域" clearable>
+          <el-option
+            v-for="item in areaList"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id">
+          </el-option>
+        </el-select> 
+      </el-form-item>
+      <el-form-item>
+        <el-select v-model="formInline.client" placeholder="请选择委托方" clearable>
+          <el-option
+            v-for="item in clientList"
+            :key="item.value"
+            :label="item.name"
+            :value="item.id">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-date-picker
+          v-model="formInline.time"
+          type="daterange"
+          range-separator="至"
+          start-placeholder="催收开始日期"
+          end-placeholder="催收结束日期">
+        </el-date-picker>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="text" icon="el-icon-search"> 开始统计</el-button> 
+        <el-button type="text" icon="el-icon-refresh" @click=clench>重置</el-button> 
+      </el-form-item>
+      <el-form-item class="operation-item">
+        <el-button type="primary" @click="onSubmit">导出查询结果</el-button>
+      </el-form-item>
+    </el-form>
   <el-table
     :data="tableData3"
     border
@@ -71,7 +55,8 @@
      show-summary
      height="350"
      :summary-method="getSummaries"
-     style="width: 100%">
+     style="width: 100%"
+     class="table-wrap">
     <el-table-column
       prop="odv"
       align="center"
@@ -192,18 +177,17 @@
       </template>
     </el-table-column>
   </el-table>
-    <div class="block">
-  	 <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="currentPage4"
-      :page-sizes="[10, 20, 30, 40]"
-      :page-size="pages"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="total">
-    </el-pagination>
-  </div>
-  <el-dialog :title="dialogTitle" :visible.sync="dialogTableVisible"  width="80%">
+  <el-pagination
+  class="pagination-wrap"
+  @size-change="handleSizeChange"
+  @current-change="handleCurrentChange"
+  :current-page="currentPage4"
+  :page-sizes="[10, 20, 30, 40]"
+  :page-size="pages"
+  layout="prev, pager, next, jumper,total, sizes"
+  :total="total">
+</el-pagination>
+  <el-dialog :title="dialogTitle" :visible.sync="dialogTableVisible" class="dialog-wrap"  width="80%">
   <el-table :data="gridData" border
             stripe>
     <el-table-column property="date" label="通话时间" ></el-table-column>
@@ -216,17 +200,16 @@
     <el-table-column property="address" label="承诺金额"></el-table-column>
     <el-table-column property="address" label="催收员"></el-table-column>
   </el-table>
-   <div class="block">
-  	 <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="currentPage4"
-      :page-sizes="[10, 20, 30, 40]"
-      :page-size="pages"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="total">
-    </el-pagination>
-   </div>
+    <el-pagination
+    @size-change="handleSizeChange"
+    @current-change="handleCurrentChange"
+    :current-page="currentPage4"
+    :page-sizes="[10, 20, 30, 40]"
+    :page-size="pages"
+    class="pagination-wrap"
+    layout="total, sizes, prev, pager, next, jumper"
+    :total="total">
+  </el-pagination>
 </el-dialog>
   </div>
 </template>
