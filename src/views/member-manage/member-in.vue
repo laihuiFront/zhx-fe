@@ -76,6 +76,7 @@
         @current-change="onClickQuery"
         :current-page.sync="queryForm.pageNum"
         :page-size.sync="queryForm.pageSize"
+        :page-sizes="[50, 100, 200, 500]"
         layout="prev, pager, next, jumper,total, sizes"
         :total="total"
         class="pagination-wrap"
@@ -198,7 +199,7 @@ export default {
       departmentTree: [],
       queryForm: {
         pageNum: 1,
-        pageSize: 10,
+        pageSize: 50,
         department: null,
         orderBy:null,
         sort:null
