@@ -164,13 +164,13 @@
                   <el-form-item prop="val16">
                     <el-input v-model="form.val16" placeholder="档案号" clearable></el-input>
                   </el-form-item>
-
-                  <el-form-item prop="val18">
-                    <el-input v-model="form.val18" placeholder="跟进次数上限" clearable></el-input>
-                  </el-form-item>
                   <el-form-item prop="val30">
                     <el-input v-model="form.val30" placeholder="跟进次数下限" clearable></el-input>
                   </el-form-item>
+                  <el-form-item prop="val18">
+                    <el-input v-model="form.val18" placeholder="跟进次数上限" clearable></el-input>
+                  </el-form-item>
+
                   <el-form-item prop="val19">
                     <el-select v-model="form.val19" placeholder="是否新分配" clearable>
                       <el-option
@@ -401,6 +401,7 @@
           border
           stripe
           style="width: 100%;height: calc(100% - 178px);"
+          class="table-wrap"
           :row-class-name="rowColor"
           :cell-style="{ whiteSpace: 'nowrap' }"
           @row-dblclick="showDetail"
@@ -705,7 +706,7 @@ export default {
         val3: seqno,
         val4: area,
         val5: name,
-        val6: idenNo,
+        val6: identNo,
         val7,
         val8: accountAge,
         val9: status,
@@ -741,7 +742,7 @@ export default {
         nextFollDateEnd: (!!val2 && val2[1]) || "",
         area,
         name,
-        idenNo,
+        identNo,
         accountAge,
         status,
         collectStatus,
