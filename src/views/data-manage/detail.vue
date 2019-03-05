@@ -1668,7 +1668,6 @@ export default {
       activeNames: ['1','2','3','4','5'],
       otherActiveName:'1',
       caseDetail:{currentuser:true},
-
       memorizeType:1,
       statusList:[{name:"有效",id:1,},{name:"无效",id:2,},{name:"未知",id:3,}],
       phoneSelectList: [],
