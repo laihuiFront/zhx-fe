@@ -46,7 +46,7 @@
             </el-form-item>
             <el-form-item >
               <el-date-picker
-                v-model="formInline.time6"
+                v-model="formInline.time2"
                 type="daterange"
                 align="right"
                 unlink-panels
@@ -1290,9 +1290,9 @@
         }
       },
     totalDataExport(){
-			let startTime=this.formInline.time[0]
-      	let endTime=this.formInline.time[1]
-		totalDataBatchExport(this.formInline.area,this.formInline.batchNos,this.formInline.clients,this.formInline.batchStatus,this.formInline.caseType,startTime,endTime,this.pageSize,this.pageNum).then((response)=>{
+			let startTime=this.formInline.time2[0]
+      	let endTime=this.formInline.time2[1]
+		totalDataBatchExport(this.formInline).then((response)=>{
           	this.$message({
             type: 'success',
             message: '导出成功!'

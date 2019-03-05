@@ -122,7 +122,7 @@
     <el-button type="primary" @click=moreDataList >批量撤销</el-button>
   </el-form-item>
    <el-form-item v-show="istrue3">
-    <el-button type="primary" @click=moreDataList >批量审核</el-button>
+    <el-button type="primary" @click=moreDataListcheck >批量审核</el-button>
   </el-form-item>
    <el-form-item v-show="istrue4">
     <el-button type="primary" @click=moreDataList >批量下载附件</el-button>
@@ -229,7 +229,7 @@
          width="170"
         show-overflow-tooltip>
         <template slot-scope="scope">
-        <el-button type="text" size="small" @click="showMessage(scope.row)">审核</el-button>
+        <el-button type="text" size="small" @click="checkData(scope.row)">审核</el-button>
         <el-button type="text" size="small" @click="showMessage(scope.row)">查看</el-button>
         <el-button type="text" size="small" @click="showMessage(scope.row)">修改</el-button>
            <el-button type="text" size="small" @click="deteleList(scope.row.id)">删除</el-button>
@@ -516,7 +516,7 @@
 </template>
 
 <script>
-	import {areaList,clientList,PersonList,dataList,deleteStatusList,accountAgeList,collectStatusList,remoweData,addDataform,remoweDataList} from '@/common/js/relief-management.js'
+	import {areaList,clientList,PersonList,dataList,checkData,deleteStatusList,accountAgeList,collectStatusList,remoweData,addDataform,remoweDataList} from '@/common/js/relief-management.js'
 export default {
   name: 'reliefManagement',
   data(){
@@ -549,10 +549,45 @@ export default {
     	 tableData3: [],
     	 collectStatusList:[],
     	 deleteStatusList:[],
-    	 deleteList:[]
+    	 deleteList:[],
+    	 applyStatus:0
     }
 },
  methods: {
+ 	moreDataListcheck(){
+ 		if(this.deleteList.length>=1){
+ 			checkData(this.deleteList).then((response)=>{
+          this.$message({
+            type: 'success',
+            message: '审核成功!'
+          });
+          dataList(this.formInline,this.applyStatus).then((response)=>{
+          	this.tableData3=response.list
+          	this.formInline={	time1:[],time2:[],time3:[]}
+          })
+          })    
+ 		}else{
+ 			this.$message({
+            type: 'error',
+            message: '请选择数据!'
+          });
+ 		}
+ 	},
+ 	checkData(row){
+ 		let ids=[]
+ 		ids.push(row.id)
+ 		checkData(ids).then((response)=>{
+          this.$message({
+            type: 'success',
+            message: '审核成功!'
+          });
+//        dataList(this.formInline,this.applyStatus).then((response)=>{
+//        	this.tableData3=response.list
+//        	this.formInline={	time1:[],time2:[],time3:[]}
+//        })
+this.search()
+          })    
+ 	},
  	handleClick(tab, event) {
        if(this.activeName2==="first"){
 	     this.istrue1=true
@@ -560,18 +595,24 @@ export default {
     	this.istrue3=true
     	this.istrue4=true
     	this.istrue5=false
+    	this.applyStatus=0
+    	this.search()
        } else if(this.activeName2==="second"){
        	 this.istrue1=false
     	   this.istrue2=true
         	this.istrue3=false
         	this.istrue4=false
     	   this.istrue5=true
+    	   this.applyStatus=1
+    	   this.search()
        } else{
        	this.istrue1=false
     	   this.istrue2=false
         	this.istrue3=false
         	this.istrue4=true
     	   this.istrue5=false
+    	   this.applyStatus=2
+    	   this.search()
        }   },
  	showMessage(row){
  		this.ruleForm=row
@@ -585,7 +626,7 @@ export default {
             type: 'success',
             message: '撤销成功!'
           });
-         dataList(this.formInline).then((response)=>{
+          dataList(this.formInline,this.applyStatus).then((response)=>{
           	this.tableData3=response.list
           	this.formInline={	time1:[],time2:[],time3:[]}
           })
@@ -598,7 +639,7 @@ export default {
  		}
  	},
  	search(){
- 		 dataList(this.formInline).then((response)=>{
+ 		  dataList(this.formInline,this.applyStatus,this.currentPage4,this.pages).then((response)=>{
           	this.tableData3=response.list
           	this.formInline={	time1:[],time2:[],time3:[]}
           
@@ -611,7 +652,7 @@ export default {
             type: 'success',
             message: '删除成功!'
           });
-          dataList(this.formInline).then((response)=>{
+           dataList(this.formInline,this.applyStatus).then((response)=>{
           	this.tableData3=response.list
           	this.formInline={	time1:[],time2:[],time3:[]}
           })
@@ -626,7 +667,7 @@ export default {
                  message: '新增成功!'
              });
              this.dialogVisible=false;
-          dataList(this.formInline).then((response)=>{
+          dataList(this.formInline,this.currentPage4,this.pages,this.applyStatus).then((response)=>{
           	this.tableData3=response.list
           	this.formInline={	time1:[],time2:[],time3:[]}
           })
@@ -685,7 +726,7 @@ this.search()
              PersonList().then((response)=>{
           	this.PersonLists=response
           })
-              dataList(this.formInline).then((response)=>{
+              dataList(this.formInline,this.applyStatus).then((response)=>{
           	this.tableData3=response.list
           	this.formInline={	time1:[],time2:[],time3:[]}
           })
