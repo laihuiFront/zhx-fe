@@ -1089,5 +1089,8 @@
 
   #collect-departmental-case {
     height: 100%;
+    .el-table .el-table__body-wrapper{
+      height: calc(100% - 50px);
+    }
   }
 </style>

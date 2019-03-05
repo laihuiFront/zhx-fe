@@ -988,6 +988,8 @@ export default {
 }
 #collect-my-case {
   height: 100%;
-
+  .el-table .el-table__body-wrapper{
+    height: calc(100% - 72px);
+  }
 }
 </style>
