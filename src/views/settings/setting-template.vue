@@ -2,7 +2,7 @@
   <div id="setting-template">
     <el-row style="margin-bottom: 15px;">
       <el-button type="primary" style="float: right"
-                 @click="dialogVisible=true;addmodule=true;">添加信函模板
+                 @click="dialogVisible=true;addmodule=true;" v-has="'添加信函模板'">添加信函模板
       </el-button>
     </el-row>
     <el-table
@@ -23,8 +23,8 @@
         label="操作"
         width="100">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="text" size="small">编辑</el-button>
-          <el-button type="text" size="small" @click="deleteOne(scope.row)">删除</el-button>
+          <el-button @click="handleClick(scope.row)" type="text" size="small" v-has="'编辑'">编辑</el-button>
+          <el-button type="text" size="small" @click="deleteOne(scope.row)" v-has="'删除'">删除</el-button>
         </template>
       </el-table-column>
     </el-table>

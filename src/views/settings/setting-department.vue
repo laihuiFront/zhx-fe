@@ -1,7 +1,7 @@
 <template>
   <div id="setting-department" class="page-wraper-sub">
     <div class="header">
-      <el-button type="primary" @click="onClickSave" class="btn">保存</el-button>
+      <el-button type="primary" @click="onClickSave" class="btn" v-has="'保存'">保存</el-button>
     </div>
     <el-tree
       v-if="departmentTree.length>0"
