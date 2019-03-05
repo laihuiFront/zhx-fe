@@ -746,7 +746,7 @@
             label: "预计退案日期"
           },
           {
-            prop: "targetName",
+            prop: "name",
             label: "姓名"
           },
           {
@@ -823,7 +823,7 @@
           val2,
           val3: seqno,
           val4: area,
-          val5: targetName,
+          val5: name,
           val6: idenNo,
           val7,
           val8: accountAge,
@@ -859,7 +859,7 @@
           nextFollDateStart: (!!val2 && val2[0])||'' ,
           nextFollDateEnd: (!!val2 && val2[1])||'',
           area,
-          targetName,
+          name,
           idenNo,
           accountAge,
           status,
