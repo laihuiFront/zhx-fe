@@ -179,7 +179,7 @@
     <div class="grid-content bg-purple">
       <el-form :inline="true">
         <el-form-item>
-          <el-button type="primary" @click="cxHandle"
+          <el-button type="primary" v-has="'撤销协催'" @click="cxHandle"
           >撤销信函</el-button
           >
         </el-form-item>

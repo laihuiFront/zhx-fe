@@ -8,8 +8,8 @@
       @reset="onClickReset"
       @query="onClickQuery"
       :queryForm="queryForm">
-      <el-button type="primary" v-if="queryForm.recordStatus==='0'" @click="onClickAdd">新建还款记录</el-button>
-      <el-button type="primary" v-if="queryForm.recordStatus==='0'" @click="onClickBatchRevoke">撤销还款</el-button>
+      <el-button type="primary" v-if="queryForm.recordStatus==='0'" @click="onClickAdd" v-has="'新建还款记录'">新建还款记录</el-button>
+      <el-button type="primary" v-if="queryForm.recordStatus==='0'" @click="onClickBatchRevoke" v-has="'撤销还款'">撤销还款</el-button>
       <el-upload
         class="upload-demo upload-btn"
         action="http://116.62.124.251/zxh/repayRecord/recordImport"
@@ -18,10 +18,10 @@
         :on-success="uploadSuccess"
         style="display:inline-block;margin-left:5x;" 
         >
-        <el-button type="primary" v-if="queryForm.recordStatus==='0'">导入还款记录</el-button>
+        <el-button type="primary" v-if="queryForm.recordStatus==='0'" v-has="'导入还款记录'">导入还款记录</el-button>
       </el-upload>
-      <el-button type="primary" @click="onClickExportSelectedRecord">导出选中数据</el-button>
-      <el-dropdown trigger="click" @command="handleCommand">
+      <el-button type="primary" @click="onClickExportSelectedRecord" v-has="'导出选中数据'">导出选中数据</el-button>
+      <el-dropdown trigger="click" @command="handleCommand" v-has="'导出查询结果'">
         <el-button type="primary">导出查询结果<i class="el-icon-arrow-down el-icon--right"></i></el-button>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="all">导出全部</el-dropdown-item>
@@ -67,6 +67,7 @@
       <el-table-column label="操作" width="100" fixed="right" v-if="queryForm.recordStatus==='0'">
         <template slot-scope="scope">
           <el-button
+            v-has="'撤销还款'"
             type="text"
             @click="onClickRevoke(scope.row)"
           >撤销还款</el-button>
