@@ -1,6 +1,7 @@
 <template>
-  <el-tabs v-model="activeName" type="card">
+  <el-tabs v-model="activeName" type="card" class="tabs-h">
     <el-tab-pane label="部门案件" name="tab1"
+                 style="height: 100%"
     ><div id="collect-departmental-case">
       <el-dialog
         :title="detailTitle"
@@ -515,8 +516,7 @@
         :data="tableData"
         border
         stripe
-        style="width: 100%"
-        height="300"
+        style="width: 100%;height: calc(100% - 220px);"
         :row-class-name="rowColor"
         @selection-change="handleSelectionChange"
         @row-dblclick="showCase"
@@ -1086,6 +1086,8 @@
       display: inline-block;
     }
   }
+
   #collect-departmental-case {
+    height: 100%;
   }
 </style>

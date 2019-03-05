@@ -7,3 +7,10 @@ body, html{
   background: #fff;
   color: #000;
 }
+
+.tabs-h{
+  height: 100%;
+  .el-tabs__content{
+    height: calc(100% - 58px);
+  }
+}

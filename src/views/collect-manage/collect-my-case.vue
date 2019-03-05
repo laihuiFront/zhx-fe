@@ -1,6 +1,6 @@
 <template>
-  <el-tabs v-model="activeName" type="card">
-    <el-tab-pane label="我的案件" name="tab1">
+  <el-tabs v-model="activeName" type="card" class="tabs-h">
+    <el-tab-pane label="我的案件" style="height: 100%" name="tab1">
       <div id="collect-my-case">
         <el-dialog
           :title="detailTitle"
@@ -400,8 +400,7 @@
           :data="tableData"
           border
           stripe
-          height="300"
-          style="width: 100%"
+          style="width: 100%;height: calc(100% - 178px);"
           :row-class-name="rowColor"
           :cell-style="{ whiteSpace: 'nowrap' }"
           @row-dblclick="showDetail"
@@ -988,7 +987,7 @@ export default {
   }
 }
 #collect-my-case {
-
+  height: 100%;
 
 }
 </style>
