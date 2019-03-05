@@ -1311,9 +1311,9 @@
         return symbol + negative + (j ? i.substr(0, j) + thousand : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousand) + (places ? decimal + Math.abs(number - i).toFixed(places).slice(2) : "");
       },
 		pageDataExport(){
-			let startTime=this.formInline.time[0]
-      	let endTime=this.formInline.time[1]
-		pageDataBatchExport(this.formInline.area,this.formInline.batchNos,this.formInline.clients,this.formInline.batchStatus,this.formInline.caseType,startTime,endTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
+			let startTime=this.formInline.time2[0]
+      	let endTime=this.formInline.time2[1]
+		totalDataBatchExport(this.formInline).then((response)=>{
           	this.$message({
             type: 'success',
             message: '导出成功!'
