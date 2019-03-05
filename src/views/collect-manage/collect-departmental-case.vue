@@ -1081,6 +1081,11 @@
   .color_ZONG{
     color: #D2B48C;
   }
+  .myCase-pop{
+    .el-form-item--mini{
+      display: inline-block;
+    }
+  }
   #collect-departmental-case {
   }
 </style>
