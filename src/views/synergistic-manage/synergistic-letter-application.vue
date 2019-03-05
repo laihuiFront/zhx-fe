@@ -181,12 +181,12 @@
             <div class="grid-content bg-purple">
               <el-form :inline="true">
                 <el-form-item>
-                  <el-button type="primary" @click="dialogVisible=true"
+                  <el-button type="primary" v-has="'同意协催'" @click="dialogVisible=true"
                   >同意协催</el-button
                   >
                 </el-form-item>
                 <el-form-item>
-                  <el-button type="primary" @click="cxHandle"
+                  <el-button type="primary" v-has="'撤销信函'" @click="cxHandle"
                     >撤销信函</el-button
                   >
                 </el-form-item>
