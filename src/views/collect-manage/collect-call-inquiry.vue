@@ -205,7 +205,7 @@ export default {
           prop:'cardNo',
           label:'卡号'
         },{
-          prop:'money',
+          prop:'moneyMsg',
           label:'委案金额'
         },{
           prop:'caseDate',
@@ -217,10 +217,10 @@ export default {
           prop:'collectDate',
           label:'上次通电'
         },{
-          prop:'proRepayAmt',
+          prop:'proRepayAmtMsg',
           label:'承诺还款金额'
         },{
-          prop:'enRepayAmt',
+          prop:'enRepayAmtMsg',
           label:'已还款金额'
         },{
           prop:'accountAge',
