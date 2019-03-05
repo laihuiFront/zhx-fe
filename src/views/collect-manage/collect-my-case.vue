@@ -164,13 +164,13 @@
                   <el-form-item prop="val16">
                     <el-input v-model="form.val16" placeholder="档案号" clearable></el-input>
                   </el-form-item>
-
-                  <el-form-item prop="val18">
-                    <el-input v-model="form.val18" placeholder="跟进次数上限" clearable></el-input>
-                  </el-form-item>
                   <el-form-item prop="val30">
                     <el-input v-model="form.val30" placeholder="跟进次数下限" clearable></el-input>
                   </el-form-item>
+                  <el-form-item prop="val18">
+                    <el-input v-model="form.val18" placeholder="跟进次数上限" clearable></el-input>
+                  </el-form-item>
+
                   <el-form-item prop="val19">
                     <el-select v-model="form.val19" placeholder="是否新分配" clearable>
                       <el-option
@@ -298,7 +298,7 @@
             <div class="grid-content bg-purple">
               <el-form :inline="true">
                 <el-form-item>
-                  <el-dropdown trigger="click" @command="colorHandle">
+                  <el-dropdown trigger="click" @command="colorHandle" v-has="'案件标色'">
                     <el-button type="primary">案件标色</el-button>
                     <el-dropdown-menu slot="dropdown">
                       <el-dropdown-item command="黑">黑色</el-dropdown-item>
@@ -311,7 +311,7 @@
                   </el-dropdown>
                 </el-form-item>
                 <el-form-item>
-                  <el-dropdown trigger="click" @command="modStatusHandle">
+                  <el-dropdown trigger="click" @command="modStatusHandle" v-has="'修改催收状态'">
                     <el-button type="primary" @click>修改催收状态</el-button>
                     <el-dropdown-menu slot="dropdown">
                       <el-dropdown-item
@@ -323,7 +323,7 @@
                   </el-dropdown>
                 </el-form-item>
                 <el-form-item>
-                  <el-button type="primary" @click="dialogVisible = true">申请协催</el-button>
+                  <el-button type="primary" @click="dialogVisible = true" v-has="'申请协催'">申请协催</el-button>
                 </el-form-item>
               </el-form>
             </div>
@@ -401,6 +401,7 @@
           border
           stripe
           style="width: 100%;height: calc(100% - 178px);"
+          class="table-wrap"
           :row-class-name="rowColor"
           :cell-style="{ whiteSpace: 'nowrap' }"
           @row-dblclick="showDetail"
@@ -705,7 +706,7 @@ export default {
         val3: seqno,
         val4: area,
         val5: name,
-        val6: idenNo,
+        val6: identNo,
         val7,
         val8: accountAge,
         val9: status,
@@ -741,7 +742,7 @@ export default {
         nextFollDateEnd: (!!val2 && val2[1]) || "",
         area,
         name,
-        idenNo,
+        identNo,
         accountAge,
         status,
         collectStatus,
@@ -988,6 +989,8 @@ export default {
 }
 #collect-my-case {
   height: 100%;
-
+  .el-table .el-table__body-wrapper{
+    height: calc(100% - 72px);
+  }
 }
 </style>
