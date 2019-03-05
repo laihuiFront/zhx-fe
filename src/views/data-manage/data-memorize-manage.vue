@@ -175,7 +175,7 @@
       :sort-orders="['ascending','descending']"
       show-overflow-tooltip>
     </el-table-column><el-table-column
-      prop="method"
+      prop="methodMsg"
       label="谈判方式"
       min-width="120"
       :sortable='true'
@@ -197,7 +197,7 @@
       :sort-orders="['ascending','descending']"
       show-overflow-tooltip>
       <template slot-scope="scope">
-        ￥{{scope.row.repayAmt}}
+        {{scope.row.repayAmtMsg}}
       </template>
     </el-table-column><el-table-column
       label="减免金额"
@@ -207,7 +207,7 @@
       align="center"
       show-overflow-tooltip>
       <template slot-scope="scope">
-        ￥{{scope.row.reduceAmt}}
+        {{scope.row.reduceAmtMsg}}
       </template>
     </el-table-column><el-table-column
       prop="reduceStatusMsg"

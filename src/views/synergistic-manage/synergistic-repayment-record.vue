@@ -31,9 +31,9 @@
     </repay-record-query>
     <div class="statistics-wrap" v-if="queryForm.recordStatus==='0'">
       <span class="title">查询结果统计：</span>
-      <span class="item">总还款额：0</span>
-      <span class="item">总M值：0</span>
-      <span class="item">总佣金额：0</span>
+      <span class="item">总还款额：{{sumForm.repayMoney?sumForm.repayMoney:0}}</span>
+      <span class="item">总M值：{{sumForm.dataCase.mVal?sumForm.dataCase.mVal:0}}</span>
+      <span class="item">总佣金额：{{sumForm.dataCase.commissionMoney?sumForm.dataCase.commissionMoney:0}}</span>
     </div>
      <el-table
       @selection-change="onSelectRow"
@@ -163,6 +163,7 @@
 <script>
 import {RepayRecordQuery} from './components'
 import {getRepayRecordList, 
+        getRepayRecordQuerySum,
         getCollectionUserList, 
         saveRepayRecord, 
         revokeRepayRecord,
@@ -179,6 +180,7 @@ export default {
   data(){
     return {
       header:{Authorization:localStorage.token},
+      sumForm:{dataCase:{}},
       recordList: [],
       collectionUserList: [],
       total:0,
@@ -214,6 +216,9 @@ export default {
     getRepayRecordList(this.queryForm).then(data => {
       this.recordList = data.list
       this.total = data.total
+    })
+    getRepayRecordQuerySum(this.queryForm).then(data=>{
+      this.sumForm = data
     })
     getCollectionUserList().then(data => {
       this.collectionUserList = data
@@ -256,6 +261,9 @@ export default {
       getRepayRecordList(this.queryForm).then(data => {
         this.recordList = data.list
         this.total = data.total
+      })
+      getRepayRecordQuerySum(this.queryForm).then(data=>{
+        this.sumForm = data
       })
     },
     onClickAdd(){

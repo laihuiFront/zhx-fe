@@ -1665,7 +1665,7 @@ export default {
       rateUpdateList:[],//利息
       syncList:[],//协催
       dependCase:[],//同批次公债案件
-      activeNames: ['1','4'],
+      activeNames: ['1','2','3','4','5'],
       otherActiveName:'1',
       caseDetail:{},
       memorizeType:1,

@@ -220,7 +220,7 @@
       label="总金额"
       show-overflow-tooltip>
       <template slot-scope="scope">
-        ￥{{scope.row.totalAmt ? scope.row.totalAmt : 0}}
+        {{scope.row.totalAmtMsg}}
       </template>
     </el-table-column>
     <el-table-column
