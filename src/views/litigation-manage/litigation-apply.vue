@@ -17,7 +17,7 @@
   <el-button type="text" icon="el-icon-refresh" @click=clench>重置</el-button> 
   </el-form-item>
   <el-form-item>
-      <el-button type="primary" @click=addDataform>添加诉讼案件</el-button>  </el-form-item>    
+      <el-button type="primary" v-has="'添加诉讼案件'" @click=addDataform>添加诉讼案件</el-button>  </el-form-item>    
 </el-form>
   </el-form>
   	</div>
@@ -112,10 +112,10 @@
       width="120"
      >
      <template slot-scope="scope">
-       <el-button type="text" size="small" icon="el-icon-check" @click="checkDatasure(scope.row.id)"></el-button>
-       <el-button type="text" size="small" icon="el-icon-message" @click="showmessage(scope.row)"></el-button>
-       <el-button type="text" size="small" icon="el-icon-edit" @click="editData(scope.row)"></el-button>
-       <el-button type="text" size="small" icon="el-icon-delete" @click="deleteData(scope.row.id)"></el-button>
+       <el-button type="text" size="small" icon="el-icon-check" @click="checkDatasure(scope.row.id)" v-has="'审核'"></el-button>
+       <el-button type="text" size="small" icon="el-icon-message" @click="showmessage(scope.row)" v-has="'查看'"></el-button>
+       <el-button type="text" size="small" icon="el-icon-edit" @click="editData(scope.row)" v-has="'编辑'"></el-button>
+       <el-button type="text" size="small" icon="el-icon-delete" @click="deleteData(scope.row.id)" v-has="'删除'"></el-button>
       </template>
     </el-table-column>
   </el-table>

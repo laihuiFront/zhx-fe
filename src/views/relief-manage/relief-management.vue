@@ -116,19 +116,19 @@
     <el-button type="primary" @click=clear>重置</el-button>
   </el-form-item>
    <el-form-item v-show="istrue1">
-    <el-button type="primary" @click=addData >新增减免</el-button>
+    <el-button type="primary" v-has="'新增减免'" @click=addData >新增减免</el-button>
   </el-form-item>
   <el-form-item v-show="istrue2">
-    <el-button type="primary" @click=moreDataList >批量撤销</el-button>
+    <el-button type="primary" v-has="'批量撤销'" @click=moreDataList >批量撤销</el-button>
   </el-form-item>
    <el-form-item v-show="istrue3">
-    <el-button type="primary" @click=moreDataListcheck >批量审核</el-button>
+    <el-button type="primary" v-has="'批量审核'" @click=moreDataListcheck >批量审核</el-button>
   </el-form-item>
    <el-form-item v-show="istrue4">
-    <el-button type="primary" @click=moreDataList >批量下载附件</el-button>
+    <el-button type="primary" v-has="'批量下载附件'" @click=moreDataList >批量下载附件</el-button>
   </el-form-item>
   <el-form-item v-show="istrue5">
-    <el-button type="primary"  >导出减免结果</el-button>
+    <el-button type="primary" v-has="'导出减免结果'" >导出减免结果</el-button>
   </el-form-item>
 </el-form>
  <el-tabs v-model="activeName2" type="card" @tab-click="handleClick">
@@ -229,10 +229,10 @@
          width="170"
         show-overflow-tooltip>
         <template slot-scope="scope">
-        <el-button type="text" size="small" @click="checkData(scope.row)">审核</el-button>
+        <el-button type="text" size="small" @click="checkData(scope.row)" v-has="'批量审核'">审核</el-button>
         <el-button type="text" size="small" @click="showMessage(scope.row)">查看</el-button>
-        <el-button type="text" size="small" @click="showMessage(scope.row)">修改</el-button>
-           <el-button type="text" size="small" @click="deteleList(scope.row.id)">删除</el-button>
+        <el-button type="text" size="small" @click="showMessage(scope.row)" v-has="'修改'">修改</el-button>
+           <el-button type="text" size="small" @click="deteleList(scope.row.id)" v-has="'删除'">删除</el-button>
        </template>
       </el-table-column>
     
@@ -342,8 +342,8 @@
         label="操作"
         show-overflow-tooltip>
         <template slot-scope="scope">
-         <el-button type="text" size="small" @click="showMessage(scope.row)">修改</el-button>
-           <el-button type="text" size="small" @click="deteleList(scope.row.id)">删除</el-button>
+         <el-button type="text" size="small" @click="showMessage(scope.row)" v-has="'修改'">修改</el-button>
+           <el-button type="text" size="small" @click="deteleList(scope.row.id)" v-has="'删除'">删除</el-button>
        </template>
       </el-table-column>
     
@@ -455,7 +455,7 @@
         show-overflow-tooltip>
         <template slot-scope="scope">
          <el-button type="text" size="small" @click="showMessage(scope.row)">查看</el-button>
-           <el-button type="text" size="small" @click="deteleList(scope.row.id)">下载附件</el-button>
+           <el-button type="text" size="small" @click="deteleList(scope.row.id)" v-has="'批量下载附件'">下载附件</el-button>
        </template>
       </el-table-column>
     
