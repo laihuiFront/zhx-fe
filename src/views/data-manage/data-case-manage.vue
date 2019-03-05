@@ -277,7 +277,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        prop="money"
+        prop="moneyMsg"
         :sortable='true'
         min-width="140"
         :sort-orders="['ascending','descending']"
@@ -286,7 +286,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        prop="balance"
+        prop="balanceMsg"
         :sortable='true'
         min-width="140"
         :sort-orders="['ascending','descending']"
@@ -337,7 +337,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        prop="proRepayAmt"
+        prop="proRepayAmtMsg"
         label="承诺还款金额"
         width="160"
         :sortable='true'
@@ -346,7 +346,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        prop="bankAmt"
+        prop="bankAmtMsg"
         width="160"
         :sortable='true'
         :sort-orders="['ascending','descending']"
@@ -355,7 +355,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        prop="enRepayAmt"
+        prop="enRepayAmtMsg"
         width="140"
         align="center"
         :sortable='true'

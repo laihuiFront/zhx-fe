@@ -74,7 +74,7 @@
      >
     </el-table-column>
     <el-table-column
-      prop="cost"
+      prop="costMsg"
       align="center"
       label="费用"
      >

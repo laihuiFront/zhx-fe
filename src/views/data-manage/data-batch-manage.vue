@@ -171,7 +171,7 @@
       :sort-orders="['ascending','descending']"
       show-overflow-tooltip>
       <template slot-scope="scope">
-           ￥{{scope.row.totalAmt}}
+           {{scope.row.totalAmtMsg}}
       </template>
     </el-table-column>
    <el-table-column
@@ -466,7 +466,7 @@ methods: {
 		this.loading=true
     let _self = this;
     if (this.selectDataCollectExportByBatchList.length>0) {
-      selectDataBatchExport(this.selectDataCollectExportByBatchList).then((response) => {
+      selectDataCollectExportByBatch(this.selectDataCollectExportByBatchList).then((response) => {
         this.loading = false;
         this.$message({
           type: 'success',
@@ -665,7 +665,7 @@ this.search()
 	   Object.id=currentValue.id
 	   _self.deleteList.push(Object)
 	   _self.selectDataBatchExportList.push(Object)
-//	   _self.selectDataCollectExportByBatchList.push(Project)
+	   _self.selectDataCollectExportByBatchList.push(Project)
 	})
 	console.log(_self.deleteList)
 },
