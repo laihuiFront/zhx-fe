@@ -72,7 +72,7 @@
         <div class="grid-content bg-purple">
           <el-form :inline="true">
             <el-form-item >
-              <el-dropdown @command="fenancheck">
+              <el-dropdown @command="fenancheck" v-has="'分案'">
                 <el-button type="primary" >
                   分案<i class="el-icon-arrow-down el-icon--right"></i>
                 </el-button>
@@ -83,7 +83,7 @@
               </el-dropdown>
             </el-form-item>
             <el-form-item >
-              <el-dropdown @command="guanlianjian">
+              <el-dropdown @command="guanlianjian" v-has="'案件'">
                 <el-button type="primary">
                   案件<i class="el-icon-arrow-down el-icon--right"></i>
                 </el-button>
@@ -98,7 +98,7 @@
               </el-dropdown>
             </el-form-item>
             <el-form-item >
-              <el-dropdown @command="handleCommand">
+              <el-dropdown @command="handleCommand" v-has="'修改'">
                 <el-button type="primary">
                   修改<i class="el-icon-arrow-down el-icon--right"></i>
                 </el-button>
@@ -111,10 +111,10 @@
               </el-dropdown>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="addshow" >添加评语</el-button>  </el-form-item>
-            <el-button type="primary"  @click="xiecui">申请协催</el-button>  </el-form-item>
+              <el-button type="primary" @click="addshow" v-has="'添加评语'">添加评语</el-button>  </el-form-item>
+            <el-button type="primary"  @click="xiecui" v-has="'申请协催'">申请协催</el-button>  </el-form-item>
             <el-form-item >
-              <el-dropdown @command="handleExport">
+              <el-dropdown @command="handleExport" v-has="'导出'">
                 <el-button type="primary">
                   导出<i class="el-icon-arrow-down el-icon--right"></i>
                 </el-button>
@@ -126,7 +126,7 @@
                 </el-dropdown-menu>
               </el-dropdown>
             </el-form-item>
-            <el-dropdown @command="biaose">
+            <el-dropdown @command="biaose" v-has="'案件标色'">
               <el-button type="primary" >
                 案件标色<i class="el-icon-arrow-down el-icon--right"></i>
               </el-button>
