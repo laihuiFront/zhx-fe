@@ -45,7 +45,7 @@ export const collectStatusList = function() {
     data:{name:"催收状态"}
   })
 }
-export const dataList = function(form,pageSize,pageNum,applyStatus) {
+export const dataList = function(form,applyStatus,pageSize,pageNum) {
   return request({
     url: '/reduce/page/all',
     method: 'post',
@@ -88,6 +88,16 @@ return request({
     data:{
     	ids:id,
     	reduceFlag:2
+    }
+  })
+}
+export const checkData = function(id) {
+return request({
+    url: '/reduce/update/status',
+    method: 'post',
+    data:{
+    	ids:id,
+    	reduceFlag:3
     }
   })
 }

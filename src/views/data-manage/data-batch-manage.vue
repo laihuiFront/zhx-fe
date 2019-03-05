@@ -3,7 +3,7 @@
   	v-loading="loading"
    	 element-loading-text="拼命加载中"
     element-loading-spinner="el-icon-loading"
-    element-loading-background="rgba(0, 0, 0, 0.8)">
+    element-loading-background="rgba(248, 248, 248, 0.8)">
    <el-row :gutter="24">
   <el-col :span="24">
   	<div class="grid-content bg-purple">
@@ -551,8 +551,20 @@ methods: {
 		this.dialogVisible2=true
 		this.messageForm=row
     this.messageForm.client = parseInt(row.client)
-    this.messageForm.caseType = parseInt(row.caseType)
-    this.messageForm.area = parseInt(row.area)
+    if(this.messageForm.caseType){
+    	
+    	this.messageForm.caseType = parseInt(row.caseType)
+    }else{
+    	this.messageForm.caseType=''
+    }
+     if(this.messageForm.area){
+    	
+    	this.messageForm.area = parseInt(row.area)
+    }else{
+    	  this.messageForm.area=''
+    }
+    
+  
 	},
   handleSort( {column,prop,order}){
     let startTime=this.form.time[0]
@@ -579,21 +591,7 @@ dataList(this.form.area,this.form.batchNos,this.form.clients,this.form.batchStat
 })
       },
       returnCaseList(){
-      	if(this.deleteList.length>0){
-      		returnCase(this.deleteList).then((response)=>{
-            this.$message({
-            type: 'success',
-            message: '退案成功!'
-          });
-          this.search()
-      })
-      	}else{
-      		 this.$message({
-            type: 'error',
-            message: '请选择退案数据!'
-          });
-      	}
-      	
+      	this.open8()
       },
 	deleteMessage(id){
 		let arry=[{id:id}]
@@ -703,6 +701,33 @@ this.search()
             message: '请选择需要删除的数据!'
           });
           }
+      },
+       open8() {
+      	let _self=this 
+      
+      		_self.$confirm('是否退案?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        }).then(() => {
+        		if(_self.deleteList.length>0){
+           	returnCase(this.deleteList).then((response)=>{
+            _self.$message({
+            type: 'success',
+            message: '退案成功!'
+          });
+          _self.search()
+}) }else{
+           	_self.$message({
+            type: 'info',
+            message: '请选择需要退案的数据!'
+          });
+          }
+        }).catch(() => {
+
+        });
+      	 
       },
    },
    created() {

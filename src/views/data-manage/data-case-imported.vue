@@ -3,7 +3,7 @@
   	 v-loading="loading2"
     element-loading-text="拼命加载中"
     element-loading-spinner="el-icon-loading"
-    element-loading-background="rgba(0, 0, 0, 0.8)">
+   element-loading-background="rgba(248, 248, 248, 0.8)">
   <el-row :gutter="24">
   <el-col :span="24">
   	<div class="grid-content bg-purple">

@@ -98,7 +98,7 @@
       </template>
     </el-table-column><el-table-column
       align="center"
-      label="可联系本人"
+      label="可联本人"
        prop="countConSelf"
      >
      <template slot-scope="scope">
@@ -116,7 +116,7 @@
     </el-table-column>
     <el-table-column
       align="center"
-      label="可联系第三人"
+      label="可联第三人"
        prop="countConThird"
      >
      <template slot-scope="scope">
@@ -125,7 +125,7 @@
     </el-table-column>
     <el-table-column
       align="center"
-      label="可联系家人"
+      label="可联家人"
       prop="countConFamily"
      >
      <template slot-scope="scope">
@@ -171,9 +171,10 @@
     <el-table-column
       align="center"
       label="合计"
+      prop="countResult"
      >
      <template slot-scope="scope">
-        <el-button type="text" size="small" >{{scope.row.name}}</el-button>
+        <el-button type="text" size="small" >{{scope.row.countResult}}</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -190,15 +191,15 @@
   <el-dialog :title="dialogTitle" :visible.sync="dialogTableVisible" class="dialog-wrap"  width="80%">
   <el-table :data="gridData" border
             stripe>
-    <el-table-column property="date" label="通话时间" ></el-table-column>
-    <el-table-column property="name" label="通话对象" ></el-table-column>
-    <el-table-column property="address" label="电话号码"></el-table-column>
-    <el-table-column property="address" label="电话类型"></el-table-column>
-    <el-table-column property="address" label="通话内容"></el-table-column>
-    <el-table-column property="address" label="通话结果"></el-table-column>
-    <el-table-column property="address" label="承诺日期"></el-table-column>
-    <el-table-column property="address" label="承诺金额"></el-table-column>
-    <el-table-column property="address" label="催收员"></el-table-column>
+    <el-table-column property="phoneTime" label="通话时间" ></el-table-column>
+    <el-table-column property="targetName" label="通话对象" ></el-table-column>
+    <el-table-column property="phone" label="电话号码"></el-table-column>
+    <el-table-column property="connectionType" label="电话类型"></el-table-column>
+    <el-table-column property="content" label="通话内容"></el-table-column>
+    <el-table-column property="collectionResult" label="通话结果"></el-table-column>
+    <el-table-column property="repayTime" label="承诺日期"></el-table-column>
+    <el-table-column property="repayAmtP" label="承诺金额"></el-table-column>
+    <el-table-column property="odv" label="催收员"></el-table-column>
   </el-table>
     <el-pagination
     @size-change="handleSizeChange"
@@ -233,23 +234,7 @@ export default {
     	areaList:[],
     	clientList:[],
     	 tableData3: [],
-    	  gridData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }],
+    	  gridData: [],
     }
     },
     methods: {
@@ -257,7 +242,7 @@ export default {
     		this.dialogTableVisible=true
     		this.dialogTitle=row.column.label
     		messageList(row,this.formInline).then((response)=>{
-          	this.gridData=response
+          	this.gridData=response.list
           })
     		
     	},
