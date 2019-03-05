@@ -119,7 +119,7 @@
       <el-table-column label="操作" >
 
       <template slot-scope="scope">
-          <el-button @click="dialogVisible=true;currentRow = scope;">
+          <el-button @click="dialogVisible=true;currentRow = scope;" v-has="'评语'">
             评语
           </el-button>
       </template>

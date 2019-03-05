@@ -454,7 +454,7 @@
             <el-form :inline="true">
 
               <el-form-item>
-                <el-dropdown trigger="click" @command="colorHandle">
+                <el-dropdown trigger="click" @command="colorHandle" v-has="'案件标色'">
                   <el-button type="primary">案件标色</el-button>
                   <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item command="黑">黑色</el-dropdown-item>
@@ -467,7 +467,7 @@
                 </el-dropdown>
               </el-form-item>
               <el-form-item>
-                <el-dropdown trigger="click" @command="modStatusHandle">
+                <el-dropdown trigger="click" @command="modStatusHandle" v-has="'修改催收状态'">
                   <el-button type="primary" @click="">修改催收状态</el-button>
                   <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item :command="item.id"
@@ -477,7 +477,7 @@
                 </el-dropdown>
               </el-form-item>
               <el-form-item>
-                <el-button type="primary" @click="dialogVisible=true;">申请协催</el-button>
+                <el-button type="primary" @click="dialogVisible=true;" v-has="'申请协催'">申请协催</el-button>
               </el-form-item>
             </el-form>
           </div>
