@@ -73,9 +73,9 @@
       <el-button type="text" @click="downLoadZip">导入模板下载</el-button>
       </el-form-item>
       <el-form-item>
-      <el-button type="primary" @click="dialogVisible = true">新增批次</el-button>  </el-form-item>
+      <el-button type="primary" @click="dialogVisible = true" v-has="'新增批次'">新增批次</el-button>  </el-form-item>
       <el-form-item>
-      <el-button type="primary"  @click="open7">删除批次</el-button>  </el-form-item>
+      <el-button type="primary"  @click="open7" v-has="'删除批次'">删除批次</el-button>  </el-form-item>
        <el-form-item >
 <el-upload
   class="upload-demo"
@@ -84,9 +84,8 @@
   :show-file-list=false
   :on-success="uploadSuccess"
   :on-progress="onProgress"
-
   >
-  <el-button size="small" type="primary">导入更新案件</el-button>
+  <el-button size="small" type="primary" v-has="'导入更新案件'">导入更新案件</el-button>
 </el-upload>
       </el-form-item>
        <el-form-item >
@@ -99,7 +98,7 @@
   :on-progress="onProgress"
 
   >
-  <el-button size="small" type="primary">导入案件评语</el-button>
+  <el-button size="small" type="primary" v-has="'导入案件评语'">导入案件评语</el-button>
 </el-upload>
       </el-form-item>
        <el-form-item >
@@ -112,7 +111,7 @@
   :on-progress="onProgress"
 
   >
-  <el-button size="small" type="primary">导入案件利息</el-button>
+  <el-button size="small" type="primary" v-has="'导入案件利息'">导入案件利息</el-button>
 </el-upload>
       </el-form-item>
        <el-form-item >
@@ -125,7 +124,7 @@
   :on-progress="onProgress"
 
   >
-  <el-button size="small" type="primary">导入案件电话</el-button>
+  <el-button size="small" type="primary" v-has="'导入案件电话'">导入案件电话</el-button>
 </el-upload>
       </el-form-item>
        <el-form-item >
@@ -138,7 +137,7 @@
   :on-progress="onProgress"
 
   >
-  <el-button size="small" type="primary">导入案件地址</el-button>
+  <el-button size="small" type="primary" v-has="'导入案件地址'">导入案件地址</el-button>
 </el-upload>
       </el-form-item>
           <el-form-item >
@@ -150,7 +149,7 @@
   :on-success="uploadSuccess"
   :on-progress="onProgress"
   >
-  <el-button size="small" type="primary">导入催收记录</el-button>
+  <el-button size="small" type="primary" v-has="'导入催收记录'">导入催收记录</el-button>
 </el-upload>
       </el-form-item>
 </el-form>
@@ -237,6 +236,7 @@
     <el-table-column
       label="操作"
       align="center"
+      width="200"
       >
        <template slot-scope="scope">
        <el-upload
@@ -247,11 +247,11 @@
         :on-success="uploadSuccess"
         :data="{batchNo:scope.row.batchNo}"
   >
-        <el-button type="text" size="small">导入</el-button>
+        <el-button type="text" size="small" v-has="'导入'">导入</el-button>
 </el-upload>
-        <el-button type="text" size="small" v-if="scope.row.batchStatus!=0" @click="downCaseModule(scope.row)">下载</el-button>
-        <el-button type="text" size="small" @click="editMessage(scope.row)">编辑</el-button>
-        <el-button type="text" size="small" @click="deleteMessage(scope.row.id)">删除</el-button>
+        <el-button type="text" size="small" v-if="scope.row.batchStatus!=0" @click="downCaseModule(scope.row)" v-has="'下载'">下载</el-button>
+        <el-button type="text" size="small" @click="editMessage(scope.row)" v-has="'编辑'">编辑</el-button>
+        <el-button type="text" size="small" @click="deleteMessage(scope.row.id)" v-has="'删除批次'">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
