@@ -1,5 +1,9 @@
 <template>
-  <div id="data-memorize-manage">
+  <div id="data-memorize-manage"
+  	v-loading="loading"	 
+  	element-loading-text="拼命加载中"
+    element-loading-spinner="el-icon-loading"
+    element-loading-background="rgba(0, 0, 0, 0.8)">
     <el-row :gutter="24">
       <el-col :span="24">
         <div class="grid-content bg-purple">
@@ -70,7 +74,7 @@
       </el-col>-->
     </el-row>
     <el-table
-      v-loading="loading"
+      
       ref="multipleTable"
       :data="tableData3"
       border

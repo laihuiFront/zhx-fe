@@ -1,5 +1,9 @@
 <template>
-  <div id="data-batch-manage">
+  <div id="data-batch-manage"
+  	v-loading="loading"
+   	 element-loading-text="拼命加载中"
+    element-loading-spinner="el-icon-loading"
+    element-loading-background="rgba(0, 0, 0, 0.8)">
    <el-row :gutter="24">
   <el-col :span="24">
   	<div class="grid-content bg-purple">
@@ -28,7 +32,7 @@
     <el-select v-model="form.batchNos" placeholder="请选择批次编号" filterable multiple collapse-tags clearable>
       <el-option
         v-for="item in form.batchList"
-        :key="item.batchNo"
+        :key="item.id"
         :label="item.batchNo"
         :value="item.batchNo">
       </el-option>
@@ -98,10 +102,7 @@
   </el-col>
    </el-row>
    <el-table
-   	v-loading="loading"
-   	 element-loading-text="拼命加载中"
-    element-loading-spinner="el-icon-loading"
-    element-loading-background="rgba(0, 0, 0, 0.8)"
+   	
     ref="multipleTable"
     :data="DataList"
     border

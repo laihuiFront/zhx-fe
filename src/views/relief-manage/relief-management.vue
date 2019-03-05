@@ -549,7 +549,8 @@ export default {
     	 tableData3: [],
     	 collectStatusList:[],
     	 deleteStatusList:[],
-    	 deleteList:[]
+    	 deleteList:[],
+    	 applyStatus:0
     }
 },
  methods: {
@@ -560,18 +561,24 @@ export default {
     	this.istrue3=true
     	this.istrue4=true
     	this.istrue5=false
+    	this.applyStatus=0
+    	this.search()
        } else if(this.activeName2==="second"){
        	 this.istrue1=false
     	   this.istrue2=true
         	this.istrue3=false
         	this.istrue4=false
     	   this.istrue5=true
+    	   this.applyStatus=1
+    	   this.search()
        } else{
        	this.istrue1=false
     	   this.istrue2=false
         	this.istrue3=false
         	this.istrue4=true
     	   this.istrue5=false
+    	   this.applyStatus=2
+    	   this.search()
        }   },
  	showMessage(row){
  		this.ruleForm=row
@@ -585,7 +592,7 @@ export default {
             type: 'success',
             message: '撤销成功!'
           });
-         dataList(this.formInline).then((response)=>{
+         dataList(this.formInline,this.pages,this.total,this.applyStatus).then((response)=>{
           	this.tableData3=response.list
           	this.formInline={	time1:[],time2:[],time3:[]}
           })
@@ -598,7 +605,7 @@ export default {
  		}
  	},
  	search(){
- 		 dataList(this.formInline).then((response)=>{
+ 		 dataList(this.formInline,this.pages,this.total,this.applyStatus).then((response)=>{
           	this.tableData3=response.list
           	this.formInline={	time1:[],time2:[],time3:[]}
           
@@ -611,7 +618,7 @@ export default {
             type: 'success',
             message: '删除成功!'
           });
-          dataList(this.formInline).then((response)=>{
+          dataList(this.formInline,this.pages,this.total,this.applyStatus).then((response)=>{
           	this.tableData3=response.list
           	this.formInline={	time1:[],time2:[],time3:[]}
           })
@@ -626,7 +633,7 @@ export default {
                  message: '新增成功!'
              });
              this.dialogVisible=false;
-          dataList(this.formInline).then((response)=>{
+          dataList(this.formInline,this.pages,this.total,this.applyStatus).then((response)=>{
           	this.tableData3=response.list
           	this.formInline={	time1:[],time2:[],time3:[]}
           })
@@ -685,7 +692,7 @@ this.search()
              PersonList().then((response)=>{
           	this.PersonLists=response
           })
-              dataList(this.formInline).then((response)=>{
+              dataList(this.formInline,this.pages,this.total,this.applyStatus).then((response)=>{
           	this.tableData3=response.list
           	this.formInline={	time1:[],time2:[],time3:[]}
           })
