@@ -51,13 +51,13 @@
               <el-button type="text" icon="el-icon-refresh" @click="resetForm">重置</el-button>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="open7">删除催记</el-button>
+              <el-button type="primary" @click="open7" v-has="'删除催记'">删除催记</el-button>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="selectDataCollectExport">导出所选催记</el-button>
+              <el-button type="primary" @click="selectDataCollectExport" v-has="'导出所选借改'">导出所选催记</el-button>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="dialogVisible2 = true">导出查询结果</el-button>  </el-form-item>
+              <el-button type="primary" @click="dialogVisible2 = true" v-has="'导出查询结果'">导出查询结果</el-button>  </el-form-item>
           </el-form>
         </div>
       </el-col>
@@ -232,8 +232,8 @@
         width="120"
         align="center">
         <template slot-scope="scope">
-          <el-button type="text" size="small" @click="editMessage(scope.row)">编辑</el-button>
-          <el-button type="text" size="small" @click="deleteMessage(scope.row.id)">删除</el-button>
+          <el-button type="text" size="small" @click="editMessage(scope.row)" v-has="'编辑'">编辑</el-button>
+          <el-button type="text" size="small" @click="deleteMessage(scope.row.id)" v-has="'删除催记'">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
