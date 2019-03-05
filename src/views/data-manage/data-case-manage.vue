@@ -154,7 +154,7 @@
           <span class="textColor"> 列表还款量:{{repayNum}}, </span>
           <span class="textColor"> 列表还款额:{{repayTotalAmt}}, </span>
           <span class="textColor"> 列表待银行查账金额:{{totalCp}}, </span>
-          <span class="textColor"> 列表PTP值:{{totalPtp}}</span>
+          <span class="textColor"> 列表承诺还款金额:{{totalPtp}}</span>
         </div>
       </el-col>
     </el-row>
@@ -206,6 +206,7 @@
         :sortable='true'
         :sort-orders="['ascending','descending']"
         label="批次号"
+        min-width="120"
         align="center"
         show-overflow-tooltip>
 
@@ -276,7 +277,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        prop="money"
+        prop="moneyMsg"
         :sortable='true'
         min-width="140"
         :sort-orders="['ascending','descending']"
@@ -285,7 +286,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        prop="balance"
+        prop="balanceMsg"
         :sortable='true'
         min-width="140"
         :sort-orders="['ascending','descending']"
@@ -336,7 +337,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        prop="proRepayAmt"
+        prop="proRepayAmtMsg"
         label="承诺还款金额"
         width="160"
         :sortable='true'
@@ -345,7 +346,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        prop="bankAmt"
+        prop="bankAmtMsg"
         width="160"
         :sortable='true'
         :sort-orders="['ascending','descending']"
@@ -354,7 +355,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        prop="enRepayAmt"
+        prop="enRepayAmtMsg"
         width="140"
         align="center"
         :sortable='true'

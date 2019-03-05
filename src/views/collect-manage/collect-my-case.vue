@@ -1,7 +1,7 @@
 <template>
-  <el-tabs v-model="activeName" type="card">
-    <el-tab-pane label="我的案件" name="tab1"
-      ><div id="collect-my-case">
+  <el-tabs v-model="activeName" type="card" class="tabs-h">
+    <el-tab-pane label="我的案件" style="height: 100%" name="tab1">
+      <div id="collect-my-case">
         <el-dialog
           :title="detailTitle"
           class="dialog-wrap"
@@ -9,7 +9,7 @@
           :close-on-click-modal="false"
           width="90%"
         >
-          <case-detail :id="detailId" ref='detail'></case-detail>
+          <case-detail :id="detailId" ref="detail"></case-detail>
         </el-dialog>
         <el-dialog title="申请协催" :visible.sync="dialogVisible" width="30%">
           <el-input
@@ -17,8 +17,7 @@
             :autosize="{ minRows: 6, maxRows: 14 }"
             placeholder="请输入内容"
             v-model="textarea3"
-          >
-          </el-input>
+          ></el-input>
           <span slot="footer" class="dialog-footer">
             <el-button @click="dialogVisible = false">取 消</el-button>
             <el-button
@@ -27,34 +26,21 @@
                 dialogVisible = false;
                 xcHandle();
               "
-              >确 定</el-button
-            >
+            >确 定</el-button>
           </span>
         </el-dialog>
         <el-row :gutter="24">
           <el-col :span="24">
             <div class="grid-content bg-purple">
-              <el-form
-                :inline="true"
-                ref="form"
-                :model="form"
-                label-width="80px"
-              >
+              <el-form :inline="true" ref="form" :model="form" label-width="80px">
                 <el-form-item prop="val0">
-                  <el-select
-                    v-model="form.val0"
-                    placeholder="请选择委托方"
-                    filterable
-                    multiple
-                    clearable
-                  >
+                  <el-select v-model="form.val0" placeholder="请选择委托方" filterable multiple clearable>
                     <el-option
                       v-for="item in val0_data"
                       :key="item.value"
                       :label="item.label"
                       :value="item.value"
-                    >
-                    </el-option>
+                    ></el-option>
                   </el-select>
                 </el-form-item>
                 <el-form-item prop="val1">
@@ -71,16 +57,11 @@
                       :key="item.value"
                       :label="item.label"
                       :value="item.value"
-                    >
-                    </el-option>
+                    ></el-option>
                   </el-select>
                 </el-form-item>
                 <el-form-item prop="val3">
-                  <el-input
-                    v-model="form.val3"
-                    placeholder="个案序列号"
-                    clearable
-                  ></el-input>
+                  <el-input v-model="form.val3" placeholder="个案序列号" clearable></el-input>
                 </el-form-item>
                 <el-form-item prop="val2">
                   <el-date-picker
@@ -92,161 +73,180 @@
                     range-separator="至"
                     start-placeholder="下次跟进开始日期"
                     end-placeholder="下次跟进结束日期"
-                  >
-                  </el-date-picker>
+                  ></el-date-picker>
                 </el-form-item>
+                <el-popover
+                  placement="bottom-end"
+                  width="800"
+                  popper-class="myCase-pop"
+                  trigger="click">
+                <img style="cursor: pointer;vertical-align: middle;margin-top: 8px;"
+                     src="./zhankai.png"
+                     width="12"
+                     height="12"
+                     alt="更多"
+                     slot="reference">
                 <el-form-item prop="val4">
-                  <el-cascader
-                    :options="val4_data"
-                    clearable
-                    placeholder="选择地区"
-                    v-model="form.val4"
-                  >
-                  </el-cascader>
-                </el-form-item>
-                <el-form-item prop="val5">
-                  <el-input
-                    v-model="form.val5"
-                    placeholder="姓名"
-                    clearable
-                  ></el-input>
-                </el-form-item>
-                <el-form-item prop="val6">
-                  <el-input
-                    v-model="form.val6"
-                    placeholder="证件号"
-                    clearable
-                  ></el-input>
-                </el-form-item>
-                <el-form-item prop="val7">
-                  <el-date-picker
-                    v-model="form.val7"
-                    type="daterange"
-                    value-format="yyyy-MM-dd"
-                    align="right"
-                    unlink-panels
-                    range-separator="至"
-                    start-placeholder="委案起始日期"
-                    end-placeholder="委案结束日期"
-                  >
-                  </el-date-picker>
-                </el-form-item>
-                <el-form-item prop="val8">
-                  <el-select
-                    v-model="form.val8"
-                    placeholder="请选择逾期账龄"
-                    clearable
-                  >
-                    <el-option
-                      v-for="item in val8_data"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
-                    >
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-                <el-form-item prop="val9">
-                  <el-select
-                    v-model="form.val9"
-                    placeholder="请选择案件状态"
-                    clearable
-                  >
-                    <el-option
-                      v-for="item in val9_data"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
-                    >
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-                <el-form-item prop="val10">
-                  <el-select
-                    v-model="form.val10"
-                    placeholder="请选择催收状态"
-                    clearable
-                  >
-                    <el-option
-                      v-for="item in val10_data"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
-                    >
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-                <el-form-item prop="val11">
-                  <el-select
-                    v-model="form.val11"
-                    placeholder="请选择案件类型"
-                    clearable
-                  >
-                    <el-option
-                      v-for="item in val11_data"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
-                    >
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-                <el-form-item prop="val12">
-                  <el-date-picker
-                    v-model="form.val12"
-                    value-format="yyyy-MM-dd"
-                    type="daterange"
-                    align="right"
-                    unlink-panels
-                    range-separator="至"
-                    start-placeholder="还款起始日期"
-                    end-placeholder="还款结束日期"
-                  >
-                  </el-date-picker>
-                </el-form-item>
-                <el-form-item prop="val29">
-                  <el-input
-                    v-model="form.val29"
-                    placeholder="委案金额下限"
-                    clearable
-                  ></el-input>
-                </el-form-item>
-                <el-form-item prop="val13">
-                  <el-input
-                    v-model="form.val13"
-                    placeholder="委案金额上限"
-                    clearable
-                  ></el-input>
-                </el-form-item>
+                    <el-cascader
+                      :options="val4_data"
+                      clearable
+                      placeholder="选择地区"
+                      v-model="form.val4"
+                    ></el-cascader>
+                  </el-form-item>
+                  <el-form-item prop="val5">
+                    <el-input v-model="form.val5" placeholder="姓名" clearable></el-input>
+                  </el-form-item>
+                  <el-form-item prop="val6">
+                    <el-input v-model="form.val6" placeholder="证件号" clearable></el-input>
+                  </el-form-item>
+                  <el-form-item prop="val8">
+                    <el-select v-model="form.val8" placeholder="请选择逾期账龄" clearable>
+                      <el-option
+                        v-for="item in val8_data"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                      ></el-option>
+                    </el-select>
+                  </el-form-item>
+                  <el-form-item prop="val9">
+                    <el-select v-model="form.val9" placeholder="请选择案件状态" clearable>
+                      <el-option
+                        v-for="item in val9_data"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                      ></el-option>
+                    </el-select>
+                  </el-form-item>
+                  <el-form-item prop="val10">
+                    <el-select v-model="form.val10" placeholder="请选择催收状态" clearable>
+                      <el-option
+                        v-for="item in val10_data"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                      ></el-option>
+                    </el-select>
+                  </el-form-item>
+                  <el-form-item prop="val11">
+                    <el-select v-model="form.val11" placeholder="请选择案件类型" clearable>
+                      <el-option
+                        v-for="item in val11_data"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                      ></el-option>
+                    </el-select>
+                  </el-form-item>
 
-                <el-form-item prop="val14">
-                  <el-select
-                    v-model="form.val14"
-                    placeholder="请选择标色状态"
-                    clearable
-                  >
-                    <el-option
-                      v-for="item in val14_data"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
-                    >
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-                <el-form-item prop="val15">
-                  <el-input
-                    v-model="form.val15"
-                    placeholder="卡号"
-                    clearable
-                  ></el-input>
-                </el-form-item>
-                <el-form-item prop="val16">
-                  <el-input
-                    v-model="form.val16"
-                    placeholder="档案号"
-                    clearable
-                  ></el-input>
+                  <el-form-item prop="val29">
+                    <el-input v-model="form.val29" placeholder="委案金额下限" clearable></el-input>
+                  </el-form-item>
+                  <el-form-item prop="val13">
+                    <el-input v-model="form.val13" placeholder="委案金额上限" clearable></el-input>
+                  </el-form-item>
+
+                  <el-form-item prop="val14">
+                    <el-select v-model="form.val14" placeholder="请选择标色状态" clearable>
+                      <el-option
+                        v-for="item in val14_data"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                      ></el-option>
+                    </el-select>
+                  </el-form-item>
+                  <el-form-item prop="val15">
+                    <el-input v-model="form.val15" placeholder="卡号" clearable></el-input>
+                  </el-form-item>
+                  <el-form-item prop="val16">
+                    <el-input v-model="form.val16" placeholder="档案号" clearable></el-input>
+                  </el-form-item>
+
+                  <el-form-item prop="val18">
+                    <el-input v-model="form.val18" placeholder="跟进次数上限" clearable></el-input>
+                  </el-form-item>
+                  <el-form-item prop="val30">
+                    <el-input v-model="form.val30" placeholder="跟进次数下限" clearable></el-input>
+                  </el-form-item>
+                  <el-form-item prop="val19">
+                    <el-select v-model="form.val19" placeholder="是否新分配" clearable>
+                      <el-option
+                        v-for="item in val19_data"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                      ></el-option>
+                    </el-select>
+                  </el-form-item>
+                  <el-form-item prop="val20">
+                    <el-select v-model="form.val20" placeholder="还款情况" clearable>
+                      <el-option
+                        v-for="item in val20_data"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                      ></el-option>
+                    </el-select>
+                  </el-form-item>
+
+                  <el-form-item prop="val22">
+                    <el-input v-model="form.val22" placeholder="自定义信息" clearable></el-input>
+                  </el-form-item>
+                  <el-form-item prop="val23">
+                    <el-input v-model="form.val23" placeholder="催收分类" clearable></el-input>
+                  </el-form-item>
+                  <el-form-item prop="val24">
+                    <el-select v-model="form.val24" placeholder="减免状态" clearable>
+                      <el-option
+                        v-for="item in val24_data"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                      ></el-option>
+                    </el-select>
+                  </el-form-item>
+                  <el-form-item prop="val25">
+                    <el-select v-model="form.val25" placeholder="报备状态" clearable>
+                      <el-option
+                        v-for="item in val25_data"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                      ></el-option>
+                    </el-select>
+                  </el-form-item>
+                  <el-form-item prop="val27">
+                    <el-input v-model="form.val27" placeholder="电话号码" clearable></el-input>
+                  </el-form-item>
+                  <el-form-item prop="val28">
+                    <el-input v-model="form.val28" placeholder="催收记录" clearable></el-input>
+                  </el-form-item>
+                  <el-form-item prop="val31">
+                    <el-date-picker
+                      v-model="form.val31"
+                      value-format="yyyy-MM-dd"
+                      type="daterange"
+                      align="right"
+                      unlink-panels
+                      range-separator="至"
+                      start-placeholder="案件分配起始日期"
+                      end-placeholder="案件分配结束日期"
+                    ></el-date-picker>
+                  </el-form-item>
+                <el-form-item prop="val21">
+                  <el-date-picker
+                    v-model="form.val21"
+                    value-format="yyyy-MM-dd"
+                    type="daterange"
+                    align="right"
+                    unlink-panels
+                    range-separator="至"
+                    start-placeholder="预计退案起始日期"
+                    end-placeholder="预计退案结束日期"
+                  ></el-date-picker>
                 </el-form-item>
                 <el-form-item prop="val17">
                   <el-date-picker
@@ -258,154 +258,38 @@
                     range-separator="至"
                     start-placeholder="最后跟进起始日期"
                     end-placeholder="最后跟进结束日期"
-                  >
-                  </el-date-picker>
+                  ></el-date-picker>
                 </el-form-item>
-                <el-form-item prop="val30">
-                  <el-input
-                    v-model="form.val30"
-                    placeholder="跟进次数下限"
-                    clearable
-                  ></el-input>
-                </el-form-item>
-                <el-form-item prop="val18">
-                  <el-input
-                    v-model="form.val18"
-                    placeholder="跟进次数上限"
-                    clearable
-                  ></el-input>
-                </el-form-item>
-
-                <el-form-item prop="val19">
-                  <el-select
-                    v-model="form.val19"
-                    placeholder="是否新分配"
-                    clearable
-                  >
-                    <el-option
-                      v-for="item in val19_data"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
-                    >
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-                <el-form-item prop="val20">
-                  <el-select
-                    v-model="form.val20"
-                    placeholder="还款情况"
-                    clearable
-                  >
-                    <el-option
-                      v-for="item in val20_data"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
-                    >
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-                <el-form-item prop="val21">
+                <el-form-item prop="val12">
                   <el-date-picker
-                    v-model="form.val21"
+                    v-model="form.val12"
                     value-format="yyyy-MM-dd"
                     type="daterange"
                     align="right"
                     unlink-panels
                     range-separator="至"
-                    start-placeholder="预计退案起始日期"
-                    end-placeholder="预计退案结束日期"
-                  >
-                  </el-date-picker>
+                    start-placeholder="还款起始日期"
+                    end-placeholder="还款结束日期"
+                  ></el-date-picker>
                 </el-form-item>
-                <el-form-item prop="val22">
-                  <el-input
-                    v-model="form.val22"
-                    placeholder="自定义信息"
-                    clearable
-                  ></el-input>
-                </el-form-item>
-                <el-form-item prop="val23">
-                  <el-input
-                    v-model="form.val23"
-                    placeholder="催收分类"
-                    clearable
-                  ></el-input>
-                </el-form-item>
-                <el-form-item prop="val24">
-                  <el-select
-                    v-model="form.val24"
-                    placeholder="减免状态"
-                    clearable
-                  >
-                    <el-option
-                      v-for="item in val24_data"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
-                    >
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-                <el-form-item prop="val25">
-                  <el-select
-                    v-model="form.val25"
-                    placeholder="报备状态"
-                    clearable
-                  >
-                    <el-option
-                      v-for="item in val25_data"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
-                    >
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-                <el-form-item prop="val27">
-                  <el-input
-                    v-model="form.val27"
-                    placeholder="电话号码"
-                    clearable
-                  ></el-input>
-                </el-form-item>
-                <el-form-item prop="val28">
-                  <el-input
-                    v-model="form.val28"
-                    placeholder="催收记录"
-                    clearable
-                  ></el-input>
-                </el-form-item>
-                <el-form-item prop="val31">
+                <el-form-item prop="val7">
                   <el-date-picker
-                    v-model="form.val31"
-                    value-format="yyyy-MM-dd"
-                    format="yyyy-MM-dd"
+                    v-model="form.val7"
                     type="daterange"
+                    value-format="yyyy-MM-dd"
                     align="right"
                     unlink-panels
                     range-separator="至"
-                    start-placeholder="案件分配起始日期"
-                    end-placeholder="案件分配结束日期"
-                  >
-                  </el-date-picker>
+                    start-placeholder="委案起始日期"
+                    end-placeholder="委案结束日期"
+                  ></el-date-picker>
+                </el-form-item>
+                </el-popover>
+                <el-form-item>
+                  <el-button type="text" icon="el-icon-search" @click="searchHandle">查询</el-button>
                 </el-form-item>
                 <el-form-item>
-                  <el-button
-                    type="text"
-                    icon="el-icon-search"
-                    @click="searchHandle"
-                    >查询</el-button
-                  >
-                </el-form-item>
-                <el-form-item>
-                  <el-button
-                    type="text"
-                    icon="el-icon-refresh"
-                    @click="resetForm('form')"
-                    >重置</el-button
-                  >
+                  <el-button type="text" icon="el-icon-refresh" @click="resetForm('form')">重置</el-button>
                 </el-form-item>
               </el-form>
             </div>
@@ -428,21 +312,18 @@
                 </el-form-item>
                 <el-form-item>
                   <el-dropdown trigger="click" @command="modStatusHandle">
-                    <el-button type="primary" @click="">修改催收状态</el-button>
+                    <el-button type="primary" @click>修改催收状态</el-button>
                     <el-dropdown-menu slot="dropdown">
                       <el-dropdown-item
                         :command="item.id"
                         v-for="(item, i) in val10_data"
                         :key="i"
-                        >{{ item.name }}
-                      </el-dropdown-item>
+                      >{{ item.name }}</el-dropdown-item>
                     </el-dropdown-menu>
                   </el-dropdown>
                 </el-form-item>
                 <el-form-item>
-                  <el-button type="primary" @click="dialogVisible = true"
-                    >申请协催</el-button
-                  >
+                  <el-button type="primary" @click="dialogVisible = true">申请协催</el-button>
                 </el-form-item>
               </el-form>
             </div>
@@ -451,27 +332,65 @@
             <div class="grid-content bg-purple">
               <el-form :inline="true">
                 <el-form-item>
-                  <span class="color_gray" style="display: inline-block; color: black;font-size: 16px;">查询结果统计：</span>
+                  <span
+                    class="color_gray"
+                    style="display: inline-block; color: black;font-size: 16px;"
+                  >查询结果统计：</span>
                 </el-form-item>
                 <el-form-item>
-                  <span class="color_gray" style="display: inline-block; color: #66b1ff;font-size: 16px;">列表案量:</span>
-                  <span style="display: inline-block; color: #66b1ff;font-size: 16px;">{{ fetchData.countCase }}, </span> </el-form-item
-                ><el-form-item>
-                <span class="color_gray" style="display: inline-block; color: #66b1ff;font-size: 16px;"> 列表金额:</span>
-                <span style="display: inline-block; color: #66b1ff;font-size: 16px;">{{ fetchData.sumMoney }}, </span> </el-form-item
-              ><el-form-item>
-                <span class="color_gray" style="display: inline-block; color: #66b1ff;font-size: 16px;"> 列表还款案量:</span>
-                <span style="display: inline-block; color: #66b1ff;font-size: 16px;">{{ fetchData.countCasePay }}, </span> </el-form-item
-              ><el-form-item>
-                <span class="color_gray" style="display: inline-block; color: #66b1ff;font-size: 16px;"> 列表还款数额:</span>
-                <span style="display: inline-block; color: #66b1ff;font-size: 16px;">{{ fetchData.sumPayMoney }}, </span> </el-form-item
-              ><el-form-item>
-                <span class="color_gray" style="display: inline-block; color: #66b1ff;font-size: 16px;"> 列表CP值:</span>
-                <span style="display: inline-block; color: #66b1ff;font-size: 16px;">{{ fetchData.sumRepay }}, </span> </el-form-item
-              ><el-form-item>
-                <span class="color_gray" style="display: inline-block; color: #66b1ff;font-size: 16px;"> 列表PTP值:</span>
-                <span style="display: inline-block; color: #66b1ff;font-size: 16px;">{{ fetchData.sumBank }} </span>
-              </el-form-item>
+                  <span
+                    class="color_gray"
+                    style="display: inline-block; color: #66b1ff;font-size: 16px;"
+                  >列表案量:</span>
+                  <span
+                    style="display: inline-block; color: #66b1ff;font-size: 16px;"
+                  >{{ fetchData.countCase }},</span>
+                </el-form-item>
+                <el-form-item>
+                  <span
+                    class="color_gray"
+                    style="display: inline-block; color: #66b1ff;font-size: 16px;"
+                  >列表金额:</span>
+                  <span
+                    style="display: inline-block; color: #66b1ff;font-size: 16px;"
+                  >{{ fetchData.sumMoney }},</span>
+                </el-form-item>
+                <el-form-item>
+                  <span
+                    class="color_gray"
+                    style="display: inline-block; color: #66b1ff;font-size: 16px;"
+                  >列表还款案量:</span>
+                  <span
+                    style="display: inline-block; color: #66b1ff;font-size: 16px;"
+                  >{{ fetchData.countCasePay }},</span>
+                </el-form-item>
+                <el-form-item>
+                  <span
+                    class="color_gray"
+                    style="display: inline-block; color: #66b1ff;font-size: 16px;"
+                  >列表还款数额:</span>
+                  <span
+                    style="display: inline-block; color: #66b1ff;font-size: 16px;"
+                  >{{ fetchData.sumPayMoney }},</span>
+                </el-form-item>
+                <el-form-item>
+                  <span
+                    class="color_gray"
+                    style="display: inline-block; color: #66b1ff;font-size: 16px;"
+                  >列表CP值:</span>
+                  <span
+                    style="display: inline-block; color: #66b1ff;font-size: 16px;"
+                  >{{ fetchData.sumRepay }},</span>
+                </el-form-item>
+                <el-form-item>
+                  <span
+                    class="color_gray"
+                    style="display: inline-block; color: #66b1ff;font-size: 16px;"
+                  >列表PTP值:</span>
+                  <span
+                    style="display: inline-block; color: #66b1ff;font-size: 16px;"
+                  >{{ fetchData.sumBank }}</span>
+                </el-form-item>
               </el-form>
             </div>
           </el-col>
@@ -481,15 +400,14 @@
           :data="tableData"
           border
           stripe
-          height="300"
-          style="width: 100%"
+          style="width: 100%;height: calc(100% - 178px);"
           :row-class-name="rowColor"
           :cell-style="{ whiteSpace: 'nowrap' }"
           @row-dblclick="showDetail"
           @selection-change="handleSelectionChange"
           @sort-change="sortHandle"
         >
-          <el-table-column type="selection" width="55"> </el-table-column>
+          <el-table-column type="selection" width="55"></el-table-column>
           <el-table-column
             label="个案序列号"
             prop="seqno"
@@ -505,8 +423,7 @@
                 type="text"
                 size="small"
                 @click="showCase(scope.row)"
-                >{{ scope.row.seqno }}</el-button
-              >
+              >{{ scope.row.seqno }}</el-button>
             </template>
           </el-table-column>
           <el-table-column
@@ -518,8 +435,7 @@
             :sort-orders="['ascending', 'descending']"
             header-align="center"
             align="center"
-          >
-          </el-table-column>
+          ></el-table-column>
           <!--<el-table-column label="操作" show-overflow-tooltip>-->
           <!--<template slot-scope="scope">-->
           <!--<el-button type="text" size="small">导入</el-button>-->
@@ -537,12 +453,16 @@
             :page-size="paginationData.pageSize"
             layout="total, sizes, prev, pager, next, jumper"
             :total="paginationData.total"
-          >
-          </el-pagination>
-        </div></div
-    ></el-tab-pane>
-    <el-tab-pane label="催收状况统计" name="tab2"> <tab2></tab2> </el-tab-pane>
-    <el-tab-pane label="我的还款统计" name="tab3"> <tab3></tab3> </el-tab-pane>
+          ></el-pagination>
+        </div>
+      </div>
+    </el-tab-pane>
+    <el-tab-pane label="催收状况统计" name="tab2">
+      <tab2></tab2>
+    </el-tab-pane>
+    <el-tab-pane label="我的还款统计" name="tab3">
+      <tab3></tab3>
+    </el-tab-pane>
   </el-tabs>
 </template>
 
@@ -558,7 +478,7 @@ import {
   addCollectStatus
 } from "@/common/js/collect-my-case";
 //import CaseDetail from "@/views/data-manage/detail";
-const CaseDetail = () => import('@/views/data-manage/detail');
+const CaseDetail = () => import("@/views/data-manage/detail");
 export default {
   components: {
     tab2,
@@ -610,7 +530,7 @@ export default {
         val28: "", //催收记录
         val29: "", //委案金额下限
         val30: "", //跟进次数下限
-        val31: "", //案件分配
+        val31: "" //案件分配
       },
       val0_data: [], //委托方
       val1_data: [], //批次号
@@ -704,7 +624,7 @@ export default {
           label: "预计退案日期"
         },
         {
-          prop: "targetName",
+          prop: "name",
           label: "姓名"
         },
         {
@@ -722,10 +642,6 @@ export default {
         {
           prop: "balance",
           label: "委案余额"
-        },{
-          prop: "caseAllotTime",
-          width:140,
-          label: "案件分配时间"
         },
         {
           prop: "moneyStart",
@@ -760,6 +676,10 @@ export default {
           label: "闲置天数"
         },
         {
+          prop: "caseAllotTime",
+          label: "案件分配日期"
+        },
+        {
           prop: "collectInfo",
           width: "180",
           label: "催收小结"
@@ -767,12 +687,13 @@ export default {
       ],
       multipleSelection: [],
       detailVisible: false,
-       detailId:-1,
+      detailId: -1,
       detailTitle: "案件详情",
       sort: {
         orderBy: "id",
         sort: "desc"
-      }
+      },
+      ops:{scrollParent:'window'}
     };
   },
   computed: {
@@ -783,7 +704,7 @@ export default {
         val2,
         val3: seqno,
         val4: area,
-        val5: targetName,
+        val5: name,
         val6: idenNo,
         val7,
         val8: accountAge,
@@ -819,7 +740,7 @@ export default {
         nextFollDateStart: (!!val2 && val2[0]) || "",
         nextFollDateEnd: (!!val2 && val2[1]) || "",
         area,
-        targetName,
+        name,
         idenNo,
         accountAge,
         status,
@@ -950,44 +871,58 @@ export default {
           data = { total: 0, list: [] };
         }
         this.fetchData = data;
-        this.fetchData.sumMoney = this.formatMoney(data.sumMoney,0, "￥")
-        this.fetchData.sumPayMoney = this.formatMoney(data.sumPayMoney,0, "￥")
-        this.fetchData.sumRepay =  this.formatMoney(data.sumRepay,0, "￥")
-        this.fetchData.sumBank = this.formatMoney(data.sumBank,0, "￥")
+        this.fetchData.sumMoney = this.formatMoney(data.sumMoney, 0, "￥");
+        this.fetchData.sumPayMoney = this.formatMoney(
+          data.sumPayMoney,
+          0,
+          "￥"
+        );
+        this.fetchData.sumRepay = this.formatMoney(data.sumRepay, 0, "￥");
+        this.fetchData.sumBank = this.formatMoney(data.sumBank, 0, "￥");
         this.paginationData.total = data.total;
         this.tableData = data.list.map(item => {
           return Object.assign(item, { "class-name": `color_${item.color}` });
         });
       });
     },
-    formatMoney(value,places, symbol, thousand, decimal) {
-      places = !isNaN(places = Math.abs(places)) ? places : 2;
+    formatMoney(value, places, symbol, thousand, decimal) {
+      places = !isNaN((places = Math.abs(places))) ? places : 2;
       symbol = symbol !== undefined ? symbol : "¥";
       thousand = thousand || ",";
       decimal = decimal || ".";
       var number = value,
         negative = number < 0 ? "-" : "",
-        i = parseInt(number = Math.abs(+number || 0).toFixed(places), 10) + "",
+        i =
+          parseInt((number = Math.abs(+number || 0).toFixed(places)), 10) + "",
         j = (j = i.length) > 3 ? j % 3 : 0;
-      return symbol + negative + (j ? i.substr(0, j) + thousand : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousand) + (places ? decimal + Math.abs(number - i).toFixed(places).slice(2) : "");
+      return (
+        symbol +
+        negative +
+        (j ? i.substr(0, j) + thousand : "") +
+        i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousand) +
+        (places
+          ? decimal +
+            Math.abs(number - i)
+              .toFixed(places)
+              .slice(2)
+          : "")
+      );
     },
     showCase(row) {
-      this.detailTitle = row.name+'案件详情'
-      this.detailId = row.id
-      this.detailVisible = true
-      this.$nextTick(()=>{
-        this.$refs.detail.queryDetail()
-      })
+      this.detailTitle = row.name + "案件详情";
+      this.detailId = row.id;
+      this.detailVisible = true;
+      this.$nextTick(() => {
+        this.$refs.detail.queryDetail();
+      });
     },
-    showDetail(row){
-
-      this.detailTitle = row.name+'案件详情'
-      this.detailId = row.id
-      this.detailVisible = true
-      this.$nextTick(()=>{
-        this.$refs.detail.queryDetail()
-      })
-
+    showDetail(row) {
+      this.detailTitle = row.name + "案件详情";
+      this.detailId = row.id;
+      this.detailVisible = true;
+      this.$nextTick(() => {
+        this.$refs.detail.queryDetail();
+      });
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
@@ -1046,6 +981,15 @@ export default {
 .color_ZONG {
   color: #d2b48c;
 }
+.myCase-pop{
+  .el-form-item--mini{
+    display: inline-block;
+  }
+}
 #collect-my-case {
+  height: 100%;
+  .el-table .el-table__body-wrapper{
+    height: calc(100% - 72px);
+  }
 }
 </style>
