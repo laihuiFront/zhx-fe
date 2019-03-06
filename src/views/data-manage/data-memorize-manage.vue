@@ -1,5 +1,9 @@
 <template>
-  <div id="data-memorize-manage">
+  <div id="data-memorize-manage"
+  	v-loading="loading"	 
+  	element-loading-text="拼命加载中"
+    element-loading-spinner="el-icon-loading"
+    element-loading-background="rgba(248, 248, 248, 0.8)">
     <el-row :gutter="24">
       <el-col :span="24">
         <div class="grid-content bg-purple">
@@ -51,13 +55,13 @@
               <el-button type="text" icon="el-icon-refresh" @click="resetForm">重置</el-button>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="open7">删除催记</el-button>
+              <el-button type="primary" @click="open7" v-has="'删除催记'">删除催记</el-button>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="selectDataCollectExport">导出所选催记</el-button>
+              <el-button type="primary" @click="selectDataCollectExport" v-has="'导出所选借改'">导出所选催记</el-button>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="dialogVisible2 = true">导出查询结果</el-button>  </el-form-item>
+              <el-button type="primary" @click="dialogVisible2 = true" v-has="'导出查询结果'">导出查询结果</el-button>  </el-form-item>
           </el-form>
         </div>
       </el-col>
@@ -70,7 +74,7 @@
       </el-col>-->
     </el-row>
     <el-table
-      v-loading="loading"
+      
       ref="multipleTable"
       :data="tableData3"
       border
@@ -232,8 +236,8 @@
         width="120"
         align="center">
         <template slot-scope="scope">
-          <el-button type="text" size="small" @click="editMessage(scope.row)">编辑</el-button>
-          <el-button type="text" size="small" @click="deleteMessage(scope.row.id)">删除</el-button>
+          <el-button type="text" size="small" @click="editMessage(scope.row)" v-has="'编辑'">编辑</el-button>
+          <el-button type="text" size="small" @click="deleteMessage(scope.row.id)" v-has="'删除催记'">删除</el-button>
         </template>
       </el-table-column>
     </el-table>

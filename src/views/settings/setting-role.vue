@@ -9,7 +9,7 @@
         <el-button icon="el-icon-refresh" type="text" @click="onClickReset">重置</el-button>
       </el-form-item>
       <el-form-item class="operation-item">
-        <el-button type="primary" @click="onClickAdd">新增角色</el-button>
+        <el-button type="primary" @click="onClickAdd" v-has="'新增角色'">新增角色</el-button>
       </el-form-item>
     </el-form>
     <el-table :data="roleList"  border stripe  style="width: 100%" class="table-wrap">
@@ -18,9 +18,9 @@
       <el-table-column prop="updateUser.userName" label="修改人" width="200"></el-table-column>
       <el-table-column label="操作" width="150">
         <template slot-scope="scope">
-          <el-button type="text" @click="onClickQueryOne(scope.row)">查看</el-button>
-          <el-button type="text" @click="onClickEdit(scope.row)">修改</el-button>
-          <el-button type="text" @click="onClickDelete(scope.row, scope.$index)">删除</el-button>
+          <el-button type="text" @click="onClickQueryOne(scope.row)" v-has="'查看'">查看</el-button>
+          <el-button type="text" @click="onClickEdit(scope.row)" v-has="'修改'">修改</el-button>
+          <el-button type="text" @click="onClickDelete(scope.row, scope.$index)" v-has="'删除'">删除</el-button>
         </template>
       </el-table-column>
     </el-table>

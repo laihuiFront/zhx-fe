@@ -46,7 +46,7 @@
             </el-form-item>
             <el-form-item >
               <el-date-picker
-                v-model="formInline.time6"
+                v-model="formInline.time2"
                 type="daterange"
                 align="right"
                 unlink-panels
@@ -72,7 +72,7 @@
         <div class="grid-content bg-purple">
           <el-form :inline="true">
             <el-form-item >
-              <el-dropdown @command="fenancheck">
+              <el-dropdown @command="fenancheck" v-has="'分案'">
                 <el-button type="primary" >
                   分案<i class="el-icon-arrow-down el-icon--right"></i>
                 </el-button>
@@ -83,7 +83,7 @@
               </el-dropdown>
             </el-form-item>
             <el-form-item >
-              <el-dropdown @command="guanlianjian">
+              <el-dropdown @command="guanlianjian" v-has="'案件'">
                 <el-button type="primary">
                   案件<i class="el-icon-arrow-down el-icon--right"></i>
                 </el-button>
@@ -98,7 +98,7 @@
               </el-dropdown>
             </el-form-item>
             <el-form-item >
-              <el-dropdown @command="handleCommand">
+              <el-dropdown @command="handleCommand" v-has="'修改'">
                 <el-button type="primary">
                   修改<i class="el-icon-arrow-down el-icon--right"></i>
                 </el-button>
@@ -111,10 +111,10 @@
               </el-dropdown>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="addshow" >添加评语</el-button>  </el-form-item>
-            <el-button type="primary"  @click="xiecui">申请协催</el-button>  </el-form-item>
+              <el-button type="primary" @click="addshow" v-has="'添加评语'">添加评语</el-button>  </el-form-item>
+            <el-button type="primary"  @click="xiecui" v-has="'申请协催'">申请协催</el-button>  </el-form-item>
             <el-form-item >
-              <el-dropdown @command="handleExport">
+              <el-dropdown @command="handleExport" v-has="'导出'">
                 <el-button type="primary">
                   导出<i class="el-icon-arrow-down el-icon--right"></i>
                 </el-button>
@@ -126,7 +126,7 @@
                 </el-dropdown-menu>
               </el-dropdown>
             </el-form-item>
-            <el-dropdown @command="biaose">
+            <el-dropdown @command="biaose" v-has="'案件标色'">
               <el-button type="primary" >
                 案件标色<i class="el-icon-arrow-down el-icon--right"></i>
               </el-button>
@@ -1290,9 +1290,9 @@
         }
       },
     totalDataExport(){
-			let startTime=this.formInline.time[0]
-      	let endTime=this.formInline.time[1]
-		totalDataBatchExport(this.formInline.area,this.formInline.batchNos,this.formInline.clients,this.formInline.batchStatus,this.formInline.caseType,startTime,endTime,this.pageSize,this.pageNum).then((response)=>{
+			let startTime=this.formInline.time2[0]
+      	let endTime=this.formInline.time2[1]
+		totalDataBatchExport(this.formInline).then((response)=>{
           	this.$message({
             type: 'success',
             message: '导出成功!'
@@ -1311,9 +1311,9 @@
         return symbol + negative + (j ? i.substr(0, j) + thousand : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousand) + (places ? decimal + Math.abs(number - i).toFixed(places).slice(2) : "");
       },
 		pageDataExport(){
-			let startTime=this.formInline.time[0]
-      	let endTime=this.formInline.time[1]
-		pageDataBatchExport(this.formInline.area,this.formInline.batchNos,this.formInline.clients,this.formInline.batchStatus,this.formInline.caseType,startTime,endTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
+			let startTime=this.formInline.time2[0]
+      	let endTime=this.formInline.time2[1]
+		totalDataBatchExport(this.formInline).then((response)=>{
           	this.$message({
             type: 'success',
             message: '导出成功!'

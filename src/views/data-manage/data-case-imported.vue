@@ -1,5 +1,9 @@
 <template>
-  <div id="data-case-imported">
+  <div id="data-case-imported" 
+  	 v-loading="loading2"
+    element-loading-text="拼命加载中"
+    element-loading-spinner="el-icon-loading"
+   element-loading-background="rgba(248, 248, 248, 0.8)">
   <el-row :gutter="24">
   <el-col :span="24">
   	<div class="grid-content bg-purple">
@@ -18,7 +22,7 @@
     <el-select v-model="form.batchNos" filterable collapse-tags  multiple placeholder="请输入批次号" clearable>
       <el-option
         v-for="item in batchList"
-        :key="item.batchNo"
+        :key="item.id"
         :label="item.batchNo"
         :value="item.batchNo">
       </el-option>
@@ -157,10 +161,7 @@
   </el-col>
    </el-row>
    <el-table
-   	  v-loading="loading2"
-    element-loading-text="拼命加载中"
-    element-loading-spinner="el-icon-loading"
-    element-loading-background="rgba(0, 0, 0, 0.8)"
+   	 
     ref="multipleTable"
     :data="DataList"
     border
@@ -169,7 +170,7 @@
      @selection-change="handleSelectionChange"
     sortable="custom"
     @sort-change="handleSort"
-    height="470"
+    height="350"
   >
   <el-table-column
       type="selection"

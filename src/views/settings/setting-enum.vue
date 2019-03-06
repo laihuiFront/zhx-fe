@@ -19,8 +19,9 @@
           type="primary"
           v-if="currentEnum.name && currentEnum.name !== '地区'"
           @click="onClickAdd"
+          v-has="'新增'"
         >新增</el-button>
-        <el-button type="primary" :disabled="disableSave" @click="onclickSave">保存</el-button>
+        <el-button type="primary" :disabled="disableSave" @click="onclickSave" v-has="'保存'">保存</el-button>
       </div>
       <el-tree
         v-if="currentEnum.name && currentEnum.name === '地区'"
@@ -112,11 +113,13 @@
               v-if="scope.row.editType !== 'edit' && scope.row.editType !== 'add'"
               type="text"
               @click="onClickEdit(scope.row)"
+              v-has="'修改'"
             >修改</el-button>
             <el-button
               v-if="scope.row.editType !== 'edit' && scope.row.editType !== 'add'"
               type="text"
               @click="onclickDelete(scope.row, scope.$index)"
+              v-has="'删除'"
             >删除</el-button>
             <el-button
               v-if="scope.row.editType==='edit' || scope.row.editType==='add'"

@@ -575,19 +575,19 @@
               <el-tab-pane label="电话" name="1" class="tabs-wrap">
                 <div class="operation">
                   <div class="left-oper">
-                    <el-button @click="changePhoneStatus('有效')">标记为有效</el-button>
-                    <el-button @click="changePhoneStatus('未知')">标记为未知</el-button>
-                    <el-button @click="changePhoneStatus('无效')">标记为无效</el-button>
+                    <el-button @click="changePhoneStatus('有效')" v-if="caseDetail.currentuser">标记为有效</el-button>
+                    <el-button @click="changePhoneStatus('未知')" v-if="caseDetail.currentuser">标记为未知</el-button>
+                    <el-button @click="changePhoneStatus('无效')" v-if="caseDetail.currentuser">标记为无效</el-button>
                     <el-button @click="showAllTel">显示全部电话</el-button>
                   </div>
                   <div class="right-oper">
-                    <el-button type="primary" @click="addPhone">新增电话</el-button>
+                    <el-button type="primary" @click="addPhone" v-if="caseDetail.currentuser">新增电话</el-button>
                     <el-popover
                       placement="bottom-end"
                       title="批量新增电话"
                       width="500"
                       trigger="click"
-                      v-model="batchAddTelVisible">
+                      v-model="batchAddTelVisible" v-if="caseDetail.currentuser">
                       <div>
                         <el-input
                           type="textarea"
@@ -603,7 +603,7 @@
                       <el-button type="primary" slot="reference">批量新增电话</el-button>
                     </el-popover>
                     <!-- <el-button type="primary">批量电催</el-button> -->
-                    <el-button type="primary" @click="_synchroSameTel">同步共债</el-button>
+                    <el-button type="primary" @click="_synchroSameTel" v-if="caseDetail.currentuser">同步共债</el-button>
                   </div>
                 </div>
                 <el-table
@@ -645,9 +645,9 @@
                     width="250">
                     <template slot-scope="scope">
                       <el-button type="text">历史记录</el-button>
-                      <el-button type="text" @click="editPhone(scope.row)">编辑</el-button>
-                      <el-button type="text" @click="deleteTel(scope.row.id)">删除</el-button>
-                      <el-button type="text">停止跟进</el-button>
+                      <el-button type="text" @click="editPhone(scope.row)" v-if="caseDetail.currentuser">编辑</el-button>
+                      <el-button type="text" @click="deleteTel(scope.row.id)" v-if="caseDetail.currentuser">删除</el-button>
+                      <el-button type="text" v-if="caseDetail.currentuser">停止跟进</el-button>
                     </template>
                   </el-table-column>
                 </el-table>
@@ -655,14 +655,14 @@
               <el-tab-pane label="地址" name="2" class="tabs-wrap" >
                 <div class="operation"  v-if="letterVisible2">
                   <div class="left-oper">
-                    <el-button @click="changeAddrStatus('有效')">标记为有效</el-button>
-                    <el-button @click="changeAddrStatus('未知')">标记为未知</el-button>
-                    <el-button @click="changeAddrStatus('无效')">标记为无效</el-button>
+                    <el-button @click="changeAddrStatus('有效')" v-if="caseDetail.currentuser">标记为有效</el-button>
+                    <el-button @click="changeAddrStatus('未知')" v-if="caseDetail.currentuser">标记为未知</el-button>
+                    <el-button @click="changeAddrStatus('无效')" v-if="caseDetail.currentuser">标记为无效</el-button>
                     <el-button @click="saveAddr">显示全部地址</el-button>
                     <el-button @click="showLetterList">查看信函记录</el-button>
                   </div>
                   <div class="right-oper">
-                    <el-button type="primary" @click="addAddr">新增地址</el-button>
+                    <el-button type="primary" @click="addAddr" v-if="caseDetail.currentuser">新增地址</el-button>
                   </div>
                 </div>
                 <el-table
@@ -716,9 +716,9 @@
                     v-if="letterVisible2"
                     width="150">
                     <template slot-scope="scope">
-                      <el-button type="text" @click="applyLetter(scope.row)">申请信函</el-button>
-                      <el-button type="text" @click="editAddr(scope.row)">编辑</el-button>
-                      <el-button type="text" @click="deleteAddr(scope.row.id)">删除</el-button>
+                      <el-button type="text" @click="applyLetter(scope.row)" v-if="caseDetail.currentuser">申请信函</el-button>
+                      <el-button type="text" @click="editAddr(scope.row)" v-if="caseDetail.currentuser">编辑</el-button>
+                      <el-button type="text" @click="deleteAddr(scope.row.id)" v-if="caseDetail.currentuser">删除</el-button>
                     </template>
                   </el-table-column>
                 </el-table>
@@ -828,7 +828,7 @@
                     </el-radio-group>
                   </div>
                   <div class="right-oper">
-                    <el-button type="primary">导出本案催记</el-button>
+                    <el-button type="primary" v-if="caseDetail.currentuser">导出本案催记</el-button>
                   </div>
                 </div>
                 <el-table
@@ -916,8 +916,8 @@
                     fixed="right"
                     width="100">
                     <template slot-scope="scope">
-                      <el-button type="text">编辑</el-button>
-                      <el-button type="text">删除</el-button>
+                      <el-button type="text" v-if="caseDetail.currentuser">编辑</el-button>
+                      <el-button type="text" v-if="caseDetail.currentuser">删除</el-button>
                     </template>
                   </el-table-column>
                 </el-table>
@@ -1199,9 +1199,9 @@
                           <el-button size="mini" type="text" @click="$set(scope.row, 'editLogVisible', false)">取消</el-button>
                           <el-button type="primary" size="mini" @click="onClickSaveLog">确定</el-button>
                         </div>
-                        <el-button type="text" @click="editLog(scope.row)" slot="reference">编辑</el-button>
+                        <el-button type="text" @click="editLog(scope.row)" slot="reference" v-if="caseDetail.currentuser">编辑</el-button>
                       </el-popover>
-                      <el-button type="text" @click="_deleteLog(scope.row.id)">删除</el-button>
+                      <el-button type="text" @click="_deleteLog(scope.row.id)" v-if="caseDetail.currentuser">删除</el-button>
                     </template>
                   </el-table-column>
                 </el-table>
@@ -1282,7 +1282,7 @@
               <el-tab-pane label="减免管理" name="13" class="tabs-wrap">
                 <div class="operation">
                   <div class="right-oper">
-                    <el-button type="primary">添加减免申请</el-button>
+                    <el-button type="primary" v-if="caseDetail.currentuser">添加减免申请</el-button>
                   </div>
                 </div>
                 <el-table
@@ -1667,7 +1667,7 @@ export default {
       dependCase:[],//同批次公债案件
       activeNames: ['1','2','3','4','5'],
       otherActiveName:'1',
-      caseDetail:{},
+      caseDetail:{currentuser:true},
       memorizeType:1,
       statusList:[{name:"有效",id:1,},{name:"无效",id:2,},{name:"未知",id:3,}],
       phoneSelectList: [],

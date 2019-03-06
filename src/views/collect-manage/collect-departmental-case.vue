@@ -1,6 +1,7 @@
 <template>
-  <el-tabs v-model="activeName" type="card">
+  <el-tabs v-model="activeName" type="card" class="tabs-h">
     <el-tab-pane label="部门案件" name="tab1"
+                 style="height: 100%"
     ><div id="collect-departmental-case">
       <el-dialog
         :title="detailTitle"
@@ -453,7 +454,7 @@
             <el-form :inline="true">
 
               <el-form-item>
-                <el-dropdown trigger="click" @command="colorHandle">
+                <el-dropdown trigger="click" @command="colorHandle" v-has="'案件标色'">
                   <el-button type="primary">案件标色</el-button>
                   <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item command="黑">黑色</el-dropdown-item>
@@ -466,7 +467,7 @@
                 </el-dropdown>
               </el-form-item>
               <el-form-item>
-                <el-dropdown trigger="click" @command="modStatusHandle">
+                <el-dropdown trigger="click" @command="modStatusHandle" v-has="'修改催收状态'">
                   <el-button type="primary" @click="">修改催收状态</el-button>
                   <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item :command="item.id"
@@ -476,7 +477,7 @@
                 </el-dropdown>
               </el-form-item>
               <el-form-item>
-                <el-button type="primary" @click="dialogVisible=true;">申请协催</el-button>
+                <el-button type="primary" @click="dialogVisible=true;" v-has="'申请协催'">申请协催</el-button>
               </el-form-item>
             </el-form>
           </div>
@@ -515,8 +516,7 @@
         :data="tableData"
         border
         stripe
-        style="width: 100%"
-        height="300"
+        style="width: 100%;height: calc(100% - 220px);"
         :row-class-name="rowColor"
         @selection-change="handleSelectionChange"
         @row-dblclick="showCase"
@@ -824,7 +824,7 @@
           val3: seqno,
           val4: area,
           val5: name,
-          val6: idenNo,
+          val6: identNo,
           val7,
           val8: accountAge,
           val9: status,
@@ -860,7 +860,7 @@
           nextFollDateEnd: (!!val2 && val2[1])||'',
           area,
           name,
-          idenNo,
+          identNo,
           accountAge,
           status,
           collectStatus,
@@ -1086,6 +1086,11 @@
       display: inline-block;
     }
   }
+
   #collect-departmental-case {
+    height: 100%;
+    .el-table .el-table__body-wrapper{
+      height: calc(100% - 50px);
+    }
   }
 </style>

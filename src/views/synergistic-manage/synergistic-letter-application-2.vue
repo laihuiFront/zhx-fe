@@ -178,12 +178,12 @@
     <div class="grid-content bg-purple">
       <el-form :inline="true">
         <el-form-item>
-          <el-button type="primary" @click="qrHandle"
+          <el-button v-has="'批量确认信函'" type="primary" @click="qrHandle"
           >批量确认信函</el-button
           >
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="cxHandle"
+          <el-button v-has="'撤销信函'" type="primary" @click="cxHandle"
           >撤销信函</el-button
           >
         </el-form-item>

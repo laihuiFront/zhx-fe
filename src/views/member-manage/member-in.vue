@@ -32,7 +32,7 @@
           <el-button icon="el-icon-refresh" type="text" @click="onClickReset">重置</el-button>
         </el-form-item>
         <el-form-item class="operation-item">
-          <el-button type="primary" @click="onClickAdd">新增员工</el-button>
+          <el-button type="primary" @click="onClickAdd" v-has="'新增员工'">新增员工</el-button>
         </el-form-item>
       </el-form>
       <el-table sortable="custom" border stripe @sort-change="handleSort" :data="memberList" style="width: 100%" class="table-wrap">
@@ -47,23 +47,27 @@
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="department" label="部门" show-overflow-tooltip></el-table-column>
         <el-table-column label="操作" width="200">
           <template slot-scope="scope">
-            <el-button type="text" @click="onClickEdit(scope.row)">修改</el-button>
+            <el-button type="text" @click="onClickEdit(scope.row)" v-has="'修改'">修改</el-button>
             <el-button
+              v-has="'锁定'"
               type="text"
               @click="onClickLock(scope.row)"
               v-if="scope.row.enable === 1 && scope.row.id !== $store.getters.userInfo.id"
             >锁定</el-button>
             <el-button
+              v-has="'解锁'"
               type="text"
               @click="onClickUnLock(scope.row)"
               v-if="scope.row.enable === 0 && scope.row.id !== $store.getters.userInfo.id"
             >解锁</el-button>
             <el-button
+              v-has="'离职'"
               type="text"
               @click="onClickLeave(scope.row)"
               v-if="scope.row.id !== $store.getters.userInfo.id"
             >离职</el-button>
             <el-button
+              v-has="'删除'"
               type="text"
               @click="onClickDelete(scope.row)"
               v-if="scope.row.id !== $store.getters.userInfo.id"

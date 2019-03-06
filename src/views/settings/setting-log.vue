@@ -32,7 +32,7 @@
         <el-button icon="el-icon-refresh" type="text" @click="onClickReset">重置</el-button>
       </el-form-item>
       <el-form-item class="operation-item">
-        <el-button type="primary" @click="onClickDelete">删除</el-button>
+        <el-button type="primary" @click="onClickDelete" v-has="'删除'">删除</el-button>
       </el-form-item>
     </el-form>
     <el-table
