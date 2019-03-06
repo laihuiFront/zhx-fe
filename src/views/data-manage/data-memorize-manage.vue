@@ -138,10 +138,10 @@
             <li class="condition-item">
               <el-select v-model="formInline.color" filterable  placeholder="请选择标色状态" clearable>
                 <el-option
-                  v-for="item in caseStatusList"
-                  :key="item.id"
-                  :label="item.name"
-                  :value="item.id">
+                  v-for="item in val14_data"
+                  :key="item.label"
+                  :label="item.label"
+                  :value="item.value">
                 </el-option>
               </el-select>
             </li>
@@ -441,6 +441,32 @@
         images:{background: "url(" + require("./down.png") + ") repeat-x",padding:"8px 5px 3px 6px",},
         loading:false,
         caseStatusList:[{name:"未退案",id:0},{name:"正常",id:1},{name:"暂停",id:2},{name:"关档",id:3},{name:"退档",id:4},{name:"全部",id:5}],
+        val14_data: [
+          {
+            label:'正常',
+            value:'黑'
+          },
+          {
+            label:'红色',
+            value:'红'
+          },
+          {
+            label:'蓝色',
+            value:'蓝'
+          },
+          {
+            label:'橙色',
+            value:'橙'
+          },
+          {
+            label:'紫色',
+            value:'紫'
+          },
+          {
+            label:'棕色',
+            value:'棕'
+          },
+        ],
         EndList:[],
         selectDataCollectExportList:[],
         departmentList:[],

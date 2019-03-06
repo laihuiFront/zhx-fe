@@ -678,30 +678,34 @@ this.search()
           }
       },
        open8() {
-      	let _self=this 
-      
-      		_self.$confirm('是否退案?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning',
-          center: true
-        }).then(() => {
-        		if(_self.deleteList.length>0){
-           	returnCase(this.deleteList).then((response)=>{
-            _self.$message({
-            type: 'success',
-            message: '退案成功!'
-          });
-          _self.search()
-}) }else{
-           	_self.$message({
-            type: 'info',
-            message: '请选择需要退案的数据!'
-          });
-          }
-        }).catch(() => {
+      	let _self=this
+         if(_self.deleteList.length>0){
+           returnCase(this.deleteList).then((response)=>{
+             _self.$confirm('是否退案?', '提示', {
+               confirmButtonText: '确定',
+               cancelButtonText: '取消',
+               type: 'warning',
+               center: true
+             }).then(() => {
+                 _self.$message({
+                 type: 'success',
+                 message: '退案成功!'
+               });
+               _self.search()
+             }).catch(() => {
 
-        });
+             });
+
+           }) }else{
+           _self.$message({
+             type: 'info',
+             message: '请选择需要退案的数据!'
+           });
+         }
+
+
+      
+
       	 
       },
    },

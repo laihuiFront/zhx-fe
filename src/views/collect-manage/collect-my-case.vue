@@ -602,6 +602,11 @@ export default {
           label: "下次跟进日期"
         },
         {
+          prop: "caseAllotTime",
+          width:140,
+          label: "案件分配日期"
+        },
+        {
           prop: "collectStatusMsg",
           label: "催收状态"
         },
@@ -675,10 +680,6 @@ export default {
         {
           prop: "leaveDays",
           label: "闲置天数"
-        },
-        {
-          prop: "caseAllotTime",
-          label: "案件分配日期"
         },
         {
           prop: "collectInfo",

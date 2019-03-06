@@ -12,7 +12,7 @@
         ><span class="topSpan">上月待银行查账金额:</span> {{ topData.lastBankAmt }}</el-col
         >
         <el-col :span="4"
-        ><span class="topSpan">上月提成(已还款):</span>¥{{
+        ><span class="topSpan">上月提成(已还款):</span>{{
           topData.lastRepaidAmt
           }}</el-col
         >
@@ -474,11 +474,11 @@ export default {
       pay(this.fetchData).then(data => {
         this.tableData = data.list;
         this.topData = data;
-        this.fetchData.paidMoney = this.formatMoney(data.paidMoney,0, "￥")
+        /*this.fetchData.paidMoney = this.formatMoney(data.paidMoney,0, "￥")
         this.fetchData.repaidAmt = this.formatMoney(data.repaidAmt,0, "￥")
         this.fetchData.bankAmtC = this.formatMoney(data.bankAmtC,0, "￥")
         this.fetchData.repaidBankAmt = this.formatMoney(data.repaidBankAmt,0, "￥")
-        this.fetchData.repayAmtP = this.formatMoney(data.repayAmtP,0, "￥")
+        this.fetchData.repayAmtP = this.formatMoney(data.repayAmtP,0, "￥")*/
 
         this.topData.lastPaidMoney = this.formatMoney(data.lastPaidMoney,0, "￥")
         this.topData.repayAmtP = this.formatMoney(data.repayAmtP,0, "￥")
