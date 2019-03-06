@@ -216,14 +216,6 @@
                     </el-option>
                   </el-select>
                 </el-form-item>
-
-                <el-form-item prop="val13">
-                  <el-input
-                    v-model="form.val13"
-                    placeholder="委案金额上限"
-                    clearable
-                  ></el-input>
-                </el-form-item>
                 <el-form-item prop="val29">
                   <el-input
                     v-model="form.val29"
@@ -231,6 +223,14 @@
                     clearable
                   ></el-input>
                 </el-form-item>
+                <el-form-item prop="val13">
+                  <el-input
+                    v-model="form.val13"
+                    placeholder="委案金额上限"
+                    clearable
+                  ></el-input>
+                </el-form-item>
+
                 <el-form-item prop="val14">
                   <el-select
                     v-model="form.val14"
@@ -260,14 +260,6 @@
                     clearable
                   ></el-input>
                 </el-form-item>
-
-                <el-form-item prop="val18">
-                  <el-input
-                    v-model="form.val18"
-                    placeholder="跟进次数上限"
-                    clearable
-                  ></el-input>
-                </el-form-item>
                 <el-form-item prop="val30">
                   <el-input
                     v-model="form.val30"
@@ -275,6 +267,14 @@
                     clearable
                   ></el-input>
                 </el-form-item>
+                <el-form-item prop="val18">
+                  <el-input
+                    v-model="form.val18"
+                    placeholder="跟进次数上限"
+                    clearable
+                  ></el-input>
+                </el-form-item>
+
                 <el-form-item prop="val19">
                   <el-select
                     v-model="form.val19"
@@ -714,6 +714,11 @@
             prop: "nextFollDate",
             width:"140",
             label: "下次跟进日期"
+          },
+          {
+            prop: "caseAllotTime",
+            width:140,
+            label: "案件分配日期"
           },
           {
             prop: "collectStatusMsg",
