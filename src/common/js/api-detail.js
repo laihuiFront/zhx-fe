@@ -11,7 +11,7 @@ export function getCaseDetail(id) {
 }
 export function getSameBatchCollect(id) {
   return request({
-    url: '/dataCase/detail',
+    url: '/case/batch/idno',
     method: 'post',
     data: {
       "caseId":id
@@ -55,6 +55,21 @@ export function getAddressDetail(id) {
     }
   })
 }
+
+//催记
+export function getCollectDetail(id,batchNo,identNo,cardNo,detaiType) {
+  return request({
+    url: '/dataCollect/detailCollect',
+    method: 'post',
+    data: {
+      id,
+      batchNo,
+      identNo,
+      cardNo,
+      detaiType
+    }
+  })
+}
 //案人信息
 export function getArchiveDetail(id) {
   return request({
@@ -66,17 +81,6 @@ export function getArchiveDetail(id) {
   })
 }
 
-//催記
-export function getCollectDetail(id,type) {
-  return request({
-    url: '/dataCollect/detailCollect',
-    method: 'post',
-    data: {
-      caseId:id,
-      detaiType:type
-    }
-  })
-}
 //评语
 export function getCommentDetail(id) {
   return request({
@@ -245,6 +249,8 @@ export function dataCollectionSave(data){
     data
   })
 }
+
+
 
 export function addLetter(data){
   return request({
