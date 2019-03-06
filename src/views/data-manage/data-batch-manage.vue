@@ -3,12 +3,10 @@
   	v-loading="loading"
    	 element-loading-text="拼命加载中"
     element-loading-spinner="el-icon-loading"
-    element-loading-background="rgba(248, 248, 248, 0.8)">
-   <el-row :gutter="24">
-  <el-col :span="24">
-  	<div class="grid-content bg-purple">
-  		<el-form :inline="true" ref="form" :model="form" label-width="80px">
-   <el-form-item >
+    element-loading-background="rgba(248, 248, 248, 0.8)"
+    class="page-wraper-sub">
+    <el-form ref="form" :model="form" :inline="true" class="query-wrap">
+      <el-form-item >
   <el-select v-model="form.area" placeholder="请选择催收区域" clearable>
     <el-option
       v-for="item in form.areaList"
@@ -75,34 +73,18 @@
  
   <el-form-item>
   <el-button type="text" icon="el-icon-search" @click="search">查询</el-button> 
-  </el-form-item>
-  <el-form-item>
   <el-button type="text" icon="el-icon-refresh" @click=resetForm>重置</el-button> 
   </el-form-item>
   <el-form-item>
-      <el-button type="primary" @click="returnCaseList" v-has="'批次退案'">批次退案</el-button>  </el-form-item>
-      <el-form-item>
-      <el-button type="primary"  @click="open7" v-has="'批次删除'">批次删除</el-button>  </el-form-item>
-      <el-form-item>
-      <el-button type="primary"  @click="dialogVisible1 = true" v-has="'导出查询结果'">导出查询结果</el-button>  </el-form-item>
-      <el-form-item>
-      <el-button type="primary" @click='selectDataExport' v-has="'导出所选批次'">导出所选批次</el-button>  </el-form-item>
-      <el-form-item>
-      <el-button type="primary" @click="selectDataByBatch" v-has="'批量导出批次催记'">批量导出批次催记</el-button>  </el-form-item>
-  	
-  </el-form>
-  	</div>
-  </el-col>
-  <el-col :span="18">
-  	<div class="grid-content bg-purple">
-  		<span>查询结果统计：</span>
-	<span class="textColor">列表户数:{{userCount}}, </span>
-  		<span class="textColor"> 列表金额:{{totalAmt}}</span>
-  	</div>
-  </el-col>
-   </el-row>
+      <el-button type="primary" @click="returnCaseList" v-has="'批次退案'">批次退案</el-button>  
+      <el-button type="primary"  @click="open7" v-has="'批次删除'">批次删除</el-button>  
+      <el-button type="primary"  @click="dialogVisible1 = true" v-has="'导出查询结果'">导出查询结果</el-button>  
+      <el-button type="primary" @click='selectDataExport' v-has="'导出所选批次'">导出所选批次</el-button>  
+      <el-button type="primary" @click="selectDataByBatch" v-has="'批量导出批次催记'">批量导出批次催记</el-button>  
+      </el-form-item>
+    </el-form>
    <el-table
-   	
+   	class="table-wrap"
     ref="multipleTable"
     :data="DataList"
     border
@@ -111,7 +93,6 @@
      @selection-change="handleSelectionChange"
     sortable="custom"
     @sort-change="handleSort"
-    height="450"
   >
   <el-table-column
       type="selection"
@@ -257,10 +238,8 @@
       </template>
     </el-table-column>
   </el-table>
-  <el-row :gutter="20">
-  <el-col :span="16">
-  	<div class="grid-content bg-purple">
   		<el-pagination
+      class="pagination-wrap"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage4"
@@ -269,12 +248,8 @@
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
     </el-pagination>
-  	</div></el-col>
-  <el-col :span="8">
-  	
-  </el-col>
-</el-row>
 <el-dialog
+  class="dialog-wrap"
   title="导出查询结果"
   :visible.sync="dialogVisible1"
   width="30%"
@@ -407,7 +382,7 @@
 </el-row>
 </el-form>
 
-<span slot="footer" class="dialog-footer">
+<span slot="footer" class="footer">
     <el-button @click="dialogVisible2 = false">取 消</el-button>
     <el-button type="primary" @click="submitmsgForm('messageForm')">确 定</el-button>
   </span>

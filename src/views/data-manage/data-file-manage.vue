@@ -1,10 +1,7 @@
 <template>
-  <div id="data-file-manage">
-  <el-row :gutter="24">
-  <el-col :span="24">
-  	<div class="grid-content bg-purple">
-  		<el-form :inline="true" ref="form" :model="form" label-width="80px">
-   <el-form-item >
+  <div id="data-file-manage" class="page-wraper-sub">
+    <el-form ref="form" :model="form" :inline="true" class="query-wrap">
+      <el-form-item >
      <el-input v-model="form.identNo" placeholder="请输入证件号" clearable></el-input>
   </el-form-item>
   <el-form-item >
@@ -32,43 +29,25 @@
   </el-form-item>
   <el-form-item>
   <el-button type="text" icon="el-icon-search" @click=search>查询</el-button> 
-  </el-form-item>
-  <el-form-item>
   <el-button type="text" icon="el-icon-refresh" @click=clench>重置</el-button> 
   </el-form-item>
-  </el-form>
-  	</div>
-  </el-col>
-  <el-col :span="8">
-  	<div class="grid-content bg-purple">
-  <el-form :inline="true">
-  		<el-form-item>
-      <el-upload
-  class="upload-demo"
+  <el-form-item>
+  <el-upload
   action="http://116.62.124.251/zxh/dataArchive/import"
   :headers="header"
   :show-file-list=false
   :on-success="uploadSuccess"
-  
+  style="display:inline-block;margin-right:5px;"
   >
-  <el-button size="small" type="primary" v-has="'导入'">导入</el-button>
-</el-upload>
-      </el-form-item>
-    <el-form-item>
+  <el-button size="small" type="primary" v-has="'导入'" >导入</el-button>
+</el-upload> 
       <el-button type="primary" @click="downModule" v-has="'模板下载'">模板下载</el-button>
-    </el-form-item>
-      <el-form-item>
-      <el-button type="primary" @click="dialogVisible2 = true" v-has="'新增'">新增</el-button>  </el-form-item>
-      <el-form-item>
+      <el-button type="primary" @click="dialogVisible2 = true" v-has="'新增'">新增</el-button> 
       <el-button type="primary" @click="open7" v-has="'删除'">删除</el-button> 
-      </el-form-item>
-     
-</el-form>
-  	</div>
-  </el-col>
-   </el-row>
+  </el-form-item>
+    </el-form>
    <el-table
-     height="470"
+    class="table-wrap"
      border
      stripe
     ref="multipleTable"
@@ -138,8 +117,8 @@
        </template>
      </el-table-column>
   </el-table>
-  <div class="block">
   	 <el-pagination
+      class="pagination-wrap"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage4"
@@ -148,8 +127,8 @@
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
     </el-pagination>
-  </div>
   <el-dialog
+  class="dialog-wrap"
   title="导入"
   :visible.sync="dialogVisible"
   width="30%"
@@ -161,6 +140,7 @@
   </span>
 </el-dialog>
 <el-dialog
+  class="dialog-wrap"
   title="新增档案"
   :visible.sync="dialogVisible2"
   width="70%"
@@ -278,12 +258,13 @@
   </el-col>
 </el-row>
 </el-form>  
-<span slot="footer" class="dialog-footer">
+<span slot="footer" class="footer">
     <el-button @click="dialogVisible2 = false">取 消</el-button>
     <el-button type="primary" @click="submitForm('dynamicValidateForm')">确 定</el-button>
   </span>
 </el-dialog>
     <el-dialog
+      class="dialog-wrap"
       title="查看档案"
       :visible.sync="dialogVisible3"
       width="70%"
