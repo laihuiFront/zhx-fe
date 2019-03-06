@@ -871,7 +871,7 @@
 <script>
   //import CaseDetail from './detail'
   const CaseDetail = () => import('@/views/data-manage/detail');
-  import {dataList,LeaveList,areaList,batchList,caseTypeList,addressList,TellList,collectStatusList,deleteStatusList,accountAgeList,clientList,EndList,PersonList,departmentList,searchList,fenan1,fenan2,addpingyu,caseStatus,deteleCase,colorList,addMValue,addCollectArea,addCollectStatus,addImportant,addSynergy,selectDataTel,selectDataCollect,selectDataCaseExport,totalDataBatchExport} from '@/common/js/data-case-manage.js'
+  import {dataList,LeaveList,areaList,batchList,caseTypeList,addressList,TellList,collectStatusList,deleteStatusList,accountAgeList,clientList,EndList,PersonList,departmentList,searchList,fenan1,fenan2,addpingyu,caseStatus,deteleCase,colorList,addMValue,addCollectArea,addCollectStatus,addImportant,addSynergy,selectDataTel,selectDataCollect,pageDataExport,selectDataCaseExport,totalDataBatchExport} from '@/common/js/data-case-manage.js'
   export default {
     name: 'dataCaseManage',
     components: {
@@ -1142,7 +1142,7 @@
 		pageDataExport(){
 			let startTime=this.formInline.time2[0]
       	let endTime=this.formInline.time2[1]
-		totalDataBatchExport(this.formInline).then((response)=>{
+      pageDataExport(this.formInline).then((response)=>{
           	this.$message({
             type: 'success',
             message: '导出成功!'
