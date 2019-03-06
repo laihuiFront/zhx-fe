@@ -1,30 +1,22 @@
 <template>
-  <div id="litigation-apply">
-   <el-row :gutter="24">
-  <el-col :span="16">
-  	<div class="grid-content bg-purple">
-  		<el-form :inline="true" ref="form" :model="form" >
-   <el-form-item label="案号">
-     <el-input v-model="form.legalNo" placeholder="请输入案号" clearable></el-input>
-  </el-form-item>
-  <el-form-item label="姓名">
-   <el-input v-model="form.cstName" placeholder="请输入姓名" clearable></el-input>
-  </el-form-item>
-  <el-form-item>
-  <el-button type="text" icon="el-icon-search" @click=search>查询</el-button> 
-  </el-form-item>
-  <el-form-item>
-  <el-button type="text" icon="el-icon-refresh" @click=clench>重置</el-button> 
-  </el-form-item>
-  <el-form-item>
-      <el-button type="primary" v-has="'添加诉讼案件'" @click=addDataform>添加诉讼案件</el-button>  </el-form-item>    
-</el-form>
-  </el-form>
-  	</div>
-  </el-col>
-   </el-row>	
-  	
+  <div id="litigation-apply" class="page-wraper-sub">
+    <el-form ref="form" :model="form" :inline="true" class="query-wrap">
+      <el-form-item>
+        <el-input v-model="form.legalNo" placeholder="请输入案号" clearable></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-input v-model="form.cstName" placeholder="请输入姓名" clearable></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="text" icon="el-icon-search" @click="search">查询</el-button> 
+        <el-button type="text" icon="el-icon-refresh" @click="clench">重置</el-button> 
+      </el-form-item>
+      <el-form-item class="operation-item">
+        <el-button type="primary" v-has="'添加诉讼案件'" @click="addDataform">添加诉讼案件</el-button>
+      </el-form-item>
+    </el-form>
   <el-table
+    class="table-wrap"
     :data="DataList"
     border
     stripe
@@ -119,8 +111,8 @@
       </template>
     </el-table-column>
   </el-table>
-    <div class="block">
   	 <el-pagination
+      class="pagination-wrap"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage4"
@@ -128,12 +120,12 @@
       :page-size="pages"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
-    </el-pagination>
-  </div>	
+    </el-pagination>	
   	<el-dialog
   :title="dialogTitle"
   :visible.sync="dialogVisible"
   width="90%"
+  class="dialog-wrap"
   >
  <el-form :inline="true" :model="formInline" class="demo-form-inline" label-width="140px" :disabled="isTrue">
  	<el-row :gutter="24">
