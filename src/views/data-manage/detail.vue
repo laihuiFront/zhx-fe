@@ -1469,11 +1469,11 @@
               style="width: 100%"
               border stripe
               class="table-wrap">
-              <el-table-column prop="dataCase.batchNo" width="80" label="时间" show-overflow-tooltip></el-table-column>
-              <el-table-column prop="dataCase.cardNo" width="70" label="对象姓名" show-overflow-tooltip></el-table-column>
-              <el-table-column prop="dataCase.identNo" width="50" label="关系" show-overflow-tooltip></el-table-column>
-              <el-table-column prop="dataCase.name" width="120" label="电话/地址" show-overflow-tooltip></el-table-column>
-              <el-table-column prop="dataCase.seqNo" label="催收记录" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="collectTime" width="80" label="时间" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="targetName" width="70" label="对象姓名" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="relation" width="50" label="关系" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="telPhone" width="120" label="电话/地址" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="collectInfo" label="催收记录" show-overflow-tooltip></el-table-column>
             </el-table>
           </div>
         </div>
@@ -1611,6 +1611,7 @@
 <script>
 
 import {getCaseDetail,
+        getSameBatchCollect,
         getAddressDetail,
         getLetterList,
         getArchiveDetail,
@@ -2016,6 +2017,9 @@ export default {
       this.otherActiveName = '1'
       getCaseDetail(this.id).then(data => {
         this.caseDetail = data
+      })
+      getSameBatchCollect(this.id).then(data => {
+        this.syncMemorizeList = data
       })
       getSameBatchCase(this.id).then(data => {
         this.dependCase = data

@@ -9,7 +9,15 @@ export function getCaseDetail(id) {
     }
   })
 }
-
+export function getSameBatchCollect(id) {
+  return request({
+    url: '/dataCase/detail',
+    method: 'post',
+    data: {
+      "caseId":id
+    }
+  })
+}
 export function getSameBatchCase(id) {
   return request({
     url: '/dataCase/sameBatchCaseList',
