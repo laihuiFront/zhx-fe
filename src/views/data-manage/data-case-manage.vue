@@ -560,7 +560,6 @@
         :sortable='true'
         :sort-orders="['ascending','descending']"
         label="催收员"
-        min-width="120"
         align="center"
         show-overflow-tooltip>
       </el-table-column>
