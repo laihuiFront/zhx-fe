@@ -92,6 +92,22 @@ export function getCommentDetail(id) {
   })
 }
 
+export function updateDataComment(data){
+  return request({
+    url: '/dataCase/updateComment',
+    method: 'post',
+    data
+  })
+}
+
+export function delDataComment(id){
+  return request({
+    url: '/dataCase/delComment',
+    method: 'post',
+    data:{id}
+  })
+}
+
 //利息
 export function getInterestDetail(id) {
   return request({

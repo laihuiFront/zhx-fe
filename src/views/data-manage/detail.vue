@@ -180,6 +180,12 @@
                       placeholder="请输入评语"
                       v-model="commentAddContent">
                     </el-input>
+                    <el-radio-group v-model="commentAddColor" style="margin-top:10px;">
+                      <el-radio label="黑">正常</el-radio>
+                      <el-radio label="蓝">标蓝</el-radio>
+                      <el-radio label="红">标红</el-radio>
+                      <el-radio label="">不更改</el-radio>
+                    </el-radio-group>
                   </div>
                   <div style="text-align: right; margin-top: 12px">
                     <el-button size="mini" type="text" @click="addCommentVisible = false">取消</el-button>
@@ -188,7 +194,7 @@
                  <el-button size="small" type="text" icon="el-icon-plus" title="添加" slot="reference"></el-button>
                 </el-popover>
                  <ul class="comments-wrap">
-                   <li v-for="(item) in commentList" :key="item.id" class="item">
+                   <li v-for="(item) in commentList" :key="item.id" class="item" :class="[{blue: item.commentColor==='BLUE'},{red: item.commentColor==='RED'}]">
                      {{item.createTime}} {{item.creatUserName}} : {{item.comment}}
                    </li>
                  </ul>
@@ -972,6 +978,34 @@
                     width="150"
                     label="提交时间">
                   </el-table-column>
+                  <el-table-column
+                    label="操作"
+                    v-if="letterVisible2"
+                    width="150">
+                    <template slot-scope="scope">
+                      <el-popover
+                        placement="bottom-end"
+                        trigger="manual"
+                        title="编辑操作记录"
+                        width="500"
+                        v-model="scope.row.editCommentVisible">
+                        <div>
+                          <el-input
+                            type="textarea"
+                            :rows="4"
+                            placeholder="请输入评语"
+                            v-model="scope.row.editContext">
+                          </el-input>
+                        </div>
+                        <div style="text-align: right; margin-top: 12px">
+                          <el-button size="mini" type="text" @click="$set(scope.row, 'editCommentVisible', false)">取消</el-button>
+                          <el-button type="primary" size="mini" @click="onClickSaveComment">确定</el-button>
+                        </div>
+                        <el-button type="text"  @click="editComment(scope.row)" slot="reference" v-if="caseDetail.currentuser">修改</el-button>
+                      </el-popover>
+                      <el-button type="text"  v-if="caseDetail.currentuser" @click="_deleteComment(scope.row.id)">删除</el-button>
+                    </template>
+                  </el-table-column>
                 </el-table>
               </el-tab-pane>
               <el-tab-pane label="利息更新" name="7" class="tabs-wrap">
@@ -1665,7 +1699,10 @@ import {getCaseDetail,
         getReduceApplyList,
         pageDataFile,
         getLegalList,
-        detailTelCurrentCollect} from '@/common/js/api-detail'
+        detailTelCurrentCollect,
+        updateDataComment,
+        delDataComment
+        } from '@/common/js/api-detail'
 import {getEnum} from '@/common/js/api-sync'
 
 export default {
@@ -1680,6 +1717,7 @@ export default {
     return {
       addCommentVisible:false,
       commentAddContent:null,
+      commentAddColor:"黑",
       dialogVisible:false,
       letterVisible:false,
       letterVisible2:true,
@@ -1805,10 +1843,31 @@ export default {
           
         });
     },
+    _deleteComment(id){
+      this.$confirm('此操作将删除该评语且无法恢复,是否继续？', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          delDataComment(id).then(res=>{
+            getCommentDetail(this.id).then(data => {
+              this.commentList = data
+            })
+            this.$message('评语删除成功')
+          })
+        }).catch(() => {
+          
+        });
+    },
     editLog(row){
       this.editLogRow = row
       this.$set(row, 'editContext', row.context)
       this.$set(row, 'editLogVisible', true)
+    },
+    editComment(row){
+      this.editCommentRow = row
+      this.$set(row, 'editContext', row.comment)
+      this.$set(row, 'editCommentVisible', true)
     },
     onClickSaveLog(){
       updateDataLog({
@@ -1819,6 +1878,18 @@ export default {
           this.logList = data
         })
         this.$message('操作记录修改成功')
+      })
+    },
+    onClickSaveComment(){
+      updateDataComment({
+        id: this.editCommentRow.id,
+        comment: this.editCommentRow.editContext
+      }).then(res =>{
+        getCommentDetail(this.id).then(data => {
+          this.$message('评语修改成功')
+          this.commentList = data
+          // this.$set(this.editCommentRow,'editCommentVisible',false)
+        })
       })
     },
     saveSelfInfo(){
@@ -2052,12 +2123,14 @@ export default {
       }
       addComment([{
         id: this.id,
-        comment: this.commentAddContent
+        comment: this.commentAddContent,
+        commentColor: this.commentAddColor
       }]).then(res => {
         this.$message('评语添加成功')
         getCommentDetail(this.id).then(data => {
           this.commentList = data
           this.addCommentVisible = false
+          this.commentAddColor = '黑'
         })
       })
     },
@@ -2227,7 +2300,13 @@ export default {
             .item{
               margin-bottom: 4px;
               line-height: 1;
-              color: #409eff;
+              color: #000;
+              &.blue{
+                color: #409eff;
+              }
+              &.red{
+                color: red;
+              }
               &:last-child{
                 margin-bottom: 0;
               }
