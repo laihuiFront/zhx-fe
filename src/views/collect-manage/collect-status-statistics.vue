@@ -1,6 +1,6 @@
 <template>
-  <div id="collect-status-statistics">
-    <el-tabs v-model="activeName" @tab-click="handleClick">
+  <div id="collect-status-statistics" style="display:flex;flex-direction:column;height:100%;">
+    <el-tabs v-model="activeName" @tab-click="handleClick" class="tabs-wrap">
       <el-tab-pane label="当日电催跟进量" name="first">
         <el-form :inline="true" ref="form1" :model="form1" label-width="80px">
           <el-form-item prop="val1">
@@ -25,7 +25,7 @@
             >
           </el-form-item>
         </el-form>
-        <el-table :data="tableData1" style="width: 100%">
+        <el-table class="table-wrap" :data="tableData1" style="width: 100%">
           <el-table-column
             v-for="(item, index) in tablecol_data1"
             :key="index"
@@ -95,7 +95,7 @@
             >
           </el-form-item>
         </el-form>
-        <el-table :data="tableData2" border
+        <el-table class="table-wrap" :data="tableData2" border
                   stripe style="width: 100%">
           <el-table-column
             v-for="(item, index) in tablecol_data2"
@@ -164,7 +164,7 @@
             >
           </el-form-item>
         </el-form>
-        <el-table :data="tableData2" border
+        <el-table class="table-wrap" :data="tableData2" border
                   stripe style="width: 100%">
           <el-table-column
             v-for="(item, index) in tablecol_data2"

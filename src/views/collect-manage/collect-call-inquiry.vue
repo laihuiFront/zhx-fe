@@ -1,5 +1,5 @@
 <template>
-  <div id="collect-call-inquiry">
+  <div id="collect-call-inquiry" class="page-wraper-sub">
     <el-dialog
       :title="detailTitle"
       class="dialog-wrap"
@@ -83,13 +83,13 @@
       </el-form-item>
     </el-form>
     <el-table
+      class="table-wrap"
       :data="tableData"
       tooltip-effect="dark"
       border
       stripe
       style="width: 100%"
       sortable="custom"
-      height="470"
       @row-dblclick="showCase"
       @sort-change="sortHandle"
     >
@@ -142,6 +142,7 @@
       </span>
     </el-dialog>
     <el-pagination
+      class="pagination-wrap"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="paginationData.currentPage"
