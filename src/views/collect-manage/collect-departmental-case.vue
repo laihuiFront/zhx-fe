@@ -1013,7 +1013,7 @@
             data = {total:0,list:[]}
           }
           this.fetchData = data;
-          this.paginationData.total = data.total;
+          this.paginationData.total = data.countCase;
           this.fetchData.sumMoney = this.formatMoney(data.sumMoney,0, "￥")
           this.fetchData.sumPayMoney = this.formatMoney(data.sumPayMoney,0, "￥")
           this.fetchData.sumRepay =  this.formatMoney(data.sumRepay,0, "￥")
