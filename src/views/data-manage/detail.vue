@@ -610,6 +610,7 @@
                   @selection-change="onSelectPhoneRow"
                   border stripe
                   :data="caseDetail.dataCaseTelEntityList"
+                  :row-class-name="telTableRowClassName"
                   style="width: 100%"
                   class="table-wrap">
                   <el-table-column
@@ -644,10 +645,36 @@
                     label="操作"
                     width="250">
                     <template slot-scope="scope">
-                      <el-button type="text">历史记录</el-button>
-                      <el-button type="text" @click="editPhone(scope.row)" v-if="caseDetail.currentuser">编辑</el-button>
-                      <el-button type="text" @click="deleteTel(scope.row.id)" v-if="caseDetail.currentuser">删除</el-button>
-                      <el-button type="text" v-if="caseDetail.currentuser" @click="stopTel(scope.row.id)">停止跟进</el-button>
+                      <el-popover
+                        v-model="scope.row.showHistory"
+                        placement="top"
+                        width="600"
+                        trigger="manual">
+                        <div>
+                          <el-radio-group v-model="scope.row.historyType" @change='getHistoryTel'>
+                            <el-radio :label="1">本案催记</el-radio>
+                            <el-radio :label="2">同号码所有催记</el-radio>
+                          </el-radio-group>
+                        </div>
+                        <el-table :data="scope.row.history" height="500">
+                          <el-table-column  property="collectTime" label="通话时间"></el-table-column>
+                          <el-table-column  property="targetName" label="通话对象"></el-table-column>
+                          <el-table-column  property="mobile" label="电话号码"></el-table-column>
+                          <el-table-column  property="sType" label="电话类型"></el-table-column>
+                          <el-table-column  property="collectInfo" label="通话内容"></el-table-column>
+                          <el-table-column  property="result" label="通话结果"></el-table-column>
+                          <el-table-column  property="repayTime" label="承诺日期"></el-table-column>
+                          <el-table-column  property="repayAmt" label="承诺金额"></el-table-column>
+                          <el-table-column  property="odv" label="催收员"></el-table-column>
+                        </el-table>
+                        <div style="text-align:center">
+                          <el-button type="primary" @click="$set(scope.row, 'showHistory',false)">关闭</el-button>
+                        </div>
+                        <el-button slot="reference" type="text" @click="showHistoryTel(scope.row)">历史记录</el-button>
+                      </el-popover>
+                      <el-button type="text" @click="editPhone(scope.row)" v-if="caseDetail.currentuser && scope.row.telStatusMsg !== '停止跟进'">编辑</el-button>
+                      <el-button type="text" @click="deleteTel(scope.row.id)" v-if="caseDetail.currentuser && scope.row.telStatusMsg !== '停止跟进'">删除</el-button>
+                      <el-button type="text" v-if="caseDetail.currentuser && scope.row.telStatusMsg !== '停止跟进'" @click="stopTel(scope.row.id)">停止跟进</el-button>
                     </template>
                   </el-table-column>
                 </el-table>
@@ -1637,7 +1664,8 @@ import {getCaseDetail,
         addLetter,
         getReduceApplyList,
         pageDataFile,
-        getLegalList} from '@/common/js/api-detail'
+        getLegalList,
+        detailTelCurrentCollect} from '@/common/js/api-detail'
 import {getEnum} from '@/common/js/api-sync'
 
 export default {
@@ -1693,11 +1721,26 @@ export default {
       uploadVisible:false,
       uploadFileList:[],
       header:{Authorization:localStorage.token},
-      legalList:[]
-
+      legalList:[],
+      currentRow:{}
     }
   },
   methods: {
+    showHistoryTel(row){
+      this.$set(row, 'historyType', 1)
+      this.$set(row, 'showHistory', true)
+      this.currentRow = row
+      this.getHistoryTel(1)
+    },
+    getHistoryTel(val){
+      detailTelCurrentCollect({
+        caseId: this.id,
+        detailType: val,
+        mobile: this.currentRow.tel
+      }).then(data =>{
+        this.$set(this.currentRow, 'history', data)
+      })
+    },
     uploadSuccess(res,file,fileList){
       if (res.code ==100){
   		    this.$message({
@@ -1988,10 +2031,10 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          updateTelStatus({
+          updateTelStatus([{
             id,
             telStatusMsg:'停止跟进'
-          }).then(res=>{
+          }]).then(res=>{
             getTelList(this.id).then(data=>{
               this.$set(this.caseDetail,'dataCaseTelEntityList',data)
             })
@@ -2123,7 +2166,12 @@ export default {
     },
     onSelectAddrRow(val){
       this.addrSelectList = val
-    }
+    },
+    telTableRowClassName({row, rowIndex}){
+      if(row.telStatusMsg === '停止跟进'){
+        return 'stop-row'
+      }
+    },
   },
   created() {
   	
@@ -2295,6 +2343,11 @@ export default {
   .upload-wrap{
     .upload-btn{
       display: inline-block;
+    }
+  }
+  .el-table{
+    .stop-row{
+      background:red
     }
   }
 </style>
