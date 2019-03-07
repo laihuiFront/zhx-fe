@@ -3,11 +3,11 @@ import { Message, MessageBox } from 'element-ui'
 import store from '../../store'
 import router from '../../router'
 import { localCache, removeCache } from '@/common/js/auth'
-
+export const baseURL = 'http://116.62.124.251/zxh';
 // 创建axios实例
 const service = axios.create({
   // baseURL: 'http://zhx.zaijushou.xyz',
-  baseURL: 'http://116.62.124.251/zxh',
+  baseURL,
   timeout: 10000 // 请求超时时间
 })
 
@@ -54,4 +54,4 @@ service.interceptors.response.use(
   }
 )
 
-export default service
+export default service;

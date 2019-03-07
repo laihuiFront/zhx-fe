@@ -1,31 +1,47 @@
 <template>
-  <div id="synergistic-letter-application" class="page-wraper-sub">
-    <el-tabs v-model="activeName"  type="card" class="tabs-wrap">
-      <el-tab-pane label="信函申请" name="tab1">
-      <el-dialog
-        :title="detailTitle"
-        class="dialog-wrap"
-        :visible.sync="detailVisible"
-        :close-on-click-modal="false"
-        width="90%"
-      >
-        <case-detail :id="detailId" ref='detail'></case-detail>
-      </el-dialog>
-      <el-dialog
-        title="同意协催"
-        :visible.sync="dialogVisible"
-        width="30%">
-        <el-input
-          type="textarea"
-          :autosize="{ minRows: 6, maxRows: 14}"
-          placeholder="请输入内容"
-          v-model="textarea3">
-        </el-input>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="dialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="dialogVisible = false;xcHandle()">确 定</el-button>
-        </span>
-      </el-dialog>
+  <div id="dclxh">
+  <el-upload
+    class="upload-demo"
+    :action="action"
+    :headers="headers"
+    :show-file-list="false"
+    accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.xls,.xlsx"
+    :multiple="false">
+    <el-button class="daoru" type="primary">导入信函记录</el-button>
+  </el-upload>
+
+    <div id="synergistic-letter-application" class="page-wraper-sub">
+      <el-tabs v-model="activeName" type="card" class="tabs-wrap">
+        <el-tab-pane label="信函申请" name="tab1">
+          <el-dialog
+            :title="detailTitle"
+            class="dialog-wrap"
+            :visible.sync="detailVisible"
+            :close-on-click-modal="false"
+            width="90%"
+          >
+            <case-detail :id="detailId" ref="detail"></case-detail>
+          </el-dialog>
+          <el-dialog title="同意协催" :visible.sync="dialogVisible" width="30%">
+            <el-input
+              type="textarea"
+              :autosize="{ minRows: 6, maxRows: 14 }"
+              placeholder="请输入内容"
+              v-model="textarea3"
+            >
+            </el-input>
+            <span slot="footer" class="dialog-footer">
+              <el-button @click="dialogVisible = false">取 消</el-button>
+              <el-button
+                type="primary"
+                @click="
+                  dialogVisible = false;
+                  xcHandle();
+                "
+                >确 定</el-button
+              >
+            </span>
+          </el-dialog>
           <el-row :gutter="24">
             <el-col :span="24">
               <div class="grid-content bg-purple">
@@ -175,12 +191,18 @@
                     >
                   </el-form-item>
                   <el-form-item>
-                    <el-button type="primary" v-has="'同意协催'" @click="dialogVisible=true"
-                    >同意协催</el-button
+                    <el-button
+                      type="primary"
+                      v-has="'同意协催'"
+                      @click="dialogVisible = true"
+                      >同意协催</el-button
                     >
                   </el-form-item>
                   <el-form-item>
-                    <el-button type="primary" v-has="'撤销信函'" @click="cxHandle"
+                    <el-button
+                      type="primary"
+                      v-has="'撤销信函'"
+                      @click="cxHandle"
                       >撤销信函</el-button
                     >
                   </el-form-item>
@@ -250,21 +272,32 @@
             :total="paginationData.total"
           >
           </el-pagination>
-      </el-tab-pane>
-      <el-tab-pane label="待发信函" name="tab2">
-        <tab2></tab2>
-      </el-tab-pane>
-    </el-tabs>
+        </el-tab-pane>
+        <el-tab-pane label="待发信函" name="tab2"> <tab2></tab2> </el-tab-pane>
+      </el-tabs>
+    </div>
   </div>
 </template>
 
 <script>
-import { pageMyCase,getEnum,markColor ,addSynergy,batchNo,addCollectStatus} from "@/common/js/collect-my-case";
-import {list as moduleList,confirmSynergy,cancelLetter,pageDataLetter} from
-    '@/common/js/synergistic-letter-application.js';
+import {
+  pageMyCase,
+  getEnum,
+  markColor,
+  addSynergy,
+  batchNo,
+  addCollectStatus
+} from "@/common/js/collect-my-case";
+import {baseURL} from '@/common/js/request.js';
+import {
+  list as moduleList,
+  confirmSynergy,
+  cancelLetter,
+  pageDataLetter
+} from "@/common/js/synergistic-letter-application.js";
 //import CaseDetail from '@/views/data-manage/detail';
-const CaseDetail = () => import('@/views/data-manage/detail');
-import tab2 from './synergistic-letter-application-2.vue';
+const CaseDetail = () => import("@/views/data-manage/detail");
+import tab2 from "./synergistic-letter-application-2.vue";
 export default {
   name: "synergisticLetterApplication",
   components: {
@@ -295,17 +328,15 @@ export default {
         val7: "", //委案金额下限
         val8: null, //申请人
         val9: null, //信函模板
-        val10: null, //案件状态
-
+        val10: null //案件状态
       },
       val0_data: [], //委托方
       val1_data: [], //批次号
       val4_data: [], //地区
-      val9_data: [
-      ], //信函模板
+      val9_data: [], //信函模板
       // 未退案0/正常1/暂停2/关档3/退档4/全部5
       val10_data: [
-        { label: "全部", value: '' },
+        { label: "全部", value: "" },
         { label: "未退案", value: 0 },
         { label: "正常", value: 1 },
         { label: "暂停", value: 2 },
@@ -393,7 +424,7 @@ export default {
         {
           prop: "synergyResult",
           label: "协催结果"
-        },
+        }
       ],
       multipleSelection: [],
       sort: {
@@ -401,9 +432,11 @@ export default {
         sort: "desc"
       },
       detailVisible: false,
-      detailId:-1,
+      detailId: -1,
       detailTitle: "案件详情",
-
+      action:baseURL+'/letter/import',
+      headers:{
+      }
     };
   },
   computed: {
@@ -427,21 +460,29 @@ export default {
         val4: collectArea,
         val5: name,
         val6: caseAmtStart,
-        val7:caseAmtEnd,
+        val7: caseAmtEnd,
         val8: applyer,
         val9: module,
         val10: caseStatus
-
       } = this.form;
       return {
-        clients,batchNos,seqno,collectArea,name,caseAmtStart,caseAmtEnd,applyer,module,caseStatus,
+        clients,
+        batchNos,
+        seqno,
+        collectArea,
+        name,
+        caseAmtStart,
+        caseAmtEnd,
+        applyer,
+        module,
+        caseStatus,
         applyDateStart: (!!val2 && val2[0]) || "",
         applyDateEnd: (!!val2 && val2[1]) || "",
         pageNum: this.paginationData.currentPage,
         pageSize: this.paginationData.pageSize,
         orderBy: this.sort.orderBy,
         sort: this.sort.sort,
-        status:0
+        status: 0
       };
     }
   },
@@ -457,13 +498,13 @@ export default {
     this.init();
   },
   methods: {
-    showCase(row){
-      this.detailTitle = row.name+'案件详情'
-      this.detailId = row.caseId
-      this.detailVisible = true
-      this.$nextTick(()=>{
-        this.$refs.detail.queryDetail()
-      })
+    showCase(row) {
+      this.detailTitle = row.name + "案件详情";
+      this.detailId = row.caseId;
+      this.detailVisible = true;
+      this.$nextTick(() => {
+        this.$refs.detail.queryDetail();
+      });
     },
     sortHandle({ prop, order }) {
       this.sort.sort = order.replace("ending", "");
@@ -504,13 +545,13 @@ export default {
         this.getMainData();
       });
     },
-    cxHandle(){
+    cxHandle() {
       if (this.multipleSelection.length == 0) {
         return;
       }
       let data = this.multipleSelection.reduce((acc, item) => {
         acc.push({
-          id: item.id,
+          id: item.id
         });
         return acc;
       }, []);
@@ -577,9 +618,12 @@ export default {
     },
     init() {
       this.getMainData();
-      moduleList().then((data)=>{
-        this.val9_data = this.transform(data, [['id', 'value'], ['title', 'label']]);
-      })
+      moduleList().then(data => {
+        this.val9_data = this.transform(data, [
+          ["id", "value"],
+          ["title", "label"]
+        ]);
+      });
       // val0: null, //委托方
       //   val1: null, //批次号
       //   val2: [], //申请时间
@@ -600,5 +644,15 @@ export default {
 
 <style lang="scss">
 #synergistic-letter-application {
+}
+#dclxh{
+  position: relative;
+  .daoru {
+    position: absolute;
+    right: 33px;
+    top: 5px;
+    z-index: 22;
+
+  }
 }
 </style>
