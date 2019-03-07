@@ -881,7 +881,7 @@ export default {
         );
         this.fetchData.sumRepay = this.formatMoney(data.sumRepay, 0, "￥");
         this.fetchData.sumBank = this.formatMoney(data.sumBank, 0, "￥");
-        this.paginationData.total = data.total;
+        this.paginationData.total = data.countCase;
         this.tableData = data.list.map(item => {
           return Object.assign(item, { "class-name": `color_${item.color}` });
         });

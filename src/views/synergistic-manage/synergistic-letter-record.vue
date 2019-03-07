@@ -334,11 +334,11 @@ export default {
           label: "催收状态"
         },
         {
-          prop: "caseAmt",
+          prop: "caseAmtMsg",
           label: "委案金额"
         },
         {
-          prop: "repayAmt",
+          prop: "repayAmtMsg",
           label: "还款金额"
         },
         {
