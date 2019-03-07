@@ -129,7 +129,7 @@
         :on-success="uploadSuccess"
         :on-progress="onProgress"
         >
-        <el-button size="small" type="primary" v-has="'导入催收记录'">导入催收记录</el-button>
+        <el-button size="small" type="primary" v-has="'导入案件记录'">导入催收记录</el-button>
       </el-upload>
     </el-form-item>
    </el-form>
