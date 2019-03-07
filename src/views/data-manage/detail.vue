@@ -1728,8 +1728,10 @@ export default {
       })
     },
     memorizeTypeChange(val){
-      getCollectDetail(this.id,val).then(data => {
-        console.info(data)
+      let batchNo = this.caseDetail.batchNo;
+      let identNo = this.caseDetail.identNo;
+      let cardNo = this.caseDetail.cardNo;
+      getCollectDetail(this.id,batchNo,identNo,cardNo,val).then(data => {
         this.memorizeList = data
       })
     },
