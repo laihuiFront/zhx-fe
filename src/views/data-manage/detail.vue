@@ -1141,7 +1141,7 @@
                   </el-table-column>
                 </el-table>
               </el-tab-pane>
-              <el-tab-pane label="共债案件" name="10" class="tabs-wrap">
+              <el-tab-pane label="共债案件" name="10" class="tabs-wrap" v-show="userInfo.sameBatch">
                 <el-table
                   :data="caseSameList"
                   style="width: 100%"
@@ -1670,7 +1670,7 @@
 </template>
 
 <script>
-
+import {mapGetters} from 'vuex'
 import {getCaseDetail,
         getSameBatchCollect,
         getAddressDetail,
@@ -1713,6 +1713,11 @@ export default {
       default: -1
     }
   },
+  computed: {
+    ...mapGetters([
+      'userInfo'
+    ])
+},
   data() {
     return {
       addCommentVisible:false,
@@ -2185,41 +2190,43 @@ export default {
       })
     },
     showPanel(tab,e){
-      var ind = tab.index;
-      if (ind == 1){
+      console.log(tab)
+      console.log(e)
+      var ind = tab.label;
+      if (ind == '地址'){
         getAddressDetail(this.id).then(data => {
           this.addrList = data
           this.letterVisible = false;
           this.letterVisible2 = true;
         })
-      }else if (ind == 2){
+      }else if (ind == '案人数据'){
         getArchiveDetail(this.id).then(data => {
           this.dataList = data
         })
-      }else if(ind == 3){//催記
+      }else if(ind == '催记'){//催記
         this.memorizeType = 1
         getCollectDetail(this.id,1).then(data => {
           console.info(data)
           this.memorizeList = data
         })
-      }else if (ind == 4){//评语
+      }else if (ind == '评语'){//评语
         getCommentDetail(this.id).then(data => {
           this.commentList = data
         })
-      }else if (ind == 5){//利息
+      }else if (ind == '利息更新'){//利息
         getInterestDetail(this.id).then(data => {
           this.rateUpdateList = data
         })
-      }else if (ind == 6){//协催
+      }else if (ind == '协催'){//协催
         this.syncType = 1
         getSynergyDetail(this.id).then(data => {
           this.syncList = data
         })
-      }else if(ind == 7){//共债案件
+      }else if(ind == '共债案件'){//共债案件
         sameCaseList(this.id).then(data=>{
           this.caseSameList = data
         })
-      }else if(ind == 8){//操作记录
+      }else if(ind == '操作记录'){//操作记录
         this.logType = ''
         pageDataLog({
           caseId: this.id,
@@ -2227,11 +2234,11 @@ export default {
         }).then(data=>{
           this.logList = data
         })
-      }else if(ind == 9){//诉讼案件
+      }else if(ind == '诉讼案件'){//诉讼案件
         getLegalList(this.id).then(data=>{
           this.legalList = data.data
         })
-      }else if(ind == 10){//减免管理
+      }else if(ind == '减免管理'){//减免管理
         getReduceApplyList(this.id).then(data=>{
           this.reduceApplyList = data
         })
