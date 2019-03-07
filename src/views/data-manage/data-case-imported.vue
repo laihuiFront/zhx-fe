@@ -1,7 +1,7 @@
 <template>
   <div id="data-case-imported" 
   	 v-loading="loading2"
-    element-loading-text="拼命加载中"
+    element-loading-text="正在导入中"
     element-loading-spinner="el-icon-loading"
    element-loading-background="rgba(248, 248, 248, 0.8)"
    class="page-wraper-sub">
@@ -129,7 +129,7 @@
         :on-success="uploadSuccess"
         :on-progress="onProgress"
         >
-        <el-button size="small" type="primary" v-has="'导入催收记录'">导入催收记录</el-button>
+        <el-button size="small" type="primary" v-has="'导入案件记录'">导入催收记录</el-button>
       </el-upload>
     </el-form-item>
    </el-form>
@@ -551,7 +551,7 @@ methods: {
       if (res.code ==100){
   		    this.$message({
             type: 'success',
-            message: res.msg
+            message: "导入成功"
           });
            dataList().then((response)=>{
             this.DataList=response.pageInfo.list

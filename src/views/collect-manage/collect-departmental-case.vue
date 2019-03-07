@@ -34,9 +34,9 @@
               :inline="true"
               ref="form"
               :model="form"
-              label-width="80px"
+              label-width="20px"
             >
-              <el-row>
+
                 <el-form-item prop="val31">
                   <el-select
                     v-model="form.val31"
@@ -67,7 +67,7 @@
                     </el-option>
                   </el-select>
                 </el-form-item>
-              </el-row>
+
               <el-form-item prop="val0">
                 <el-select
                   v-model="form.val0"
@@ -1013,7 +1013,7 @@
             data = {total:0,list:[]}
           }
           this.fetchData = data;
-          this.paginationData.total = data.total;
+          this.paginationData.total = data.countCase;
           this.fetchData.sumMoney = this.formatMoney(data.sumMoney,0, "￥")
           this.fetchData.sumPayMoney = this.formatMoney(data.sumPayMoney,0, "￥")
           this.fetchData.sumRepay =  this.formatMoney(data.sumRepay,0, "￥")

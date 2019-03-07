@@ -284,3 +284,11 @@ export function getLegalList(caseId){
     data:{caseId}
   })
 }
+
+export function detailTelCurrentCollect(data){
+  return request({
+    url: 'dataCollect/tel/detailTelCurentCollect',
+    method: 'post',
+    data
+  })
+}
