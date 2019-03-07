@@ -647,7 +647,7 @@
                       <el-button type="text">历史记录</el-button>
                       <el-button type="text" @click="editPhone(scope.row)" v-if="caseDetail.currentuser">编辑</el-button>
                       <el-button type="text" @click="deleteTel(scope.row.id)" v-if="caseDetail.currentuser">删除</el-button>
-                      <el-button type="text" v-if="caseDetail.currentuser">停止跟进</el-button>
+                      <el-button type="text" v-if="caseDetail.currentuser" @click="stopTel(scope.row.id)">停止跟进</el-button>
                     </template>
                   </el-table-column>
                 </el-table>
@@ -1979,6 +1979,25 @@ export default {
           this.$message('电话状态修改成功')
         })
       }).catch(()=>{})
+    },
+    stopTel(id){
+      this.$confirm('确认停止跟进该电话？', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          updateTelStatus({
+            id,
+            telStatusMsg:'停止跟进'
+          }).then(res=>{
+            getTelList(this.id).then(data=>{
+              this.$set(this.caseDetail,'dataCaseTelEntityList',data)
+            })
+            this.$message('该电话已停止跟进')
+          })
+        }).catch(() => {
+          
+        });
     },
     onClickAddComment(){
       if(!this.commentAddContent){
