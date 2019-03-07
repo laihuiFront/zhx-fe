@@ -1869,6 +1869,7 @@ export default {
     showAllAddr(){
       getAddressDetail(this.id).then(data=>{
         this.addrList = data
+
       })
     },
     saveAddr(){
@@ -2115,6 +2116,8 @@ export default {
       if (ind == 1){
         getAddressDetail(this.id).then(data => {
           this.addrList = data
+          this.letterVisible = false;
+          this.letterVisible2 = true;
         })
       }else if (ind == 2){
         getArchiveDetail(this.id).then(data => {

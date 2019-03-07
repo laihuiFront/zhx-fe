@@ -388,15 +388,15 @@
         label-width="100px"
         class="demo-ruleForm"
       >
-        <el-form-item label="催收时间" prop="createTime">
+        <el-form-item label="通话时间" prop="createTime">
           <el-date-picker
             v-model="recordInfo.collectTime"
-            value-format="yyyy-MM-dd HH:mm:ss"
+            value-format="yyyy-MM-dd HH:mm"
             type="datetime"
             placeholder="选择日期时间">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="催收结果" prop="result">
+        <el-form-item label="通话结果" prop="result">
           <el-input
             type="textarea"
             :rows="4"
