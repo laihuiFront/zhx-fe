@@ -1,5 +1,5 @@
 <template>
-<div>
+<div style="height:100%;display:flex;flex-direction:column;">
 <el-dialog
   :title="detailTitle"
   class="dialog-wrap"
@@ -171,12 +171,6 @@
           >重置</el-button
           >
         </el-form-item>
-      </el-form>
-    </div>
-  </el-col>
-  <el-col :span="22">
-    <div class="grid-content bg-purple">
-      <el-form :inline="true">
         <el-form-item>
           <el-button v-has="'批量确认信函'" type="primary" @click="qrHandle"
           >批量确认信函</el-button
@@ -192,6 +186,7 @@
   </el-col>
 </el-row>
 <el-table
+  class="table-wrap"
   ref="multipleTable"
   :data="tableData"
   border
@@ -241,8 +236,8 @@
   <!--</template>-->
   <!--</el-table-column>-->
 </el-table>
-<div class="block">
   <el-pagination
+  class="pagination-wrap"
   @size-change="handleSizeChange"
   @current-change="handleCurrentChange"
   :current-page="paginationData.currentPage"
@@ -252,8 +247,7 @@
   :total="paginationData.total"
   >
   </el-pagination>
-</div></div
->
+</div>
 </template>
 
 <script>

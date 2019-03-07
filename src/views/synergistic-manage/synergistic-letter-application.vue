@@ -1,251 +1,246 @@
 <template>
-  <el-tabs v-model="activeName" id="synergistic-letter-application" type="card">
-    <el-tab-pane label="信函申请" name="tab1"
-      ><div>
-    <el-dialog
-      :title="detailTitle"
-      class="dialog-wrap"
-      :visible.sync="detailVisible"
-      :close-on-click-modal="false"
-      width="90%"
-    >
-      <case-detail :id="detailId" ref='detail'></case-detail>
-    </el-dialog>
-    <el-dialog
-      title="同意协催"
-      :visible.sync="dialogVisible"
-      width="30%">
-      <el-input
-        type="textarea"
-        :autosize="{ minRows: 6, maxRows: 14}"
-        placeholder="请输入内容"
-        v-model="textarea3">
-      </el-input>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false;xcHandle()">确 定</el-button>
-      </span>
-    </el-dialog>
-        <el-row :gutter="24">
-          <el-col :span="24">
-            <div class="grid-content bg-purple">
-              <el-form
-                :inline="true"
-                ref="form"
-                :model="form"
-                label-width="80px"
-              >
-                <el-form-item prop="val0">
-                  <el-select
-                    v-model="form.val0"
-                    placeholder="请选择委托方"
-                    filterable
-                    multiple
-                    clearable
-                  >
-                    <el-option
-                      v-for="item in val0_data"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
+  <div id="synergistic-letter-application" class="page-wraper-sub">
+    <el-tabs v-model="activeName"  type="card" class="tabs-wrap">
+      <el-tab-pane label="信函申请" name="tab1">
+      <el-dialog
+        :title="detailTitle"
+        class="dialog-wrap"
+        :visible.sync="detailVisible"
+        :close-on-click-modal="false"
+        width="90%"
+      >
+        <case-detail :id="detailId" ref='detail'></case-detail>
+      </el-dialog>
+      <el-dialog
+        title="同意协催"
+        :visible.sync="dialogVisible"
+        width="30%">
+        <el-input
+          type="textarea"
+          :autosize="{ minRows: 6, maxRows: 14}"
+          placeholder="请输入内容"
+          v-model="textarea3">
+        </el-input>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="dialogVisible = false;xcHandle()">确 定</el-button>
+        </span>
+      </el-dialog>
+          <el-row :gutter="24">
+            <el-col :span="24">
+              <div class="grid-content bg-purple">
+                <el-form
+                  :inline="true"
+                  ref="form"
+                  :model="form"
+                  label-width="80px"
+                >
+                  <el-form-item prop="val0">
+                    <el-select
+                      v-model="form.val0"
+                      placeholder="请选择委托方"
+                      filterable
+                      multiple
+                      clearable
                     >
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-                <el-form-item prop="val1">
-                  <el-select
-                    v-model="form.val1"
-                    multiple
-                    filterable
-                    remote
-                    placeholder="请输入批次号"
-                    :remote-method="querySearch"
-                  >
-                    <el-option
-                      v-for="item in val1_data"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
+                      <el-option
+                        v-for="item in val0_data"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                      >
+                      </el-option>
+                    </el-select>
+                  </el-form-item>
+                  <el-form-item prop="val1">
+                    <el-select
+                      v-model="form.val1"
+                      multiple
+                      filterable
+                      remote
+                      placeholder="请输入批次号"
+                      :remote-method="querySearch"
                     >
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-                <el-form-item prop="val2">
-                  <el-date-picker
-                    v-model="form.val2"
-                    value-format="yyyy-MM-dd"
-                    type="daterange"
-                    align="right"
-                    unlink-panels
-                    range-separator="至"
-                    start-placeholder="申请开始日期"
-                    end-placeholder="申请结束日期"
-                  >
-                  </el-date-picker>
-                </el-form-item>
-                <el-form-item prop="val3">
-                  <el-input
-                    v-model="form.val3"
-                    placeholder="个案序列号"
-                    clearable
-                  ></el-input>
-                </el-form-item>
-                <el-form-item prop="val4">
-                  <el-cascader
-                    :options="val4_data"
-                    clearable
-                    placeholder="催收区域"
-                    v-model="form.val4"
-                  >
-                  </el-cascader>
-                </el-form-item>
-                <el-form-item prop="val5">
-                  <el-input
-                    v-model="form.val5"
-                    placeholder="姓名"
-                    clearable
-                  ></el-input>
-                </el-form-item>
-                <el-form-item prop="val7">
-                  <el-input
-                    v-model="form.val7"
-                    placeholder="委案金额下限"
-                    clearable
-                  ></el-input>
-                </el-form-item>
-                <el-form-item prop="val6">
-                  <el-input
-                    v-model="form.val6"
-                    placeholder="委案金额上限"
-                    clearable
-                  ></el-input>
-                </el-form-item>
+                      <el-option
+                        v-for="item in val1_data"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                      >
+                      </el-option>
+                    </el-select>
+                  </el-form-item>
+                  <el-form-item prop="val2">
+                    <el-date-picker
+                      v-model="form.val2"
+                      value-format="yyyy-MM-dd"
+                      type="daterange"
+                      align="right"
+                      unlink-panels
+                      range-separator="至"
+                      start-placeholder="申请开始日期"
+                      end-placeholder="申请结束日期"
+                    >
+                    </el-date-picker>
+                  </el-form-item>
+                  <el-form-item prop="val3">
+                    <el-input
+                      v-model="form.val3"
+                      placeholder="个案序列号"
+                      clearable
+                    ></el-input>
+                  </el-form-item>
+                  <el-form-item prop="val4">
+                    <el-cascader
+                      :options="val4_data"
+                      clearable
+                      placeholder="催收区域"
+                      v-model="form.val4"
+                    >
+                    </el-cascader>
+                  </el-form-item>
+                  <el-form-item prop="val5">
+                    <el-input
+                      v-model="form.val5"
+                      placeholder="姓名"
+                      clearable
+                    ></el-input>
+                  </el-form-item>
+                  <el-form-item prop="val7">
+                    <el-input
+                      v-model="form.val7"
+                      placeholder="委案金额下限"
+                      clearable
+                    ></el-input>
+                  </el-form-item>
+                  <el-form-item prop="val6">
+                    <el-input
+                      v-model="form.val6"
+                      placeholder="委案金额上限"
+                      clearable
+                    ></el-input>
+                  </el-form-item>
 
-                <el-form-item prop="val8">
-                  <el-input
-                    v-model="form.val8"
-                    placeholder="申请人"
-                    clearable
-                  ></el-input>
-                </el-form-item>
-                <el-form-item prop="val9">
-                  <el-select
-                    v-model="form.val9"
-                    placeholder="信函模板"
-                    clearable
-                  >
-                    <el-option
-                      v-for="item in val9_data"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
+                  <el-form-item prop="val8">
+                    <el-input
+                      v-model="form.val8"
+                      placeholder="申请人"
+                      clearable
+                    ></el-input>
+                  </el-form-item>
+                  <el-form-item prop="val9">
+                    <el-select
+                      v-model="form.val9"
+                      placeholder="信函模板"
+                      clearable
                     >
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-                <el-form-item prop="val10">
-                  <el-select
-                    v-model="form.val10"
-                    placeholder="案件状态"
-                    clearable
-                  >
-                    <el-option
-                      v-for="item in val10_data"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
+                      <el-option
+                        v-for="item in val9_data"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                      >
+                      </el-option>
+                    </el-select>
+                  </el-form-item>
+                  <el-form-item prop="val10">
+                    <el-select
+                      v-model="form.val10"
+                      placeholder="案件状态"
+                      clearable
                     >
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-                <el-form-item>
-                  <el-button
-                    type="text"
-                    icon="el-icon-search"
-                    @click="searchHandle"
-                    >查询</el-button
-                  >
-                </el-form-item>
-                <el-form-item>
-                  <el-button
-                    type="text"
-                    icon="el-icon-refresh"
-                    @click="resetForm('form')"
-                    >重置</el-button
-                  >
-                </el-form-item>
-              </el-form>
-            </div>
-          </el-col>
-          <el-col :span="22">
-            <div class="grid-content bg-purple">
-              <el-form :inline="true">
-                <el-form-item>
-                  <el-button type="primary" v-has="'同意协催'" @click="dialogVisible=true"
-                  >同意协催</el-button
-                  >
-                </el-form-item>
-                <el-form-item>
-                  <el-button type="primary" v-has="'撤销信函'" @click="cxHandle"
-                    >撤销信函</el-button
-                  >
-                </el-form-item>
-              </el-form>
-            </div>
-          </el-col>
-        </el-row>
-        <el-table
-          ref="multipleTable"
-          :data="tableData"
-          border
-          stripe
-          style="width: 100%"
-          :cell-style="{ whiteSpace: 'nowrap' }"
-          @selection-change="handleSelectionChange"
-          @row-dblclick="showCase"
-          @sort-change="sortHandle"
-        >
-          <el-table-column type="selection" width="55"> </el-table-column>
-          <el-table-column
-            label="个案序列号"
-            prop="seqno"
-            sortable="custom"
-            :sort-orders="['ascending', 'descending']"
-            min-width="120"
-            header-align="center"
-            align="center"
+                      <el-option
+                        v-for="item in val10_data"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                      >
+                      </el-option>
+                    </el-select>
+                  </el-form-item>
+                  <el-form-item>
+                    <el-button
+                      type="text"
+                      icon="el-icon-search"
+                      @click="searchHandle"
+                      >查询</el-button
+                    >
+                  </el-form-item>
+                  <el-form-item>
+                    <el-button
+                      type="text"
+                      icon="el-icon-refresh"
+                      @click="resetForm('form')"
+                      >重置</el-button
+                    >
+                  </el-form-item>
+                  <el-form-item>
+                    <el-button type="primary" v-has="'同意协催'" @click="dialogVisible=true"
+                    >同意协催</el-button
+                    >
+                  </el-form-item>
+                  <el-form-item>
+                    <el-button type="primary" v-has="'撤销信函'" @click="cxHandle"
+                      >撤销信函</el-button
+                    >
+                  </el-form-item>
+                </el-form>
+              </div>
+            </el-col>
+          </el-row>
+          <el-table
+            class="table-wrap"
+            ref="multipleTable"
+            :data="tableData"
+            border
+            stripe
+            style="width: 100%"
+            :cell-style="{ whiteSpace: 'nowrap' }"
+            @selection-change="handleSelectionChange"
+            @row-dblclick="showCase"
+            @sort-change="sortHandle"
           >
-            <template slot-scope="scope">
-              <el-button
-                style="text-decoration: underline"
-                type="text"
-                size="small"
-                @click="showCase(scope.row)"
-                >{{ scope.row.seqno }}</el-button
-              >
-            </template>
-          </el-table-column>
-          <el-table-column
-            v-for="(item, index) in tableCol_data"
-            :key="index"
-            v-bind="item"
-            sortable="custom"
-            min-width="100"
-            :sort-orders="['ascending', 'descending']"
-            header-align="center"
-            align="center"
-          >
-          </el-table-column>
-          <!--<el-table-column label="操作" show-overflow-tooltip>-->
-          <!--<template slot-scope="scope">-->
-          <!--<el-button type="text" size="small">导入</el-button>-->
-          <!--<el-button type="text" size="small">下载</el-button>-->
-          <!--<el-button type="text" size="small">编辑</el-button>-->
-          <!--</template>-->
-          <!--</el-table-column>-->
-        </el-table>
-        <div class="block">
+            <el-table-column type="selection" width="55"> </el-table-column>
+            <el-table-column
+              label="个案序列号"
+              prop="seqno"
+              sortable="custom"
+              :sort-orders="['ascending', 'descending']"
+              min-width="120"
+              header-align="center"
+              align="center"
+            >
+              <template slot-scope="scope">
+                <el-button
+                  style="text-decoration: underline"
+                  type="text"
+                  size="small"
+                  @click="showCase(scope.row)"
+                  >{{ scope.row.seqno }}</el-button
+                >
+              </template>
+            </el-table-column>
+            <el-table-column
+              v-for="(item, index) in tableCol_data"
+              :key="index"
+              v-bind="item"
+              sortable="custom"
+              min-width="100"
+              :sort-orders="['ascending', 'descending']"
+              header-align="center"
+              align="center"
+            >
+            </el-table-column>
+            <!--<el-table-column label="操作" show-overflow-tooltip>-->
+            <!--<template slot-scope="scope">-->
+            <!--<el-button type="text" size="small">导入</el-button>-->
+            <!--<el-button type="text" size="small">下载</el-button>-->
+            <!--<el-button type="text" size="small">编辑</el-button>-->
+            <!--</template>-->
+            <!--</el-table-column>-->
+          </el-table>
           <el-pagination
+            class="pagination-wrap"
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="paginationData.currentPage"
@@ -255,12 +250,12 @@
             :total="paginationData.total"
           >
           </el-pagination>
-        </div></div
-    ></el-tab-pane>
-    <el-tab-pane label="待发信函" name="tab2">
-      <tab2></tab2>
-    </el-tab-pane>
-  </el-tabs>
+      </el-tab-pane>
+      <el-tab-pane label="待发信函" name="tab2">
+        <tab2></tab2>
+      </el-tab-pane>
+    </el-tabs>
+  </div>
 </template>
 
 <script>
