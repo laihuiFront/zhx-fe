@@ -463,7 +463,7 @@
         label="个案序列号"
         show-overflow-tooltip>
         <template slot-scope="scope">
-          <el-button type="text" size="small" @click="editCase(scope.row.id, scope.row.name)">{{scope.row.seqNo}}</el-button>
+          <el-button type="text" size="small" @click="editCase(scope.row.id, scope.row.name,scope.row.seqNo)">{{scope.row.seqNo}}</el-button>
         </template>
       </el-table-column>
       <el-table-column
@@ -1464,13 +1464,21 @@
           this.$refs.detail.queryDetail()
         })
       },
-      editCase(id, name){
-        this.detailTitle = name+'案件详情'
-        this.detailId = id
-        this.detailVisible = true
-        this.$nextTick(()=>{
-          this.$refs.detail.queryDetail()
+      editCase(id, name, seqNo){
+        this.$router.push({
+          path:'case-detail',
+          query:{
+            id,
+            name,
+            seqNo
+          }
         })
+        // this.detailTitle = name+'案件详情'
+        // this.detailId = id
+        // this.detailVisible = true
+        // this.$nextTick(()=>{
+        //   this.$refs.detail.queryDetail()
+        // })
       }
     },
     created() {

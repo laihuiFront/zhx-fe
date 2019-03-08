@@ -165,6 +165,10 @@ export default new Router({
           path: 'setting-role',
           component: () => import('@/views/settings/setting-role'),
           name: 'setting-role'
+        },{
+          path: 'case-detail',
+          component: () => import('@/views/data-manage/detail'),
+          name: 'case-detail'
         }
       ]
     },

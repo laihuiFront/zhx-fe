@@ -1141,7 +1141,7 @@
                   </el-table-column>
                 </el-table>
               </el-tab-pane>
-              <el-tab-pane label="共债案件" name="10" class="tabs-wrap" v-show="userInfo.sameBatch">
+              <el-tab-pane label="共债案件" name="10" class="tabs-wrap" v-if="userInfo.sameBatch">
                 <el-table
                   :data="caseSameList"
                   style="width: 100%"
@@ -1707,16 +1707,19 @@ import {getEnum} from '@/common/js/api-sync'
 
 export default {
   name:'caseDetail',
-  props:{
-    id:{
-      type: Number,
-      default: -1
-    }
-  },
+  // props:{
+  //   id:{
+  //     type: Number,
+  //     default: -1
+  //   }
+  // },
   computed: {
     ...mapGetters([
       'userInfo'
-    ])
+    ]),
+    id(){
+      return this.$route.query.id
+    }
 },
   data() {
     return {
@@ -2256,8 +2259,14 @@ export default {
       }
     },
   },
+  watch: {
+    '$route' (to, from) {
+      // console.log(this.getStatus(this.$route.path))
+      this.queryDetail()
+    }
+  },
   created() {
-  	
+  	this.queryDetail()
   }
 }
 </script>

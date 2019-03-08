@@ -23,25 +23,42 @@ export default {
 },
   methods:{
     gotoPage(menu){
-      this.$router.push('/zhx' + menu.menuUrl)
+      if(menu.isDetail){
+        this.$router.push({
+          path:'case-detail',
+          query: menu.query
+        })
+      }else{
+        this.$router.push('/zhx' + menu.menuUrl)
+      }
     },
     closeTab(menu){
       const tabIndex = this.$store.getters.getTabIndex(menu.id)
       let nextPath = null
+      let nextMenu = null
       if (menu.id === this.currentMenu.id) {
         if (this.tabMenus.length > 1) {
           if(tabIndex===0){
-            nextPath = this.tabMenus[1].menuUrl
+            nextMenu = this.tabMenus[1]
           }else{
-            nextPath = this.tabMenus[tabIndex-1].menuUrl
+            nextMenu = this.tabMenus[tabIndex-1]
           }
+          nextPath = nextMenu.menuUrl
         } else {
-          nextPath = '/home-page'
+          this.$router.push('/zhx'+'/home-page')
+          return
         }
       }
       this.removeTab(menu.id)
-      if(nextPath){
-        this.$router.push('/zhx'+nextPath)
+      if(nextMenu){
+        if(nextMenu.isDetail){
+          this.$router.push({
+            path:'case-detail',
+            query: nextMenu.query
+          })
+        }else{
+          this.$router.push('/zhx'+nextPath)
+        }
       }
     },
     ...mapMutations({
