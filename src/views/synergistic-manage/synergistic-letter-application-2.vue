@@ -172,6 +172,7 @@
             </el-form-item>
             <el-form-item>
               <el-dropdown
+               v-has="'导出信函'"
                 trigger="click"
                 @command="exportXh"
               >
@@ -185,6 +186,7 @@
             </el-form-item>
             <el-form-item>
               <el-dropdown
+                v-has="'导出查询结果'"
                 trigger="click"
                 @command="exportCx"
               >
