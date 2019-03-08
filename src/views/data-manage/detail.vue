@@ -28,7 +28,7 @@
               <el-input v-model="caseDetail.cardNo" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="催收状态">
-              <el-input v-model="caseDetail.collectStatus" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.collectStatusMsg" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="预计退案日">
               <el-date-picker v-model="caseDetail.expectTime" type="date" :disabled="true"  placeholder="选择日期"></el-date-picker>
@@ -895,7 +895,7 @@
                     label="电话/地址">
                   </el-table-column>
                   <el-table-column
-                    prop="collectionType"
+                    prop="telType"
                     show-overflow-tooltip
                     label="类型">
                   </el-table-column>
@@ -910,7 +910,7 @@
                     label="催收对象">
                   </el-table-column>
                   <el-table-column
-                    prop="method"
+                    prop="methodMsg"
                     show-overflow-tooltip
                     label="谈判方式">
                   </el-table-column>
@@ -930,7 +930,7 @@
                     label="减免金额">
                   </el-table-column>
                   <el-table-column
-                    prop="remark"
+                    prop="reduceStatusMsg"
                     show-overflow-tooltip
                     label="减免状态">
                   </el-table-column>
@@ -940,7 +940,7 @@
                     label="催收人">
                   </el-table-column>
                   <el-table-column
-                    prop="collectStatus"
+                    prop="collectStatusMsg"
                     show-overflow-tooltip
                     label="催收状态">
                   </el-table-column>

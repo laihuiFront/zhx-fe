@@ -203,6 +203,7 @@
       border
       stripe
       tooltip-effect="dark"
+      @row-dblclick="showCase"
       style="width: 100%"
       sortable="custom"
       @sort-change="handleSort"
@@ -223,6 +224,15 @@
         :sort-orders="['ascending','descending']"
         label="个案序列号"
       >
+        <template slot-scope="scope">
+          <el-button
+            style="text-decoration: underline"
+            type="text"
+            size="small"
+            @click="showCase(scope.row)"
+          >{{ scope.row.seqno }}</el-button
+          >
+        </template>
       </el-table-column>
       <el-table-column
         prop="name"
@@ -498,6 +508,19 @@
       }
     },
     methods: {
+      showCase(row){
+        let id = row.caseId
+        let name = row.name
+        let seqNo = row.seqno
+        this.$router.push({
+          path:'case-detail',
+          query:{
+            id,
+            name,
+            seqNo
+          }
+        })
+      },
       editMessage(record){
         this.recordInfo = {
           id: record.id,
