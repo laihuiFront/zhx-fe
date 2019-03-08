@@ -252,7 +252,7 @@
   	<el-form-item label="批  次  号"	
   			prop="batchNo"
         :rules="{ required: true, message: '批次号不能为空', trigger: 'blur'}">
-    <el-input v-model="formInline.batchNo" placeholder="请输入批次号" clearable></el-input>
+    <el-input v-model="formInline.batchNo" disabled placeholder="请输入批次号" clearable></el-input>
   </el-form-item>
   </div>
   </el-col>
@@ -285,7 +285,7 @@
   	<el-form-item label="委  托  方" 
   		prop="client"
     :rules="{required: true, message: '委托方不能为空', trigger: 'blur'}">
-    <el-select v-model="formInline.client" placeholder="请选择委托方" clearable>
+    <el-select v-model="formInline.client" placeholder="请选择委托方" clearable @change="changeBotno">
     <el-option
       v-for="item in clientList"
       :key="item.id"
@@ -318,6 +318,7 @@
     :rules="{required: true, message: '请选择日期', trigger: 'change'}">
      <div class="block">
     <el-date-picker
+    	@change="changeBotno"
       v-model="formInline.caseTime"
       align="right"
       type="date"
@@ -376,7 +377,7 @@
   	<el-form-item label="批  次  号"	
   			prop="batchNo"
         :rules="{ required: true, message: '批次号不能为空', trigger: 'blur'}">
-    <el-input v-model="messageForm.batchNo" placeholder="请输入批次号" clearable></el-input>
+    <el-input v-model="messageForm.batchNo" disabled placeholder="请输入批次号" clearable></el-input>
   </el-form-item>
   </div>
   </el-col>
@@ -409,7 +410,7 @@
   	<el-form-item label="委  托  方" 
   		prop="client"
     :rules="{required: true, message: '委托方不能为空', trigger: 'blur'}">
-    <el-select v-model="messageForm.client" placeholder="请选择委托方" clearable>
+    <el-select v-model="messageForm.client" @change="changeBotno1" placeholder="请选择委托方" clearable>
     <el-option
       v-for="item in clientList"
       :key="item.id"
@@ -442,6 +443,7 @@
     :rules="{required: true, message: '请选择日期', trigger: 'change'}">
      <div class="block">
     <el-date-picker
+    	@change="changeBotno1"
       v-model="messageForm.caseTime"
       align="right"
       type="date"
@@ -541,6 +543,14 @@ export default {
     }
   },
 methods: {
+	changeBotno(){
+	
+		      this.$set(this.formInline, 'batchNo', this.formInline.client+'-'+this.formInline.caseTime)
+	},
+	changeBotno1(){
+	
+		      this.$set(this.messageForm, 'batchNo', this.messageForm.client+'-'+this.messageForm.caseTime)
+	},
 	ImportdialogVisibleWay(){
 		this.loading2=false
 		this.ImportdialogVisible=false

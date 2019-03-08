@@ -278,7 +278,7 @@ export function addLetter(data){
 
 export function getReduceApplyList(id){
   return request({
-    url: '/reduce/apply/select/id',
+    url: '/reduce/apply/page',
     method: 'post',
     data:{id}
   })
@@ -308,3 +308,28 @@ export function detailTelCurrentCollect(data){
     data
   })
 }
+
+export function AddtableList(id,form){
+  return request({
+    url: '/reduce/apply/add',
+    method: 'post',
+    data:{
+    	caseId:id,
+      payer:form.payer,
+      relation:form.relation,
+      contactWay:form.contactWay,
+      sex:form.sex,
+      age:form.age,
+      visitFlag:form.visitFlag,
+      joinFlag:form.joinFlag,
+      connectFlag:form.connectFlag,
+      enRepayAmt:form.enRepayAmt,
+      repayAmt:form.repayAmt,
+      repayTime:form.repayTime,
+      reduceReason:form.reduceReason,
+      reduceData:form.reduceData,
+      remark:form.remark,
+    }
+  })
+}
+

@@ -1416,10 +1416,7 @@
         this.search()
       },
       search(){
-
-        let caseDateStart=this.formInline.time6==null?"":this.formInline.time6[0]
-        let caseDateEnd=this.formInline.time6==null?"":this.formInline.time6[1]
-        searchList(this.formInline.area,this.formInline.batchNos,this.formInline.clients,this.formInline.caseType,caseDateStart,caseDateEnd,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
+        searchList(this.formInline,this.pageSize,this.pageNum).then((response)=>{
           this.totalCaseNum=response.totalCaseNum
           this.totalAmt = this.formatMoney(response.totalAmt,0, "￥")
           this.repayTotalAmt= this.formatMoney(response.repayTotalAmt,0, "￥")

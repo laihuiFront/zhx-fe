@@ -9,7 +9,7 @@
       <el-form-item >
   <el-select v-model="form.area" placeholder="请选择催收区域" clearable>
     <el-option
-      v-for="item in form.areaList"
+      v-for="item in areaList"
       :key="item.value"
       :label="item.name"
       :value="item.id">
@@ -29,7 +29,7 @@
   <el-form-item >
     <el-select v-model="form.batchNos" placeholder="请选择批次编号" filterable multiple collapse-tags clearable>
       <el-option
-        v-for="item in form.batchList"
+        v-for="item in batchList"
         :key="item.id"
         :label="item.batchNo"
         :value="item.batchNo">
@@ -40,7 +40,7 @@
   <el-select v-model="form.clients" placeholder="请选择委托方" filterable
              multiple clearable collapse-tags>
     <el-option
-      v-for="item in form.clientList"
+      v-for="item in clientList"
       :key="item.value"
       :label="item.name"
       :value="item.id">
@@ -50,7 +50,7 @@
    <el-form-item >
   <el-select v-model="form.caseType" placeholder="请选择案件类型" clearable>
     <el-option
-      v-for="item in form.caseTypeList"
+      v-for="item in caseTypeList"
       :key="item.value"
       :label="item.name"
       :value="item.id">
@@ -396,6 +396,7 @@ export default {
   name: 'dataBatchManage',
    data(){
     return {
+    	batchList:[],
       header:{Authorization:localStorage.token},
     	loading:false,
     	userCount:'',
@@ -722,7 +723,7 @@ this.search()
             this.clientList=response;
 })
      batchList().then((response)=>{
-       this.form.batchList=response;
+       this.batchList=response;
      })
      caseTypeList().then((response)=>{
           	this.form.caseTypeList=response

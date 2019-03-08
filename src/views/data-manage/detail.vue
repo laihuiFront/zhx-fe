@@ -1318,11 +1318,11 @@
               <el-tab-pane label="减免管理" name="13" class="tabs-wrap">
                 <div class="operation">
                   <div class="right-oper">
-                    <el-button type="primary" v-if="caseDetail.currentuser">添加减免申请</el-button>
+                    <el-button type="primary" v-if="caseDetail.currentuser" @click="adddialogVisible =true">添加减免申请</el-button>
                   </div>
                 </div>
                 <el-table
-                  :data="caseDetail.reliefList"
+                  :data="reduceApplyList"
                   style="width: 100%"
                   border stripe
                   class="table-wrap">
@@ -1640,6 +1640,175 @@
         <el-button type="primary" @click="saveApplyLetter">确 定</el-button>
       </span>
     </el-dialog>
+    <el-dialog
+  title="添加减免申请"
+  :visible.sync="adddialogVisible"
+  width="60%"
+  append-to-body
+ >
+ <el-form :inline="true" :model="messageForm" ref="messageForm" label-width="130px" class="demo-dynamic">
+	<el-row :gutter="24">
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  	<el-form-item label="还款人姓名"	>
+  		
+    <el-input v-model="messageForm.payer" placeholder="请输入姓名" clearable></el-input>
+  </el-form-item>
+  </div>
+  </el-col>
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  		<el-form-item label="关系"
+  			
+  			>
+        <el-input v-model="messageForm.relation" placeholder="请输入关系" clearable></el-input>
+  </el-form-item>
+  		
+  	</div>
+  </el-col>
+</el-row>
+	<el-row :gutter="24">
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  	<el-form-item label="联系方式"	
+  			>
+    <el-input v-model="messageForm.contactWay" placeholder="请输入联系方式" clearable></el-input>
+  </el-form-item>
+  </div>
+  </el-col>
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  		<el-form-item
+  			<el-select v-model="messageForm.batchStatus" placeholder="请选择" clearable>
+    <el-option
+      v-for="item in caseDetail.dataCaseTelEntityList"
+      :key="item.id"
+      :label="item.name"
+      :value="item.id">
+    </el-option>
+  </el-select>
+  </el-form-item>
+  	</div>
+  </el-col>
+</el-row>
+<el-row :gutter="24">
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  	<el-form-item label="性 别" >
+  		  <el-radio-group v-model="messageForm.sex">
+      <el-radio label="男"></el-radio>
+      <el-radio label="女"></el-radio>
+    </el-radio-group>
+  </el-form-item>	
+  	</div>
+  </el-col>
+    <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  	<el-form-item label="年 龄"	
+  			>
+    <el-input v-model="messageForm.age" placeholder="请输入年龄" clearable></el-input>
+  </el-form-item>
+  </div>
+  </el-col>
+</el-row>
+<el-row :gutter="24">
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  	<el-form-item label="是否外访" >
+  		  <el-radio-group v-model="messageForm.visitFlag">
+      <el-radio label="0">是</el-radio>
+      <el-radio label="1">否</el-radio>
+    </el-radio-group>
+  </el-form-item>	
+  	</div>
+  </el-col>
+    <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  	<el-form-item label="是否共债" >
+  		  <el-radio-group v-model="messageForm.joinFlag">
+          <el-radio label="0">是</el-radio>
+      <el-radio label="1">否</el-radio>
+    </el-radio-group>
+  </el-form-item>	
+  	</div>
+  </el-col>
+</el-row>
+	<el-row :gutter="24">
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  	<el-form-item label="是否可联"	
+  		>
+    <el-input v-model="messageForm.connectFlag" placeholder="请输入联系方式" clearable></el-input>
+  </el-form-item>
+  </div>
+  </el-col>
+   <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  	<el-form-item label="已还款"	
+  		>
+    <el-input v-model="messageForm.enRepayAmt" placeholder="请输入联系方式" clearable></el-input>
+  </el-form-item>
+  </div>
+  </el-col>
+</el-row>
+
+<el-row :gutter="24">
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  	<el-form-item label="承诺还款"	
+  		>
+    <el-input v-model="messageForm.repayAmt" placeholder="请输入还款金额" clearable></el-input>
+  </el-form-item>
+  </div>
+  </el-col>
+   <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  	<el-form-item label="承诺还款日期"	
+  		>
+  		 <div class="block">
+    <el-date-picker
+      v-model="messageForm.repayTime"
+      type="date"
+      placeholder="选择日期">
+    </el-date-picker>
+  </div>
+  </el-form-item>
+  </div>
+  </el-col>
+</el-row>
+
+<el-row :gutter="24">
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  	<el-form-item label="减免原因"	
+  		>
+    <el-input v-model="messageForm.reduceReason" placeholder="请输入减免原因" clearable></el-input>
+  </el-form-item>
+  </div>
+  </el-col>
+   <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  	<el-form-item label="减免材料"	
+  		>
+  		    <el-input v-model="messageForm.reduceData" placeholder="请输入减免材料" clearable></el-input>
+  </el-form-item>
+  </div>
+  </el-col>
+</el-row>
+
+<el-row :gutter="24">
+  <el-col :span="24">
+  <el-form-item label="备注" >
+    <el-input type="textarea" v-model="messageForm.remark" style="width: 200%;">></el-input>
+  </el-form-item>
+   </el-col>
+</el-row>
+</el-form>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="adddialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="saveData">确 定</el-button>
+  </span>
+</el-dialog>
   </div>
 </template>
 
@@ -1675,7 +1844,8 @@ import {getCaseDetail,
         getLegalList,
         detailTelCurrentCollect,
         updateDataComment,
-        delDataComment
+        delDataComment,
+        AddtableList
         } from '@/common/js/api-detail'
 import {getEnum} from '@/common/js/api-sync'
 
@@ -1697,6 +1867,8 @@ export default {
 },
   data() {
     return {
+    	messageForm:{},
+    	adddialogVisible:false,
       addCommentVisible:false,
       commentAddContent:null,
       commentAddColor:"黑",
@@ -1746,6 +1918,12 @@ export default {
     }
   },
   methods: {
+  	saveData(){
+AddtableList(this.id,this.messageForm).then((response)=>{
+ this.$message('添加成功')    
+ this.adddialogVisible=false
+})
+  	},
     showHistoryTel(row){
       this.$set(row, 'historyType', 1)
       this.$set(row, 'showHistory', true)
