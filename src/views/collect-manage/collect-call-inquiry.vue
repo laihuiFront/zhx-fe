@@ -310,11 +310,16 @@ export default {
       })
     },
     showCase(row){
-      this.detailTitle = row.name+'案件详情'
-      this.detailId = row.id
-      this.detailVisible = true
-      this.$nextTick(()=>{
-        this.$refs.detail.queryDetail()
+      let id = row.id
+      let name = row.name
+      let seqNo = row.seqNo
+      this.$router.push({
+        path:'case-detail',
+        query:{
+          id,
+          name,
+          seqNo
+        }
       })
     },
     handleCurrentChange(currentPage){

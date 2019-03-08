@@ -527,7 +527,6 @@
             :sort-orders="['ascending', 'descending']"
             min-width="120"
             header-align="center"
-            @row-dblclick="showCase"
             align="center"
           >
             <template slot-scope="scope">
@@ -908,11 +907,16 @@
     },
     methods: {
       showCase(row) {
-        this.detailTitle = row.name+'案件详情'
-        this.detailId = row.id
-        this.detailVisible = true
-        this.$nextTick(()=>{
-          this.$refs.detail.queryDetail()
+        let id = row.id
+        let name = row.name
+        let seqNo = row.seqno
+        this.$router.push({
+          path:'case-detail',
+          query:{
+            id,
+            name,
+            seqNo
+          }
         })
       },
       formatMoney(value,places, symbol, thousand, decimal) {
