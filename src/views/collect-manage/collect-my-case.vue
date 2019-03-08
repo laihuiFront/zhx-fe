@@ -635,15 +635,15 @@ export default {
           label: "证件号"
         },
         {
-          prop: "money",
+          prop: "moneyMsg",
           label: "委案金额"
         },
         {
-          prop: "balance",
+          prop: "balanceMsg",
           label: "委案余额"
         },
         {
-          prop: "moneyStart",
+          prop: "moneyStartMsg",
           label: "最新欠款"
         },
         {
@@ -651,17 +651,17 @@ export default {
           label: "逾期天数"
         },
         {
-          prop: "enRepayAmt",
+          prop: "enRepayAmtMsg",
           width: "140",
           label: "已还款金额"
         },
         {
-          prop: "repayAmt",
+          prop: "repayAmtMsg",
           width: "150",
           label: "承诺还款金额"
         },
         {
-          prop: "bankAmt",
+          prop: "bankAmtMsg",
           width: "150",
           label: "待银行查账金额"
         },
