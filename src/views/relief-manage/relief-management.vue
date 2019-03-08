@@ -149,7 +149,7 @@
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
-          prop="collectStatus"
+          prop="collectStatusMsg"
           align="center"
           label="催收状态"
           show-overflow-tooltip>
@@ -185,7 +185,7 @@
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
-          prop="reduceStatus" 
+          prop="reduceStatusMsg"
           align="center"
           label="减免状态"
           show-overflow-tooltip>
