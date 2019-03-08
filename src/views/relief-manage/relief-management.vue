@@ -125,10 +125,10 @@
     <el-button type="primary" @click=moreDataListcheck >批量审核</el-button>
   </el-form-item>
    <el-form-item v-show="istrue4">
-    <el-button type="primary" @click=moreDataList >批量下载附件</el-button>
+    <el-button type="primary" @click=moreDownDataList >批量下载附件</el-button>
   </el-form-item>
   <el-form-item v-show="istrue5">
-    <el-button type="primary"  >导出减免结果</el-button>
+    <el-button type="primary" @click="dialogVisible1 = true" >导出减免结果</el-button>
   </el-form-item>
 </el-form>
  <el-tabs v-model="activeName2" type="card" @tab-click="handleClick">
@@ -511,16 +511,32 @@
     <el-button @click="dialogVisible = false">取 消</el-button>
     <el-button type="primary" @click="submitForm('ruleForm')">确 定</el-button>
   </span>
+</el-dialog><el-dialog
+  title="导出查询结果"
+  :visible.sync="dialogVisible1"
+  width="30%"
+  >
+  <el-row :gutter="20">
+  <el-col :span="10"><div class="grid-content bg-purple"> 
+  	<el-button @click=totalDataExport>按查询条件全部导出</el-button>
+</div></el-col>
+  <el-col :span="10">
+  	<div class="grid-content bg-purple">  
+  		<el-button @click=pageDataExport>按查询条件导出当前分页</el-button>
+</div></el-col>
+</el-row>
 </el-dialog>
   </div>
 </template>
 
 <script>
-	import {areaList,clientList,PersonList,dataList,checkData,deleteStatusList,accountAgeList,collectStatusList,remoweData,addDataform,remoweDataList} from '@/common/js/relief-management.js'
+	import {areaList,clientList,PersonList,pageDataBatchExport,dataList,checkData,deleteStatusList,accountAgeList,collectStatusList,remoweData,addDataform,remoweDataList} from '@/common/js/relief-management.js'
 export default {
   name: 'reliefManagement',
   data(){
     return {
+    	dialogVisible1:false,
+    	sType:0,
     	istrue1:true,
     	istrue2:false,
     	istrue3:true,
@@ -536,7 +552,7 @@ export default {
     	accountAgeList:[],
     	dataList:[],
     	 currentPage4: 1,
-        pages:1,
+        pages:100,
         total:100,
     	formInline:{
     		time1:[],
@@ -554,6 +570,14 @@ export default {
     }
 },
  methods: {
+ 	totalDataExport(){
+ 		this.sType=0
+ 		pageDataBatchExport(this.formInline,this.sType)
+ 	},
+ 	pageDataExport(){
+ 		this.sType=1
+ 		pageDataBatchExport(this.formInline,this.sType)
+ 	},
  	moreDataListcheck(){
  		if(this.deleteList.length>=1){
  			checkData(this.deleteList).then((response)=>{
@@ -638,7 +662,28 @@ this.search()
           });
  		}
  	},
+ 		moreDownDataList(){
+ 		if(this.deleteList.length>=1){
+ 			remoweDataList(this.deleteList).then((response)=>{
+          this.$message({
+            type: 'success',
+            message: '撤销成功!'
+          });
+          dataList(this.formInline,this.applyStatus).then((response)=>{
+          	this.tableData3=response.list
+          	this.formInline={	time1:[],time2:[],time3:[]}
+          })
+          })    
+ 		}else{
+ 			this.$message({
+            type: 'error',
+            message: '请选择数据!'
+          });
+ 		}
+ 	},
  	search(){
+ 		console.log(this.currentPage4)
+ 		console.log(this.pages)
  		  dataList(this.formInline,this.applyStatus,this.currentPage4,this.pages).then((response)=>{
           	this.tableData3=response.list
           	this.formInline={	time1:[],time2:[],time3:[]}
@@ -706,7 +751,7 @@ handleSizeChange(val){
 	this.search()
 },
 handleCurrentChange(val){
-this.pageNum=val;
+this.currentPage4=val;
 this.search()
 },
  },

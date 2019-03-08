@@ -1282,7 +1282,7 @@
               <el-tab-pane label="减免管理" name="13" class="tabs-wrap">
                 <div class="operation">
                   <div class="right-oper">
-                    <el-button type="primary" v-if="caseDetail.currentuser">添加减免申请</el-button>
+                    <el-button type="primary" v-if="caseDetail.currentuser" @click="adddialogVisible =true">添加减免申请</el-button>
                   </div>
                 </div>
                 <el-table
@@ -1605,6 +1605,136 @@
         <el-button type="primary" @click="saveApplyLetter">确 定</el-button>
       </span>
     </el-dialog>
+    <el-dialog
+  title="添加减免申请"
+  :visible.sync="adddialogVisible"
+  width="50%"
+  append-to-body
+ >
+ <el-form :inline="true" :model="messageForm" ref="messageForm" label-width="100px" class="demo-dynamic">
+	<el-row :gutter="24">
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  	<el-form-item label="还款人姓名"	
+  			prop="batchNo"
+        :rules="{ required: true, message: '姓名号不能为空', trigger: 'blur'}">
+    <el-input v-model="messageForm.batchNo" placeholder="请输入姓名" clearable></el-input>
+  </el-form-item>
+  </div>
+  </el-col>
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  		<el-form-item label="关系"
+  			prop="batchNo"
+        :rules="{ required: true, message: '关系不能为空', trigger: 'blur'}"
+  			>
+        <el-input v-model="messageForm.targetRate" placeholder="请输入关系" clearable></el-input>
+  </el-form-item>
+  		
+  	</div>
+  </el-col>
+</el-row>
+	<el-row :gutter="24">
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  	<el-form-item label="联系方式"	
+  			prop="batchNo"
+        :rules="{ required: true, message: '联系方式不能为空', trigger: 'blur'}">
+    <el-input v-model="messageForm.batchNo" placeholder="请输入联系方式" clearable></el-input>
+  </el-form-item>
+  </div>
+  </el-col>
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  		<el-form-item
+  			<el-select v-model="messageForm.batchStatus" placeholder="请选择" clearable>
+    <el-option
+      v-for="item in caseDetail.dataCaseTelEntityList"
+      :key="item.id"
+      :label="item.name"
+      :value="item.id">
+    </el-option>
+  </el-select>
+  </el-form-item>
+  	</div>
+  </el-col>
+</el-row>
+<el-row :gutter="24">
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  	<el-form-item label="性 别" >
+  		  <el-radio-group v-model="messageForm.resource">
+      <el-radio label="男"></el-radio>
+      <el-radio label="女"></el-radio>
+    </el-radio-group>
+  </el-form-item>	
+  	</div>
+  </el-col>
+    <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  	<el-form-item label="年 龄"	
+  			prop="batchNo"
+        :rules="{ required: true, message: '联系方式不能为空', trigger: 'blur'}">
+    <el-input v-model="messageForm.batchNo" placeholder="请输入联系方式" clearable></el-input>
+  </el-form-item>
+  </div>
+  </el-col>
+</el-row>
+<el-row :gutter="24">
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  	<el-form-item label="是否外访" >
+  		  <el-radio-group v-model="messageForm.resource">
+      <el-radio label="是"></el-radio>
+      <el-radio label="否"></el-radio>
+    </el-radio-group>
+  </el-form-item>	
+  	</div>
+  </el-col>
+    <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  	<el-form-item label="是否共债" >
+  		  <el-radio-group v-model="messageForm.resource">
+      <el-radio label="是"></el-radio>
+      <el-radio label="否"></el-radio>
+    </el-radio-group>
+  </el-form-item>	
+  	</div>
+  </el-col>
+</el-row>
+	<el-row :gutter="24">
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  	<el-form-item label="是否可联"	
+  			prop="batchNo"
+        :rules="{ required: true, message: '联系方式不能为空', trigger: 'blur'}">
+    <el-input v-model="messageForm.batchNo" placeholder="请输入联系方式" clearable></el-input>
+  </el-form-item>
+  </div>
+  </el-col>
+   <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  	<el-form-item label="已还款"	
+  			prop="batchNo"
+        :rules="{ required: true, message: '联系方式不能为空', trigger: 'blur'}">
+    <el-input v-model="messageForm.batchNo" placeholder="请输入联系方式" clearable></el-input>
+  </el-form-item>
+  </div>
+  </el-col>
+</el-row>
+<el-row :gutter="24">
+  <el-col :span="24">
+  <el-form-item label="批次备注" >
+    <el-input type="textarea" v-model="messageForm.remark" style="width: 200%;">></el-input>
+  </el-form-item>
+   </el-col>
+</el-row>
+</el-form>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="adddialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="saveData">确 定</el-button>
+  </span>
+</el-dialog>
   </div>
 </template>
 
@@ -1649,6 +1779,8 @@ export default {
   },
   data() {
     return {
+    	messageForm:{},
+    	adddialogVisible:false,
       addCommentVisible:false,
       commentAddContent:null,
       dialogVisible:false,
@@ -1697,6 +1829,9 @@ export default {
     }
   },
   methods: {
+  	saveData(){
+  		console.log(this.id)
+  	},
     uploadSuccess(res,file,fileList){
       if (res.code ==100){
   		    this.$message({

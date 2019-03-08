@@ -45,7 +45,7 @@ export const collectStatusList = function() {
     data:{name:"催收状态"}
   })
 }
-export const dataList = function(form,applyStatus,pageSize,pageNum) {
+export const dataList = function(form,applyStatus,pageNum,pageSize) {
   return request({
     url: '/reduce/page/all',
     method: 'post',
@@ -70,7 +70,51 @@ export const dataList = function(form,applyStatus,pageSize,pageNum) {
     }
   })
 }
-
+//export const totalDataBatchExport = function(area,batchNos,clients,batchStatus,caseType,startTime,endTime,pageSize,pageNum) {
+//return download({
+//  url: '/dataBatch/totalDataBatchExport',
+//  method: 'post',
+//  data: {
+//  	batchStatus: batchStatus ? batchStatus :"",
+//     area:area ? area : "",
+//     batchNos:batchNos,
+//     clients:clients,
+//     caseType:caseType ? caseType : "",
+//     startTime:startTime ? startTime : "",
+//     endTime:endTime ? endTime : "",
+//     pageNum:pageNum ? pageNum : 1,
+//     pageSize:pageSize ? pageSize : 100
+//     
+//  }
+//})
+//}
+export const pageDataBatchExport = function(form,sType) {
+return download({
+    url: '/reduce/dataExport',
+    method: 'post',
+    data: {
+    	sType:sType,
+    	applyStatus:applyStatus,
+      area:form.area,
+      client:form.client,
+      batchNo:form.batchNo,
+      targetName:form.targetName,
+      accountAge:form.accountAge,
+      completeTimeStart:form.time3[0],
+      completeTimeEnd:form.time3[1],
+      seqno:form.seqno,
+      odv:form.odv,
+      reduceReferTimeStart:form.time1[0],
+      reduceReferTimeEnd:form.time1[1],
+      reduceStatus:form.reduceStatus,
+      reduceValidTimeStart:form.time2[0],
+      reduceValidTimeEnd:form.time2[1],
+      pageNum:pageNum ? pageNum : 1,
+      pageSize:pageSize ? pageSize : 100
+       
+    }
+  })
+}
 export const remoweData = function(id) {
 return request({
     url: '/reduce/update/status',
