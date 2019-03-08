@@ -64,7 +64,7 @@
       <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
       <el-table-column prop="dataCase.mVal" label="M值" show-overflow-tooltip></el-table-column>
       <el-table-column prop="dataCase.commissionMoney" label="公司佣金" show-overflow-tooltip></el-table-column>
-      <el-table-column label="操作" width="100" fixed="right" v-if="queryForm.recordStatus==='0'">
+      <el-table-column label="操作" width="100"  v-if="queryForm.recordStatus==='0'">
         <template slot-scope="scope">
           <el-button
             v-has="'撤销还款'"
