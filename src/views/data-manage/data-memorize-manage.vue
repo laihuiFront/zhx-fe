@@ -205,7 +205,6 @@
       tooltip-effect="dark"
       @row-dblclick="showCase"
       style="width: 100%"
-      sortable="custom"
       @sort-change="handleSort"
       @selection-change="handleSelectionChange">
       <el-table-column
@@ -219,7 +218,7 @@
       </el-table-column>
       <el-table-column
         prop="seqno"
-        :sortable='true'
+        sortable="custom"
         min-width="120"
         :sort-orders="['ascending','descending']"
         label="个案序列号"
@@ -236,14 +235,14 @@
       </el-table-column>
       <el-table-column
         prop="name"
-        :sortable='true'
+        sortable="custom"
         :sort-orders="['ascending','descending']"
         label="姓名"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="measure"
-        :sortable='true'
+        sortable="custom"
         min-width="120"
         :sort-orders="['ascending','descending']"
         label="催收措施"
@@ -253,14 +252,14 @@
         prop="collectTime"
         label="催收时间"
         width="140"
-        :sortable='true'
+        sortable="custom"
         :sort-orders="['ascending','descending']"
         align="center"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="targetName"
-        :sortable='true'
+        sortable="custom"
         :sort-orders="['ascending','descending']"
         min-width="120"
         label="对象姓名"
@@ -270,7 +269,7 @@
         prop="relation"
         label="与案人关系"
         min-width="120"
-        :sortable='true'
+        sortable="custom"
         :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
@@ -278,7 +277,7 @@
         prop="telType"
         label="电话类型"
         min-width="120"
-        :sortable='true'
+        sortable="custom"
         :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
@@ -286,7 +285,7 @@
         prop="mobile"
         width="120"
         align="center"
-        :sortable='true'
+        sortable="custom"
         :sort-orders="['ascending','descending']"
         label="电话号码"
         show-overflow-tooltip>
@@ -295,7 +294,7 @@
         prop="collectInfo"
         label="催收记录"
         min-width="120"
-        :sortable='true'
+        sortable="custom"
         :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column><el-table-column
@@ -303,14 +302,14 @@
       label="催收结果"
       min-width="160"
       align="center"
-      :sortable='true'
+      sortable="custom"
       :sort-orders="['ascending','descending']"
       show-overflow-tooltip>
     </el-table-column><el-table-column
       prop="methodMsg"
       label="谈判方式"
       min-width="120"
-      :sortable='true'
+      sortable="custom"
       :sort-orders="['ascending','descending']"
       show-overflow-tooltip>
     </el-table-column><el-table-column
@@ -318,14 +317,14 @@
       label="承诺还款日期"
       width="140"
       align="center"
-      :sortable='true'
+      sortable="custom"
       :sort-orders="['ascending','descending']"
       show-overflow-tooltip>
     </el-table-column><el-table-column
       label="承诺还款金额"
       width="140"
       align="center"
-      :sortable='true'
+      sortable="custom"
       :sort-orders="['ascending','descending']"
       show-overflow-tooltip>
       <template slot-scope="scope">
@@ -334,7 +333,7 @@
     </el-table-column><el-table-column
       label="减免金额"
       width="140"
-      :sortable='true'
+      sortable="custom"
       :sort-orders="['ascending','descending']"
       align="center"
       show-overflow-tooltip>
@@ -344,14 +343,14 @@
     </el-table-column><el-table-column
       prop="reduceStatusMsg"
       label="减免状态"
-      :sortable='true'
+      sortable="custom"
       min-width="130"
       :sort-orders="['ascending','descending']"
       show-overflow-tooltip>
     </el-table-column><el-table-column
       prop="odv"
       label="催收员"
-      :sortable='true'
+      sortable="custom"
       min-width="130"
       :sort-orders="['ascending','descending']"
       show-overflow-tooltip>
@@ -359,7 +358,7 @@
       prop="collectStatusMsg"
       label="催收状态"
       min-width="130"
-      :sortable='true'
+      sortable="custom"
       :sort-orders="['ascending','descending']"
       show-overflow-tooltip>
     </el-table-column>

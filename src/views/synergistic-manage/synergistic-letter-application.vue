@@ -7,7 +7,7 @@
     :show-file-list="false"
     accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.xls,.xlsx"
     :multiple="false">
-    <el-button class="daoru" type="primary">导入信函记录</el-button>
+    <el-button class="daoru" type="primary" v-has="'导入信函记录'">导入信函记录</el-button>
   </el-upload>
 
     <div id="synergistic-letter-application" class="page-wraper-sub">
@@ -435,8 +435,7 @@ export default {
       detailId: -1,
       detailTitle: "案件详情",
       action:baseURL+'/letter/import',
-      headers:{
-      }
+      headers:{Authorization:localStorage.token}
     };
   },
   computed: {
@@ -514,6 +513,7 @@ export default {
     sortHandle({ prop, order }) {
       this.sort.sort = order.replace("ending", "");
       this.sort.orderBy = prop;
+      this.getMainData();
     },
     //查询批次号
     querySearch(queryString) {

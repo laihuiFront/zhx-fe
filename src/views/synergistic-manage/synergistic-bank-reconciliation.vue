@@ -29,7 +29,6 @@
       </el-dropdown>
     </bank-record-query>
     <el-table
-      sortable="custom"
       @sort-change="handleSort"
       @selection-change="onSelectRow"
       border
@@ -38,25 +37,25 @@
       style="width: 100%"
       class="table-wrap">
       <el-table-column type="selection" width="50"></el-table-column>
-      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.batchNo" label="批次号" show-overflow-tooltip></el-table-column>
-      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.cardNo" label="卡号" show-overflow-tooltip></el-table-column>
-      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.identNo" label="证件号" show-overflow-tooltip></el-table-column>
-      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.name" label="姓名" show-overflow-tooltip></el-table-column>
-      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.seqNo" label="个案序列号" show-overflow-tooltip>
+      <el-table-column sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.batchNo" label="批次号" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.cardNo" label="卡号" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.identNo" label="证件号" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.name" label="姓名" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.seqNo" label="个案序列号" show-overflow-tooltip>
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="editCase(scope.row.dataCase.id, scope.row.dataCase.name,scope.row.dataCase.seqNo)">{{scope.row.dataCase.seqNo}}</el-button>
         </template>
       </el-table-column>
-      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.client" label="委托方" show-overflow-tooltip></el-table-column>
-      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.money" label="委案金额" show-overflow-tooltip></el-table-column>
-      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.repayMoney" label="案件已还款" show-overflow-tooltip></el-table-column>
-      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="cpMoney" label="待银行查账金额" show-overflow-tooltip></el-table-column>
-      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="cpDate" label="待银行查账日期" show-overflow-tooltip></el-table-column>
-      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="repayUser" label="还款人" show-overflow-tooltip></el-table-column>
-      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="repayType" label="还款方式" show-overflow-tooltip></el-table-column>
-      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="submitUser.name" label="提交人" show-overflow-tooltip></el-table-column>
-      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="submitTime" label="提交时间" show-overflow-tooltip></el-table-column>
-      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="remark" label="备注" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.client" label="委托方" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.money" label="委案金额" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.repayMoney" label="案件已还款" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" :sort-orders="['ascending','descending']" prop="cpMoney" label="待银行查账金额" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" :sort-orders="['ascending','descending']" prop="cpDate" label="待银行查账日期" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" :sort-orders="['ascending','descending']" prop="repayUser" label="还款人" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" :sort-orders="['ascending','descending']" prop="repayType" label="还款方式" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" :sort-orders="['ascending','descending']" prop="submitUser.name" label="提交人" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" :sort-orders="['ascending','descending']" prop="submitTime" label="提交时间" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" :sort-orders="['ascending','descending']" prop="remark" label="备注" show-overflow-tooltip></el-table-column>
       <el-table-column label="操作" width="100" v-if="queryForm.status==='0'">
         <template slot-scope="scope">
           <el-button

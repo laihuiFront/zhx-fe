@@ -1099,42 +1099,42 @@
                   border stripe
                   class="table-wrap">
                   <el-table-column
-                    prop="content"
+                    prop="statusMsg"
                     show-overflow-tooltip
                     label="状态">
                   </el-table-column>
                   <el-table-column
-                    prop="content"
+                    prop="synergisticType,"
                     show-overflow-tooltip
                     label="协催类型">
                   </el-table-column>
                   <el-table-column
-                    prop="content"
+                    prop="applyContent"
                     show-overflow-tooltip
                     label="申请内容">
                   </el-table-column>
                   <el-table-column
-                    prop="content"
+                    prop="applyTime"
                     show-overflow-tooltip
                     label="申请时间">
                   </el-table-column>
                   <el-table-column
-                    prop="content"
+                    prop="applyUser.name"
                     show-overflow-tooltip
                     label="申请人">
                   </el-table-column>
                   <el-table-column
-                    prop="content"
+                    prop="synergisticTime"
                     show-overflow-tooltip
                     label="协催时间">
                   </el-table-column>
                   <el-table-column
-                    prop="content"
+                    prop="synergisticUser.userName"
                     show-overflow-tooltip
                     label="协催人">
                   </el-table-column>
                   <el-table-column
-                    prop="content"
+                    prop="synergisticResult"
                     show-overflow-tooltip
                     label="协催结果">
                   </el-table-column>
@@ -2465,6 +2465,7 @@ AddtableList(this.id,this.messageForm).then((response)=>{
   },
   created() {
   	this.queryDetail()
+    this.batchForm = {sType:0}
   }
 }
 </script>

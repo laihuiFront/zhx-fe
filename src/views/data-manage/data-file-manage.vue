@@ -54,7 +54,6 @@
     :data="DataList"
     tooltip-effect="dark"
     style="width: 100%"
-    sortable="custom"
     @sort-change="handleSort"
     @selection-change="handleSelectionChange">
     <el-table-column
@@ -63,14 +62,14 @@
     </el-table-column>
     <el-table-column
       label="证件号"
-      :sortable='true'
+      sortable="custom"
       :sort-orders="['ascending','descending']"
        prop="identNo"
       >
     </el-table-column>
     <el-table-column
       prop="name"
-      :sortable='true'
+      sortable="custom"
       :sort-orders="['ascending','descending']"
       label="姓名"
       >
@@ -96,7 +95,7 @@
      <el-table-column
        label="档案变更日期"
        prop="updateTime"
-       :sortable='true'
+       sortable="custom"
        :sort-orders="['ascending','descending']"
        show-overflow-tooltip>
      </el-table-column>

@@ -91,7 +91,6 @@
     stripe
     style="width: 100%;margin-top: 10px;"
      @selection-change="handleSelectionChange"
-    sortable="custom"
     @sort-change="handleSort"
   >
   <el-table-column
@@ -100,7 +99,7 @@
     </el-table-column>
     <el-table-column
     	prop="areaMsg"
-      :sortable='true'
+      sortable="custom"
       min-width="140"
       :sort-orders="['ascending','descending']"
       label="催收区域"
@@ -108,7 +107,7 @@
     </el-table-column>
     <el-table-column
     	prop="batchNo"
-      :sortable='true'
+      sortable="custom"
       min-width="140"
       :sort-orders="['ascending','descending']"
       label="批次号"
@@ -116,7 +115,7 @@
     </el-table-column>
     <el-table-column
       prop="clientMsg"
-      :sortable='true'
+      sortable="custom"
       min-width="120"
       :sort-orders="['ascending','descending']"
       label="委托方"
@@ -124,7 +123,7 @@
     </el-table-column>
     <el-table-column
       prop="statusMsg"
-      :sortable='true'
+      sortable="custom"
       min-width="120"
       :sort-orders="['ascending','descending']"
       label="批次状态"
@@ -134,14 +133,14 @@
       prop="caseTime"
       label="委案日期"
       width="140"
-      :sortable='true'
+      sortable="custom"
       :sort-orders="['ascending','descending']"
       align="center"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
       prop="userCount"
-      :sortable='true'
+      sortable="custom"
       :sort-orders="['ascending','descending']"
       label="户数"
       show-overflow-tooltip>
@@ -149,7 +148,7 @@
     <el-table-column
       label="总金额"
       min-width="120"
-      :sortable='true'
+      sortable="custom"
       :sort-orders="['ascending','descending']"
       show-overflow-tooltip>
       <template slot-scope="scope">
@@ -159,7 +158,7 @@
    <el-table-column
       prop="caseTypeMsg"
       label="案件类型"
-      :sortable='true'
+      sortable="custom"
       min-width="120"
       :sort-orders="['ascending','descending']"
       show-overflow-tooltip>
@@ -167,7 +166,7 @@
     <el-table-column
       prop="returnTime"
       label="预计退案时间"
-      :sortable='true'
+      sortable="custom"
       :sort-orders="['ascending','descending']"
       width="140"
       align="center"
@@ -175,7 +174,7 @@
     </el-table-column>
     <el-table-column
       prop="realReturnTime"
-      :sortable='true'
+      sortable="custom"
       :sort-orders="['ascending','descending']"
       width="140"
       align="center"
@@ -185,7 +184,7 @@
     <el-table-column
       prop="createTime"
       width="180"
-      :sortable='true'
+      sortable="custom"
       :sort-orders="['ascending','descending']"
       align="center"
       label="录入时间"
@@ -194,7 +193,7 @@
     <el-table-column
       prop="batchRemark"
       min-width="250"
-      :sortable='true'
+      sortable="custom"
       :sort-orders="['ascending','descending']"
       align="center"
       label="批次备注"
@@ -202,7 +201,7 @@
     </el-table-column>
     <el-table-column
       prop="creatUser"
-      :sortable='true'
+      sortable="custom"
       :sort-orders="['ascending','descending']"
       label="录入人员"
       align="center"
@@ -213,6 +212,8 @@
       prop="remark"
       min-width="180"
       align="center"
+      sortable="custom"
+      :sort-orders="['ascending','descending']"
       label="备注"
       show-overflow-tooltip>
     </el-table-column>

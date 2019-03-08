@@ -132,10 +132,14 @@ export function getInterestDetail(id) {
 //协催
 export function getSynergyDetail(id) {
   return request({
-    url: '/dataCase/listSynergy',
+    url: '/synergistic/list',
     method: 'post',
     data: {
-      id
+      pageSize: 10000,
+      pageNum: 1,
+      dataCase: {
+        id
+      }
     }
   })
 }

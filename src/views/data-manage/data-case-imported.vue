@@ -141,7 +141,6 @@
     stripe
     style="width: 100%"
      @selection-change="handleSelectionChange"
-    sortable="custom"
     @sort-change="handleSort"
     height="350"
   >
@@ -150,21 +149,21 @@
       width="55">
     </el-table-column>
     <el-table-column
-      :sortable='true'
+      sortable="custom"
       :sort-orders="['ascending','descending']"
       label="批次号"
       prop="batchNo">
     </el-table-column>
     <el-table-column
       prop="clientMsg"
-      :sortable='true'
+      sortable="custom"
       label="委托方"
       :sort-orders="['ascending','descending']"
       width="140">
     </el-table-column>
     <el-table-column
       prop="statusMsg"
-      :sortable='true'
+      sortable="custom"
       label="批次状态"
       :sort-orders="['ascending','descending']"
       show-overflow-tooltip>
@@ -173,30 +172,31 @@
       </template>
     </el-table-column>
     <el-table-column
-      :sortable='true'
+      sortable="custom"
       :sort-orders="['ascending','descending']"
       prop="caseTime"
       label="委案日期"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
-      :sortable='true'
+      sortable="custom"
       :sort-orders="['ascending','descending']"
       prop="userCount"
       label="户数"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
-      :sortable='true'
+      sortable="custom"
       :sort-orders="['ascending','descending']"
       label="总金额"
+      prop="totalAmtMsg"
       show-overflow-tooltip>
       <template slot-scope="scope">
         {{scope.row.totalAmtMsg}}
       </template>
     </el-table-column>
     <el-table-column
-      :sortable='true'
+      sortable="custom"
       :sort-orders="['ascending','descending']"
       prop="uploadTime"
       label="上传时间"
@@ -205,6 +205,8 @@
     <el-table-column
       prop="remark"
       label="批次备注"
+      sortable="custom"
+      :sort-orders="['ascending','descending']"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
@@ -683,10 +685,12 @@ methods: {
       let endTime=this.form.time[1]
       this.sort = order==null?"desc":order.replace("ending","")
       this.orderBy = prop==null?"id":prop
+     /* this.$refs.multipleTable.clearSort()*/
       dataList(this.form.area,this.form.batchNos,this.form.clients,this.form.caseType,startTime,endTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
         this.DataList=response.pageInfo.list
         this.pages = response.pageInfo.pages
         this.total = response.pageInfo.total
+        this.tableAttribute.sortMethod.order = 'descending'
       })
   },
 	search(){
