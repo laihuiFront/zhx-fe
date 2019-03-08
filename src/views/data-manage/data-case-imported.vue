@@ -69,7 +69,7 @@
       <el-button type="primary"  @click="open7" v-has="'删除批次'">删除批次</el-button>
       <el-upload
         class="upload-demo"
-        action="http://116.62.124.251/zxh/dataCase/updateCase/import"
+        :action="action+'/updateCase/import'"
         :headers="header"
         :show-file-list=false
         :on-success="uploadSuccess"
@@ -79,7 +79,7 @@
       </el-upload>
       <el-upload
         class="upload-demo"
-        action="http://116.62.124.251/zxh/dataCase/comment/import"
+        :action="action+'/comment/import'"
         :headers="header"
         :show-file-list=false
         :on-success="uploadSuccess"
@@ -90,7 +90,7 @@
       </el-upload>
       <el-upload
         class="upload-demo"
-        action="http://116.62.124.251/zxh/dataCase/interest/import"
+        :action="action+'/interest/import'"
         :headers="header"
         :show-file-list=false
         :on-success="uploadSuccess"
@@ -101,7 +101,7 @@
       </el-upload>
       <el-upload
         class="upload-demo"
-        action="http://116.62.124.251/zxh/dataCase/tel/import"
+        :action="action+'/tel/import'"
         :headers="header"
         :show-file-list=false
         :on-success="uploadSuccess"
@@ -112,7 +112,7 @@
       </el-upload>
       <el-upload
         class="upload-demo"
-        action="http://116.62.124.251/zxh/dataCase/address/import"
+        :action="action+'/address/import'"
         :headers="header"
         :show-file-list=false
         :on-success="uploadSuccess"
@@ -123,7 +123,7 @@
       </el-upload>
       <el-upload
         class="upload-demo"
-        action="http://116.62.124.251/zxh/dataCollect/import"
+        :action="action+'/dataCollect/import'"
         :headers="header"
         :show-file-list=false
         :on-success="uploadSuccess"
@@ -215,7 +215,7 @@
        <template slot-scope="scope">
        <el-upload
         class="upload-demo"
-        action="http://116.62.124.251/zxh/dataCase/newCase/import"
+        :action="action+'/newCase/import'"
         :headers="header"
         :show-file-list=false
         :on-success="uploadSuccess"
@@ -504,12 +504,13 @@
 </template>
 
 <script>
+	  import {baseURL} from '@/common/js/request.js';
 		import {dataList,batchList,remoweData,addData,clientList,caseTypeList,areaList,update,downLoadZip,downCaseModule} from '@/common/js/data-case-imported.js';
-    import {baseURL} from '@/common/js/request.js';
 export default {
   name: 'dataCaseImported',
   data(){
     return {
+    	action:baseURL+'/dataCase',
     	ImportdialogVisible:false,
     	ImportMsg:'',
     	loading2:false,

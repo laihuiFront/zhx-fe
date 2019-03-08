@@ -1318,7 +1318,7 @@
               <el-tab-pane label="减免管理" name="13" class="tabs-wrap">
                 <div class="operation">
                   <div class="right-oper">
-                    <el-button type="primary" v-if="caseDetail.currentuser" @click="adddialogVisible =true">添加减免申请</el-button>
+                    <el-button type="primary" v-if="caseDetail.currentuser" @click="showadddialogVisible">添加减免申请</el-button>
                   </div>
                 </div>
                 <el-table
@@ -1327,17 +1327,20 @@
                   border stripe
                   class="table-wrap">
                   <el-table-column
-                    prop="time"
+                    prop="reduceType"
                     show-overflow-tooltip
                     label="类型">
                   </el-table-column>
                   <el-table-column
-                    prop="type"
+                    prop="applyStatus"
                     show-overflow-tooltip
                     label="处理状态">
+                     <template slot-scope="scope">
+         {{scope.row.applyStatus==0?"待审核":scope.row.applyStatus==1?"已审核":"已完成"}}
+      </template>
                   </el-table-column>
                   <el-table-column
-                    prop="content"
+                    prop="applyStatus"
                     show-overflow-tooltip
                     label="减免/报备状态">
                   </el-table-column>
@@ -1347,32 +1350,32 @@
                     label="申请日期">
                   </el-table-column>
                   <el-table-column
-                    prop="user"
+                    prop="applyUser"
                     show-overflow-tooltip
                     label="申请人">
                   </el-table-column>
                   <el-table-column
-                    prop="user"
+                    prop="auditTime"
                     show-overflow-tooltip
                     label="审核日期">
                   </el-table-column>
                   <el-table-column
-                    prop="user"
+                    prop="createTime"
                     show-overflow-tooltip
                     label="提交日期">
                   </el-table-column>
                   <el-table-column
-                    prop="user"
+                    prop="completeTime"
                     show-overflow-tooltip
                     label="完成日期">
                   </el-table-column>
                   <el-table-column
-                    prop="user"
+                    prop="completeUser"
                     show-overflow-tooltip
                     label="完成人">
                   </el-table-column>
                   <el-table-column
-                    prop="user"
+                    prop="reduceResult"
                     show-overflow-tooltip
                     label="减免/报备结果">
                   </el-table-column>
@@ -1382,9 +1385,24 @@
                     label="是否报备">
                   </el-table-column>
                   <el-table-column
-                    prop="user"
                     show-overflow-tooltip
+                    width="120"
                     label="操作">
+                     <template slot-scope="scope">
+      <el-upload
+        class="upload-demo"
+        :action="action+'/reduce/save/import'"
+        :headers="header"
+        :show-file-list=false
+        :on-success="uploadSuccess"
+        :on-progress="onProgress"
+       
+        >
+        <el-button size="small" type="text" >上传</el-button>
+      </el-upload>
+        <el-button type="text" size="small" @click="editData(scope.row)">修改</el-button>
+        <el-button type="text" size="small" @click="deteleData(scope.row.id)">删除</el-button>
+      </template>
                   </el-table-column>
                 </el-table>
               </el-tab-pane>
@@ -1845,9 +1863,11 @@ import {getCaseDetail,
         detailTelCurrentCollect,
         updateDataComment,
         delDataComment,
-        AddtableList
+        AddtableList,
+        DeteleData
         } from '@/common/js/api-detail'
 import {getEnum} from '@/common/js/api-sync'
+	  import {baseURL} from '@/common/js/request.js';
 
 export default {
   name:'caseDetail',
@@ -1867,6 +1887,7 @@ export default {
 },
   data() {
     return {
+    	action:baseURL,
     	messageForm:{},
     	adddialogVisible:false,
       addCommentVisible:false,
@@ -1914,14 +1935,38 @@ export default {
       uploadFileList:[],
       header:{Authorization:localStorage.token},
       legalList:[],
-      currentRow:{}
+      currentRow:{},
+      	header:{Authorization:localStorage.token},
     }
   },
   methods: {
+  	showadddialogVisible(){
+  		this.adddialogVisible=true;
+  		this.messageForm={}
+  	},
+  	editData(row){
+  		this.adddialogVisible=true;
+  		this.messageForm=row;
+  		getReduceApplyList(this.id).then(data=>{
+          this.reduceApplyList = data.list
+        })
+  	},
+  	deteleData(id){
+  		DeteleData(id).then((response)=>{
+ this.$message('删除成功')    
+ getReduceApplyList(this.id).then(data=>{
+          this.reduceApplyList = data.list
+        })
+})
+  	},
   	saveData(){
 AddtableList(this.id,this.messageForm).then((response)=>{
- this.$message('添加成功')    
+ this.$message('操作成功')    
  this.adddialogVisible=false
+ this.messageForm={}
+ getReduceApplyList(this.id).then(data=>{
+          this.reduceApplyList = data.list
+        })
 })
   	},
     showHistoryTel(row){
@@ -2396,7 +2441,7 @@ AddtableList(this.id,this.messageForm).then((response)=>{
         })
       }else if(ind == '减免管理'){//减免管理
         getReduceApplyList(this.id).then(data=>{
-          this.reduceApplyList = data
+          this.reduceApplyList = data.list
         })
       }
     },

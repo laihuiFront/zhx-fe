@@ -1,29 +1,29 @@
 import request from '@/common/js/request'
 import download from '@/common/js/download'
-export const dataList = function(area,dept,batchNo,clients,odvs,caseStatus,measure,result,identNo,cardNo,collectInfo,color,seqno,bailStartDate,bailEndDate,expectStartTime,expectEndTime,collectStartTime,collectEndTime,orderBy,sort,pageSize,pageNum) {
+export const dataList = function(form,sort,orderBy,pageSize,pageNum) {
 return request({
     url: '/dataCollect/pageDataCollect',
     method: 'post',
     data: {
-       area:  area,
-       dept:  dept,
-       batchNo:  batchNo ,
-       clients:  clients ,
-       odvs:  odvs ,
-       caseStatus:  caseStatus ,
-       measure:  measure ,
-       result:  result,
-       identNo:  identNo ,
-       cardNo:  cardNo ,
-       collectInfo:  collectInfo ,
-       color:  color ,
-       seqno:  seqno ,
-       bailStartDate:  bailStartDate ,
-       bailEndDate:  bailEndDate ,
-       expectStartTime:  expectStartTime ,
-       expectEndTime:  expectEndTime,
-       collectStartTime:  collectStartTime ,
-       collectEndTime:  collectEndTime ,
+         area: form. area,
+       dept:  form.dept,
+       batchNo: form.batchNo ,
+       clients:  form.clients ,
+       odvs:  form.odvs ,
+       caseStatus:  form.caseStatus ,
+       measure:  form.measure ,
+       result:  form.result,
+       identNo:  form.identNo ,
+       cardNo:  form.cardNo ,
+       collectInfo:  form.collectInfo ,
+       color:  form.color ,
+       seqno:  form.seqno ,
+       bailStartDate:  form.bailStartDate ,
+       bailEndDate:  form.bailEndDate ,
+       expectStartTime:  form.expectStartTime ,
+       expectEndTime:  form.expectEndTime,
+       collectStartTime:  form.collectStartTime ,
+       collectEndTime:  form.collectEndTime ,
       orderBy:orderBy?orderBy:"id",
       sort:sort?sort:"desc",
        pageNum:pageNum ? pageNum : 1,
@@ -32,17 +32,32 @@ return request({
   })
 }
 
-export const search = function(area,dept,odvs,measure,orderBy,sort,pageSize,pageNum) {
+export const search = function(form,orderBy,sort,pageSize,pageNum) {
 return request({
     url: '/dataCollect/pageDataCollect',
     method: 'post',
     data: {
-       area:  area,
-       dept:  dept,
-       odvs:  odvs ,
+         area: form. area,
+       dept:  form.dept,
+       batchNo: form.batchNo ,
+       clients:  form.clients ,
+       odvs:  form.odvs ,
+       caseStatus:  form.caseStatus ,
+       measure:  form.measure ,
+       result:  form.result,
+       identNo:  form.identNo ,
+       cardNo:  form.cardNo ,
+       collectInfo:  form.collectInfo ,
+       color:  form.color ,
+       seqno:  form.seqno ,
+       bailStartDate:  form.bailStartDate ,
+       bailEndDate:  form.bailEndDate ,
+       expectStartTime:  form.expectStartTime ,
+       expectEndTime:  form.expectEndTime,
+       collectStartTime:  form.collectStartTime ,
+       collectEndTime:  form.collectEndTime ,
       orderBy:orderBy?orderBy:"id",
       sort:sort?sort:"desc",
-       measure:  measure ,
        pageNum:pageNum ? pageNum : 1,
        pageSize:pageSize ? pageSize : 100
     }
