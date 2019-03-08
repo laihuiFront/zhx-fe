@@ -163,7 +163,7 @@
               >
             </el-form-item>
             <el-form-item>
-              <el-dropdown trigger="click" @command="exportXh">
+              <el-dropdown trigger="click" @command="exportXh" v-has="'导出信函'">
                 <el-button type="primary">导出信函</el-button>
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item
@@ -176,7 +176,7 @@
               </el-dropdown>
             </el-form-item>
             <el-form-item>
-              <el-dropdown trigger="click" @command="exportCx">
+              <el-dropdown trigger="click" @command="exportCx" v-has="'导出查询结果'">
                 <el-button type="primary">导出查询结果</el-button>
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item command="1"
@@ -195,7 +195,7 @@
                 accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.xls,.xlsx"
                 :multiple="false"
               >
-                <el-button class="daoru" type="primary">导入信函记录</el-button>
+                <el-button class="daoru" type="primary" v-has="'导入信函记录'">导入信函记录</el-button>
               </el-upload>
             </el-form-item>
           </el-form>
