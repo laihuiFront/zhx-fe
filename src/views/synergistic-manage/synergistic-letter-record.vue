@@ -192,6 +192,7 @@
   :data="tableData"
   border
   stripe
+  @row-dblclick="showCase"
   style="width: 100%"
   :cell-style="{ whiteSpace: 'nowrap' }"
   @selection-change="handleSelectionChange"
@@ -447,10 +448,16 @@ export default {
   },
   methods: {
     showCase(row){
-      this.detailId = row.caseId
-      this.detailVisible=true;
-      this.$nextTick(()=>{
-        this.$refs.detail.queryDetail()
+      let id = row.id
+      let name = row.name
+      let seqNo = row.seqno
+      this.$router.push({
+        path:'case-detail',
+        query:{
+          id,
+          name,
+          seqNo
+        }
       })
     },
     sortHandle({ prop, order }) {

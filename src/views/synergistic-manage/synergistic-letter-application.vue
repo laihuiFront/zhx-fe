@@ -499,12 +499,17 @@ export default {
   },
   methods: {
     showCase(row) {
-      this.detailTitle = row.name + "案件详情";
-      this.detailId = row.caseId;
-      this.detailVisible = true;
-      this.$nextTick(() => {
-        this.$refs.detail.queryDetail();
-      });
+      let id = row.caseId
+      let name = row.name
+      let seqNo = row.seqno
+      this.$router.push({
+        path:'case-detail',
+        query:{
+          id,
+          name,
+          seqNo
+        }
+      })
     },
     sortHandle({ prop, order }) {
       this.sort.sort = order.replace("ending", "");

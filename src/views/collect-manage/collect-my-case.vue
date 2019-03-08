@@ -417,7 +417,7 @@
                   style="text-decoration: underline"
                   type="text"
                   size="small"
-                  @click="showCase(scope.row)"
+                  @click="showCase(scope.row.id, scope.row.name,scope.row.seqno)"
                 >{{ scope.row.seqno }}</el-button>
               </template>
             </el-table-column>
@@ -903,21 +903,28 @@ export default {
           : "")
       );
     },
-    showCase(row) {
-      this.detailTitle = row.name + "案件详情";
-      this.detailId = row.id;
-      this.detailVisible = true;
-      this.$nextTick(() => {
-        this.$refs.detail.queryDetail();
-      });
+    showCase(id, name, seqNo) {
+      this.$router.push({
+        path:'case-detail',
+        query:{
+          id,
+          name,
+          seqNo
+        }
+      })
     },
     showDetail(row) {
-      this.detailTitle = row.name + "案件详情";
-      this.detailId = row.id;
-      this.detailVisible = true;
-      this.$nextTick(() => {
-        this.$refs.detail.queryDetail();
-      });
+      let id = row.id
+      let name = row.name
+      let seqNo = row.seqno
+      this.$router.push({
+        path:'case-detail',
+        query:{
+          id,
+          name,
+          seqNo
+        }
+      })
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
