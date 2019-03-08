@@ -8,8 +8,8 @@
       @reset="onClickReset"
       @query="onClickQuery"
       :queryForm="queryForm">
-      <el-button type="primary" v-if="queryForm.recordStatus==='0'" @click="onClickAdd">新建还款记录</el-button>
-      <el-button type="primary" v-if="queryForm.recordStatus==='0'" @click="onClickBatchRevoke">撤销还款</el-button>
+      <el-button type="primary" v-if="queryForm.recordStatus==='0'" @click="onClickAdd" v-has="'新建还款记录'">新建还款记录</el-button>
+      <el-button type="primary" v-if="queryForm.recordStatus==='0'" @click="onClickBatchRevoke" v-has="'撤销还款'">撤销还款</el-button>
       <el-upload
         class="upload-demo upload-btn"
         action="http://116.62.124.251/zxh/repayRecord/recordImport"
@@ -18,10 +18,10 @@
         :on-success="uploadSuccess"
         style="display:inline-block;margin-left:5x;" 
         >
-        <el-button type="primary" v-if="queryForm.recordStatus==='0'">导入还款记录</el-button>
+        <el-button type="primary" v-if="queryForm.recordStatus==='0'" v-has="'导入还款记录'">导入还款记录</el-button>
       </el-upload>
-      <el-button type="primary" @click="onClickExportSelectedRecord">导出选中数据</el-button>
-      <el-dropdown trigger="click" @command="handleCommand">
+      <el-button type="primary" @click="onClickExportSelectedRecord" v-has="'导出选中数据'">导出选中数据</el-button>
+      <el-dropdown trigger="click" @command="handleCommand" v-has="'导出查询结果'">
         <el-button type="primary">导出查询结果<i class="el-icon-arrow-down el-icon--right"></i></el-button>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="all">导出全部</el-dropdown-item>
@@ -36,37 +36,40 @@
       <span class="item">总佣金额：{{sumForm.dataCase.commissionMoney?sumForm.dataCase.commissionMoney:0}}</span>
     </div>
      <el-table
+     sortable="custom"
       @selection-change="onSelectRow"
+      @sort-change="handleSort"
       border
       stripe
       :data="recordList"
       style="width: 100%"
       class="table-wrap">
       <el-table-column type="selection" width="50"></el-table-column>
-      <el-table-column prop="dataCase.batchNo" label="批次号" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="dataCase.cardNo" label="卡号" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="dataCase.identNo" label="证件号" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="dataCase.name" label="姓名" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="dataCase.seqNo" label="个案序列号" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="dataCase.client" label="委托方" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="dataCase.overdueBillTime" label="账龄" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="dataCase.money" label="委案金额" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="bankReconciliation.cpMoney" label="待银行查账金额" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="bankReconciliation.cpDate" label="待银行查账日期" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="collectUser.name" label="回收催收员" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="repayMoney" label="还款金额" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="dataCase.overdueBalance" label="余额" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="repayDate" label="还款日期" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="repayUser" label="还款人" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="repayType" label="还款方式" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="confirmUser.name" label="确认人" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="confirmTime" label="确认时间" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="dataCase.mVal" label="M值" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="dataCase.commissionMoney" label="公司佣金" show-overflow-tooltip></el-table-column>
-      <el-table-column label="操作" width="100" fixed="right" v-if="queryForm.recordStatus==='0'">
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.batchNo" label="批次号" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.cardNo" label="卡号" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.identNo" label="证件号" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.name" label="姓名" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.seqNo" label="个案序列号" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.client" label="委托方" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.overdueBillTime" label="账龄" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.money" label="委案金额" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="bankReconciliation.cpMoney" label="待银行查账金额" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="bankReconciliation.cpDate" label="待银行查账日期" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="collectUser.name" label="回收催收员" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="repayMoney" label="还款金额" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.overdueBalance" label="余额" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="repayDate" label="还款日期" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="repayUser" label="还款人" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="repayType" label="还款方式" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="confirmUser.name" label="确认人" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="confirmTime" label="确认时间" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="remark" label="备注" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.mVal" label="M值" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.commissionMoney" label="公司佣金" show-overflow-tooltip></el-table-column>
+      <el-table-column label="操作" width="100"  v-if="queryForm.recordStatus==='0'">
         <template slot-scope="scope">
           <el-button
+            v-has="'撤销还款'"
             type="text"
             @click="onClickRevoke(scope.row)"
           >撤销还款</el-button>
@@ -257,7 +260,14 @@ export default {
         confirmUser:{name: null}
       }
     },
+    handleSort({column,prop,order}){
+      // console.log(prop,'@',order)
+      this.queryForm.orderBy = prop
+      this.queryForm.sort = order === 'ascending' ? 'asc':'desc'
+      this.onClickQuery()
+    },
     onClickQuery(){
+      this.recordList = []
       getRepayRecordList(this.queryForm).then(data => {
         this.recordList = data.list
         this.total = data.total
@@ -314,11 +324,11 @@ export default {
     },
     handleCommand(command){
       if(command === 'current'){
-        expCurrentRepayRecord(this.queryForm).them(res => {
+        expCurrentRepayRecord(this.queryForm).then(res => {
           this.$message('导出成功')
         })
       }else {
-        expAllRepayRecord(this.queryForm).them(res => {
+        expAllRepayRecord(this.queryForm).then(res => {
           this.$message('导出成功')
         })
       }

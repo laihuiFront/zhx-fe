@@ -4,7 +4,7 @@
       @reset="onClickReset"
       @query="onClickQuery"
       :queryForm="queryForm">
-      <el-dropdown trigger="click" @command="handleCommand">
+      <el-dropdown trigger="click" @command="handleCommand" v-has="'导出查询结果'">
         <el-button type="primary">导出查询结果<i class="el-icon-arrow-down el-icon--right"></i></el-button>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="all">导出全部</el-dropdown-item>
@@ -13,24 +13,26 @@
       </el-dropdown>
     </syn-record-query>
     <el-table
+      sortable="custom"
+      @sort-change="handleSort"
       :data="recordList"
       border
       stripe
       style="width: 100%"
       class="table-wrap">
-      <el-table-column prop="synergisticType" label="协催类型" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="dataCase.collectStatus" label="催收状态" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="dataCase.seqNo" label="个案序列号" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="dataCase.identNo" label="证件号" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="dataCase.name" label="姓名" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="dataCase.money" label="委案金额" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="dataCase.repayMoney" label="还款金额" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="applyContent" label="申请内容" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="applyTime" label="申请时间" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="applyUser.userName" label="催收员" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="synergisticTime" label="协催时间" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="synergisticUser.name" label="协催人" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="synergisticResult" label="协催结果" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="synergisticType" label="协催类型" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.collectStatus" label="催收状态" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.seqNo" label="个案序列号" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.identNo" label="证件号" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.name" label="姓名" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.money" label="委案金额" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.repayMoney" label="还款金额" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="applyContent" label="申请内容" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="applyTime" label="申请时间" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="applyUser.userName" label="催收员" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="synergisticTime" label="协催时间" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="synergisticUser.name" label="协催人" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="synergisticResult" label="协催结果" show-overflow-tooltip></el-table-column>
     </el-table>
     <el-pagination
       @size-change="onClickQuery"
@@ -88,18 +90,25 @@ export default {
       }
     },
     onClickQuery(){
+      this.recordList = []
       getSynergisticRecordList(this.queryForm).then(data => {
         this.recordList = data.list
         this.total = data.total
       })
     },
+    handleSort({column,prop,order}){
+      // console.log(prop,'@',order)
+      this.queryForm.orderBy = prop
+      this.queryForm.sort = order === 'ascending' ? 'asc':'desc'
+      this.onClickQuery()
+    },
     handleCommand(command){
       if(command === 'current'){
-        expCurrentSynergisticRecord(this.queryForm).them(res => {
+        expCurrentSynergisticRecord(this.queryForm).then(res => {
           this.$message('导出成功')
         })
       }else {
-        expAllSynergisticRecord(this.queryForm).them(res => {
+        expAllSynergisticRecord(this.queryForm).then(res => {
           this.$message('导出成功')
         })
       }

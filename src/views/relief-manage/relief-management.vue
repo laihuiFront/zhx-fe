@@ -1,36 +1,32 @@
 <template>
-  <div id="relief-management">
-  	<el-form :inline="true" :model="formInline" class="demo-form-inline">
-  <el-form-item label="批次号">
-    <el-input v-model="formInline.batchNo" placeholder="请输入批次号"></el-input>
-  </el-form-item>
-    <el-form-item label="个案序列号">
-    <el-input v-model="formInline.seqno" placeholder="请输入个案序列号"></el-input>
-  </el-form-item>
-  <el-form-item label="对象姓名">
-    <el-input v-model="formInline.targetName" placeholder="请输入对象姓名"></el-input>
-  </el-form-item>
-   <!--<el-form-item label="催收员">
-                <el-select v-model="formInline.odv" filterable  placeholder="请选择催收员" clearable>
-                  <el-option
-                    v-for="item in PersonLists"
-                    :key="item.id"
-                    :label="item.userName"
-                    :value="item.id">
-                  </el-option>
-                </el-select>
-              </el-form-item>-->
-  <el-form-item label="催收区域">
-    <el-select v-model="formInline.area" placeholder="请选择催收区域" clearable>
-                <el-option
-                  v-for="item in areaList"
-                  :key="item.id"
-                  :label="item.name"
-                  :value="item.id">
-                </el-option>
-              </el-select>
-  </el-form-item>
-   <el-form-item label="委托方">
+  <div id="relief-management" class="page-wraper-sub">
+    <el-form ref="form" :model="formInline" :inline="true" class="query-wrap">
+      <el-form-item>
+        <el-input v-model="formInline.batchNo" clearable placeholder="请输入批次号"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-input v-model="formInline.seqno" clearable placeholder="请输入个案序列号"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-input v-model="formInline.targetName" clearable placeholder="请输入对象姓名"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-select v-model="formInline.area" clearable placeholder="请选择催收区域">
+          <el-option
+            v-for="item in areaList"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-popover
+        placement="bottom-end"
+        width="750"
+        trigger="click">
+          <ul class="condition-wrap">
+            <li class="condition-item">
               <el-select v-model="formInline.client" filterable   placeholder="请选择委托方" clearable>
                 <el-option
                   v-for="item in clientList"
@@ -39,8 +35,18 @@
                   :value="item.id">
                 </el-option>
               </el-select>
-            </el-form-item>
-             <el-form-item label="逾期账龄">
+            </li>
+            <li class="condition-item">
+              <el-select v-model="formInline.accountAge" filterable  placeholder="请选择逾期账龄" clearable>
+                <el-option
+                  v-for="item in accountAgeList"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id">
+                </el-option>
+              </el-select>
+         <!--  </el-form-item>-->
+              <!--<el-form-item label="逾期账龄">
                 <el-select v-model="formInline.accountAge" filterable  placeholder="请选择逾期账龄" clearable>
                   <el-option
                     v-for="item in accountAgeList"
@@ -147,98 +153,189 @@
       <el-table-column
         prop="seqno"
         align="center"
-        label="个人序列号"
-      >
-      </el-table-column>
-      <el-table-column
-        prop="targetName"
+        label="个人序列号"-->
+            </li>
+            <li class="condition-item">
+              <el-select v-model="formInline.reduceStatus" filterable  placeholder="请选择减免状态" clearable>
+                <el-option
+                  v-for="item in deleteStatusList"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id">
+                </el-option>
+              </el-select>
+            </li>
+            <li class="condition-item">
+              <el-select v-model="formInline.collectStatus" filterable  placeholder="请选择催收状态" clearable>
+                <el-option
+                  v-for="item in collectStatusList"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id">
+                </el-option>
+              </el-select>
+            </li>
+            <li class="condition-item half">
+              <el-date-picker
+                v-model="formInline.time1"
+                type="daterange"
+                align="right"
+                value-format="yyyy-MM-dd"
+                unlink-panels
+                range-separator="至"
+                start-placeholder="提交开始日期"
+                end-placeholder="提交结束日期"
+                clearable
+              >
+              </el-date-picker>
+            </li>
+            <li class="condition-item half">
+              <el-date-picker
+                v-model="formInline.time2"
+                type="daterange"
+                align="right"
+                value-format="yyyy-MM-dd"
+                unlink-panels
+                range-separator="至"
+                start-placeholder="有效开始日期"
+                end-placeholder="有效结束日期"
+                clearable
+              >
+              </el-date-picker>
+            </li>
+            <li class="condition-item half">
+              <el-date-picker
+                v-model="formInline.time3"
+                type="daterange"
+                align="right"
+                value-format="yyyy-MM-dd"
+                unlink-panels
+                range-separator="至"
+                start-placeholder="完成开始日期"
+                end-placeholder="完成结束日期"
+                clearable
+              >
+              </el-date-picker>
+            </li>
+          </ul>
+          <img src="./zhankai.png" width="12" height="12" alt="更多" slot="reference">
+        </el-popover>
+        <el-button icon="el-icon-search" type="text" @click="search">查询</el-button>
+        <el-button icon="el-icon-refresh" type="text" @click="clear">重置</el-button>
+      </el-form-item>
+      <el-form-item class="operation-item">
+        <el-button type="primary"　v-show="istrue1" v-has="'新增减免'" @click=addData >新增减免</el-button>
+        <el-button type="primary"　v-show="istrue2" v-has="'批量撤销'" @click=moreDataList >批量撤销</el-button>
+        <el-button type="primary"　v-show="istrue3" v-has="'批量审核'" @click=moreDataListcheck >批量审核</el-button>
+        <el-button type="primary"　v-show="istrue4" v-has="'批量下载附件'" @click=moreDataList >批量下载附件</el-button>
+        <el-button type="primary"　v-show="istrue5" v-has="'导出减免结果'" >导出减免结果</el-button>
+      </el-form-item>
+    </el-form>
+ <el-tabs v-model="activeName2" type="card" @tab-click="handleClick" class="tabs-wrap">
+    <el-tab-pane label="待审核" name="first">
+      <el-table
+        class="table-wrap"
+        ref="multipleTable"
+        :data="tableData3"
+        style="width: 100%;"
+        @selection-change="handleSelectionChange"
+            >
+        <el-table-column
+          type="selection"
+          width="55">
+        </el-table-column>
+        <el-table-column
+          prop="seqno"
+          align="center"
+          label="个人序列号"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="targetName"
+          align="center"
+        label="案人姓名"
+          show-overflow-tooltip>
+        </el-table-column>
+        <el-table-column
+          prop="collectStatusMsg"
+          align="center"
+          label="催收状态"
+          show-overflow-tooltip>
+        </el-table-column>
+        <el-table-column
+          prop="accountAge"
+          align="center"
+          label="委案金额"
+          show-overflow-tooltip>
+        </el-table-column>
+        <el-table-column
+          prop="completeTime"
         align="center"
-       label="案人姓名"
-        show-overflow-tooltip>
-      </el-table-column>
-      <el-table-column
-        prop="collectStatus"
+          label="完成时间"
+          show-overflow-tooltip>
+        </el-table-column>
+        <el-table-column
+          prop="completeUser"
+          label="完成人"
+          align="center"
+          show-overflow-tooltip>
+        </el-table-column>
+        <el-table-column
+          prop="approveRepayAmt"
         align="center"
-        label="催收状态"
-        show-overflow-tooltip>
-      </el-table-column>
-      <el-table-column
-        prop="accountAge"
+          label="批复还款金额"
+          show-overflow-tooltip>
+        </el-table-column>
+        <el-table-column
+          prop="reduceValidTime"
         align="center"
-        label="委案金额"
-        show-overflow-tooltip>
-      </el-table-column>
-      <el-table-column
-        prop="completeTime"
-       align="center"
-        label="完成时间"
-        show-overflow-tooltip>
-      </el-table-column>
-      <el-table-column
-        prop="completeUser"
-        label="完成人"
+          label="有效日期"
+          show-overflow-tooltip>
+        </el-table-column>
+        <el-table-column
+          prop="reduceStatusMsg"
+          align="center"
+          label="减免状态"
+          show-overflow-tooltip>
+        </el-table-column>
+        <el-table-column
+          prop="reduceResult"
+        label="减免结果"
+          align="center"
+          show-overflow-tooltip>
+        </el-table-column>
+        <el-table-column
+          prop="enRepayAmt"
         align="center"
-        show-overflow-tooltip>
-      </el-table-column>
-      <el-table-column
-        prop="approveRepayAmt"
-      align="center"
-        label="批复还款金额"
-        show-overflow-tooltip>
-      </el-table-column>
-      <el-table-column
-        prop="reduceValidTime"
-      align="center"
-        label="有效日期"
-        show-overflow-tooltip>
-      </el-table-column>
-      <el-table-column
-        prop="reduceStatus" 
-        align="center"
-        label="减免状态"
-        show-overflow-tooltip>
-      </el-table-column>
-      <el-table-column
-        prop="reduceResult"
-      label="减免结果"
-        align="center"
-        show-overflow-tooltip>
-      </el-table-column>
-      <el-table-column
-        prop="enRepayAmt"
-      align="center"
-        label="实际还款金额"
-        show-overflow-tooltip>
-      </el-table-column>
-      <el-table-column
-        prop="reduceUpdateTime"
-        align="center"
-        label="减免状态更新时间"
-        show-overflow-tooltip>
-      </el-table-column>
-      <el-table-column
-        prop="newCase"
-        label="附件"
-        align="center"
-        show-overflow-tooltip>
-      </el-table-column>
-  
-      <el-table-column
-        label="操作"
-         fixed="right"
-         width="170"
-        show-overflow-tooltip>
-        <template slot-scope="scope">
-        <el-button type="text" size="small" @click="checkData(scope.row)">审核</el-button>
-        <el-button type="text" size="small" @click="showMessage(scope.row)">查看</el-button>
-        <el-button type="text" size="small" @click="showMessage(scope.row)">修改</el-button>
-           <el-button type="text" size="small" @click="deteleList(scope.row.id)">删除</el-button>
-       </template>
-      </el-table-column>
-    
-    </el-table>
-    <div class="block">
+          label="实际还款金额"
+          show-overflow-tooltip>
+        </el-table-column>
+        <el-table-column
+          prop="reduceUpdateTime"
+          align="center"
+          label="减免状态更新时间"
+          show-overflow-tooltip>
+        </el-table-column>
+        <el-table-column
+          prop="newCase"
+          label="附件"
+          align="center"
+          show-overflow-tooltip>
+        </el-table-column>
+        <el-table-column
+          label="操作"
+          width="170"
+          show-overflow-tooltip>
+          <template slot-scope="scope">
+          <el-button type="text" size="small" @click="checkData(scope.row)" v-has="'批量审核'">审核</el-button>
+          <el-button type="text" size="small" @click="showMessage(scope.row)">查看</el-button>
+          <el-button type="text" size="small" @click="showMessage(scope.row)" v-has="'修改'">修改</el-button>
+            <el-button type="text" size="small" @click="deteleList(scope.row.id)" v-has="'删除'">删除</el-button>
+        </template>
+        </el-table-column>
+      </el-table>
       <el-pagination
+        class="pagination-wrap"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="currentPage4"
@@ -247,8 +344,10 @@
         layout="total, sizes, prev, pager, next, jumper"
         :total="total">
       </el-pagination>
-    </div></el-tab-pane>
-    <el-tab-pane label="已审核" name="second"><el-table
+    </el-tab-pane>
+    <el-tab-pane label="已审核" name="second">
+      <el-table
+      class="table-wrap"
       ref="multipleTable"
       :data="tableData3"
       style="width: 100%;"
@@ -342,14 +441,14 @@
         label="操作"
         show-overflow-tooltip>
         <template slot-scope="scope">
-         <el-button type="text" size="small" @click="showMessage(scope.row)">修改</el-button>
-           <el-button type="text" size="small" @click="deteleList(scope.row.id)">删除</el-button>
+         <el-button type="text" size="small" @click="showMessage(scope.row)" v-has="'修改'">修改</el-button>
+           <el-button type="text" size="small" @click="deteleList(scope.row.id)" v-has="'删除'">删除</el-button>
        </template>
       </el-table-column>
     
     </el-table>
-    <div class="block">
       <el-pagination
+        class="pagination-wrap"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="currentPage4"
@@ -358,8 +457,10 @@
         layout="total, sizes, prev, pager, next, jumper"
         :total="total">
       </el-pagination>
-    </div></el-tab-pane>
-    <el-tab-pane label="已完成" name="third"><el-table
+    </el-tab-pane>
+    <el-tab-pane label="已完成" name="third">
+      <el-table
+      class="table-wrap"
       ref="multipleTable"
       :data="tableData3"
       style="width: 100%;"
@@ -455,25 +556,26 @@
         show-overflow-tooltip>
         <template slot-scope="scope">
          <el-button type="text" size="small" @click="showMessage(scope.row)">查看</el-button>
-           <el-button type="text" size="small" @click="deteleList(scope.row.id)">下载附件</el-button>
+           <el-button type="text" size="small" @click="deteleList(scope.row.id)" v-has="'批量下载附件'">下载附件</el-button>
        </template>
       </el-table-column>
     
     </el-table>
-    <div class="block">
-      <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="currentPage4"
-        :page-sizes="[100, 500, 2000, 10000, 1000000]"
-        :page-size="pages"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="total">
-      </el-pagination>
-    </div></el-tab-pane>
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="currentPage4"
+      :page-sizes="[100, 500, 2000, 10000, 1000000]"
+      :page-size="pages"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total"
+      class="pagination-wrap">
+    </el-pagination>
+    </el-tab-pane>
   </el-tabs>
 
     <el-dialog
+    class="dialog-wrap"
   :title="dialogTitle"
   :visible.sync="dialogVisible"
   width="40%"
@@ -507,7 +609,7 @@
   </div>
   </el-form-item>
   </el-form>
-  <span slot="footer" class="dialog-footer">
+  <span slot="footer" class="footer">
     <el-button @click="dialogVisible = false">取 消</el-button>
     <el-button type="primary" @click="submitForm('ruleForm')">确 定</el-button>
   </span>

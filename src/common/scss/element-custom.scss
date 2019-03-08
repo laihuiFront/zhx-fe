@@ -8,7 +8,7 @@
   .el-table__body-wrapper{
     overflow-y: auto;
     overflow-x: hidden;
-    height: calc(100% - 37px);
+    height: calc(100% - 45px);
   }
 }
 
@@ -22,11 +22,24 @@
   .operation-item{
     float: right;
   }
-
 }
 
 .table-wrap{
   flex: 1;
+}
+
+.tabs-wrap{
+  flex:1;
+  display: flex;
+  flex-direction: column;
+  .el-tabs__content{
+    flex:1;
+    .el-tab-pane{
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+  }
 }
 
 .pagination-wrap{
@@ -77,6 +90,9 @@
     }
     .el-select {
       width: 100%;
+    }
+    &.five-one{
+      width: 20%
     }
     .el-input{
       width: 100%;

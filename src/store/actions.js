@@ -72,6 +72,19 @@ export const initPageMenu = function({state, commit}, toPath) {
   }
 }
 
+export const initCaseDetailPage = function({state, commit}, param = {}){
+  const toMenu = {
+    id: 'detail' + param.id,
+    menuLabel: param.name + '-' + param.seqNo,
+    menuUrl:'case-detail',
+    query:param,
+    isDetail: true
+  }
+  commit(types.SET_CURRENT_MENU, toMenu)
+  commit(types.PUSH_TAB_MENUS, state.menu[0])
+  commit(types.PUSH_TAB_MENUS, toMenu)
+}
+
 export function resetPassword(form) {
   return request({
     method:'post',

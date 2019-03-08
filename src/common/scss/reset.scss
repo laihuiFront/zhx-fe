@@ -22,15 +22,16 @@ time, mark, audio, video, input{
   font-weight: normal;
   vertical-align: baseline;
   box-sizing: border-box;
-  &::-webkit-scrollbar{
-    background-color: #e6e8eb;
-    width: 4px;
-    border-radius: 4px;
-  }
-  &::-webkit-scrollbar-thumb{
-    background-color: #989ba3;
-    border-radius: 2px;
-  }
+  // &::-webkit-scrollbar{
+  //   background-color: #e6e8eb;
+  //   width: 16px;
+  //   height: 16px;
+  //   border-radius: 8px;
+  // }
+  // &::-webkit-scrollbar-thumb{
+  //   background-color: #989ba3;
+  //   border-radius: 8px;
+  // }
 }
 
 /* HTML5 display-role reset for older browsers */

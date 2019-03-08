@@ -8,7 +8,7 @@
       @reset="onClickReset"
       @query="onClickQuery"
       :queryForm="queryForm">
-      <el-button type="primary" v-if="queryForm.status==='0'" @click="onClickBatchCancelBankRecon">作废待银行查账金额</el-button>
+      <el-button type="primary" v-if="queryForm.status==='0'" @click="onClickBatchCancelBankRecon" v-has="'作废'">作废待银行查账金额</el-button>
       <el-upload
         class="upload-demo upload-btn"
         action="http://116.62.124.251/zxh/bankReconciliation/cpImport"
@@ -17,10 +17,10 @@
         :on-success="uploadSuccess"
         style="display:inline-block;margin-left:5x;" 
         >
-        <el-button type="primary" v-if="queryForm.status==='0'">导入待银行查账</el-button>
+        <el-button type="primary" v-if="queryForm.status==='0'" v-has="'导入待银行查账'">导入待银行查账</el-button>
       </el-upload>
-      <el-button type="primary" @click="onClickExportSelectedRecord">导出选中数据</el-button>
-      <el-dropdown trigger="click" @command="handleCommand">
+      <el-button type="primary" @click="onClickExportSelectedRecord" v-has="'导出选中数据'">导出选中数据</el-button>
+      <el-dropdown trigger="click" @command="handleCommand" v-has="'导出查询结果'">
         <el-button type="primary">导出查询结果<i class="el-icon-arrow-down el-icon--right"></i></el-button>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="all">导出全部</el-dropdown-item>
@@ -29,6 +29,8 @@
       </el-dropdown>
     </bank-record-query>
     <el-table
+      sortable="custom"
+      @sort-change="handleSort"
       @selection-change="onSelectRow"
       border
       stripe
@@ -36,24 +38,25 @@
       style="width: 100%"
       class="table-wrap">
       <el-table-column type="selection" width="50"></el-table-column>
-      <el-table-column prop="dataCase.batchNo" label="批次号" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="dataCase.cardNo" label="卡号" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="dataCase.identNo" label="证件号" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="dataCase.name" label="姓名" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="dataCase.seqNo" label="个案序列号" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="dataCase.client" label="委托方" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="dataCase.money" label="委案金额" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="dataCase.repayMoney" label="案件已还款" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="cpMoney" label="待银行查账金额" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="cpDate" label="待银行查账日期" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="repayUser" label="还款人" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="repayType" label="还款方式" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="submitUser.name" label="提交人" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="submitTime" label="提交时间" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.batchNo" label="批次号" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.cardNo" label="卡号" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.identNo" label="证件号" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.name" label="姓名" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.seqNo" label="个案序列号" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.client" label="委托方" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.money" label="委案金额" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.repayMoney" label="案件已还款" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="cpMoney" label="待银行查账金额" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="cpDate" label="待银行查账日期" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="repayUser" label="还款人" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="repayType" label="还款方式" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="submitUser.name" label="提交人" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="submitTime" label="提交时间" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="remark" label="备注" show-overflow-tooltip></el-table-column>
       <el-table-column label="操作" width="100" v-if="queryForm.status==='0'">
         <template slot-scope="scope">
           <el-button
+            v-has="'作废'"
             type="text"
             @click="onClicCancelBankRecon(scope.row.id)"
           >作废待银行查账</el-button>
@@ -199,10 +202,17 @@ export default {
       }
     },
     onClickQuery(){
+      this.recordList = []
       getBankReconList(this.queryForm).then(data => {
         this.recordList = data.list
         this.total = data.total
       })
+    },
+    handleSort({column,prop,order}){
+      // console.log(prop,'@',order)
+      this.queryForm.orderBy = prop
+      this.queryForm.sort = order === 'ascending' ? 'asc':'desc'
+      this.onClickQuery()
     },
     onClickBatchCancelBankRecon(){
       if(!this.selectList.length){
@@ -248,13 +258,13 @@ export default {
     },
     onClickCancel(){},
     onClickSave(){},
-    handleCommand(){
+    handleCommand(command){
       if(command === 'current'){
-        expCurrentBankReconRecord(this.queryForm).them(res => {
+        expCurrentBankReconRecord(this.queryForm).then(res => {
           this.$message('导出成功')
         })
       }else {
-        expAllBankReconRecord(this.queryForm).them(res => {
+        expAllBankReconRecord(this.queryForm).then(res => {
           this.$message('导出成功')
         })
       }

@@ -1,5 +1,5 @@
 <template>
-<div>
+<div style="height:100%;display:flex;flex-direction:column;">
 <el-dialog
   :title="detailTitle"
   class="dialog-wrap"
@@ -171,19 +171,13 @@
           >重置</el-button
           >
         </el-form-item>
-      </el-form>
-    </div>
-  </el-col>
-  <el-col :span="22">
-    <div class="grid-content bg-purple">
-      <el-form :inline="true">
         <el-form-item>
-          <el-button type="primary" @click="qrHandle"
+          <el-button v-has="'批量确认信函'" type="primary" @click="qrHandle"
           >批量确认信函</el-button
           >
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="cxHandle"
+          <el-button v-has="'撤销信函'" type="primary" @click="cxHandle"
           >撤销信函</el-button
           >
         </el-form-item>
@@ -192,6 +186,7 @@
   </el-col>
 </el-row>
 <el-table
+  class="table-wrap"
   ref="multipleTable"
   :data="tableData"
   border
@@ -241,8 +236,8 @@
   <!--</template>-->
   <!--</el-table-column>-->
 </el-table>
-<div class="block">
   <el-pagination
+  class="pagination-wrap"
   @size-change="handleSizeChange"
   @current-change="handleCurrentChange"
   :current-page="paginationData.currentPage"
@@ -252,8 +247,7 @@
   :total="paginationData.total"
   >
   </el-pagination>
-</div></div
->
+</div>
 </template>
 
 <script>
@@ -339,11 +333,11 @@ export default {
           label: "催收状态"
         },
         {
-          prop: "caseAmt",
+          prop: "caseAmtMsg",
           label: "委案金额"
         },
         {
-          prop: "repayAmt",
+          prop: "repayAmtMsg",
           label: "还款金额"
         },
         {
@@ -453,11 +447,16 @@ export default {
   },
   methods: {
     showCase(row){
-      this.detailTitle = row.name+'案件详情'
-      this.detailId = row.caseId
-      this.detailVisible = true
-      this.$nextTick(()=>{
-        this.$refs.detail.queryDetail()
+      let id = row.caseId
+      let name = row.name
+      let seqNo = row.seqno
+      this.$router.push({
+        path:'case-detail',
+        query:{
+          id,
+          name,
+          seqNo
+        }
       })
     },
     sortHandle({ prop, order }) {

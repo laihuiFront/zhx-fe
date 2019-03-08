@@ -1,168 +1,140 @@
 <template>
   <div id="data-case-imported" 
   	 v-loading="loading2"
-    element-loading-text="拼命加载中"
+    element-loading-text="正在导入中"
     element-loading-spinner="el-icon-loading"
-   element-loading-background="rgba(248, 248, 248, 0.8)">
-  <el-row :gutter="24">
-  <el-col :span="24">
-  	<div class="grid-content bg-purple">
-  		<el-form :inline="true" ref="form" :model="form" label-width="80px">
-   <el-form-item >
-  <el-select class="Newinput" v-model="form.area" placeholder="请选择催收区域" clearable>
-    <el-option
-      v-for="item in areaList"
-      :key="item.id"
-      :label="item.name"
-      :value="item.id">
-    </el-option>
-  </el-select>
-  </el-form-item>
-  <el-form-item >
-    <el-select v-model="form.batchNos" filterable collapse-tags  multiple placeholder="请输入批次号" clearable>
-      <el-option
-        v-for="item in batchList"
-        :key="item.id"
-        :label="item.batchNo"
-        :value="item.batchNo">
-      </el-option>
-    </el-select>
-  </el-form-item>
-   <el-form-item >
-  <el-select v-model="form.clients" filterable collapse-tags  multiple placeholder="请选择委托方" clearable>
-    <el-option
-      v-for="item in clientList"
-      :key="item.id"
-      :label="item.name"
-      :value="item.id">
-    </el-option>
-  </el-select>
-  </el-form-item>
-   <el-form-item >
-  <el-select v-model="form.caseType" placeholder="请选择案件类型" clearable>
-    <el-option
-      v-for="item in caseTypeList"
-      :key="item.id"
-      :label="item.name"
-      :value="item.id">
-    </el-option>
-  </el-select>
-  </el-form-item>
-   <el-form-item >
- <el-date-picker
-      v-model="form.time"
-      type="daterange"
-      align="right"
-       value-format="yyyy-MM-dd"
-      unlink-panels
-      range-separator="至"
-      start-placeholder="委案开始日期"
-      end-placeholder="委案结束日期"
-      >
-    </el-date-picker>
-  </el-form-item>
-  <el-form-item>
-  <el-button type="text" icon="el-icon-search" @click=search>查询</el-button> 
-  </el-form-item>
-  <el-form-item>
-  <el-button type="text" icon="el-icon-refresh" @click="resetForm()">重置</el-button> 
-  </el-form-item>
-  </el-form>
-  	</div>
-  </el-col>
-  <el-col :span="20">
-  	<div class="grid-content bg-purple">
-  <el-form :inline="true">
-  		<el-form-item>
+   element-loading-background="rgba(248, 248, 248, 0.8)"
+   class="page-wraper-sub">
+   <el-form ref="form" :model="form" :inline="true" class="query-wrap">
+    <el-form-item >
+      <el-select class="Newinput" v-model="form.area" placeholder="请选择催收区域" clearable>
+        <el-option
+          v-for="item in areaList"
+          :key="item.id"
+          :label="item.name"
+          :value="item.id">
+        </el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item >
+      <el-select v-model="form.batchNos" filterable collapse-tags  multiple placeholder="请输入批次号" clearable>
+        <el-option
+          v-for="item in batchList"
+          :key="item.id"
+          :label="item.batchNo"
+          :value="item.batchNo">
+        </el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item >
+      <el-select v-model="form.clients" filterable collapse-tags  multiple placeholder="请选择委托方" clearable>
+        <el-option
+          v-for="item in clientList"
+          :key="item.id"
+          :label="item.name"
+          :value="item.id">
+        </el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item >
+      <el-select v-model="form.caseType" placeholder="请选择案件类型" clearable>
+        <el-option
+          v-for="item in caseTypeList"
+          :key="item.id"
+          :label="item.name"
+          :value="item.id">
+        </el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item >
+      <el-date-picker
+        v-model="form.time"
+        type="daterange"
+        align="right"
+        value-format="yyyy-MM-dd"
+        unlink-panels
+        range-separator="至"
+        start-placeholder="委案开始日期"
+        end-placeholder="委案结束日期"
+        >
+      </el-date-picker>
+    </el-form-item>
+    <el-form-item>
+      <el-button type="text" icon="el-icon-search" @click=search>查询</el-button> 
+      <el-button type="text" icon="el-icon-refresh" @click="resetForm()">重置</el-button> 
+    </el-form-item>
+    <el-form-item >
       <el-button type="text" @click="downLoadZip">导入模板下载</el-button>
-      </el-form-item>
-      <el-form-item>
-      <el-button type="primary" @click="dialogVisible = true">新增批次</el-button>  </el-form-item>
-      <el-form-item>
-      <el-button type="primary"  @click="open7">删除批次</el-button>  </el-form-item>
-       <el-form-item >
-<el-upload
-  class="upload-demo"
-  action="http://116.62.124.251/zxh/dataCase/updateCase/import"
-  :headers="header"
-  :show-file-list=false
-  :on-success="uploadSuccess"
-  :on-progress="onProgress"
+      <el-button type="primary" @click="dialogVisible = true" v-has="'新增批次'">新增批次</el-button> 
+      <el-button type="primary"  @click="open7" v-has="'删除批次'">删除批次</el-button>
+      <el-upload
+        class="upload-demo"
+        action="http://116.62.124.251/zxh/dataCase/updateCase/import"
+        :headers="header"
+        :show-file-list=false
+        :on-success="uploadSuccess"
+        :on-progress="onProgress"
+        >
+        <el-button size="small" type="primary" v-has="'导入更新案件'">导入更新案件</el-button>
+      </el-upload>
+      <el-upload
+        class="upload-demo"
+        action="http://116.62.124.251/zxh/dataCase/comment/import"
+        :headers="header"
+        :show-file-list=false
+        :on-success="uploadSuccess"
+        :on-progress="onProgress"
 
-  >
-  <el-button size="small" type="primary">导入更新案件</el-button>
-</el-upload>
-      </el-form-item>
-       <el-form-item >
-<el-upload
-  class="upload-demo"
-  action="http://116.62.124.251/zxh/dataCase/comment/import"
-  :headers="header"
-  :show-file-list=false
-  :on-success="uploadSuccess"
-  :on-progress="onProgress"
+        >
+        <el-button size="small" type="primary" v-has="'导入案件评语'">导入案件评语</el-button>
+      </el-upload>
+      <el-upload
+        class="upload-demo"
+        action="http://116.62.124.251/zxh/dataCase/interest/import"
+        :headers="header"
+        :show-file-list=false
+        :on-success="uploadSuccess"
+        :on-progress="onProgress"
 
-  >
-  <el-button size="small" type="primary">导入案件评语</el-button>
-</el-upload>
-      </el-form-item>
-       <el-form-item >
-<el-upload
-  class="upload-demo"
-  action="http://116.62.124.251/zxh/dataCase/interest/import"
-  :headers="header"
-  :show-file-list=false
-  :on-success="uploadSuccess"
-  :on-progress="onProgress"
+        >
+        <el-button size="small" type="primary" v-has="'导入案件利息'">导入案件利息</el-button>
+      </el-upload>
+      <el-upload
+        class="upload-demo"
+        action="http://116.62.124.251/zxh/dataCase/tel/import"
+        :headers="header"
+        :show-file-list=false
+        :on-success="uploadSuccess"
+        :on-progress="onProgress"
 
-  >
-  <el-button size="small" type="primary">导入案件利息</el-button>
-</el-upload>
-      </el-form-item>
-       <el-form-item >
-<el-upload
-  class="upload-demo"
-  action="http://116.62.124.251/zxh/dataCase/tel/import"
-  :headers="header"
-  :show-file-list=false
-  :on-success="uploadSuccess"
-  :on-progress="onProgress"
+        >
+        <el-button size="small" type="primary" v-has="'导入案件电话'">导入案件电话</el-button>
+      </el-upload>
+      <el-upload
+        class="upload-demo"
+        action="http://116.62.124.251/zxh/dataCase/address/import"
+        :headers="header"
+        :show-file-list=false
+        :on-success="uploadSuccess"
+        :on-progress="onProgress"
 
-  >
-  <el-button size="small" type="primary">导入案件电话</el-button>
-</el-upload>
-      </el-form-item>
-       <el-form-item >
-<el-upload
-  class="upload-demo"
-  action="http://116.62.124.251/zxh/dataCase/address/import"
-  :headers="header"
-  :show-file-list=false
-  :on-success="uploadSuccess"
-  :on-progress="onProgress"
-
-  >
-  <el-button size="small" type="primary">导入案件地址</el-button>
-</el-upload>
-      </el-form-item>
-          <el-form-item >
-<el-upload
-  class="upload-demo"
-  action="http://116.62.124.251/zxh/dataCollect/import"
-  :headers="header"
-  :show-file-list=false
-  :on-success="uploadSuccess"
-  :on-progress="onProgress"
-  >
-  <el-button size="small" type="primary">导入催收记录</el-button>
-</el-upload>
-      </el-form-item>
-</el-form>
-  	</div>
-  </el-col>
-   </el-row>
+        >
+        <el-button size="small" type="primary" v-has="'导入案件地址'">导入案件地址</el-button>
+      </el-upload>
+      <el-upload
+        class="upload-demo"
+        action="http://116.62.124.251/zxh/dataCollect/import"
+        :headers="header"
+        :show-file-list=false
+        :on-success="uploadSuccess"
+        :on-progress="onProgress"
+        >
+        <el-button size="small" type="primary" v-has="'导入案件记录'">导入催收记录</el-button>
+      </el-upload>
+    </el-form-item>
+   </el-form>
    <el-table
-   	 
+   	class="table-wrap"
     ref="multipleTable"
     :data="DataList"
     border
@@ -238,6 +210,7 @@
     <el-table-column
       label="操作"
       align="center"
+      width="200"
       >
        <template slot-scope="scope">
        <el-upload
@@ -248,16 +221,16 @@
         :on-success="uploadSuccess"
         :data="{batchNo:scope.row.batchNo}"
   >
-        <el-button type="text" size="small">导入</el-button>
+        <el-button type="text" size="small" v-has="'导入'">导入</el-button>
 </el-upload>
-        <el-button type="text" size="small" v-if="scope.row.batchStatus!=0" @click="downCaseModule(scope.row)">下载</el-button>
-        <el-button type="text" size="small" @click="editMessage(scope.row)">编辑</el-button>
-        <el-button type="text" size="small" @click="deleteMessage(scope.row.id)">删除</el-button>
+        <el-button type="text" size="small" v-if="scope.row.batchStatus!=0" @click="downCaseModule(scope.row)" v-has="'下载'">下载</el-button>
+        <el-button type="text" size="small" @click="editMessage(scope.row)" v-has="'编辑'">编辑</el-button>
+        <el-button type="text" size="small" @click="deleteMessage(scope.row.id)" v-has="'删除批次'">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
-  <div class="block">
     <el-pagination
+      class="pagination-wrap"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage4"
@@ -266,8 +239,8 @@
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
     </el-pagination>
-  </div>
   <el-dialog
+  class="dialog-wrap"
   title="新增批次"
   :visible.sync="dialogVisible"
   width="55%"
@@ -279,7 +252,7 @@
   	<el-form-item label="批  次  号"	
   			prop="batchNo"
         :rules="{ required: true, message: '批次号不能为空', trigger: 'blur'}">
-    <el-input v-model="formInline.batchNo" placeholder="请输入批次号" clearable></el-input>
+    <el-input v-model="formInline.batchNo" disabled placeholder="请输入批次号" clearable></el-input>
   </el-form-item>
   </div>
   </el-col>
@@ -312,7 +285,7 @@
   	<el-form-item label="委  托  方" 
   		prop="client"
     :rules="{required: true, message: '委托方不能为空', trigger: 'blur'}">
-    <el-select v-model="formInline.client" placeholder="请选择委托方" clearable>
+    <el-select v-model="formInline.client" placeholder="请选择委托方" clearable @change="changeBotno">
     <el-option
       v-for="item in clientList"
       :key="item.id"
@@ -345,6 +318,7 @@
     :rules="{required: true, message: '请选择日期', trigger: 'change'}">
      <div class="block">
     <el-date-picker
+    	@change="changeBotno"
       v-model="formInline.caseTime"
       align="right"
       type="date"
@@ -385,12 +359,13 @@
 </el-row>
 </el-form>
 
-<span slot="footer" class="dialog-footer">
+<span slot="footer" class="footer">
     <el-button @click="dialogVisible = false">取 消</el-button>
     <el-button type="primary" @click="submitForm('formInline')">确 定</el-button>
   </span>
 </el-dialog>
 <el-dialog
+  class="dialog-wrap"
   title="修改批次"
   :visible.sync="dialogVisible2"
   width="55%"
@@ -402,7 +377,7 @@
   	<el-form-item label="批  次  号"	
   			prop="batchNo"
         :rules="{ required: true, message: '批次号不能为空', trigger: 'blur'}">
-    <el-input v-model="messageForm.batchNo" placeholder="请输入批次号" clearable></el-input>
+    <el-input v-model="messageForm.batchNo" disabled placeholder="请输入批次号" clearable></el-input>
   </el-form-item>
   </div>
   </el-col>
@@ -435,7 +410,7 @@
   	<el-form-item label="委  托  方" 
   		prop="client"
     :rules="{required: true, message: '委托方不能为空', trigger: 'blur'}">
-    <el-select v-model="messageForm.client" placeholder="请选择委托方" clearable>
+    <el-select v-model="messageForm.client" @change="changeBotno1" placeholder="请选择委托方" clearable>
     <el-option
       v-for="item in clientList"
       :key="item.id"
@@ -468,6 +443,7 @@
     :rules="{required: true, message: '请选择日期', trigger: 'change'}">
      <div class="block">
     <el-date-picker
+    	@change="changeBotno1"
       v-model="messageForm.caseTime"
       align="right"
       type="date"
@@ -508,17 +484,19 @@
 </el-row>
 </el-form>
 
-<span slot="footer" class="dialog-footer">
+<span slot="footer" class="footer">
     <el-button @click="dialogVisible2 = false">取 消</el-button>
     <el-button type="primary" @click="submitmsgForm('messageForm')">确 定</el-button>
   </span>
-</el-dialog><el-dialog
+</el-dialog>
+<el-dialog
+  class="dialog-wrap"
   title="提示"
   :visible.sync="ImportdialogVisible"
   width="30%"
   >
   <span>{{ImportMsg}}</span>
-  <span slot="footer" class="dialog-footer">
+  <span slot="footer" class="footer">
     <el-button type="primary" @click=ImportdialogVisibleWay >确 定</el-button>
   </span>
 </el-dialog>
@@ -526,7 +504,8 @@
 </template>
 
 <script>
-		import {dataList,batchList,remoweData,addData,clientList,caseTypeList,areaList,update,downLoadZip,downCaseModule} from '@/common/js/data-case-imported.js'
+		import {dataList,batchList,remoweData,addData,clientList,caseTypeList,areaList,update,downLoadZip,downCaseModule} from '@/common/js/data-case-imported.js';
+    import {baseURL} from '@/common/js/request.js';
 export default {
   name: 'dataCaseImported',
   data(){
@@ -564,6 +543,14 @@ export default {
     }
   },
 methods: {
+	changeBotno(){
+	
+		      this.$set(this.formInline, 'batchNo', this.formInline.client+'-'+this.formInline.caseTime)
+	},
+	changeBotno1(){
+	
+		      this.$set(this.messageForm, 'batchNo', this.messageForm.client+'-'+this.messageForm.caseTime)
+	},
 	ImportdialogVisibleWay(){
 		this.loading2=false
 		this.ImportdialogVisible=false
@@ -575,7 +562,7 @@ methods: {
       if (res.code ==100){
   		    this.$message({
             type: 'success',
-            message: res.msg
+            message: "导入成功"
           });
            dataList().then((response)=>{
             this.DataList=response.pageInfo.list

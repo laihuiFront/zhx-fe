@@ -1,5 +1,5 @@
 <template>
-  <div id="collect-repayment-statistics">
+  <div id="collect-repayment-statistics" style="display:flex;flex-direction:column;height:100%;">
     <section class="topDataWp">
       <el-row :gutter="10">
         <el-col :span="3"
@@ -12,11 +12,11 @@
         ><span class="topSpan">上月待银行查账金额:</span> {{ topData.lastBankAmt }}</el-col
         >
         <el-col :span="4"
-        ><span class="topSpan">上月提成(已还款):</span>¥{{
+        ><span class="topSpan">上月提成(已还款):</span>{{
           topData.lastRepaidAmt
           }}</el-col
         >
-        <el-col :span="4"
+        <el-col :span="8"
         ><span class="topSpan">上月提成(待银行查账金额):</span> {{ topData.lastRepaidBankAmt }}</el-col
         >
       </el-row>
@@ -35,7 +35,7 @@
           topData.thisRepaidAmt
           }}</el-col
         >
-        <el-col :span="4"
+        <el-col :span="8"
         ><span class="topSpan">当月提成(待银行查账金额):</span>{{ topData.thisRepaidBankAmt }}</el-col
         >
       </el-row>
@@ -90,49 +90,49 @@
               </el-option>
             </el-select>
           </el-form-item>
+          <el-form-item prop="val2">
+            <el-select v-model="form1.val2" placeholder="请选择委托方" filterable multiple clearable>
+              <el-option
+                v-for="item in val2_data"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              >
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item prop="val3">
+            <el-select
+              v-model="form1.val3"
+              multiple
+              filterable
+              remote
+              placeholder="请输入批次号"
+              :remote-method="querySearch">
+              <el-option
+                v-for="item in val3_data"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item prop="val4">
+            <el-select
+              v-model="form1.val4"
+              placeholder="请选择逾期账龄"
+              clearable
+            >
+              <el-option
+                v-for="item in val4_data"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              >
+              </el-option>
+            </el-select>
+          </el-form-item>
         </el-row>
-        <el-form-item prop="val2">
-          <el-select v-model="form1.val2" placeholder="请选择委托方" filterable multiple clearable>
-            <el-option
-              v-for="item in val2_data"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            >
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item prop="val3">
-          <el-select
-            v-model="form1.val3"
-            multiple
-            filterable
-            remote
-            placeholder="请输入批次号"
-            :remote-method="querySearch">
-            <el-option
-              v-for="item in val3_data"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item prop="val4">
-          <el-select
-            v-model="form1.val4"
-            placeholder="请选择逾期账龄"
-            clearable
-          >
-            <el-option
-              v-for="item in val4_data"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            >
-            </el-option>
-          </el-select>
-        </el-form-item>
         <el-form-item prop="val5">
           <el-date-picker
             v-model="form1.val5"
@@ -183,7 +183,7 @@
         </el-form-item>
       </el-form>
     </section>
-    <section class="table-wrap">
+    <!-- <section class="table-wrap"> -->
       <div style="padding-bottom: 20px;">
         <span style="color: black;font-size: 16px;">查询结果统计:</span>
         <span class="" v-if="form1.val1 == 0">
@@ -199,6 +199,7 @@
         </span>
       </div>
       <el-table
+        class="table-wrap"
         ref="multipleTable"
         :data="tableData"
         border
@@ -213,7 +214,7 @@
           :key="index"
         ></el-table-column>
       </el-table>
-    </section>
+    <!-- </section> -->
   </div>
 </template>
 
@@ -474,11 +475,11 @@ export default {
       pay(this.fetchData).then(data => {
         this.tableData = data.list;
         this.topData = data;
-        this.fetchData.paidMoney = this.formatMoney(data.paidMoney,0, "￥")
+        /*this.fetchData.paidMoney = this.formatMoney(data.paidMoney,0, "￥")
         this.fetchData.repaidAmt = this.formatMoney(data.repaidAmt,0, "￥")
         this.fetchData.bankAmtC = this.formatMoney(data.bankAmtC,0, "￥")
         this.fetchData.repaidBankAmt = this.formatMoney(data.repaidBankAmt,0, "￥")
-        this.fetchData.repayAmtP = this.formatMoney(data.repayAmtP,0, "￥")
+        this.fetchData.repayAmtP = this.formatMoney(data.repayAmtP,0, "￥")*/
 
         this.topData.lastPaidMoney = this.formatMoney(data.lastPaidMoney,0, "￥")
         this.topData.repayAmtP = this.formatMoney(data.repayAmtP,0, "￥")

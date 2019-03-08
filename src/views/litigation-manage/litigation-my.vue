@@ -1,41 +1,35 @@
 <template>
-  <div id="litigation-my">
-  	 <el-tabs v-model="activeName2" type="card" @tab-click="handleClick">
-    <el-tab-pane label="我的诉讼案件" name="first"> <el-row :gutter="24">
-  <el-col :span="20">
-  	<div class="grid-content bg-purple">
-  		<el-form :inline="true" ref="form" :model="form" >
-  			<el-form-item label="案件状态">
-     <el-select v-model="form.legalStatusMsg " filterable  placeholder="请选择案件状态" clearable>
-    <el-option
-      v-for="item in legalStatusMsgList"
-      :key="item.id"
-      :label="item.name"
-      :value="item.id">
-    </el-option>
-     </el-select>
-  </el-form-item>
-   <el-form-item label="案号">
-     <el-input v-model="form.legalNo" placeholder="请输入案号" clearable></el-input>
-  </el-form-item>
-  <el-form-item label="姓名">
-   <el-input v-model="form.cstName" placeholder="请输入姓名" clearable></el-input>
-  </el-form-item>
-  <el-form-item>
-  <el-button type="text" icon="el-icon-search" @click=search>查询</el-button> 
-  </el-form-item>
-  <el-form-item>
-  <el-button type="text" icon="el-icon-refresh" @click=clench>重置</el-button> 
-  </el-form-item>
-  <el-form-item>
-      <el-button type="primary" @click=addDataform>添加诉讼案件</el-button>  </el-form-item>    
-</el-form>
-  </el-form>
-  	</div>
-  </el-col>
-   </el-row>	
+  <div id="litigation-my" class="page-wraper-sub">
+  	 <el-tabs v-model="activeName2" type="card" @tab-click="handleClick" class="tabs-wrap">
+    <el-tab-pane label="我的诉讼案件" name="first"> 
+      <el-form ref="form" :model="form" :inline="true" class="query-wrap">
+        <el-form-item>
+          <el-select v-model="form.legalStatusMsg " filterable  placeholder="请选择案件状态" clearable>
+            <el-option
+              v-for="item in legalStatusMsgList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-input v-model="form.legalNo" placeholder="请输入案号" clearable></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-input v-model="form.cstName" placeholder="请输入姓名" clearable></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="text" icon="el-icon-search" @click="search">查询</el-button> 
+          <el-button type="text" icon="el-icon-refresh" @click="clench">重置</el-button> 
+        </el-form-item>
+        <el-form-item class="operation-item">
+          <el-button type="primary" v-has="'添加诉讼案件'" @click="addDataform">添加诉讼案件</el-button>
+        </el-form-item> 
+      </el-form>
   	
   <el-table
+    class="table-wrap"
     :data="DataList"
     border
     stripe
@@ -123,23 +117,22 @@
       width="120"
      >
      <template slot-scope="scope">
-       <el-button type="text" size="small" icon="el-icon-message" @click="showmessage(scope.row)"></el-button>
-       <el-button type="text" size="small" icon="el-icon-edit" @click="editData(scope.row)"></el-button>
-       <el-button type="text" size="small" icon="el-icon-delete" @click="deleteData(scope.row.id)"></el-button>
+       <el-button type="text" size="small" icon="el-icon-message" @click="showmessage(scope.row)" v-has="'查看'"></el-button>
+       <el-button type="text" size="small" icon="el-icon-edit" @click="editData(scope.row)" v-has="'编辑'"></el-button>
+       <el-button type="text" size="small" icon="el-icon-delete" @click="deleteData(scope.row.id)" v-has="'删除'"></el-button>
       </template>
     </el-table-column>
   </el-table>
-    <div class="block">
-  	 <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="currentPage4"
-      :page-sizes="[100, 500, 2000, 10000, 1000000]"
-      :page-size="pages"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="total">
-    </el-pagination>
-  </div>	
+    <el-pagination
+    class="pagination-wrap"
+    @size-change="handleSizeChange"
+    @current-change="handleCurrentChange"
+    :current-page="currentPage4"
+    :page-sizes="[100, 500, 2000, 10000, 1000000]"
+    :page-size="pages"
+    layout="total, sizes, prev, pager, next, jumper"
+    :total="total">
+  </el-pagination>	
   	<el-dialog
   :title="dialogTitle"
   append-to-body
@@ -455,41 +448,35 @@
   </span>
 </el-dialog>
     </el-tab-pane>
-    <el-tab-pane label="全部诉讼案件" name="second"><el-row :gutter="24">
-  <el-col :span="20">
-  	<div class="grid-content bg-purple">
-  		<el-form :inline="true" ref="form" :model="form2" >
-  			<el-form-item label="案件状态">
-     <el-select v-model="form2.legalStatusMsg " filterable  placeholder="请选择案件状态" clearable>
-    <el-option
-      v-for="item in legalStatusMsgList"
-      :key="item.id"
-      :label="item.name"
-      :value="item.id">
-    </el-option>
-     </el-select>
-  </el-form-item>
-   <el-form-item label="案号">
-     <el-input v-model="form2.legalNo" placeholder="请输入案号" clearable></el-input>
-  </el-form-item>
-  <el-form-item label="姓名">
-   <el-input v-model="form2.cstName" placeholder="请输入姓名" clearable></el-input>
-  </el-form-item>
-  <el-form-item>
-  <el-button type="text" icon="el-icon-search" @click=search2>查询</el-button> 
-  </el-form-item>
-  <el-form-item>
-  <el-button type="text" icon="el-icon-refresh" @click=clench>重置</el-button> 
-  </el-form-item>
-  <el-form-item>
-      <el-button type="primary" @click=addDataform>添加诉讼案件</el-button>  </el-form-item>    
-</el-form>
-  </el-form>
-  	</div>
-  </el-col>
-   </el-row>	
+    <el-tab-pane label="全部诉讼案件" name="second">
+      <el-form ref="form" :model="form2" :inline="true" class="query-wrap">
+        <el-form-item>
+          <el-select v-model="form2.legalStatusMsg " filterable  placeholder="请选择案件状态" clearable>
+            <el-option
+              v-for="item in legalStatusMsgList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-input v-model="form2.legalNo" placeholder="请输入案号" clearable></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-input v-model="form2.cstName" placeholder="请输入姓名" clearable></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="text" icon="el-icon-search" @click="search2">查询</el-button> 
+          <el-button type="text" icon="el-icon-refresh" @click="clench">重置</el-button> 
+        </el-form-item>
+        <el-form-item class="operation-item">
+          <el-button type="primary" @click="addDataform">添加诉讼案件</el-button>  
+        </el-form-item>    
+      </el-form>
   	
   <el-table
+    class="table-wrap"
     :data="DataList2"
     border
     stripe
@@ -583,8 +570,8 @@
       </template>
     </el-table-column>
   </el-table>
-    <div class="block">
   	 <el-pagination
+      class="pagination-wrap"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage4"
@@ -592,9 +579,9 @@
       :page-size="pages"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
-    </el-pagination>
-  </div>	
+    </el-pagination>	
   	<el-dialog
+    class="dialog-wrap"
   :title="dialogTitle"
   append-to-body
   :visible.sync="dialogVisible"

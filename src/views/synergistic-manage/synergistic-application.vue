@@ -8,8 +8,9 @@
       @reset="onClickReset"
       @query="onClickQuery"
       :queryForm="queryForm">
-        <el-button type="primary" v-if="queryForm.applyStatus==='0'" @click="onClickBatchApprove(1)">同意协催</el-button>
+        <el-button type="primary" v-if="queryForm.applyStatus==='0'" @click="onClickBatchApprove(1)" v-has="'同意协催'">同意协催</el-button>
         <el-popover
+          v-has="'完成协催'"
           v-if="queryForm.applyStatus==='1'"
           placement="bottom-start"
           trigger="manual"
@@ -31,7 +32,7 @@
           <el-button type="primary"  slot="reference" @click="onclickBatchFinish">完成协催</el-button>
         </el-popover>
         
-        <el-button type="primary" @click="onClickBatchApprove(-1)">撤销协催</el-button>
+        <el-button type="primary" @click="onClickBatchApprove(-1)" v-has="'撤销协催'">撤销协催</el-button>
         <el-upload
           class="upload-demo upload-btn"
           action="http://116.62.124.251/zxh/synergistic/finishedSynergisticImport"
@@ -40,7 +41,7 @@
           :on-success="uploadSuccess"
           style="display:inline-block;margin-left:5x;" 
           >
-          <el-button type="primary">导入完成待办协催</el-button>
+          <el-button type="primary" v-has="'导入完成待办协催'">导入完成待办协催</el-button>
         </el-upload>
         <el-upload
           class="upload-demo upload-btn"
@@ -50,9 +51,9 @@
           :on-success="uploadSuccess"
           style="display:inline-block;margin-left:5x;" 
           >
-          <el-button type="primary">导入协催记录</el-button>
+          <el-button type="primary" v-has="'导入协催记录'">导入协催记录</el-button>
         </el-upload>
-        <el-dropdown trigger="click" @command="handleCommand" v-if="queryForm.applyStatus==='1'">
+        <el-dropdown trigger="click" @command="handleCommand" v-if="queryForm.applyStatus==='1'" v-has="'导出查询结果'">
           <el-button type="primary">导出查询结果<i class="el-icon-arrow-down el-icon--right"></i></el-button>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="all">导出全部</el-dropdown-item>
@@ -61,27 +62,30 @@
         </el-dropdown>
     </syn-record-query>
     <el-table
+      sortable="custom"
       @selection-change="onSelectRow"
+      @sort-change="handleSort"
       border
       stripe
       :data="recordList"
       style="width: 100%"
       class="table-wrap">
       <el-table-column type="selection" width="50"></el-table-column>
-      <el-table-column prop="synergisticType" label="协催类型" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="dataCase.collectStatus" label="催收状态" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="dataCase.seqNo" label="个案序列号" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="dataCase.identNo" label="证件号" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="dataCase.name" label="姓名" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="dataCase.money" label="委案金额" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="dataCase.repayMoney" label="还款金额" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="applyContent" label="申请内容" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="applyTime" label="申请时间" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="applyUser.userName" label="催收员" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="synergisticType" label="协催类型" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.collectStatus" label="催收状态" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.seqNo" label="个案序列号" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.identNo" label="证件号" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.name" label="姓名" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.money" label="委案金额" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.repayMoney" label="还款金额" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="applyContent" label="申请内容" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="applyTime" label="申请时间" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="applyUser.userName" label="催收员" show-overflow-tooltip></el-table-column>
       <el-table-column label="操作" show-overflow-tooltip width="150">
         <template slot-scope="scope">
-          <el-button type="text" v-if="queryForm.applyStatus==='0'" @click="onClickApprove(scope.row, 1)">同意协催</el-button>
+          <el-button type="text" v-if="queryForm.applyStatus==='0'" @click="onClickApprove(scope.row, 1)" v-has="'同意协催'">同意协催</el-button>
           <el-popover
+            v-has="'完成协催'"
             v-if="queryForm.applyStatus==='1'"
             placement="bottom-end"
             trigger="click"
@@ -102,7 +106,7 @@
             </div>
             <el-button type="text"  slot="reference">完成协催</el-button>
           </el-popover>
-          <el-button type="text" @click="onClickApprove(scope.row, -1)">撤销协催</el-button>
+          <el-button type="text" @click="onClickApprove(scope.row, -1)" v-has="'撤销协催'">撤销协催</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -186,6 +190,12 @@ export default {
         this.total = data.total
       })
     },
+    handleSort({column,prop,order}){
+      // console.log(prop,'@',order)
+      this.queryForm.orderBy = prop
+      this.queryForm.sort = order === 'ascending' ? 'asc':'desc'
+      this.onClickQuery()
+    },
     onSelectRow(val){
       this.selectList = val
     },
@@ -222,11 +232,11 @@ export default {
     },
     handleCommand(command){
       if(command === 'current'){
-        expCurrentSynergisticRecord(this.queryForm).them(res => {
+        expCurrentSynergisticRecord(this.queryForm).then(res => {
           this.$message('导出成功')
         })
       }else {
-        expAllSynergisticRecord(this.queryForm).them(res => {
+        expAllSynergisticRecord(this.queryForm).then(res => {
           this.$message('导出成功')
         })
       }

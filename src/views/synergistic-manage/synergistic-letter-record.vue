@@ -179,7 +179,7 @@
     <div class="grid-content bg-purple">
       <el-form :inline="true">
         <el-form-item>
-          <el-button type="primary" @click="cxHandle"
+          <el-button type="primary" v-has="'撤销协催'" @click="cxHandle"
           >撤销信函</el-button
           >
         </el-form-item>
@@ -192,6 +192,7 @@
   :data="tableData"
   border
   stripe
+  @row-dblclick="showCase"
   style="width: 100%"
   :cell-style="{ whiteSpace: 'nowrap' }"
   @selection-change="handleSelectionChange"
@@ -334,11 +335,11 @@ export default {
           label: "催收状态"
         },
         {
-          prop: "caseAmt",
+          prop: "caseAmtMsg",
           label: "委案金额"
         },
         {
-          prop: "repayAmt",
+          prop: "repayAmtMsg",
           label: "还款金额"
         },
         {
@@ -447,10 +448,16 @@ export default {
   },
   methods: {
     showCase(row){
-      this.detailId = row.caseId
-      this.detailVisible=true;
-      this.$nextTick(()=>{
-        this.$refs.detail.queryDetail()
+      let id = row.id
+      let name = row.name
+      let seqNo = row.seqno
+      this.$router.push({
+        path:'case-detail',
+        query:{
+          id,
+          name,
+          seqNo
+        }
       })
     },
     sortHandle({ prop, order }) {

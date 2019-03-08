@@ -9,7 +9,15 @@ export function getCaseDetail(id) {
     }
   })
 }
-
+export function getSameBatchCollect(id) {
+  return request({
+    url: '/case/batch/idno',
+    method: 'post',
+    data: {
+      "caseId":id
+    }
+  })
+}
 export function getSameBatchCase(id) {
   return request({
     url: '/dataCase/sameBatchCaseList',
@@ -47,28 +55,32 @@ export function getAddressDetail(id) {
     }
   })
 }
-//案人信息
-export function getArchiveDetail(id) {
-  return request({
-    url: '/dataArchive/findAll',
-    method: 'post',
-    data: {
-      id
-    }
-  })
-}
 
-//催記
-export function getCollectDetail(id,type) {
+//催记
+export function getCollectDetail(id,batchNo,identNo,cardNo,detaiType) {
   return request({
     url: '/dataCollect/detailCollect',
     method: 'post',
     data: {
-      caseId:id,
-      detaiType:type
+      id,
+      batchNo,
+      identNo,
+      cardNo,
+      detaiType
     }
   })
 }
+//案人信息
+export function getArchiveDetail(id) {
+  return request({
+    url: '/detai/archive/list',
+    method: 'post',
+    data: {
+      "caseId":id
+    }
+  })
+}
+
 //评语
 export function getCommentDetail(id) {
   return request({
@@ -77,6 +89,22 @@ export function getCommentDetail(id) {
     data: {
       id
     }
+  })
+}
+
+export function updateDataComment(data){
+  return request({
+    url: '/dataCase/updateComment',
+    method: 'post',
+    data
+  })
+}
+
+export function delDataComment(id){
+  return request({
+    url: '/dataCase/delComment',
+    method: 'post',
+    data:{id}
   })
 }
 
@@ -238,6 +266,8 @@ export function dataCollectionSave(data){
   })
 }
 
+
+
 export function addLetter(data){
   return request({
     url: '/letter/addLetter',
@@ -248,7 +278,7 @@ export function addLetter(data){
 
 export function getReduceApplyList(id){
   return request({
-    url: '/reduce/apply/select/id',
+    url: '/reduce/apply/page',
     method: 'post',
     data:{id}
   })
@@ -270,3 +300,36 @@ export function getLegalList(caseId){
     data:{caseId}
   })
 }
+
+export function detailTelCurrentCollect(data){
+  return request({
+    url: 'dataCollect/tel/detailTelCurentCollect',
+    method: 'post',
+    data
+  })
+}
+
+export function AddtableList(id,form){
+  return request({
+    url: '/reduce/apply/add',
+    method: 'post',
+    data:{
+    	caseId:id,
+      payer:form.payer,
+      relation:form.relation,
+      contactWay:form.contactWay,
+      sex:form.sex,
+      age:form.age,
+      visitFlag:form.visitFlag,
+      joinFlag:form.joinFlag,
+      connectFlag:form.connectFlag,
+      enRepayAmt:form.enRepayAmt,
+      repayAmt:form.repayAmt,
+      repayTime:form.repayTime,
+      reduceReason:form.reduceReason,
+      reduceData:form.reduceData,
+      remark:form.remark,
+    }
+  })
+}
+

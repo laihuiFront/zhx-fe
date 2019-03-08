@@ -28,7 +28,7 @@
               <el-input v-model="caseDetail.cardNo" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="催收状态">
-              <el-input v-model="caseDetail.collectStatus" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.collectStatusMsg" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="预计退案日">
               <el-date-picker v-model="caseDetail.expectTime" type="date" :disabled="true"  placeholder="选择日期"></el-date-picker>
@@ -180,6 +180,12 @@
                       placeholder="请输入评语"
                       v-model="commentAddContent">
                     </el-input>
+                    <el-radio-group v-model="commentAddColor" style="margin-top:10px;">
+                      <el-radio label="黑">正常</el-radio>
+                      <el-radio label="蓝">标蓝</el-radio>
+                      <el-radio label="红">标红</el-radio>
+                      <el-radio label="">不更改</el-radio>
+                    </el-radio-group>
                   </div>
                   <div style="text-align: right; margin-top: 12px">
                     <el-button size="mini" type="text" @click="addCommentVisible = false">取消</el-button>
@@ -188,7 +194,7 @@
                  <el-button size="small" type="text" icon="el-icon-plus" title="添加" slot="reference"></el-button>
                 </el-popover>
                  <ul class="comments-wrap">
-                   <li v-for="(item) in commentList" :key="item.id" class="item">
+                   <li v-for="(item) in commentList" :key="item.id" class="item" :class="[{blue: item.commentColor==='BLUE'},{red: item.commentColor==='RED'}]">
                      {{item.createTime}} {{item.creatUserName}} : {{item.comment}}
                    </li>
                  </ul>
@@ -610,6 +616,7 @@
                   @selection-change="onSelectPhoneRow"
                   border stripe
                   :data="caseDetail.dataCaseTelEntityList"
+                  :row-class-name="telTableRowClassName"
                   style="width: 100%"
                   class="table-wrap">
                   <el-table-column
@@ -644,10 +651,36 @@
                     label="操作"
                     width="250">
                     <template slot-scope="scope">
-                      <el-button type="text">历史记录</el-button>
-                      <el-button type="text" @click="editPhone(scope.row)" v-if="caseDetail.currentuser">编辑</el-button>
-                      <el-button type="text" @click="deleteTel(scope.row.id)" v-if="caseDetail.currentuser">删除</el-button>
-                      <el-button type="text" v-if="caseDetail.currentuser">停止跟进</el-button>
+                      <el-popover
+                        v-model="scope.row.showHistory"
+                        placement="top"
+                        width="600"
+                        trigger="manual">
+                        <div>
+                          <el-radio-group v-model="scope.row.historyType" @change='getHistoryTel'>
+                            <el-radio :label="1">本案催记</el-radio>
+                            <el-radio :label="2">同号码所有催记</el-radio>
+                          </el-radio-group>
+                        </div>
+                        <el-table :data="scope.row.history" height="500">
+                          <el-table-column  property="collectTime" label="通话时间"></el-table-column>
+                          <el-table-column  property="targetName" label="通话对象"></el-table-column>
+                          <el-table-column  property="mobile" label="电话号码"></el-table-column>
+                          <el-table-column  property="sType" label="电话类型"></el-table-column>
+                          <el-table-column  property="collectInfo" label="通话内容"></el-table-column>
+                          <el-table-column  property="result" label="通话结果"></el-table-column>
+                          <el-table-column  property="repayTime" label="承诺日期"></el-table-column>
+                          <el-table-column  property="repayAmt" label="承诺金额"></el-table-column>
+                          <el-table-column  property="odv" label="催收员"></el-table-column>
+                        </el-table>
+                        <div style="text-align:center">
+                          <el-button type="primary" @click="$set(scope.row, 'showHistory',false)">关闭</el-button>
+                        </div>
+                        <el-button slot="reference" type="text" @click="showHistoryTel(scope.row)">历史记录</el-button>
+                      </el-popover>
+                      <el-button type="text" @click="editPhone(scope.row)" v-if="caseDetail.currentuser && scope.row.telStatusMsg !== '停止跟进'">编辑</el-button>
+                      <el-button type="text" @click="deleteTel(scope.row.id)" v-if="caseDetail.currentuser && scope.row.telStatusMsg !== '停止跟进'">删除</el-button>
+                      <el-button type="text" v-if="caseDetail.currentuser && scope.row.telStatusMsg !== '停止跟进'" @click="stopTel(scope.row.id)">停止跟进</el-button>
                     </template>
                   </el-table-column>
                 </el-table>
@@ -862,7 +895,7 @@
                     label="电话/地址">
                   </el-table-column>
                   <el-table-column
-                    prop="collectionType"
+                    prop="telType"
                     show-overflow-tooltip
                     label="类型">
                   </el-table-column>
@@ -877,7 +910,7 @@
                     label="催收对象">
                   </el-table-column>
                   <el-table-column
-                    prop="method"
+                    prop="methodMsg"
                     show-overflow-tooltip
                     label="谈判方式">
                   </el-table-column>
@@ -897,7 +930,7 @@
                     label="减免金额">
                   </el-table-column>
                   <el-table-column
-                    prop="remark"
+                    prop="reduceStatusMsg"
                     show-overflow-tooltip
                     label="减免状态">
                   </el-table-column>
@@ -907,13 +940,12 @@
                     label="催收人">
                   </el-table-column>
                   <el-table-column
-                    prop="collectStatus"
+                    prop="collectStatusMsg"
                     show-overflow-tooltip
                     label="催收状态">
                   </el-table-column>
                   <el-table-column
                     label="操作"
-                    fixed="right"
                     width="100">
                     <template slot-scope="scope">
                       <el-button type="text" v-if="caseDetail.currentuser">编辑</el-button>
@@ -944,6 +976,34 @@
                     show-overflow-tooltip
                     width="150"
                     label="提交时间">
+                  </el-table-column>
+                  <el-table-column
+                    label="操作"
+                    v-if="letterVisible2"
+                    width="150">
+                    <template slot-scope="scope">
+                      <el-popover
+                        placement="bottom-end"
+                        trigger="manual"
+                        title="编辑操作记录"
+                        width="500"
+                        v-model="scope.row.editCommentVisible">
+                        <div>
+                          <el-input
+                            type="textarea"
+                            :rows="4"
+                            placeholder="请输入评语"
+                            v-model="scope.row.editContext">
+                          </el-input>
+                        </div>
+                        <div style="text-align: right; margin-top: 12px">
+                          <el-button size="mini" type="text" @click="$set(scope.row, 'editCommentVisible', false)">取消</el-button>
+                          <el-button type="primary" size="mini" @click="onClickSaveComment">确定</el-button>
+                        </div>
+                        <el-button type="text"  @click="editComment(scope.row)" slot="reference" v-if="caseDetail.currentuser">修改</el-button>
+                      </el-popover>
+                      <el-button type="text"  v-if="caseDetail.currentuser" @click="_deleteComment(scope.row.id)">删除</el-button>
+                    </template>
                   </el-table-column>
                 </el-table>
               </el-tab-pane>
@@ -1080,7 +1140,7 @@
                   </el-table-column>
                 </el-table>
               </el-tab-pane>
-              <el-tab-pane label="共债案件" name="10" class="tabs-wrap">
+              <el-tab-pane label="共债案件" name="10" class="tabs-wrap" v-if="userInfo.sameBatch">
                 <el-table
                   :data="caseSameList"
                   style="width: 100%"
@@ -1146,6 +1206,8 @@
                       <el-radio label="电话催收">电话催收</el-radio>
                       <el-radio label="电话管理">电话管理</el-radio>
                       <el-radio label="案件管理">案件管理</el-radio>
+                      <el-radio label="电话催收">电话催收</el-radio>
+                      <el-radio label="CP管理">CP管理</el-radio>
                     </el-radio-group>
                   </div>
                 </div>
@@ -1177,33 +1239,7 @@
                     show-overflow-tooltip
                     label="操作人">
                   </el-table-column>
-                  <el-table-column
-                    label="操作"
-                    width="100">
-                    <template slot-scope="scope">
-                      <el-popover
-                        placement="bottom-end"
-                        trigger="manual"
-                        title="编辑操作记录"
-                        width="500"
-                        v-model="scope.row.editLogVisible">
-                        <div>
-                          <el-input
-                            type="textarea"
-                            :rows="4"
-                            placeholder="请输入操作记录"
-                            v-model="scope.row.editContext">
-                          </el-input>
-                        </div>
-                        <div style="text-align: right; margin-top: 12px">
-                          <el-button size="mini" type="text" @click="$set(scope.row, 'editLogVisible', false)">取消</el-button>
-                          <el-button type="primary" size="mini" @click="onClickSaveLog">确定</el-button>
-                        </div>
-                        <el-button type="text" @click="editLog(scope.row)" slot="reference" v-if="caseDetail.currentuser">编辑</el-button>
-                      </el-popover>
-                      <el-button type="text" @click="_deleteLog(scope.row.id)" v-if="caseDetail.currentuser">删除</el-button>
-                    </template>
-                  </el-table-column>
+
                 </el-table>
               </el-tab-pane>
               <el-tab-pane label="诉讼案件" name="12" class="tabs-wrap">
@@ -1286,7 +1322,7 @@
                   </div>
                 </div>
                 <el-table
-                  :data="caseDetail.reliefList"
+                  :data="reduceApplyList"
                   style="width: 100%"
                   border stripe
                   class="table-wrap">
@@ -1347,7 +1383,6 @@
                   </el-table-column>
                   <el-table-column
                     prop="user"
-                    fixed="right"
                     show-overflow-tooltip
                     label="操作">
                   </el-table-column>
@@ -1469,11 +1504,11 @@
               style="width: 100%"
               border stripe
               class="table-wrap">
-              <el-table-column prop="dataCase.batchNo" width="80" label="时间" show-overflow-tooltip></el-table-column>
-              <el-table-column prop="dataCase.cardNo" width="70" label="对象姓名" show-overflow-tooltip></el-table-column>
-              <el-table-column prop="dataCase.identNo" width="50" label="关系" show-overflow-tooltip></el-table-column>
-              <el-table-column prop="dataCase.name" width="120" label="电话/地址" show-overflow-tooltip></el-table-column>
-              <el-table-column prop="dataCase.seqNo" label="催收记录" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="collectTime" width="80" label="时间" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="targetName" width="70" label="对象姓名" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="relation" width="50" label="关系" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="telPhone" width="120" label="电话/地址" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="collectInfo" label="催收记录" show-overflow-tooltip></el-table-column>
             </el-table>
           </div>
         </div>
@@ -1608,27 +1643,25 @@
     <el-dialog
   title="添加减免申请"
   :visible.sync="adddialogVisible"
-  width="50%"
+  width="60%"
   append-to-body
  >
- <el-form :inline="true" :model="messageForm" ref="messageForm" label-width="100px" class="demo-dynamic">
+ <el-form :inline="true" :model="messageForm" ref="messageForm" label-width="130px" class="demo-dynamic">
 	<el-row :gutter="24">
   <el-col :span="12">
   	<div class="grid-content bg-purple">
-  	<el-form-item label="还款人姓名"	
-  			prop="batchNo"
-        :rules="{ required: true, message: '姓名号不能为空', trigger: 'blur'}">
-    <el-input v-model="messageForm.batchNo" placeholder="请输入姓名" clearable></el-input>
+  	<el-form-item label="还款人姓名"	>
+  		
+    <el-input v-model="messageForm.payer" placeholder="请输入姓名" clearable></el-input>
   </el-form-item>
   </div>
   </el-col>
   <el-col :span="12">
   	<div class="grid-content bg-purple">
   		<el-form-item label="关系"
-  			prop="batchNo"
-        :rules="{ required: true, message: '关系不能为空', trigger: 'blur'}"
+  			
   			>
-        <el-input v-model="messageForm.targetRate" placeholder="请输入关系" clearable></el-input>
+        <el-input v-model="messageForm.relation" placeholder="请输入关系" clearable></el-input>
   </el-form-item>
   		
   	</div>
@@ -1638,9 +1671,8 @@
   <el-col :span="12">
   	<div class="grid-content bg-purple">
   	<el-form-item label="联系方式"	
-  			prop="batchNo"
-        :rules="{ required: true, message: '联系方式不能为空', trigger: 'blur'}">
-    <el-input v-model="messageForm.batchNo" placeholder="请输入联系方式" clearable></el-input>
+  			>
+    <el-input v-model="messageForm.contactWay" placeholder="请输入联系方式" clearable></el-input>
   </el-form-item>
   </div>
   </el-col>
@@ -1663,7 +1695,7 @@
   <el-col :span="12">
   	<div class="grid-content bg-purple">
   	<el-form-item label="性 别" >
-  		  <el-radio-group v-model="messageForm.resource">
+  		  <el-radio-group v-model="messageForm.sex">
       <el-radio label="男"></el-radio>
       <el-radio label="女"></el-radio>
     </el-radio-group>
@@ -1673,9 +1705,8 @@
     <el-col :span="12">
   	<div class="grid-content bg-purple">
   	<el-form-item label="年 龄"	
-  			prop="batchNo"
-        :rules="{ required: true, message: '联系方式不能为空', trigger: 'blur'}">
-    <el-input v-model="messageForm.batchNo" placeholder="请输入联系方式" clearable></el-input>
+  			>
+    <el-input v-model="messageForm.age" placeholder="请输入年龄" clearable></el-input>
   </el-form-item>
   </div>
   </el-col>
@@ -1684,9 +1715,9 @@
   <el-col :span="12">
   	<div class="grid-content bg-purple">
   	<el-form-item label="是否外访" >
-  		  <el-radio-group v-model="messageForm.resource">
-      <el-radio label="是"></el-radio>
-      <el-radio label="否"></el-radio>
+  		  <el-radio-group v-model="messageForm.visitFlag">
+      <el-radio label="0">是</el-radio>
+      <el-radio label="1">否</el-radio>
     </el-radio-group>
   </el-form-item>	
   	</div>
@@ -1694,9 +1725,9 @@
     <el-col :span="12">
   	<div class="grid-content bg-purple">
   	<el-form-item label="是否共债" >
-  		  <el-radio-group v-model="messageForm.resource">
-      <el-radio label="是"></el-radio>
-      <el-radio label="否"></el-radio>
+  		  <el-radio-group v-model="messageForm.joinFlag">
+          <el-radio label="0">是</el-radio>
+      <el-radio label="1">否</el-radio>
     </el-radio-group>
   </el-form-item>	
   	</div>
@@ -1706,25 +1737,68 @@
   <el-col :span="12">
   	<div class="grid-content bg-purple">
   	<el-form-item label="是否可联"	
-  			prop="batchNo"
-        :rules="{ required: true, message: '联系方式不能为空', trigger: 'blur'}">
-    <el-input v-model="messageForm.batchNo" placeholder="请输入联系方式" clearable></el-input>
+  		>
+    <el-input v-model="messageForm.connectFlag" placeholder="请输入联系方式" clearable></el-input>
   </el-form-item>
   </div>
   </el-col>
    <el-col :span="12">
   	<div class="grid-content bg-purple">
   	<el-form-item label="已还款"	
-  			prop="batchNo"
-        :rules="{ required: true, message: '联系方式不能为空', trigger: 'blur'}">
-    <el-input v-model="messageForm.batchNo" placeholder="请输入联系方式" clearable></el-input>
+  		>
+    <el-input v-model="messageForm.enRepayAmt" placeholder="请输入联系方式" clearable></el-input>
   </el-form-item>
   </div>
   </el-col>
 </el-row>
+
+<el-row :gutter="24">
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  	<el-form-item label="承诺还款"	
+  		>
+    <el-input v-model="messageForm.repayAmt" placeholder="请输入还款金额" clearable></el-input>
+  </el-form-item>
+  </div>
+  </el-col>
+   <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  	<el-form-item label="承诺还款日期"	
+  		>
+  		 <div class="block">
+    <el-date-picker
+      v-model="messageForm.repayTime"
+      type="date"
+      placeholder="选择日期">
+    </el-date-picker>
+  </div>
+  </el-form-item>
+  </div>
+  </el-col>
+</el-row>
+
+<el-row :gutter="24">
+  <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  	<el-form-item label="减免原因"	
+  		>
+    <el-input v-model="messageForm.reduceReason" placeholder="请输入减免原因" clearable></el-input>
+  </el-form-item>
+  </div>
+  </el-col>
+   <el-col :span="12">
+  	<div class="grid-content bg-purple">
+  	<el-form-item label="减免材料"	
+  		>
+  		    <el-input v-model="messageForm.reduceData" placeholder="请输入减免材料" clearable></el-input>
+  </el-form-item>
+  </div>
+  </el-col>
+</el-row>
+
 <el-row :gutter="24">
   <el-col :span="24">
-  <el-form-item label="批次备注" >
+  <el-form-item label="备注" >
     <el-input type="textarea" v-model="messageForm.remark" style="width: 200%;">></el-input>
   </el-form-item>
    </el-col>
@@ -1739,8 +1813,9 @@
 </template>
 
 <script>
-
+import {mapGetters} from 'vuex'
 import {getCaseDetail,
+        getSameBatchCollect,
         getAddressDetail,
         getLetterList,
         getArchiveDetail,
@@ -1766,23 +1841,37 @@ import {getCaseDetail,
         addLetter,
         getReduceApplyList,
         pageDataFile,
-        getLegalList} from '@/common/js/api-detail'
+        getLegalList,
+        detailTelCurrentCollect,
+        updateDataComment,
+        delDataComment,
+        AddtableList
+        } from '@/common/js/api-detail'
 import {getEnum} from '@/common/js/api-sync'
 
 export default {
   name:'caseDetail',
-  props:{
-    id:{
-      type: Number,
-      default: -1
+  // props:{
+  //   id:{
+  //     type: Number,
+  //     default: -1
+  //   }
+  // },
+  computed: {
+    ...mapGetters([
+      'userInfo'
+    ]),
+    id(){
+      return this.$route.query.id
     }
-  },
+},
   data() {
     return {
     	messageForm:{},
     	adddialogVisible:false,
       addCommentVisible:false,
       commentAddContent:null,
+      commentAddColor:"黑",
       dialogVisible:false,
       letterVisible:false,
       letterVisible2:true,
@@ -1824,14 +1913,32 @@ export default {
       uploadVisible:false,
       uploadFileList:[],
       header:{Authorization:localStorage.token},
-      legalList:[]
-
+      legalList:[],
+      currentRow:{}
     }
   },
   methods: {
   	saveData(){
-  		console.log(this.id)
+AddtableList(this.id,this.messageForm).then((response)=>{
+ this.$message('添加成功')    
+ this.adddialogVisible=false
+})
   	},
+    showHistoryTel(row){
+      this.$set(row, 'historyType', 1)
+      this.$set(row, 'showHistory', true)
+      this.currentRow = row
+      this.getHistoryTel(1)
+    },
+    getHistoryTel(val){
+      detailTelCurrentCollect({
+        caseId: this.id,
+        detailType: val,
+        mobile: this.currentRow.tel
+      }).then(data =>{
+        this.$set(this.currentRow, 'history', data)
+      })
+    },
     uploadSuccess(res,file,fileList){
       if (res.code ==100){
   		    this.$message({
@@ -1862,8 +1969,10 @@ export default {
       })
     },
     memorizeTypeChange(val){
-      getCollectDetail(this.id,val).then(data => {
-        console.info(data)
+      let batchNo = this.caseDetail.batchNo;
+      let identNo = this.caseDetail.identNo;
+      let cardNo = this.caseDetail.cardNo;
+      getCollectDetail(this.id,batchNo,identNo,cardNo,val).then(data => {
         this.memorizeList = data
       })
     },
@@ -1894,10 +2003,31 @@ export default {
           
         });
     },
+    _deleteComment(id){
+      this.$confirm('此操作将删除该评语且无法恢复,是否继续？', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          delDataComment(id).then(res=>{
+            getCommentDetail(this.id).then(data => {
+              this.commentList = data
+            })
+            this.$message('评语删除成功')
+          })
+        }).catch(() => {
+          
+        });
+    },
     editLog(row){
       this.editLogRow = row
       this.$set(row, 'editContext', row.context)
       this.$set(row, 'editLogVisible', true)
+    },
+    editComment(row){
+      this.editCommentRow = row
+      this.$set(row, 'editContext', row.comment)
+      this.$set(row, 'editCommentVisible', true)
     },
     onClickSaveLog(){
       updateDataLog({
@@ -1908,6 +2038,18 @@ export default {
           this.logList = data
         })
         this.$message('操作记录修改成功')
+      })
+    },
+    onClickSaveComment(){
+      updateDataComment({
+        id: this.editCommentRow.id,
+        comment: this.editCommentRow.editContext
+      }).then(res =>{
+        getCommentDetail(this.id).then(data => {
+          this.$message('评语修改成功')
+          this.commentList = data
+          // this.$set(this.editCommentRow,'editCommentVisible',false)
+        })
       })
     },
     saveSelfInfo(){
@@ -1958,6 +2100,7 @@ export default {
     showAllAddr(){
       getAddressDetail(this.id).then(data=>{
         this.addrList = data
+
       })
     },
     saveAddr(){
@@ -2114,6 +2257,25 @@ export default {
         })
       }).catch(()=>{})
     },
+    stopTel(id){
+      this.$confirm('确认停止跟进该电话？', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          updateTelStatus([{
+            id,
+            telStatusMsg:'停止跟进'
+          }]).then(res=>{
+            getTelList(this.id).then(data=>{
+              this.$set(this.caseDetail,'dataCaseTelEntityList',data)
+            })
+            this.$message('该电话已停止跟进')
+          })
+        }).catch(() => {
+          
+        });
+    },
     onClickAddComment(){
       if(!this.commentAddContent){
         this.$message('请输入评语内容')
@@ -2121,12 +2283,15 @@ export default {
       }
       addComment([{
         id: this.id,
-        comment: this.commentAddContent
+        comment: this.commentAddContent,
+        color: this.commentAddColor
       }]).then(res => {
         this.$message('评语添加成功')
         getCommentDetail(this.id).then(data => {
           this.commentList = data
           this.addCommentVisible = false
+          this.commentAddContent = "";
+          this.commentAddColor = '黑'
         })
       })
     },
@@ -2151,6 +2316,9 @@ export default {
       this.otherActiveName = '1'
       getCaseDetail(this.id).then(data => {
         this.caseDetail = data
+      })
+      getSameBatchCollect(this.id).then(data => {
+        this.syncMemorizeList = data
       })
       getSameBatchCase(this.id).then(data => {
         this.dependCase = data
@@ -2178,39 +2346,43 @@ export default {
       })
     },
     showPanel(tab,e){
-      var ind = tab.index;
-      if (ind == 1){
+      console.log(tab)
+      console.log(e)
+      var ind = tab.label;
+      if (ind == '地址'){
         getAddressDetail(this.id).then(data => {
           this.addrList = data
+          this.letterVisible = false;
+          this.letterVisible2 = true;
         })
-      }else if (ind == 2){
+      }else if (ind == '案人数据'){
         getArchiveDetail(this.id).then(data => {
           this.dataList = data
         })
-      }else if(ind == 3){//催記
+      }else if(ind == '催记'){//催記
         this.memorizeType = 1
         getCollectDetail(this.id,1).then(data => {
           console.info(data)
           this.memorizeList = data
         })
-      }else if (ind == 4){//评语
+      }else if (ind == '评语'){//评语
         getCommentDetail(this.id).then(data => {
           this.commentList = data
         })
-      }else if (ind == 5){//利息
+      }else if (ind == '利息更新'){//利息
         getInterestDetail(this.id).then(data => {
           this.rateUpdateList = data
         })
-      }else if (ind == 6){//协催
+      }else if (ind == '协催'){//协催
         this.syncType = 1
         getSynergyDetail(this.id).then(data => {
           this.syncList = data
         })
-      }else if(ind == 7){//共债案件
+      }else if(ind == '共债案件'){//共债案件
         sameCaseList(this.id).then(data=>{
           this.caseSameList = data
         })
-      }else if(ind == 8){//操作记录
+      }else if(ind == '操作记录'){//操作记录
         this.logType = ''
         pageDataLog({
           caseId: this.id,
@@ -2218,11 +2390,11 @@ export default {
         }).then(data=>{
           this.logList = data
         })
-      }else if(ind == 9){//诉讼案件
+      }else if(ind == '诉讼案件'){//诉讼案件
         getLegalList(this.id).then(data=>{
           this.legalList = data.data
         })
-      }else if(ind == 10){//减免管理
+      }else if(ind == '减免管理'){//减免管理
         getReduceApplyList(this.id).then(data=>{
           this.reduceApplyList = data
         })
@@ -2233,10 +2405,21 @@ export default {
     },
     onSelectAddrRow(val){
       this.addrSelectList = val
+    },
+    telTableRowClassName({row, rowIndex}){
+      if(row.telStatusMsg === '停止跟进'){
+        return 'stop-row'
+      }
+    },
+  },
+  watch: {
+    '$route' (to, from) {
+      // console.log(this.getStatus(this.$route.path))
+      this.queryDetail()
     }
   },
   created() {
-  	
+  	this.queryDetail()
   }
 }
 </script>
@@ -2286,7 +2469,13 @@ export default {
             .item{
               margin-bottom: 4px;
               line-height: 1;
-              color: #409eff;
+              color: #000;
+              &.blue{
+                color: #409eff;
+              }
+              &.red{
+                color: red;
+              }
               &:last-child{
                 margin-bottom: 0;
               }
@@ -2405,6 +2594,11 @@ export default {
   .upload-wrap{
     .upload-btn{
       display: inline-block;
+    }
+  }
+  .el-table{
+    .stop-row{
+      background:red
     }
   }
 </style>
