@@ -20,6 +20,16 @@ const mutations = {
     const menuIndex = _.findIndex(state.tabMenus, item => item.id === menuId)
     state.tabMenus.splice(menuIndex, 1)
   },
+  [types.REMOVE_TAB_OTHER](state, reservedId){
+    let tabMenus = [state.tabMenus[0]]
+    if(reservedId){
+      const menuIndex = _.findIndex(state.tabMenus, item => item.id === reservedId)
+      if(menuIndex > 0){
+        tabMenus.push(state.tabMenus[menuIndex])
+      }
+    }
+    state.tabMenus = tabMenus
+  },
   [types.SET_CURRENT_MENU](state, menu){
     state.currentMenu = menu
   },

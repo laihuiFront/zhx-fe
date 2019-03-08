@@ -2,12 +2,23 @@
   <section id="tab-menu">
     <span class="left-wrap"><i class="icon el-icon-arrow-left"></i></span>
     <ul class="menu-wrap">
-      <li @click="gotoPage(menu)" class="menu-item" :class="{active:menu.id === currentMenu.id}" v-for="(menu) in tabMenus" :key="'tab'+menu.id">
+      <li 
+         @click="gotoPage(menu)"
+         class="menu-item" 
+         :class="{active:menu.id === currentMenu.id}" 
+         v-for="(menu) in tabMenus" 
+         :key="'tab'+menu.id"
+          @contextmenu.prevent="openMenu(menu,$event)">
         <span class="text">{{menu.menuLabel}}</span>
         <i v-if="menu.menuLabel !== '首页'" @click.stop="closeTab(menu)" class="el-icon-close"></i>
       </li>
     </ul>
     <span class="right-wrap"><i class="icon el-icon-arrow-right"></i></span>
+    <ul v-show="visible" :style="{left:left+'px',top:top+'px'}" class="contextmenu">
+      <li @click="closeTab(selectedTab)" v-if="selectedTab.menuLabel !== '首页'">关闭当前标签页</li>
+      <li @click="closeOthersTags">关闭其他标签页</li>
+      <li @click="closeAllTags" v-if="selectedTab.menuLabel !== '首页'">关闭所有标签页</li>
+    </ul>
   </section>
 </template>
 
@@ -20,8 +31,54 @@ export default {
       'tabMenus',
       'currentMenu'
     ])
-},
+  },
+  data(){
+    return {
+      visible:false,
+      top: 0,
+      left: 0,
+      selectedTab: {}
+    }
+  },
+  watch: {
+    visible(value) {
+      if (value) {
+        document.body.addEventListener('click', this.closeMenu)
+      } else {
+        document.body.removeEventListener('click', this.closeMenu)
+      }
+    }
+  },
   methods:{
+    openMenu(tab, e){
+      const menuMinWidth = 105
+      const offsetLeft = this.$el.getBoundingClientRect().left // container margin left
+      const offsetWidth = this.$el.offsetWidth // container width
+      const maxLeft = offsetWidth - menuMinWidth // left boundary
+      const left = e.clientX - offsetLeft + 15 // 15: margin right
+
+      if (left > maxLeft) {
+        this.left = maxLeft
+      } else {
+        this.left = left
+      }
+      this.top = e.clientY
+
+      this.visible = true
+      this.selectedTab = tab
+    },
+    closeMenu() {
+      this.visible = false
+    },
+    closeOthersTags(){
+      this.gotoPage(this.selectedTab)
+      this.removeOtherTab(this.selectedTab.id)
+    },
+    //关闭所有就回到首页，第一个一定是首页
+    closeAllTags(){
+      this.gotoPage(this.tabMenus[0])
+      this.removeOtherTab()
+    },
     gotoPage(menu){
       if(menu.isDetail){
         this.$router.push({
@@ -62,7 +119,8 @@ export default {
       }
     },
     ...mapMutations({
-      removeTab:'REMOVE_TAB_MENUS'
+      removeTab:'REMOVE_TAB_MENUS',
+      removeOtherTab:'REMOVE_TAB_OTHER'
     })
   }
 }
@@ -70,6 +128,7 @@ export default {
 
 <style lang="scss">
 #tab-menu{
+  // position: relative;
   display: flex;
   height: 35px;
   border: 1px solid #e8e8e8;
@@ -116,6 +175,27 @@ export default {
     height: 35px;
     line-height: 35px;
     cursor: pointer;
+  }
+  .contextmenu {
+    margin: 0;
+    background: #fff;
+    z-index: 100;
+    position: absolute;
+    list-style-type: none;
+    padding: 5px 0;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 400;
+    color: #333;
+    box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, .3);
+    li {
+      margin: 0;
+      padding: 7px 16px;
+      cursor: pointer;
+      &:hover {
+        background: #eee;
+      }
+    }
   }
 }
 </style>
