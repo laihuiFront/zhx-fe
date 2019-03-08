@@ -755,17 +755,17 @@
             label: "证件号"
           },
           {
-            prop: "money",
+            prop: "moneyMsg",
             width:130,
             label: "委案金额"
           },
           {
-            prop: "balance",
+            prop: "balanceMsg",
             width:130,
             label: "委案余额"
           },
           {
-            prop: "moneyStart",
+            prop: "moneyStartMsg",
             width:130,
             label: "最新欠款"
           },
@@ -775,17 +775,17 @@
             label: "逾期天数"
           },
           {
-            prop: "enRepayAmt",
+            prop: "enRepayAmtMsg",
             width:130,
             label: "已还款金额"
           },
           {
-            prop: "repayAmt",
+            prop: "repayAmtMsg",
             width:"180",
             label: "承诺还款金额"
           },
           {
-            prop: "bankAmt",
+            prop: "bankAmtMsg",
             width:"180",
             label: "待银行查账金额"
           },
