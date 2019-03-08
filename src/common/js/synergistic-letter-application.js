@@ -1,7 +1,30 @@
 import request from '@/common/js/request';
+import download from '@/common/js/download'
 
-
-
+//导出信函
+export function dcxh(data={}) {
+  return download({
+    url:'/letter/download',
+    method:'post',
+    data
+  })
+}
+//导出查询结果  全量导出
+export function dccxjg(data={}) {
+  return download({
+    url:'/letter/totalExport',
+    method:'post',
+    data
+  })
+}
+//导出查询结果 导出当前页
+export function dccxjgThis(data={}) {
+  return download({
+    url:'/letter/pageExport',
+    method:'post',
+    data
+  })
+}
 //信函列表
 export function pageDataLetter(data={}) {
   return request({
