@@ -605,14 +605,14 @@
       handleSort( {column,prop,order}){
         this.sort = order==null?"desc":order.replace("ending","")
         this.orderBy = prop==null?"id":prop
-        search(this.formInline.area,this.formInline.dept,this.formInline.odvs,this.formInline.measure,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
+        search(this.formInline,this.pageSize,this.pageNum).then((response)=>{
           this.tableData3=response.list
           //this.pages = response.pages
           this.total = response.total
         })
       },
       search(){
-        search(this.formInline.area,this.formInline.dept,this.formInline.odvs,this.formInline.measure,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
+        search(this.formInline,this.pageSize,this.pageNum).then((response)=>{
           this.tableData3=response.list
           //this.pages = response.pages
           this.total = response.total
@@ -625,7 +625,7 @@
         let expectEndTime=this.formInline.expectTime[1]
         let collectStartTime=this.formInline.collectTime[0]
         let collectEndTime=this.formInline.collectTime[1]
-        dataList(this.formInline.area,this.formInline.dept,this.formInline.batchNo,this.formInline.clients,this.formInline.odvs,this.formInline.caseStatus,this.formInline.measure,this.formInline.result,this.formInline.identNo,this.formInline.cardNo,this.formInline.collectInfo,this.formInline.color,this.formInline.seqno,this.formInline.bailStartDate,this.formInline.bailEndDate,this.formInline.expectStartTime,this.formInline.expectEndTime,this.formInline.collectStartTime,this.formInline.collectEndTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
+        dataList(this.formInline,this.pageSize,this.pageNum).then((response)=>{
           this.tableData3=response.list
           this.total=response.total
           this.dialogVisible=false
@@ -652,7 +652,7 @@
         this.search()
       },
       resetForm(){
-        this.form={}
+        this.formInline={}
       },
       open7() {
         let _self=this
@@ -684,7 +684,8 @@
       },
     },
     created() {
-      dataList(this.formInline.area,this.formInline.dept,this.formInline.batchNo,this.formInline.clients,this.formInline.odvs,this.formInline.caseStatus,this.formInline.measure,this.formInline.result,this.formInline.identNo,this.formInline.cardNo,this.formInline.collectInfo,this.formInline.color,this.formInline.seqno,this.formInline.bailStartDate,this.formInline.bailEndDate,this.formInline.expectStartTime,this.formInline.expectEndTime,this.formInline.collectStartTime,this.formInline.collectEndTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
+    	console.log(this.formInline)
+      dataList(this.formInline,this.pageSize,this.pageNum).then((response)=>{
         this.tableData3=response.list
         //this.pages = response.pages
         this.total = response.total

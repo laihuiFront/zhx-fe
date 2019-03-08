@@ -435,8 +435,7 @@ export default {
       detailId: -1,
       detailTitle: "案件详情",
       action:baseURL+'/letter/import',
-      headers:{
-      }
+      headers:{Authorization:localStorage.token}
     };
   },
   computed: {
@@ -514,6 +513,7 @@ export default {
     sortHandle({ prop, order }) {
       this.sort.sort = order.replace("ending", "");
       this.sort.orderBy = prop;
+      this.getMainData();
     },
     //查询批次号
     querySearch(queryString) {
