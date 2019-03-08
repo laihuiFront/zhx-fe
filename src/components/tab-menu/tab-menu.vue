@@ -1,7 +1,7 @@
 <template>
   <section id="tab-menu">
-    <span class="left-wrap"><i class="icon el-icon-arrow-left"></i></span>
-    <ul class="menu-wrap">
+    <span class="left-wrap" @click="onClickLeft"><i class="icon el-icon-arrow-left"></i></span>
+    <ul class="menu-wrap" ref='tabList'>
       <li 
          @click="gotoPage(menu)"
          class="menu-item" 
@@ -13,7 +13,7 @@
         <i v-if="menu.menuLabel !== '首页'" @click.stop="closeTab(menu)" class="el-icon-close"></i>
       </li>
     </ul>
-    <span class="right-wrap"><i class="icon el-icon-arrow-right"></i></span>
+    <span class="right-wrap" @click="onClickRight"><i class="icon el-icon-arrow-right"></i></span>
     <ul v-show="visible" :style="{left:left+'px',top:top+'px'}" class="contextmenu">
       <li @click="closeTab(selectedTab)" v-if="selectedTab.menuLabel !== '首页'">关闭当前标签页</li>
       <li @click="closeOthersTags">关闭其他标签页</li>
@@ -41,6 +41,12 @@ export default {
     }
   },
   watch: {
+    tabMenus(){
+      console.log('123')
+      setTimeout(()=>{
+        this.$refs.tabList.scrollTo(this.$refs.tabList.scrollWidth, 0)
+      },250)
+    },
     visible(value) {
       if (value) {
         document.body.addEventListener('click', this.closeMenu)
@@ -49,7 +55,19 @@ export default {
       }
     }
   },
+  mounted(){
+    this.$refs.tabList.style.left = '0px'
+    this.$refs.tabList.style.right = '0px'
+  },
   methods:{
+    onClickLeft(){
+      // this.$refs.tabList.scrollTo(this.$refs.tabList.scrollWidth, 0)
+      // console.log(this.$refs.tabList.scrollLeft)
+      this.$refs.tabList.scrollLeft = this.$refs.tabList.scrollLeft + 50
+    },
+    onClickRight(){
+      this.$refs.tabList.scrollLeft = this.$refs.tabList.scrollLeft - 50
+    },
     openMenu(tab, e){
       const menuMinWidth = 105
       const offsetLeft = this.$el.getBoundingClientRect().left // container margin left
@@ -129,6 +147,7 @@ export default {
 <style lang="scss">
 #tab-menu{
   // position: relative;
+  width:100%;
   display: flex;
   height: 35px;
   border: 1px solid #e8e8e8;
@@ -137,11 +156,15 @@ export default {
     border-right: 1px solid #e8e8e8;
     height: 35px;
     line-height: 35px;
+    background: #fff;
     cursor: pointer;
+    // z-index: 100;
   }
   .menu-wrap{
+    position: relative;
     flex:1;
-    overflow: auto;
+    overflow: scroll;
+    
     white-space: nowrap;
     &::-webkit-scrollbar{
       display: none;
@@ -174,7 +197,9 @@ export default {
     padding: 0 20px;
     height: 35px;
     line-height: 35px;
+    background: #fff;
     cursor: pointer;
+    // z-index: 100;
   }
   .contextmenu {
     margin: 0;
