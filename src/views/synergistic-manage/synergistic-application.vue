@@ -232,11 +232,11 @@ export default {
     },
     handleCommand(command){
       if(command === 'current'){
-        expCurrentSynergisticRecord(this.queryForm).them(res => {
+        expCurrentSynergisticRecord(this.queryForm).then(res => {
           this.$message('导出成功')
         })
       }else {
-        expAllSynergisticRecord(this.queryForm).them(res => {
+        expAllSynergisticRecord(this.queryForm).then(res => {
           this.$message('导出成功')
         })
       }

@@ -324,11 +324,11 @@ export default {
     },
     handleCommand(command){
       if(command === 'current'){
-        expCurrentRepayRecord(this.queryForm).them(res => {
+        expCurrentRepayRecord(this.queryForm).then(res => {
           this.$message('导出成功')
         })
       }else {
-        expAllRepayRecord(this.queryForm).them(res => {
+        expAllRepayRecord(this.queryForm).then(res => {
           this.$message('导出成功')
         })
       }

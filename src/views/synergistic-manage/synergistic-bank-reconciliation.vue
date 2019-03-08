@@ -56,6 +56,7 @@
       <el-table-column label="操作" width="100" v-if="queryForm.status==='0'">
         <template slot-scope="scope">
           <el-button
+            v-has="'作废'"
             type="text"
             @click="onClicCancelBankRecon(scope.row.id)"
           >作废待银行查账</el-button>
@@ -257,13 +258,13 @@ export default {
     },
     onClickCancel(){},
     onClickSave(){},
-    handleCommand(){
+    handleCommand(command){
       if(command === 'current'){
-        expCurrentBankReconRecord(this.queryForm).them(res => {
+        expCurrentBankReconRecord(this.queryForm).then(res => {
           this.$message('导出成功')
         })
       }else {
-        expAllBankReconRecord(this.queryForm).them(res => {
+        expAllBankReconRecord(this.queryForm).then(res => {
           this.$message('导出成功')
         })
       }
