@@ -22,7 +22,11 @@
       class="table-wrap">
       <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="synergisticType" label="协催类型" show-overflow-tooltip></el-table-column>
       <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.collectStatus" label="催收状态" show-overflow-tooltip></el-table-column>
-      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.seqNo" label="个案序列号" show-overflow-tooltip></el-table-column>
+      <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.seqNo" label="个案序列号" show-overflow-tooltip>
+        <template slot-scope="scope">
+          <el-button type="text" size="small" @click="editCase(scope.row.dataCase.id, scope.row.dataCase.name,scope.row.dataCase.seqNo)">{{scope.row.dataCase.seqNo}}</el-button>
+        </template>
+      </el-table-column>
       <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.identNo" label="证件号" show-overflow-tooltip></el-table-column>
       <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.name" label="姓名" show-overflow-tooltip></el-table-column>
       <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="dataCase.money" label="委案金额" show-overflow-tooltip></el-table-column>
@@ -76,6 +80,16 @@ export default {
     this.onClickQuery()
   },
   methods: {
+    editCase(id, name, seqNo){
+      this.$router.push({
+        path:'case-detail',
+        query:{
+          id,
+          name,
+          seqNo
+        }
+      })
+    },
     onClickReset(){
       this.queryForm = {
         pageNum: this.queryForm.pageNum,
