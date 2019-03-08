@@ -409,7 +409,6 @@
       :row-class-name="rowColor"
       style="width: 100%;margin-top:10px"
       @selection-change="handleSelectionChange"
-      sortable="custom"
       @row-dblclick="showDetail"
       @sort-change="handleSort"
     >
@@ -418,7 +417,7 @@
         width="55">
       </el-table-column>
       <el-table-column
-        :sortable='true'
+        sortable="custom"
         :sort-orders="['ascending','descending']"
         label="ID"
         prop="id"
@@ -428,7 +427,7 @@
       <el-table-column
         prop="collectArea"
         align="center"
-        :sortable='true'
+        sortable="custom"
         :sort-orders="['ascending','descending']"
         min-width="140"
         label="催收区域"
@@ -437,7 +436,7 @@
       <el-table-column
         prop="collectStatusMsg"
         align="center"
-        :sortable='true'
+        sortable="custom"
         min-width="140"
         :sort-orders="['ascending','descending']"
         label="催收状态"
@@ -445,7 +444,7 @@
       </el-table-column>
       <el-table-column
         prop="batchNo"
-        :sortable='true'
+        sortable="custom"
         :sort-orders="['ascending','descending']"
         label="批次号"
         min-width="120"
@@ -456,7 +455,7 @@
       <el-table-column
         prop="seqNo"
         width="140"
-        :sortable='true'
+        sortable="custom"
         :sort-orders="['ascending','descending']"
         align="center"
         label="个案序列号"
@@ -469,7 +468,7 @@
         prop="caseDate"
         align="center"
         label="委案日期"
-        :sortable='true'
+        sortable="custom"
         :sort-orders="['ascending','descending']"
         width="140"
         show-overflow-tooltip>
@@ -477,7 +476,7 @@
       <el-table-column
         prop="expectTime"
         width="140"
-        :sortable='true'
+        sortable="custom"
         :sort-orders="['ascending','descending']"
         align="center"
         label="预计退案日期"
@@ -485,7 +484,7 @@
       </el-table-column>
       <el-table-column
         prop="name"
-        :sortable='true'
+        sortable="custom"
         :sort-orders="['ascending','descending']"
         label="姓名"
         align="center"
@@ -493,7 +492,7 @@
       </el-table-column>
       <el-table-column
         prop="identNo"
-        :sortable='true'
+        sortable="custom"
         :sort-orders="['ascending','descending']"
         min-width="120"
         align="center"
@@ -503,7 +502,7 @@
       <el-table-column
         prop="area"
         min-width="140"
-        :sortable='true'
+        sortable="custom"
         :sort-orders="['ascending','descending']"
         align="center"
         label="地区"
@@ -512,7 +511,7 @@
       <el-table-column
         prop="cardNo"
         min-width="140"
-        :sortable='true'
+        sortable="custom"
         :sort-orders="['ascending','descending']"
         align="center"
         label="卡号"
@@ -520,7 +519,7 @@
       </el-table-column>
       <el-table-column
         prop="moneyMsg"
-        :sortable='true'
+        sortable="custom"
         min-width="140"
         :sort-orders="['ascending','descending']"
         label="委案金额"
@@ -529,7 +528,7 @@
       </el-table-column>
       <el-table-column
         prop="balanceMsg"
-        :sortable='true'
+        sortable="custom"
         min-width="140"
         :sort-orders="['ascending','descending']"
         align="center"
@@ -538,7 +537,7 @@
       </el-table-column>
       <el-table-column
         prop="collectDate"
-        :sortable='true'
+        sortable="custom"
         :sort-orders="['ascending','descending']"
         width="140"
         align="center"
@@ -547,7 +546,7 @@
       </el-table-column>
       <el-table-column
         prop="newCase"
-        :sortable='true'
+        sortable="custom"
         :sort-orders="['ascending','descending']"
         label="最新催记"
         min-width="140"
@@ -556,7 +555,7 @@
       </el-table-column>
       <el-table-column
         prop="odv"
-        :sortable='true'
+        sortable="custom"
         :sort-orders="['ascending','descending']"
         label="催收员"
         align="center"
@@ -567,7 +566,7 @@
         label="跟进次数"
         min-width="120"
         align="center"
-        :sortable='true'
+        sortable="custom"
         :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
@@ -575,7 +574,7 @@
         prop="distributeTime"
         width="140"
         align="center"
-        :sortable='true'
+        sortable="custom"
         :sort-orders="['ascending','descending']"
         label="案件分配时间"
         show-overflow-tooltip>
@@ -584,7 +583,7 @@
         prop="proRepayAmtMsg"
         label="承诺还款金额"
         width="160"
-        :sortable='true'
+        sortable="custom"
         :sort-orders="['ascending','descending']"
         align="center"
         show-overflow-tooltip>
@@ -592,7 +591,7 @@
       <el-table-column
         prop="bankAmtMsg"
         width="160"
-        :sortable='true'
+        sortable="custom"
         :sort-orders="['ascending','descending']"
         align="center"
         label="待银行查账金额"
@@ -602,7 +601,7 @@
         prop="enRepayAmtMsg"
         width="140"
         align="center"
-        :sortable='true'
+        sortable="custom"
         :sort-orders="['ascending','descending']"
         label="已还金额"
         show-overflow-tooltip>
@@ -611,7 +610,7 @@
         prop="accountAge"
         min-width="120"
         label="逾期账龄"
-        :sortable='true'
+        sortable="custom"
         :sort-orders="['ascending','descending']"
         align="center"
         show-overflow-tooltip>
@@ -619,7 +618,7 @@
       <el-table-column
         min-width="140"
         prop="distributeHistory"
-        :sortable='true'
+        sortable="custom"
         :sort-orders="['ascending','descending']"
         label="分配历史"
         show-overflow-tooltip>
@@ -627,7 +626,7 @@
       <el-table-column
         prop="summary"
         min-width="180"
-        :sortable='true'
+        sortable="custom"
         :sort-orders="['ascending','descending']"
         label="催收小结"
         show-overflow-tooltip>
