@@ -946,7 +946,6 @@
                   </el-table-column>
                   <el-table-column
                     label="操作"
-                    fixed="right"
                     width="100">
                     <template slot-scope="scope">
                       <el-button type="text" v-if="caseDetail.currentuser">编辑</el-button>
@@ -1207,6 +1206,8 @@
                       <el-radio label="电话催收">电话催收</el-radio>
                       <el-radio label="电话管理">电话管理</el-radio>
                       <el-radio label="案件管理">案件管理</el-radio>
+                      <el-radio label="电话催收">电话催收</el-radio>
+                      <el-radio label="CP管理">CP管理</el-radio>
                     </el-radio-group>
                   </div>
                 </div>
@@ -1238,33 +1239,7 @@
                     show-overflow-tooltip
                     label="操作人">
                   </el-table-column>
-                  <el-table-column
-                    label="操作"
-                    width="100">
-                    <template slot-scope="scope">
-                      <el-popover
-                        placement="bottom-end"
-                        trigger="manual"
-                        title="编辑操作记录"
-                        width="500"
-                        v-model="scope.row.editLogVisible">
-                        <div>
-                          <el-input
-                            type="textarea"
-                            :rows="4"
-                            placeholder="请输入操作记录"
-                            v-model="scope.row.editContext">
-                          </el-input>
-                        </div>
-                        <div style="text-align: right; margin-top: 12px">
-                          <el-button size="mini" type="text" @click="$set(scope.row, 'editLogVisible', false)">取消</el-button>
-                          <el-button type="primary" size="mini" @click="onClickSaveLog">确定</el-button>
-                        </div>
-                        <el-button type="text" @click="editLog(scope.row)" slot="reference" v-if="caseDetail.currentuser">编辑</el-button>
-                      </el-popover>
-                      <el-button type="text" @click="_deleteLog(scope.row.id)" v-if="caseDetail.currentuser">删除</el-button>
-                    </template>
-                  </el-table-column>
+
                 </el-table>
               </el-tab-pane>
               <el-tab-pane label="诉讼案件" name="12" class="tabs-wrap">
@@ -1408,7 +1383,6 @@
                   </el-table-column>
                   <el-table-column
                     prop="user"
-                    fixed="right"
                     show-overflow-tooltip
                     label="操作">
                   </el-table-column>
@@ -2132,12 +2106,13 @@ export default {
       addComment([{
         id: this.id,
         comment: this.commentAddContent,
-        commentColor: this.commentAddColor
+        color: this.commentAddColor
       }]).then(res => {
         this.$message('评语添加成功')
         getCommentDetail(this.id).then(data => {
           this.commentList = data
           this.addCommentVisible = false
+          this.commentAddContent = "";
           this.commentAddColor = '黑'
         })
       })

@@ -568,6 +568,8 @@
         label="跟进次数"
         min-width="120"
         align="center"
+        :sortable='true'
+        :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
@@ -626,6 +628,8 @@
       <el-table-column
         prop="summary"
         min-width="180"
+        :sortable='true'
+        :sort-orders="['ascending','descending']"
         label="催收小结"
         show-overflow-tooltip>
       </el-table-column>

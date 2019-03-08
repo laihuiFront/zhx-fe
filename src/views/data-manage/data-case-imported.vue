@@ -502,7 +502,8 @@
 </template>
 
 <script>
-		import {dataList,batchList,remoweData,addData,clientList,caseTypeList,areaList,update,downLoadZip,downCaseModule} from '@/common/js/data-case-imported.js'
+		import {dataList,batchList,remoweData,addData,clientList,caseTypeList,areaList,update,downLoadZip,downCaseModule} from '@/common/js/data-case-imported.js';
+    import {baseURL} from '@/common/js/request.js';
 export default {
   name: 'dataCaseImported',
   data(){

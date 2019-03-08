@@ -73,10 +73,10 @@ export function getCollectDetail(id,batchNo,identNo,cardNo,detaiType) {
 //案人信息
 export function getArchiveDetail(id) {
   return request({
-    url: '/dataArchive/findAll',
+    url: '/detai/archive/list',
     method: 'post',
     data: {
-      id
+      "caseId":id
     }
   })
 }

@@ -231,9 +231,9 @@
         >
           <el-button type="text" size="small" v-has="'追加'">追加</el-button>
         </el-upload>-->
-        <el-button type="text" size="small" @click="returnMessage(scope.row.id)" v-has="'批次退案'">退案</el-button>
+        <el-button type="text" size="small" @click="returnMessage(scope.row.id)" v-has="'退案'">退案</el-button>
         <el-button type="text" size="small" @click="editMessage(scope.row)" v-has="'编辑'">编辑</el-button>
-        <el-button type="text" size="small" @click="deleteMessage(scope.row.id)" v-has="'批次删除'">删除</el-button>
+        <el-button type="text" size="small" @click="deleteMessage(scope.row.id)" v-has="'删除'">删除</el-button>
         <el-button type="text" size="small" v-has="'批量导出批次催记'" @click="exportCollect(scope.row)">导出催记</el-button>
       </template>
     </el-table-column>
