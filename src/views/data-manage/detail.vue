@@ -2420,6 +2420,7 @@ AddtableList(this.id,this.messageForm).then((response)=>{
   },
   created() {
   	this.queryDetail()
+    this.batchForm = {sType:0}
   }
 }
 </script>
