@@ -1932,7 +1932,7 @@
       :visible.sync="ligigationVisible"
       width="50%"
       append-to-body>
-          <el-form :inline="true" :model="legalForm" class="demo-form-inline" label-width="120px;">
+          <el-form :inline="true" :model="legalForm" class="demo-form-inline" label-width="180px;">
                   <el-form-item label="姓名">
                     <el-input v-model="legalForm.cstName" placeholder="请输入姓名"></el-input>
                   </el-form-item>
@@ -2147,6 +2147,7 @@ import {getCaseDetail,
         detailTelCurrentCollect,
         updateDataComment,
         delDataComment,
+        PersonList,
         AddtableList,
         DeteleData,
         saveArchive,
@@ -2191,6 +2192,10 @@ export default {
       memorizeList:[],//催記
       commentList:[],//评语
       addrList:[],//地址
+      progressList:[{name:"判决",id:1},{name:"收案",id:2}],
+      PersonDataList:[],
+      legalStatusMsgList:[{name:"已审核",id:1},{name:"审核中",id:2},{name:"未申请",id:0}],
+      caseStatusList:[{name:"未退案",id:0},{name:"正常",id:1},{name:"暂停",id:2},{name:"关档",id:3},{name:"退档",id:4},{name:"全部",id:5}],
       letterList:[],//信函记录
       dataList:[],//案人信息
       rateUpdateList:[],//利息
@@ -2251,7 +2256,8 @@ export default {
         })
   	},
     saveLegal(){
-      saveLegal(this.id).then(data=>{
+      this.legalForm.caseId = this.id;
+      saveLegal(this.legalForm).then(data=>{
         this.$message('申请成功')
         getLegalList(this.id).then(data=>{
           this.legalList = data.list
@@ -2724,6 +2730,9 @@ AddtableList(this.id,this.messageForm).then((response)=>{
     },
     litigationApply(){
   	    this.ligigationVisible=true;
+        PersonList().then((response)=>{
+          this.PersonDataList=response
+        })
     },
     onClickBatchAddTel(){
       if(!this.batchAddTelContent){

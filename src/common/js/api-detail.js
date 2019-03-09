@@ -388,3 +388,10 @@ export function saveDataCollectDetail(data){
   })
 }
 
+export const PersonList = function() {
+  return request({
+    url: '/user/select/roleList',
+    method: 'post',
+    data:{role:"催收员"}
+  })
+}
