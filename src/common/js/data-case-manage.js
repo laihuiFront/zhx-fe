@@ -5,7 +5,7 @@ export const dataList = function(form,pageSize,pageNum) {
     url: '/dataCase/pageCaseList',
     method: 'post',
     data: {
-      idStr :!(form.id && form.id.length > 0)?"":form.id.replace(/\n/,","),
+      idStr :form.id==null?"":form.id.replace(/\n/,","),
       cardNo : form.cardNo==null?"":form.cardNo.replace(/\n/,","),//卡号
       clients :form.clients,//委托方
       batchNos:form.batchNos,  //批次编号
@@ -280,7 +280,7 @@ export const fenan2 = function(form,fenan) {
     method: 'post',
     data: {
     	odv:fenan,
-//    idStr :form.id==null?"":form.id.replace(/\n/,","),
+      idStr :form.id==null?"":form.id.replace(/\n/,","),
       cardNo : form.cardNo==null?"":form.cardNo.replace(/\n/,","),//卡号
       clients :form.clients,//委托方
       batchNos:form.batchNos,  //批次编号
@@ -362,7 +362,7 @@ export const totalDataBatchExport = function(form) {
     url: '/dataCase/totalDataBatchExport',
     method: 'post',
     data: {
-//    idStr :form.id==null?"":form.id.replace(/\n/,","),
+      idStr :form.id==null?"":form.id.replace(/\n/,","),
       cardNo : form.cardNo==null?"":form.cardNo.replace(/\n/,","),//卡号
       clients :form.clients,//委托方
       batchNos:form.batchNos,  //批次编号
@@ -412,7 +412,7 @@ export const pageDataExport = function(form) {
     url: '/dataCase/pageDataBatchExport',
     method: 'post',
     data: {
-//    idStr :form.id==null?"":form.id.replace(/\n/,","),
+      idStr :form.id==null?"":form.id.replace(/\n/,","),
       cardNo : form.cardNo==null?"":form.cardNo.replace(/\n/,","),//卡号
       clients :form.clients,//委托方
       batchNos:form.batchNos,  //批次编号

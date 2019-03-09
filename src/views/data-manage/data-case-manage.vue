@@ -2,7 +2,7 @@
   <div id="data-case-manage" class="page-wraper-sub">
     <el-form ref="form" :model="formInline" :inline="true" class="query-wrap">
       <el-form-item >
-        <el-select v-model="formInline.area" placeholder="请选择催收区域" clearable>
+        <el-select v-model="formInline.collectArea" placeholder="请选择催收区域" clearable>
           <el-option
             v-for="item in areaList"
             :key="item.id"
@@ -125,7 +125,7 @@
               </el-select>
             </li>
             <li class="condition-item five-one">
-              <el-select v-model="formInline.odv" filterable collapse-tags multiple placeholder="请选择催收员" clearable>
+              <el-select v-model="formInline.odvs" filterable collapse-tags multiple placeholder="请选择催收员" clearable>
                 <el-option
                   v-for="item in PersonList"
                   :key="item.id"
@@ -145,7 +145,7 @@
               </el-select>
             </li>
             <li class="condition-item five-one">
-              <el-select v-model="formInline.client" filterable collapse-tags  multiple placeholder="请选择委托方" clearable>
+              <el-select v-model="formInline.clients" filterable collapse-tags  multiple placeholder="请选择委托方" clearable>
                 <el-option
                   v-for="item in clientList"
                   :key="item.id"
@@ -407,7 +407,7 @@
       border
       stripe
       :row-class-name="rowColor"
-      style="width: 100%;margin-top:10px"
+      style="margin-top:10px"
       @selection-change="handleSelectionChange"
       @row-dblclick="showDetail"
       @sort-change="handleSort"
@@ -926,7 +926,7 @@
         deleteList:[],
         caseTypeList:[],
         areaList:[],
-        formInline:{batchNos:[],clients:[],time1:[],time2:[],time3:[],time4:[],time5:[],time6:[]},
+        formInline:{odvs:[],batchNos:[],clients:[],time1:[],time2:[],time3:[],time4:[],time5:[],time6:[]},
         dialogVisible:false,
         tableData3:[],
         currentPage4: 1,
@@ -1437,7 +1437,7 @@
         this.search()
       },
       resetFormInline() {
-        this.formInline={batchNos:[],clients:[],time1:[],time2:[],time3:[],time4:[],time5:[],time6:[]}
+        this.formInline={odvs:[],batchNos:[],clients:[],time1:[],time2:[],time3:[],time4:[],time5:[],time6:[]}
       },
 
       open7() {
@@ -1486,7 +1486,7 @@
       }
     },
     created() {
-      searchList().then((response)=>{
+      searchList(this.formInline,this.pageSize,this.pageNum).then((response)=>{
         this.tableData3=response.pageInfo.list
         this.totalCaseNum=response.totalCaseNum
         this.totalAmt = this.formatMoney(response.totalAmt,0, "￥")

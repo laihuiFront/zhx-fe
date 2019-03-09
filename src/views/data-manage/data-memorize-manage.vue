@@ -86,7 +86,7 @@
               </el-select>
             </li>
             <li class="condition-item">
-              <el-select v-model="formInline.odv" filterable  placeholder="请选择催收员" clearable>
+              <el-select v-model="formInline.odvs" collapse-tags  filterable multiple  placeholder="请选择催收员" clearable>
                 <el-option
                   v-for="item in PersonList"
                   :key="item.createTime"
@@ -106,7 +106,7 @@
               </el-select>
             </li>
             <li class="condition-item">
-              <el-select v-model="formInline.client" placeholder="请选择委托方" clearable>
+              <el-select v-model="formInline.clients" collapse-tags  filterable multiple placeholder="请选择委托方" clearable>
                 <el-option
                   v-for="item in clientList"
                   :key="item.id"
@@ -500,6 +500,8 @@
         total:0,
         form:{PersonList:[]},
         formInline:{
+        	odvs:[],
+        	clients:[],
           collectTime:[],
           expectTime:[],
           bailTime:[]
@@ -604,14 +606,14 @@
       handleSort( {column,prop,order}){
         this.sort = order==null?"desc":order.replace("ending","")
         this.orderBy = prop==null?"id":prop
-        search(this.formInline,this.pageSize,this.pageNum).then((response)=>{
+        search(this.formInline,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
           this.tableData3=response.list
           //this.pages = response.pages
           this.total = response.total
         })
       },
       search(){
-        search(this.formInline,this.pageSize,this.pageNum).then((response)=>{
+        search(this.formInline,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
           this.tableData3=response.list
           //this.pages = response.pages
           this.total = response.total
@@ -624,7 +626,7 @@
         let expectEndTime=this.formInline.expectTime[1]
         let collectStartTime=this.formInline.collectTime[0]
         let collectEndTime=this.formInline.collectTime[1]
-        dataList(this.formInline,this.pageSize,this.pageNum).then((response)=>{
+        dataList(this.formInline,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
           this.tableData3=response.list
           this.total=response.total
           this.dialogVisible=false
@@ -651,7 +653,13 @@
         this.search()
       },
       resetForm(){
-        this.formInline={}
+        this.formInline={
+        	odvs:[],
+        	clients:[],
+          collectTime:[],
+          expectTime:[],
+          bailTime:[]
+        }
       },
       open7() {
         let _self=this
@@ -683,8 +691,7 @@
       },
     },
     created() {
-    	console.log(this.formInline)
-      dataList(this.formInline,this.pageSize,this.pageNum).then((response)=>{
+      dataList(this.formInline,this.sort,this.orderBy,this.pageSize,this.pageNum).then((response)=>{
         this.tableData3=response.list
         //this.pages = response.pages
         this.total = response.total

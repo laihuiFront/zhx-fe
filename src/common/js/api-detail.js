@@ -18,6 +18,16 @@ export function getSameBatchCollect(id) {
     }
   })
 }
+
+export function DeteleData(id) {
+  return request({
+    url: '/reduce/apply/update/status',
+    method: 'post',
+    data: {
+      "id":id
+    }
+  })
+}
 export function getSameBatchCase(id) {
   return request({
     url: '/dataCase/sameBatchCaseList',
@@ -318,6 +328,7 @@ export function AddtableList(id,form){
     url: '/reduce/apply/add',
     method: 'post',
     data:{
+    	id:form.id,
     	caseId:id,
       payer:form.payer,
       relation:form.relation,
