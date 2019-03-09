@@ -1,4 +1,5 @@
 import request from '@/common/js/request'
+import download from '@/common/js/download'
 export const areaList = function() {
 return request({
     url: '/sys/dictionary/select/list/name',
@@ -50,7 +51,7 @@ export const dataList = function(form,applyStatus,pageNum,pageSize) {
     url: '/reduce/page/all',
     method: 'post',
     data: {
-    	applyStatus:applyStatus,
+      applyStatus:applyStatus,
       area:form.area,
       client:form.client,
       batchNo:form.batchNo,
@@ -88,7 +89,7 @@ export const dataList = function(form,applyStatus,pageNum,pageSize) {
 //  }
 //})
 //}
-export const pageDataBatchExport = function(form,sType) {
+export const pageDataBatchExport = function(form,applyStatus,sType,pageNum,pageSize) {
 return download({
     url: '/reduce/dataExport',
     method: 'post',
@@ -135,6 +136,15 @@ return request({
     }
   })
 }
+
+export const downDataList = function(id) {
+return download({
+    url: '/reduce/download',
+    method: 'post',
+    data:id
+  })
+}
+
 export const checkData = function(id) {
 return request({
     url: '/reduce/update/status',

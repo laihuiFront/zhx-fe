@@ -254,7 +254,7 @@
   	<el-form-item label="批  次  号"	
   			prop="batchNo"
         :rules="{ required: true, message: '批次号不能为空', trigger: 'blur'}">
-    <el-input v-model="formInline.batchNo" disabled placeholder="请输入批次号" clearable></el-input>
+    <el-input v-model="formInline.batchNo" :disabled=true placeholder="请输入批次号" clearable></el-input>
   </el-form-item>
   </div>
   </el-col>
@@ -379,7 +379,7 @@
   	<el-form-item label="批  次  号"	
   			prop="batchNo"
         :rules="{ required: true, message: '批次号不能为空', trigger: 'blur'}">
-    <el-input v-model="messageForm.batchNo" disabled placeholder="请输入批次号" clearable></el-input>
+    <el-input v-model="messageForm.batchNo" :disabled=true placeholder="请输入批次号" clearable></el-input>
   </el-form-item>
   </div>
   </el-col>
@@ -496,6 +496,7 @@
   title="提示"
   :visible.sync="ImportdialogVisible"
   width="30%"
+  :before-close="handleClose"
   >
   <span>{{ImportMsg}}</span>
   <span slot="footer" class="footer">
@@ -542,17 +543,31 @@ export default {
     		clients:[],
     		batchNos:[],
     	},
-       
+       clientValue:''
     }
   },
 methods: {
+	handleClose(){
+		this.loading2=false
+		this.ImportdialogVisible=false
+	},
 	changeBotno(){
-	
-		      this.$set(this.formInline, 'batchNo', this.formInline.client+'-'+this.formInline.caseTime)
+	    for(var i=0;i<=this.clientList.length;i++){
+	    	if(this.formInline.client===this.clientList[i].id){
+	    		this.clientValue=this.clientList[i].name
+	    				      this.$set(this.formInline, 'batchNo', this.clientValue +'-'+this.formInline.caseTime)
+	    		return
+	    	}
+	    }
 	},
 	changeBotno1(){
-	
-		      this.$set(this.messageForm, 'batchNo', this.messageForm.client+'-'+this.messageForm.caseTime)
+	   for(var i=0;i<=this.clientList.length;i++){
+	    	if(this.formInline.client===this.clientList[i].id){
+	    		this.clientValue=this.clientList[i].name
+	    				      this.$set(this.formInline, 'batchNo', this.clientValue +'-'+this.formInline.caseTime)
+	    		return
+	    	}
+	    }
 	},
 	ImportdialogVisibleWay(){
 		this.loading2=false
@@ -573,14 +588,9 @@ methods: {
               this.total = response.total
               this.loading2=false
           })
-      }else if(res.code ==800){
+      }else{
         this.ImportdialogVisible=true
         this.ImportMsg= res.msg
-      }else{
-      	this.$message({
-            type: 'error',
-            message: res.msg
-          });
       }
   	},
 	deleteMessage(id){
