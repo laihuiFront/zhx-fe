@@ -691,7 +691,7 @@
                     <el-button @click="changeAddrStatus('有效')" v-if="caseDetail.currentuser">标记为有效</el-button>
                     <el-button @click="changeAddrStatus('未知')" v-if="caseDetail.currentuser">标记为未知</el-button>
                     <el-button @click="changeAddrStatus('无效')" v-if="caseDetail.currentuser">标记为无效</el-button>
-                    <el-button @click="saveAddr">显示全部地址</el-button>
+                    <!-- <el-button @click="saveAddr">显示全部地址</el-button> -->
                     <el-button @click="showLetterList">查看信函记录</el-button>
                   </div>
                   <div class="right-oper">
@@ -747,7 +747,7 @@
                   <el-table-column
                     label="操作"
                     v-if="letterVisible2"
-                    width="150">
+                    width="200">
                     <template slot-scope="scope">
                       <el-button type="text" @click="applyLetter(scope.row)" v-if="caseDetail.currentuser">申请信函</el-button>
                       <el-button type="text" @click="editAddr(scope.row)" v-if="caseDetail.currentuser">编辑</el-button>
@@ -2047,7 +2047,7 @@ AddtableList(this.id,this.messageForm).then((response)=>{
     },
     syncTypeChange(val){
       getSynergyDetail(this.id).then(data => {
-        this.syncList = data
+        this.syncList = data.list
       })
     },
     memorizeTypeChange(val){
@@ -2473,7 +2473,7 @@ AddtableList(this.id,this.messageForm).then((response)=>{
       }else if (ind == '协催'){//协催
         this.syncType = 1
         getSynergyDetail(this.id).then(data => {
-          this.syncList = data
+          this.syncList = data.list
         })
       }else if(ind == '共债案件'){//共债案件
         sameCaseList(this.id).then(data=>{
