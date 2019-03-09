@@ -557,7 +557,7 @@
                   v-model="uploadVisible">
                   <el-upload
                     class="upload-demo upload-btn"
-                    action="http://116.62.124.251/zxh/dataFile/save/import"
+                    :action="action+'/dataFile/save/import'"
                     :headers="header"
                     :show-file-list=false
                     :on-success="uploadSuccess"
@@ -845,6 +845,7 @@
                   :data="dataList"
                   border stripe
                   style="width: 100%"
+                  height="120px"
                   class="table-wrap">
                   <el-table-column
                     prop="name"
@@ -892,6 +893,7 @@
                   :data="memorizeList"
                   style="width: 100%"
                   border stripe
+                  height="120px"
                   class="table-wrap">
                   <el-table-column
                     prop="measure"
@@ -983,6 +985,7 @@
                   :data="commentList"
                   border stripe
                   style="width: 100%"
+                  height="120px"
                   class="table-wrap">
                   <el-table-column
                     prop="comment"
@@ -1036,6 +1039,7 @@
                   :data="rateUpdateList"
                   border stripe
                   style="width: 100%"
+                  height="120px"
                   class="table-wrap">
                   <el-table-column
                     prop="currency"
@@ -1121,6 +1125,7 @@
                   :data="syncList"
                   style="width: 100%"
                   border stripe
+                  height="120px"
                   class="table-wrap">
                   <el-table-column
                     prop="statusMsg"
@@ -1169,6 +1174,7 @@
                   :data="caseSameList"
                   style="width: 100%"
                   border stripe
+                  height="120px"
                   class="table-wrap">
                   <el-table-column
                     prop="batchNo"
@@ -1239,6 +1245,7 @@
                   :data="logList"
                   border stripe
                   style="width: 100%"
+                  height="120px"
                   class="table-wrap">
                   <el-table-column
                     prop="opTime"
@@ -1276,6 +1283,7 @@
                   border stripe
                   :data="legalList"
                   style="width: 100%;margin-top:5px;"
+                  height="120px"
                   class="table-wrap">
                   <el-table-column
                     prop="legalStatusMsg"
@@ -1283,7 +1291,7 @@
                     label="案件状态">
                   </el-table-column>
                   <el-table-column
-                    prop="progressMsg "
+                    prop="progressMsg"
                     show-overflow-tooltip
                     label="办案进度">
                   </el-table-column>
@@ -1354,6 +1362,7 @@
                   :data="reduceApplyList"
                   style="width: 100%"
                   border stripe
+                  height="120px"
                   class="table-wrap">
                   <el-table-column
                     prop="reduceType"
@@ -2104,11 +2113,11 @@
                   <el-form-item label="备注"  style="width: 90%;">
                     <el-input type="textarea"  style="width: 280%;"  v-model="legalForm.remark"></el-input>
                   </el-form-item>
+          </el-form>
                   <span slot="footer" class="dialog-footer">
                     <el-button @click="ligigationVisible = false">取 消</el-button>
                     <el-button type="primary" @click="saveLegal">确 定</el-button>
                   </span>
-          </el-form>
     </el-dialog>
   </div>
 </template>
@@ -2259,8 +2268,9 @@ export default {
       this.legalForm.caseId = this.id;
       saveLegal(this.legalForm).then(data=>{
         this.$message('申请成功')
+        this.ligigationVisible = false;
         getLegalList(this.id).then(data=>{
-          this.legalList = data.list
+          this.legalList = data
         })
       })
     },
@@ -2834,7 +2844,7 @@ AddtableList(this.id,this.messageForm).then((response)=>{
         })
       }else if(ind == '诉讼案件'){//诉讼案件
         getLegalList(this.id).then(data=>{
-          this.legalList = data.data
+          this.legalList = data
         })
       }else if(ind == '减免管理'){//减免管理
         getReduceApplyList(this.id).then(data=>{

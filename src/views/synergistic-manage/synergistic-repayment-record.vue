@@ -12,7 +12,7 @@
       <el-button type="primary" v-if="queryForm.recordStatus==='0'" @click="onClickBatchRevoke" v-has="'撤销还款'">撤销还款</el-button>
       <el-upload
         class="upload-demo upload-btn"
-        action="http://116.62.124.251/zxh/repayRecord/recordImport"
+        :action="action+'/repayRecord/recordImport'"
         :headers="header"
         :show-file-list="false"
         :on-success="uploadSuccess"
@@ -167,6 +167,7 @@
 </template>
 
 <script>
+  import {baseURL} from '@/common/js/request.js';
 import {RepayRecordQuery} from './components'
 import {getRepayRecordList, 
         getRepayRecordQuerySum,
@@ -185,6 +186,7 @@ export default {
   },
   data(){
     return {
+      action:baseURL,
       header:{Authorization:localStorage.token},
       sumForm:{dataCase:{}},
       recordList: [],

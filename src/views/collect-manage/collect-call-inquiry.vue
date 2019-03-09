@@ -275,8 +275,8 @@ export default {
     this.init();
   },
   methods:{
-    sortHandle({prop,order}){
-      this.sort = order.replace('ending', '');
+    sortHandle({column,prop,order}){
+      this.sort.sort = order.replace('ending', '');
       this.sort.orderBy = prop;
       this.getMainData();
     },

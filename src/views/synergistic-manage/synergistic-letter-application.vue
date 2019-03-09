@@ -195,7 +195,7 @@
                     <el-button
                       type="primary"
                       v-has="'同意协催'"
-                      @click="dialogVisible = true"
+                      @click="showXc"
                       >同意协催</el-button
                     >
                   </el-form-item>
@@ -511,6 +511,17 @@ export default {
     this.init();
   },
   methods: {
+    showXc(){
+      if (this.multipleSelection.length == 0) {
+        this.$message({
+          message: "请先选择数据",
+          type: "error"
+        });
+        return;
+      }else{
+        this.dialogVisible = true;
+      }
+    },
     fileStatu(res){
       if (res.code ==100){
         this.$message({
@@ -583,6 +594,10 @@ export default {
     },
     cxHandle() {
       if (this.multipleSelection.length == 0) {
+        this.$message({
+          message: "请先选择数据",
+          type: "error"
+        });
         return;
       }
       let data = this.multipleSelection.reduce((acc, item) => {
@@ -613,6 +628,7 @@ export default {
       }, []);
 
       confirmSynergy(data).then(() => {
+        this.getMainData();
         this.$message({
           message: "提交成功",
           type: "success"

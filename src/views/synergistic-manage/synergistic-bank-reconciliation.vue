@@ -11,7 +11,7 @@
       <el-button type="primary" v-if="queryForm.status==='0'" @click="onClickBatchCancelBankRecon" v-has="'作废'">作废待银行查账金额</el-button>
       <el-upload
         class="upload-demo upload-btn"
-        action="http://116.62.124.251/zxh/bankReconciliation/cpImport"
+        :action="action+'/bankReconciliation/cpImport'"
         :headers="header"
         :show-file-list="false"
         :on-success="uploadSuccess"
@@ -139,6 +139,7 @@
 
 <script>
 import {BankRecordQuery} from './components'
+import {baseURL} from '@/common/js/request.js';
 import {getBankReconList,cancelBankRecon,expSelectedBankReconRecord,expAllBankReconRecord,expCurrentBankReconRecord} from '@/common/js/api-sync'
 export default {
   name: 'synergisticBankReconciliation',
@@ -147,6 +148,7 @@ export default {
   },
   data(){
     return {
+      action:baseURL,
       header:{Authorization:localStorage.token},
       recordList: [],
       total:0,

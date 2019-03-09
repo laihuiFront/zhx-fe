@@ -35,7 +35,7 @@
         <el-button type="primary" @click="onClickBatchApprove(-1)" v-has="'撤销协催'">撤销协催</el-button>
         <el-upload
           class="upload-demo upload-btn"
-          action="http://116.62.124.251/zxh/synergistic/finishedSynergisticImport"
+          :action="action+'/synergistic/finishedSynergisticImport'"
           :headers="header"
           :show-file-list="false"
           :on-success="uploadSuccess"
@@ -45,7 +45,7 @@
         </el-upload>
         <el-upload
           class="upload-demo upload-btn"
-          action="http://116.62.124.251/zxh/synergistic/synergisticRecordImport"
+          :action="action+'/synergistic/synergisticRecordImport'"
           :headers="header"
           :show-file-list="false"
           :on-success="uploadSuccess"
@@ -128,6 +128,7 @@
 
 <script>
 import {SynRecordQuery} from './components'
+import {baseURL} from '@/common/js/request.js';
 import {getSynergisticRecordList,expAllSynergisticRecord,expCurrentSynergisticRecord,approveSynergisticRecord,finishSynergisticRecord} from '@/common/js/api-sync'
 export default {
   name: 'synergisticApplication',
@@ -136,6 +137,7 @@ export default {
   },
   data(){
     return {
+      action:baseURL,
       header:{Authorization:localStorage.token},
       recordList: [],
       total:0,

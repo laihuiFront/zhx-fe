@@ -68,12 +68,12 @@ export function getAddressDetail(id) {
 }
 
 //催记
-export function getCollectDetail(id,batchNo,identNo,cardNo,detaiType) {
+export function getCollectDetail(caseId,batchNo,identNo,cardNo,detaiType) {
   return request({
     url: '/dataCollect/detailCollect',
     method: 'post',
     data: {
-      id,
+      caseId,
       batchNo,
       identNo,
       cardNo,

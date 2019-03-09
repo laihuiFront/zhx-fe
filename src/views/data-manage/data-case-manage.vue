@@ -407,7 +407,7 @@
       border
       stripe
       :row-class-name="rowColor"
-      style="margin-top:10px"
+      style="margin-top:10px;"
       @selection-change="handleSelectionChange"
       @row-dblclick="showDetail"
       @sort-change="handleSort"

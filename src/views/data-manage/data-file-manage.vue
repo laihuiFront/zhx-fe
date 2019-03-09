@@ -33,7 +33,7 @@
   </el-form-item>
   <el-form-item>
   <el-upload
-  action="http://116.62.124.251/zxh/dataArchive/import"
+  :action="action+'/dataArchive/import'"
   :headers="header"
   :show-file-list=false
   :on-success="uploadSuccess"
@@ -396,12 +396,13 @@
 
 <script>
 	import {dataList,remoweData,addData,downModule} from '@/common/js/data-file-manage.js'
-
+  import {baseURL} from '@/common/js/request.js';
 
 export default {
   name: 'dataFileManage',
    data(){
     return {
+      action:baseURL,
     	deleteList:[],
       dialogVisible:false,
     	  pageNum:"",

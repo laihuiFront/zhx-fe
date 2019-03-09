@@ -149,6 +149,7 @@
       label="总金额"
       min-width="120"
       sortable="custom"
+      prop="totalAmtMsg"
       :sort-orders="['ascending','descending']"
       show-overflow-tooltip>
       <template slot-scope="scope">
@@ -222,16 +223,6 @@
       label="操作"
       width="250">
       <template slot-scope="scope">
-        <!--<el-upload
-          class="upload-demo"
-          action="http://116.62.124.251/zxh/dataCase/newCase/import"
-          :headers="header"
-          :show-file-list=false
-          :on-success="uploadSuccess"
-          :data="{batchNo:scope.row.batchNo}"
-        >
-          <el-button type="text" size="small" v-has="'追加'">追加</el-button>
-        </el-upload>-->
         <el-button type="text" size="small" @click="returnMessage(scope.row.id)" v-has="'退案'">退案</el-button>
         <el-button type="text" size="small" @click="editMessage(scope.row)" v-has="'编辑'">编辑</el-button>
         <el-button type="text" size="small" @click="deleteMessage(scope.row.id)" v-has="'删除'">删除</el-button>

@@ -511,6 +511,7 @@ showCase(row){
     sortHandle({ prop, order }) {
       this.sort.sort = order.replace("ending", "");
       this.sort.orderBy = prop;
+      this.getMainData();
     },
     //查询批次号
     querySearch(queryString) {
@@ -549,6 +550,10 @@ showCase(row){
     },
     cxHandle() {
       if (this.multipleSelection.length == 0) {
+        this.$message({
+          message: "请先选择数据",
+          type: "error"
+        });
         return;
       }
       let data = this.multipleSelection.reduce((acc, item) => {
@@ -568,6 +573,10 @@ showCase(row){
     //同意协催
     qrHandle() {
       if (this.multipleSelection.length == 0) {
+        this.$message({
+          message: "请先选择数据",
+          type: "error"
+        });
         return;
       }
       let data = this.multipleSelection.reduce((acc, item) => {
