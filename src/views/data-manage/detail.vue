@@ -1422,8 +1422,7 @@
         :action="action+'/reduce/save/import'"
         :headers="header"
         :show-file-list=false
-        :on-success="uploadSuccess"
-        :on-progress="onProgress"
+       
        
         >
         <el-button size="small" type="text" >上传</el-button>
