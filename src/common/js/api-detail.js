@@ -356,3 +356,11 @@ export function saveArchive(data){
   })
 }
 
+export function getHistoryAddrList(caseId){
+  return request({
+    url: 'dataLog/listDataAddressLog',
+    method: 'post',
+    data:{caseId}
+  })
+}
+
