@@ -356,3 +356,11 @@ export function saveArchive(data){
   })
 }
 
+export function saveLegal(data){
+  return request({
+    url: '/legal/save',
+    method: 'post',
+    data
+  })
+}
+
