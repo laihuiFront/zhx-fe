@@ -698,6 +698,7 @@ export default {
 #synergistic-letter-application {
 }
 #dclxh{
+  height: calc(100% - 21px);
   position: relative;
   .daoru {
     position: absolute;

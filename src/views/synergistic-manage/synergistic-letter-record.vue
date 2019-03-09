@@ -682,6 +682,10 @@ export default {
 
 <style lang="scss">
 #xhjl {
+  height: calc(100% - 21px);
+  .el-table{
+    height: calc(100% - 143px);
+  }
   .upload-demo {
     padding-bottom: 20px;
     .el-upload {
