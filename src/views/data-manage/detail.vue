@@ -884,7 +884,8 @@
                     </el-radio-group>
                   </div>
                   <div class="right-oper">
-                    <el-button type="primary" v-if="caseDetail.currentuser">导出本案催记</el-button>
+                    <el-button type="primary" @click="addDataCollect" v-if="caseDetail.currentuser">添加辅助催记</el-button>
+                    <el-button type="primary" @click="_expDataCollect" v-if="caseDetail.currentuser">导出本案催记</el-button>
                   </div>
                 </div>
                 <el-table
@@ -971,7 +972,7 @@
                     label="操作"
                     width="100">
                     <template slot-scope="scope">
-                      <el-button type="text" v-if="caseDetail.currentuser">编辑</el-button>
+                      <el-button type="text" @click="editDataCollect(scope.row)" v-if="caseDetail.currentuser">编辑</el-button>
                       <el-button type="text" v-if="caseDetail.currentuser">删除</el-button>
                     </template>
                   </el-table-column>
@@ -1646,6 +1647,49 @@
       </span>
     </el-dialog>
     <el-dialog
+      title="添加辅助催记"
+      :visible.sync="dialogDataCollectVisible"
+      width="45%"
+      append-to-body
+      class="addr-dialog-wrap"
+      >
+      <el-form :inline="true" :model="dataCollectInfo" class="address-form" label-width="100px">
+        <el-form-item label="催收措施">
+          <el-select v-model="dataCollectInfo.measure" placeholder="请选择催收措施" clearable>
+            <el-option :key="1" label="电话催收" value="电话催收"></el-option>
+            <el-option :key="2" label="信函" value="信函"></el-option>
+            <el-option :key="3" label="辅助渠道" value="辅助渠道"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="电话">
+          <el-input v-model="dataCollectInfo.mobile" placeholder="请输入电话"></el-input>
+        </el-form-item>
+        <el-form-item label="姓名">
+          <el-input v-model="dataCollectInfo.targetName" placeholder="请输入姓名"></el-input>
+        </el-form-item>
+        <el-form-item label="类型">
+          <el-select v-model="dataCollectInfo.telType" placeholder="请选择类型" clearable>
+            <el-option
+              v-for="item in PhonetypeList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id+''">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="关系">
+          <el-input v-model="dataCollectInfo.relation" placeholder="请输入关系"></el-input>
+        </el-form-item>
+        <el-form-item label="催收内容" class="whole">
+          <el-input type="textarea" :row="4" v-model="dataCollectInfo.collectInfo"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogDataCollectVisible = false">取 消</el-button>
+        <el-button type="primary" @click="saveDataCollect">确 定</el-button>
+      </span>
+    </el-dialog>
+    <el-dialog
       title="新建案人数据"
       :visible.sync="dialogArchiveVisible"
       width="45%"
@@ -1918,7 +1962,9 @@ import {getCaseDetail,
         AddtableList,
         DeteleData,
         saveArchive,
-        getHistoryAddrList
+        getHistoryAddrList,
+        expDataCollect,
+        saveDataCollectDetail
         } from '@/common/js/api-detail'
 import {getEnum} from '@/common/js/api-sync'
 	  import {baseURL} from '@/common/js/request.js';
@@ -1992,10 +2038,17 @@ export default {
       currentRow:{},
         header:{Authorization:localStorage.token},
         archiveInfo:{},
-        dialogArchiveVisible:false
+        dialogArchiveVisible:false,
+        dataCollectInfo:{},
+        dialogDataCollectVisible:false
     }
   },
   methods: {
+    _expDataCollect(){
+      expDataCollect([{id:this.id}]).then(()=>{
+        this.$message('导出成功')
+      })
+    },
   	showadddialogVisible(){
   		this.adddialogVisible=true;
   		this.messageForm={}
@@ -2193,6 +2246,59 @@ AddtableList(this.id,this.messageForm).then((response)=>{
         this.letterList = data;
         this.letterVisible = true;
         this.letterVisible2 = false;
+      })
+    },
+    saveDataCollect(){
+      let result = this.dataCollectInfo
+      result.caseId = this.id
+      if(this.dataCollectEditType === 'add'){
+        result.id = 0
+      }
+      saveDataCollectDetail(result).then(res=>{
+        if(this.dataCollectEditType === 'add'){
+          getCollectDetail(this.id,this.memorizeType).then(data => {
+            this.memorizeList = data
+          })
+          this.$message('新增辅助催记成功')
+        }else{
+          getCollectDetail(this.id,this.memorizeType).then(data => {
+            this.memorizeList = data
+          })
+          this.$message('修改辅助催记成功')
+        }
+        this.dialogDataCollectVisible = false
+      })
+    },
+    editDataCollect(row, index){
+      this.dataCollectInfo = {...row}
+      this.dataCollectEditType = 'edit'
+      this.dialogDataCollectVisible = true
+    },
+    addDataCollect(){
+      this.dataCollectInfo = {}
+      this.dataCollectEditType = 'add'
+  		this.dialogDataCollectVisible=true
+    },
+    saveAddr(){
+      let result = this.addressInfo
+      result.caseId = this.id
+      if(this.addrEditType === 'add'){
+        result.id = 0
+      }
+      saveCaseAddress(result).then(res=>{
+        if(this.addrEditType === 'add'){
+          // this.caseDetail.dataCaseTelEntityList.push(res)
+          getAddressDetail(this.id).then(data=>{
+            this.addrList = data
+          })
+          this.$message('新增地址成功')
+        }else{
+          getAddressDetail(this.id).then(data=>{
+            this.addrList = data
+          })
+          this.$message('修改地址成功')
+        }
+        this.dialogAddrVisible = false
       })
     },
     addAddr(){
@@ -2463,6 +2569,9 @@ AddtableList(this.id,this.messageForm).then((response)=>{
       })
       getEnum('减免状态').then(data=>{
         this.jmztList = data
+      })
+      getEnum('电话类型').then(data=>{
+        this.PhonetypeList = data
       })
       pageDataFile(this.id).then((response)=>{
         this.uploadFileList=response

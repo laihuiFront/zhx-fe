@@ -1,4 +1,5 @@
 import request from '@/common/js/request'
+import download from '@/common/js/download'
 
 export function getCaseDetail(id) {
   return request({
@@ -361,6 +362,21 @@ export function getHistoryAddrList(caseId){
     url: 'dataLog/listDataAddressLog',
     method: 'post',
     data:{caseId}
+  })
+}
+
+export function expDataCollect(data){
+  return download({
+    url: '/dataCollect/selectDataCollectExport',
+    data
+  })
+}
+
+export function saveDataCollectDetail(data){
+  return request({
+    url: 'dataCollection/detailSave',
+    method: 'post',
+    data
   })
 }
 
