@@ -749,6 +749,22 @@
                     v-if="letterVisible2"
                     width="200">
                     <template slot-scope="scope">
+                      <el-popover
+                        v-model="scope.row.showHistory"
+                        placement="top"
+                        width="600"
+                        trigger="manual">
+                        <el-table :data="scope.row.history" height="300">
+                          <el-table-column show-overflow-tooltip  property="opTime" label="操作时间"></el-table-column>
+                          <el-table-column  show-overflow-tooltip property="type" label="分类"></el-table-column>
+                          <el-table-column show-overflow-tooltip  property="context" label="操作内容"></el-table-column>
+                          <el-table-column show-overflow-tooltip  property="operName" label="操作人"></el-table-column>
+                        </el-table>
+                        <div style="text-align:center">
+                          <el-button type="primary" @click="$set(scope.row, 'showHistory',false)">关闭</el-button>
+                        </div>
+                        <el-button slot="reference" type="text" @click="showHistoryAddr(scope.row)">历史记录</el-button>
+                      </el-popover>
                       <el-button type="text" @click="applyLetter(scope.row)" v-if="caseDetail.currentuser">申请信函</el-button>
                       <el-button type="text" @click="editAddr(scope.row)" v-if="caseDetail.currentuser">编辑</el-button>
                       <el-button type="text" @click="deleteAddr(scope.row.id)" v-if="caseDetail.currentuser">删除</el-button>
@@ -819,6 +835,8 @@
               </el-tab-pane>
               <el-tab-pane label="案人数据" name="3" class="tabs-wrap">
                 <div class="operation"  v-if="letterVisible2">
+                  <div class="left-oper">
+                  </div>
                   <div class="right-oper">
                     <el-button type="primary" @click="onClickAddArchive" v-if="caseDetail.currentuser">新增案人数据</el-button>
                   </div>
@@ -2225,7 +2243,8 @@ import {getCaseDetail,
         delDataComment,
         AddtableList,
         DeteleData,
-        saveArchive
+        saveArchive,
+        getHistoryAddrList
         } from '@/common/js/api-detail'
 import {getEnum} from '@/common/js/api-sync'
 	  import {baseURL} from '@/common/js/request.js';
@@ -2341,13 +2360,20 @@ AddtableList(this.id,this.messageForm).then((response)=>{
           this.reduceApplyList = data.list
         })
 })
-  	},
+    },
+    showHistoryAddr(row){
+      this.$set(row, 'showHistory', true)
+      getHistoryAddrList(row.id).then((data)=>{
+        this.$set(row, 'history', data)
+      })
+    },
     showHistoryTel(row){
       this.$set(row, 'historyType', 1)
       this.$set(row, 'showHistory', true)
       this.currentRow = row
       this.getHistoryTel(1)
     },
+    
     getHistoryTel(val){
       detailTelCurrentCollect({
         caseId: this.id,
