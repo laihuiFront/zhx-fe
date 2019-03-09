@@ -63,7 +63,7 @@
       <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.overdueBalanceMsg" label="余额" show-overflow-tooltip></el-table-column>
       <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="repayDate" label="还款日期" show-overflow-tooltip></el-table-column>
       <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="repayUser" label="还款人" show-overflow-tooltip></el-table-column>
-      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="repayType" label="还款方式" show-overflow-tooltip></el-table-column>
+      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="repayType.name" label="还款方式" show-overflow-tooltip></el-table-column>
       <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="confirmUser.name" label="确认人" show-overflow-tooltip></el-table-column>
       <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="confirmTime" label="确认时间" show-overflow-tooltip></el-table-column>
       <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="remark" label="备注" show-overflow-tooltip></el-table-column>
@@ -120,7 +120,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="回收催收员" prop="dyga">
-          <el-select v-model="recordInfo.collectionUser.id" filterable clearable placeholder="请选择回收催收员">
+          <el-select v-model="recordInfo.collectUser.id" filterable clearable placeholder="请选择回收催收员">
             <el-option
               v-for="item in collectionUserList"
               :key="item.id"
@@ -145,7 +145,7 @@
            <el-input v-model="recordInfo.repayUser" clearable placeholder="请输入还款人"></el-input>
         </el-form-item>
         <el-form-item label="还款方式" prop="dyga">
-          <el-select v-model="recordInfo.repayType" clearable placeholder="请选择还款方式">
+          <el-select v-model="recordInfo.repayType.id" clearable placeholder="请选择还款方式">
             <el-option
               v-for="item in repayTypeList"
               :key="item.code"
@@ -201,7 +201,8 @@ export default {
       },
       recordInfo:{
         dataCase:{},
-        collectionUser:{}
+        collectUser:{},
+        repayType:{}
       },
       queryForm:{
         recordStatus: '0',
@@ -294,7 +295,7 @@ export default {
     onClickAdd(){
       this.recordInfo = {
         dataCase:{id:null},
-        collectionUser:{id:null}
+        collectUser:{id:null}
       }
       this.$set(this.dialogData, 'editVisible', true)
     },
@@ -365,7 +366,7 @@ export default {
       this.loadingSeqNo = true
       getSeqNoList({
         seqNo: query,
-        pageNum: 20
+        pageNum: 1
       }).then(data => {
         this.seqNoList = data.list
         this.loadingSeqNo = false
