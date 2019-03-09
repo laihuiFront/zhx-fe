@@ -103,16 +103,16 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage4"
-      :page-sizes="[10, 20, 30, 40]"
+      :page-sizes="[100, 500, 2000, 10000, 1000000]"
       :page-size="pages"
-      layout="prev, pager, next, jumper,total, sizes"
+      layout="total, sizes, prev, pager, next, jumper"
       :total="total">
     </el-pagination>
   </div>
 </template>
 
 <script>
-		import {areaList,clientList,PersonList,dataList} from '@/common/js/statistics-month.js'
+		import {areaList,clientList,PersonList,dataList,selectDataCaseExport} from '@/common/js/statistics-month.js'
 
 export default {
   name: 'statisticsMonth',
@@ -184,8 +184,13 @@ export default {
 handleCurrentChange(val){
 this.pageNum=val;
 },
- 	onSubmit(){
- 		console.log(this.formInline.odv)
+  	onSubmit(){
+ 		selectDataCaseExport(this.formInline,this.pageSize,this.pageNum).then((response)=>{
+          	this.$message({
+            type: 'success',
+            message: '导出成功!'
+          });
+          })
  	},
  	clench(){
  		this.formInline={}

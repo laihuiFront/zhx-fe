@@ -1,4 +1,6 @@
 import request from '@/common/js/request'
+import download from '@/common/js/download'
+
 export const areaList = function() {
 return request({
     url: '/sys/dictionary/select/list/name',
@@ -7,6 +9,22 @@ return request({
   })
 }
 
+export const selectDataCaseExport = function(form,pageSize,pageNum) {
+  return download({
+    url: '/statistics/collection/month/export',
+    method: 'post',
+      data: {
+       odvAttr:form.odv,
+       area:form.area,
+       client:form.client,
+       monthStart:form.time[0],
+       monthEnd:form.time[1],
+       pageNum:pageNum ? pageNum : 1,
+       pageSize:pageSize ? pageSize : 10
+    }
+  })
+
+}
 export const clientList = function() {
 return request({
     url: '/sys/dictionary/select/list/name',

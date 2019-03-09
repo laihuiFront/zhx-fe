@@ -46,11 +46,13 @@ export const collectStatusList = function() {
     data:{name:"催收状态"}
   })
 }
-export const dataList = function(form,applyStatus,pageNum,pageSize) {
+export const dataList = function(form,applyStatus,sort,orderBy,pageNum,pageSize) {
   return request({
     url: '/reduce/page/all',
     method: 'post',
     data: {
+      orderBy:orderBy?orderBy:"id",
+      sort:sort?sort:"desc",
       applyStatus:applyStatus,
       area:form.area,
       client:form.client,

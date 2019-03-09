@@ -39,8 +39,8 @@
           <el-option
             v-for="item in sectionList"
             :key="item.id"
-            :label="item.label"
-            :value="item.value">
+            :label="item.name"
+            :value="item.name">
           </el-option>
         </el-select>
       </el-form-item>
@@ -442,7 +442,7 @@
 </template>
 
 <script>
-  import {search,dataList,areaList,pageDataExport,selectDataExport,totalDataExport,sectionList,remoweData,caseTypeList,clientList,EndList,PersonList,departmentList,deleteDataCollectRecord,updateDataCollectRecord} from '@/common/js/data-memorize-manage.js'
+  import {search,dataList,areaList,pageDataExport,selectDataExport,totalDataExport,remoweData,caseTypeList,clientList,EndList,PersonList,departmentList,deleteDataCollectRecord,updateDataCollectRecord} from '@/common/js/data-memorize-manage.js'
   export default {
     name: 'dataMemorizeManage',
     data(){
@@ -482,7 +482,7 @@
         PersonList:[],
         clientList:[],
         caseTypeList:[],
-        sectionList:[],
+        sectionList:[{id:1,name:"电话催收"},{id:2,name:"信函"},{id:3,name:"辅助渠道"}],
         pageSize:100,
         pageNum:1,
         orderBy:"id",
@@ -715,9 +715,7 @@
       departmentList().then((response)=>{
         this.departmentList=response
       })
-      sectionList().then((response)=>{
-        this.sectionList=response
-      })
+     
     },
   }
 </script>

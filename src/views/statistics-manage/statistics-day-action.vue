@@ -179,15 +179,15 @@
     </el-table-column>
   </el-table>
   <el-pagination
-  class="pagination-wrap"
-  @size-change="handleSizeChange"
-  @current-change="handleCurrentChange"
-  :current-page="currentPage4"
-  :page-sizes="[10, 20, 30, 40]"
-  :page-size="pages"
-  layout="prev, pager, next, jumper,total, sizes"
-  :total="total">
-</el-pagination>
+      class="pagination-wrap"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="currentPage4"
+      :page-sizes="[100, 500, 2000, 10000, 1000000]"
+      :page-size="pages"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total">
+    </el-pagination>
   <el-dialog :title="dialogTitle" :visible.sync="dialogTableVisible" class="dialog-wrap"  width="80%">
   <el-table :data="gridData" border
             stripe>
@@ -216,7 +216,7 @@
 </template>
 
 <script>
-		import {areaList,clientList,PersonList,dataList,messageList} from '@/common/js/statistics-day-action.js'
+		import {areaList,clientList,PersonList,dataList,messageList,selectDataCaseExport} from '@/common/js/statistics-day-action.js'
 export default {
   name: 'statisticsDayAction',
   data(){
@@ -278,8 +278,13 @@ export default {
 handleCurrentChange(val){
 this.pageNum=val;
 },
- 	onSubmit(){
- 		
+  	onSubmit(){
+ 		selectDataCaseExport(this.formInline,this.pageSize,this.pageNum).then((response)=>{
+          	this.$message({
+            type: 'success',
+            message: '导出成功!'
+          });
+          })
  	},
  	clench(){
  		this.formInline={}

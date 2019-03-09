@@ -232,13 +232,18 @@
       </el-form-item>
     </el-form>
  <el-tabs v-model="activeName2" type="card" @tab-click="handleClick" class="tabs-wrap">
-    <el-tab-pane label="待审核" name="first">
+    <el-tab-pane label="待审核" name="first" >
       <el-table
         class="table-wrap"
         ref="multipleTable"
         :data="tableData3"
         style="width: 100%;"
+        border
+         stripe
+          tooltip-effect="dark"
+          @sort-change="handleSort"
         @selection-change="handleSelectionChange"
+       
             >
         <el-table-column
           type="selection"
@@ -248,72 +253,108 @@
           prop="seqno"
           align="center"
           label="个人序列号"
+          sortable="custom"
+          :sort-orders="['ascending','descending']"
+           width="110"
         >
         </el-table-column>
         <el-table-column
           prop="targetName"
           align="center"
         label="案人姓名"
+        sortable="custom"
+          width="110"
+        :sort-orders="['ascending','descending']"
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
           prop="collectStatusMsg"
           align="center"
           label="催收状态"
+            width="110"
+          sortable="custom"
+          :sort-orders="['ascending','descending']"
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
           prop="accountAge"
           align="center"
+            width="110"
           label="委案金额"
+          sortable="custom"
+          :sort-orders="['ascending','descending']"
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
           prop="completeTime"
         align="center"
           label="完成时间"
+            width="110"
+          sortable="custom"
+          :sort-orders="['ascending','descending']"
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
           prop="completeUser"
           label="完成人"
+            width="110"
           align="center"
+          sortable="custom"
+          :sort-orders="['ascending','descending']"
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
           prop="approveRepayAmt"
-        align="center"
+          align="center"
+            width="120"
           label="批复还款金额"
+          sortable="custom"
+          :sort-orders="['ascending','descending']"
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
           prop="reduceValidTime"
         align="center"
           label="有效日期"
+          sortable="custom"
+            width="110"
+          :sort-orders="['ascending','descending']"
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
           prop="reduceStatusMsg"
           align="center"
+            width="110"
           label="减免状态"
+          sortable="custom"
+          :sort-orders="['ascending','descending']"
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
           prop="reduceResult"
         label="减免结果"
           align="center"
+            width="110"
+          sortable="custom"
+          :sort-orders="['ascending','descending']"
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
           prop="enRepayAmt"
         align="center"
+          width="130"
           label="实际还款金额"
+          sortable="custom"
+          :sort-orders="['ascending','descending']"
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
           prop="reduceUpdateTime"
           align="center"
+            width="140"
           label="减免状态更新时间"
+          sortable="custom"
+          :sort-orders="['ascending','descending']"
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
@@ -362,41 +403,48 @@
         prop="seqno"
         align="center"
         label="个人序列号"
+        :sort-orders="['ascending','descending']"
       >
       </el-table-column>
       <el-table-column
         prop="targetName"
         align="center"
        label="案人姓名"
+       :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="collectStatus"
         align="center"
         label="催收状态"
+        :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="accountAge"
         align="center"
         label="委案金额"
+        :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="completeTime"
        align="center"
         label="完成时间"
+        :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="completeUser"
         label="完成人"
         align="center"
+        :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="approveRepayAmt"
       align="center"
+      :sort-orders="['ascending','descending']"
         label="批复还款金额"
         show-overflow-tooltip>
       </el-table-column>
@@ -404,23 +452,27 @@
         prop="reduceValidTime"
       align="center"
         label="有效日期"
+        :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="reduceStatus" 
         align="center"
         label="减免状态"
+        :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="reduceResult"
       label="减免结果"
         align="center"
+        :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="enRepayAmt"
       align="center"
+      :sort-orders="['ascending','descending']"
         label="实际还款金额"
         show-overflow-tooltip>
       </el-table-column>
@@ -428,6 +480,7 @@
         prop="reduceUpdateTime"
         align="center"
         label="减免状态更新时间"
+        :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
@@ -475,35 +528,41 @@
         prop="seqno"
         align="center"
         label="个人序列号"
+        :sort-orders="['ascending','descending']"
       >
       </el-table-column>
       <el-table-column
         prop="targetName"
         align="center"
        label="案人姓名"
+       :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="collectStatus"
         align="center"
         label="催收状态"
+        :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="accountAge"
         align="center"
         label="委案金额"
+        :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="completeTime"
        align="center"
         label="完成时间"
+        :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="completeUser"
         label="完成人"
+        :sort-orders="['ascending','descending']"
         align="center"
         show-overflow-tooltip>
       </el-table-column>
@@ -511,35 +570,41 @@
         prop="approveRepayAmt"
       align="center"
         label="批复还款金额"
+        :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="reduceValidTime"
       align="center"
         label="有效日期"
+        :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="reduceStatus" 
         align="center"
         label="减免状态"
+        :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="reduceResult"
       label="减免结果"
         align="center"
+        :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="enRepayAmt"
       align="center"
         label="实际还款金额"
+        :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="reduceUpdateTime"
         align="center"
+        :sort-orders="['ascending','descending']"
         label="减免状态更新时间"
         show-overflow-tooltip>
       </el-table-column>
@@ -669,10 +734,18 @@ export default {
     	 deleteStatusList:[],
     	 deleteList:[],
     	 applyStatus:0,
-    	 downList:[]
+    	 downList:[],
+    	orderBy:"id",
+      sort:"desc",
     }
 },
  methods: {
+ 	   handleSort( {column,prop,order}){
+      this.sort = order==null?"desc":order.replace("ending","")
+      this.orderBy = prop==null?"id":prop
+      this.search()
+
+    },
  	downloadList(name){
  		let downloadData=[]
  		downloadData.push(name);
@@ -681,7 +754,7 @@ export default {
             type: 'success',
             message: '下载成功!'
           });
-          dataList(this.formInline,this.applyStatus).then((response)=>{
+          dataList(this.formInline,this.applyStatus,this.sort,this.orderBy,this.currentPage4,this.pageSize).then((response)=>{
           	this.tableData3=response.list
           	this.formInline={	time1:[],time2:[],time3:[]}
           })
@@ -689,11 +762,11 @@ export default {
  	},
  	totalDataExport(){
  		this.sType=0
- 		pageDataBatchExport(this.formInline,this.applyStatus,this.sType,this.pageNum,this.pageSize)
+ 		pageDataBatchExport(this.formInline,this.applyStatus,this.sort,this.orderBy,this.currentPage4,this.pageSize)
  	},
  	pageDataExport(){
  		this.sType=1
-pageDataBatchExport(this.formInline,this.applyStatus,this.sType,this.pageNum,this.pageSize)
+pageDataBatchExport(this.formInline,this.applyStatus,this.sort,this.orderBy,this.currentPage4,this.pageSize)
 },
  	moreDataListcheck(){
  		if(this.deleteList.length>=1){
@@ -702,7 +775,7 @@ pageDataBatchExport(this.formInline,this.applyStatus,this.sType,this.pageNum,thi
             type: 'success',
             message: '审核成功!'
           });
-          dataList(this.formInline,this.applyStatus).then((response)=>{
+          dataList(this.formInline,this.applyStatus,this.sort,this.orderBy,this.currentPage4,this.pageSize).then((response)=>{
           	this.tableData3=response.list
           	this.formInline={	time1:[],time2:[],time3:[]}
           })
@@ -767,7 +840,7 @@ this.search()
             type: 'success',
             message: '撤销成功!'
           });
-          dataList(this.formInline,this.applyStatus).then((response)=>{
+          dataList(this.formInline,this.applyStatus,this.sort,this.orderBy,this.currentPage4,this.pageSize).then((response)=>{
           	this.tableData3=response.list
           	this.formInline={	time1:[],time2:[],time3:[]}
           })
@@ -786,7 +859,7 @@ this.search()
             type: 'success',
             message: '下载成功!'
           });
-          dataList(this.formInline,this.applyStatus).then((response)=>{
+          dataList(this.formInline,this.applyStatus,this.sort,this.orderBy,this.currentPage4,this.pageSize).then((response)=>{
           	this.tableData3=response.list
           	this.formInline={	time1:[],time2:[],time3:[]}
           })
@@ -799,9 +872,8 @@ this.search()
  		}
  	},
  	search(){
- 		console.log(this.currentPage4)
- 		console.log(this.pages)
- 		  dataList(this.formInline,this.applyStatus,this.currentPage4,this.pages).then((response)=>{
+ 	
+ 		  dataList(this.formInline,this.applyStatus,this.sort,this.orderBy,this.currentPage4,this.pageSize).then((response)=>{
           	this.tableData3=response.list
           	this.formInline={	time1:[],time2:[],time3:[]}
           
@@ -814,7 +886,7 @@ this.search()
             type: 'success',
             message: '删除成功!'
           });
-           dataList(this.formInline,this.applyStatus).then((response)=>{
+           dataList(this.formInline,this.applyStatus,this.sort,this.orderBy,this.currentPage4,this.pageSize).then((response)=>{
           	this.tableData3=response.list
           	this.formInline={	time1:[],time2:[],time3:[]}
           })
@@ -829,7 +901,7 @@ this.search()
                  message: '新增成功!'
              });
              this.dialogVisible=false;
-          dataList(this.formInline,this.currentPage4,this.pages,this.applyStatus).then((response)=>{
+          dataList(this.formInline,this.applyStatus,this.sort,this.orderBy,this.currentPage4,this.pageSize).then((response)=>{
           	this.tableData3=response.list
           	this.formInline={	time1:[],time2:[],time3:[]}
           })
@@ -891,7 +963,7 @@ this.search()
              PersonList().then((response)=>{
           	this.PersonLists=response
           })
-              dataList(this.formInline,this.applyStatus).then((response)=>{
+              dataList(this.formInline,this.applyStatus,this.sort,this.orderBy,this.currentPage4,this.pageSize).then((response)=>{
           	this.tableData3=response.list
           	this.formInline={	time1:[],time2:[],time3:[]}
           })
