@@ -348,3 +348,11 @@ export function AddtableList(id,form){
   })
 }
 
+export function saveArchive(data){
+  return request({
+    url: 'detai/archive/save',
+    method: 'post',
+    data
+  })
+}
+
