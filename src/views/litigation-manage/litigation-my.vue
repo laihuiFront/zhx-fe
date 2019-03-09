@@ -1005,13 +1005,13 @@ export default {
   	},
   	search(){
   		dataList(this.form).then((response)=>{
-            this.DataList=response.data.list
+            this.DataList=response.list
               this.total = response.total
 })    
   	},
   	search2(){
   		dataList2(this.form2).then((response)=>{
-            this.DataList2=response.data.list
+            this.DataList2=response.list
               this.total = response.total
 })    
   	},
@@ -1024,12 +1024,12 @@ this.pageNum=val;
 },
 created() {
               dataList(this.form).then((response)=>{
-              this.DataList=response.data.list
+              this.DataList=response.list
              // this.pages = response.pages
               this.total = response.total
 })    
         dataList2(this.form).then((response)=>{
-              this.DataList2=response.data.list
+              this.DataList2=response.list
              // this.pages = response.pages
               this.total = response.total
 })    

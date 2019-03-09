@@ -357,6 +357,14 @@ export function saveArchive(data){
   })
 }
 
+export function saveLegal(data){
+  return request({
+    url: '/legal/save',
+    method: 'post',
+    data
+  })
+}
+
 export function getHistoryAddrList(caseId){
   return request({
     url: 'dataLog/listDataAddressLog',

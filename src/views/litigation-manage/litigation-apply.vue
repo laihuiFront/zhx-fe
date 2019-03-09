@@ -122,569 +122,569 @@
       :total="total">
     </el-pagination>	
   	<el-dialog
-  :title="dialogTitle"
-  :visible.sync="dialogVisible"
-  width="90%"
-  class="dialog-wrap"
+    :title="dialogTitle"
+    :visible.sync="dialogVisible"
+    width="90%"
+    class="dialog-wrap"
   >
- <el-form :inline="true" :model="formInline" class="demo-form-inline" label-width="140px" :disabled="isTrue">
- 	<el-row :gutter="24">
-  <el-col :span="8">
-  	<div class="grid-content bg-purple">
-  		  <el-form-item label="姓名">
-    <el-input v-model="formInline.cstName" placeholder="请输入姓名"></el-input>
-  </el-form-item>
-  	</div></el-col>
-  <el-col :span="8">
-  	<div class="grid-content bg-purple">
-  		<el-form-item label="案件状态">
-     <el-select v-model="formInline.legalStatus" filterable  placeholder="请选择案件状态" clearable>
-    <el-option
-      v-for="item in legalStatusMsgList"
-      :key="item.id"
-      :label="item.name"
-      :value="item.id">
-    </el-option>
-     </el-select>
-  </el-form-item>
-  	</div></el-col>
-  	<el-col :span="8">
-  	<div class="grid-content bg-purple">
-   <el-form-item label="证件号">
-    <el-input v-model="formInline.identNo" placeholder="请输入证件号"></el-input>
-  </el-form-item>
-  	</div></el-col>
-</el-row>
- 
-  <el-row :gutter="20">
-  <el-col :span="8">
-  	<div class="grid-content bg-purple">
-  		<el-form-item label="办案进度">
-    <el-select v-model="formInline.progress" filterable  placeholder="请选择案件进度" clearable>
-    <el-option
-      v-for="item in progressList"
-      :key="item.id"
-      :label="item.name"
-      :value="item.id">
-    </el-option>
-     </el-select>
-  </el-form-item>
-  	</div></el-col>
-  <el-col :span="8">
-  	<div class="grid-content bg-purple">
-  	  <el-form-item label="案件类型">
-     <el-select v-model="formInline.legalType" filterable  placeholder="请选择案件类型" clearable>
-    <el-option
-      v-for="item in caseStatusList"
-      :key="item.id"
-      :label="item.name"
-      :value="item.id">
-    </el-option>
-     </el-select>
-  </el-form-item>
-  	</div></el-col>
-  	<el-col :span="8">
-  	<div class="grid-content bg-purple">
-    <el-form-item label="标的">
-    <el-input v-model="formInline.tital" placeholder="请输入标的"></el-input>
-  </el-form-item>
-  	</div></el-col>
-</el-row>
- 
-  
-  <el-row :gutter="20">
-  <el-col :span="8">
-  	<div class="grid-content bg-purple">
-  	<el-form-item label="委托人">
-    <el-input v-model="formInline.clientele" placeholder="请输入委托人"></el-input>
-  </el-form-item>
-  	</div></el-col>
-  <el-col :span="8">
-  	<div class="grid-content bg-purple">
-  	   <el-form-item label="所属人">
-     <el-select v-model="formInline.owner" filterable  placeholder="请选择所属人" clearable>
-    <el-option
-      v-for="item in PersonDataList"
-      :key="item.id"
-      :label="item.userName"
-      :value="item.id">
-    </el-option>
-     </el-select>
-  </el-form-item>
-  	</div></el-col>
-  	<el-col :span="8">
-  	<div class="grid-content bg-purple">
-    <el-form-item label="被告人">
-    <el-input v-model="formInline.accused" placeholder="请输入被告人"></el-input>
-  </el-form-item>
-  	</div></el-col>
-</el-row>
- 
- <el-row :gutter="20">
-  <el-col :span="8">
-  	<div class="grid-content bg-purple">
-  	  <el-form-item label="代理律师">
-    <el-input v-model="formInline.agent" placeholder="请输入代理律师"></el-input>
-  </el-form-item>
-  	</div></el-col>
-  <el-col :span="8">
-  	<div class="grid-content bg-purple">
-  	    <el-form-item label="律师联系方式">
-    <el-input v-model="formInline.agentTel" placeholder="请输入联系方式"></el-input>
-  </el-form-item>
-  	</div></el-col>
-  	<el-col :span="8">
-  	<div class="grid-content bg-purple">
-    <el-form-item label="费用">
-    <el-input v-model="formInline.cost" placeholder="请输入费用"></el-input>
-  </el-form-item>
-  	</div></el-col>
-</el-row>
-  
- <el-row :gutter="20">
-  <el-col :span="8">
-  	<div class="grid-content bg-purple">
-  	  <el-form-item label="委案日期">
-     <div class="block">
-    <el-date-picker
-      v-model="formInline.legalDate"
-      type="date"
-      value-format="yyyy-MM-dd"
-      placeholder="选择日期">
-    </el-date-picker>
-  </div>
-  </el-form-item>
-  	</div></el-col>
-  <el-col :span="8">
-  	<div class="grid-content bg-purple">
-  	   <el-form-item label="受案日期">
-     <div class="block">
-    <el-date-picker
-    	value-format="yyyy-MM-dd"
-      v-model="formInline.filingDat"
-      type="date"
-      placeholder="选择日期">
-    </el-date-picker>
-  </div>
-  </el-form-item>
-  	</div></el-col>
-  	<el-col :span="8">
-  	<div class="grid-content bg-purple">
-    <el-form-item label="受案法院">
-    <el-input v-model="formInline.court" placeholder="请输入法院"></el-input>
-  </el-form-item>
-  	</div></el-col>
-</el-row>
+    <el-form :inline="true" :model="formInline" class="demo-form-inline" label-width="140px" :disabled="isTrue">
+      <el-row :gutter="24">
+        <el-col :span="8">
+          <div class="grid-content bg-purple">
+            <el-form-item label="姓名">
+              <el-input v-model="formInline.cstName" placeholder="请输入姓名"></el-input>
+            </el-form-item>
+          </div></el-col>
+        <el-col :span="8">
+          <div class="grid-content bg-purple">
+            <el-form-item label="案件状态">
+              <el-select v-model="formInline.legalStatus" filterable  placeholder="请选择案件状态" clearable>
+                <el-option
+                  v-for="item in legalStatusMsgList"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </div></el-col>
+        <el-col :span="8">
+          <div class="grid-content bg-purple">
+            <el-form-item label="证件号">
+              <el-input v-model="formInline.identNo" placeholder="请输入证件号"></el-input>
+            </el-form-item>
+          </div></el-col>
+      </el-row>
 
-     <el-row :gutter="20">
-  <el-col :span="8">
-  	<div class="grid-content bg-purple">
-  	  <el-form-item label="办案法官">
-    <el-input v-model="formInline.judge" placeholder="请输入办案法官"></el-input>
-  </el-form-item>
-  	</div></el-col>
-  <el-col :span="8">
-  	<div class="grid-content bg-purple">
-  	    <el-form-item label="法官联系方式">
-    <el-input v-model="formInline.judgeTel" placeholder="请输入联系方式"></el-input>
-  </el-form-item>
-  	</div></el-col>
-  	<el-col :span="8">
-  	<div class="grid-content bg-purple">
-    <el-form-item label="案号">
-    <el-input v-model="formInline.legalNo" placeholder="请输入案号"></el-input>
-  </el-form-item>
-  	</div></el-col>
-</el-row>
-   
-    <el-row :gutter="20">
-  <el-col :span="8">
-  	<div class="grid-content bg-purple">
-  	  <el-form-item label="首次开庭日期">
-     <div class="block">
-    <el-date-picker
-    	value-format="yyyy-MM-dd"
-      v-model="formInline.firstDate"
-      type="date"
-      placeholder="选择日期">
-    </el-date-picker>
-  </div>
-  </el-form-item>
-  	</div></el-col>
-  <el-col :span="8">
-  	<div class="grid-content bg-purple">
-  	   <el-form-item label="判决日期">
-     <div class="block">
-    <el-date-picker
-    	value-format="yyyy-MM-dd"
-      v-model="formInline.judgeDate"
-      type="date"
-      placeholder="选择日期">
-    </el-date-picker>
-  </div>
-  </el-form-item>
-  	</div></el-col>
-  	<el-col :span="8">
-  	<div class="grid-content bg-purple">
-    <el-form-item label="申请执行案号">
-    <el-input v-model="formInline.exeNo" placeholder="请输入案号"></el-input>
-  </el-form-item>
-  	</div></el-col>
-</el-row>
-
-  <el-row :gutter="20">
-  <el-col :span="8">
-  	<div class="grid-content bg-purple">
-  	  <el-form-item label="申请执行日期">
-     <div class="block">
-    <el-date-picker
-    	value-format="yyyy-MM-dd"
-      v-model="formInline.exeDate"
-      type="date"
-      placeholder="选择日期">
-    </el-date-picker>
-  </div>
-  </el-form-item>
-  	</div></el-col>
-  <el-col :span="8">
-  	<div class="grid-content bg-purple">
-  	   <el-form-item label="执行终结日期">
-     <div class="block">
-    <el-date-picker
-    	value-format="yyyy-MM-dd"
-      v-model="formInline.exeEndDate"
-      type="date"
-      placeholder="选择日期">
-    </el-date-picker>
-  </div>
-  </el-form-item>
-  	</div></el-col>
-  	<el-col :span="8">
-  	<div class="grid-content bg-purple">
-      <el-form-item label="诉讼缴费日期">
-     <div class="block">
-    <el-date-picker
-    	value-format="yyyy-MM-dd"
-      v-model="formInline.costDate"
-      type="date"
-      placeholder="选择日期">
-    </el-date-picker>
-  </div>
-  </el-form-item>
-  	</div></el-col>
-</el-row>
-
-<el-row :gutter="20">
-  <el-col :span="8">
-  	<div class="grid-content bg-purple">
-  	  <el-form-item label="保全缴费日期">
-     <div class="block">
-    <el-date-picker
-    	value-format="yyyy-MM-dd"
-      v-model="formInline.preservationDate"
-      type="date"
-      placeholder="选择日期">
-    </el-date-picker>
-  </div>
-  </el-form-item>
-  	</div></el-col>
-  <el-col :span="8">
-  	<div class="grid-content bg-purple">
-  	 <el-form-item label="送达情况">
-    <el-input v-model="formInline.arriveInfo" placeholder="请输入送达"></el-input>
-  </el-form-item>
-  	</div></el-col>
-  	<el-col :span="8">
-  	<div class="grid-content bg-purple">
-      
-  	</div></el-col>
-</el-row>
-
-<el-row :gutter="20">
-  <el-col :span="16">
-  	<div class="grid-content bg-purple">
-  	  <el-form-item label="保全资产清单">
-    <el-input type="textarea" style="width: 280%;" v-model="formInline.preservationList"></el-input>
-  </el-form-item>
-  	</div></el-col>
-</el-row>
-
-<el-row :gutter="20">
-  <el-col :span="16">
-  	<div class="grid-content bg-purple">
-  	  <el-form-item label="判决书">
-    <el-input type="textarea" style="width: 280%;"  v-model="formInline.judgment"></el-input>
-  </el-form-item>
-  	</div></el-col>
-  
-</el-row>
-
-<el-row :gutter="20">
-  <el-col :span="16">
-  	<div class="grid-content bg-purple">
-  	  <el-form-item label="备注">
-     <el-input type="textarea" style="width: 280%;"  v-model="formInline.remark"></el-input>
-  </el-form-item>
-  	</div>
-  </el-col>
-  </el-row>
-</el-form>
+      <el-row :gutter="20">
+        <el-col :span="8">
+          <div class="grid-content bg-purple">
+            <el-form-item label="办案进度">
+              <el-select v-model="formInline.progress" filterable  placeholder="请选择案件进度" clearable>
+                <el-option
+                  v-for="item in progressList"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </div></el-col>
+        <el-col :span="8">
+          <div class="grid-content bg-purple">
+            <el-form-item label="案件类型">
+              <el-select v-model="formInline.legalType" filterable  placeholder="请选择案件类型" clearable>
+                <el-option
+                  v-for="item in caseStatusList"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </div></el-col>
+        <el-col :span="8">
+          <div class="grid-content bg-purple">
+            <el-form-item label="标的">
+              <el-input v-model="formInline.tital" placeholder="请输入标的"></el-input>
+            </el-form-item>
+          </div></el-col>
+      </el-row>
 
 
- <div v-if=isTrue>
-<el-row :gutter="20">
-  <el-col :span="24">
-  	<div class="grid-content bg-purple addTitle" >
-  	 关联数据
-  	</div></el-col>
-</el-row>
-<el-row :gutter="20"  >
-  <el-col :span="24">
-  	 <el-tabs v-model="activeName2" type="card" @tab-click="handleClick">
-    <el-tab-pane label="办理记录" name="first">
-    	<el-row :gutter="20" style="margin-bottom: 10px;" >
-     <el-col :span="21">
-  	<div class="grid-content bg-purple" >
-  	 <span style="color: #e8e8e8;font-size: 18px;">办理记录</span>
-  	</div>
-     </el-col>
-     <el-button type="primary" @click="adddialogVisible = true"> 添加办理记录</el-button>
-       </el-row>
-    	<el-table
-      :data="handleList"
-      border
-      stripe
-      style="width: 100%">
-       <el-table-column
-        prop="handleDate"
-        label="办理时间"
-        width="180">
-      </el-table-column>
-      <el-table-column
-        prop="progress"
-        label="办理进度"
-        width="180">
-      </el-table-column>
-      <el-table-column
-        prop="preservationDate"
-        label="保全费缴纳时间">
-      </el-table-column>
-       <el-table-column
-        prop="preservationList"
-        label="保全资产清单">
-      </el-table-column>
-       <el-table-column
-        prop="remark"
-        label="备注">
-      </el-table-column>
-      <el-table-column
-      align="center"
-      label="操作"
-      width="120"
-     >
-     <template slot-scope="scope">
-       <el-button type="text" size="small" icon="el-icon-edit" @click="edithandleList(scope.row)"></el-button>
-       <el-button type="text" size="small" icon="el-icon-delete" @click="deletehandleList(scope.row.id)"></el-button>
-      </template>
-    </el-table-column>
-    </el-table>
-    </el-tab-pane>
-    <el-dialog
-  title="添加办理记录"
-  :visible.sync="adddialogVisible"
-  width="40%"
-  append-to-body
-  >
- <el-form :model="ruleForm" ref="ruleForm" label-width="100px" class="demo-ruleForm">
- 	<el-form-item label="办案进度"
- 		prop="progress"
- 		:rules="{
-      required: true, message: '请选择办案进度', trigger: 'change'  
+      <el-row :gutter="20">
+        <el-col :span="8">
+          <div class="grid-content bg-purple">
+            <el-form-item label="委托人">
+              <el-input v-model="formInline.clientele" placeholder="请输入委托人"></el-input>
+            </el-form-item>
+          </div></el-col>
+        <el-col :span="8">
+          <div class="grid-content bg-purple">
+            <el-form-item label="所属人">
+              <el-select v-model="formInline.owner" filterable  placeholder="请选择所属人" clearable>
+                <el-option
+                  v-for="item in PersonDataList"
+                  :key="item.id"
+                  :label="item.userName"
+                  :value="item.id">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </div></el-col>
+        <el-col :span="8">
+          <div class="grid-content bg-purple">
+            <el-form-item label="被告人">
+              <el-input v-model="formInline.accused" placeholder="请输入被告人"></el-input>
+            </el-form-item>
+          </div></el-col>
+      </el-row>
+
+      <el-row :gutter="20">
+        <el-col :span="8">
+          <div class="grid-content bg-purple">
+            <el-form-item label="代理律师">
+              <el-input v-model="formInline.agent" placeholder="请输入代理律师"></el-input>
+            </el-form-item>
+          </div></el-col>
+        <el-col :span="8">
+          <div class="grid-content bg-purple">
+            <el-form-item label="律师联系方式">
+              <el-input v-model="formInline.agentTel" placeholder="请输入联系方式"></el-input>
+            </el-form-item>
+          </div></el-col>
+        <el-col :span="8">
+          <div class="grid-content bg-purple">
+            <el-form-item label="费用">
+              <el-input v-model="formInline.cost" placeholder="请输入费用"></el-input>
+            </el-form-item>
+          </div></el-col>
+      </el-row>
+
+      <el-row :gutter="20">
+        <el-col :span="8">
+          <div class="grid-content bg-purple">
+            <el-form-item label="委案日期">
+              <div class="block">
+                <el-date-picker
+                  v-model="formInline.legalDate"
+                  type="date"
+                  value-format="yyyy-MM-dd"
+                  placeholder="选择日期">
+                </el-date-picker>
+              </div>
+            </el-form-item>
+          </div></el-col>
+        <el-col :span="8">
+          <div class="grid-content bg-purple">
+            <el-form-item label="受案日期">
+              <div class="block">
+                <el-date-picker
+                  value-format="yyyy-MM-dd"
+                  v-model="formInline.filingDat"
+                  type="date"
+                  placeholder="选择日期">
+                </el-date-picker>
+              </div>
+            </el-form-item>
+          </div></el-col>
+        <el-col :span="8">
+          <div class="grid-content bg-purple">
+            <el-form-item label="受案法院">
+              <el-input v-model="formInline.court" placeholder="请输入法院"></el-input>
+            </el-form-item>
+          </div></el-col>
+      </el-row>
+
+      <el-row :gutter="20">
+        <el-col :span="8">
+          <div class="grid-content bg-purple">
+            <el-form-item label="办案法官">
+              <el-input v-model="formInline.judge" placeholder="请输入办案法官"></el-input>
+            </el-form-item>
+          </div></el-col>
+        <el-col :span="8">
+          <div class="grid-content bg-purple">
+            <el-form-item label="法官联系方式">
+              <el-input v-model="formInline.judgeTel" placeholder="请输入联系方式"></el-input>
+            </el-form-item>
+          </div></el-col>
+        <el-col :span="8">
+          <div class="grid-content bg-purple">
+            <el-form-item label="案号">
+              <el-input v-model="formInline.legalNo" placeholder="请输入案号"></el-input>
+            </el-form-item>
+          </div></el-col>
+      </el-row>
+
+      <el-row :gutter="20">
+        <el-col :span="8">
+          <div class="grid-content bg-purple">
+            <el-form-item label="首次开庭日期">
+              <div class="block">
+                <el-date-picker
+                  value-format="yyyy-MM-dd"
+                  v-model="formInline.firstDate"
+                  type="date"
+                  placeholder="选择日期">
+                </el-date-picker>
+              </div>
+            </el-form-item>
+          </div></el-col>
+        <el-col :span="8">
+          <div class="grid-content bg-purple">
+            <el-form-item label="判决日期">
+              <div class="block">
+                <el-date-picker
+                  value-format="yyyy-MM-dd"
+                  v-model="formInline.judgeDate"
+                  type="date"
+                  placeholder="选择日期">
+                </el-date-picker>
+              </div>
+            </el-form-item>
+          </div></el-col>
+        <el-col :span="8">
+          <div class="grid-content bg-purple">
+            <el-form-item label="申请执行案号">
+              <el-input v-model="formInline.exeNo" placeholder="请输入案号"></el-input>
+            </el-form-item>
+          </div></el-col>
+      </el-row>
+
+      <el-row :gutter="20">
+        <el-col :span="8">
+          <div class="grid-content bg-purple">
+            <el-form-item label="申请执行日期">
+              <div class="block">
+                <el-date-picker
+                  value-format="yyyy-MM-dd"
+                  v-model="formInline.exeDate"
+                  type="date"
+                  placeholder="选择日期">
+                </el-date-picker>
+              </div>
+            </el-form-item>
+          </div></el-col>
+        <el-col :span="8">
+          <div class="grid-content bg-purple">
+            <el-form-item label="执行终结日期">
+              <div class="block">
+                <el-date-picker
+                  value-format="yyyy-MM-dd"
+                  v-model="formInline.exeEndDate"
+                  type="date"
+                  placeholder="选择日期">
+                </el-date-picker>
+              </div>
+            </el-form-item>
+          </div></el-col>
+        <el-col :span="8">
+          <div class="grid-content bg-purple">
+            <el-form-item label="诉讼缴费日期">
+              <div class="block">
+                <el-date-picker
+                  value-format="yyyy-MM-dd"
+                  v-model="formInline.costDate"
+                  type="date"
+                  placeholder="选择日期">
+                </el-date-picker>
+              </div>
+            </el-form-item>
+          </div></el-col>
+      </el-row>
+
+      <el-row :gutter="20">
+        <el-col :span="8">
+          <div class="grid-content bg-purple">
+            <el-form-item label="保全缴费日期">
+              <div class="block">
+                <el-date-picker
+                  value-format="yyyy-MM-dd"
+                  v-model="formInline.preservationDate"
+                  type="date"
+                  placeholder="选择日期">
+                </el-date-picker>
+              </div>
+            </el-form-item>
+          </div></el-col>
+        <el-col :span="8">
+          <div class="grid-content bg-purple">
+            <el-form-item label="送达情况">
+              <el-input v-model="formInline.arriveInfo" placeholder="请输入送达"></el-input>
+            </el-form-item>
+          </div></el-col>
+        <el-col :span="8">
+          <div class="grid-content bg-purple">
+
+          </div></el-col>
+      </el-row>
+
+      <el-row :gutter="20">
+        <el-col :span="16">
+          <div class="grid-content bg-purple">
+            <el-form-item label="保全资产清单">
+              <el-input type="textarea" style="width: 280%;" v-model="formInline.preservationList"></el-input>
+            </el-form-item>
+          </div></el-col>
+      </el-row>
+
+      <el-row :gutter="20">
+        <el-col :span="16">
+          <div class="grid-content bg-purple">
+            <el-form-item label="判决书">
+              <el-input type="textarea" style="width: 280%;"  v-model="formInline.judgment"></el-input>
+            </el-form-item>
+          </div></el-col>
+
+      </el-row>
+
+      <el-row :gutter="20">
+        <el-col :span="16">
+          <div class="grid-content bg-purple">
+            <el-form-item label="备注">
+              <el-input type="textarea" style="width: 280%;"  v-model="formInline.remark"></el-input>
+            </el-form-item>
+          </div>
+        </el-col>
+      </el-row>
+    </el-form>
+
+
+    <div v-if=isTrue>
+      <el-row :gutter="20">
+        <el-col :span="24">
+          <div class="grid-content bg-purple addTitle" >
+            关联数据
+          </div></el-col>
+      </el-row>
+      <el-row :gutter="20"  >
+        <el-col :span="24">
+          <el-tabs v-model="activeName2" type="card" @tab-click="handleClick">
+            <el-tab-pane label="办理记录" name="first">
+              <el-row :gutter="20" style="margin-bottom: 10px;" >
+                <el-col :span="21">
+                  <div class="grid-content bg-purple" >
+                    <span style="color: #e8e8e8;font-size: 18px;">办理记录</span>
+                  </div>
+                </el-col>
+                <el-button type="primary" @click="adddialogVisible = true"> 添加办理记录</el-button>
+              </el-row>
+              <el-table
+                :data="handleList"
+                border
+                stripe
+                style="width: 100%">
+                <el-table-column
+                  prop="handleDate"
+                  label="办理时间"
+                  width="180">
+                </el-table-column>
+                <el-table-column
+                  prop="progress"
+                  label="办理进度"
+                  width="180">
+                </el-table-column>
+                <el-table-column
+                  prop="preservationDate"
+                  label="保全费缴纳时间">
+                </el-table-column>
+                <el-table-column
+                  prop="preservationList"
+                  label="保全资产清单">
+                </el-table-column>
+                <el-table-column
+                  prop="remark"
+                  label="备注">
+                </el-table-column>
+                <el-table-column
+                  align="center"
+                  label="操作"
+                  width="120"
+                >
+                  <template slot-scope="scope">
+                    <el-button type="text" size="small" icon="el-icon-edit" @click="edithandleList(scope.row)"></el-button>
+                    <el-button type="text" size="small" icon="el-icon-delete" @click="deletehandleList(scope.row.id)"></el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </el-tab-pane>
+            <el-dialog
+              title="添加办理记录"
+              :visible.sync="adddialogVisible"
+              width="40%"
+              append-to-body
+            >
+              <el-form :model="ruleForm" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+                <el-form-item label="办案进度"
+                              prop="progress"
+                              :rules="{
+      required: true, message: '请选择办案进度', trigger: 'change'
     }">
-    <el-select v-model="ruleForm.progress" filterable  placeholder="请选择案件进度" clearable>
-    <el-option
-      v-for="item in progressList"
-      :key="item.id"
-      :label="item.name"
-      :value="item.id">
-    </el-option>
-     </el-select>
-  </el-form-item>
-   <el-form-item label="办理时间"
-   		prop="handleDate"
- 		:rules="{
-       type: 'string', required: true, message: '请选择时间', trigger: 'change' 
+                  <el-select v-model="ruleForm.progress" filterable  placeholder="请选择案件进度" clearable>
+                    <el-option
+                      v-for="item in progressList"
+                      :key="item.id"
+                      :label="item.name"
+                      :value="item.id">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item label="办理时间"
+                              prop="handleDate"
+                              :rules="{
+       type: 'string', required: true, message: '请选择时间', trigger: 'change'
     }">
-     <div class="block">
-    <el-date-picker
-    	value-format="yyyy-MM-dd"
-      v-model="ruleForm.handleDate"
-      type="date"
-      placeholder="选择日期">
-    </el-date-picker>
-  </div>
-  </el-form-item>
-   <el-form-item label="保全费缴纳时间">
-     <div class="block">
-    <el-date-picker
-    	value-format="yyyy-MM-dd"
-      v-model="ruleForm.preservationDate"
-      type="date"
-      placeholder="选择日期">
-    </el-date-picker>
-  </div>
-  </el-form-item>
-  <el-form-item label="保全资产清单" >
-    <el-input type="textarea" v-model="ruleForm.preservationList"></el-input>
-  </el-form-item>
-    <el-form-item label="备注" >
-    <el-input type="textarea" v-model="ruleForm.remark"></el-input>
-  </el-form-item>
-</el-form>
-  <span slot="footer" class="dialog-footer">
+                  <div class="block">
+                    <el-date-picker
+                      value-format="yyyy-MM-dd"
+                      v-model="ruleForm.handleDate"
+                      type="date"
+                      placeholder="选择日期">
+                    </el-date-picker>
+                  </div>
+                </el-form-item>
+                <el-form-item label="保全费缴纳时间">
+                  <div class="block">
+                    <el-date-picker
+                      value-format="yyyy-MM-dd"
+                      v-model="ruleForm.preservationDate"
+                      type="date"
+                      placeholder="选择日期">
+                    </el-date-picker>
+                  </div>
+                </el-form-item>
+                <el-form-item label="保全资产清单" >
+                  <el-input type="textarea" v-model="ruleForm.preservationList"></el-input>
+                </el-form-item>
+                <el-form-item label="备注" >
+                  <el-input type="textarea" v-model="ruleForm.remark"></el-input>
+                </el-form-item>
+              </el-form>
+              <span slot="footer" class="dialog-footer">
     <el-button @click="adddialogVisible = false">取 消</el-button>
     <el-button type="primary" @click="submitForm1('ruleForm')">确 定</el-button>
   </span>
-</el-dialog>
-    <el-tab-pane label="收费记录" name="second"><el-row :gutter="20" style="margin-bottom: 10px;" >
-     <el-col :span="21">
-  	<div class="grid-content bg-purple" >
-  	 <span style="color: #e8e8e8;font-size: 18px;">收费记录</span>
-  	</div>
-     </el-col>
-     <el-button type="primary" @click="add1dialogVisible = true"> 添加收费记录</el-button>
-       </el-row>
-    	<el-table
-      :data="feeList"
-      border
-      stripe
-      style="width: 100%">
-       <el-table-column
-        prop="fee"
-        label="收费金额"
-        width="180">
-      </el-table-column>
-      <el-table-column
-        prop="chargeDate"
-        label="收费日期"
-        width="180">
-      </el-table-column>
-      <el-table-column
-        prop="feeType"
-        label="款项类别">
-      </el-table-column>
-       <el-table-column
-        prop="feeTarget"
-        label="收费对象">
-      </el-table-column>
-      <el-table-column
-        prop="payMethod"
-        label="付款方式">
-      </el-table-column>
-      <el-table-column
-        prop="payee"
-        label="收费人">
-      </el-table-column>
-      <el-table-column
-        prop="voucher"
-        label="凭证号">
-      </el-table-column>
-       <el-table-column
-        prop="remark"
-        label="备注">
-      </el-table-column>
-      <el-table-column
-      align="center"
-      label="操作"
-      width="120"
-     >
-     <template slot-scope="scope">
-       <el-button type="text" size="small" icon="el-icon-edit" @click="editfeeList(scope.row)"></el-button>
-       <el-button type="text" size="small" icon="el-icon-delete" @click="deleteFeeList(scope.row.id)"></el-button>
-      </template>
-    </el-table-column>
-    </el-table>
-    </el-tab-pane>
-    <el-dialog
-  title="添加收费记录"
-  :visible.sync="add1dialogVisible"
-  width="70%"
-  append-to-body
-  >
- <el-form :model="ruleForm1" ref="ruleForm1" :inline="true" label-width="180px" class="demo-ruleForm">
- 	<el-form-item label="收费金额"   
- 		prop="fee"
- 		:rules="{
+            </el-dialog>
+            <el-tab-pane label="收费记录" name="second"><el-row :gutter="20" style="margin-bottom: 10px;" >
+              <el-col :span="21">
+                <div class="grid-content bg-purple" >
+                  <span style="color: #e8e8e8;font-size: 18px;">收费记录</span>
+                </div>
+              </el-col>
+              <el-button type="primary" @click="add1dialogVisible = true"> 添加收费记录</el-button>
+            </el-row>
+              <el-table
+                :data="feeList"
+                border
+                stripe
+                style="width: 100%">
+                <el-table-column
+                  prop="fee"
+                  label="收费金额"
+                  width="180">
+                </el-table-column>
+                <el-table-column
+                  prop="chargeDate"
+                  label="收费日期"
+                  width="180">
+                </el-table-column>
+                <el-table-column
+                  prop="feeType"
+                  label="款项类别">
+                </el-table-column>
+                <el-table-column
+                  prop="feeTarget"
+                  label="收费对象">
+                </el-table-column>
+                <el-table-column
+                  prop="payMethod"
+                  label="付款方式">
+                </el-table-column>
+                <el-table-column
+                  prop="payee"
+                  label="收费人">
+                </el-table-column>
+                <el-table-column
+                  prop="voucher"
+                  label="凭证号">
+                </el-table-column>
+                <el-table-column
+                  prop="remark"
+                  label="备注">
+                </el-table-column>
+                <el-table-column
+                  align="center"
+                  label="操作"
+                  width="120"
+                >
+                  <template slot-scope="scope">
+                    <el-button type="text" size="small" icon="el-icon-edit" @click="editfeeList(scope.row)"></el-button>
+                    <el-button type="text" size="small" icon="el-icon-delete" @click="deleteFeeList(scope.row.id)"></el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </el-tab-pane>
+            <el-dialog
+              title="添加收费记录"
+              :visible.sync="add1dialogVisible"
+              width="70%"
+              append-to-body
+            >
+              <el-form :model="ruleForm1" ref="ruleForm1" :inline="true" label-width="180px" class="demo-ruleForm">
+                <el-form-item label="收费金额"
+                              prop="fee"
+                              :rules="{
       required: true, message: '收费不能为空', trigger: 'blur'
     }">
-    <el-input v-model="ruleForm1.fee"></el-input>
-  </el-form-item>
-	<el-form-item label="收费人">
-    <el-input v-model="ruleForm1.payee"></el-input>
-  </el-form-item>
- 	<el-form-item label="款项类别">
-    <el-select v-model="ruleForm1.feeType" filterable  placeholder="请选择款项类别" clearable>
-    <el-option
-      v-for="item in feeTypeList"
-      :key="item.id"
-      :label="item.name"
-      :value="item.id">
-    </el-option>
-     </el-select>
-  </el-form-item>
-  
-    <el-form-item label="收费日期"
-    	prop="chargeDate"
- 		:rules="{
-       type: 'string', required: true, message: '请选择时间', trigger: 'change' 
+                  <el-input v-model="ruleForm1.fee"></el-input>
+                </el-form-item>
+                <el-form-item label="收费人">
+                  <el-input v-model="ruleForm1.payee"></el-input>
+                </el-form-item>
+                <el-form-item label="款项类别">
+                  <el-select v-model="ruleForm1.feeType" filterable  placeholder="请选择款项类别" clearable>
+                    <el-option
+                      v-for="item in feeTypeList"
+                      :key="item.id"
+                      :label="item.name"
+                      :value="item.id">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+
+                <el-form-item label="收费日期"
+                              prop="chargeDate"
+                              :rules="{
+       type: 'string', required: true, message: '请选择时间', trigger: 'change'
     }">
-     <div class="block">
-    <el-date-picker
-    	value-format="yyyy-MM-dd"
-      v-model="ruleForm1.chargeDate"
-      type="date"
-      placeholder="选择日期">
-    </el-date-picker>
-  </div>
-  </el-form-item>
-	<el-form-item label="付款方式">
-    <el-select v-model="ruleForm1.payMethod" filterable  placeholder="请选择付款方式" clearable>
-    <el-option
-      v-for="item in payMethodList"
-      :key="item.id"
-      :label="item.value"
-      :value="item.value">
-    </el-option>
-     </el-select>
-  </el-form-item>
-   <el-form-item label="收费对象">
-     <div class="block">
-       <el-input v-model="ruleForm1.feeTarget"></el-input>
-  </div>
-  </el-form-item>
-  <el-form-item label="凭证号" style="width: 80%;">
-    <el-input type="textarea" v-model="ruleForm1.voucher" style="width: 280%;"></el-input>
-  </el-form-item>
-    <el-form-item label="备注" style="width: 80%;">
-    <el-input type="textarea" v-model="ruleForm1.remark" style="width: 280%;"></el-input>
-  </el-form-item>
-</el-form>
-  <span slot="footer" class="dialog-footer">
+                  <div class="block">
+                    <el-date-picker
+                      value-format="yyyy-MM-dd"
+                      v-model="ruleForm1.chargeDate"
+                      type="date"
+                      placeholder="选择日期">
+                    </el-date-picker>
+                  </div>
+                </el-form-item>
+                <el-form-item label="付款方式">
+                  <el-select v-model="ruleForm1.payMethod" filterable  placeholder="请选择付款方式" clearable>
+                    <el-option
+                      v-for="item in payMethodList"
+                      :key="item.id"
+                      :label="item.value"
+                      :value="item.value">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item label="收费对象">
+                  <div class="block">
+                    <el-input v-model="ruleForm1.feeTarget"></el-input>
+                  </div>
+                </el-form-item>
+                <el-form-item label="凭证号" style="width: 80%;">
+                  <el-input type="textarea" v-model="ruleForm1.voucher" style="width: 280%;"></el-input>
+                </el-form-item>
+                <el-form-item label="备注" style="width: 80%;">
+                  <el-input type="textarea" v-model="ruleForm1.remark" style="width: 280%;"></el-input>
+                </el-form-item>
+              </el-form>
+              <span slot="footer" class="dialog-footer">
     <el-button @click="addd1ialogVisible = false">取 消</el-button>
     <el-button type="primary"@click="submitForm('ruleForm1')">确 定</el-button>
   </span>
-</el-dialog>
-</el-tab-pane>
-  </el-tabs>
-  </el-col>
-</el-row>
-</div>
-  <span slot="footer" class="dialog-footer">
+            </el-dialog>
+            </el-tab-pane>
+          </el-tabs>
+        </el-col>
+      </el-row>
+    </div>
+    <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible = false">取 消</el-button>
     <el-button type="primary" @click="SaveData" v-if=!isTrue>确 定</el-button>
   </span>
-</el-dialog>
-<el-dialog
+  </el-dialog>
+    <el-dialog
   title="审核诉讼案件"
   :visible.sync="dialogVisible1"
   width="30%"
@@ -929,7 +929,7 @@ export default {
   	},
   	search(){
   		dataList(this.form).then((response)=>{
-            this.DataList=response.data.list
+            this.DataList=response.list
              // this.pages = response.pages
               this.total = response.total
 })    
@@ -943,7 +943,7 @@ this.pageNum=val;
    },
       created() {
               dataList(this.form).then((response)=>{
-              this.DataList=response.data.list
+              this.DataList=response.list
               this.total = response.total
 })    
                 PersonList().then((response)=>{

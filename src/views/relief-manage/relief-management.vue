@@ -227,8 +227,8 @@
         <el-button type="primary"　v-show="istrue1" v-has="'新增减免'" @click=addData >新增减免</el-button>
         <el-button type="primary"　v-show="istrue2" v-has="'批量撤销'" @click=moreDataList >批量撤销</el-button>
         <el-button type="primary"　v-show="istrue3" v-has="'批量审核'" @click=moreDataListcheck >批量审核</el-button>
-        <el-button type="primary"　v-show="istrue4" v-has="'批量下载附件'" @click=moreDataList >批量下载附件</el-button>
-        <el-button type="primary"　v-show="istrue5" v-has="'导出减免结果'" >导出减免结果</el-button>
+        <el-button type="primary"　v-show="istrue4" v-has="'批量下载附件'" @click=moredownDataList >批量下载附件</el-button>
+        <el-button type="primary"　v-show="istrue5" v-has="'导出减免结果'" @click="dialogVisible1 = true"  >导出减免结果</el-button>
       </el-form-item>
     </el-form>
  <el-tabs v-model="activeName2" type="card" @tab-click="handleClick" class="tabs-wrap">
@@ -556,7 +556,7 @@
         show-overflow-tooltip>
         <template slot-scope="scope">
          <el-button type="text" size="small" @click="showMessage(scope.row)">查看</el-button>
-           <el-button type="text" size="small" @click="deteleList(scope.row.id)" v-has="'批量下载附件'">下载附件</el-button>
+           <el-button type="text" size="small" @click="downloadList(scope.row.fileName)" v-has="'批量下载附件'">下载附件</el-button>
        </template>
       </el-table-column>
     
@@ -632,7 +632,7 @@
 </template>
 
 <script>
-	import {areaList,clientList,PersonList,pageDataBatchExport,dataList,checkData,deleteStatusList,accountAgeList,collectStatusList,remoweData,addDataform,remoweDataList} from '@/common/js/relief-management.js'
+	import {areaList,clientList,downDataList,PersonList,pageDataBatchExport,dataList,checkData,deleteStatusList,accountAgeList,collectStatusList,remoweData,addDataform,remoweDataList} from '@/common/js/relief-management.js'
 export default {
   name: 'reliefManagement',
   data(){
@@ -668,18 +668,33 @@ export default {
     	 collectStatusList:[],
     	 deleteStatusList:[],
     	 deleteList:[],
-    	 applyStatus:0
+    	 applyStatus:0,
+    	 downList:[]
     }
 },
  methods: {
+ 	downloadList(name){
+ 		let downloadData=[]
+ 		downloadData.push(name);
+ 			downDataList(this.downList).then((response)=>{
+          this.$message({
+            type: 'success',
+            message: '下载成功!'
+          });
+          dataList(this.formInline,this.applyStatus).then((response)=>{
+          	this.tableData3=response.list
+          	this.formInline={	time1:[],time2:[],time3:[]}
+          })
+          }) 
+ 	},
  	totalDataExport(){
  		this.sType=0
- 		pageDataBatchExport(this.formInline,this.sType)
+ 		pageDataBatchExport(this.formInline,this.applyStatus,this.sType,this.pageNum,this.pageSize)
  	},
  	pageDataExport(){
  		this.sType=1
- 		pageDataBatchExport(this.formInline,this.sType)
- 	},
+pageDataBatchExport(this.formInline,this.applyStatus,this.sType,this.pageNum,this.pageSize)
+},
  	moreDataListcheck(){
  		if(this.deleteList.length>=1){
  			checkData(this.deleteList).then((response)=>{
@@ -764,12 +779,12 @@ this.search()
           });
  		}
  	},
- 		moreDownDataList(){
+ 		moredownDataList(){
  		if(this.deleteList.length>=1){
- 			remoweDataList(this.deleteList).then((response)=>{
+ 			downDataList(this.downList).then((response)=>{
           this.$message({
             type: 'success',
-            message: '撤销成功!'
+            message: '下载成功!'
           });
           dataList(this.formInline,this.applyStatus).then((response)=>{
           	this.tableData3=response.list
@@ -843,8 +858,11 @@ this.search()
  		handleSelectionChange(row){
   		let _self=this
   		_self.deleteList=[]
+  		_self.downList=[]
+  		
 	row.forEach(function(currentValue, index, arr){
 	   _self.deleteList.push(currentValue.id)
+	   _self.downList.push(currentValue.fileName)
 	})
 	console.log(_self.deleteList)
 },

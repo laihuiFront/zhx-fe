@@ -6,7 +6,7 @@
           <el-form
             :model="caseDetail"
             ref="ruleForm"
-            label-width="100px"
+            label-width="130px"
             class="rule-form"
           >
             <el-form-item label="姓名">
@@ -260,7 +260,7 @@
           <el-form
               :model="caseDetail"
               ref="otherForm"
-              label-width="100px"
+              label-width="130px"
               class="rule-form"
             >
             <el-form-item label="分配时间">
@@ -587,31 +587,31 @@
                     <el-button @click="showAllTel">显示全部电话</el-button>
                   </div>
                   <div class="right-oper">
-                    <el-button type="primary" @click="addPhone" v-if="caseDetail.currentuser">新增电话</el-button>
-                    <el-popover
-                      placement="bottom-end"
-                      title="批量新增电话"
-                      width="500"
-                      trigger="click"
-                      v-model="batchAddTelVisible" v-if="caseDetail.currentuser">
-                      <div>
-                        <el-input
-                          type="textarea"
-                          :rows="4"
-                          placeholder="请按照'关系-姓名-电话'的格式输入,多个条目以/隔开"
-                          v-model="batchAddTelContent">
-                        </el-input>
-                      </div>
-                      <div style="text-align: right; margin-top: 12px">
-                        <el-button size="mini" type="text" @click="batchAddTelVisible = false">取消</el-button>
-                        <el-button type="primary" size="mini" @click="onClickBatchAddTel">确定</el-button>
-                      </div>
-                      <el-button type="primary" slot="reference">批量新增电话</el-button>
-                    </el-popover>
-                    <!-- <el-button type="primary">批量电催</el-button> -->
-                    <el-button type="primary" @click="_synchroSameTel" v-if="caseDetail.currentuser">同步共债</el-button>
+                <el-button type="primary" @click="addPhone" v-if="caseDetail.currentuser">新增电话</el-button>
+                <el-popover
+                  placement="bottom-end"
+                  title="批量新增电话"
+                  width="500"
+                  trigger="click"
+                  v-model="batchAddTelVisible" v-if="caseDetail.currentuser">
+                  <div>
+                    <el-input
+                      type="textarea"
+                      :rows="4"
+                      placeholder="请按照'关系-姓名-电话'的格式输入,多个条目以/隔开"
+                      v-model="batchAddTelContent">
+                    </el-input>
                   </div>
-                </div>
+                  <div style="text-align: right; margin-top: 12px">
+                    <el-button size="mini" type="text" @click="batchAddTelVisible = false">取消</el-button>
+                    <el-button type="primary" size="mini" @click="onClickBatchAddTel">确定</el-button>
+                  </div>
+                  <el-button type="primary" slot="reference">批量新增电话</el-button>
+                </el-popover>
+                <!-- <el-button type="primary">批量电催</el-button> -->
+                <el-button type="primary" @click="_synchroSameTel" v-if="caseDetail.currentuser">同步共债</el-button>
+              </div>
+          </div>
                 <el-table
                   @selection-change="onSelectPhoneRow"
                   border stripe
@@ -1267,10 +1267,15 @@
                 </el-table>
               </el-tab-pane>
               <el-tab-pane label="诉讼案件" name="12" class="tabs-wrap">
+                <div class="left-oper">
+                </div>
+                <div class="right-oper">
+                  <el-button type="primary"  @click="litigationApply" v-if="caseDetail.currentuser">申请诉讼</el-button>
+                </div>
                 <el-table
                   border stripe
                   :data="legalList"
-                  style="width: 100%"
+                  style="width: 100%;margin-top:5px;"
                   class="table-wrap">
                   <el-table-column
                     prop="legalStatusMsg"
@@ -1418,8 +1423,7 @@
         :action="action+'/reduce/save/import'"
         :headers="header"
         :show-file-list=false
-        :on-success="uploadSuccess"
-        :on-progress="onProgress"
+       
        
         >
         <el-button size="small" type="text" >上传</el-button>
@@ -1923,6 +1927,189 @@
     <el-button type="primary" @click="saveData">确 定</el-button>
   </span>
 </el-dialog>
+    <el-dialog
+      title="申请诉讼"
+      :visible.sync="ligigationVisible"
+      width="50%"
+      append-to-body>
+          <el-form :inline="true" :model="legalForm" class="demo-form-inline" label-width="120px;">
+                  <el-form-item label="姓名">
+                    <el-input v-model="legalForm.cstName" placeholder="请输入姓名"></el-input>
+                  </el-form-item>
+                  <el-form-item label="案件状态">
+                    <el-select v-model="legalForm.legalStatus" filterable  placeholder="请选择案件状态" clearable>
+                      <el-option
+                        v-for="item in legalStatusMsgList"
+                        :key="item.id"
+                        :label="item.name"
+                        :value="item.id">
+                      </el-option>
+                    </el-select>
+                  </el-form-item>
+                  <el-form-item label="证件号">
+                    <el-input v-model="legalForm.identNo" placeholder="请输入证件号"></el-input>
+                  </el-form-item>
+                  <el-form-item label="办案进度">
+                    <el-select v-model="legalForm.progress" filterable  placeholder="请选择案件进度" clearable>
+                      <el-option
+                        v-for="item in progressList"
+                        :key="item.id"
+                        :label="item.name"
+                        :value="item.id">
+                      </el-option>
+                    </el-select>
+                  </el-form-item>
+                  <el-form-item label="案件类型">
+                    <el-select v-model="legalForm.legalType" filterable  placeholder="请选择案件类型" clearable>
+                      <el-option
+                        v-for="item in caseStatusList"
+                        :key="item.id"
+                        :label="item.name"
+                        :value="item.id">
+                      </el-option>
+                    </el-select>
+                  </el-form-item>
+                  <el-form-item label="标的">
+                    <el-input v-model="legalForm.tital" placeholder="请输入标的"></el-input>
+                  </el-form-item>
+                  <el-form-item label="委托人">
+                    <el-input v-model="legalForm.clientele" placeholder="请输入委托人"></el-input>
+                  </el-form-item>
+                  <el-form-item label="所属人">
+                    <el-select v-model="legalForm.owner" filterable  placeholder="请选择所属人" clearable>
+                      <el-option
+                        v-for="item in PersonDataList"
+                        :key="item.id"
+                        :label="item.userName"
+                        :value="item.id">
+                      </el-option>
+                    </el-select>
+                  </el-form-item>
+                  <el-form-item label="被告人">
+                    <el-input v-model="legalForm.accused" placeholder="请输入被告人"></el-input>
+                  </el-form-item>
+                  <el-form-item label="代理律师">
+                    <el-input v-model="legalForm.agent" placeholder="请输入代理律师"></el-input>
+                  </el-form-item>
+                  <el-form-item label="律师联系方式">
+                    <el-input v-model="legalForm.agentTel" placeholder="请输入联系方式"></el-input>
+                  </el-form-item>
+                  <el-form-item label="费用">
+                    <el-input v-model="legalForm.cost" placeholder="请输入费用"></el-input>
+                  </el-form-item>
+                  <el-form-item label="委案日期">
+                    <div class="block">
+                      <el-date-picker
+                        v-model="legalForm.legalDate"
+                        type="date"
+                        value-format="yyyy-MM-dd"
+                        placeholder="选择日期">
+                      </el-date-picker>
+                    </div>
+                  </el-form-item>
+                  <el-form-item label="受案日期">
+                    <div class="block">
+                      <el-date-picker
+                        value-format="yyyy-MM-dd"
+                        v-model="legalForm.filingDat"
+                        type="date"
+                        placeholder="选择日期">
+                      </el-date-picker>
+                    </div>
+                  </el-form-item>
+                  <el-form-item label="受案法院">
+                    <el-input v-model="legalForm.court" placeholder="请输入法院"></el-input>
+                  </el-form-item>
+                  <el-form-item label="办案法官">
+                    <el-input v-model="legalForm.judge" placeholder="请输入办案法官"></el-input>
+                  </el-form-item>
+                  <el-form-item label="法官联系方式">
+                    <el-input v-model="legalForm.judgeTel" placeholder="请输入联系方式"></el-input>
+                  </el-form-item>
+                  <el-form-item label="案号">
+                    <el-input v-model="legalForm.legalNo" placeholder="请输入案号"></el-input>
+                  </el-form-item>
+                  <el-form-item label="首次开庭日期">
+                    <div class="block">
+                      <el-date-picker
+                        value-format="yyyy-MM-dd"
+                        v-model="legalForm.firstDate"
+                        type="date"
+                        placeholder="选择日期">
+                      </el-date-picker>
+                    </div>
+                  </el-form-item>
+                  <el-form-item label="判决日期">
+                    <div class="block">
+                      <el-date-picker
+                        value-format="yyyy-MM-dd"
+                        v-model="legalForm.judgeDate"
+                        type="date"
+                        placeholder="选择日期">
+                      </el-date-picker>
+                    </div>
+                  </el-form-item>
+                  <el-form-item label="申请执行案号">
+                    <el-input v-model="legalForm.exeNo" placeholder="请输入案号"></el-input>
+                  </el-form-item>
+                  <el-form-item label="申请执行日期">
+                    <div class="block">
+                      <el-date-picker
+                        value-format="yyyy-MM-dd"
+                        v-model="legalForm.exeDate"
+                        type="date"
+                        placeholder="选择日期">
+                      </el-date-picker>
+                    </div>
+                  </el-form-item>
+                  <el-form-item label="执行终结日期">
+                    <div class="block">
+                      <el-date-picker
+                        value-format="yyyy-MM-dd"
+                        v-model="legalForm.exeEndDate"
+                        type="date"
+                        placeholder="选择日期">
+                      </el-date-picker>
+                    </div>
+                  </el-form-item>
+                  <el-form-item label="诉讼缴费日期">
+                    <div class="block">
+                      <el-date-picker
+                        value-format="yyyy-MM-dd"
+                        v-model="legalForm.costDate"
+                        type="date"
+                        placeholder="选择日期">
+                      </el-date-picker>
+                    </div>
+                  </el-form-item>
+                  <el-form-item label="保全缴费日期">
+                    <div class="block">
+                      <el-date-picker
+                        value-format="yyyy-MM-dd"
+                        v-model="legalForm.preservationDate"
+                        type="date"
+                        placeholder="选择日期">
+                      </el-date-picker>
+                    </div>
+                  </el-form-item>
+                  <el-form-item label="保全资产清单" style="width: 90%;">
+                    <el-input type="textarea" style="width: 280%;" v-model="legalForm.preservationList"></el-input>
+                  </el-form-item>
+                  <el-form-item label="送达情况" style="width: 90%;">
+                    <el-input v-model="legalForm.arriveInfo" style="width: 280%;" placeholder="请输入送达情况"></el-input>
+                  </el-form-item>
+                  <el-form-item label="判决书"  style="width: 90%;">
+                    <el-input type="textarea"  style="width: 280%;"  v-model="legalForm.judgment"></el-input>
+                  </el-form-item>
+                  <el-form-item label="备注"  style="width: 90%;">
+                    <el-input type="textarea"  style="width: 280%;"  v-model="legalForm.remark"></el-input>
+                  </el-form-item>
+                  <span slot="footer" class="dialog-footer">
+                    <el-button @click="ligigationVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="saveLegal">确 定</el-button>
+                  </span>
+          </el-form>
+    </el-dialog>
   </div>
 </template>
 
@@ -1956,6 +2143,7 @@ import {getCaseDetail,
         getReduceApplyList,
         pageDataFile,
         getLegalList,
+        saveLegal,
         detailTelCurrentCollect,
         updateDataComment,
         delDataComment,
@@ -1997,6 +2185,7 @@ export default {
       letterVisible:false,
       letterVisible2:true,
     	formInline:{},
+      legalForm:{},
       PhonetypeList:[],
       syncMemorizeList:[],
       memorizeList:[],//催記
@@ -2010,6 +2199,7 @@ export default {
       activeNames: ['1','2','3','4','5'],
       otherActiveName:'1',
       caseDetail:{currentuser:true},
+      ligigationVisible:false,
       memorizeType:1,
       statusList:[{name:"有效",id:1,},{name:"无效",id:2,},{name:"未知",id:3,}],
       phoneSelectList: [],
@@ -2060,6 +2250,14 @@ export default {
           this.reduceApplyList = data.list
         })
   	},
+    saveLegal(){
+      saveLegal(this.id).then(data=>{
+        this.$message('申请成功')
+        getLegalList(this.id).then(data=>{
+          this.legalList = data.list
+        })
+      })
+    },
   	deteleData(id){
   		DeteleData(id).then((response)=>{
  this.$message('删除成功')    
@@ -2523,6 +2721,9 @@ AddtableList(this.id,this.messageForm).then((response)=>{
           this.commentAddColor = '黑'
         })
       })
+    },
+    litigationApply(){
+  	    this.ligigationVisible=true;
     },
     onClickBatchAddTel(){
       if(!this.batchAddTelContent){
