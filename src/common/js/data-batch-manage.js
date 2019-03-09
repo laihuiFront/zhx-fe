@@ -26,7 +26,7 @@ return download({
     url: '/dataBatch/totalDataBatchExport',
     method: 'post',
     data: {
-    	batchStatus: batchStatus ? batchStatus :"",
+    	batchStatus: batchStatus,
        area:area ? area : "",
        batchNos:batchNos,
        clients:clients,
@@ -44,7 +44,7 @@ return download({
     url: '/dataBatch/pageDataBatchExport',
     method: 'post',
     data: {
-    	batchStatus: batchStatus ? batchStatus :"",
+    	batchStatus: batchStatus,
        area:area ? area : "",
        batchNos:batchNos,
        clients:clients,
