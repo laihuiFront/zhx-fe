@@ -12,7 +12,7 @@
       <el-button type="primary" v-if="queryForm.recordStatus==='0'" @click="onClickBatchRevoke" v-has="'撤销还款'">撤销还款</el-button>
       <el-upload
         class="upload-demo upload-btn"
-        :action="action+'/repayRecord/recordImport'"
+        :action="action+'/repayRecord/import'"
         :headers="header"
         :show-file-list="false"
         :on-success="uploadSuccess"

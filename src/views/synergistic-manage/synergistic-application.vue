@@ -70,7 +70,7 @@
       style="width: 100%"
       class="table-wrap">
       <el-table-column type="selection" width="50"></el-table-column>
-      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="synergisticType" label="协催类型" show-overflow-tooltip></el-table-column>
+      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="synergisticType.name" label="协催类型" show-overflow-tooltip></el-table-column>
       <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.collectStatus" label="催收状态" show-overflow-tooltip></el-table-column>
       <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.seqNo" label="个案序列号" show-overflow-tooltip>
         <template slot-scope="scope">

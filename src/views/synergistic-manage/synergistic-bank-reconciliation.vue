@@ -11,7 +11,7 @@
       <el-button type="primary" v-if="queryForm.status==='0'" @click="onClickBatchCancelBankRecon" v-has="'作废'">作废待银行查账金额</el-button>
       <el-upload
         class="upload-demo upload-btn"
-        :action="action+'/bankReconciliation/cpImport'"
+        :action="action+'/bankReconciliation/import'"
         :headers="header"
         :show-file-list="false"
         :on-success="uploadSuccess"
@@ -184,7 +184,7 @@ export default {
       if (res.code ==100){
   		    this.$message({
             type: 'success',
-            message: res.msg
+            message: "导入成功"
           });
            this.onClickQuery()
       }else{

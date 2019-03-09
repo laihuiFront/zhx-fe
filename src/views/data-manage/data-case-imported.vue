@@ -123,7 +123,7 @@
       </el-upload>
       <el-upload
         class="upload-demo"
-        :action="action+'/dataCollect/import'"
+        :action="collectAction+'/dataCollect/import'"
         :headers="header"
         :show-file-list=false
         :on-success="uploadSuccess"
@@ -514,6 +514,7 @@ export default {
   data(){
     return {
     	action:baseURL+'/dataCase',
+      collectAction:baseURL,
     	ImportdialogVisible:false,
     	ImportMsg:'',
     	loading2:false,
