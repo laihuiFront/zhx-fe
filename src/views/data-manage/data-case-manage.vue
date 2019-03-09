@@ -1551,6 +1551,9 @@
       margin-right:-10px;
       line-height: 21px;
     }
+    .el-table__body-wrapper{
+      height: calc(100% - 74px);
+    }
     .el-dialog__header{
       background-color: #f8f8f8;
 
