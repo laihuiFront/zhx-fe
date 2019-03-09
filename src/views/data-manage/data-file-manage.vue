@@ -1,5 +1,9 @@
 <template>
-  <div id="data-file-manage" class="page-wraper-sub">
+  <div id="data-file-manage" class="page-wraper-sub"
+  	v-loading="loading2"
+    element-loading-text="正在导入中"
+    element-loading-spinner="el-icon-loading"
+   element-loading-background="rgba(248, 248, 248, 0.8)">
     <el-form ref="form" :model="form" :inline="true" class="query-wrap">
       <el-form-item >
      <el-input v-model="form.identNo" placeholder="请输入证件号" clearable></el-input>
@@ -36,8 +40,9 @@
   :action="action+'/dataArchive/import'"
   :headers="header"
   :show-file-list=false
-  :on-success="uploadSuccess"
   style="display:inline-block;margin-right:5px;"
+  :on-success="uploadSuccess"
+  :on-progress="onProgress"
   >
   <el-button size="small" type="primary" v-has="'导入'" >导入</el-button>
 </el-upload> 
@@ -389,9 +394,22 @@
 
   </span>
     </el-dialog>
+    <el-dialog
+  class="dialog-wrap"
+  title="提示"
+  :visible.sync="ImportdialogVisible"
+  width="30%"
+  :before-close="handleClose"
+  >
+  <span>{{ImportMsg}}</span>
+  <span slot="footer" class="footer">
+    <el-button type="primary" @click=ImportdialogVisibleWay >确 定</el-button>
+  </span>
+</el-dialog>
   </div>
 
-    </div>
+
+    
 </template>
 
 <script>
@@ -402,6 +420,9 @@ export default {
   name: 'dataFileManage',
    data(){
     return {
+    	ImportMsg:'',
+    	ImportdialogVisible:false,
+    	loading2:false,
       action:baseURL,
     	deleteList:[],
       dialogVisible:false,
@@ -445,24 +466,41 @@ export default {
     }
   },
   methods: {
+  	ImportdialogVisibleWay(){
+		this.loading2=false
+		this.ImportdialogVisible=false
+	},
+  	handleClose(){
+  			this.loading2=false
+		this.ImportdialogVisible=false
+  	},
+  	onProgress(){
+		this.loading2=true
+	},
   	showMessage(row){
   		console.log(row)
   		this.dialogVisible3=true
   		this.dynamicValidateForm2=row
   	},
-  	uploadSuccess(){
-  		this.$message({
+
+  	
+  		uploadSuccess(res,file,fileList){
+      if (res.code ==100){
+  		    this.$message({
             type: 'success',
-            message: '导入成功!'
+            message: "导入成功"
           });
            dataList().then((response)=>{
             this.DataList=response.list
               //this.pages = response.pages
               this.total = response.total
-})    
+              this.loading2=false
+          })
+      }else{
+        this.ImportdialogVisible=true
+        this.ImportMsg= res.msg
+      }
   	},
-  	
-  	
   	removeDomainAddress(item) {
         var index = this.dynamicValidateForm.addressList.indexOf(item)
         if (index !== -1) {
