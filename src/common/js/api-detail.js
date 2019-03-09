@@ -348,3 +348,19 @@ export function AddtableList(id,form){
   })
 }
 
+export function saveArchive(data){
+  return request({
+    url: 'detai/archive/save',
+    method: 'post',
+    data
+  })
+}
+
+export function getHistoryAddrList(caseId){
+  return request({
+    url: 'dataLog/listDataAddressLog',
+    method: 'post',
+    data:{caseId}
+  })
+}
+

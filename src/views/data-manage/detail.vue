@@ -691,7 +691,7 @@
                     <el-button @click="changeAddrStatus('有效')" v-if="caseDetail.currentuser">标记为有效</el-button>
                     <el-button @click="changeAddrStatus('未知')" v-if="caseDetail.currentuser">标记为未知</el-button>
                     <el-button @click="changeAddrStatus('无效')" v-if="caseDetail.currentuser">标记为无效</el-button>
-                    <el-button @click="saveAddr">显示全部地址</el-button>
+                    <!-- <el-button @click="saveAddr">显示全部地址</el-button> -->
                     <el-button @click="showLetterList">查看信函记录</el-button>
                   </div>
                   <div class="right-oper">
@@ -747,8 +747,24 @@
                   <el-table-column
                     label="操作"
                     v-if="letterVisible2"
-                    width="150">
+                    width="200">
                     <template slot-scope="scope">
+                      <el-popover
+                        v-model="scope.row.showHistory"
+                        placement="top"
+                        width="600"
+                        trigger="manual">
+                        <el-table :data="scope.row.history" height="300">
+                          <el-table-column show-overflow-tooltip  property="opTime" label="操作时间"></el-table-column>
+                          <el-table-column  show-overflow-tooltip property="type" label="分类"></el-table-column>
+                          <el-table-column show-overflow-tooltip  property="context" label="操作内容"></el-table-column>
+                          <el-table-column show-overflow-tooltip  property="operName" label="操作人"></el-table-column>
+                        </el-table>
+                        <div style="text-align:center">
+                          <el-button type="primary" @click="$set(scope.row, 'showHistory',false)">关闭</el-button>
+                        </div>
+                        <el-button slot="reference" type="text" @click="showHistoryAddr(scope.row)">历史记录</el-button>
+                      </el-popover>
                       <el-button type="text" @click="applyLetter(scope.row)" v-if="caseDetail.currentuser">申请信函</el-button>
                       <el-button type="text" @click="editAddr(scope.row)" v-if="caseDetail.currentuser">编辑</el-button>
                       <el-button type="text" @click="deleteAddr(scope.row.id)" v-if="caseDetail.currentuser">删除</el-button>
@@ -818,6 +834,13 @@
                 </el-table>
               </el-tab-pane>
               <el-tab-pane label="案人数据" name="3" class="tabs-wrap">
+                <div class="operation"  v-if="letterVisible2">
+                  <div class="left-oper">
+                  </div>
+                  <div class="right-oper">
+                    <el-button type="primary" @click="onClickAddArchive" v-if="caseDetail.currentuser">新增案人数据</el-button>
+                  </div>
+                </div>
                 <el-table
                   :data="dataList"
                   border stripe
@@ -1591,7 +1614,7 @@
           <el-input v-model="addressInfo.relation" placeholder="请输入关系"></el-input>
         </el-form-item>
         <el-form-item label="地址" class="whole">
-          <el-input v-model="addressInfo.address" placeholder="请输入关系"></el-input>
+          <el-input v-model="addressInfo.address" placeholder="请输入地址"></el-input>
         </el-form-item>
         <el-form-item label="类型">
           <el-select v-model="addressInfo.type" placeholder="请选择分类" clearable>
@@ -1619,6 +1642,35 @@
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogAddrVisible = false">取 消</el-button>
         <el-button type="primary" @click="saveAddr">确 定</el-button>
+      </span>
+    </el-dialog>
+    <el-dialog
+      title="新建案人数据"
+      :visible.sync="dialogArchiveVisible"
+      width="45%"
+      append-to-body
+      class="addr-dialog-wrap"
+      >
+      <el-form :inline="true" :model="archiveInfo" class="address-form" label-width="100px">
+        <el-form-item label="证件号" class="whole">
+          <el-input v-model="archiveInfo.identNo" placeholder="请输入证件号"></el-input>
+        </el-form-item>
+        <el-form-item label="姓名">
+          <el-input v-model="archiveInfo.name" placeholder="请输入姓名"></el-input>
+        </el-form-item>
+        <el-form-item label="信息类型" >
+          <el-input v-model="archiveInfo.msgType" placeholder="请输入信息类型"></el-input>
+        </el-form-item>
+        <el-form-item label="信息内容" class="whole">
+          <el-input type="textarea" :row='4' v-model="archiveInfo.msgContext"></el-input>
+        </el-form-item>
+        <el-form-item label="备注" class="whole">
+          <el-input type="textarea" :row='4' v-model="archiveInfo.remark"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogArchiveVisible = false">取 消</el-button>
+        <el-button type="primary" @click="_saveArchive">确 定</el-button>
       </span>
     </el-dialog>
     <el-dialog
@@ -1863,7 +1915,9 @@ import {getCaseDetail,
         updateDataComment,
         delDataComment,
         AddtableList,
-        DeteleData
+        DeteleData,
+        saveArchive,
+        getHistoryAddrList
         } from '@/common/js/api-detail'
 import {getEnum} from '@/common/js/api-sync'
 	  import {baseURL} from '@/common/js/request.js';
@@ -1935,7 +1989,9 @@ export default {
       header:{Authorization:localStorage.token},
       legalList:[],
       currentRow:{},
-      	header:{Authorization:localStorage.token},
+        header:{Authorization:localStorage.token},
+        archiveInfo:{},
+        dialogArchiveVisible:false
     }
   },
   methods: {
@@ -1967,13 +2023,20 @@ AddtableList(this.id,this.messageForm).then((response)=>{
           this.reduceApplyList = data.list
         })
 })
-  	},
+    },
+    showHistoryAddr(row){
+      this.$set(row, 'showHistory', true)
+      getHistoryAddrList(row.id).then((data)=>{
+        this.$set(row, 'history', data)
+      })
+    },
     showHistoryTel(row){
       this.$set(row, 'historyType', 1)
       this.$set(row, 'showHistory', true)
       this.currentRow = row
       this.getHistoryTel(1)
     },
+    
     getHistoryTel(val){
       detailTelCurrentCollect({
         caseId: this.id,
@@ -2009,7 +2072,7 @@ AddtableList(this.id,this.messageForm).then((response)=>{
     },
     syncTypeChange(val){
       getSynergyDetail(this.id).then(data => {
-        this.syncList = data
+        this.syncList = data.list
       })
     },
     memorizeTypeChange(val){
@@ -2209,6 +2272,21 @@ AddtableList(this.id,this.messageForm).then((response)=>{
           this.$message('地址状态修改成功')
         })
       }).catch(()=>{})
+    },
+    onClickAddArchive(){
+      this.archiveInfo = {}
+  		this.dialogArchiveVisible=true
+    },
+    _saveArchive(){
+      let result = this.archiveInfo
+      result.caseId = this.id
+      saveArchive(result).then(res=>{
+        this.$message('新增案人数据成功')
+        getArchiveDetail(this.id).then(data => {
+          this.dataList = data
+        })
+        this.dialogArchiveVisible = false
+      })
     },
     showAllTel(){
       getTelList(this.id).then(data=>{
@@ -2420,7 +2498,7 @@ AddtableList(this.id,this.messageForm).then((response)=>{
       }else if (ind == '协催'){//协催
         this.syncType = 1
         getSynergyDetail(this.id).then(data => {
-          this.syncList = data
+          this.syncList = data.list
         })
       }else if(ind == '共债案件'){//共债案件
         sameCaseList(this.id).then(data=>{

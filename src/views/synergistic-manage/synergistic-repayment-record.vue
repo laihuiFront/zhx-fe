@@ -55,12 +55,12 @@
       </el-table-column>
       <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.client" label="委托方" show-overflow-tooltip></el-table-column>
       <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.overdueBillTime" label="账龄" show-overflow-tooltip></el-table-column>
-      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.money" label="委案金额" show-overflow-tooltip></el-table-column>
-      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="bankReconciliation.cpMoney" label="待银行查账金额" show-overflow-tooltip></el-table-column>
+      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.moneyMsg" label="委案金额" show-overflow-tooltip></el-table-column>
+      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="bankReconciliation.cpMoneyMsg" label="待银行查账金额" show-overflow-tooltip></el-table-column>
       <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="bankReconciliation.cpDate" label="待银行查账日期" show-overflow-tooltip></el-table-column>
       <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="collectUser.name" label="回收催收员" show-overflow-tooltip></el-table-column>
-      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="repayMoney" label="还款金额" show-overflow-tooltip></el-table-column>
-      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.overdueBalance" label="余额" show-overflow-tooltip></el-table-column>
+      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="repayMoneyMsg" label="还款金额" show-overflow-tooltip></el-table-column>
+      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.overdueBalanceMsg" label="余额" show-overflow-tooltip></el-table-column>
       <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="repayDate" label="还款日期" show-overflow-tooltip></el-table-column>
       <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="repayUser" label="还款人" show-overflow-tooltip></el-table-column>
       <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="repayType" label="还款方式" show-overflow-tooltip></el-table-column>
