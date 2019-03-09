@@ -5,6 +5,7 @@
     :action="action"
     :headers="headers"
     :show-file-list="false"
+    :on-success="fileStatu"
     accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.xls,.xlsx"
     :multiple="false">
     <el-button class="daoru" type="primary" v-has="'导入信函记录'">导入信函记录</el-button>
@@ -276,6 +277,17 @@
         <el-tab-pane label="待发信函" name="tab2"> <tab2></tab2> </el-tab-pane>
       </el-tabs>
     </div>
+  <el-dialog
+    class="dialog-wrap"
+    title="提示"
+    :visible.sync="ImportdialogVisible"
+    width="30%"
+  >
+    <span>{{ImportMsg}}</span>
+    <span slot="footer" class="footer">
+      <el-button type="primary" @click="ImportdialogVisible=false;">确 定</el-button>
+    </span>
+  </el-dialog>
   </div>
 </template>
 
@@ -306,6 +318,8 @@ export default {
   },
   data() {
     return {
+      ImportdialogVisible:false,
+      ImportMsg: '',
       paginationData: {
         pageSize: 100,
         total: 0,
@@ -497,6 +511,23 @@ export default {
     this.init();
   },
   methods: {
+    fileStatu(res){
+      if (res.code ==100){
+        this.$message({
+          type: 'success',
+          message: "导入成功"
+        });
+        this.getMainData();
+      }else if(res.code ==800){
+        this.ImportdialogVisible=true;
+        this.ImportMsg= res.msg;
+      }else{
+        this.$message({
+          type: 'error',
+          message: res.msg
+        });
+      }
+    },
     showCase(row) {
       let id = row.caseId
       let name = row.name

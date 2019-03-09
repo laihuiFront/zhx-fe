@@ -194,6 +194,8 @@
                 :show-file-list="false"
                 accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.xls,.xlsx"
                 :multiple="false"
+
+                :on-success="fileStatu"
               >
                 <el-button class="daoru" type="primary" v-has="'导入信函记录'">导入信函记录</el-button>
               </el-upload>
@@ -307,6 +309,8 @@ export default {
   },
   data() {
     return {
+      ImportdialogVisible:false,
+      ImportMsg: '',
       paginationData: {
         pageSize: 10,
         total: 0,
@@ -499,7 +503,23 @@ export default {
     this.init();
   },
   methods: {
-
+    fileStatu(res){
+      if (res.code ==100){
+        this.$message({
+          type: 'success',
+          message: "导入成功"
+        });
+        this.getMainData();
+      }else if(res.code ==800){
+        this.ImportdialogVisible=true;
+        this.ImportMsg= res.msg;
+      }else{
+        this.$message({
+          type: 'error',
+          message: res.msg
+        });
+      }
+    },
     exportXh(command) {
       dcxh({ id: command });
     },

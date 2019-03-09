@@ -35,6 +35,7 @@ export default {
     height: 35px;
   }
   .page-wrap{
+    position: relative;
   	overflow-x:hidden;
   	overflow-y:auto;
     flex:1;
