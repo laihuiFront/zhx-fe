@@ -5,7 +5,7 @@ return request({
     url: '/dataBatch/pageDataCase',
     method: 'post',
     data: {
-    	batchStatus: batchStatus ? batchStatus :"",
+    	batchStatus: batchStatus ? batchStatus :0,
        area:area ? area : "",
        batchNos:batchNos,
        clients:clients,

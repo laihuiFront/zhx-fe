@@ -549,6 +549,7 @@ methods: {
 	search(){
       	let startTime=this.form.time[0]
       	let endTime=this.form.time[1]
+    console.info("***"+this.form.batchStatus)
 dataList(this.form.area,this.form.batchNos,this.form.clients,this.form.batchStatus,this.form.caseType,startTime,endTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
 
             this.DataList=response.pageInfo.list
