@@ -720,7 +720,7 @@ export default {
     	dataList:[],
     	 currentPage4: 1,
         pages:100,
-        total:100,
+        total:0,
     	formInline:{
     		time1:[],
     		time2:[],
@@ -757,6 +757,7 @@ export default {
           dataList(this.formInline,this.applyStatus,this.sort,this.orderBy,this.currentPage4,this.pageSize).then((response)=>{
           	this.tableData3=response.list
           	this.formInline={	time1:[],time2:[],time3:[]}
+            this.total = response.total
           })
           }) 
  	},
@@ -778,6 +779,7 @@ pageDataBatchExport(this.formInline,this.applyStatus,this.sort,this.orderBy,this
           dataList(this.formInline,this.applyStatus,this.sort,this.orderBy,this.currentPage4,this.pageSize).then((response)=>{
           	this.tableData3=response.list
           	this.formInline={	time1:[],time2:[],time3:[]}
+            this.total = response.total
           })
           })    
  		}else{
@@ -843,6 +845,7 @@ this.search()
           dataList(this.formInline,this.applyStatus,this.sort,this.orderBy,this.currentPage4,this.pageSize).then((response)=>{
           	this.tableData3=response.list
           	this.formInline={	time1:[],time2:[],time3:[]}
+            this.total = response.total
           })
           })    
  		}else{
@@ -862,6 +865,7 @@ this.search()
           dataList(this.formInline,this.applyStatus,this.sort,this.orderBy,this.currentPage4,this.pageSize).then((response)=>{
           	this.tableData3=response.list
           	this.formInline={	time1:[],time2:[],time3:[]}
+            this.total = response.total
           })
           })    
  		}else{
@@ -876,6 +880,7 @@ this.search()
  		  dataList(this.formInline,this.applyStatus,this.sort,this.orderBy,this.currentPage4,this.pageSize).then((response)=>{
           	this.tableData3=response.list
           	this.formInline={	time1:[],time2:[],time3:[]}
+            this.total = response.total
           
           })
  	},
@@ -889,6 +894,7 @@ this.search()
            dataList(this.formInline,this.applyStatus,this.sort,this.orderBy,this.currentPage4,this.pageSize).then((response)=>{
           	this.tableData3=response.list
           	this.formInline={	time1:[],time2:[],time3:[]}
+             this.total = response.total
           })
           })    
  	},
@@ -904,6 +910,7 @@ this.search()
           dataList(this.formInline,this.applyStatus,this.sort,this.orderBy,this.currentPage4,this.pageSize).then((response)=>{
           	this.tableData3=response.list
           	this.formInline={	time1:[],time2:[],time3:[]}
+            this.total = response.total
           })
           })     
           } else {
@@ -966,6 +973,7 @@ this.search()
               dataList(this.formInline,this.applyStatus,this.sort,this.orderBy,this.currentPage4,this.pageSize).then((response)=>{
           	this.tableData3=response.list
           	this.formInline={	time1:[],time2:[],time3:[]}
+          	this.total = response.total
           })
                collectStatusList().then((response)=>{
                 this.collectStatusList=response
