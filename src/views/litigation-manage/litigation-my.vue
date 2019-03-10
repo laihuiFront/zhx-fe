@@ -218,7 +218,7 @@
     <el-option
       v-for="item in PersonDataList"
       :key="item.id"
-      :label="item.name"
+      :label="item.userName"
       :value="item.id">
     </el-option>
      </el-select>
@@ -666,7 +666,7 @@
     <el-option
       v-for="item in PersonDataList"
       :key="item.id"
-      :label="item.name"
+      :label="item.userName"
       :value="item.id">
     </el-option>
      </el-select>

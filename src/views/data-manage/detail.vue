@@ -2253,8 +2253,12 @@
       append-to-body
       class="addr-dialog-wrap"
     >
-      <el-form :inline="true" :model="synergyInfo" class="address-form" label-width="80px">
-        <el-form-item label="协催类型">
+      <el-form :inline="true" :model="synergyInfo" ref="synergyInfo"  class="address-form" label-width="80px">
+        <el-form-item label="协催类型"
+        	prop="synergisticType"
+ 		:rules="{
+     required: true, message: '请选择', trigger: 'change' 
+    }">
           <el-select v-model="synergyInfo.synergisticType" placeholder="请选择协催类型" clearable style="width:70%">
             <el-option
               v-for="item in synergyTypeList"
@@ -2264,8 +2268,19 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="协催人">
-          <el-input v-model="synergyInfo.synergisticUser" ></el-input>
+        <el-form-item label="协催人"
+        prop="synergisticUser"
+ 		:rules="{
+     required: true, message: '请选择', trigger: 'change' 
+    }">
+        	<el-select v-model="synergyInfo.synergisticUser" filterable placeholder="请选择协催类型" clearable style="width:70%">
+            <el-option
+              v-for="item in PersonDataList"
+              :key="item.id"
+              :label="item.userName"
+              :value="item.id">
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="协催结果" class="whole">
           <el-input type="textarea" :rows="7" v-model="synergyInfo.synergisticResult" ></el-input>
@@ -2273,7 +2288,7 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogSyergyResultVisible = false">取 消</el-button>
-        <el-button type="primary" @click="saveSynergyResult">确 定</el-button>
+        <el-button type="primary" @click="saveSynergyResult('synergyInfo')">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -2282,6 +2297,7 @@
 <script>
 import {mapGetters} from 'vuex'
 import {getCaseDetail,
+	
         getSameBatchCollect,
         getAddressDetail,
         getLetterList,
@@ -2322,7 +2338,7 @@ import {getCaseDetail,
         saveArchive,
         getHistoryAddrList,
         expDataCollect,
-        saveDataCollectDetail
+        saveDataCollectDetail,
         } from '@/common/js/api-detail'
 import {getEnum} from '@/common/js/api-sync'
 	  import {baseURL} from '@/common/js/request.js';
@@ -2434,16 +2450,41 @@ export default {
       })
 
     },
-    saveSynergyResult(){
-      this.synergyInfo.caseId = this.id
+     saveSynergyResult(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.synergyInfo.caseId = this.id
       saveResult(this.synergyInfo).then(data=>{
         this.dialogSyergyResultVisible = false;
         getSynergyDetail(this.id).then(data => {
           this.syncList = data.list
         })
       })
-
-    },
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
+//  saveSynergyResult(formName){
+//  	
+//  	this.$refs[formName].validate((valid) => {
+//        if (valid) {
+//       this.synergyInfo.caseId = this.id
+//    saveResult(this.synergyInfo).then(data=>{
+//      this.dialogSyergyResultVisible = false;
+//      getSynergyDetail(this.id).then(data => {
+//        this.syncList = data.list
+//      })
+//    })
+//        } else {
+//          console.log('error submit!!');
+//          return false;
+//        }
+//      });
+//   
+//
+//  },
     _expDataCollect(){
       expDataCollect([{id:this.id}]).then(()=>{
         this.$message('导出成功')
@@ -3069,6 +3110,9 @@ AddtableList(this.id,this.messageForm).then((response)=>{
   created() {
   	this.queryDetail()
     this.batchForm = {sType:0}
+     PersonList().then((response)=>{
+          this.PersonDataList=response
+        })
   }
 }
 </script>
