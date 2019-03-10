@@ -1120,6 +1120,10 @@
                       <el-radio :label="5">已撤销</el-radio>
                     </el-radio-group>
                   </div>
+                  <div class="right-oper">
+                    <el-button type="primary" @click="showSynergyApply" v-if="caseDetail.currentuser">添加协催申请</el-button>
+                    <el-button type="primary" @click="showSynergyResult" v-if="caseDetail.currentuser">添加协催记录</el-button>
+                  </div>
                 </div>
                 <el-table
                   :data="syncList"
@@ -1133,7 +1137,7 @@
                     label="状态">
                   </el-table-column>
                   <el-table-column
-                    prop="synergisticType,"
+                    prop="synergisticType.name"
                     show-overflow-tooltip
                     label="协催类型">
                   </el-table-column>
@@ -2213,6 +2217,65 @@
                     <el-button type="primary" @click="saveLegal">确 定</el-button>
                   </span>
     </el-dialog>
+
+    <el-dialog
+      title="申请协催(带*为必填字段)"
+      :visible.sync="dialogSyergyAplVisible"
+      width="30%"
+      append-to-body
+      class="addr-dialog-wrap"
+    >
+      <el-form :inline="true" :model="synergyInfo" class="address-form" label-width="80px">
+        <el-form-item label="协催类型" class="whole">
+          <el-select v-model="synergyInfo.synergisticType" placeholder="请选择协催类型" clearable style="width:70%">
+            <el-option
+              v-for="item in synergyTypeList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="申请内容" class="whole">
+          <el-input type="textarea" :rows="7" v-model="synergyInfo.applyContent" style="width:100%"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogSyergyAplVisible = false">取 消</el-button>
+        <el-button type="primary" @click="saveSynergyApply">确 定</el-button>
+      </span>
+    </el-dialog>
+
+    <el-dialog
+      title="添加协催记录(带*为必填字段)"
+      :visible.sync="dialogSyergyResultVisible"
+      width="35%"
+      append-to-body
+      class="addr-dialog-wrap"
+    >
+      <el-form :inline="true" :model="synergyInfo" class="address-form" label-width="80px">
+        <el-form-item label="协催类型">
+          <el-select v-model="synergyInfo.synergisticType" placeholder="请选择协催类型" clearable style="width:70%">
+            <el-option
+              v-for="item in synergyTypeList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="协催人">
+          <el-input v-model="synergyInfo.synergisticUser" ></el-input>
+        </el-form-item>
+        <el-form-item label="协催结果" class="whole">
+          <el-input type="textarea" :rows="7" v-model="synergyInfo.synergisticResult" ></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogSyergyResultVisible = false">取 消</el-button>
+        <el-button type="primary" @click="saveSynergyResult">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -2245,8 +2308,11 @@ import {getCaseDetail,
         addLetter,
         getReduceApplyList,
         pageDataFile,
+        getSynergyTypeList,
         getLegalList,
         saveLegal,
+        saveApply,
+        saveResult,
         detailTelCurrentCollect,
         updateDataComment,
         delDataComment,
@@ -2288,8 +2354,11 @@ export default {
       dialogVisible:false,
       letterVisible:false,
       letterVisible2:true,
+      dialogSyergyAplVisible:false,
+      dialogSyergyResultVisible:false,
     	formInline:{},
       legalForm:{},
+      synergyTypeList:[],
       PhonetypeList:[],
       syncMemorizeList:[],
       memorizeList:[],//催記
@@ -2321,6 +2390,7 @@ export default {
       batchAddTelContent: null,
       dialogAddrVisible: false,
       addressInfo:{},
+      synergyInfo:{},
       addrSelectList:[],
       logType:'',
       logList:[],
@@ -2342,6 +2412,38 @@ export default {
     }
   },
   methods: {
+    showSynergyApply(){
+      getSynergyTypeList().then(data => {
+        this.synergyTypeList = data
+      })
+      this.dialogSyergyAplVisible = true;
+    },
+    showSynergyResult(){
+      getSynergyTypeList().then(data => {
+        this.synergyTypeList = data
+      })
+      this.dialogSyergyResultVisible = true;
+    },
+    saveSynergyApply(){
+      this.synergyInfo.caseId = this.id
+      saveApply(this.synergyInfo).then(data=>{
+        this.dialogSyergyAplVisible = false;
+        getSynergyDetail(this.id).then(data => {
+          this.syncList = data.list
+        })
+      })
+
+    },
+    saveSynergyResult(){
+      this.synergyInfo.caseId = this.id
+      saveResult(this.synergyInfo).then(data=>{
+        this.dialogSyergyResultVisible = false;
+        getSynergyDetail(this.id).then(data => {
+          this.syncList = data.list
+        })
+      })
+
+    },
     _expDataCollect(){
       expDataCollect([{id:this.id}]).then(()=>{
         this.$message('导出成功')

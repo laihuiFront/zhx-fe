@@ -597,7 +597,7 @@ export default {
         {
           prop: "caseAllotTime",
           width:140,
-          label: "案件分配日期"
+          label: "案件分配时间"
         },
         {
           prop: "collectStatusMsg",

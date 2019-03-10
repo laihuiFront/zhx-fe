@@ -316,6 +316,14 @@ export function getLegalList(caseId){
   })
 }
 
+export const getSynergyTypeList = function() {
+  return request({
+    url: '/sys/dictionary/select/list/name',
+    method: 'post',
+    data:{name:"协催类型"}
+  })
+}
+
 export function detailTelCurrentCollect(data){
   return request({
     url: 'dataCollect/tel/detailTelCurentCollect',
@@ -393,5 +401,23 @@ export const PersonList = function() {
     url: '/user/select/roleList',
     method: 'post',
     data:{role:"催收员"}
+  })
+}
+
+
+export function saveApply(data){
+  return request({
+    url: '/synergistic/saveApply',
+    method: 'post',
+    data
+  })
+}
+
+
+export function saveResult(data){
+  return request({
+    url: '/synergistic/saveResult',
+    method: 'post',
+    data
   })
 }
