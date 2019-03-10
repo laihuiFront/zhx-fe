@@ -174,7 +174,7 @@
       prop="countResult"
      >
      <template slot-scope="scope">
-        <el-button type="text" size="small" >{{scope.row.countResult}}</el-button>
+        <el-button type="text" size="small"  @click="showMessage(scope)">{{scope.row.countResult}}</el-button>
       </template>
     </el-table-column>
   </el-table>
