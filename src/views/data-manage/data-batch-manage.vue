@@ -268,7 +268,7 @@
   	<el-form-item label="批  次  号"	
   			prop="batchNo"
         :rules="{ required: true, message: '批次号不能为空', trigger: 'blur'}">
-    <el-input v-model="messageForm.batchNo" placeholder="请输入批次号" clearable></el-input>
+    <el-input v-model="messageForm.batchNo" :disabled=true placeholder="请输入批次号" clearable></el-input>
   </el-form-item>
   </div>
   </el-col>
@@ -422,8 +422,8 @@ export default {
   },
 methods: {
   exportCollect(row){
-        var arr = [{"id":row.id}];
-    selectDataBatchExport(arr).then((response)=>{
+        var arr = [{"batchNo":row.batchNo}];
+    selectDataCollectExportByBatch(arr).then((response)=>{
       this.loading=false;
       this.$message({
         type: 'success',
