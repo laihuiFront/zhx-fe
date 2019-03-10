@@ -237,7 +237,7 @@
         class="table-wrap"
         ref="multipleTable"
         :data="tableData3"
-        style="width: 100%;"
+        style="width: 150%;"
         border
          stripe
           tooltip-effect="dark"
@@ -351,7 +351,7 @@
         <el-table-column
           prop="reduceUpdateTime"
           align="center"
-            width="140"
+            width="160"
           label="减免状态更新时间"
           sortable="custom"
           :sort-orders="['ascending','descending']"

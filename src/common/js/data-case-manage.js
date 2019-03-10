@@ -1,6 +1,6 @@
 import request from '@/common/js/request'
 import download from '@/common/js/download'
-export const dataList = function(form,pageSize,pageNum) {
+export const dataList = function(form,orderBy,sort,pageSize,pageNum) {
   return request({
     url: '/dataCase/pageCaseList',
     method: 'post',
@@ -42,15 +42,15 @@ export const dataList = function(form,pageSize,pageNum) {
       collectEndDate:form.time5==null?"":form.time5[1] ,
       expectStartTime:form.time3==null?"":form.time3[0] ,//预退案时间
       expectEndTime:form.time3==null?"":form.time3[1],
-      orderBy:form.orderBy,
-      sort:form.sort,
+      orderBy:orderBy,
+      sort:sort,
       batchBonds:form.batchBonds,
       pageNum :pageNum,
       pageSize :pageSize,
     }
   })
 }
-export const searchList =  function(form,pageSize,pageNum) {
+export const searchList =  function(form,orderBy,sort,pageSize,pageNum) {
   return request({
     url: '/dataCase/pageCaseList',
     method: 'post',
@@ -92,8 +92,8 @@ export const searchList =  function(form,pageSize,pageNum) {
       collectEndDate:form.time5==null?"":form.time5[1] ,
       expectStartTime:form.time3==null?"":form.time3[0] ,//预退案时间
       expectEndTime:form.time3==null?"":form.time3[1],
-      orderBy:form.orderBy,
-      sort:form.sort,
+      orderBy:orderBy,
+      sort:sort,
         batchBonds:form.batchBonds,
       pageNum :pageNum,
       pageSize :pageSize,
@@ -452,5 +452,12 @@ export const pageDataExport = function(form) {
       orderBy:form.orderBy,
       sort:form.sort,
     }
+  })
+}
+export const getSynergyTypeList = function() {
+  return request({
+    url: '/sys/dictionary/select/list/name',
+    method: 'post',
+    data:{name:"协催类型"}
   })
 }
