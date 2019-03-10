@@ -558,6 +558,7 @@
         sortable="custom"
         :sort-orders="['ascending','descending']"
         label="催收员"
+        min-width="140"
         align="center"
         show-overflow-tooltip>
       </el-table-column>
@@ -834,7 +835,7 @@
         	<el-form-item label="协催类型">
             <el-select v-model="addSynergyForm.Synergytype" placeholder="请选择协催类型" clearable>
               <el-option
-                v-for="item in addSynergyForm.List"
+                v-for="item in addSynergyFormList"
                 :key="item.id"
                 :label="item.name"
                 :value="item.name">

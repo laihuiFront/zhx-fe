@@ -123,7 +123,7 @@
       </el-upload>
       <el-upload
         class="upload-demo"
-        :action="action+'/dataCollect/import'"
+        :action="collectAction+'/dataCollect/import'"
         :headers="header"
         :show-file-list=false
         :on-success="uploadSuccess"
@@ -167,9 +167,6 @@
       label="批次状态"
       :sort-orders="['ascending','descending']"
       show-overflow-tooltip>
-      <template slot-scope="scope">
-       {{scope.row.batchStatus==0?"未导入":scope.row.batchStatus==1?"未退案":"已退案"}}
-      </template>
     </el-table-column>
     <el-table-column
       sortable="custom"
@@ -514,6 +511,7 @@ export default {
   data(){
     return {
     	action:baseURL+'/dataCase',
+      collectAction:baseURL,
     	ImportdialogVisible:false,
     	ImportMsg:'',
     	loading2:false,
