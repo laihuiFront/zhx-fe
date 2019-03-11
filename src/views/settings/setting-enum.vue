@@ -90,6 +90,23 @@
             <span v-else>{{scope.row.description}}</span>
           </template>
         </el-table-column>
+        <el-table-column v-if="currentEnum.name==='催收结果'" prop="sysFlag" label="是否有效">
+          <template slot-scope="scope">
+            <el-switch
+              v-if="scope.row.editType==='edit' || scope.row.editType==='add'"
+              v-model="scope.row.tempSysFlag"
+              :active-value="1"
+              :inactive-value="0"
+            ></el-switch>
+            <el-switch
+              v-else
+              :disabled="true"
+              v-model="scope.row.sysFlag"
+              :active-value="1"
+              :inactive-value="0"
+            ></el-switch>
+          </template>
+        </el-table-column>
         <el-table-column prop="status" label="启用">
           <template slot-scope="scope">
             <el-switch
@@ -213,6 +230,7 @@ export default {
             id: item.id,
             name: item.tempName,
             status: item.tempStatus,
+            sysFlag:item.tempSysFlag,
             description: item.tempDescription,
             parent: {
               id: this.currentEnum.id
@@ -229,6 +247,7 @@ export default {
       this.$set(row, 'tempName', row.name)
       this.$set(row, 'tempDescription', row.description)
       this.$set(row, 'tempStatus', row.status)
+      this.$set(row, 'tempSysFlag', row.sysFlag)
       this.$set(row, 'editType', 'edit')
     },
     onClickCancel (row, index) {
