@@ -29,6 +29,7 @@
       </el-form>
   	
   <el-table
+    v-loading="tableLoad"
     class="table-wrap"
     :data="DataList"
     border
@@ -490,6 +491,7 @@
       </el-form>
   	
   <el-table
+    v-loading="tableLoad"
     class="table-wrap"
     :data="DataList2"
     border
@@ -933,6 +935,7 @@ export default {
   name: 'litigationMy',
 	data(){
   		return{
+        tableLoad:false,
   			 activeName2: 'first',
   			isTrue:false,
   			dialogTitle:'新增',
@@ -1032,15 +1035,19 @@ export default {
   		this.form={}
   	},
   	search(){
+      this.tableLoad = true
   		dataList(this.form).then((response)=>{
             this.DataList=response.list
               this.total = response.total
+              this.tableLoad = false
 })    
   	},
   	search2(){
+      this.tableLoad = true
   		dataList2(this.form2).then((response)=>{
             this.DataList2=response.list
               this.total = response.total
+              this.tableLoad = false
 })    
   	},
   		handleSizeChange(val){
@@ -1051,15 +1058,19 @@ this.pageNum=val;
 },
 },
 created() {
+    this.tableLoad = true
               dataList(this.form).then((response)=>{
               this.DataList=response.list
              // this.pages = response.pages
               this.total = response.total
+              this.tableLoad = false
 })    
+  this.tableLoad = true
         dataList2(this.form).then((response)=>{
               this.DataList2=response.list
              // this.pages = response.pages
               this.total = response.total
+              this.tableLoad = false
 })    
                 PersonList().then((response)=>{
           	this.PersonDataList=response

@@ -16,6 +16,7 @@
       </el-form-item>
     </el-form>
   <el-table
+    v-loading="tableLoad"
     class="table-wrap"
     :data="DataList"
     border
@@ -766,6 +767,7 @@ export default {
   name: 'litigationApply',
   	data(){
   		return{
+        tableLoad:false,
   			payMethodList:[{id:1,value:"现金"},{id:2,value:"支票"},{id:3,value:"邮政汇款"},{id:4,value:"银行电汇"},{id:5,value:"网上支付"},{id:6,value:"其他"},],
   			feeTypeList:[],
   			ruleForm1:{},
@@ -963,10 +965,12 @@ export default {
   		this.form={}
   	},
   	search(){
+      this.tableLoad = true
   		dataList(this.form).then((response)=>{
             this.DataList=response.list
              // this.pages = response.pages
               this.total = response.total
+              this.tableLoad = false
 })    
   	},
   		handleSizeChange(val){
@@ -977,9 +981,11 @@ this.pageNum=val;
 },
    },
       created() {
+              this.tableLoad = true
               dataList(this.form).then((response)=>{
               this.DataList=response.list
               this.total = response.total
+              this.tableLoad = false
 })    
                 PersonList().then((response)=>{
           	this.PersonDataList=response
