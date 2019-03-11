@@ -37,84 +37,98 @@
     <el-table-column
       prop="legalStatusMsg"
       align="center"
+      min-width="120"
       label="案件状态"
      >
     </el-table-column>
    <el-table-column
       prop="progressMsg"
       align="center"
+      min-width="120"
       label="办案进度"
      >
     </el-table-column><el-table-column
       prop="legalType"
       align="center"
+      min-width="120"
       label="案件类型"
      >
     </el-table-column><el-table-column
       prop="cstName"
       align="center"
+      min-width="120"
       label="客户姓名"
      >
     </el-table-column><el-table-column
       prop="legalDate"
       align="center"
+      min-width="120"
       label="委案日期"
      >
     </el-table-column><el-table-column
       prop="clientele"
       align="center"
+      min-width="120"
       label="委托人"
      >
     </el-table-column>
     <el-table-column
       prop="accused"
       align="center"
+      min-width="120"
       label="被告人"
      >
     </el-table-column>
     <el-table-column
       prop="tital"
       align="center"
+      min-width="120"
       label="标的"
      >
     </el-table-column>
     <el-table-column
       prop="costMsg"
       align="center"
+      min-width="120"
       label="费用"
      >
     </el-table-column>
     <el-table-column
       prop="owner"
       align="center"
+      min-width="120"
       label="所属人"
      >
     </el-table-column><el-table-column
       prop="agent"
+      min-width="120"
       align="center"
       label="代理律师"
      >
     </el-table-column><el-table-column
       prop="court"
       align="center"
+      min-width="120"
       label="受案法院"
      >
     </el-table-column><el-table-column
       prop="legalNo"
       align="center"
+      min-width="120"
       label="案号"
      >
     </el-table-column>
     <el-table-column
       prop="remark"
       align="center"
+      min-width="180"
       label="备注"
      >
     </el-table-column>
     <el-table-column
       align="center"
       label="操作"
-      width="120"
+      width="180"
      >
      <template slot-scope="scope">
        <el-button type="text" size="small"  @click="showmessage(scope.row)" v-has="'查看'">查看</el-button>
@@ -484,49 +498,58 @@
     <el-table-column
       prop="legalStatusMsg"
       align="center"
+      min-width="120"
       label="案件状态"
      >
     </el-table-column>
    <el-table-column
       prop="progressMsg"
       align="center"
+      min-width="120"
       label="办案进度"
      >
     </el-table-column><el-table-column
       prop="legalType"
       align="center"
+      min-width="120"
       label="案件类型"
      >
     </el-table-column><el-table-column
       prop="cstName"
       align="center"
+      min-width="120"
       label="客户姓名"
      >
     </el-table-column><el-table-column
       prop="legalDate"
       align="center"
+      min-width="120"
       label="委案日期"
      >
     </el-table-column><el-table-column
       prop="clientele"
       align="center"
+      min-width="120"
       label="委托人"
      >
     </el-table-column>
     <el-table-column
       prop="accused"
+      min-width="120"
       align="center"
       label="被告人"
      >
     </el-table-column>
     <el-table-column
       prop="tital"
+      min-width="120"
       align="center"
       label="标的"
      >
     </el-table-column>
     <el-table-column
       prop="costMsg"
+      min-width="120"
       align="center"
       label="费用"
      >
@@ -534,34 +557,39 @@
     <el-table-column
       prop="owner"
       align="center"
+      min-width="120"
       label="所属人"
      >
     </el-table-column><el-table-column
       prop="agent"
       align="center"
+      min-width="120"
       label="代理律师"
      >
     </el-table-column><el-table-column
       prop="court"
       align="center"
+      min-width="120"
       label="受案法院"
      >
     </el-table-column><el-table-column
       prop="legalNo"
       align="center"
+      min-width="120"
       label="案号"
      >
     </el-table-column>
     <el-table-column
       prop="remark"
       align="center"
+      min-width="180"
       label="备注"
      >
     </el-table-column>
     <el-table-column
       align="center"
       label="操作"
-      width="120"
+      width="180"
      >
      <template slot-scope="scope">
        <el-button type="text" size="small"  @click="showmessage(scope.row)">查看</el-button>
