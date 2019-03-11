@@ -3,7 +3,7 @@
   	 v-loading="loading2"
     element-loading-text="正在导入中"
     element-loading-spinner="el-icon-loading"
-   element-loading-background="rgba(248, 248, 248, 0.8)"
+   element-loading-background="rgba(0, 0, 0, 0.7)"
    class="page-wraper-sub">
    <el-form ref="form" :model="form" :inline="true" class="query-wrap">
     <el-form-item >
@@ -514,7 +514,7 @@ export default {
       collectAction:baseURL,
     	ImportdialogVisible:false,
     	ImportMsg:'',
-    	loading2:false,
+    	loading2:true,
     	header:{Authorization:localStorage.token},
     	messageForm:{},
     	areaList:[],
