@@ -25,83 +25,104 @@
       prop="legalStatusMsg"
       align="center"
       label="案件状态"
+      show-overflow-tooltip
      >
     </el-table-column>
    <el-table-column
       prop="progressMsg"
       align="center"
       label="办案进度"
+      show-overflow-tooltip
      >
-    </el-table-column><el-table-column
+    </el-table-column>
+    <el-table-column
       prop="legalTypeMsg"
       align="center"
       label="案件类型"
+      show-overflow-tooltip
      >
-    </el-table-column><el-table-column
+    </el-table-column>
+    <el-table-column
       prop="cstName"
       align="center"
       label="客户姓名"
+      show-overflow-tooltip
      >
-    </el-table-column><el-table-column
+    </el-table-column>
+    <el-table-column
       prop="legalDate"
       align="center"
       label="委案日期"
+      show-overflow-tooltip
      >
-    </el-table-column><el-table-column
+    </el-table-column>
+    <el-table-column
       prop="clientele"
       align="center"
       label="委托人"
+      show-overflow-tooltip
      >
     </el-table-column>
     <el-table-column
       prop="accused"
       align="center"
       label="被告人"
+      show-overflow-tooltip
      >
     </el-table-column>
     <el-table-column
       prop="tital"
       align="center"
       label="标的"
+      show-overflow-tooltip
      >
     </el-table-column>
     <el-table-column
       prop="costMsg"
       align="center"
       label="费用"
+      show-overflow-tooltip
      >
     </el-table-column>
     <el-table-column
       prop="owner"
       align="center"
       label="所属人"
+      show-overflow-tooltip
      >
-    </el-table-column><el-table-column
+    </el-table-column>
+    <el-table-column
       prop="agent"
       align="center"
       label="代理律师"
+      show-overflow-tooltip
      >
-    </el-table-column><el-table-column
+    </el-table-column>
+    <el-table-column
       prop="court"
       align="center"
       label="受案法院"
+      show-overflow-tooltip
      >
-    </el-table-column><el-table-column
+    </el-table-column>
+    <el-table-column
       prop="legalNo"
       align="center"
       label="案号"
+      show-overflow-tooltip
      >
     </el-table-column>
     <el-table-column
       prop="remark"
       align="center"
       label="备注"
+      show-overflow-tooltip
      >
     </el-table-column>
     <el-table-column
       align="center"
       label="操作"
-      width="120"
+      width="200"
      >
      <template slot-scope="scope">
        <el-button type="text" size="small"  @click="checkDatasure(scope.row.id)" v-has="'审核'">审核</el-button>
