@@ -592,9 +592,9 @@
       width="180"
      >
      <template slot-scope="scope">
-       <el-button type="text" size="small"  @click="showmessage(scope.row)">查看</el-button>
-       <el-button type="text" size="small" @click="editData(scope.row)">编辑</el-button>
-       <el-button type="text" size="small"  @click="deleteData(scope.row.id)">删除</el-button>
+       <el-button type="text" size="small" v-has="'编辑'" @click="showmessage(scope.row)">查看</el-button>
+       <el-button type="text" size="small" v-has="'编辑'" @click="editData(scope.row)">编辑</el-button>
+       <el-button type="text" size="small" v-has="'编辑'" @click="deleteData(scope.row.id)">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
