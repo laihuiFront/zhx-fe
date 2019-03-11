@@ -514,7 +514,7 @@ export default {
       collectAction:baseURL,
     	ImportdialogVisible:false,
     	ImportMsg:'',
-    	loading2:true,
+    	loading2:false,
     	header:{Authorization:localStorage.token},
     	messageForm:{},
     	areaList:[],
