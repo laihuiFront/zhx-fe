@@ -104,10 +104,10 @@
       width="120"
      >
      <template slot-scope="scope">
-       <el-button type="text" size="small" icon="el-icon-check" @click="checkDatasure(scope.row.id)" v-has="'审核'"></el-button>
-       <el-button type="text" size="small" icon="el-icon-message" @click="showmessage(scope.row)" v-has="'查看'"></el-button>
-       <el-button type="text" size="small" icon="el-icon-edit" @click="editData(scope.row)" v-has="'编辑'"></el-button>
-       <el-button type="text" size="small" icon="el-icon-delete" @click="deleteData(scope.row.id)" v-has="'删除'"></el-button>
+       <el-button type="text" size="small"  @click="checkDatasure(scope.row.id)" v-has="'审核'">审核</el-button>
+       <el-button type="text" size="small" @click="showmessage(scope.row)" v-has="'查看'">查看</el-button>
+       <el-button type="text" size="small"  @click="editData(scope.row)" v-has="'编辑'">编辑</el-button>
+       <el-button type="text" size="small"  @click="deleteData(scope.row.id)" v-has="'删除'">删除</el-button>
       </template>
     </el-table-column>
   </el-table>

@@ -117,9 +117,9 @@
       width="120"
      >
      <template slot-scope="scope">
-       <el-button type="text" size="small" icon="el-icon-message" @click="showmessage(scope.row)" v-has="'查看'"></el-button>
-       <el-button type="text" size="small" icon="el-icon-edit" @click="editData(scope.row)" v-has="'编辑'"></el-button>
-       <el-button type="text" size="small" icon="el-icon-delete" @click="deleteData(scope.row.id)" v-has="'删除'"></el-button>
+       <el-button type="text" size="small"  @click="showmessage(scope.row)" v-has="'查看'">查看</el-button>
+       <el-button type="text" size="small"  @click="editData(scope.row)" v-has="'编辑'">编辑</el-button>
+       <el-button type="text" size="small"  @click="deleteData(scope.row.id)" v-has="'删除'">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -218,7 +218,7 @@
     <el-option
       v-for="item in PersonDataList"
       :key="item.id"
-      :label="item.name"
+      :label="item.userName"
       :value="item.id">
     </el-option>
      </el-select>
@@ -564,9 +564,9 @@
       width="120"
      >
      <template slot-scope="scope">
-       <el-button type="text" size="small" icon="el-icon-message" @click="showmessage(scope.row)"></el-button>
-       <el-button type="text" size="small" icon="el-icon-edit" @click="editData(scope.row)"></el-button>
-       <el-button type="text" size="small" icon="el-icon-delete" @click="deleteData(scope.row.id)"></el-button>
+       <el-button type="text" size="small"  @click="showmessage(scope.row)">查看</el-button>
+       <el-button type="text" size="small" @click="editData(scope.row)">编辑</el-button>
+       <el-button type="text" size="small"  @click="deleteData(scope.row.id)">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -666,7 +666,7 @@
     <el-option
       v-for="item in PersonDataList"
       :key="item.id"
-      :label="item.name"
+      :label="item.userName"
       :value="item.id">
     </el-option>
      </el-select>

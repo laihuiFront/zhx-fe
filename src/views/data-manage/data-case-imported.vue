@@ -359,7 +359,7 @@
 </el-form>
 
 <span slot="footer" class="footer">
-    <el-button @click="dialogVisible = false">取 消</el-button>
+    <el-button @click="backForm">取 消</el-button>
     <el-button type="primary" @click="submitForm('formInline')">确 定</el-button>
   </span>
 </el-dialog>
@@ -484,7 +484,7 @@
 </el-form>
 
 <span slot="footer" class="footer">
-    <el-button @click="dialogVisible2 = false">取 消</el-button>
+    <el-button @click="backForm2">取 消</el-button>
     <el-button type="primary" @click="submitmsgForm('messageForm')">确 定</el-button>
   </span>
 </el-dialog>
@@ -573,6 +573,24 @@ methods: {
 	},
 	onProgress(){
 		this.loading2=true
+	},
+	backForm(){
+		this.dialogVisible=false;
+		this.formInline={
+        	batchNo:'',
+        	targetRate:'',
+        	returnTime:'',
+        	caseTime:''
+        }
+	},
+		backForm2(){
+		this.dialogVisible2=false;
+		this.messageForm={
+        	batchNo:'',
+        	targetRate:'',
+        	returnTime:'',
+        	caseTime:''
+        }
 	},
 		uploadSuccess(res,file,fileList){
       if (res.code ==100){

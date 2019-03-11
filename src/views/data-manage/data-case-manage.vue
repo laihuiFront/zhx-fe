@@ -838,7 +838,7 @@
                 v-for="item in addSynergyFormList"
                 :key="item.id"
                 :label="item.name"
-                :value="item.name">
+                :value="item.id">
               </el-option>
             </el-select>
           </el-form-item>
@@ -873,7 +873,7 @@
 <script>
   //import CaseDetail from './detail'
   const CaseDetail = () => import('@/views/data-manage/detail');
-  import {dataList,LeaveList,areaList,batchList,caseTypeList,addressList,TellList,collectStatusList,deleteStatusList,accountAgeList,clientList,EndList,PersonList,departmentList,searchList,fenan1,fenan2,addpingyu,caseStatus,deteleCase,colorList,addMValue,addCollectArea,addCollectStatus,addImportant,addSynergy,selectDataTel,selectDataCollect,pageDataExport,selectDataCaseExport,totalDataBatchExport} from '@/common/js/data-case-manage.js'
+  import {dataList,getSynergyTypeList,LeaveList,areaList,batchList,caseTypeList,addressList,TellList,collectStatusList,deleteStatusList,accountAgeList,clientList,EndList,PersonList,departmentList,searchList,fenan1,fenan2,addpingyu,caseStatus,deteleCase,colorList,addMValue,addCollectArea,addCollectStatus,addImportant,addSynergy,selectDataTel,selectDataCollect,pageDataExport,selectDataCaseExport,totalDataBatchExport} from '@/common/js/data-case-manage.js'
   export default {
     name: 'dataCaseManage',
     components: {
@@ -963,6 +963,7 @@
             value:'棕'
           },
         ],
+        addSynergyFormList:[],
         detailVisible4:false,
         detailVisible5:false,
         detailVisible6:false,
@@ -1396,9 +1397,8 @@
         this.sort = order==null?"desc":order.replace("ending","")
         this.orderBy = prop==null?"id":prop
 
-        let caseDateStart=this.formInline.time6==null?"":this.formInline.time6[0]
-        let caseDateEnd=this.formInline.time6==null?"":this.formInline.time6[1]
-        searchList(this.formInline.area,this.formInline.batchNos,this.formInline.clients,this.formInline.caseType,caseDateStart,caseDateEnd,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
+   
+        searchList(this.formInline,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
           this.totalCaseNum=response.totalCaseNum
           this.totalAmt = this.formatMoney(response.totalAmt,0, "￥")
           this.repayTotalAmt= this.formatMoney(response.repayTotalAmt,0, "￥")
@@ -1416,7 +1416,7 @@
         this.search()
       },
       search(){
-        searchList(this.formInline,this.pageSize,this.pageNum).then((response)=>{
+        searchList(this.formInline,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
           this.totalCaseNum=response.totalCaseNum
           this.totalAmt = this.formatMoney(response.totalAmt,0, "￥")
           this.repayTotalAmt= this.formatMoney(response.repayTotalAmt,0, "￥")
@@ -1487,7 +1487,7 @@
       }
     },
     created() {
-      searchList(this.formInline,this.pageSize,this.pageNum).then((response)=>{
+      searchList(this.formInline,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
         this.tableData3=response.pageInfo.list
         this.totalCaseNum=response.totalCaseNum
         this.totalAmt = this.formatMoney(response.totalAmt,0, "￥")
@@ -1539,6 +1539,9 @@
       })
       LeaveList().then((response)=>{
         this.LeaveList=response
+      })
+      getSynergyTypeList().then((response)=>{
+        this.addSynergyFormList=response
       })
 
     },
