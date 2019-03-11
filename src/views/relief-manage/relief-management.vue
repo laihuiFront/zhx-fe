@@ -243,7 +243,7 @@
           tooltip-effect="dark"
           @sort-change="handleSort"
         @selection-change="handleSelectionChange"
-       
+        v-loading="tableLoad"
             >
         <el-table-column
           type="selection"
@@ -393,7 +393,7 @@
       :data="tableData3"
       style="width: 100%;"
       @selection-change="handleSelectionChange"
-     
+     v-loading="tableLoad"
     >
       <el-table-column
         type="selection"
@@ -518,7 +518,7 @@
       :data="tableData3"
       style="width: 100%;"
       @selection-change="handleSelectionChange"
-     
+      v-loading="tableLoad"
     >
       <el-table-column
         type="selection"
@@ -702,6 +702,7 @@ export default {
   name: 'reliefManagement',
   data(){
     return {
+      tableLoad:false,
     	dialogVisible1:false,
     	sType:0,
     	istrue1:true,
@@ -754,10 +755,12 @@ export default {
             type: 'success',
             message: '下载成功!'
           });
+          this.tableLoad = true
           dataList(this.formInline,this.applyStatus,this.sort,this.orderBy,this.currentPage4,this.pageSize).then((response)=>{
           	this.tableData3=response.list
           	this.formInline={	time1:[],time2:[],time3:[]}
             this.total = response.total
+            this.tableLoad = false
           })
           }) 
  	},
@@ -776,10 +779,12 @@ pageDataBatchExport(this.formInline,this.applyStatus,this.sort,this.orderBy,this
             type: 'success',
             message: '审核成功!'
           });
+          this.tableLoad = true
           dataList(this.formInline,this.applyStatus,this.sort,this.orderBy,this.currentPage4,this.pageSize).then((response)=>{
           	this.tableData3=response.list
           	this.formInline={	time1:[],time2:[],time3:[]}
             this.total = response.total
+            this.tableLoad = false
           })
           })    
  		}else{
@@ -842,10 +847,12 @@ this.search()
             type: 'success',
             message: '撤销成功!'
           });
+          this.tableLoad = true
           dataList(this.formInline,this.applyStatus,this.sort,this.orderBy,this.currentPage4,this.pageSize).then((response)=>{
           	this.tableData3=response.list
           	this.formInline={	time1:[],time2:[],time3:[]}
             this.total = response.total
+            this.tableLoad = false
           })
           })    
  		}else{
@@ -862,10 +869,12 @@ this.search()
             type: 'success',
             message: '下载成功!'
           });
+          this.tableLoad = true
           dataList(this.formInline,this.applyStatus,this.sort,this.orderBy,this.currentPage4,this.pageSize).then((response)=>{
           	this.tableData3=response.list
           	this.formInline={	time1:[],time2:[],time3:[]}
             this.total = response.total
+            this.tableLoad = false
           })
           })    
  		}else{
@@ -876,12 +885,12 @@ this.search()
  		}
  	},
  	search(){
- 	
+     this.tableLoad = true
  		  dataList(this.formInline,this.applyStatus,this.sort,this.orderBy,this.currentPage4,this.pageSize).then((response)=>{
           	this.tableData3=response.list
           	this.formInline={	time1:[],time2:[],time3:[]}
             this.total = response.total
-          
+            this.tableLoad = false
           })
  	},
  	deteleList(id){
@@ -891,10 +900,12 @@ this.search()
             type: 'success',
             message: '删除成功!'
           });
+          this.tableLoad = true
            dataList(this.formInline,this.applyStatus,this.sort,this.orderBy,this.currentPage4,this.pageSize).then((response)=>{
           	this.tableData3=response.list
           	this.formInline={	time1:[],time2:[],time3:[]}
              this.total = response.total
+             this.tableLoad = false
           })
           })    
  	},
@@ -907,10 +918,12 @@ this.search()
                  message: '新增成功!'
              });
              this.dialogVisible=false;
+             this.tableLoad = true
           dataList(this.formInline,this.applyStatus,this.sort,this.orderBy,this.currentPage4,this.pageSize).then((response)=>{
           	this.tableData3=response.list
           	this.formInline={	time1:[],time2:[],time3:[]}
             this.total = response.total
+            this.tableLoad = false
           })
           })     
           } else {
@@ -970,10 +983,12 @@ this.search()
              PersonList().then((response)=>{
           	this.PersonLists=response
           })
+          this.tableLoad = true
               dataList(this.formInline,this.applyStatus,this.sort,this.orderBy,this.currentPage4,this.pageSize).then((response)=>{
           	this.tableData3=response.list
           	this.formInline={	time1:[],time2:[],time3:[]}
-          	this.total = response.total
+            this.total = response.total
+            this.tableLoad = false
           })
                collectStatusList().then((response)=>{
                 this.collectStatusList=response
