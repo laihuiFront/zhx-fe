@@ -24,6 +24,7 @@
     <el-table-column
       prop="legalStatusMsg"
       align="center"
+      min-width="120"
       label="案件状态"
       show-overflow-tooltip
      >
@@ -31,6 +32,7 @@
    <el-table-column
       prop="progressMsg"
       align="center"
+      min-width="120"
       label="办案进度"
       show-overflow-tooltip
      >
@@ -38,6 +40,7 @@
     <el-table-column
       prop="legalTypeMsg"
       align="center"
+      min-width="120"
       label="案件类型"
       show-overflow-tooltip
      >
@@ -45,6 +48,7 @@
     <el-table-column
       prop="cstName"
       align="center"
+      min-width="120"
       label="客户姓名"
       show-overflow-tooltip
      >
@@ -52,6 +56,7 @@
     <el-table-column
       prop="legalDate"
       align="center"
+      min-width="120"
       label="委案日期"
       show-overflow-tooltip
      >
@@ -59,6 +64,7 @@
     <el-table-column
       prop="clientele"
       align="center"
+      min-width="120"
       label="委托人"
       show-overflow-tooltip
      >
@@ -66,12 +72,14 @@
     <el-table-column
       prop="accused"
       align="center"
+      min-width="120"
       label="被告人"
       show-overflow-tooltip
      >
     </el-table-column>
     <el-table-column
       prop="tital"
+       min-width="120"
       align="center"
       label="标的"
       show-overflow-tooltip
@@ -80,6 +88,7 @@
     <el-table-column
       prop="costMsg"
       align="center"
+      min-width="120"
       label="费用"
       show-overflow-tooltip
      >
@@ -87,6 +96,7 @@
     <el-table-column
       prop="owner"
       align="center"
+      min-width="120"
       label="所属人"
       show-overflow-tooltip
      >
@@ -94,6 +104,7 @@
     <el-table-column
       prop="agent"
       align="center"
+      min-width="120"
       label="代理律师"
       show-overflow-tooltip
      >
@@ -101,6 +112,7 @@
     <el-table-column
       prop="court"
       align="center"
+      min-width="120"
       label="受案法院"
       show-overflow-tooltip
      >
@@ -108,6 +120,7 @@
     <el-table-column
       prop="legalNo"
       align="center"
+      min-width="120"
       label="案号"
       show-overflow-tooltip
      >
@@ -115,6 +128,7 @@
     <el-table-column
       prop="remark"
       align="center"
+      min-width="180"
       label="备注"
       show-overflow-tooltip
      >
