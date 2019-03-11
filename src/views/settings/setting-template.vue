@@ -8,7 +8,7 @@
     <el-table
       :data="tableData"
       border stripe
-      stripe
+      v-loading="tableLoad"
       style="width: 100%">
       <el-table-column
         prop="id"
@@ -68,6 +68,7 @@ export default {
   },
   data(){
     return{
+      tableLoad:false,
       tableData:[],
       dialogVisible:false,
       msg:'',
@@ -112,8 +113,10 @@ export default {
       });
     },
     getMainData(){
+      this.tableLoad = true
       list().then((data)=>{
-        this.tableData = data;
+        this.tableData = data
+        this.tableLoad = false
       });
     },
     handleClick(currentRow){

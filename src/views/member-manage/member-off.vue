@@ -13,6 +13,7 @@
       </el-form-item>
     </el-form>
     <el-table
+      v-loading="tableLoad"
       sortable="custom"
       border
       stripe
@@ -65,6 +66,7 @@ export default {
   name: 'memberOff',
   data(){
     return {
+      tableLoad:false,
       queryForm: {
         pageNum: 1,
         pageSize: 50,
@@ -94,9 +96,11 @@ export default {
         pageNum: this.queryForm.pageNum,
         pageSize: this.queryForm.pageSize
       }
+      this.tableLoad = true
       listMember(data).then(response => {
         this.memberList = response.list
         this.total = response.total
+        this.tableLoad = false
       })
     },
     onClickReset() {

@@ -12,7 +12,7 @@
         <el-button type="primary" @click="onClickAdd" v-has="'新增角色'">新增角色</el-button>
       </el-form-item>
     </el-form>
-    <el-table :data="roleList"  border stripe  style="width: 100%" class="table-wrap">
+    <el-table v-loading="tableLoad" :data="roleList"  border stripe  style="width: 100%" class="table-wrap">
       <el-table-column prop="roleName" label="角色名称" width="300"></el-table-column>
       <el-table-column prop="roleDesc" label="角色描述" show-overflow-tooltip></el-table-column>
       <el-table-column prop="updateUser.userName" label="修改人" width="200"></el-table-column>
@@ -84,6 +84,7 @@ export default {
   },
   data () {
     return {
+      tableLoad:false,
       queryForm: {
       },
       roleList: [],
@@ -184,7 +185,11 @@ export default {
     },
     initRoleList () {
       this.roleList = []
-      getRoleList(this.queryForm.roleName).then(data => this.roleList = data)
+      this.tableLoad = true
+      getRoleList(this.queryForm.roleName).then(data => {
+        this.roleList = data
+        this.tableLoad = false
+      })
     }
   }
 }

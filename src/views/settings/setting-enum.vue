@@ -30,6 +30,7 @@
         :expand-on-click-node="false"
         class="tree-wrap"
         width="400px"
+        v-loading="tableLoad"
       >
         <span class="custom-tree-node" slot-scope="{ node, data }">
           <span>
@@ -67,6 +68,7 @@
         border stripe
         :data="configData"
         style="width: 100%"
+        v-loading="tableLoad"
       >
         <el-table-column prop="date" :label="currentEnum.name">
           <template slot-scope="scope">
@@ -156,6 +158,7 @@ export default {
   name: 'settingEnum',
   data () {
     return {
+      tableLoad:false,
       configList: [],
       activeIndex: 0,
       configData: []
@@ -190,12 +193,20 @@ export default {
     currentEnum (newVal, OldVal) {
       if (newVal.id) {
         this.configData = []
-        getConfigList(newVal.id).then(response => this.configData = response)
+        this.tableLoad = true
+        getConfigList(newVal.id).then(response => {
+          this.configData = response
+          this.tableLoad = false
+        })
       }
     }
   },
   created () {
-    getConfigList().then(response => this.configList = response)
+    this.tableLoad = true
+    getConfigList().then(response => {
+      this.configList = response
+      this.tableLoad = false
+    })
   },
   methods: {
     onClickAdd () {
@@ -209,7 +220,11 @@ export default {
       if (this.currentEnum.name === '地区') {
         insertConfigData(this.configData).then(() => {
           this.$message('保存成功')
-          getConfigList(this.currentEnum.id).then(response => this.configData = response)
+          this.tableLoad = true
+          getConfigList(this.currentEnum.id).then(response => {
+            this.configData = response
+            this.tableLoad = false
+          })
         })
       } else {
         const toSaveList = this.configData.filter(item => item.editType === 'add' || item.editType === 'edit')
@@ -239,7 +254,11 @@ export default {
         })
         insertConfigData(data).then(() => {
           this.$message('保存成功')
-          getConfigList(this.currentEnum.id).then(response => this.configData = response)
+          this.tableLoad = true
+          getConfigList(this.currentEnum.id).then(response => {
+            this.configData = response
+            this.tableLoad = false
+          })
         })
       }
     },

@@ -35,7 +35,7 @@
           <el-button type="primary" @click="onClickAdd" v-has="'新增员工'">新增员工</el-button>
         </el-form-item>
       </el-form>
-      <el-table sortable="custom" border stripe @sort-change="handleSort" :data="memberList" style="width: 100%" class="table-wrap">
+      <el-table v-loading="tableLoad" sortable="custom" border stripe @sort-change="handleSort" :data="memberList" style="width: 100%" class="table-wrap">
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="userName" label="员工姓名" show-overflow-tooltip></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']"  prop="number" show-overflow-tooltip label="账号"></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="sex" label="性别" show-overflow-tooltip width="70"></el-table-column>
@@ -199,6 +199,7 @@ export default {
   name: 'memberIn',
   data () {
     return {
+      tableLoad:false,
     	isTrue:true,
       departmentTree: [],
       queryForm: {
@@ -287,9 +288,11 @@ export default {
         pageNum: this.queryForm.pageNum,
         pageSize: this.queryForm.pageSize
       }
+      this.tableLoad = true
       listMember(data).then(response => {
         this.memberList = response.list
         this.total = response.total
+        this.tableLoad = false
       })
     },
     onClickAdd () {

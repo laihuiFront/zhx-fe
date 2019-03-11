@@ -36,6 +36,7 @@
       </el-form-item>
     </el-form>
     <el-table
+      v-loading="tableLoad"
       @selection-change="onSelectRow"
       border stripe
       :data="logList"
@@ -78,6 +79,7 @@ export default {
   name: 'settingLog',
   data() {
     return {
+      tableLoad:false,
       queryForm: {
         pageNum: 1,
         pageSize: 10,
@@ -132,9 +134,11 @@ export default {
         createTimeBegin: this.queryForm.date[0],
         createTimeEnd: this.queryForm.date[1]
       }
+      this.tableLoad = true
       getOperationLog(data).then(response => {
         this.logList = response.list
         this.total = response.total
+        this.tableLoad = false
       })
     },
     onSelectRow(val){
