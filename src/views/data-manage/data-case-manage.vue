@@ -58,7 +58,7 @@
           placement="bottom-end"
           width="800"
           trigger="click">
-          <ul class="condition-wrap">
+          <ul class="condition-wrap data-case-condition-wrap">
             <li class="condition-item five-one">
               <el-input v-model="formInline.vin" placeholder="请输入车架号"></el-input>
             </li>
@@ -1586,4 +1586,9 @@
   color: #D2B48C;
 }
   }
+.data-case-condition-wrap{
+  height: 350px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
 </style>
