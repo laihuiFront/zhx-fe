@@ -59,7 +59,7 @@ export const searchList =  function(form,orderBy,sort,pageSize,pageNum) {
       cardNo : form.cardNo==null?"":form.cardNo.replace(/\n/,","),//卡号
       clients :form.clients,//委托方
       batchNos:form.batchNos,  //批次编号
-      odvs :form.odv, //催收员
+      odvs :form.odvs, //催收员
       dept:form.dept,
       accountAge :form.accountAge, //逾期賬齡
       seqNo:form.seqNo==null?"":form.seqNo.replace(/\n/,","),//個案序列號
