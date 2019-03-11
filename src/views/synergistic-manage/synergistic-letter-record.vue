@@ -1,5 +1,5 @@
 <template>
-  <div id="xhjl">
+  <div id="xhjl" class="page-wraper-sub">
 
     <el-dialog
       :title="detailTitle"
@@ -217,6 +217,7 @@
       </el-col>
     </el-row>
     <el-table
+      class="table-wrap"
       ref="multipleTable"
       :data="tableData"
       border
@@ -265,8 +266,8 @@
       <!--</template>-->
       <!--</el-table-column>-->
     </el-table>
-    <div class="block">
       <el-pagination
+        class="pagination-wrap"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="paginationData.currentPage"
@@ -276,7 +277,6 @@
         :total="paginationData.total"
       >
       </el-pagination>
-    </div>
   </div>
 </template>
 

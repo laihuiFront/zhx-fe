@@ -1,5 +1,5 @@
 <template>
-  <div id="dclxh">
+  <div id="dclxh" class="page-wraper-sub">
   <el-upload
     class="upload-demo"
     :action="action"

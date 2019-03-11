@@ -7,7 +7,7 @@
   }
   .el-table__body-wrapper{
     overflow-y: auto;
-    overflow-x: hidden;
+    overflow-x: auto;
     height: calc(100% - 45px);
   }
 }
