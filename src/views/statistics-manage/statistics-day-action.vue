@@ -49,6 +49,7 @@
       </el-form-item>
     </el-form>
   <el-table
+    v-loading="tableLoad"
     :data="tableData3"
     border
     stripe
@@ -221,6 +222,7 @@ export default {
   name: 'statisticsDayAction',
   data(){
     return {
+      tableLoad:false,
     	dialogTitle:'',
     	dialogTableVisible:false,
     	 currentPage4: 1,
@@ -302,8 +304,10 @@ this.pageNum=val;
              PersonList().then((response)=>{
           	this.PersonList=response
           })
+          this.tableLoad = true
                dataList(this.formInline).then((response)=>{
-          	this.tableData3=response.list
+            this.tableData3=response.list
+            this.tableLoad = false
           })
             
 },

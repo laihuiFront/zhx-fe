@@ -54,6 +54,7 @@
       </el-form-item>
     </el-form>
     <el-table
+      v-loading="tableLoad"
       :data="tableData3"
       border
       stripe
@@ -118,6 +119,7 @@ export default {
   name: 'statisticsMonth',
   data(){
     return {
+      tableLoad:false,
     	 currentPage4: 1,
         pages:1,
         total:100,
@@ -196,6 +198,7 @@ this.pageNum=val;
  		this.formInline={}
  	},
       query(){
+        this.tableLoad = true
         dataList(this.formInline).then((response)=>{
           this.tableData3=response.list
           this.dataList=[]
@@ -210,11 +213,13 @@ this.pageNum=val;
             }
 
           }
+          this.tableLoad = false
           console.log(this.dataList)
         })
       }
  },
  created() {
+   this.tableLoad = true
  	 dataList(this.formInline).then((response)=>{
           	this.tableData3=response.list
           	this.dataList=[]
@@ -229,7 +234,8 @@ this.pageNum=val;
 }
           		
           	}
-          	console.log(this.dataList)
+            console.log(this.dataList)
+            this.tableLoad = false
           })
           areaList().then((response)=>{
           	this.areaList=response

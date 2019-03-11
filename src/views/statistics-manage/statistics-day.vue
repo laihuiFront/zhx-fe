@@ -50,6 +50,7 @@
     </el-form>
   
   <el-table
+    v-loading ="tableLoad"
     :data="tableData3"
     border
     stripe
@@ -184,10 +185,11 @@ export default {
   name: 'statisticsDay',
   data(){
     return {
+      tableLoad:false,
     	dataList:[],
     	 currentPage4: 1,
         pages:1,
-        total:100,
+        total:0,
     	formInline:{
     		odv:[],
     		time:[]
@@ -226,15 +228,19 @@ export default {
                 return sums;
             },
  	handleSizeChange(val){
-	this.pageSize=val
+  this.pageSize=val
+  this.tableLoad = true
 	              dataList(this.formInline,this.pageSize,this.pageNum).then((response)=>{
-          	this.tableData3=response
+            this.tableData3=response
+            this.tableLoad = false
           })
 },
 handleCurrentChange(val){
 this.pageNum=val;
+  this.tableLoad = true
               dataList(this.formInline,this.pageSize,this.pageNum).then((response)=>{
-          	this.tableData3=response
+            this.tableData3=response
+            this.tableLoad = false
           })
 },
  	onSubmit(){
@@ -249,8 +255,10 @@ this.pageNum=val;
  		this.formInline={}
  	},
    query(){
+     this.tableLoad = true
      dataList(this.formInline).then((response)=>{
        this.tableData3=response.list
+       this.tableLoad = false
      })
    }
  },
@@ -266,8 +274,10 @@ this.pageNum=val;
              PersonList().then((response)=>{
           	this.PersonList=response
           })
+          this.tableLoad = true
               dataList(this.formInline).then((response)=>{
-          	this.tableData3=response.list
+            this.tableData3=response.list
+            this.tableLoad = false
           })
             
             
