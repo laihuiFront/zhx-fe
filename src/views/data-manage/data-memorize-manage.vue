@@ -326,6 +326,7 @@
       label="承诺还款金额"
       width="140"
       align="center"
+      prop="repayAmtMsg"
       sortable="custom"
       :sort-orders="['ascending','descending']"
       show-overflow-tooltip>
@@ -338,6 +339,7 @@
       sortable="custom"
       :sort-orders="['ascending','descending']"
       align="center"
+      prop="reduceAmtMsg"
       show-overflow-tooltip>
       <template slot-scope="scope">
         {{scope.row.reduceAmtMsg}}

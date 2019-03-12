@@ -606,7 +606,7 @@ export default {
           label: "催收状态"
         },
         {
-          prop: "collectionType",
+          prop: "telType",
           label: "催收分类"
         },
         {
