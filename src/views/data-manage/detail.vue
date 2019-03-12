@@ -916,7 +916,7 @@
                     label="关系">
                   </el-table-column>
                   <el-table-column
-                    prop="telPhone"
+                    prop="mobile"
                     show-overflow-tooltip
                     label="电话/地址">
                   </el-table-column>
@@ -924,6 +924,11 @@
                     prop="telType"
                     show-overflow-tooltip
                     label="类型">
+                  </el-table-column>
+                  <el-table-column
+                    prop="collectInfo"
+                    show-overflow-tooltip
+                    label="催收信息">
                   </el-table-column>
                   <el-table-column
                     prop="result"
@@ -946,12 +951,12 @@
                     label="承诺日期">
                   </el-table-column>
                   <el-table-column
-                    prop="repayAmt"
+                    prop="repayAmtMsg"
                     show-overflow-tooltip
                     label="承诺金额">
                   </el-table-column>
                   <el-table-column
-                    prop="reduceAmt"
+                    prop="reduceAmtMsg"
                     show-overflow-tooltip
                     label="减免金额">
                   </el-table-column>
@@ -1471,8 +1476,8 @@
               label-width="100px"
               class="demo-ruleForm"
             >
-              <el-form-item label="电话" prop="telPhone">
-                <el-input v-model="batchForm.telPhone" placeholder="请输入电话号码"></el-input>
+              <el-form-item label="电话" prop="mobile">
+                <el-input v-model="batchForm.mobile" placeholder="请输入电话号码"></el-input>
               </el-form-item>
               <el-form-item label="姓名" prop="targetName">
                 <el-input v-model="batchForm.targetName" placeholder="请输入姓名"></el-input>
@@ -1519,7 +1524,7 @@
                 </el-input>
               </el-form-item>
               <el-form-item label="催收状态" prop="collectStatus">
-                <el-select v-model="batchForm.collectStatus" placeholder="请选择催收结果">
+                <el-select v-model="batchForm.collectStatus" placeholder="请选择催收状态">
                   <el-option
                     v-for="item in csztList"
                     :key="item.id"
@@ -2380,7 +2385,10 @@ export default {
 //  },
     _expDataCollect(){
       expDataCollect([{id:this.id}]).then(()=>{
-        this.$message('导出成功')
+        this.$message({
+          type: 'success',
+          message: '导出成功'
+        });
       })
     },
   	showadddialogVisible(){
@@ -2397,7 +2405,10 @@ export default {
     saveLegal(){
       this.legalForm.caseId = this.id;
       saveLegal(this.legalForm).then(data=>{
-        this.$message('申请成功')
+        this.$message({
+          type: 'success',
+          message: '申请成功'
+        });
         this.ligigationVisible = false;
         getLegalList(this.id).then(data=>{
           this.legalList = data
@@ -2406,15 +2417,21 @@ export default {
     },
   	deteleData(id){
   		DeteleData(id).then((response)=>{
- this.$message('删除成功')    
- getReduceApplyList(this.id).then(data=>{
+        this.$message({
+          type: 'success',
+          message: '删除成功'
+        });
+        getReduceApplyList(this.id).then(data=>{
           this.reduceApplyList = data.list
         })
 })
   	},
   	saveData(){
 AddtableList(this.id,this.messageForm).then((response)=>{
- this.$message('操作成功')    
+  this.$message({
+    type: 'success',
+    message: '操作成功'
+  });
  this.adddialogVisible=false
  this.messageForm={}
  getReduceApplyList(this.id).then(data=>{
@@ -2485,7 +2502,10 @@ AddtableList(this.id,this.messageForm).then((response)=>{
     onClickSaveCollection(){
       this.batchForm.caseId = this.id
       dataCollectionSave(this.batchForm).then((data)=>{
-        this.$message('新增催收记录成功')
+        this.$message({
+          type: 'success',
+          message: '新增催收记录成功'
+        });
         getCollectDetail(this.id,1).then(data => {
           console.info(data)
           this.memorizeList = data
@@ -2502,7 +2522,10 @@ AddtableList(this.id,this.messageForm).then((response)=>{
             pageDataLog({caseId:this.id, type:this.logType}).then(data=>{
               this.logList = data
             })
-            this.$message('操作记录删除成功')
+            this.$message({
+              type: 'success',
+              message: '操作记录删除成功'
+            });
           })
         }).catch(() => {
           
@@ -2518,7 +2541,11 @@ AddtableList(this.id,this.messageForm).then((response)=>{
             getCommentDetail(this.id).then(data => {
               this.commentList = data
             })
-            this.$message('评语删除成功')
+            this.$message({
+              type: 'success',
+              message: '评语删除成功'
+            });
+
           })
         }).catch(() => {
           
@@ -2542,7 +2569,10 @@ AddtableList(this.id,this.messageForm).then((response)=>{
         pageDataLog({caseId:this.id, type:this.logType}).then(data=>{
           this.logList = data
         })
-        this.$message('操作记录修改成功')
+        this.$message({
+          type: 'success',
+          message: '操作记录修改成功'
+        });
       })
     },
     onClickSaveComment(){
@@ -2551,7 +2581,10 @@ AddtableList(this.id,this.messageForm).then((response)=>{
         comment: this.editCommentRow.editContext
       }).then(res =>{
         getCommentDetail(this.id).then(data => {
-          this.$message('评语修改成功')
+          this.$message({
+            type: 'success',
+            message: '评语修改成功'
+          });
           this.commentList = data
           // this.$set(this.editCommentRow,'editCommentVisible',false)
         })
@@ -2562,7 +2595,10 @@ AddtableList(this.id,this.messageForm).then((response)=>{
         id: this.id,
         remark: this.caseDetail.selfInfo
       }).then(res=>{
-        this.$message('修改自定义信息成功')
+        this.$message({
+          type: 'success',
+          message: '修改自定义信息成功'
+        });
       })
     },
     applyLetter(row){
@@ -2580,7 +2616,10 @@ AddtableList(this.id,this.messageForm).then((response)=>{
         getAddressDetail(this.id).then(data=>{
           this.addrList = data
         })
-        this.$message('信函申请提交成功')
+        this.$message({
+          type: 'success',
+          message: '信函申请提交成功'
+        });
         this.dialogLetterVisible = false
       })
     },
@@ -2603,12 +2642,18 @@ AddtableList(this.id,this.messageForm).then((response)=>{
           getCollectDetail(this.id,this.memorizeType).then(data => {
             this.memorizeList = data
           })
-          this.$message('新增辅助催记成功')
+          this.$message({
+            type: 'success',
+            message: '新增辅助催记成功'
+          });
         }else{
           getCollectDetail(this.id,this.memorizeType).then(data => {
             this.memorizeList = data
           })
-          this.$message('修改辅助催记成功')
+          this.$message({
+            type: 'success',
+            message: '修改辅助催记成功'
+          });
         }
         this.dialogDataCollectVisible = false
       })
@@ -2635,12 +2680,18 @@ AddtableList(this.id,this.messageForm).then((response)=>{
           getAddressDetail(this.id).then(data=>{
             this.addrList = data
           })
-          this.$message('新增地址成功')
+          this.$message({
+            type: 'success',
+            message: '新增地址成功'
+          });
         }else{
           getAddressDetail(this.id).then(data=>{
             this.addrList = data
           })
-          this.$message('修改地址成功')
+          this.$message({
+            type: 'success',
+            message: '修改地址成功'
+          });
         }
         this.dialogAddrVisible = false
       })
@@ -2673,12 +2724,18 @@ AddtableList(this.id,this.messageForm).then((response)=>{
           getAddressDetail(this.id).then(data=>{
             this.addrList = data
           })
-          this.$message('新增地址成功')
+          this.$message({
+            type: 'success',
+            message: '新增地址成功'
+          });
         }else{
           getAddressDetail(this.id).then(data=>{
             this.addrList = data
           })
-          this.$message('修改地址成功')
+          this.$message({
+            type: 'success',
+            message: '修改地址成功'
+          });
         }
         this.dialogAddrVisible = false
       })
@@ -2693,7 +2750,10 @@ AddtableList(this.id,this.messageForm).then((response)=>{
             getAddressDetail(this.id).then(data=>{
                this.addrList = data
             })
-            this.$message('删除地址成功')
+            this.$message({
+              type: 'success',
+              message: '删除地址成功'
+            });
           })
         }).catch(() => {
           
@@ -2720,7 +2780,10 @@ AddtableList(this.id,this.messageForm).then((response)=>{
           getAddressDetail(this.id).then(data=>{
             this.addrList = data
           })
-          this.$message('地址状态修改成功')
+          this.$message({
+            type: 'success',
+            message: '地址状态修改成功'
+          });
         })
       }).catch(()=>{})
     },
@@ -2732,7 +2795,10 @@ AddtableList(this.id,this.messageForm).then((response)=>{
       let result = this.archiveInfo
       result.caseId = this.id
       saveArchive(result).then(res=>{
-        this.$message('新增案人数据成功')
+        this.$message({
+          type: 'success',
+          message: '新增案人数据成功'
+        });
         getArchiveDetail(this.id).then(data => {
           this.dataList = data
         })
@@ -2756,12 +2822,18 @@ AddtableList(this.id,this.messageForm).then((response)=>{
           getTelList(this.id).then(data=>{
             this.$set(this.caseDetail,'dataCaseTelEntityList',data)
           })
-          this.$message('新增电话成功')
+          this.$message({
+            type: 'success',
+            message: '新增电话成功'
+          });
         }else{
           getTelList(this.id).then(data=>{
             this.$set(this.caseDetail,'dataCaseTelEntityList',data)
           })
-          this.$message('修改电话成功')
+          this.$message({
+            type: 'success',
+            message: '修改电话成功'
+          });
         }
         this.dialogVisible = false
       })
@@ -2786,7 +2858,10 @@ AddtableList(this.id,this.messageForm).then((response)=>{
             getTelList(this.id).then(data=>{
               this.$set(this.caseDetail,'dataCaseTelEntityList',data)
             })
-            this.$message('删除电话成功')
+            this.$message({
+              type: 'success',
+              message: '删除电话成功'
+            });
           })
         }).catch(() => {
           
@@ -2799,7 +2874,10 @@ AddtableList(this.id,this.messageForm).then((response)=>{
           type: 'warning'
         }).then(() => {
           synchroSameTel(this.id).then(res=>{
-            this.$message('同步共债成功')
+            this.$message({
+              type: 'success',
+              message: '同步共债成功'
+            });
           })
         }).catch(() => {
           
@@ -2826,7 +2904,10 @@ AddtableList(this.id,this.messageForm).then((response)=>{
           getTelList(this.id).then(data=>{
             this.$set(this.caseDetail,'dataCaseTelEntityList',data)
           })
-          this.$message('电话状态修改成功')
+          this.$message({
+            type: 'success',
+            message: '电话状态修改成功'
+          });
         })
       }).catch(()=>{})
     },
@@ -2859,7 +2940,10 @@ AddtableList(this.id,this.messageForm).then((response)=>{
         comment: this.commentAddContent,
         color: this.commentAddColor
       }]).then(res => {
-        this.$message('评语添加成功')
+        this.$message({
+          type: 'success',
+          message: '评语添加成功'
+        });
         getCommentDetail(this.id).then(data => {
           this.commentList = data
           this.addCommentVisible = false
@@ -2883,7 +2967,10 @@ AddtableList(this.id,this.messageForm).then((response)=>{
         caseId: this.id,
         remark: this.batchAddTelContent
       }).then(res => {
-        this.$message('电话添加成功')
+        this.$message({
+          type: 'success',
+          message: '电话添加成功'
+        });
         getTelList(this.id).then(data=>{
           this.$set(this.caseDetail,'dataCaseTelEntityList',data)
           this.batchAddTelContent = null
