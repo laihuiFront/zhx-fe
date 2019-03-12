@@ -390,6 +390,7 @@
             </el-col>
           </el-row>
           <el-table
+            v-loadin="tableLoad"
             ref="multipleTable"
             :data="tableData"
             border
@@ -482,6 +483,7 @@ export default {
   name: "collectMyCase",
   data() {
     return {
+      tableLoad:false,
       paginationData: {
         pageSize: 100,
         total: 0,
@@ -861,6 +863,7 @@ export default {
       });
     },
     getMainData() {
+      this.tableLoad = true
       pageMyCase(this.realFetchFormData).then(data => {
         if (!data) {
           data = { total: 0, list: [] };
@@ -878,6 +881,7 @@ export default {
         this.tableData = data.list.map(item => {
           return Object.assign(item, { "class-name": `color_${item.color}` });
         });
+        this.tableLoad = false
       });
     },
     formatMoney(value, places, symbol, thousand, decimal) {

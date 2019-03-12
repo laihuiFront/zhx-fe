@@ -83,6 +83,7 @@
       </el-form-item>
     </el-form>
     <el-table
+      v-loading="tableLoad"
       class="table-wrap"
       :data="tableData"
       tooltip-effect="dark"
@@ -165,6 +166,7 @@ export default {
   },
   data(){
     return {
+      tableLoad:false,
       paginationData:{
         pageSize:100,
         total:0,
@@ -287,6 +289,7 @@ export default {
       cb([]);
     },
     getMainData(){
+      this.tableLoad = true
       this.realFetchFormData.orderBy = this.sort.orderBy
       this.realFetchFormData.sort = this.sort.sort
       pageCaseTel(this.realFetchFormData).then((data)=>{
@@ -307,6 +310,7 @@ export default {
         // }]
         this.paginationData.total = data.total;
         this.tableData = data.list;
+        this.tableLoad = false
       })
     },
     showCase(row){

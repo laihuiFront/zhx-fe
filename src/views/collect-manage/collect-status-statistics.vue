@@ -25,7 +25,7 @@
             >
           </el-form-item>
         </el-form>
-        <el-table class="table-wrap" :data="tableData1" style="width: 100%">
+        <el-table class="table-wrap" v-loading="tableLoad" :data="tableData1" style="width: 100%">
           <el-table-column
             v-for="(item, index) in tablecol_data1"
             :key="index"
@@ -95,7 +95,7 @@
             >
           </el-form-item>
         </el-form>
-        <el-table class="table-wrap" :data="tableData2" border
+        <el-table v-loading="tableLoad" class="table-wrap" :data="tableData2" border
                   stripe style="width: 100%">
           <el-table-column
             v-for="(item, index) in tablecol_data2"
@@ -164,7 +164,7 @@
             >
           </el-form-item>
         </el-form>
-        <el-table class="table-wrap" :data="tableData2" border
+        <el-table v-loading="tableLoad" class="table-wrap" :data="tableData3" border
                   stripe style="width: 100%">
           <el-table-column
             v-for="(item, index) in tablecol_data2"
@@ -183,6 +183,7 @@ export default {
   name: "collectStatusStatistics",
   data() {
     return {
+      tableLoad:false,
       activeName: "first",
       form1: { val1: null },
       tableData1: [],
@@ -246,18 +247,24 @@ export default {
       this.getMainData1();
     },
     getMainData1(){
+      this.tableLoad = true
       day({dateSearchStart:(!!this.form1.val1 && this.form1.val1[0])||'',dateSearchEnd:(!!this.form1.val1 && this.form1.val1[1])||''}).then((data)=>{
         this.tableData1 = data;
+        this.tableLoad = false
       })
     },
     getMainData2(){
+      this.tableLoad = true
       state(this.form2_data).then((data)=>{
         this.tableData2 = data;
+        this.tableLoad = false
       })
     },
     getMainData3(){
+      this.tableLoad = true
       batch(this.form3_data).then((data)=>{
         this.tableData3 = data;
+        thi.tableLoad = false
       })
     },
     getEnum(){

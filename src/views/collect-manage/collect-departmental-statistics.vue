@@ -199,6 +199,7 @@
         </span>
       </div>
       <el-table
+        v-loading="tableLoad"
         class="table-wrap"
         ref="multipleTable"
         :data="tableData"
@@ -253,6 +254,7 @@ export default {
       }
     ];
     return {
+      tableLoad:false,
       topData: {},
       form1: {
         val1: "0",
@@ -472,6 +474,7 @@ export default {
       });
     },
     getMainData() {
+      this.tableLoad = true
       pay(this.fetchData).then(data => {
         this.tableData = data.list;
         this.topData = data;
@@ -496,6 +499,7 @@ export default {
         this.topData.lastRepayAmt = this.formatMoney(data.lastRepayAmt,0, "￥")
         this.topData.lastBankAmt = this.formatMoney(data.lastBankAmt,0, "￥")
         this.topData.lastRepaidAmt = this.formatMoney(data.lastRepaidAmt,0, "￥")
+        this.tableLoad = false
       });
     },
     init() {
