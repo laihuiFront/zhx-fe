@@ -537,7 +537,10 @@
       },
       onClickSave(){
         updateDataCollectRecord(this.recordInfo).then(res=>{
-          this.$message('修改记录成功成功')
+          this.$message({
+            type: 'success',
+            message: '修改记录成功成功!'
+          });
           this.search()
           this.dialogVisible1 = false
         })
