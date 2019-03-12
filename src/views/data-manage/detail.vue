@@ -222,7 +222,7 @@
             label="账号">
           </el-table-column>
           <el-table-column
-            prop="money"
+            prop="moneyMsg"
             label="委案金额">
           </el-table-column>
           <el-table-column
@@ -230,15 +230,15 @@
             label="币种">
           </el-table-column>
           <el-table-column
-            prop="proRepayAmt"
-            label="PTP">
+            prop="proRepayAmtMsg"
+            label="承诺还款金额">
           </el-table-column>
           <el-table-column
-            prop="bankAmt"
+            prop="bankAmtMsg"
             label="待银行查账金额">
           </el-table-column>
           <el-table-column
-            prop="enRepayAmt"
+            prop="enRepayAmtMsg"
             label="已还款">
           </el-table-column>
           <el-table-column
@@ -654,7 +654,7 @@
                       <el-popover
                         v-model="scope.row.showHistory"
                         placement="top"
-                        width="600"
+                        width="1000"
                         trigger="manual">
                         <div>
                           <el-radio-group v-model="scope.row.historyType" @change='getHistoryTel'>
@@ -747,7 +747,7 @@
                   <el-table-column
                     label="操作"
                     v-if="letterVisible2"
-                    width="200">
+                    width="250">
                     <template slot-scope="scope">
                       <el-popover
                         v-model="scope.row.showHistory"
@@ -1211,17 +1211,17 @@
                     label="委托方">
                   </el-table-column>
                   <el-table-column
-                    prop="money"
+                    prop="moneyMsg"
                     show-overflow-tooltip
                     label="委案金额">
                   </el-table-column>
                   <el-table-column
-                    prop="collectStatus"
+                    prop="collectStatusMsg"
                     show-overflow-tooltip
                     label="催收状态">
                   </el-table-column>
                   <el-table-column
-                    prop="enRepayAmt"
+                    prop="enRepayAmtMsg"
                     show-overflow-tooltip
                     label="已还款">
                   </el-table-column>
@@ -1811,16 +1811,16 @@
   </el-col>
   <el-col :span="12">
   	<div class="grid-content bg-purple">
-  		<el-form-item
+  		<el-form-item>
   			<el-select v-model="messageForm.batchStatus" placeholder="请选择" clearable>
-    <el-option
-      v-for="item in caseDetail.dataCaseTelEntityList"
-      :key="item.id"
-      :label="item.name"
-      :value="item.id">
-    </el-option>
-  </el-select>
-  </el-form-item>
+        <el-option
+          v-for="item in caseDetail.dataCaseTelEntityList"
+          :key="item.id"
+          :label="item.name"
+          :value="item.id">
+        </el-option>
+      </el-select>
+      </el-form-item>
   	</div>
   </el-col>
 </el-row>
