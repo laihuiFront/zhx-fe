@@ -111,7 +111,7 @@
       label="备注"
       show-overflow-tooltip>
       <template slot-scope="scope" >
-        <div v-for="(domain, index) in scope.row.remakList">
+        <div v-for="(domain, index) in scope.row.remarkList">
           <span >{{domain.remark}}</span> <br />
         </div>
       </template>
@@ -614,8 +614,11 @@ this.search()
       })
     },
     downModule(){
+    	this.loading2=true
+					this.fullscreenLoading=true
       downModule().then((response)=> {
-
+this.loading2=false
+					this.fullscreenLoading=false
       })
     },
       search(){
@@ -695,6 +698,9 @@ this.search()
   	margin-bottom: 10px;
   	
   }
+   .el-loading-spinner .el-loading-text {
+    font-size: 18px;
+    }
 }
 </style>
 
