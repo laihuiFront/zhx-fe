@@ -1743,7 +1743,7 @@
       </span>
     </el-dialog>
     <el-dialog
-      title="新增/编辑地址"
+      title="申请信函"
       :visible.sync="dialogLetterVisible"
       width="45%"
       append-to-body
