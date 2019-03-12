@@ -411,7 +411,7 @@
             type="textarea"
             :rows="4"
             placeholder="请输入内容"
-            v-model="recordInfo.result">
+            v-model="recordInfo.collectInfo">
           </el-input>
         </el-form-item>
       </el-form>
@@ -527,7 +527,7 @@
       editMessage(record){
         this.recordInfo = {
           id: record.id,
-          result: record.result,
+          collectInfo: record.collectInfo,
           collectTime: record.collectTime
         }
         this.dialogVisible1 = true
@@ -549,7 +549,10 @@
           type: 'warning'
         }).then(() => {
           deleteDataCollectRecord([{id}]).then(res=>{
-            this.$message('删除成功')
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            });
             this.search()
           })
         }).catch(() => {
