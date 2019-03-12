@@ -52,6 +52,7 @@
   </el-form-item>
     </el-form>
    <el-table
+    v-loading="tableLoad"
     class="table-wrap"
      border
      stripe
@@ -420,6 +421,7 @@ export default {
   name: 'dataFileManage',
    data(){
     return {
+      tableLoad:false,
     	ImportMsg:'',
     	ImportdialogVisible:false,
     	loading2:false,
@@ -490,11 +492,13 @@ export default {
             type: 'success',
             message: "导入成功"
           });
+          this.tableLoad = true
            dataList().then((response)=>{
             this.DataList=response.list
               //this.pages = response.pages
               this.total = response.total
               this.loading2=false
+              this.tableLoad = false
           })
       }else{
         this.ImportdialogVisible=true
@@ -593,10 +597,12 @@ this.search()
       this.orderBy = prop==null?"id":prop
       let startTime=this.form.time[0]
       let endTime=this.form.time[1]
+      this.tableLoad = true
       dataList(this.form.name,this.form.identNo,this.form.mobile,this.form.address,startTime,endTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
         this.DataList=response.list
         //this.pages = response.pages
         this.total = response.total
+        this.tableLoad = false
       })
     },
     downModule(){
@@ -606,11 +612,13 @@ this.search()
     },
       search(){
       	let startTime=this.form.time[0]
-      	let endTime=this.form.time[1]
+        let endTime=this.form.time[1]
+        this.tableLoad = true
         dataList(this.form.name,this.form.identNo,this.form.mobile,this.form.address,startTime,endTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
           this.DataList=response.list
           //this.pages = response.pages
           this.total = response.total
+          this.tableLoad = false
         })
       },
        submitForm(formName){
@@ -644,10 +652,12 @@ this.search()
       }
     },
     created() {
+      this.tableLoad = true
             dataList().then((response)=>{
             this.DataList=response.list
              // this.pages = response.pages
               this.total = response.total
+              this.tableLoad = false
 })    
              
 },

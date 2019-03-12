@@ -134,6 +134,7 @@
     </el-form-item>
    </el-form>
    <el-table
+    v-loading="tableLoad"
    	class="table-wrap"
     ref="multipleTable"
     :data="DataList"
@@ -510,6 +511,7 @@ export default {
   name: 'dataCaseImported',
   data(){
     return {
+      tableLoad:false,
     	action:baseURL+'/dataCase',
       collectAction:baseURL,
     	ImportdialogVisible:false,
@@ -598,11 +600,13 @@ methods: {
             type: 'success',
             message: "导入成功"
           });
+          this.tableLoad = true
            dataList().then((response)=>{
             this.DataList=response.pageInfo.list
               //this.pages = response.pages
               this.total = response.total
               this.loading2=false
+              this.tableLoad = false
           })
       }else{
         this.ImportdialogVisible=true
@@ -712,22 +716,25 @@ methods: {
       this.sort = order==null?"desc":order.replace("ending","")
       this.orderBy = prop==null?"id":prop
      /* this.$refs.multipleTable.clearSort()*/
+     this.tableLoad = true
       dataList(this.form.area,this.form.batchNos,this.form.clients,this.form.caseType,startTime,endTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
         this.DataList=response.pageInfo.list
         this.pages = response.pageInfo.pages
         this.total = response.pageInfo.total
         this.tableAttribute.sortMethod.order = 'descending'
+        this.tableLoad = false
       })
   },
 	search(){
       	let startTime=this.form.time[0]
       	let endTime=this.form.time[1]
-
+        this.tableLoad = true
 dataList(this.form.area,this.form.batchNos,this.form.clients,this.form.caseType,startTime,endTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
             this.DataList=response.pageInfo.list
   console.info(response.pageInfo.pages);
            // this.pages = response.pageInfo.pages
             this.total = response.pageInfo.total
+            this.tableLoad = false
 })
       },
   handleSizeChange(val){
@@ -783,9 +790,11 @@ this.search()
       },
     },
 created() {
+            this.tableLoad = true
             dataList().then((response)=>{
             this.DataList=response.pageInfo.list
               this.total = response.pageInfo.total
+              this.tableLoad = false
 })
               clientList().then((response)=>{
             this.form.clientList=response;

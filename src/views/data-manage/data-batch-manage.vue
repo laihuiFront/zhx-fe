@@ -84,6 +84,7 @@
       </el-form-item>
     </el-form>
    <el-table
+    v-loading="tableLoad"
    	class="table-wrap"
     ref="multipleTable"
     :data="DataList"
@@ -388,6 +389,7 @@ export default {
   name: 'dataBatchManage',
    data(){
     return {
+      tableLoad:false,
     	batchList:[],
       header:{Authorization:localStorage.token},
     	loading:false,
@@ -539,17 +541,20 @@ methods: {
     let endTime=this.form.time[1]
     this.sort = order==null?"desc":order.replace("ending","")
     this.orderBy = prop==null?"id":prop
+    this.tableLoad = true
     dataList(this.form.area,this.form.batchNos,this.form.clients,this.form.batchStatus,this.form.caseType,startTime,endTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
 
       this.DataList=response.pageInfo.list
       //this.pages = response.pageInfo.pages
       this.total = response.pageInfo.total
+      this.tableLoad = false
     })
   },
 	search(){
       	let startTime=this.form.time[0]
       	let endTime=this.form.time[1]
     console.info("***"+this.form.batchStatus)
+    this.tableLoad = true
 dataList(this.form.area,this.form.batchNos,this.form.clients,this.form.batchStatus,this.form.caseType,startTime,endTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
 
             this.DataList=response.pageInfo.list
@@ -557,6 +562,7 @@ dataList(this.form.area,this.form.batchNos,this.form.clients,this.form.batchStat
             this.totalAmt=this.formatMoney(response.totalAmt,0, "￥");
             //this.pages = response.pageInfo.pages
             this.total = response.pageInfo.total
+            this.tableLoad = false
 })
       },
       returnCaseList(){
@@ -604,11 +610,13 @@ dataList(this.form.area,this.form.batchNos,this.form.clients,this.form.batchStat
         type: 'success',
         message: res.msg
       });
+      this.tableLoad = true
       dataList().then((response)=>{
         this.DataList=response.pageInfo.list
         this.total = response.pageInfo.total
         this.totalAmt=this.formatMoney(response.totalAmt,0, "￥");
         this.total = response.total
+        this.tableLoad = false
       })
     }else{
       this.$message({
@@ -704,12 +712,14 @@ this.search()
       },
    },
    created() {
+     this.tableLoad = true
             dataList().then((response)=>{
               this.DataList=response.pageInfo.list
               //this.pages = response.pageInfo.pages
               this.total = response.pageInfo.total
               this.totalAmt=this.formatMoney(response.totalAmt,0, "￥");
               this.userCount=response.userCount;
+              this.tableLoad = false
             })
               clientList().then((response)=>{
             this.form.clientList=response;

@@ -401,6 +401,7 @@
     </el-row>
     
     <el-table
+      v-loading="tableLoad"
       class="table-wrap"
       ref="multipleTable"
       :data="tableData3"
@@ -881,6 +882,7 @@
     },
     data(){
       return {
+        tableLoad:false,
       	dialogVisibleCase:false,
         detailId: -1,
       	addSynergyForm:{
@@ -1370,6 +1372,7 @@
       searchdataList(form){
         this.formInline.orderBy = this.orderBy;
         this.formInline.sort = this.sort;
+        this.tableLoad = true
         dataList(this.formInline).then((response)=>{
           this.totalCaseNum=response.totalCaseNum
           this.totalAmt = this.formatMoney(response.totalAmt,0, "￥")
@@ -1381,6 +1384,7 @@
           //this.pages = response.pages
           this.total = response.pageInfo.total
           this.dialogVisible = false
+          this.tableLoad = false
         })
       },
       handleSelectionChange(row){
@@ -1397,7 +1401,7 @@
         this.sort = order==null?"desc":order.replace("ending","")
         this.orderBy = prop==null?"id":prop
 
-   
+        this.tableLoad = true
         searchList(this.formInline,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
           this.totalCaseNum=response.totalCaseNum
           this.totalAmt = this.formatMoney(response.totalAmt,0, "￥")
@@ -1409,6 +1413,7 @@
 
           //this.pages = response.pages
           this.total = response.pageInfo.total
+          this.tableLoad = false
         })
       },
       handleSizeChange(val){
@@ -1416,6 +1421,7 @@
         this.search()
       },
       search(){
+          this.tableLoad = true
         searchList(this.formInline,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
           this.totalCaseNum=response.totalCaseNum
           this.totalAmt = this.formatMoney(response.totalAmt,0, "￥")
@@ -1427,6 +1433,7 @@
 
           //this.pages = response.pages
           this.total = response.pageInfo.total
+          this.tableLoad = false
         })
       },
       handleSizeChange(val){
@@ -1487,6 +1494,7 @@
       }
     },
     created() {
+      this.tableLoad = true
       searchList(this.formInline,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
         this.tableData3=response.pageInfo.list
         this.totalCaseNum=response.totalCaseNum
@@ -1499,6 +1507,7 @@
         this.tableData3 = response.pageInfo.list.map((item)=>{
           return Object.assign(item, {'class-name': `color_${item.color}`});
         })
+        this.tableLoad = false
       })
       areaList().then((response)=>{
         this.areaList=response

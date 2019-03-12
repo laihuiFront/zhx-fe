@@ -197,6 +197,7 @@
       </el-form-item>
     </el-form>
     <el-table
+      v-loading="tableLoad"
       class="table-wrap"
       ref="multipleTable"
       :data="tableData3"
@@ -447,6 +448,7 @@
     name: 'dataMemorizeManage',
     data(){
       return {
+        tableLoad:false,
         images:{background: "url(" + require("./down.png") + ") repeat-x",padding:"8px 5px 3px 6px",},
         loading:false,
         caseStatusList:[{name:"未退案",id:0},{name:"正常",id:1},{name:"暂停",id:2},{name:"关档",id:3},{name:"退档",id:4},{name:"全部",id:5}],
@@ -606,17 +608,21 @@
       handleSort( {column,prop,order}){
         this.sort = order==null?"desc":order.replace("ending","")
         this.orderBy = prop==null?"id":prop
+        this.tableLoad = true
         search(this.formInline,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
           this.tableData3=response.list
           //this.pages = response.pages
           this.total = response.total
+          this.tableLoad = false
         })
       },
       search(){
+        this.tableLoad = true
         search(this.formInline,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
           this.tableData3=response.list
           //this.pages = response.pages
           this.total = response.total
+          this.tableLoad = false
         })
       },
       Listsearch(){
@@ -626,10 +632,12 @@
         let expectEndTime=this.formInline.expectTime[1]
         let collectStartTime=this.formInline.collectTime[0]
         let collectEndTime=this.formInline.collectTime[1]
+        this.tableLoad = true
         dataList(this.formInline,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
           this.tableData3=response.list
           this.total=response.total
           this.dialogVisible=false
+          this.tableLoad = false
         })
       },
       handleSelectionChange(row){
@@ -691,10 +699,12 @@
       },
     },
     created() {
+      this.tableLoad = true
       dataList(this.formInline,this.sort,this.orderBy,this.pageSize,this.pageNum).then((response)=>{
         this.tableData3=response.list
         //this.pages = response.pages
         this.total = response.total
+        this.tableLoad = false
       })
       areaList().then((response)=>{
         this.areaList=response
