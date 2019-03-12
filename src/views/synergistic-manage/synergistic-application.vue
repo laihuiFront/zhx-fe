@@ -62,6 +62,7 @@
         </el-dropdown>
     </syn-record-query>
     <el-table
+      v-loading="tableLoad"
       @selection-change="onSelectRow"
       @sort-change="handleSort"
       border
@@ -137,6 +138,7 @@ export default {
   },
   data(){
     return {
+      tableLoad:false,
       action:baseURL,
       header:{Authorization:localStorage.token},
       recordList: [],
@@ -199,10 +201,12 @@ export default {
       }
     },
     onClickQuery(){
+      this.tableLoad = true
       this.recordList = []
       getSynergisticRecordList(this.queryForm).then(data => {
         this.recordList = data.list
         this.total = data.total
+        this.tableLoad = false
       })
     },
     handleSort({column,prop,order}){

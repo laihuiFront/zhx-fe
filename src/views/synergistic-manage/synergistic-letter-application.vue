@@ -212,6 +212,7 @@
             </el-col>
           </el-row>
           <el-table
+            v-loading="tableLoad"
             class="table-wrap"
             ref="multipleTable"
             :data="tableData"
@@ -318,6 +319,7 @@ export default {
   },
   data() {
     return {
+      tableLoad:false,
       ImportdialogVisible:false,
       ImportMsg: '',
       paginationData: {
@@ -636,6 +638,7 @@ export default {
       });
     },
     getMainData() {
+      this.tableLoad = true
       pageDataLetter(this.realFetchFormData).then(data => {
         if (!data) {
           data = { total: 0, list: [] };
@@ -645,6 +648,7 @@ export default {
         this.tableData = data.list.map(item => {
           return Object.assign(item, { "class-name": `color_${item.color}` });
         });
+        this.tableLoad = false
       });
     },
     resetForm(formName) {

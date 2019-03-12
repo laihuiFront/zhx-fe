@@ -29,6 +29,7 @@
       </el-dropdown>
     </bank-record-query>
     <el-table
+      v-loading="tableLoad"
       @sort-change="handleSort"
       @selection-change="onSelectRow"
       border
@@ -148,6 +149,7 @@ export default {
   },
   data(){
     return {
+      tableLoad:false,
       action:baseURL,
       header:{Authorization:localStorage.token},
       recordList: [],
@@ -174,9 +176,11 @@ export default {
     }
   },
   created() {
+    this.tableLoad = true
     getBankReconList(this.queryForm).then(data => {
       this.recordList = data.list
       this.total = data.total
+      this.tableLoad = false
     })
   },
   methods: {
@@ -217,10 +221,12 @@ export default {
       }
     },
     onClickQuery(){
+      this.tableLoad = true
       this.recordList = []
       getBankReconList(this.queryForm).then(data => {
         this.recordList = data.list
         this.total = data.total
+        this.tableLoad = false
       })
     },
     handleSort({column,prop,order}){

@@ -36,6 +36,7 @@
       <span class="item">总佣金额：{{sumForm.dataCase.commissionMoney?sumForm.dataCase.commissionMoney:0}}</span>
     </div>
      <el-table
+      v-loading="tableLoad"
       @selection-change="onSelectRow"
       @sort-change="handleSort"
       border
@@ -186,6 +187,7 @@ export default {
   },
   data(){
     return {
+      tableLoad:false,
       action:baseURL,
       header:{Authorization:localStorage.token},
       sumForm:{dataCase:{}},
@@ -222,9 +224,11 @@ export default {
     }
   },
   created() {
+    this.tableLoad = true
     getRepayRecordList(this.queryForm).then(data => {
       this.recordList = data.list
       this.total = data.total
+      this.tableLoad = false
     })
     getRepayRecordQuerySum(this.queryForm).then(data=>{
       this.sumForm = data
@@ -283,10 +287,12 @@ export default {
       this.onClickQuery()
     },
     onClickQuery(){
+      this.tableLoad  = true
       this.recordList = []
       getRepayRecordList(this.queryForm).then(data => {
         this.recordList = data.list
         this.total = data.total
+        this.tableLoad = false
       })
       getRepayRecordQuerySum(this.queryForm).then(data=>{
         this.sumForm = data
