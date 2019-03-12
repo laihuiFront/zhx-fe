@@ -70,6 +70,11 @@
         style="width: 100%"
         v-loading="tableLoad"
       >
+        <el-table-column v-if="currentEnum.name==='催收区域'" prop="id" label="催收区域id">
+          <template slot-scope="scope">
+            <span>{{scope.row.id}}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="date" :label="currentEnum.name">
           <template slot-scope="scope">
             <el-input
