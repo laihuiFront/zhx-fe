@@ -682,9 +682,11 @@
       :close-on-click-modal="false"
       width="30%"
     >
-      <el-form :inline="true" :model="fenan" class="demo-form-inline" label-width="120px">
+      <el-form :inline="true" ref="fenan" :model="fenan" class="demo-form-inline" label-width="120px">
         <div class="grid-content bg-purple">
-          <el-form-item label="催收员">
+          <el-form-item label="催收员"
+          	prop="odv"
+    :rules="{required: true, message: '催收员不能为空', trigger: 'blur'}">
             <el-select v-model="fenan.odv" filterable  placeholder="请选择催收员" clearable>
               <el-option
                 v-for="item in PersonList"
@@ -697,8 +699,8 @@
         </div>
       </el-form>
       <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisible2 = false">取 消</el-button>
-    <el-button type="primary" @click=fenancheckone>确 定</el-button>
+    <el-button @click="detailVisible3 = false">取 消</el-button>
+    <el-button type="primary" @click="submitmsgForm('fenan')">确 定</el-button>
   </span>
     </el-dialog>
       <el-dialog
@@ -708,9 +710,11 @@
       :close-on-click-modal="false"
       width="30%"
     >
-      <el-form :inline="true" :model="fenan" class="demo-form-inline" label-width="120px">
+      <el-form :inline="true" ref="fenan" :model="fenan" class="demo-form-inline" label-width="120px">
         <div class="grid-content bg-purple">
-          <el-form-item label="催收员">
+          <el-form-item label="催收员"
+          		prop="odv"
+    :rules="{required: true, message: '催收员不能为空', trigger: 'blur'}">>
             <el-select v-model="fenan.odv" filterable  placeholder="请选择催收员" clearable>
               <el-option
                 v-for="item in PersonList"
@@ -723,8 +727,8 @@
         </div>
       </el-form>
       <span slot="footer" class="footer">
-    <el-button @click="dialogVisible8 = false">取 消</el-button>
-    <el-button type="primary" @click=fenanchecktwo>确 定</el-button>
+    <el-button @click="detailVisible8 = false">取 消</el-button>
+    <el-button type="primary" @click="submitmsgForm2('fenan')">确 定</el-button>
   </span>
     </el-dialog>
     <el-dialog
@@ -980,6 +984,26 @@
       }
     },
     methods: {
+    	  submitmsgForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+         this.fenancheckone()
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
+      submitmsgForm2(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+         this.fenanchecktwo()
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
     	rowColor({row}){
       return `color_${row.color}`;
     },

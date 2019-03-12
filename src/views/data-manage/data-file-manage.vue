@@ -1,9 +1,11 @@
 <template>
   <div id="data-file-manage" class="page-wraper-sub"
   	v-loading="loading2"
+  	   	   	  	  v-loading.fullscreen.lock="fullscreenLoading"
+
     element-loading-text="正在导入中"
     element-loading-spinner="el-icon-loading"
-   element-loading-background="rgba(248, 248, 248, 0.8)">
+   element-loading-background="rgba(0, 0, 0, 0.7)">
     <el-form ref="form" :model="form" :inline="true" class="query-wrap">
       <el-form-item >
      <el-input v-model="form.identNo" placeholder="请输入证件号" clearable></el-input>
@@ -421,6 +423,7 @@ export default {
   name: 'dataFileManage',
    data(){
     return {
+    	fullscreenLoading:false,
       tableLoad:false,
     	ImportMsg:'',
     	ImportdialogVisible:false,
@@ -471,13 +474,17 @@ export default {
   	ImportdialogVisibleWay(){
 		this.loading2=false
 		this.ImportdialogVisible=false
+					this.fullscreenLoading=false
 	},
   	handleClose(){
   			this.loading2=false
+  						this.fullscreenLoading=false
 		this.ImportdialogVisible=false
   	},
   	onProgress(){
 		this.loading2=true
+					this.fullscreenLoading=true
+
 	},
   	showMessage(row){
   		console.log(row)
@@ -498,6 +505,7 @@ export default {
               //this.pages = response.pages
               this.total = response.total
               this.loading2=false
+              			this.fullscreenLoading=false
               this.tableLoad = false
           })
       }else{

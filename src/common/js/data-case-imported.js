@@ -24,7 +24,7 @@ return request({
     url: '/dataBatch/save',
     method: 'post',
     data:{
-   area:form.area,//催收区域
+   area:form.areaListId,//催收区域
    batchNo:form.batchNo,//批次编号
    client:form.client,//委托方
    caseType:form.caseType,//案件类型

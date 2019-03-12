@@ -1,6 +1,7 @@
 <template>
   <div id="data-case-imported" 
   	 v-loading="loading2"
+  	  v-loading.fullscreen.lock="fullscreenLoading"
     element-loading-text="正在导入中"
     element-loading-spinner="el-icon-loading"
    element-loading-background="rgba(0, 0, 0, 0.7)"
@@ -511,6 +512,7 @@ export default {
   name: 'dataCaseImported',
   data(){
     return {
+    	fullscreenLoading:false,
       tableLoad:false,
     	action:baseURL+'/dataCase',
       collectAction:baseURL,
@@ -549,6 +551,7 @@ export default {
 methods: {
 	handleClose(){
 		this.loading2=false
+		this.fullscreenLoading=false
 		this.ImportdialogVisible=false
 	},
 	changeBotno(){
@@ -571,10 +574,12 @@ methods: {
 	},
 	ImportdialogVisibleWay(){
 		this.loading2=false
+				this.fullscreenLoading=false
 		this.ImportdialogVisible=false
 	},
 	onProgress(){
 		this.loading2=true
+		this.fullscreenLoading=true
 	},
 	backForm(){
 		this.dialogVisible=false;
@@ -606,6 +611,7 @@ methods: {
               //this.pages = response.pages
               this.total = response.total
               this.loading2=false
+              this.fullscreenLoading=false
               this.tableLoad = false
           })
       }else{
@@ -827,7 +833,9 @@ created() {
   .upload-demo{
   	display: inline-block;
   }
-
+.el-loading-spinner .el-loading-text {
+    font-size: 18px;
+    }
 }
 </style>
 

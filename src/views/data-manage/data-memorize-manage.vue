@@ -2,8 +2,9 @@
   <div id="data-memorize-manage"
   	v-loading="loading"	 
   	element-loading-text="拼命加载中"
+  	  	  v-loading.fullscreen.lock="fullscreenLoading"
     element-loading-spinner="el-icon-loading"
-    element-loading-background="rgba(248, 248, 248, 0.8)"
+    element-loading-background="rgba(0, 0, 0, 0.8)"
     class="page-wraper-sub">
     <el-form id="repay-record-query" :model="formInline" :inline="true" class="query-wrap">
       <el-form-item >
@@ -478,6 +479,7 @@
             value:'棕'
           },
         ],
+        fullscreenLoading:false,
         EndList:[],
         selectDataCollectExportList:[],
         departmentList:[],
@@ -557,9 +559,11 @@
       },
       selectDataCollectExport(){
         this.loading=true
+        		this.fullscreenLoading=true
         if(this.selectDataCollectExportList.length>=1) {
           selectDataExport(this.selectDataCollectExportList).then((response) => {
             this.loading = false;
+            		this.fullscreenLoading=false
             this.$message({
               type: 'success',
               message: '导出成功!'
@@ -567,6 +571,7 @@
           })
         }else{
           this.loading = false;
+          		this.fullscreenLoading=false
           this.$message({
             type: 'info',
             message: '请选择数据!'
@@ -575,6 +580,8 @@
       },
       totalDataCollectExport(){
         this.loading=true;
+        		this.fullscreenLoading=true
+
         let bailStartDate=this.formInline.bailTime[0]
         let bailEndDate=this.formInline.bailTime[1]
         let expectStartTime=this.formInline.expectTime[0]
@@ -583,6 +590,8 @@
         let collectEndTime=this.formInline.collectTime[1]
         totalDataExport(this.formInline.area,this.formInline.dept,this.formInline.batchNo,this.formInline.clients,this.formInline.odvs,this.formInline.caseStatus,this.formInline.measure,this.formInline.result,this.formInline.identNo,this.formInline.cardNo,this.formInline.collectInfo,this.formInline.color,this.formInline.seqno,this.formInline.bailStartDate,this.formInline.bailEndDate,this.formInline.expectStartTime,this.formInline.expectEndTime,this.formInline.collectStartTime,this.formInline.collectEndTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
           this.loading=false;
+          		this.fullscreenLoading=false
+
           this.$message({
             type: 'success',
             message: '导出成功!'
@@ -591,6 +600,7 @@
       },
       pageDataCollectExport(){
         this.loading=true;
+        		this.fullscreenLoading=true
         let bailStartDate=this.formInline.bailTime[0]
         let bailEndDate=this.formInline.bailTime[1]
         let expectStartTime=this.formInline.expectTime[0]
@@ -599,6 +609,8 @@
         let collectEndTime=this.formInline.collectTime[1]
         pageDataExport(this.formInline.area,this.formInline.dept,this.formInline.batchNo,this.formInline.clients,this.formInline.odvs,this.formInline.caseStatus,this.formInline.measure,this.formInline.result,this.formInline.identNo,this.formInline.cardNo,this.formInline.collectInfo,this.formInline.color,this.formInline.seqno,this.formInline.bailStartDate,this.formInline.bailEndDate,this.formInline.expectStartTime,this.formInline.expectEndTime,this.formInline.collectStartTime,this.formInline.collectEndTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
           this.loading=false;
+          		this.fullscreenLoading=false
+
           this.$message({
             type: 'success',
             message: '导出成功!'
@@ -758,6 +770,9 @@
           }
         }
       }
+    }
+    .el-loading-spinner .el-loading-text {
+    font-size: 18px;
     }
   }
 </style>
