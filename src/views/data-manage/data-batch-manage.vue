@@ -226,7 +226,7 @@
       <template slot-scope="scope">
         <el-button type="text" size="small" @click="returnMessage(scope.row.id)" v-has="'退案'">退案</el-button>
         <el-button type="text" size="small" @click="editMessage(scope.row)" v-has="'编辑'">编辑</el-button>
-        <el-button type="text" size="small" @click="deleteMessage(scope.row.id)" v-has="'删除'">删除</el-button>
+        <el-button type="text" size="small" @click="deleteMessage(scope.row.id,scope.row.batchNo)" v-has="'删除'">删除</el-button>
         <el-button type="text" size="small" v-has="'批量导出批次催记'" @click="exportCollect(scope.row)">导出催记</el-button>
       </template>
     </el-table-column>
@@ -639,6 +639,7 @@ this.search()
 		let Project={batchNo:""}
 		Project.batchNo=currentValue.batchNo
 	   Object.id=currentValue.id
+    Object.batchNo=currentValue.batchNo
 	   _self.deleteList.push(Object)
 	   _self.selectDataBatchExportList.push(Object)
 	   _self.selectDataCollectExportByBatchList.push(Project)

@@ -225,7 +225,7 @@
 </el-upload>
         <el-button type="text" size="small" v-if="scope.row.batchStatus!=0" @click="downCaseModule(scope.row)" v-has="'下载'">下载</el-button>
         <el-button type="text" size="small" @click="editMessage(scope.row)" v-has="'编辑'">编辑</el-button>
-        <el-button type="text" size="small" @click="deleteMessage(scope.row.id)" v-has="'删除批次'">删除</el-button>
+        <el-button type="text" size="small" @click="deleteMessage(scope.row.id,scope.row.batchNo)" v-has="'删除批次'">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -751,6 +751,7 @@ this.search()
 	row.forEach(function(currentValue, index, arr){
 		let Object={"id":""}
 	   Object.id=currentValue.id
+     Object.batchNo = currentValue.batchNo
 	   _self.deleteList.push(Object)
 	})
 

@@ -2506,8 +2506,10 @@ AddtableList(this.id,this.messageForm).then((response)=>{
           type: 'success',
           message: '新增催收记录成功'
         });
-        getCollectDetail(this.id,1).then(data => {
-          console.info(data)
+        let batchNo = this.caseDetail.batchNo;
+        let identNo = this.caseDetail.identNo;
+        let cardNo = this.caseDetail.cardNo;
+        getCollectDetail(this.id,batchNo,identNo,cardNo,1).then(data => {
           this.memorizeList = data
         })
       })
