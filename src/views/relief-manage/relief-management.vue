@@ -368,7 +368,7 @@
           width="170"
           show-overflow-tooltip>
           <template slot-scope="scope">
-          <el-button type="text" size="small" @click="checkData(scope.row)" v-has="'批量审核'">审核</el-button>
+          <el-button type="text" size="small" @click="open7(scope.row)" v-has="'批量审核'">审核</el-button>
           <el-button type="text" size="small" @click="showMessage(scope.row)">查看</el-button>
           <el-button type="text" size="small" @click="showMessage(scope.row)" v-has="'修改'">修改</el-button>
             <el-button type="text" size="small" @click="deteleList(scope.row.id)" v-has="'删除'">删除</el-button>
@@ -741,6 +741,18 @@ export default {
     }
 },
  methods: {
+ 	  open7(row) {
+        this.$confirm('确定审核通过减免申请转入待提交吗？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        }).then(() => {
+          this.checkData(row)
+        }).catch(() => {
+
+        });
+      },
  	   handleSort( {column,prop,order}){
       this.sort = order==null?"desc":order.replace("ending","")
       this.orderBy = prop==null?"id":prop
@@ -821,7 +833,7 @@ this.search()
        } else if(this.activeName2==="second"){
        	 this.istrue1=false
     	   this.istrue2=true
-        	this.istrue3=false
+        	this.istrue3=true
         	this.istrue4=false
     	   this.istrue5=true
     	   this.applyStatus=1
