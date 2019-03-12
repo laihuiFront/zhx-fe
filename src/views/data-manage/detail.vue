@@ -763,11 +763,11 @@
                         <div style="text-align:center">
                           <el-button type="primary" @click="$set(scope.row, 'showHistory',false)">关闭</el-button>
                         </div>
-                        <el-button slot="reference" type="text" @click="showHistoryAddr(scope.row)">历史记录</el-button>
+                        <el-button slot="reference" type="text" @click="showHistoryAddr(scope.row)" v-if="letterVisible2">历史记录</el-button>
                       </el-popover>
-                      <el-button type="text" @click="applyLetter(scope.row)" v-if="caseDetail.currentuser">申请信函</el-button>
-                      <el-button type="text" @click="editAddr(scope.row)" v-if="caseDetail.currentuser">编辑</el-button>
-                      <el-button type="text" @click="deleteAddr(scope.row.id)" v-if="caseDetail.currentuser">删除</el-button>
+                      <el-button type="text"  @click="applyLetter(scope.row)" v-if="caseDetail.currentuser && letterVisible2">申请信函</el-button>
+                      <el-button type="text" @click="editAddr(scope.row)" v-if="caseDetail.currentuser && letterVisible2">编辑</el-button>
+                      <el-button type="text" @click="deleteAddr(scope.row.id)" v-if="caseDetail.currentuser&& letterVisible2">删除</el-button>
                     </template>
                   </el-table-column>
                 </el-table>
@@ -2627,8 +2627,8 @@ AddtableList(this.id,this.messageForm).then((response)=>{
     showLetterList(){
       getLetterList(this.id).then(data=>{
         this.letterList = data;
-        this.letterVisible = true;
         this.letterVisible2 = false;
+        this.letterVisible = true;
       })
     },
     saveDataCollect(){
