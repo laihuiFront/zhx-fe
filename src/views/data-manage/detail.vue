@@ -1476,8 +1476,8 @@
               label-width="100px"
               class="demo-ruleForm"
             >
-              <el-form-item label="电话" prop="mobile">
-                <el-input v-model="batchForm.mobile" placeholder="请输入电话号码"></el-input>
+              <el-form-item label="电话" prop="mobile" >
+                <el-input v-model="batchForm.mobile"  placeholder="请输入电话号码"></el-input>
               </el-form-item>
               <el-form-item label="姓名" prop="targetName">
                 <el-input v-model="batchForm.targetName" placeholder="请输入姓名"></el-input>
@@ -1570,9 +1570,9 @@
               style="width: 100%"
               border stripe
               class="table-wrap">
-              <el-table-column prop="collectTime" width="80" label="时间" show-overflow-tooltip></el-table-column>
-              <el-table-column prop="targetName" width="70" label="对象姓名" show-overflow-tooltip></el-table-column>
-              <el-table-column prop="relation" width="50" label="关系" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="collectTime" width="120" label="时间" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="targetName" width="120" label="对象姓名" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="relation" width="120" label="关系" show-overflow-tooltip></el-table-column>
               <el-table-column prop="telPhone" width="120" label="电话/地址" show-overflow-tooltip></el-table-column>
               <el-table-column prop="collectInfo" label="催收记录" show-overflow-tooltip></el-table-column>
             </el-table>
