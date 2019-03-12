@@ -3205,7 +3205,8 @@ AddtableList(this.id,this.messageForm).then((response)=>{
     display: flex;
     .left-panel{
       padding: 12px;
-      flex:1;
+      flex: 0 0 50%;
+      width: 50%;
       margin-right: 24px;
       border: 1px solid #d1d1d1;
       box-sizing: border-box;
@@ -3237,7 +3238,8 @@ AddtableList(this.id,this.messageForm).then((response)=>{
       }
     }
     .right-panel{
-      flex: 1;
+      flex: 0 0 50%;
+      width: 50%;
     }
   }
 }
