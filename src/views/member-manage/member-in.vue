@@ -43,7 +43,6 @@
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="mobile" label="手机" show-overflow-tooltip></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="joinTime" label="入职日期" show-overflow-tooltip></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="roleList" :formatter="formatRole" label="员工角色" show-overflow-tooltip></el-table-column>
-        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="position" label="职位" show-overflow-tooltip></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="department" label="部门" show-overflow-tooltip></el-table-column>
         <el-table-column label="操作" width="200">
           <template slot-scope="scope">
@@ -120,16 +119,6 @@
               :key="item.id"
               :label="item.roleName"
               :value="item.id"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="职位" prop="sex">
-          <el-select v-model="memberInfo.position" placeholder="请选择职位">
-            <el-option
-              v-for="item in positionList"
-              :key="item.job"
-              :label="item.position"
-              :value="item.position"
             ></el-option>
           </el-select>
         </el-form-item>
@@ -219,7 +208,18 @@ export default {
       memberList: [],
       memberInfo: {number:''},
       rules: {
-
+        userName: [
+          { required: true, message: '请输入用户名', trigger: 'blur' }
+        ],
+        number: [
+          { required: true, message: '请输入账号', trigger: 'blur' }
+        ],
+        department: [
+          { required: true, message: '请选择部门', trigger: 'change' }
+        ],
+        role: [
+          { required: true, message: '请选择角色', trigger: 'change' }
+        ],
       },
       roleList: [],
       positionList: [],
@@ -407,46 +407,54 @@ export default {
       this.$set(this.dialogData, 'editVisible', false)
     },
     onClickSave () {
-      if(this.returnName && this.returnName !== this.memberInfo.userName){
-        this.$confirm(`已有用户名相同的员工,是否用${this.returnName}替换${this.memberInfo.userName}`, '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.memberInfo.userName = this.returnName
-          this.returnName = null
-          let { ...resultData } = this.memberInfo
-          resultData.roleList = resultData.roleList.map(item => { return { id: item } })
-          if (this.dialogData.type === 'add') {
-            addMember(resultData).then(response => {
-              this.onClickQuery()
-              this.onClickCancel()
-            })
-          } else {
-            updateMember(resultData).then(response => {
-              this.onClickQuery()
-              this.onClickCancel()
-            })
-          }
-        }).catch(() => { 
+      this.$refs.ruleForm.validate((valid)=>{
+        if(valid){
+          if(this.returnName && this.returnName !== this.memberInfo.userName){
+            this.$confirm(`已有用户名相同的员工,是否用${this.returnName}替换${this.memberInfo.userName}`, '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              this.memberInfo.userName = this.returnName
+              this.returnName = null
+              let { ...resultData } = this.memberInfo
+              resultData.roleList = resultData.roleList.map(item => { return { id: item } })
+              if (this.dialogData.type === 'add') {
+                addMember(resultData).then(response => {
+                  this.onClickQuery()
+                  this.onClickCancel()
+                })
+              } else {
+                updateMember(resultData).then(response => {
+                  this.onClickQuery()
+                  this.onClickCancel()
+                })
+              }
+            }).catch(() => { 
 
-        })
-      }else{
-          this.returnName = null
-          let { ...resultData } = this.memberInfo
-          resultData.roleList = resultData.roleList.map(item => { return { id: item } })
-          if (this.dialogData.type === 'add') {
-            addMember(resultData).then(response => {
-              this.onClickQuery()
-              this.onClickCancel()
             })
-          } else {
-            updateMember(resultData).then(response => {
-              this.onClickQuery()
-              this.onClickCancel()
-            })
+          }else{
+              this.returnName = null
+              let { ...resultData } = this.memberInfo
+              resultData.roleList = resultData.roleList.map(item => { return { id: item } })
+              if (this.dialogData.type === 'add') {
+                addMember(resultData).then(response => {
+                  this.onClickQuery()
+                  this.onClickCancel()
+                })
+              } else {
+                updateMember(resultData).then(response => {
+                  this.onClickQuery()
+                  this.onClickCancel()
+                })
+              }
           }
-      }
+        }else{
+          this.$message('校验失败，请根据提示修改后提交')
+          return
+        }
+      })
+      
     },
     formatRole (row, column, cellValue) {
       if (cellValue && cellValue.length > 0) {
