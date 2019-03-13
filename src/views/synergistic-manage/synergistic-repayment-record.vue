@@ -21,13 +21,7 @@
         <el-button type="primary" v-if="queryForm.recordStatus==='0'" v-has="'导入还款记录'">导入还款记录</el-button>
       </el-upload>
       <el-button type="primary" @click="onClickExportSelectedRecord" v-has="'导出选中数据'">导出选中数据</el-button>
-      <el-dropdown trigger="click" @command="handleCommand" v-has="'导出查询结果'">
-        <el-button type="primary">导出查询结果<i class="el-icon-arrow-down el-icon--right"></i></el-button>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item command="all">导出全部</el-dropdown-item>
-          <el-dropdown-item command="current">导出当前分页</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+      <el-button type="primary" @click="dialogExportVisible = true" v-has="'导出查询结果'">导出查询结果</el-button>
     </repay-record-query>
     <div class="statistics-wrap" v-if="queryForm.recordStatus==='0'">
       <span class="title">查询结果统计：</span>
@@ -164,6 +158,23 @@
         <el-button type="primary" @click="onClickSave">保 存</el-button>
       </span>
     </el-dialog>
+    <el-dialog
+      title="导出查询结果"
+      :visible.sync="dialogExportVisible"
+      width="30%"
+    >
+      <el-form :inline="true">
+        <el-form-item>
+          <el-button @click="handleCommand('all')">按查询条件全部导出</el-button>
+        </el-form-item>
+        <el-form-item>
+          <el-button @click="handleCommand('current')">按查询条件导出当前分页</el-button>
+        </el-form-item>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogExportVisible = false">取 消</el-button>
+        </span>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
@@ -187,6 +198,7 @@ export default {
   },
   data(){
     return {
+      dialogExportVisible:false,
       tableLoad:false,
       action:baseURL,
       header:{Authorization:localStorage.token},
@@ -354,6 +366,7 @@ export default {
           this.$message('导出成功')
         })
       }
+      this.dialogExportVisible = false
     },
     onSelectRow(val){
       this.selectList = val

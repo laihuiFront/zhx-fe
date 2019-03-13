@@ -4,13 +4,7 @@
       @reset="onClickReset"
       @query="onClickQuery"
       :queryForm="queryForm">
-      <el-dropdown trigger="click" @command="handleCommand" v-has="'导出查询结果'">
-        <el-button type="primary">导出查询结果<i class="el-icon-arrow-down el-icon--right"></i></el-button>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item command="all">导出全部</el-dropdown-item>
-          <el-dropdown-item command="current">导出当前分页</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+      <el-button type="primary" @click="dialogExportVisible = true" v-has="'导出查询结果'">导出查询结果</el-button>
     </syn-record-query>
     <el-table
       v-loading="tableLoad"
@@ -48,6 +42,23 @@
       :total="total"
       class="pagination-wrap"
     ></el-pagination>
+    <el-dialog
+      title="导出查询结果"
+      :visible.sync="dialogExportVisible"
+      width="30%"
+    >
+      <el-form :inline="true">
+        <el-form-item>
+          <el-button @click="handleCommand('all')">按查询条件全部导出</el-button>
+        </el-form-item>
+        <el-form-item>
+          <el-button @click="handleCommand('current')">按查询条件导出当前分页</el-button>
+        </el-form-item>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogExportVisible = false">取 消</el-button>
+        </span>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
@@ -61,6 +72,7 @@ export default {
   },
   data(){
     return {
+      dialogExportVisible:false,
       tableLoad:false,
       recordList: [],
       total:0,
@@ -129,6 +141,7 @@ export default {
           this.$message('导出成功')
         })
       }
+      this.dialogExportVisible = false
     },
   }
 }
