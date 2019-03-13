@@ -168,7 +168,7 @@
         <el-col :span="8">
           <div class="grid-content bg-purple">
             <el-form-item label="姓名">
-              <el-input v-model="formInline.cstName" placeholder="请输入姓名"></el-input>
+              <el-input v-model="formInline.accused" placeholder="请输入姓名"></el-input>
             </el-form-item>
           </div></el-col>
         <el-col :span="8">
@@ -297,7 +297,7 @@
               <div class="block">
                 <el-date-picker
                   value-format="yyyy-MM-dd"
-                  v-model="formInline.filingDat"
+                  v-model="formInline.filingDate"
                   type="date"
                   placeholder="选择日期">
                 </el-date-picker>
@@ -894,7 +894,10 @@ export default {
    		this.handleList=response.handleList
    		this.feeList=response.feeList
    		this.formInline=response.legalEntity
-         })    
+   		this.formInline.progress=parseInt(response.legalEntity.progress)
+   		this.formInline.owner=parseInt(response.legalEntity.owner)
+        console.log(response.legalEntity)
+   		})
    	},
    	addDataform(){
    		this.formInline={};
@@ -933,9 +936,12 @@ export default {
    		this.checkId=id;
    	},
    	editData(row){
+   		console.log(row)
    		this.dialogVisible=true;
    		this.dialogTitle="修改";
    		this.formInline=row
+   		this.formInline.progress=parseInt(row.progress)
+   		this.formInline.owner=parseInt(row.owner)
    		this.isTrue=false
    		this.addId=row.id
    	},
