@@ -39,7 +39,7 @@
       </div>
       <div style="display: flex;">
         <div style="flex:1">
-          <vue-ueditor-wrap :config="myConfig" @ready="ready" :destroy="true" v-model="msg"></vue-ueditor-wrap>
+          <vue-ueditor-wrap :config="myConfig" @ready="ready" height="100%" :destroy="true" v-model="msg"></vue-ueditor-wrap>
         </div>
         <div class="r-list">
           <div class="tit">模板占位符</div>
