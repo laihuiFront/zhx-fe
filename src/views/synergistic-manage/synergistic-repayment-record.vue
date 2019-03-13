@@ -221,9 +221,9 @@ export default {
 
       },
       recordInfo:{
-        dataCase:{},
-        collectUser:{},
-        repayType:{}
+        dataCase:{id:null},
+        collectUser:{id:null},
+        repayType:{id:null}
       },
       queryForm:{
         recordStatus: '0',
@@ -324,7 +324,8 @@ export default {
     onClickAdd(){
       this.recordInfo = {
         dataCase:{id:null},
-        collectUser:{id:null}
+        collectUser:{id:null},
+        repayType:{id:null}
       }
       this.$set(this.dialogData, 'editVisible', true)
     },
