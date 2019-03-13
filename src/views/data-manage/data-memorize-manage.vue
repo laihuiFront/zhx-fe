@@ -691,31 +691,30 @@
       },
       open7() {
         let _self=this
+         if(_self.deleteList.length>0){
         _self.$confirm('是否删除?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning',
           center: true
         }).then(() => {
-          console.info(1)
-          if(_self.deleteList.length>0){
-            console.info(2)
-            remoweData(_self.deleteList).then((response)=>{
+                     remoweData(_self.deleteList).then((response)=>{
               _self.$message({
                 type: 'success',
                 message: '删除成功!'
               });
               _self.search()
             })
-          }else{
+         
+
+        }).catch(() => {
+        });
+         }else{
             _self.$message({
               type: 'info',
               message: '请选择需要删除的数据!'
             });
           }
-
-        }).catch(() => {
-        });
       },
     },
     created() {

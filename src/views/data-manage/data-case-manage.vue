@@ -1073,38 +1073,75 @@
        		dataObject.id=this.deleteList[i].id
        		datasList.push(dataObject)}
           if(command==="1"){
-           caseStatus(datasList).then((response)=>{
+          	this.$confirm('是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        }).then(() => {
+         caseStatus(datasList).then((response)=>{
               this.$message({
              type: 'success',
              message: '操作成功!'
           });
         this.search()
       })
+        }).catch(() => {
+
+        });
+           
        	}
           else if(command==="2"){
-            caseStatus(datasList).then((response)=>{
+            this.$confirm('是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        }).then(() => {
+         caseStatus(datasList).then((response)=>{
               this.$message({
              type: 'success',
              message: '操作成功!'
           });
         this.search()
       })
+        }).catch(() => {
+
+        });
           }else if(command==="3"){
-          caseStatus(datasList).then((response)=>{
+         this.$confirm('是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        }).then(() => {
+         caseStatus(datasList).then((response)=>{
               this.$message({
              type: 'success',
              message: '操作成功!'
           });
         this.search()
       })
+        }).catch(() => {
+
+        });
           }else if(command==="4"){
-          caseStatus(datasList).then((response)=>{
+          this.$confirm('是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        }).then(() => {
+         caseStatus(datasList).then((response)=>{
               this.$message({
              type: 'success',
              message: '操作成功!'
           });
         this.search()
       })
+        }).catch(() => {
+
+        });
           }else {
             this.$confirm('是否删除?', '提示', {
               confirmButtonText: '确定',
