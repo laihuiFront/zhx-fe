@@ -1,5 +1,10 @@
 <template>
-  <div id="dclxh" class="page-wraper-sub">
+  <div id="dclxh" class="page-wraper-sub"
+  	v-loading="loading2"
+  	v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-text="正在导入中"
+    element-loading-spinner="el-icon-loading"
+   element-loading-background="rgba(0, 0, 0, 0.7)">
   <el-upload
     class="upload-demo"
     :action="action"
@@ -320,6 +325,8 @@ export default {
   },
   data() {
     return {
+    	loading2:false,
+    	fullscreenLoading:false,
       tableLoad:false,
       ImportdialogVisible:false,
       ImportMsg: '',
@@ -526,12 +533,16 @@ export default {
       }
     },
     fileStatu(res){
+    	this.loading2=true
+					this.fullscreenLoading=true
       if (res.code ==100){
         this.$message({
           type: 'success',
           message: "导入成功"
         });
         this.getMainData();
+        this.loading2=false
+					this.fullscreenLoading=false
       }else if(res.code ==800){
         this.ImportdialogVisible=true;
         this.ImportMsg= res.msg;

@@ -1,5 +1,10 @@
 <template>
-  <div id="synergistic-bank-reconciliation" class="page-wraper-sub">
+  <div id="synergistic-bank-reconciliation" class="page-wraper-sub"
+  	v-loading="loading2"
+  	   	   	  	  v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-text="正在导入中"
+    element-loading-spinner="el-icon-loading"
+   element-loading-background="rgba(0, 0, 0, 0.7)">
     <el-tabs v-model="queryForm.status" @tab-click="onClickQuery">
       <el-tab-pane label="待银行对帐" name="0"></el-tab-pane>
       <el-tab-pane label="已作废" name="1"></el-tab-pane>
@@ -160,6 +165,8 @@ export default {
   },
   data(){
     return {
+    	loading2:false,
+    	fullscreenLoading:false,
       dialogExportVisible:false,
       tableLoad:false,
       action:baseURL,
@@ -197,12 +204,16 @@ export default {
   },
   methods: {
      uploadSuccess(res,file,fileList){
+     	this.loading2=true
+					this.fullscreenLoading=true
       if (res.code ==100){
   		    this.$message({
             type: 'success',
             message: "导入成功"
           });
            this.onClickQuery()
+           this.loading2=false
+					this.fullscreenLoading=false
       }else{
         this.$message({
           type: 'error',
@@ -281,9 +292,13 @@ export default {
         this.$message('请选择需要导出的记录')
         return
       }
+      this.loading2=true
+					this.fullscreenLoading=true
       const ids = this.selectList.map(item => item.id)
       expSelectedBankReconRecord(ids).then(() => {
         this.$message('导出成功')
+        this.loading2=false
+					this.fullscreenLoading=false
       }).catch(() => { })
     },
     onSelectRow(val){
@@ -293,12 +308,18 @@ export default {
     onClickSave(){},
     handleCommand(command){
       if(command === 'current'){
+      	this.loading2=true
+					this.fullscreenLoading=true
         expCurrentBankReconRecord(this.queryForm).then(res => {
           this.$message('导出成功')
+          this.loading2=false
+					this.fullscreenLoading=false
         })
       }else {
         expAllBankReconRecord(this.queryForm).then(res => {
           this.$message('导出成功')
+          this.loading2=false
+					this.fullscreenLoading=false
         })
       }
       this.dialogExportVisible = false

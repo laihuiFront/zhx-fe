@@ -1,5 +1,10 @@
 <template>
-  <div id="synergistic-record" class="page-wraper-sub">
+  <div id="synergistic-record" class="page-wraper-sub"
+  	v-loading="loading2"
+  	   	   	  	  v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-text="正在导入中"
+    element-loading-spinner="el-icon-loading"
+   element-loading-background="rgba(0, 0, 0, 0.7)">
     <syn-record-query 
       @reset="onClickReset"
       @query="onClickQuery"
@@ -72,6 +77,8 @@ export default {
   },
   data(){
     return {
+    	loading2:false,
+    	fullscreenLoading:false,
       dialogExportVisible:false,
       tableLoad:false,
       recordList: [],
@@ -132,13 +139,19 @@ export default {
       this.onClickQuery()
     },
     handleCommand(command){
+    	this.loading2=true
+					this.fullscreenLoading=true
       if(command === 'current'){
         expCurrentSynergisticRecord(this.queryForm).then(res => {
           this.$message('导出成功')
+          this.loading2=false
+					this.fullscreenLoading=false
         })
       }else {
         expAllSynergisticRecord(this.queryForm).then(res => {
           this.$message('导出成功')
+          this.loading2=false
+					this.fullscreenLoading=false
         })
       }
       this.dialogExportVisible = false
@@ -148,7 +161,9 @@ export default {
 </script>
 
 <style lang="scss">
-#synergistic-record{}
+#synergistic-record{
+	
+}
 </style>
 
 

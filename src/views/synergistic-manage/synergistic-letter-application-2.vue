@@ -1,5 +1,10 @@
 <template>
-  <div style="height:100%;display:flex;flex-direction:column;">
+  <div style="height:100%;display:flex;flex-direction:column;"
+  	v-loading="loading2"
+  	v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-text="正在导入中"
+    element-loading-spinner="el-icon-loading"
+   element-loading-background="rgba(0, 0, 0, 0.7)">
     <el-dialog
       :title="detailTitle"
       class="dialog-wrap"
@@ -297,6 +302,8 @@ export default {
   },
   data() {
     return {
+    	loading2:false,
+    	fullscreenLoading:false,
       tableLoad:false,
       paginationData: {
         pageSize: 100,

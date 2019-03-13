@@ -1,5 +1,10 @@
 <template>
-  <div id="synergistic-application" class="page-wraper-sub">
+  <div id="synergistic-application" class="page-wraper-sub"
+  		v-loading="loading2"
+  	   	   	  	  v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-text="正在导入中"
+    element-loading-spinner="el-icon-loading"
+   element-loading-background="rgba(0, 0, 0, 0.7)">
     <el-tabs v-model="queryForm.applyStatus" @tab-click="onClickQuery">
       <el-tab-pane label="协催申请" name="0"></el-tab-pane>
       <el-tab-pane label="待办协催" name="1"></el-tab-pane>
@@ -138,6 +143,8 @@ export default {
   },
   data(){
     return {
+    	loading2:false,
+    	fullscreenLoading:false,
       tableLoad:false,
       action:baseURL,
       header:{Authorization:localStorage.token},
@@ -174,12 +181,16 @@ export default {
       })
     },
     uploadSuccess(res,file,fileList){
+    		  this.loading2=true
+					this.fullscreenLoading=true
       if (res.code ==100){
   		    this.$message({
             type: 'success',
             message: res.msg
           });
            this.onClickQuery()
+           	this.loading2=false
+					this.fullscreenLoading=false
       }else{
         this.$message({
           type: 'error',
@@ -250,13 +261,19 @@ export default {
       }).catch(() => { })
     },
     handleCommand(command){
+    		this.loading2=true
+					this.fullscreenLoading=true
       if(command === 'current'){
         expCurrentSynergisticRecord(this.queryForm).then(res => {
           this.$message('导出成功')
+          	this.loading2=false
+					this.fullscreenLoading=false
         })
       }else {
         expAllSynergisticRecord(this.queryForm).then(res => {
           this.$message('导出成功')
+          	this.loading2=false
+					this.fullscreenLoading=false
         })
       }
     },
