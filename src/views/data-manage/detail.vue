@@ -1157,7 +1157,7 @@
                     label="申请时间">
                   </el-table-column>
                   <el-table-column
-                    prop="applyUser.name"
+                    prop="applyUser.userName"
                     show-overflow-tooltip
                     label="申请人">
                   </el-table-column>
@@ -2486,7 +2486,23 @@ AddtableList(this.id,this.messageForm).then((response)=>{
         })
     },
     syncTypeChange(val){
-      getSynergyDetail(this.id).then(data => {
+      let applyStatus;
+      let finishStatus;
+      if (val==1){
+
+      }else if (val==2){
+        applyStatus = 0
+        finishStatus = 0
+      }else if (val==3){
+        applyStatus = 1
+        finishStatus = 0
+      }else if(val==4){
+        applyStatus = 1
+        finishStatus = 1
+      }else if(val==5){
+        applyStatus = -1
+      }
+      getSynergyDetail(this.id,applyStatus,finishStatus).then(data => {
         this.syncList = data.list
       })
     },

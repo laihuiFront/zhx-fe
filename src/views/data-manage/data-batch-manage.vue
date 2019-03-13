@@ -226,7 +226,7 @@
       label="操作"
       width="250">
       <template slot-scope="scope">
-        <el-button type="text" size="small" @click="returnMessage(scope.row.id)" v-has="'退案'">退案</el-button>
+        <el-button type="text" size="small" @click="open2(scope.row.id)" v-has="'退案'">退案</el-button>
         <el-button type="text" size="small" @click="editMessage(scope.row)" v-has="'编辑'">编辑</el-button>
         <el-button type="text" size="small" @click="deleteMessage(scope.row.id,scope.row.batchNo)" v-has="'删除'">删除</el-button>
         <el-button type="text" size="small" v-has="'批量导出批次催记'" @click="exportCollect(scope.row)">导出催记</el-button>
@@ -718,12 +718,18 @@ this.search()
              type: 'info',
              message: '请选择需要退案的数据!'
            });
-         }
-
-
-      
-
-      	 
+         } 
+      },
+       open2(id) {
+        this.$confirm(' 是否退案?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.returnMessage(id)
+        }).catch(() => {
+                
+        });
       },
    },
    created() {

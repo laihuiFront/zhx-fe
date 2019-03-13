@@ -131,13 +131,15 @@ export function getInterestDetail(id) {
 }
 
 //协催
-export function getSynergyDetail(id) {
+export function getSynergyDetail(id,applyStatus,finishStatus) {
   return request({
     url: '/synergistic/list',
     method: 'post',
     data: {
       pageSize: 10000,
       pageNum: 1,
+      applyStatus:applyStatus,
+      finishStatus:finishStatus,
       dataCase: {
         id
       }
