@@ -38,6 +38,7 @@
                 v-model="form.val0"
                 placeholder="请选择委托方"
                 filterable
+                collapse-tags
                 multiple
                 clearable
               >
@@ -104,13 +105,6 @@
                 clearable
               ></el-input>
             </el-form-item>
-            <el-form-item prop="val6">
-              <el-input
-                v-model="form.val6"
-                placeholder="委案金额上限"
-                clearable
-              ></el-input>
-            </el-form-item>
             <el-form-item prop="val7">
               <el-input
                 v-model="form.val7"
@@ -118,6 +112,14 @@
                 clearable
               ></el-input>
             </el-form-item>
+            <el-form-item prop="val6">
+              <el-input
+                v-model="form.val6"
+                placeholder="委案金额上限"
+                clearable
+              ></el-input>
+            </el-form-item>
+
             <el-form-item prop="val8">
               <el-input
                 v-model="form.val8"

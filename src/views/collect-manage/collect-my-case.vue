@@ -34,7 +34,7 @@
               <div class="grid-content bg-purple">
                 <el-form :inline="true" ref="form" :model="form" label-width="80px">
                   <el-form-item prop="val0">
-                    <el-select v-model="form.val0" placeholder="请选择委托方" filterable multiple clearable>
+                    <el-select v-model="form.val0" placeholder="请选择委托方" collapse-tags filterable multiple clearable>
                       <el-option
                         v-for="item in val0_data"
                         :key="item.value"
@@ -47,6 +47,7 @@
                     <el-select
                       v-model="form.val1"
                       multiple
+                      collapse-tags
                       filterable
                       remote
                       placeholder="请输入批次号"

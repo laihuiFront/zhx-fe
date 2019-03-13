@@ -39,6 +39,7 @@
                 v-model="form.val0"
                 placeholder="请选择委托方"
                 filterable
+                collapse-tags
                 multiple
                 clearable
               >
@@ -626,7 +627,7 @@ export default {
       this.tableLoad = true
       pageDataLetter(this.realFetchFormData).then(data => {
         if (!data) {
-          data = { total: 0, list: [] };
+          data = { total: 9, list: [] };
         }
         this.fetchData = data;
         this.paginationData.total = data.total;
