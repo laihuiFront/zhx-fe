@@ -295,7 +295,7 @@ import {
   list as moduleList,
   confirmSynergy,
   cancelLetter,
-  pageDataLetter,
+  pageDataLetterInfo,
   confirmLetter,
   dcxh,
   dccxjg,
@@ -625,7 +625,7 @@ export default {
     },
     getMainData() {
       this.tableLoad = true
-      pageDataLetter(this.realFetchFormData).then(data => {
+      pageDataLetterInfo(this.realFetchFormData).then(data => {
         if (!data) {
           data = { total: 9, list: [] };
         }
