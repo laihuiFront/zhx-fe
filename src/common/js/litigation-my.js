@@ -51,11 +51,12 @@ return request({
   })
 }
 
-export const addData = function(form) {
+export const addData = function(form,id) {
 return request({
     url: '/legal/save',
     method: 'post',
     data:{
+    	id:form.id,
     legalStatusMsg:form.legalStatusMsg,// 案件状态   1 已经审核 2审核中 0未申请
 	identNo:form.identNo, //证件号码
 	legalType:form.legalType,// 案件類型

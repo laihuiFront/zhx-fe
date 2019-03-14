@@ -75,6 +75,7 @@
                     placeholder="请选择委托方"
                     filterable
                     multiple
+                    collapse-tags
                     clearable
                   >
                     <el-option
@@ -90,6 +91,7 @@
                   <el-select
                     v-model="form.val1"
                     multiple
+                    collapse-tags
                     filterable
                     remote
                     placeholder="请输入批次号"

@@ -22,6 +22,7 @@
           placeholder="请选择委托方"
           filterable
           multiple
+          collapse-tags
           clearable
         >
           <el-option

@@ -34,6 +34,14 @@ export function pageDataLetter(data={}) {
   })
 }
 
+export function pageDataLetterInfo(data={}) {
+  return request({
+    url: '/letter/pageDataLetterInfo',
+    method: 'post',
+    data,
+  })
+}
+
 //信函模板
 export function list(data={}) {
   return request({

@@ -1,6 +1,7 @@
 <template>
   <div id="data-case-imported" 
   	 v-loading="loading2"
+  	  v-loading.fullscreen.lock="fullscreenLoading"
     element-loading-text="正在导入中"
     element-loading-spinner="el-icon-loading"
    element-loading-background="rgba(0, 0, 0, 0.7)"
@@ -225,7 +226,7 @@
 </el-upload>
         <el-button type="text" size="small" v-if="scope.row.batchStatus!=0" @click="downCaseModule(scope.row)" v-has="'下载'">下载</el-button>
         <el-button type="text" size="small" @click="editMessage(scope.row)" v-has="'编辑'">编辑</el-button>
-        <el-button type="text" size="small" @click="deleteMessage(scope.row.id)" v-has="'删除批次'">删除</el-button>
+        <el-button type="text" size="small" @click="deleteMessage(scope.row.id,scope.row.batchNo)" v-has="'删除批次'">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -511,6 +512,7 @@ export default {
   name: 'dataCaseImported',
   data(){
     return {
+    	fullscreenLoading:false,
       tableLoad:false,
     	action:baseURL+'/dataCase',
       collectAction:baseURL,
@@ -549,6 +551,7 @@ export default {
 methods: {
 	handleClose(){
 		this.loading2=false
+		this.fullscreenLoading=false
 		this.ImportdialogVisible=false
 	},
 	changeBotno(){
@@ -571,10 +574,12 @@ methods: {
 	},
 	ImportdialogVisibleWay(){
 		this.loading2=false
+				this.fullscreenLoading=false
 		this.ImportdialogVisible=false
 	},
 	onProgress(){
 		this.loading2=true
+		this.fullscreenLoading=true
 	},
 	backForm(){
 		this.dialogVisible=false;
@@ -606,6 +611,7 @@ methods: {
               //this.pages = response.pages
               this.total = response.total
               this.loading2=false
+              this.fullscreenLoading=false
               this.tableLoad = false
           })
       }else{
@@ -751,6 +757,7 @@ this.search()
 	row.forEach(function(currentValue, index, arr){
 		let Object={"id":""}
 	   Object.id=currentValue.id
+     Object.batchNo = currentValue.batchNo
 	   _self.deleteList.push(Object)
 	})
 
@@ -827,7 +834,9 @@ created() {
   .upload-demo{
   	display: inline-block;
   }
-
+.el-loading-spinner .el-loading-text {
+    font-size: 18px;
+    }
 }
 </style>
 

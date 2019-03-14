@@ -30,16 +30,18 @@
     <el-dialog
       title="编辑"
       :visible.sync="dialogVisible"
-      width="1000px">
+      width="1000px"
+      custom-class="dia-top"
+    >
       <div class="dia-top-inp">
         <span
           style="white-space: nowrap"><span>模板名称: </span><span style="color: red">* </span>
         </span>&nbsp;
         <el-input v-model="input" placeholder="请输入内容"></el-input>
       </div>
-      <div style="display: flex;">
+      <div style="display: flex;height: 600px;">
         <div style="flex:1">
-          <vue-ueditor-wrap :config="myConfig" @ready="ready" :destroy="true" v-model="msg"></vue-ueditor-wrap>
+          <vue-ueditor-wrap :config="myConfig" @ready="ready" height="100%" :destroy="true" v-model="msg"></vue-ueditor-wrap>
         </div>
         <div class="r-list">
           <div class="tit">模板占位符</div>
@@ -98,6 +100,8 @@ export default {
   methods:{
     ready(editorInstance){
       this.editor = editorInstance;
+      console.log(editorInstance)
+      document.querySelector(`#${this.editor.key}`).style.height = '100%'
     },
     saveContent(){
       let data = {title:this.input,context:this.editor.getAllHtml()};
@@ -163,11 +167,20 @@ export default {
       color: #D09F6D;
     }
   }
+  .dia-top{
+    .edui-editor{
+      height: 100%;
+    }
+    #edui1{
+      height: 100%;
+    }
+  }
   .dia-top-inp{
     display: flex;
     justify-content: center;
     margin-bottom: 10px;
     align-items: center;
+
   }
 }
 </style>

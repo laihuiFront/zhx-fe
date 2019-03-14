@@ -1157,7 +1157,7 @@
                     label="申请时间">
                   </el-table-column>
                   <el-table-column
-                    prop="applyUser.name"
+                    prop="applyUser.userName"
                     show-overflow-tooltip
                     label="申请人">
                   </el-table-column>
@@ -1743,7 +1743,7 @@
       </span>
     </el-dialog>
     <el-dialog
-      title="新增/编辑地址"
+      title="申请信函"
       :visible.sync="dialogLetterVisible"
       width="45%"
       append-to-body
@@ -2486,7 +2486,23 @@ AddtableList(this.id,this.messageForm).then((response)=>{
         })
     },
     syncTypeChange(val){
-      getSynergyDetail(this.id).then(data => {
+      let applyStatus;
+      let finishStatus;
+      if (val==1){
+
+      }else if (val==2){
+        applyStatus = 0
+        finishStatus = 0
+      }else if (val==3){
+        applyStatus = 1
+        finishStatus = 0
+      }else if(val==4){
+        applyStatus = 1
+        finishStatus = 1
+      }else if(val==5){
+        applyStatus = -1
+      }
+      getSynergyDetail(this.id,applyStatus,finishStatus).then(data => {
         this.syncList = data.list
       })
     },
@@ -2506,8 +2522,10 @@ AddtableList(this.id,this.messageForm).then((response)=>{
           type: 'success',
           message: '新增催收记录成功'
         });
-        getCollectDetail(this.id,1).then(data => {
-          console.info(data)
+        let batchNo = this.caseDetail.batchNo;
+        let identNo = this.caseDetail.identNo;
+        let cardNo = this.caseDetail.cardNo;
+        getCollectDetail(this.id,batchNo,identNo,cardNo,1).then(data => {
           this.memorizeList = data
         })
       })
@@ -3205,8 +3223,8 @@ AddtableList(this.id,this.messageForm).then((response)=>{
     display: flex;
     .left-panel{
       padding: 12px;
-      flex: 0 0 50%;
-      width: 50%;
+      flex: 0 0 35%;
+      width: 35%;
       margin-right: 24px;
       border: 1px solid #d1d1d1;
       box-sizing: border-box;
@@ -3238,8 +3256,8 @@ AddtableList(this.id,this.messageForm).then((response)=>{
       }
     }
     .right-panel{
-      flex: 0 0 50%;
-      width: 50%;
+      flex: 0 0 65%;
+      width: 65%;
     }
   }
 }

@@ -2,8 +2,10 @@
   <div id="data-batch-manage"
   	v-loading="loading"
    	 element-loading-text="拼命加载中"
+   	   	  	  v-loading.fullscreen.lock="fullscreenLoading"
+
     element-loading-spinner="el-icon-loading"
-    element-loading-background="rgba(248, 248, 248, 0.8)"
+    element-loading-background="rgba(0, 0, 0, 0.7)"
     class="page-wraper-sub">
     <el-form ref="form" :model="form" :inline="true" class="query-wrap">
       <el-form-item >
@@ -224,9 +226,9 @@
       label="操作"
       width="250">
       <template slot-scope="scope">
-        <el-button type="text" size="small" @click="returnMessage(scope.row.id)" v-has="'退案'">退案</el-button>
+        <el-button type="text" size="small" @click="open2(scope.row.id)" v-has="'退案'">退案</el-button>
         <el-button type="text" size="small" @click="editMessage(scope.row)" v-has="'编辑'">编辑</el-button>
-        <el-button type="text" size="small" @click="deleteMessage(scope.row.id)" v-has="'删除'">删除</el-button>
+        <el-button type="text" size="small" @click="deleteMessage(scope.row.id,scope.row.batchNo)" v-has="'删除'">删除</el-button>
         <el-button type="text" size="small" v-has="'批量导出批次催记'" @click="exportCollect(scope.row)">导出催记</el-button>
       </template>
     </el-table-column>
@@ -389,6 +391,7 @@ export default {
   name: 'dataBatchManage',
    data(){
     return {
+    	fullscreenLoading:false,
       tableLoad:false,
     	batchList:[],
       header:{Authorization:localStorage.token},
@@ -427,6 +430,7 @@ methods: {
         var arr = [{"batchNo":row.batchNo}];
     selectDataCollectExportByBatch(arr).then((response)=>{
       this.loading=false;
+      	this.fullscreenLoading=false
       this.$message({
         type: 'success',
         message: '导出成功!'
@@ -435,10 +439,12 @@ methods: {
   },
 	selectDataByBatch(){
 		this.loading=true
+			this.fullscreenLoading=true
     let _self = this;
     if (this.selectDataCollectExportByBatchList.length>0) {
       selectDataCollectExportByBatch(this.selectDataCollectExportByBatchList).then((response) => {
-        this.loading = false;
+        this.loading = false;	
+        this.fullscreenLoading=false
         this.$message({
           type: 'success',
           message: '导出成功!'
@@ -446,6 +452,7 @@ methods: {
       })
     }else{
       this.loading=false;
+      	this.fullscreenLoading=false
       _self.$message({
         type: 'info',
         message: '请选择需要导出的数据!'
@@ -454,10 +461,12 @@ methods: {
 	},
 	selectDataExport(){
 		this.loading=true
+			this.fullscreenLoading=true
     let _self = this;
     if (this.selectDataBatchExportList.length>0){
   		selectDataBatchExport(this.selectDataBatchExportList).then((response)=>{
           	this.loading=false;
+          		this.fullscreenLoading=false
           	this.$message({
             type: 'success',
             message: '导出成功!'
@@ -465,6 +474,7 @@ methods: {
           })
     }else{
       this.loading=false;
+      	this.fullscreenLoading=false
       _self.$message({
         type: 'info',
         message: '请选择需要导出的数据!'
@@ -475,11 +485,13 @@ methods: {
 
 	totalDataExport(){
 			this.loading=true;
+				this.fullscreenLoading=true
 			console.info(1111)
 			let startTime=this.form.time[0]
       	let endTime=this.form.time[1]
 		totalDataBatchExport(this.form.area,this.form.batchNos,this.form.clients,this.form.batchStatus,this.form.caseType,startTime,endTime,this.pageSize,this.pageNum).then((response)=>{
           	this.loading=false;
+          		this.fullscreenLoading=false
           	this.$message({
             type: 'success',
             message: '导出成功!'
@@ -488,10 +500,12 @@ methods: {
 	},
 	pageDataExport(){
 			this.loading=true;
+				this.fullscreenLoading=true
 			let startTime=this.form.time[0]
       	let endTime=this.form.time[1]
 		pageDataBatchExport(this.form.area,this.form.batchNos,this.form.clients,this.form.batchStatus,this.form.caseType,startTime,endTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
           	this.loading=false;
+          		this.fullscreenLoading=false
           	this.$message({
             type: 'success',
             message: '导出成功!'
@@ -639,6 +653,7 @@ this.search()
 		let Project={batchNo:""}
 		Project.batchNo=currentValue.batchNo
 	   Object.id=currentValue.id
+    Object.batchNo=currentValue.batchNo
 	   _self.deleteList.push(Object)
 	   _self.selectDataBatchExportList.push(Object)
 	   _self.selectDataCollectExportByBatchList.push(Project)
@@ -703,12 +718,18 @@ this.search()
              type: 'info',
              message: '请选择需要退案的数据!'
            });
-         }
-
-
-      
-
-      	 
+         } 
+      },
+       open2(id) {
+        this.$confirm(' 是否退案?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.returnMessage(id)
+        }).catch(() => {
+                
+        });
       },
    },
    created() {
@@ -751,6 +772,9 @@ this.search()
   	background-color: #f8f8f8;
   
   }
+  .el-loading-spinner .el-loading-text {
+    font-size: 18px;
+    }
 }
 </style>
 

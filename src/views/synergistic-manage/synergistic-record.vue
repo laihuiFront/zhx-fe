@@ -1,16 +1,15 @@
 <template>
-  <div id="synergistic-record" class="page-wraper-sub">
+  <div id="synergistic-record" class="page-wraper-sub"
+  	v-loading="loading2"
+  	   	   	  	  v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-text="正在导入中"
+    element-loading-spinner="el-icon-loading"
+   element-loading-background="rgba(0, 0, 0, 0.7)">
     <syn-record-query 
       @reset="onClickReset"
       @query="onClickQuery"
       :queryForm="queryForm">
-      <el-dropdown trigger="click" @command="handleCommand" v-has="'导出查询结果'">
-        <el-button type="primary">导出查询结果<i class="el-icon-arrow-down el-icon--right"></i></el-button>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item command="all">导出全部</el-dropdown-item>
-          <el-dropdown-item command="current">导出当前分页</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+      <el-button type="primary" @click="dialogExportVisible = true" v-has="'导出查询结果'">导出查询结果</el-button>
     </syn-record-query>
     <el-table
       v-loading="tableLoad"
@@ -48,6 +47,23 @@
       :total="total"
       class="pagination-wrap"
     ></el-pagination>
+    <el-dialog
+      title="导出查询结果"
+      :visible.sync="dialogExportVisible"
+      width="30%"
+    >
+      <el-form :inline="true">
+        <el-form-item>
+          <el-button @click="handleCommand('all')">按查询条件全部导出</el-button>
+        </el-form-item>
+        <el-form-item>
+          <el-button @click="handleCommand('current')">按查询条件导出当前分页</el-button>
+        </el-form-item>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogExportVisible = false">取 消</el-button>
+        </span>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
@@ -61,6 +77,9 @@ export default {
   },
   data(){
     return {
+    	loading2:false,
+    	fullscreenLoading:false,
+      dialogExportVisible:false,
       tableLoad:false,
       recordList: [],
       total:0,
@@ -120,22 +139,31 @@ export default {
       this.onClickQuery()
     },
     handleCommand(command){
+    	this.loading2=true
+					this.fullscreenLoading=true
       if(command === 'current'){
         expCurrentSynergisticRecord(this.queryForm).then(res => {
           this.$message('导出成功')
+          this.loading2=false
+					this.fullscreenLoading=false
         })
       }else {
         expAllSynergisticRecord(this.queryForm).then(res => {
           this.$message('导出成功')
+          this.loading2=false
+					this.fullscreenLoading=false
         })
       }
+      this.dialogExportVisible = false
     },
   }
 }
 </script>
 
 <style lang="scss">
-#synergistic-record{}
+#synergistic-record{
+	
+}
 </style>
 
 

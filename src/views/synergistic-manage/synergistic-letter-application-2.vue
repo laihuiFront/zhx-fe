@@ -1,11 +1,20 @@
 <template>
-  <div style="height:100%;display:flex;flex-direction:column;">
+  <div style="height:100%;display:flex;flex-direction:column;"
+  	v-loading="loading2"
+  	v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-text="正在导入中"
+    element-loading-spinner="el-icon-loading"
+   element-loading-background="rgba(0, 0, 0, 0.7)">
     <el-dialog
       :title="detailTitle"
       class="dialog-wrap"
       :visible.sync="detailVisible"
       :close-on-click-modal="false"
       width="90%"
+      v-loading.fullscreen.lock="fullscreenLoading"
+      element-loading-text="正在导入中"
+      element-loading-spinner="el-icon-loading"
+      element-loading-background="rgba(0, 0, 0, 0.7)"
     >
       <case-detail></case-detail>
     </el-dialog>
@@ -38,6 +47,7 @@
                 v-model="form.val0"
                 placeholder="请选择委托方"
                 filterable
+                collapse-tags
                 multiple
                 clearable
               >
@@ -104,13 +114,6 @@
                 clearable
               ></el-input>
             </el-form-item>
-            <el-form-item prop="val6">
-              <el-input
-                v-model="form.val6"
-                placeholder="委案金额上限"
-                clearable
-              ></el-input>
-            </el-form-item>
             <el-form-item prop="val7">
               <el-input
                 v-model="form.val7"
@@ -118,6 +121,14 @@
                 clearable
               ></el-input>
             </el-form-item>
+            <el-form-item prop="val6">
+              <el-input
+                v-model="form.val6"
+                placeholder="委案金额上限"
+                clearable
+              ></el-input>
+            </el-form-item>
+
             <el-form-item prop="val8">
               <el-input
                 v-model="form.val8"
@@ -293,8 +304,11 @@ export default {
   components: {
     CaseDetail
   },
+  props:['active'],
   data() {
     return {
+    	loading2:false,
+    	fullscreenLoading:false,
       tableLoad:false,
       paginationData: {
         pageSize: 100,
@@ -424,7 +438,8 @@ export default {
       detailVisible: false,
       detailId: -1,
       detailTitle: "案件详情",
-      moduleList:[]
+      moduleList:[],
+      fullscreenLoading:true
     };
   },
   computed: {
@@ -457,7 +472,7 @@ export default {
         clients,
         batchNos,
         seqno,
-        collectArea,
+        collectArea:collectArea+''?collectArea:null,
         name,
         caseAmtStart,
         caseAmtEnd,
@@ -480,7 +495,12 @@ export default {
         console.log(Object.values(newObj));
       },
       deep: true
-    }
+    },
+    active(n){
+      if(n == 'tab2'){
+        this.getMainData();
+      }
+    },
   },
   created() {
     this.init();
@@ -488,7 +508,12 @@ export default {
   methods: {
 
     exportXh(command){
-      dcxh({id:command})
+      if (this.multipleSelection.length == 0) {
+        this.$message.warning('至少选择一条数据');
+        return
+      }
+      let id = this.multipleSelection[0].id;
+      dcxh({module:command,id});
     },
     exportCx(command){
       if (command == 1) {
@@ -570,6 +595,8 @@ showCase(row){
           message: "提交成功",
           type: "success"
         });
+        this.getMainData();
+
       });
     },
     //同意协催

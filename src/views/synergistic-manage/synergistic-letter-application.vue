@@ -1,5 +1,10 @@
 <template>
-  <div id="dclxh" class="page-wraper-sub">
+  <div id="dclxh" class="page-wraper-sub"
+  	v-loading="loading2"
+  	v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-text="正在导入中"
+    element-loading-spinner="el-icon-loading"
+   element-loading-background="rgba(0, 0, 0, 0.7)">
   <el-upload
     class="upload-demo"
     :action="action"
@@ -58,6 +63,7 @@
                       placeholder="请选择委托方"
                       filterable
                       multiple
+                      collapse-tags
                       clearable
                     >
                       <el-option
@@ -192,10 +198,7 @@
                     >
                   </el-form-item>
                   <el-form-item>
-                    <el-button
-                      type="primary"
-                      v-has="'同意协催'"
-                      @click="showXc"
+                    <el-button type="primary" v-has="'同意协催'" @click="showXc"
                       >同意协催</el-button
                     >
                   </el-form-item>
@@ -275,20 +278,24 @@
           >
           </el-pagination>
         </el-tab-pane>
-        <el-tab-pane label="待发信函" name="tab2"> <tab2></tab2> </el-tab-pane>
+        <el-tab-pane label="待发信函" name="tab2">
+          <tab2 :active="activeName"></tab2>
+        </el-tab-pane>
       </el-tabs>
     </div>
-  <el-dialog
-    class="dialog-wrap"
-    title="提示"
-    :visible.sync="ImportdialogVisible"
-    width="30%"
-  >
-    <span>{{ImportMsg}}</span>
-    <span slot="footer" class="footer">
-      <el-button type="primary" @click="ImportdialogVisible=false;">确 定</el-button>
-    </span>
-  </el-dialog>
+    <el-dialog
+      class="dialog-wrap"
+      title="提示"
+      :visible.sync="ImportdialogVisible"
+      width="30%"
+    >
+      <span>{{ ImportMsg }}</span>
+      <span slot="footer" class="footer">
+        <el-button type="primary" @click="ImportdialogVisible = false"
+          >确 定</el-button
+        >
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -301,7 +308,7 @@ import {
   batchNo,
   addCollectStatus
 } from "@/common/js/collect-my-case";
-import {baseURL} from '@/common/js/request.js';
+import { baseURL } from "@/common/js/request.js";
 import {
   list as moduleList,
   confirmSynergy,
@@ -319,6 +326,8 @@ export default {
   },
   data() {
     return {
+    	loading2:false,
+    	fullscreenLoading:false,
       tableLoad:false,
       ImportdialogVisible:false,
       ImportMsg: '',
@@ -450,8 +459,9 @@ export default {
       detailVisible: false,
       detailId: -1,
       detailTitle: "案件详情",
-      action:baseURL+'/letter/import',
-      headers:{Authorization:localStorage.token}
+      action: baseURL + "/letter/import",
+      headers: { Authorization: localStorage.token },
+      fullscreenLoading:false
     };
   },
   computed: {
@@ -484,7 +494,7 @@ export default {
         clients,
         batchNos,
         seqno,
-        collectArea,
+        collectArea: collectArea + "" ? collectArea : null,
         name,
         caseAmtStart,
         caseAmtEnd,
@@ -513,46 +523,52 @@ export default {
     this.init();
   },
   methods: {
-    showXc(){
+    showXc() {
       if (this.multipleSelection.length == 0) {
         this.$message({
           message: "请先选择数据",
           type: "error"
         });
         return;
-      }else{
+      } else {
         this.dialogVisible = true;
       }
     },
     fileStatu(res){
+    	this.loading2=true
+					this.fullscreenLoading=true
       if (res.code ==100){
         this.$message({
-          type: 'success',
+          type: "success",
           message: "导入成功"
         });
         this.getMainData();
+
       }else if(res.code ==800){
         this.ImportdialogVisible=true;
         this.ImportMsg= res.msg;
       }else{
         this.$message({
-          type: 'error',
+          type: "error",
           message: res.msg
         });
       }
+      this.loading2=false
+
+      this.fullscreenLoading = false;
     },
     showCase(row) {
-      let id = row.caseId
-      let name = row.name
-      let seqNo = row.seqno
+      let id = row.caseId;
+      let name = row.name;
+      let seqNo = row.seqno;
       this.$router.push({
-        path:'case-detail',
-        query:{
+        path: "case-detail",
+        query: {
           id,
           name,
           seqNo
         }
-      })
+      });
     },
     sortHandle({ prop, order }) {
       this.sort.sort = order.replace("ending", "");
@@ -614,6 +630,7 @@ export default {
           message: "提交成功",
           type: "success"
         });
+        this.getMainData();
       });
     },
     //同意协催
@@ -638,7 +655,7 @@ export default {
       });
     },
     getMainData() {
-      this.tableLoad = true
+      this.tableLoad = true;
       pageDataLetter(this.realFetchFormData).then(data => {
         if (!data) {
           data = { total: 0, list: [] };
@@ -648,7 +665,7 @@ export default {
         this.tableData = data.list.map(item => {
           return Object.assign(item, { "class-name": `color_${item.color}` });
         });
-        this.tableLoad = false
+        this.tableLoad = false;
       });
     },
     resetForm(formName) {
@@ -701,7 +718,7 @@ export default {
 <style lang="scss">
 #synergistic-letter-application {
 }
-#dclxh{
+#dclxh {
   height: calc(100% - 21px);
   position: relative;
   .daoru {
@@ -709,7 +726,6 @@ export default {
     right: 33px;
     top: 5px;
     z-index: 22;
-
   }
 }
 </style>

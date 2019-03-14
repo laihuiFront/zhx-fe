@@ -2,8 +2,9 @@
   <div id="data-memorize-manage"
   	v-loading="loading"	 
   	element-loading-text="拼命加载中"
+  	  	  v-loading.fullscreen.lock="fullscreenLoading"
     element-loading-spinner="el-icon-loading"
-    element-loading-background="rgba(248, 248, 248, 0.8)"
+    element-loading-background="rgba(0, 0, 0, 0.8)"
     class="page-wraper-sub">
     <el-form id="repay-record-query" :model="formInline" :inline="true" class="query-wrap">
       <el-form-item >
@@ -324,6 +325,7 @@
       label="承诺还款金额"
       width="140"
       align="center"
+      prop="repayAmtMsg"
       sortable="custom"
       :sort-orders="['ascending','descending']"
       show-overflow-tooltip>
@@ -336,6 +338,7 @@
       sortable="custom"
       :sort-orders="['ascending','descending']"
       align="center"
+      prop="reduceAmtMsg"
       show-overflow-tooltip>
       <template slot-scope="scope">
         {{scope.row.reduceAmtMsg}}
@@ -410,7 +413,7 @@
             type="textarea"
             :rows="4"
             placeholder="请输入内容"
-            v-model="recordInfo.result">
+            v-model="recordInfo.collectInfo">
           </el-input>
         </el-form-item>
       </el-form>
@@ -477,6 +480,7 @@
             value:'棕'
           },
         ],
+        fullscreenLoading:false,
         EndList:[],
         selectDataCollectExportList:[],
         departmentList:[],
@@ -526,7 +530,7 @@
       editMessage(record){
         this.recordInfo = {
           id: record.id,
-          result: record.result,
+          collectInfo: record.collectInfo,
           collectTime: record.collectTime
         }
         this.dialogVisible1 = true
@@ -536,7 +540,10 @@
       },
       onClickSave(){
         updateDataCollectRecord(this.recordInfo).then(res=>{
-          this.$message('修改记录成功成功')
+          this.$message({
+            type: 'success',
+            message: '修改记录成功成功!'
+          });
           this.search()
           this.dialogVisible1 = false
         })
@@ -548,7 +555,10 @@
           type: 'warning'
         }).then(() => {
           deleteDataCollectRecord([{id}]).then(res=>{
-            this.$message('删除成功')
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            });
             this.search()
           })
         }).catch(() => {
@@ -556,9 +566,11 @@
       },
       selectDataCollectExport(){
         this.loading=true
+        		this.fullscreenLoading=true
         if(this.selectDataCollectExportList.length>=1) {
           selectDataExport(this.selectDataCollectExportList).then((response) => {
             this.loading = false;
+            		this.fullscreenLoading=false
             this.$message({
               type: 'success',
               message: '导出成功!'
@@ -566,6 +578,7 @@
           })
         }else{
           this.loading = false;
+          		this.fullscreenLoading=false
           this.$message({
             type: 'info',
             message: '请选择数据!'
@@ -574,6 +587,8 @@
       },
       totalDataCollectExport(){
         this.loading=true;
+        		this.fullscreenLoading=true
+
         let bailStartDate=this.formInline.bailTime[0]
         let bailEndDate=this.formInline.bailTime[1]
         let expectStartTime=this.formInline.expectTime[0]
@@ -582,6 +597,8 @@
         let collectEndTime=this.formInline.collectTime[1]
         totalDataExport(this.formInline.area,this.formInline.dept,this.formInline.batchNo,this.formInline.clients,this.formInline.odvs,this.formInline.caseStatus,this.formInline.measure,this.formInline.result,this.formInline.identNo,this.formInline.cardNo,this.formInline.collectInfo,this.formInline.color,this.formInline.seqno,this.formInline.bailStartDate,this.formInline.bailEndDate,this.formInline.expectStartTime,this.formInline.expectEndTime,this.formInline.collectStartTime,this.formInline.collectEndTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
           this.loading=false;
+          		this.fullscreenLoading=false
+
           this.$message({
             type: 'success',
             message: '导出成功!'
@@ -590,6 +607,7 @@
       },
       pageDataCollectExport(){
         this.loading=true;
+        		this.fullscreenLoading=true
         let bailStartDate=this.formInline.bailTime[0]
         let bailEndDate=this.formInline.bailTime[1]
         let expectStartTime=this.formInline.expectTime[0]
@@ -598,6 +616,8 @@
         let collectEndTime=this.formInline.collectTime[1]
         pageDataExport(this.formInline.area,this.formInline.dept,this.formInline.batchNo,this.formInline.clients,this.formInline.odvs,this.formInline.caseStatus,this.formInline.measure,this.formInline.result,this.formInline.identNo,this.formInline.cardNo,this.formInline.collectInfo,this.formInline.color,this.formInline.seqno,this.formInline.bailStartDate,this.formInline.bailEndDate,this.formInline.expectStartTime,this.formInline.expectEndTime,this.formInline.collectStartTime,this.formInline.collectEndTime,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
           this.loading=false;
+          		this.fullscreenLoading=false
+
           this.$message({
             type: 'success',
             message: '导出成功!'
@@ -670,31 +690,30 @@
       },
       open7() {
         let _self=this
+         if(_self.deleteList.length>0){
         _self.$confirm('是否删除?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning',
           center: true
         }).then(() => {
-          console.info(1)
-          if(_self.deleteList.length>0){
-            console.info(2)
-            remoweData(_self.deleteList).then((response)=>{
+                     remoweData(_self.deleteList).then((response)=>{
               _self.$message({
                 type: 'success',
                 message: '删除成功!'
               });
               _self.search()
             })
-          }else{
+         
+
+        }).catch(() => {
+        });
+         }else{
             _self.$message({
               type: 'info',
               message: '请选择需要删除的数据!'
             });
           }
-
-        }).catch(() => {
-        });
       },
     },
     created() {
@@ -757,6 +776,9 @@
           }
         }
       }
+    }
+    .el-loading-spinner .el-loading-text {
+    font-size: 18px;
     }
   }
 </style>

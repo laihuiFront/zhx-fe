@@ -49,7 +49,7 @@
       label="办案进度"
      >
     </el-table-column><el-table-column
-      prop="legalType"
+      prop="legalTypeMsg"
       align="center"
       min-width="120"
       label="案件类型"
@@ -95,7 +95,7 @@
      >
     </el-table-column>
     <el-table-column
-      prop="owner"
+      prop="ownerName"
       align="center"
       min-width="120"
       label="所属人"
@@ -288,7 +288,7 @@
      <div class="block">
     <el-date-picker
     	value-format="yyyy-MM-dd"
-      v-model="formInline.filingDat"
+      v-model="formInline.filingDate"
       type="date"
       placeholder="选择日期">
     </el-date-picker>
@@ -511,7 +511,7 @@
       label="办案进度"
      >
     </el-table-column><el-table-column
-      prop="legalType"
+      prop="legalTypeMsg"
       align="center"
       min-width="120"
       label="案件类型"
@@ -557,7 +557,7 @@
      >
     </el-table-column>
     <el-table-column
-      prop="owner"
+      prop="ownerName"
       align="center"
       min-width="120"
       label="所属人"
@@ -594,9 +594,9 @@
       width="180"
      >
      <template slot-scope="scope">
-       <el-button type="text" size="small" v-has="'编辑'" @click="showmessage(scope.row)">查看</el-button>
+       <el-button type="text" size="small" v-has="'查看'" @click="showmessage(scope.row)">查看</el-button>
        <el-button type="text" size="small" v-has="'编辑'" @click="editData(scope.row)">编辑</el-button>
-       <el-button type="text" size="small" v-has="'编辑'" @click="deleteData(scope.row.id)">删除</el-button>
+       <el-button type="text" size="small" v-has="'删除'" @click="deleteData(scope.row.id)">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -751,7 +751,7 @@
      <div class="block">
     <el-date-picker
     	value-format="yyyy-MM-dd"
-      v-model="formInline.filingDat"
+      v-model="formInline.filingDate"
       type="date"
       placeholder="选择日期">
     </el-date-picker>
@@ -921,8 +921,8 @@
 </el-form>
  
   <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="SaveData">确 定</el-button>
+    <el-button  @click="dialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="SaveData" v-if=!isTrue> 确 定</el-button>
   </span>
 </el-dialog></el-tab-pane>
   </el-tabs>
@@ -968,6 +968,9 @@ export default {
    		this.dialogTitle="详情"
    		this.isTrue=true
    		this.formInline=row
+   		
+   		this.formInline.progress=parseInt(row.progress)
+   		this.formInline.owner=parseInt(row.owner)
    	},
    	addDataform(){
    		this.formInline={};
@@ -1007,6 +1010,9 @@ export default {
    		this.dialogVisible=true;
    		this.dialogTitle="修改";
    		this.formInline=row
+   		
+   		this.formInline.progress=parseInt(row.progress)
+   		this.formInline.owner=parseInt(row.owner)
    		this.isTrue=false
    	},
    	deleteData(id){
