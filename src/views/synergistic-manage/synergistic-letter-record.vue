@@ -562,8 +562,8 @@ export default {
         this.$message.warning("至少选择一条数据");
         return;
       }
-      let id = this.multipleSelection[0].id;
-      dcxh({ module: command, id });
+      let {id,caseId} = this.multipleSelection[0];
+      dcxh({ module: command, id ,caseId});
     },
     exportCx(command) {
       this.fullscreenLoading = true;
