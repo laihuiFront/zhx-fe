@@ -1,6 +1,12 @@
 <template>
-  <div id="xhjl" class="page-wraper-sub">
-
+  <div
+    id="xhjl"
+    class="page-wraper-sub"
+    v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-text="正在导入中"
+    element-loading-spinner="el-icon-loading"
+    element-loading-background="rgba(0, 0, 0, 0.7)"
+  >
     <el-dialog
       :title="detailTitle"
       class="dialog-wrap"
@@ -164,24 +170,32 @@
               >
             </el-form-item>
             <el-form-item>
-              <el-dropdown trigger="click" @command="exportXh" v-has="'导出信函'">
+              <el-dropdown
+                trigger="click"
+                @command="exportXh"
+                v-has="'导出信函'"
+              >
                 <el-button type="primary">导出信函</el-button>
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item
                     v-for="(item, index) in moduleList"
                     :key="index"
                     :command="item.id"
-                  >{{ item.title }}
+                    >{{ item.title }}
                   </el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </el-form-item>
             <el-form-item>
-              <el-dropdown trigger="click" @command="exportCx" v-has="'导出查询结果'">
+              <el-dropdown
+                trigger="click"
+                @command="exportCx"
+                v-has="'导出查询结果'"
+              >
                 <el-button type="primary">导出查询结果</el-button>
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item command="1"
-                  >导出全部查询结果</el-dropdown-item
+                    >导出全部查询结果</el-dropdown-item
                   >
                   <el-dropdown-item command="2">导出当前页</el-dropdown-item>
                 </el-dropdown-menu>
@@ -195,10 +209,13 @@
                 :show-file-list="false"
                 accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.xls,.xlsx"
                 :multiple="false"
-
+                :on-error="()=>{this.fullscreenLoading = false;}"
+                :on-progress="()=>{this.fullscreenLoading = true;}"
                 :on-success="fileStatu"
               >
-                <el-button class="daoru" type="primary" v-has="'导入信函记录'">导入信函记录</el-button>
+                <el-button class="daoru" type="primary" v-has="'导入信函记录'"
+                  >导入信函记录</el-button
+                >
               </el-upload>
             </el-form-item>
           </el-form>
@@ -212,7 +229,6 @@
                 >撤销信函</el-button
               >
             </el-form-item>
-
           </el-form>
         </div>
       </el-col>
@@ -268,17 +284,17 @@
       <!--</template>-->
       <!--</el-table-column>-->
     </el-table>
-      <el-pagination
-        class="pagination-wrap"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="paginationData.currentPage"
-        :page-sizes="[100, 500, 2000, 10000, 1000000]"
-        :page-size="paginationData.pageSize"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="paginationData.total"
-      >
-      </el-pagination>
+    <el-pagination
+      class="pagination-wrap"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="paginationData.currentPage"
+      :page-sizes="[100, 500, 2000, 10000, 1000000]"
+      :page-size="paginationData.pageSize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="paginationData.total"
+    >
+    </el-pagination>
   </div>
 </template>
 
@@ -311,9 +327,9 @@ export default {
   },
   data() {
     return {
-      tableLoad:false,
-      ImportdialogVisible:false,
-      ImportMsg: '',
+      tableLoad: false,
+      ImportdialogVisible: false,
+      ImportMsg: "",
       paginationData: {
         pageSize: 10,
         total: 0,
@@ -477,7 +493,7 @@ export default {
         clients,
         batchNos,
         seqno,
-        collectArea,
+        collectArea: collectArea + "" ? collectArea : null,
         name,
         caseAmtStart,
         caseAmtEnd,
@@ -506,25 +522,31 @@ export default {
     this.init();
   },
   methods: {
-    fileStatu(res){
-      if (res.code ==100){
+    fileStatu(res) {
+      if (res.code == 100) {
         this.$message({
-          type: 'success',
+          type: "success",
           message: "导入成功"
         });
         this.getMainData();
-      }else if(res.code ==800){
-        this.ImportdialogVisible=true;
-        this.ImportMsg= res.msg;
-      }else{
+      } else if (res.code == 800) {
+        this.ImportdialogVisible = true;
+        this.ImportMsg = res.msg;
+      } else {
         this.$message({
-          type: 'error',
+          type: "error",
           message: res.msg
         });
       }
+      this.fullscreenLoading = false;
     },
     exportXh(command) {
-      dcxh({ id: command });
+      if (this.multipleSelection.length == 0) {
+        this.$message.warning("至少选择一条数据");
+        return;
+      }
+      let id = this.multipleSelection[0].id;
+      dcxh({ module: command, id });
     },
     exportCx(command) {
       if (command == 1) {
@@ -533,18 +555,18 @@ export default {
         dccxjgThis(this.realFetchFormData);
       }
     },
-    showCase(row){
-      let id = row.id
-      let name = row.name
-      let seqNo = row.seqno
+    showCase(row) {
+      let id = row.id;
+      let name = row.name;
+      let seqNo = row.seqno;
       this.$router.push({
-        path:'case-detail',
-        query:{
+        path: "case-detail",
+        query: {
           id,
           name,
           seqNo
         }
-      })
+      });
     },
     sortHandle({ prop, order }) {
       this.sort.sort = order.replace("ending", "");
@@ -624,7 +646,7 @@ export default {
       });
     },
     getMainData() {
-      this.tableLoad = true
+      this.tableLoad = true;
       pageDataLetterInfo(this.realFetchFormData).then(data => {
         if (!data) {
           data = { total: 9, list: [] };
@@ -634,7 +656,7 @@ export default {
         this.tableData = data.list.map(item => {
           return Object.assign(item, { "class-name": `color_${item.color}` });
         });
-        this.tableLoad = false
+        this.tableLoad = false;
       });
     },
     resetForm(formName) {
@@ -688,7 +710,7 @@ export default {
 <style lang="scss">
 #xhjl {
   height: calc(100% - 21px);
-  .el-table{
+  .el-table {
     height: calc(100% - 143px);
   }
   .upload-demo {
