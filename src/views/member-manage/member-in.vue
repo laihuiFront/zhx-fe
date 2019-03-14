@@ -188,6 +188,7 @@ export default {
   name: 'memberIn',
   data () {
     return {
+      queryDepartment:null,
       tableLoad:false,
     	isTrue:true,
       departmentTree: [],
@@ -229,8 +230,9 @@ export default {
   created () {
     getDepartmentTree().then(data => {
       this.departmentTree = data
+      this.queryDepartment = data[0]
+      this.onClickQuery()
     })
-    this.onClickQuery()
     getRoleList().then(response => {
       this.roleList = response
     })
@@ -297,10 +299,20 @@ export default {
     },
     onClickAdd () {
       // this.memberInfo.roleList = null
-      this.memberInfo = {
-        status: 1,
-        enable: 1,
-        roleList: []
+      if(!this.queryDepartment){
+        this.memberInfo = {
+          status: 1,
+          enable: 1,
+          roleList: [],
+        }
+      }else{
+        this.memberInfo = {
+          status: 1,
+          enable: 1,
+          roleList: [],
+          departId:this.queryDepartment.id,
+          department:this.queryDepartment.orgName
+        }
       }
       this.$set(this.dialogData, 'title', '新增员工')
       this.$set(this.dialogData, 'type', 'add')
@@ -384,7 +396,7 @@ export default {
       this.currentDept = null
     },
     onClickDepartment (data, node) {
-
+      this.queryDepartment = data
       this.$set(this.queryForm, 'department', data.id)
       this.onClickQuery()
     },
