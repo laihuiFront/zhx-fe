@@ -95,7 +95,7 @@
      >
     </el-table-column>
     <el-table-column
-      prop="owner"
+      prop="ownerName"
       align="center"
       min-width="120"
       label="所属人"
@@ -511,7 +511,7 @@
       label="办案进度"
      >
     </el-table-column><el-table-column
-      prop="legalType"
+      prop="legalTypeMsg"
       align="center"
       min-width="120"
       label="案件类型"
@@ -557,7 +557,7 @@
      >
     </el-table-column>
     <el-table-column
-      prop="owner"
+      prop="ownerName"
       align="center"
       min-width="120"
       label="所属人"

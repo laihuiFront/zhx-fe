@@ -95,7 +95,7 @@
      >
     </el-table-column>
     <el-table-column
-      prop="owner"
+      prop="ownerName"
       align="center"
       min-width="120"
       label="所属人"
