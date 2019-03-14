@@ -103,7 +103,7 @@
           <el-input v-model="memberInfo.userName" placeholder="请输入用户名" @blur="adduserName"></el-input>
         </el-form-item>
         <el-form-item label="账号" prop="number">
-          <el-input :disabled="isTrue" v-model="memberInfo.number" placeholder="请输入账号"></el-input>
+          <el-input  v-model="memberInfo.number" placeholder="请输入账号"></el-input>
         </el-form-item>
         <el-form-item label="部门" prop="department">
           <el-input
