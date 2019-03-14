@@ -1,20 +1,18 @@
 <template>
-  <div style="height:100%;display:flex;flex-direction:column;"
-  	v-loading="loading2"
-  	v-loading.fullscreen.lock="fullscreenLoading"
-    element-loading-text="正在导入中"
+  <div
+    style="height:100%;display:flex;flex-direction:column;"
+    v-loading="loading2"
+    v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-text="正在处理中"
     element-loading-spinner="el-icon-loading"
-   element-loading-background="rgba(0, 0, 0, 0.7)">
+    element-loading-background="rgba(0, 0, 0, 0.7)"
+  >
     <el-dialog
       :title="detailTitle"
       class="dialog-wrap"
       :visible.sync="detailVisible"
       :close-on-click-modal="false"
       width="90%"
-      v-loading.fullscreen.lock="fullscreenLoading"
-      element-loading-text="正在导入中"
-      element-loading-spinner="el-icon-loading"
-      element-loading-background="rgba(0, 0, 0, 0.7)"
     >
       <case-detail></case-detail>
     </el-dialog>
@@ -183,14 +181,17 @@
             </el-form-item>
             <el-form-item>
               <el-dropdown
-               v-has="'导出信函'"
+                v-has="'导出信函'"
                 trigger="click"
                 @command="exportXh"
               >
                 <el-button type="primary">导出信函</el-button>
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item v-for="(item,index) in moduleList" :key="index"
-                                    :command="item.id">{{item.title}}
+                  <el-dropdown-item
+                    v-for="(item, index) in moduleList"
+                    :key="index"
+                    :command="item.id"
+                    >{{ item.title }}
                   </el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
@@ -203,7 +204,9 @@
               >
                 <el-button type="primary">导出查询结果</el-button>
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item command="1">导出全部查询结果</el-dropdown-item>
+                  <el-dropdown-item command="1"
+                    >导出全部查询结果</el-dropdown-item
+                  >
                   <el-dropdown-item command="2">导出当前页</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
@@ -304,12 +307,12 @@ export default {
   components: {
     CaseDetail
   },
-  props:['active'],
+  props: ["active"],
   data() {
     return {
-    	loading2:false,
-    	fullscreenLoading:false,
-      tableLoad:false,
+      loading2: false,
+      fullscreenLoading: false,
+      tableLoad: false,
       paginationData: {
         pageSize: 100,
         total: 0,
@@ -438,8 +441,8 @@ export default {
       detailVisible: false,
       detailId: -1,
       detailTitle: "案件详情",
-      moduleList:[],
-      fullscreenLoading:true
+      moduleList: [],
+      fullscreenLoading: false
     };
   },
   computed: {
@@ -472,7 +475,7 @@ export default {
         clients,
         batchNos,
         seqno,
-        collectArea:collectArea+''?collectArea:null,
+        collectArea: collectArea + "" ? collectArea : null,
         name,
         caseAmtStart,
         caseAmtEnd,
@@ -496,44 +499,48 @@ export default {
       },
       deep: true
     },
-    active(n){
-      if(n == 'tab2'){
+    active(n) {
+      if (n == "tab2") {
         this.getMainData();
       }
-    },
+    }
   },
   created() {
     this.init();
   },
   methods: {
-
-    exportXh(command){
+    exportXh(command) {
       if (this.multipleSelection.length == 0) {
-        this.$message.warning('至少选择一条数据');
-        return
+        this.$message.warning("至少选择一条数据");
+        return;
       }
       let id = this.multipleSelection[0].id;
-      dcxh({module:command,id});
+      dcxh({ module: command, id });
     },
-    exportCx(command){
+    exportCx(command) {
+      this.fullscreenLoading = true;
       if (command == 1) {
-        dccxjg(this.realFetchFormData)
-      }else{
-        dccxjgThis(this.realFetchFormData);
+        dccxjg(this.realFetchFormData).then(()=>{
+          this.fullscreenLoading = false;
+        });
+      } else {
+        dccxjgThis(this.realFetchFormData).then(()=>{
+          this.fullscreenLoading = false;
+        });
       }
     },
-showCase(row){
-  let id = row.caseId
-  let name = row.name
-  let seqNo = row.seqno
-  this.$router.push({
-  path:'case-detail',
-  query:{
-  id,
-  name,
-  seqNo
-}
-})
+    showCase(row) {
+      let id = row.caseId;
+      let name = row.name;
+      let seqNo = row.seqno;
+      this.$router.push({
+        path: "case-detail",
+        query: {
+          id,
+          name,
+          seqNo
+        }
+      });
     },
     sortHandle({ prop, order }) {
       this.sort.sort = order.replace("ending", "");
@@ -596,7 +603,6 @@ showCase(row){
           type: "success"
         });
         this.getMainData();
-
       });
     },
     //同意协催
@@ -623,7 +629,7 @@ showCase(row){
       });
     },
     getMainData() {
-      this.tableLoad = true
+      this.tableLoad = true;
       pageDataLetter(this.realFetchFormData).then(data => {
         if (!data) {
           data = { total: 0, list: [] };
@@ -633,7 +639,7 @@ showCase(row){
         this.tableData = data.list.map(item => {
           return Object.assign(item, { "class-name": `color_${item.color}` });
         });
-        this.tableLoad = false
+        this.tableLoad = false;
       });
     },
     resetForm(formName) {
