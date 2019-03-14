@@ -198,6 +198,7 @@ export default {
       val2_data_form2: [],
       tableData2: [],
       tablecol_data2:[
+        {prop:'collectStatusMsg',label:'催收状态'},
         {prop:'batchNo',label:'批次号'},
         {prop:'paidMoney',label:'已还款金额（回收值）'},
         {prop:'commisionMoney',label:'委案金额（案值）'},
@@ -264,7 +265,7 @@ export default {
       this.tableLoad = true
       batch(this.form3_data).then((data)=>{
         this.tableData3 = data;
-        thi.tableLoad = false
+        this.tableLoad = false
       })
     },
     getEnum(){
