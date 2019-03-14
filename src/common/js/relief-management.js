@@ -157,6 +157,16 @@ return request({
     }
   })
 }
+export const sureData = function(id) {
+return request({
+    url: '/reduce/update/status',
+    method: 'post',
+    data:{
+    	ids:id,
+    	reduceFlag:4
+    }
+  })
+}
 
 export const addDataform = function(form) {
 return request({
