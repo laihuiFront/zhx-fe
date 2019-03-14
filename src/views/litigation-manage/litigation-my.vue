@@ -49,7 +49,7 @@
       label="办案进度"
      >
     </el-table-column><el-table-column
-      prop="legalType"
+      prop="legalTypeMsg"
       align="center"
       min-width="120"
       label="案件类型"
@@ -594,9 +594,9 @@
       width="180"
      >
      <template slot-scope="scope">
-       <el-button type="text" size="small" v-has="'编辑'" @click="showmessage(scope.row)">查看</el-button>
+       <el-button type="text" size="small" v-has="'查看'" @click="showmessage(scope.row)">查看</el-button>
        <el-button type="text" size="small" v-has="'编辑'" @click="editData(scope.row)">编辑</el-button>
-       <el-button type="text" size="small" v-has="'编辑'" @click="deleteData(scope.row.id)">删除</el-button>
+       <el-button type="text" size="small" v-has="'删除'" @click="deleteData(scope.row.id)">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
