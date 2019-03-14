@@ -509,6 +509,9 @@ export default {
             .el-select {
               width: 100%;
             }
+            .el-date-editor{
+              width: 100%;
+            }
           }
         }
       }

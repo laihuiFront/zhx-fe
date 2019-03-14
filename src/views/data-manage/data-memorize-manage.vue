@@ -199,7 +199,6 @@
     <el-table
       v-loading="tableLoad"
       class="table-wrap"
-      ref="multipleTable"
       :data="tableData3"
       border
       stripe
