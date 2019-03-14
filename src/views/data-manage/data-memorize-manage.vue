@@ -198,6 +198,7 @@
       </el-form-item>
     </el-form>
     <el-table
+      height="1"
       v-loading="tableLoad"
       class="table-wrap"
       :data="tableData3"
@@ -450,6 +451,7 @@
     name: 'dataMemorizeManage',
     data(){
       return {
+        tableHeight:50,
         tableLoad:false,
         images:{background: "url(" + require("./down.png") + ") repeat-x",padding:"8px 5px 3px 6px",},
         loading:false,
