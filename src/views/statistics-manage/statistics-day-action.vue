@@ -41,7 +41,7 @@
         </el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-button type="text" icon="el-icon-search"> 开始统计</el-button> 
+        <el-button type="text" icon="el-icon-search" @click=query> 开始统计</el-button> 
         <el-button type="text" icon="el-icon-refresh" @click=clench>重置</el-button> 
       </el-form-item>
       <el-form-item class="operation-item">
@@ -290,6 +290,13 @@ this.pageNum=val;
  	},
  	clench(){
  		this.formInline={}
+ 	},
+ 	query(){
+ 		 this.tableLoad = true
+               dataList(this.formInline,this.pageSize,this.pageNum).then((response)=>{
+            this.tableData3=response.list
+            this.tableLoad = false
+          })
  	}
  },
  created() {

@@ -225,8 +225,9 @@
       </el-form-item>
       <el-form-item class="operation-item">
         <el-button type="primary"　v-show="istrue1" v-has="'新增减免'" @click=addData >新增减免</el-button>
-        <el-button type="primary"　v-show="istrue2" v-has="'批量撤销'" @click=moreDataList >批量撤销</el-button>
-        <el-button type="primary"　v-show="istrue3" v-has="'批量审核'" @click=moreDataListcheck >批量审核</el-button>
+        <el-button type="primary"　v-show="istrue2" v-has="'批量撤销'" @click=open8 >批量撤销</el-button>
+        <el-button type="primary"　v-show="istrue3" v-has="'批量审核'" @click=open9 >批量审核</el-button>
+        <el-button type="primary"　v-show="istrue6" v-has="'批量确认'" @click=open10 >批量确认</el-button>
         <el-button type="primary"　v-show="istrue4" v-has="'批量下载附件'" @click=moredownDataList >批量下载附件</el-button>
         <el-button type="primary"　v-show="istrue5" v-has="'导出减免结果'" @click="dialogVisible1 = true"  >导出减免结果</el-button>
       </el-form-item>
@@ -729,7 +730,7 @@
 </template>
 
 <script>
-	import {areaList,clientList,downDataList,PersonList,pageDataBatchExport,dataList,checkData,deleteStatusList,accountAgeList,collectStatusList,remoweData,addDataform,remoweDataList} from '@/common/js/relief-management.js'
+	import {areaList,sureData,clientList,downDataList,PersonList,pageDataBatchExport,dataList,checkData,deleteStatusList,accountAgeList,collectStatusList,remoweData,addDataform,remoweDataList} from '@/common/js/relief-management.js'
 export default {
   name: 'reliefManagement',
   data(){
@@ -742,6 +743,7 @@ export default {
     	istrue3:true,
     	istrue4:true,
     	istrue5:false,
+    	istrue6:false,
     	activeName2:"first",
     	dialogTitle:'新增减免',
     	ruleForm:{
@@ -781,6 +783,42 @@ export default {
           center: true
         }).then(() => {
           this.checkData(row)
+        }).catch(() => {
+
+        });
+      },
+       open8() {
+        this.$confirm('确定撤销吗？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        }).then(() => {
+          this.moreDataList()
+        }).catch(() => {
+
+        });
+      },
+      open9() {
+        this.$confirm('确定审核通过减免申请转入待提交吗？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        }).then(() => {
+          this.moreDataListcheck()
+        }).catch(() => {
+
+        });
+      },
+      open10() {
+        this.$confirm('确定通过进入已完成吗？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        }).then(() => {
+          this.moreDataListsure()
         }).catch(() => {
 
         });
@@ -860,14 +898,16 @@ this.search()
     	this.istrue3=true
     	this.istrue4=true
     	this.istrue5=false
+    	this.istrue6=false
     	this.applyStatus=0
     	this.search()
        } else if(this.activeName2==="second"){
        	 this.istrue1=false
     	   this.istrue2=true
-        	this.istrue3=true
+        	this.istrue3=false
         	this.istrue4=false
     	   this.istrue5=true
+    	   this.istrue6=true
     	   this.applyStatus=1
     	   this.search()
        } else{
@@ -876,6 +916,7 @@ this.search()
         	this.istrue3=false
         	this.istrue4=true
     	   this.istrue5=false
+    	    this.istrue6=false
     	   this.applyStatus=2
     	   this.search()
        }   },
@@ -890,6 +931,28 @@ this.search()
           this.$message({
             type: 'success',
             message: '撤销成功!'
+          });
+          this.tableLoad = true
+          dataList(this.formInline,this.applyStatus,this.sort,this.orderBy,this.currentPage4,this.pageSize).then((response)=>{
+          	this.tableData3=response.list
+          	this.formInline={	time1:[],time2:[],time3:[]}
+            this.total = response.total
+            this.tableLoad = false
+          })
+          })    
+ 		}else{
+ 			this.$message({
+            type: 'error',
+            message: '请选择数据!'
+          });
+ 		}
+ 	},
+ 	moreDataListsure(){
+ 		if(this.deleteList.length>=1){
+ 			sureData(this.deleteList).then((response)=>{
+          this.$message({
+            type: 'success',
+            message: '操作成功!'
           });
           this.tableLoad = true
           dataList(this.formInline,this.applyStatus,this.sort,this.orderBy,this.currentPage4,this.pageSize).then((response)=>{
