@@ -1,27 +1,20 @@
 <template>
-  <div
-    id="dclxh"
-    class="page-wraper-sub"
-    v-loading.fullscreen.lock="fullscreenLoading"
+  <div id="dclxh" class="page-wraper-sub"
+  	v-loading="loading2"
+  	v-loading.fullscreen.lock="fullscreenLoading"
     element-loading-text="正在导入中"
     element-loading-spinner="el-icon-loading"
-    element-loading-background="rgba(0, 0, 0, 0.7)"
-  >
-    <el-upload
-      class="upload-demo"
-      :action="action"
-      :headers="headers"
-      :show-file-list="false"
-      :on-success="fileStatu"
-      :on-error="()=>{this.fullscreenLoading = false;}"
-      :on-progress="()=>{this.fullscreenLoading = true;}"
-      accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.xls,.xlsx"
-      :multiple="false"
-    >
-      <el-button class="daoru" type="primary" v-has="'导入信函记录'"
-        >导入信函记录</el-button
-      >
-    </el-upload>
+   element-loading-background="rgba(0, 0, 0, 0.7)">
+  <el-upload
+    class="upload-demo"
+    :action="action"
+    :headers="headers"
+    :show-file-list="false"
+    :on-success="fileStatu"
+    accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.xls,.xlsx"
+    :multiple="false">
+    <el-button class="daoru" type="primary" v-has="'导入信函记录'">导入信函记录</el-button>
+  </el-upload>
 
     <div id="synergistic-letter-application" class="page-wraper-sub">
       <el-tabs v-model="activeName" type="card" class="tabs-wrap">
@@ -333,9 +326,11 @@ export default {
   },
   data() {
     return {
-      tableLoad: false,
-      ImportdialogVisible: false,
-      ImportMsg: "",
+    	loading2:false,
+    	fullscreenLoading:false,
+      tableLoad:false,
+      ImportdialogVisible:false,
+      ImportMsg: '',
       paginationData: {
         pageSize: 100,
         total: 0,
@@ -539,22 +534,26 @@ export default {
         this.dialogVisible = true;
       }
     },
-    fileStatu(res) {
-      if (res.code == 100) {
+    fileStatu(res){
+    	this.loading2=true
+					this.fullscreenLoading=true
+      if (res.code ==100){
         this.$message({
           type: "success",
           message: "导入成功"
         });
         this.getMainData();
-      } else if (res.code == 800) {
-        this.ImportdialogVisible = true;
-        this.ImportMsg = res.msg;
-      } else {
+
+      }else if(res.code ==800){
+        this.ImportdialogVisible=true;
+        this.ImportMsg= res.msg;
+      }else{
         this.$message({
           type: "error",
           message: res.msg
         });
       }
+      this.loading2=false
 
       this.fullscreenLoading = false;
     },
