@@ -1443,8 +1443,9 @@
         :action="action+'/reduce/save/import'"
         :headers="header"
         :show-file-list=false
-       
-       
+        :data=fileNames
+        :on-change="handleChange"
+         :on-success="uploadSuccess2"
         >
         <el-button size="small" type="text" >上传</el-button>
       </el-upload>
@@ -2322,10 +2323,15 @@ export default {
         archiveInfo:{},
         dialogArchiveVisible:false,
         dataCollectInfo:{},
-        dialogDataCollectVisible:false
+        dialogDataCollectVisible:false,
+        fileNames:{file:'',caseId:''}
     }
   },
   methods: {
+  	handleChange(file){
+		this.fileNames.file=file.name
+  	this.fileNames.caseId=this.id
+  	},
     showSynergyApply(){
       getSynergyTypeList().then(data => {
         this.synergyTypeList = data
@@ -2470,6 +2476,19 @@ AddtableList(this.id,this.messageForm).then((response)=>{
            pageDataFile(this.id).then((response)=>{
             this.uploadFileList=response
           })
+      }else{
+        this.$message({
+          type: 'error',
+          message: res.msg
+        });
+      }
+  	},
+  	 uploadSuccess2(res,file,fileList){
+      if (res.code ==100){
+  		    this.$message({
+            type: 'success',
+            message: res.msg
+         });
       }else{
         this.$message({
           type: 'error',

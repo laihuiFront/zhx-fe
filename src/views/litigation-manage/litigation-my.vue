@@ -33,13 +33,17 @@
     class="table-wrap"
     :data="DataList"
     border
-    stripe
+stripe
+          tooltip-effect="dark"
+          @sort-change="handleSort"
      style="width: 100%">
     <el-table-column
       prop="legalStatusMsg"
       align="center"
       min-width="120"
       label="案件状态"
+       sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column>
    <el-table-column
@@ -47,30 +51,40 @@
       align="center"
       min-width="120"
       label="办案进度"
+       sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column><el-table-column
       prop="legalTypeMsg"
       align="center"
       min-width="120"
       label="案件类型"
+       sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column><el-table-column
       prop="cstName"
       align="center"
       min-width="120"
       label="客户姓名"
+       sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column><el-table-column
       prop="legalDate"
       align="center"
       min-width="120"
       label="委案日期"
+       sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column><el-table-column
       prop="clientele"
       align="center"
       min-width="120"
       label="委托人"
+       sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column>
     <el-table-column
@@ -78,6 +92,8 @@
       align="center"
       min-width="120"
       label="被告人"
+       sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column>
     <el-table-column
@@ -85,6 +101,8 @@
       align="center"
       min-width="120"
       label="标的"
+       sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column>
     <el-table-column
@@ -92,6 +110,8 @@
       align="center"
       min-width="120"
       label="费用"
+       sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column>
     <el-table-column
@@ -99,24 +119,32 @@
       align="center"
       min-width="120"
       label="所属人"
+       sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column><el-table-column
       prop="agent"
       min-width="120"
       align="center"
       label="代理律师"
+       sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column><el-table-column
       prop="court"
       align="center"
       min-width="120"
       label="受案法院"
+       sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column><el-table-column
       prop="legalNo"
       align="center"
       min-width="120"
       label="案号"
+       sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column>
     <el-table-column
@@ -124,6 +152,8 @@
       align="center"
       min-width="180"
       label="备注"
+       sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column>
     <el-table-column
@@ -496,12 +526,16 @@
     :data="DataList2"
     border
     stripe
+          tooltip-effect="dark"
+          @sort-change="handleSort"
      style="width: 100%">
     <el-table-column
       prop="legalStatusMsg"
       align="center"
       min-width="120"
       label="案件状态"
+        sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column>
    <el-table-column
@@ -509,30 +543,40 @@
       align="center"
       min-width="120"
       label="办案进度"
+        sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column><el-table-column
       prop="legalTypeMsg"
       align="center"
       min-width="120"
       label="案件类型"
+        sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column><el-table-column
       prop="cstName"
       align="center"
       min-width="120"
       label="客户姓名"
+        sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column><el-table-column
       prop="legalDate"
       align="center"
       min-width="120"
       label="委案日期"
+        sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column><el-table-column
       prop="clientele"
       align="center"
       min-width="120"
       label="委托人"
+        sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column>
     <el-table-column
@@ -540,6 +584,8 @@
       min-width="120"
       align="center"
       label="被告人"
+        sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column>
     <el-table-column
@@ -547,6 +593,8 @@
       min-width="120"
       align="center"
       label="标的"
+        sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column>
     <el-table-column
@@ -554,6 +602,8 @@
       min-width="120"
       align="center"
       label="费用"
+        sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column>
     <el-table-column
@@ -561,24 +611,32 @@
       align="center"
       min-width="120"
       label="所属人"
+        sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column><el-table-column
       prop="agent"
       align="center"
       min-width="120"
       label="代理律师"
+        sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column><el-table-column
       prop="court"
       align="center"
       min-width="120"
       label="受案法院"
+        sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column><el-table-column
       prop="legalNo"
       align="center"
       min-width="120"
       label="案号"
+        sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column>
     <el-table-column
@@ -586,6 +644,8 @@
       align="center"
       min-width="180"
       label="备注"
+        sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column>
     <el-table-column
@@ -935,6 +995,8 @@ export default {
   name: 'litigationMy',
 	data(){
   		return{
+  				orderBy:"id",
+      sort:"desc",
         tableLoad:false,
   			 activeName2: 'first',
   			isTrue:false,
@@ -960,6 +1022,12 @@ export default {
   	}
   },
    methods: {
+   	handleSort( {column,prop,order}){
+      this.sort = order==null?"desc":order.replace("ending","")
+      this.orderBy = prop==null?"id":prop
+      this.search()
+
+    },  
    	 handleClick(tab, event) {
         console.log(tab, event);
      },
@@ -1042,7 +1110,7 @@ export default {
   	},
   	search(){
       this.tableLoad = true
-  		dataList(this.form).then((response)=>{
+  		dataList(this.form,this.orderBy,this.sort).then((response)=>{
             this.DataList=response.list
               this.total = response.total
               this.tableLoad = false
@@ -1050,7 +1118,7 @@ export default {
   	},
   	search2(){
       this.tableLoad = true
-  		dataList2(this.form2).then((response)=>{
+  		dataList2(this.form2,this.orderBy,this.sort).then((response)=>{
             this.DataList2=response.list
               this.total = response.total
               this.tableLoad = false

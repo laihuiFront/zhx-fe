@@ -392,6 +392,10 @@
       ref="multipleTable"
       :data="tableData3"
       style="width: 100%;"
+       border
+         stripe
+          tooltip-effect="dark"
+          @sort-change="handleSort"
       @selection-change="handleSelectionChange"
      v-loading="tableLoad"
     >
@@ -403,48 +407,55 @@
         prop="seqno"
         align="center"
         label="个人序列号"
-        :sort-orders="['ascending','descending']"
+         sortable="custom"
+          :sort-orders="['ascending','descending']"
       >
       </el-table-column>
       <el-table-column
         prop="targetName"
         align="center"
        label="案人姓名"
-       :sort-orders="['ascending','descending']"
+        sortable="custom"
+          :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="collectStatus"
         align="center"
         label="催收状态"
-        :sort-orders="['ascending','descending']"
+        sortable="custom"
+          :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="accountAge"
         align="center"
         label="委案金额"
-        :sort-orders="['ascending','descending']"
+         sortable="custom"
+          :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="completeTime"
        align="center"
         label="完成时间"
-        :sort-orders="['ascending','descending']"
+         sortable="custom"
+          :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="completeUser"
         label="完成人"
         align="center"
-        :sort-orders="['ascending','descending']"
+          sortable="custom"
+          :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="approveRepayAmt"
       align="center"
-      :sort-orders="['ascending','descending']"
+       sortable="custom"
+          :sort-orders="['ascending','descending']"
         label="批复还款金额"
         show-overflow-tooltip>
       </el-table-column>
@@ -452,27 +463,31 @@
         prop="reduceValidTime"
       align="center"
         label="有效日期"
-        :sort-orders="['ascending','descending']"
+        sortable="custom"
+          :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="reduceStatus" 
         align="center"
         label="减免状态"
-        :sort-orders="['ascending','descending']"
+       sortable="custom"
+          :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="reduceResult"
       label="减免结果"
         align="center"
-        :sort-orders="['ascending','descending']"
+          sortable="custom"
+          :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="enRepayAmt"
       align="center"
-      :sort-orders="['ascending','descending']"
+       sortable="custom"
+          :sort-orders="['ascending','descending']"
         label="实际还款金额"
         show-overflow-tooltip>
       </el-table-column>
@@ -480,7 +495,8 @@
         prop="reduceUpdateTime"
         align="center"
         label="减免状态更新时间"
-        :sort-orders="['ascending','descending']"
+        sortable="custom"
+          :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
@@ -517,6 +533,10 @@
       ref="multipleTable"
       :data="tableData3"
       style="width: 100%;"
+       border
+         stripe
+          tooltip-effect="dark"
+          @sort-change="handleSort"
       @selection-change="handleSelectionChange"
       v-loading="tableLoad"
     >
@@ -528,41 +548,47 @@
         prop="seqno"
         align="center"
         label="个人序列号"
-        :sort-orders="['ascending','descending']"
+       sortable="custom"
+          :sort-orders="['ascending','descending']"
       >
       </el-table-column>
       <el-table-column
         prop="targetName"
         align="center"
        label="案人姓名"
-       :sort-orders="['ascending','descending']"
+        sortable="custom"
+          :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="collectStatus"
         align="center"
         label="催收状态"
-        :sort-orders="['ascending','descending']"
+        sortable="custom"
+          :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="accountAge"
         align="center"
         label="委案金额"
-        :sort-orders="['ascending','descending']"
+    sortable="custom"
+          :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="completeTime"
        align="center"
         label="完成时间"
-        :sort-orders="['ascending','descending']"
+         sortable="custom"
+          :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="completeUser"
         label="完成人"
-        :sort-orders="['ascending','descending']"
+         sortable="custom"
+          :sort-orders="['ascending','descending']"
         align="center"
         show-overflow-tooltip>
       </el-table-column>
@@ -570,41 +596,47 @@
         prop="approveRepayAmt"
       align="center"
         label="批复还款金额"
-        :sort-orders="['ascending','descending']"
+        sortable="custom"
+          :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="reduceValidTime"
       align="center"
         label="有效日期"
-        :sort-orders="['ascending','descending']"
+       sortable="custom"
+          :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="reduceStatus" 
         align="center"
         label="减免状态"
-        :sort-orders="['ascending','descending']"
+         sortable="custom"
+          :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="reduceResult"
       label="减免结果"
         align="center"
-        :sort-orders="['ascending','descending']"
+       sortable="custom"
+          :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="enRepayAmt"
       align="center"
         label="实际还款金额"
-        :sort-orders="['ascending','descending']"
+        sortable="custom"
+          :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="reduceUpdateTime"
         align="center"
-        :sort-orders="['ascending','descending']"
+    sortable="custom"
+          :sort-orders="['ascending','descending']"
         label="减免状态更新时间"
         show-overflow-tooltip>
       </el-table-column>

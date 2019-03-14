@@ -21,6 +21,8 @@
     :data="DataList"
     border
     stripe
+          tooltip-effect="dark"
+          @sort-change="handleSort"
      style="width: 100%">
     <el-table-column
       prop="legalStatusMsg"
@@ -28,6 +30,8 @@
       min-width="120"
       label="案件状态"
       show-overflow-tooltip
+        sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column>
    <el-table-column
@@ -36,6 +40,8 @@
       min-width="120"
       label="办案进度"
       show-overflow-tooltip
+        sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column>
     <el-table-column
@@ -44,6 +50,8 @@
       min-width="120"
       label="案件类型"
       show-overflow-tooltip
+        sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column>
     <el-table-column
@@ -52,6 +60,8 @@
       min-width="120"
       label="客户姓名"
       show-overflow-tooltip
+        sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column>
     <el-table-column
@@ -60,6 +70,8 @@
       min-width="120"
       label="委案日期"
       show-overflow-tooltip
+        sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column>
     <el-table-column
@@ -68,6 +80,8 @@
       min-width="120"
       label="委托人"
       show-overflow-tooltip
+        sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column>
     <el-table-column
@@ -76,6 +90,8 @@
       min-width="120"
       label="被告人"
       show-overflow-tooltip
+        sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column>
     <el-table-column
@@ -84,6 +100,8 @@
       align="center"
       label="标的"
       show-overflow-tooltip
+        sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column>
     <el-table-column
@@ -92,6 +110,8 @@
       min-width="120"
       label="费用"
       show-overflow-tooltip
+        sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column>
     <el-table-column
@@ -100,6 +120,8 @@
       min-width="120"
       label="所属人"
       show-overflow-tooltip
+        sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column>
     <el-table-column
@@ -108,6 +130,8 @@
       min-width="120"
       label="代理律师"
       show-overflow-tooltip
+        sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column>
     <el-table-column
@@ -116,6 +140,8 @@
       min-width="120"
       label="受案法院"
       show-overflow-tooltip
+        sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column>
     <el-table-column
@@ -124,6 +150,8 @@
       min-width="120"
       label="案号"
       show-overflow-tooltip
+        sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column>
     <el-table-column
@@ -132,6 +160,8 @@
       min-width="180"
       label="备注"
       show-overflow-tooltip
+        sortable="custom"
+          :sort-orders="['ascending','descending']"
      >
     </el-table-column>
     <el-table-column
@@ -797,10 +827,18 @@ export default {
          addId:'',
          	handleList:[],
   				feeList:[],
-  				changeId:''
+  				changeId:'',
+  					orderBy:"id",
+      sort:"desc",
   	}
   },
    methods: {
+handleSort( {column,prop,order}){
+      this.sort = order==null?"desc":order.replace("ending","")
+      this.orderBy = prop==null?"id":prop
+      this.search()
+
+    },   	
    	  submitFormCheck(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
@@ -972,7 +1010,7 @@ export default {
   	},
   	search(){
       this.tableLoad = true
-  		dataList(this.form).then((response)=>{
+  		dataList(this.form,this.orderBy,this.sort).then((response)=>{
             this.DataList=response.list
              // this.pages = response.pages
               this.total = response.total
