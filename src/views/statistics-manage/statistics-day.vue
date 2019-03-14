@@ -278,6 +278,7 @@ this.pageNum=val;
               dataList(this.formInline).then((response)=>{
             this.tableData3=response.list
             this.tableLoad = false
+            this.total=response.totalNum
           })
             
             

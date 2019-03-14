@@ -221,6 +221,7 @@ this.pageNum=val;
  created() {
    this.tableLoad = true
  	 dataList(this.formInline).then((response)=>{
+ 	 	         this.total=response.totalNum
           	this.tableData3=response.list
           	this.dataList=[]
           	for(var i=0;i<=response.list[0].list.length;i++){
@@ -234,8 +235,8 @@ this.pageNum=val;
 }
           		
           	}
+          	   this.tableLoad = false
             console.log(this.dataList)
-            this.tableLoad = false
           })
           areaList().then((response)=>{
           	this.areaList=response
