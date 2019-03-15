@@ -218,7 +218,9 @@ export default {
       this.configData.unshift({
         id: -(new Date()).getTime() % 1000000,
         status: 1,
-        editType: 'add'
+        editType: 'add',
+        tempSysFlag:1,
+        sysFlag:1
       })
     },
     onclickSave () {
