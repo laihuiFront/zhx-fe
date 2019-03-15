@@ -5,7 +5,7 @@
          element-loading-text="正在加载中"
          element-loading-spinner="el-icon-loading"
          element-loading-background="rgba(0, 0, 0, 0.7)"
-         class="page-wraper-sub">
+         >
     <div class="left-wrap">
       <el-tree
         v-if="departmentTree.length>0"
@@ -38,21 +38,17 @@
         </el-form-item>
         <el-form-item class="operation-item">
           <el-button type="primary" @click="onClickAdd" v-has="'新增员工'">新增员工</el-button>
-        </el-form-item>
-        <el-form-item class="operation-item">
           <el-button type="primary" @click="onClickImport" >导出员工信息</el-button>
-        </el-form-item>
-        <el-form-item class="operation-item">
-        <el-upload
-          class="upload-demo"
-          :action="action+'/user/import'"
-          :headers="header"
-          :show-file-list=false
-          :on-success="uploadSuccess"
-          :on-progress="onProgress"
-        >
-          <el-button size="small" type="primary">导入用户信息</el-button>
-        </el-upload>
+          <el-upload
+            class="upload-demo"
+            :action="action+'/user/import'"
+            :headers="header"
+            :show-file-list=false
+            :on-success="uploadSuccess"
+            :on-progress="onProgress"
+          >
+            <el-button size="small" type="primary">导入用户信息</el-button>
+          </el-upload>
         </el-form-item>
       </el-form>
       <el-table v-loading="tableLoad" sortable="custom" border stripe @sort-change="handleSort" @selection-change="handleSelectionChange"  height="1" :data="memberList" style="width: 100%" class="table-wrap">
@@ -211,6 +207,7 @@ export default {
   name: 'memberIn',
   data () {
     return {
+      header:{Authorization:localStorage.token},
       queryDepartment:null,
       tableLoad:false,
       fullscreenLoading:false,
