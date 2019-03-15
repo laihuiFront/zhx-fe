@@ -1,9 +1,8 @@
 <template>
   <div id="data-file-manage" class="page-wraper-sub"
   	v-loading="loading2"
-  	   	   	  	  v-loading.fullscreen.lock="fullscreenLoading"
-
-    element-loading-text="正在导入中"
+  	v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-text="正在导出中"
     element-loading-spinner="el-icon-loading"
    element-loading-background="rgba(0, 0, 0, 0.7)">
     <el-form ref="form" :model="form" :inline="true" class="query-wrap">

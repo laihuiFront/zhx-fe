@@ -727,7 +727,6 @@ methods: {
         this.DataList=response.pageInfo.list
         this.pages = response.pageInfo.pages
         this.total = response.pageInfo.total
-        this.tableAttribute.sortMethod.order = 'descending'
         this.tableLoad = false
       })
   },

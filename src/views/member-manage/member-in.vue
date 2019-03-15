@@ -64,7 +64,7 @@
         <el-table-column label="操作" width="200">
           <template slot-scope="scope">
             <el-button type="text" @click="onClickEdit(scope.row)" v-has="'修改'">修改</el-button>
-            <el-button type="text" @click="onClickReset(scope.row)" >重置</el-button>
+            <el-button type="text" @click="onClickPwdReset(scope.row)" >密码重置</el-button>
             <el-button
               v-has="'锁定'"
               type="text"
@@ -130,7 +130,7 @@
             placeholder="请选择部门"
           ></el-input>
         </el-form-item>
-        <el-form-item label="角色" prop="role">
+        <el-form-item label="角色" prop="roleList">
           <el-select v-model="memberInfo.roleList" multiple placeholder="请选择角色">
             <el-option
               v-for="item in roleList"
@@ -241,7 +241,7 @@ export default {
         department: [
           { required: true, message: '请选择部门', trigger: 'change' }
         ],
-        role: [
+        roleList: [
           { required: true, message: '请选择角色', trigger: 'change' }
         ],
       },
@@ -373,14 +373,17 @@ export default {
         this.$set(this.dialogData, 'editVisible', true)
       })
     },
-    onClickReset(row){
+    onClickPwdReset(row){
       this.$confirm('确定重置该员工密码？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
         resetMember(row.id).then(() => {
-          this.$message('员工密码重置成功')
+          this.$message({
+            type: 'success',
+            message: '员工密码重置成功!'
+          });
           this.onClickQuery()
         })
       }).catch(() => { })
@@ -397,7 +400,10 @@ export default {
           enable: 0
         }
         changeStatus(data).then(() => {
-          this.$message('员工账号锁定成功')
+          this.$message({
+            type: 'success',
+            message: '员工账号锁定成功!'
+          });
           this.onClickQuery()
         })
       }).catch(() => { })
