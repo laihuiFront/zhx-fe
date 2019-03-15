@@ -221,6 +221,7 @@
         :show-file-list=false
         :on-success="uploadSuccess"
         :data="{batchNo:scope.row.batchNo}"
+        :on-progress="onProgress"
   >
         <el-button type="text" size="small" v-has="'导入'">导入</el-button>
 </el-upload>
