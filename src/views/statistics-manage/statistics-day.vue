@@ -57,6 +57,7 @@
      show-summary
      :summary-method="getSummaries"
     style="width: 100%"
+    height="1"
       class="table-wrap">
     <el-table-column
       prop="odv"

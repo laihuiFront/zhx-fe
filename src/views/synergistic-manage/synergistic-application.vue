@@ -74,6 +74,7 @@
       stripe
       :data="recordList"
       style="width: 100%"
+      height="1"
       class="table-wrap">
       <el-table-column type="selection" width="50"></el-table-column>
       <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="synergisticType.name" label="协催类型" show-overflow-tooltip></el-table-column>

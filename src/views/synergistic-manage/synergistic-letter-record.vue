@@ -249,6 +249,7 @@
     <el-table
       v-loading="tableLoad"
       class="table-wrap"
+      height="1"
       ref="multipleTable"
       :data="tableData"
       border
@@ -328,7 +329,9 @@ import {
   confirmLetter,
   dcxh,
   dccxjg,
-  dccxjgThis
+  dccxjgThis,
+  dccxjgInfo,
+  dccxjgInfoThis
 } from "@/common/js/synergistic-letter-application.js";
 import CaseDetail from "@/views/data-manage/detail";
 import { baseURL } from "@/common/js/request.js";
@@ -569,11 +572,11 @@ export default {
       this.fullscreenLoading = true;
 
       if (command == 1) {
-        dccxjg(this.realFetchFormData).then(()=>{
+        dccxjgInfo(this.realFetchFormData).then(()=>{
           this.fullscreenLoading = false;
         });
       } else {
-        dccxjgThis(this.realFetchFormData).then(()=>{
+        dccxjgInfoThis(this.realFetchFormData).then(()=>{
           this.fullscreenLoading = false;
         });
       }

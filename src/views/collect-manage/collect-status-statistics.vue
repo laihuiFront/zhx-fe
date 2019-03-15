@@ -25,7 +25,7 @@
             >
           </el-form-item>
         </el-form>
-        <el-table class="table-wrap" v-loading="tableLoad" :data="tableData1" style="width: 100%">
+        <el-table class="table-wrap" height="1" v-loading="tableLoad" :data="tableData1" style="width: 100%">
           <el-table-column
             v-for="(item, index) in tablecol_data1"
             :key="index"
@@ -95,7 +95,7 @@
             >
           </el-form-item>
         </el-form>
-        <el-table v-loading="tableLoad" class="table-wrap" :data="tableData2" border
+        <el-table v-loading="tableLoad" class="table-wrap"  height="1" :data="tableData2" border
                   stripe style="width: 100%">
           <el-table-column
             v-for="(item, index) in tablecol_data2"
@@ -164,7 +164,7 @@
             >
           </el-form-item>
         </el-form>
-        <el-table v-loading="tableLoad" class="table-wrap" :data="tableData3" border
+        <el-table v-loading="tableLoad" class="table-wrap"  height="1" :data="tableData3" border
                   stripe style="width: 100%">
           <el-table-column
             v-for="(item, index) in tablecol_data2"

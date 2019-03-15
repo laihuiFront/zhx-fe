@@ -137,6 +137,7 @@
    <el-table
     v-loading="tableLoad"
    	class="table-wrap"
+    height="1"
     ref="multipleTable"
     :data="DataList"
     border
@@ -144,7 +145,6 @@
     style="width: 100%"
      @selection-change="handleSelectionChange"
     @sort-change="handleSort"
-    height="350"
   >
   <el-table-column
       type="selection"

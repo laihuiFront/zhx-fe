@@ -34,6 +34,7 @@
       border
       stripe
       :data="recordList"
+      height="1"
       style="width: 100%"
       class="table-wrap">
       <el-table-column type="selection" width="50"></el-table-column>

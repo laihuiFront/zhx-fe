@@ -41,6 +41,7 @@
       border stripe
       :data="logList"
       style="width: 100%"
+      height="1"
       class="table-wrap">
       <el-table-column
         type="selection"

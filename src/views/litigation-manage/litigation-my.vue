@@ -523,6 +523,7 @@ stripe
   <el-table
     v-loading="tableLoad"
     class="table-wrap"
+    height="1"
     :data="DataList2"
     border
     stripe

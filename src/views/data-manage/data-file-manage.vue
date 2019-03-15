@@ -56,6 +56,7 @@
    <el-table
     v-loading="tableLoad"
     class="table-wrap"
+    height="1"
      border
      stripe
     ref="multipleTable"

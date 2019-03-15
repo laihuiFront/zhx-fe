@@ -236,6 +236,7 @@
     <el-tab-pane label="待审核" name="first" >
       <el-table
         class="table-wrap"
+        height="1"
         ref="multipleTable"
         :data="tableData3"
         style="width: 150%;"
@@ -531,6 +532,7 @@
     <el-tab-pane label="已完成" name="third">
       <el-table
       class="table-wrap"
+      height="1"
       ref="multipleTable"
       :data="tableData3"
       style="width: 100%;"

@@ -398,6 +398,7 @@
             stripe
             style="width: 100%;height: calc(100% - 178px);"
             class="table-wrap"
+            height="1"
             :row-class-name="rowColor"
             :cell-style="{ whiteSpace: 'nowrap' }"
             @row-dblclick="showDetail"
