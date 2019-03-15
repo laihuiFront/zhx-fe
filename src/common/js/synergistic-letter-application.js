@@ -25,6 +25,23 @@ export function dccxjgThis(data={}) {
     data
   })
 }
+
+//导出查询结果  全量导出
+export function dccxjgInfo(data={}) {
+  return download({
+    url:'/letter/totalInfoExport',
+    method:'post',
+    data
+  })
+}
+//导出查询结果 导出当前页
+export function dccxjgInfoThis(data={}) {
+  return download({
+    url:'/letter/pageInfoExport',
+    method:'post',
+    data
+  })
+}
 //信函列表
 export function pageDataLetter(data={}) {
   return request({

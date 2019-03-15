@@ -1,5 +1,5 @@
 import request from '@/common/js/request'
-
+import download from '@/common/js/download'
 export function listMember(data){
   return request({
     url: '/user/select/list',
@@ -11,6 +11,26 @@ export function listMember(data){
 export function deleteMember(id) {
   return request({
     url: '/user/delete/id',
+    method: 'post',
+    data: {
+      id
+    }
+  })
+}
+
+export function resetMember(id) {
+  return request({
+    url: '/user/set/password',
+    method: 'post',
+    data: {
+      id
+    }
+  })
+}
+
+export function exportList(id) {
+  return download({
+    url: '/select/exportList',
     method: 'post',
     data: {
       id
