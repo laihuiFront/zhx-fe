@@ -726,6 +726,10 @@ export default {
 #dclxh {
   height: calc(100% - 21px);
   position: relative;
+  #upload-demo{
+    position: absolute;
+    right: 0px;
+  }
   .daoru {
     position: absolute;
     right: 33px;
