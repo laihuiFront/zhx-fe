@@ -28,13 +28,11 @@ export function resetMember(id) {
   })
 }
 
-export function exportList(id) {
+export function exportList(data) {
   return download({
-    url: '/select/exportList',
+    url: '/user/select/exportList',
     method: 'post',
-    data: {
-      id
-    }
+    data
   })
 }
 
