@@ -117,6 +117,7 @@ export default {
       this.queryForm = {}
     },
     onClickAdd () {
+      this.roleInfo = {}
       this.$set(this.dialogData, 'title', '新增角色')
       this.$set(this.dialogData, 'type', 'add')
       listAuth().then(response => {
