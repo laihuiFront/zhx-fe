@@ -528,7 +528,7 @@ stripe
     border
     stripe
           tooltip-effect="dark"
-          @sort-change="handleSort"
+          @sort-change="handleSort2"
      style="width: 100%">
     <el-table-column
       prop="legalStatusMsg"
@@ -1029,6 +1029,12 @@ export default {
       this.search()
 
     },  
+    handleSort2( {column,prop,order}){
+      this.sort = order==null?"desc":order.replace("ending","")
+      this.orderBy = prop==null?"id":prop
+      this.search2()
+
+    },
    	 handleClick(tab, event) {
         console.log(tab, event);
      },

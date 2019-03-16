@@ -550,8 +550,8 @@
                   width="120"
                 >
                   <template slot-scope="scope">
-                    <el-button type="text" size="small" icon="el-icon-edit" @click="edithandleList(scope.row)"></el-button>
-                    <el-button type="text" size="small" icon="el-icon-delete" @click="deletehandleList(scope.row.id)"></el-button>
+                    <el-button type="text" size="small"  @click="edithandleList(scope.row)">编辑</el-button>
+                    <el-button type="text" size="small"  @click="open7(scope.row.id)">删除</el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -666,8 +666,8 @@
                   width="120"
                 >
                   <template slot-scope="scope">
-                    <el-button type="text" size="small" icon="el-icon-edit" @click="editfeeList(scope.row)"></el-button>
-                    <el-button type="text" size="small" icon="el-icon-delete" @click="deleteFeeList(scope.row.id)"></el-button>
+                    <el-button type="text" size="small"  @click="editfeeList(scope.row)">编辑</el-button>
+                    <el-button type="text" size="small"  @click="open8(scope.row.id)">删除</el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -834,6 +834,41 @@ export default {
   	}
   },
    methods: {
+   	open7(id) {
+        this.$confirm('是否删除?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        }).then(() => {
+                     this.deletehandleList(id).then((response)=>{
+              this.$message({
+                type: 'success',
+                message: '删除成功!'
+              });
+              this.search()
+            })
+        }).catch(() => {
+        });
+      },
+      	open8(id) {
+        this.$confirm('是否删除?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        }).then(() => {
+                     this.deleteFeeList(id).then((response)=>{
+              this.$message({
+                type: 'success',
+                message: '删除成功!'
+              });
+              this.search()
+            })
+        }).catch(() => {
+        });
+      },
+ 
 handleSort( {column,prop,order}){
       this.sort = order==null?"desc":order.replace("ending","")
       this.orderBy = prop==null?"id":prop
@@ -934,8 +969,14 @@ handleSort( {column,prop,order}){
    		this.feeList=response.feeList
    		this.formInline=response.legalEntity
    		this.formInline.progress=parseInt(response.legalEntity.progress)
+   		if(!response.legalEntity.progress){
+   			this.formInline.progress=""
+   		}
    		this.formInline.owner=parseInt(response.legalEntity.owner)
-        console.log(response.legalEntity)
+   		if(!response.legalEntity.owner){
+   			this.formInline.owner=""
+   		}
+        console.log(this.formInline)
    		})
    	},
    	addDataform(){
@@ -980,7 +1021,13 @@ handleSort( {column,prop,order}){
    		this.dialogTitle="修改";
    		this.formInline=row
    		this.formInline.progress=parseInt(row.progress)
+   		if(!this.formInline.progress){
+   			this.formInline.progress=""
+   		}
    		this.formInline.owner=parseInt(row.owner)
+   		if(!this.formInline.owner){
+   			this.formInline.owner=""
+   		}
    		this.isTrue=false
    		this.addId=row.id
    	},

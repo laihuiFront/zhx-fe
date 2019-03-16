@@ -1,5 +1,11 @@
 <template>
-  <div id="statistics-month" class="page-wraper-sub">
+  <div id="statistics-month" class="page-wraper-sub"
+  		v-loading="loading"
+   	 element-loading-text="拼命加载中"
+   	   	  	  v-loading.fullscreen.lock="fullscreenLoading"
+
+    element-loading-spinner="el-icon-loading"
+    element-loading-background="rgba(0, 0, 0, 0.7)">>
     <el-form ref="form" :model="formInline" :inline="true" class="query-wrap">
       <el-form-item>
         <el-select v-model="formInline.odv" multiple collapse-tags  filterable  placeholder="请选择催收员" clearable>
@@ -119,10 +125,12 @@ export default {
   name: 'statisticsMonth',
   data(){
     return {
+    	fullscreenLoading:false,
+    	loading:false,
       tableLoad:false,
     	 currentPage4: 1,
         pages:1,
-        total:100,
+        total:0,
         dataList:[],
     	formInline:{time:"",time2:""},
     	PersonList:[],
@@ -187,11 +195,15 @@ handleCurrentChange(val){
 this.pageNum=val;
 },
   	onSubmit(){
+  			this.loading=true
+			this.fullscreenLoading=true
  		selectDataCaseExport(this.formInline,this.pageSize,this.pageNum).then((response)=>{
           	this.$message({
             type: 'success',
             message: '导出成功!'
           });
+          	this.loading=false
+			this.fullscreenLoading=false
           })
  	},
  	clench(){
@@ -219,25 +231,25 @@ this.pageNum=val;
       }
  },
  created() {
-   this.tableLoad = true
- 	 dataList(this.formInline).then((response)=>{
- 	 	         this.total=response.totalNum
-          	this.tableData3=response.list
-          	this.dataList=[]
-          	for(var i=0;i<=response.list[0].list.length;i++){
-           for(var j in response.list[0].list[i]) {
-           	// debugger
-           	if(j==="area"){
-           		let item={area:''}
-          		item.area=response.list[0].list[i].area
-          		this.dataList.push(item)
-           	}
-}
-          		
-          	}
-          	   this.tableLoad = false
-            console.log(this.dataList)
-          })
+// this.tableLoad = true
+// 	 dataList(this.formInline).then((response)=>{
+// 	 	         this.total=response.totalNum
+//        	this.tableData3=response.list
+//        	this.dataList=[]
+//        	for(var i=0;i<=response.list[0].list.length;i++){
+//         for(var j in response.list[0].list[i]) {
+//         	// debugger
+//         	if(j==="area"){
+//         		let item={area:''}
+//        		item.area=response.list[0].list[i].area
+//        		this.dataList.push(item)
+//         	}
+//}
+//        		
+//        	}
+//        	   this.tableLoad = false
+//          console.log(this.dataList)
+//        })
           areaList().then((response)=>{
           	this.areaList=response
           })

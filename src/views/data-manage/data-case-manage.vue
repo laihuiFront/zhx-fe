@@ -1243,9 +1243,13 @@
         }
       },
     totalDataExport(){
+    	this.loading2=true
+              this.fullscreenLoading=true
 			let startTime=this.formInline.time2[0]
       	let endTime=this.formInline.time2[1]
 		totalDataBatchExport(this.formInline).then((response)=>{
+			this.loading2=false
+              this.fullscreenLoading=false
           	this.$message({
             type: 'success',
             message: '导出成功!'
@@ -1264,9 +1268,13 @@
         return symbol + negative + (j ? i.substr(0, j) + thousand : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousand) + (places ? decimal + Math.abs(number - i).toFixed(places).slice(2) : "");
       },
 		pageDataExport(){
+			this.loading2=true
+              this.fullscreenLoading=true
 			let startTime=this.formInline.time2[0]
       	let endTime=this.formInline.time2[1]
       pageDataExport(this.formInline).then((response)=>{
+      	this.loading2=false
+              this.fullscreenLoading=false
           	this.$message({
             type: 'success',
             message: '导出成功!'

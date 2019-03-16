@@ -91,7 +91,7 @@ export const dataList = function(form,applyStatus,sort,orderBy,pageNum,pageSize)
 //  }
 //})
 //}
-export const pageDataBatchExport = function(form,applyStatus,sType,pageNum,pageSize) {
+export const pageDataBatchExport = function(form,applyStatus,sType,sort,orderBy,pageNum,pageSize) {
 return download({
     url: '/reduce/dataExport',
     method: 'post',
