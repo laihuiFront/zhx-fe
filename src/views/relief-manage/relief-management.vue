@@ -308,7 +308,7 @@
         <el-table-column
           prop="approveRepayAmt"
           align="center"
-            width="120"
+          min-width="150"
           label="批复还款金额"
           sortable="custom"
           :sort-orders="['ascending','descending']"
@@ -342,7 +342,7 @@
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
-          prop="enRepayAmt"
+          prop="enRepayAmtMsg"
         align="center"
           width="130"
           label="实际还款金额"
