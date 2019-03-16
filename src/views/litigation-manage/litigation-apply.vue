@@ -18,6 +18,7 @@
   <el-table
     v-loading="tableLoad"
     class="table-wrap"
+    height="1"
     :data="DataList"
     border
     stripe
@@ -809,7 +810,7 @@ export default {
   			isTrue:false,
   			dialogTitle:'新增',
   			progressList:[{name:"判决",id:1},{name:"收案",id:2}], 
-        legalStatusMsgList:[{name:"已审核",id:1},{name:"审核中",id:2},{name:"未申请",id:0}],  
+        legalStatusMsgList:[{name:"已审核",id:1},{name:"待审核",id:0}],
         caseStatusList:[{name:"未退案",id:0},{name:"正常",id:1},{name:"暂停",id:2},{name:"关档",id:3},{name:"退档",id:4},{name:"全部",id:5}],
   			formInline:{},
   			dialogVisible:false,

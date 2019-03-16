@@ -1,5 +1,11 @@
 <template>
-  <div id="member-in">
+    <div id="member-in"
+         v-loading="loading2"
+         v-loading.fullscreen.lock="fullscreenLoading"
+         element-loading-text="正在加载中"
+         element-loading-spinner="el-icon-loading"
+         element-loading-background="rgba(0, 0, 0, 0.7)"
+         >
     <div class="left-wrap">
       <el-tree
         v-if="departmentTree.length>0"
@@ -29,13 +35,24 @@
         </el-form-item>
         <el-form-item>
           <el-button icon="el-icon-search" type="text" @click="onClickQuery">查询</el-button>
-          <el-button icon="el-icon-refresh" type="text" @click="onClickReset">重置</el-button>
         </el-form-item>
         <el-form-item class="operation-item">
           <el-button type="primary" @click="onClickAdd" v-has="'新增员工'">新增员工</el-button>
+          <el-button type="primary" @click="onClickImport" >导出员工信息</el-button>
+          <el-upload
+            class="upload-demo"
+            :action="action+'/user/import'"
+            :headers="header"
+            :show-file-list=false
+            :on-success="uploadSuccess"
+            :on-progress="onProgress"
+          >
+            <el-button size="small" type="primary">导入用户信息</el-button>
+          </el-upload>
         </el-form-item>
       </el-form>
-      <el-table v-loading="tableLoad" sortable="custom" border stripe @sort-change="handleSort" :data="memberList" style="width: 100%" class="table-wrap">
+      <el-table v-loading="tableLoad" sortable="custom" border stripe @sort-change="handleSort" @selection-change="handleSelectionChange"  height="1" :data="memberList" style="width: 100%" class="table-wrap">
+        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="id" label="员工id" show-overflow-tooltip></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="userName" label="员工姓名" show-overflow-tooltip></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']"  prop="number" show-overflow-tooltip label="账号"></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="sex" label="性别" show-overflow-tooltip width="70"></el-table-column>
@@ -47,6 +64,7 @@
         <el-table-column label="操作" width="200">
           <template slot-scope="scope">
             <el-button type="text" @click="onClickEdit(scope.row)" v-has="'修改'">修改</el-button>
+            <el-button type="text" @click="onClickPwdReset(scope.row)" >密码重置</el-button>
             <el-button
               v-has="'锁定'"
               type="text"
@@ -112,7 +130,7 @@
             placeholder="请选择部门"
           ></el-input>
         </el-form-item>
-        <el-form-item label="角色" prop="role">
+        <el-form-item label="角色" prop="roleList">
           <el-select v-model="memberInfo.roleList" multiple placeholder="请选择角色">
             <el-option
               v-for="item in roleList"
@@ -182,14 +200,19 @@
 </template>
 
 <script>
+  import {baseURL} from '@/common/js/request.js';
 import { getDepartmentTree, getRoleList } from '@/common/js/api-setting'
-import { listMember, deleteMember, changeStatus, addMember, updateMember, getUserById, getPositionList,getLoginName} from '@/common/js/api-member'
+import { listMember, deleteMember,exportList, resetMember,changeStatus, addMember, updateMember, getUserById, getPositionList,getLoginName} from '@/common/js/api-member'
 export default {
   name: 'memberIn',
   data () {
     return {
+      header:{Authorization:localStorage.token},
       queryDepartment:null,
       tableLoad:false,
+      fullscreenLoading:false,
+      loading2:false,
+      action:baseURL,
     	isTrue:true,
       departmentTree: [],
       queryForm: {
@@ -218,12 +241,13 @@ export default {
         department: [
           { required: true, message: '请选择部门', trigger: 'change' }
         ],
-        role: [
+        roleList: [
           { required: true, message: '请选择角色', trigger: 'change' }
         ],
       },
       roleList: [],
       positionList: [],
+      multipleSelection:[],
       returnName: null
     }
   },
@@ -241,6 +265,27 @@ export default {
     })
   },
   methods: {
+    handleSelectionChange(val) {
+      this.multipleSelection = val;
+    },
+    onProgress(){
+      this.loading2=true
+      this.fullscreenLoading=true
+    },
+    uploadSuccess(res,file,fileList){
+      if (res.code ==100){
+        this.$message({
+          type: 'success',
+          message: "导入成功"
+        });
+        this.onClickQuery()
+        this.loading2=false
+        this.fullscreenLoading=false
+      }else{
+        this.ImportdialogVisible=true
+        this.ImportMsg= res.msg
+      }
+    },
   	adduserName(){
   		if(this.memberInfo.userName){
   			getLoginName(this.memberInfo.userName).then(response => {
@@ -328,6 +373,21 @@ export default {
         this.$set(this.dialogData, 'editVisible', true)
       })
     },
+    onClickPwdReset(row){
+      this.$confirm('确定重置该员工密码？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        resetMember(row.id).then(() => {
+          this.$message({
+            type: 'success',
+            message: '员工密码重置成功!'
+          });
+          this.onClickQuery()
+        })
+      }).catch(() => { })
+    },
     onClickLock (row) {
       this.$confirm('确定锁定该员工账号？', '提示', {
         confirmButtonText: '确定',
@@ -340,7 +400,10 @@ export default {
           enable: 0
         }
         changeStatus(data).then(() => {
-          this.$message('员工账号锁定成功')
+          this.$message({
+            type: 'success',
+            message: '员工账号锁定成功!'
+          });
           this.onClickQuery()
         })
       }).catch(() => { })
@@ -417,6 +480,25 @@ export default {
     onClickCancel () {
       this.$refs['ruleForm'].resetFields()
       this.$set(this.dialogData, 'editVisible', false)
+    },
+    onClickImport(){
+      this.loading2=true
+      this.fullscreenLoading=true
+      const data = {
+        status: 1,
+        department: this.queryForm.department,
+        number: this.queryForm.number,
+        userName: this.queryForm.userName
+      }
+      exportList(data).then(() => {
+        this.loading2=false
+        this.fullscreenLoading=false
+        this.$message({
+          message: "导出成功",
+          type: "success"
+        });
+      });
+
     },
     onClickSave () {
       this.$refs.ruleForm.validate((valid)=>{
@@ -514,6 +596,9 @@ export default {
   .right-wrap {
     flex: 1;
     overflow: hidden;
+  }
+  .upload-demo{
+    display: inline-block;
   }
   .dialog-wrap {
     .el-dialog__body {

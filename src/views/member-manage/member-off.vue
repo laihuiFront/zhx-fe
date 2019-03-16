@@ -20,6 +20,7 @@
       @sort-change="handleSort"
       :data="memberList"
       style="width: 100%"
+      height="1"
       class="table-wrap">
       <el-table-column
         :sortable='true' 

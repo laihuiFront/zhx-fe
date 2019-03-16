@@ -249,6 +249,7 @@
     <el-table
       v-loading="tableLoad"
       class="table-wrap"
+      height="1"
       ref="multipleTable"
       :data="tableData"
       border
@@ -328,7 +329,9 @@ import {
   confirmLetter,
   dcxh,
   dccxjg,
-  dccxjgThis
+  dccxjgThis,
+  dccxjgInfo,
+  dccxjgInfoThis
 } from "@/common/js/synergistic-letter-application.js";
 import CaseDetail from "@/views/data-manage/detail";
 import { baseURL } from "@/common/js/request.js";
@@ -561,6 +564,9 @@ export default {
       if (this.multipleSelection.length == 0) {
         this.$message.warning("至少选择一条数据");
         return;
+      }else if (this.multipleSelection.length > 1) {
+        this.$message.warning("只能选择一条数据");
+        return;
       }
       let {id,caseId} = this.multipleSelection[0];
       dcxh({ module: command, id ,caseId});
@@ -569,11 +575,11 @@ export default {
       this.fullscreenLoading = true;
 
       if (command == 1) {
-        dccxjg(this.realFetchFormData).then(()=>{
+        dccxjgInfo(this.realFetchFormData).then(()=>{
           this.fullscreenLoading = false;
         });
       } else {
-        dccxjgThis(this.realFetchFormData).then(()=>{
+        dccxjgInfoThis(this.realFetchFormData).then(()=>{
           this.fullscreenLoading = false;
         });
       }

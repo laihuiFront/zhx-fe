@@ -86,6 +86,7 @@
     <el-table
       v-loading="tableLoad"
       class="table-wrap"
+      height="1"
       :data="tableData"
       tooltip-effect="dark"
       border

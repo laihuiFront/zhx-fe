@@ -409,6 +409,7 @@
     <el-table
       v-loading="tableLoad"
       class="table-wrap"
+      height="1"
       ref="multipleTable"
       :data="tableData3"
       border

@@ -225,6 +225,7 @@
           <el-table
             v-loading="tableLoad"
             class="table-wrap"
+            height="1"
             ref="multipleTable"
             :data="tableData"
             border
@@ -725,6 +726,10 @@ export default {
 #dclxh {
   height: calc(100% - 21px);
   position: relative;
+  #upload-demo{
+    position: absolute;
+    right: 0px;
+  }
   .daoru {
     position: absolute;
     right: 33px;

@@ -218,6 +218,7 @@
     <el-table
       v-loading="tableLoad"
       class="table-wrap"
+      height="1"
       ref="multipleTable"
       :data="tableData"
       border
@@ -512,6 +513,10 @@ export default {
     exportXh(command) {
       if (this.multipleSelection.length == 0) {
         this.$message.warning("至少选择一条数据");
+        return;
+      }
+      if (this.multipleSelection.length > 1) {
+        this.$message.warning("只能选择一条数据");
         return;
       }
       let {id,caseId} = this.multipleSelection[0];

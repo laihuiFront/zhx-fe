@@ -18,6 +18,7 @@
       border
       stripe
       style="width: 100%"
+      height="1"
       class="table-wrap">
       <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="synergisticType" label="协催类型" show-overflow-tooltip></el-table-column>
       <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.collectStatus" label="催收状态" show-overflow-tooltip></el-table-column>
