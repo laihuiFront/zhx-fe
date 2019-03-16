@@ -1,5 +1,11 @@
 <template>
-  <div id="statistics-day" class="page-wraper-sub">
+  <div id="statistics-day" class="page-wraper-sub"
+  	v-loading="loading"
+   	 element-loading-text="拼命加载中"
+   	   	  	  v-loading.fullscreen.lock="fullscreenLoading"
+
+    element-loading-spinner="el-icon-loading"
+    element-loading-background="rgba(0, 0, 0, 0.7)">
     <el-form ref="form" :model="formInline" :inline="true" class="query-wrap">
       <el-form-item>
         <el-select v-model="formInline.odv" multiple collapse-tags  filterable  placeholder="请选择催收员" clearable>
@@ -186,6 +192,8 @@ export default {
   name: 'statisticsDay',
   data(){
     return {
+    	fullscreenLoading:false,
+    	loading:false,
       tableLoad:false,
     	dataList:[],
     	 currentPage4: 1,
@@ -245,11 +253,15 @@ this.pageNum=val;
           })
 },
  	onSubmit(){
+ 		this.loading=true
+			this.fullscreenLoading=true
  		selectDataCaseExport(this.formInline,this.pageSize,this.pageNum).then((response)=>{
           	this.$message({
             type: 'success',
             message: '导出成功!'
           });
+          this.loading=false
+			this.fullscreenLoading=false
           })
  	},
  	clench(){
