@@ -933,8 +933,14 @@ handleSort( {column,prop,order}){
    		this.feeList=response.feeList
    		this.formInline=response.legalEntity
    		this.formInline.progress=parseInt(response.legalEntity.progress)
+   		if(!response.legalEntity.progress){
+   			this.formInline.progress=""
+   		}
    		this.formInline.owner=parseInt(response.legalEntity.owner)
-        console.log(response.legalEntity)
+   		if(!response.legalEntity.owner){
+   			this.formInline.owner=""
+   		}
+        console.log(this.formInline)
    		})
    	},
    	addDataform(){
@@ -979,7 +985,13 @@ handleSort( {column,prop,order}){
    		this.dialogTitle="修改";
    		this.formInline=row
    		this.formInline.progress=parseInt(row.progress)
+   		if(!this.formInline.progress){
+   			this.formInline.progress=""
+   		}
    		this.formInline.owner=parseInt(row.owner)
+   		if(!this.formInline.owner){
+   			this.formInline.owner=""
+   		}
    		this.isTrue=false
    		this.addId=row.id
    	},

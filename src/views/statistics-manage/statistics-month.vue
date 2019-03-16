@@ -122,7 +122,7 @@ export default {
       tableLoad:false,
     	 currentPage4: 1,
         pages:1,
-        total:100,
+        total:0,
         dataList:[],
     	formInline:{time:"",time2:""},
     	PersonList:[],
@@ -219,25 +219,25 @@ this.pageNum=val;
       }
  },
  created() {
-   this.tableLoad = true
- 	 dataList(this.formInline).then((response)=>{
- 	 	         this.total=response.totalNum
-          	this.tableData3=response.list
-          	this.dataList=[]
-          	for(var i=0;i<=response.list[0].list.length;i++){
-           for(var j in response.list[0].list[i]) {
-           	// debugger
-           	if(j==="area"){
-           		let item={area:''}
-          		item.area=response.list[0].list[i].area
-          		this.dataList.push(item)
-           	}
-}
-          		
-          	}
-          	   this.tableLoad = false
-            console.log(this.dataList)
-          })
+// this.tableLoad = true
+// 	 dataList(this.formInline).then((response)=>{
+// 	 	         this.total=response.totalNum
+//        	this.tableData3=response.list
+//        	this.dataList=[]
+//        	for(var i=0;i<=response.list[0].list.length;i++){
+//         for(var j in response.list[0].list[i]) {
+//         	// debugger
+//         	if(j==="area"){
+//         		let item={area:''}
+//        		item.area=response.list[0].list[i].area
+//        		this.dataList.push(item)
+//         	}
+//}
+//        		
+//        	}
+//        	   this.tableLoad = false
+//          console.log(this.dataList)
+//        })
           areaList().then((response)=>{
           	this.areaList=response
           })

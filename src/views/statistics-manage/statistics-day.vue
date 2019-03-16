@@ -274,12 +274,12 @@ this.pageNum=val;
              PersonList().then((response)=>{
           	this.PersonList=response
           })
-          this.tableLoad = true
-              dataList(this.formInline).then((response)=>{
-            this.tableData3=response.list
-            this.tableLoad = false
-            this.total=response.totalNum
-          })
+//        this.tableLoad = true
+//            dataList(this.formInline).then((response)=>{
+//          this.tableData3=response.list
+//          this.tableLoad = false
+//          this.total=response.totalNum
+//        })
             
             
 },

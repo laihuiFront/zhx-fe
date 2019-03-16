@@ -650,9 +650,11 @@ methods: {
     })
   },
   downCaseModule(row){
-
+    this.loading2=true
+              this.fullscreenLoading=true
     downCaseModule(row.batchNo).then((response)=> {
-
+     this.loading2=false
+              this.fullscreenLoading=false
     })
   },
 	editMessage(row){
