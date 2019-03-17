@@ -443,7 +443,7 @@
                 </el-form-item>
                 <el-form-item>
                   <el-button
-                    type="text"
+                    type="primary"
                     icon="el-icon-refresh"
                     @click="resetForm('form')"
                   >重置</el-button

@@ -287,10 +287,10 @@
                   </el-form-item>
                   </el-popover>
                   <el-form-item>
-                    <el-button type="text" icon="el-icon-search" @click="searchHandle">查询</el-button>
+                    <el-button type="primary" icon="el-icon-search" @click="searchHandle">查询</el-button>
                   </el-form-item>
                   <el-form-item>
-                    <el-button type="text" icon="el-icon-refresh" @click="resetForm('form')">重置</el-button>
+                    <el-button type="primary" icon="el-icon-refresh" @click="resetForm('form')">重置</el-button>
                   </el-form-item>
                   <el-form-item>
                     <el-dropdown trigger="click" @command="colorHandle" v-has="'案件标色'">

@@ -20,8 +20,8 @@
           <el-input v-model="form.cstName" placeholder="请输入姓名" clearable></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="text" icon="el-icon-search" @click="search">查询</el-button> 
-          <el-button type="text" icon="el-icon-refresh" @click="clench">重置</el-button> 
+          <el-button type="primary" icon="el-icon-search" @click="search">查询</el-button> 
+          <el-button type="primary" icon="el-icon-refresh" @click="clench">重置</el-button> 
         </el-form-item>
         <el-form-item class="operation-item">
           <el-button type="primary" v-has="'添加诉讼案件'" @click="addDataform">添加诉讼案件</el-button>
@@ -29,9 +29,10 @@
       </el-form>
   	
   <el-table
-    v-loading="tableLoad"
+   v-loading="tableLoad"
     class="table-wrap"
     height="1"
+
     :data="DataList"
     border
     stripe
@@ -1085,7 +1086,7 @@ export default {
    	editData(row){
    		this.dialogVisible=true;
    		this.dialogTitle="修改";
-   		this.formInline=row
+   		this.formInline=JSON.parse(JSON.stringify(row))
    		
    		this.formInline.progress=parseInt(row.progress)
    		this.formInline.owner=parseInt(row.owner)
