@@ -31,11 +31,12 @@
   <el-table
     v-loading="tableLoad"
     class="table-wrap"
+    height="1"
     :data="DataList"
     border
-stripe
-          tooltip-effect="dark"
-          @sort-change="handleSort"
+    stripe
+    tooltip-effect="dark"
+    @sort-change="handleSort"
      style="width: 100%">
     <el-table-column
       prop="legalStatusMsg"

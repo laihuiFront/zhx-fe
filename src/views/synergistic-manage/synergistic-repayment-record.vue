@@ -31,7 +31,7 @@
     <div class="statistics-wrap" v-if="queryForm.recordStatus==='0'">
       <span class="title">查询结果统计：</span>
       <span class="item">总还款额：{{sumForm.repayMoney?sumForm.repayMoney:0}}</span>
-      <span class="item">总M值：{{sumForm.dataCase.mVal?sumForm.dataCase.mVal:0}}</span>
+      <span class="item">总提成值：{{sumForm.dataCase.mVal?sumForm.dataCase.mVal:0}}</span>
       <span class="item">总佣金额：{{sumForm.dataCase.commissionMoney?sumForm.dataCase.commissionMoney:0}}</span>
     </div>
      <el-table
