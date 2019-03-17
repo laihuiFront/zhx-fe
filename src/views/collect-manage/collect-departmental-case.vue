@@ -435,7 +435,7 @@
                 </el-popover>
                 <el-form-item>
                   <el-button
-                    type="text"
+                    type="primary"
                     icon="el-icon-search"
                     @click="searchHandle"
                   >查询</el-button

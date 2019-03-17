@@ -8,8 +8,8 @@
         <el-input v-model="queryForm.userName" clearable placeholder="请输入员工姓名"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button icon="el-icon-search" type="text" @click="onClickQuery">查询</el-button>
-        <el-button icon="el-icon-refresh" type="text" @click="onClickReset">重置</el-button>
+        <el-button icon="el-icon-search" type="primary" @click="onClickQuery">查询</el-button>
+        <el-button icon="el-icon-refresh" type="primary" @click="onClickReset">重置</el-button>
       </el-form-item>
     </el-form>
     <el-table

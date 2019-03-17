@@ -19,11 +19,11 @@
             </el-date-picker>
           </el-form-item>
           <el-form-item>
-            <el-button type="text" icon="el-icon-search" @click="getMainData1()"
+            <el-button type="primary" icon="el-icon-search" @click="getMainData1()"
               >查询</el-button
             >
             <el-button
-              type="text"
+              type="primary"
               icon="el-icon-refresh"
               @click="
                 resetForm('form1');
@@ -94,11 +94,11 @@
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-button type="text" icon="el-icon-search" @click="getMainData2"
+            <el-button type="primary" icon="el-icon-search" @click="getMainData2"
               >查询</el-button
             >
             <el-button
-              type="text"
+              type="primary"
               icon="el-icon-refresh"
               @click="
                 resetForm('form2');
@@ -177,11 +177,11 @@
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-button type="text" icon="el-icon-search" @click="getMainData3"
+            <el-button type="primary" icon="el-icon-search" @click="getMainData3"
               >查询</el-button
             >
             <el-button
-              type="text"
+              type="primary"
               icon="el-icon-refresh"
               @click="
                 resetForm('form3');

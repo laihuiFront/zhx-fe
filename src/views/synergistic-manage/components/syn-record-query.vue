@@ -109,8 +109,8 @@
         </ul>
         <img src="./zhankai.png" width="12" height="12" alt="更多" slot="reference">
       </el-popover>
-      <el-button icon="el-icon-search" type="text" @click="$emit('query')">查询</el-button>
-      <el-button icon="el-icon-refresh" type="text" @click="$emit('reset')">重置</el-button>
+      <el-button icon="el-icon-search" type="primary" @click="$emit('query')">查询</el-button>
+      <el-button icon="el-icon-refresh" type="primary" @click="$emit('reset')">重置</el-button>
     </el-form-item>
     <el-form-item>
       <slot></slot>

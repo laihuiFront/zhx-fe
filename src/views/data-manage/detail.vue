@@ -1451,7 +1451,7 @@
         :on-change="handleChange"
          :on-success="uploadSuccess2"
         >
-        <el-button size="small" type="text" >上传</el-button>
+        <el-button size="small" @click="moreId(scope.row.id)" type="text" >上传</el-button>
       </el-upload>
         <el-button type="text" size="small" @click="editData(scope.row)">修改</el-button>
         <el-button type="text" size="small" @click="deteleData(scope.row.id)">删除</el-button>
@@ -2329,13 +2329,17 @@ export default {
         dialogArchiveVisible:false,
         dataCollectInfo:{},
         dialogDataCollectVisible:false,
-        fileNames:{file:'',caseId:''}
+        fileNames:{file:'',caseId:'',id:''}
     }
   },
   methods: {
   	handleChange(file){
 		this.fileNames.file=file.name
   	this.fileNames.caseId=this.id
+  	},
+  	moreId(id){
+  				this.fileNames.id=id
+
   	},
     showSynergyApply(){
       getSynergyTypeList().then(data => {
