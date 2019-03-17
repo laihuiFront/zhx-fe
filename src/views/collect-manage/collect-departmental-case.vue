@@ -894,6 +894,7 @@
           pageSize: this.paginationData.pageSize,
           dept,
           odv,
+          sType:1,
           orderBy: this.sort.orderBy,
           sort: this.sort.sort,
         };
@@ -1017,10 +1018,6 @@
           }
           this.fetchData = data;
           this.paginationData.total = data.countCase;
-          this.fetchData.sumMoney = this.formatMoney(data.sumMoney,0, "￥")
-          this.fetchData.sumPayMoney = this.formatMoney(data.sumPayMoney,0, "￥")
-          this.fetchData.sumRepay =  this.formatMoney(data.sumRepay,0, "￥")
-          this.fetchData.sumBank = this.formatMoney(data.sumBank,0, "￥")
           this.tableData = data.list.map((item)=>{
             return Object.assign(item, {'class-name': `color_${item.color}`});
           })

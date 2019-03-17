@@ -372,7 +372,7 @@
                     <span
                       class="color_gray"
                       style="display: inline-block; color: #66b1ff;font-size: 16px;"
-                    >列表CP值:</span>
+                    >列表提成值:</span>
                     <span
                       style="display: inline-block; color: #66b1ff;font-size: 16px;"
                     >{{ fetchData.sumRepay }},</span>
@@ -381,7 +381,7 @@
                     <span
                       class="color_gray"
                       style="display: inline-block; color: #66b1ff;font-size: 16px;"
-                    >列表PTP值:</span>
+                    >列表待銀行查账值:</span>
                     <span
                       style="display: inline-block; color: #66b1ff;font-size: 16px;"
                     >{{ fetchData.sumBank }}</span>
@@ -391,7 +391,7 @@
             </el-col>
           </el-row>
           <el-table
-            v-loadin="tableLoad"
+            v-loading="tableLoad"
             ref="multipleTable"
             :data="tableData"
             border
@@ -608,7 +608,7 @@ export default {
           label: "催收状态"
         },
         {
-          prop: "telType",
+          prop: "collectionType",
           label: "催收分类"
         },
         {
@@ -871,14 +871,6 @@ export default {
           data = { total: 0, list: [] };
         }
         this.fetchData = data;
-        this.fetchData.sumMoney = this.formatMoney(data.sumMoney, 0, "￥");
-        this.fetchData.sumPayMoney = this.formatMoney(
-          data.sumPayMoney,
-          0,
-          "￥"
-        );
-        this.fetchData.sumRepay = this.formatMoney(data.sumRepay, 0, "￥");
-        this.fetchData.sumBank = this.formatMoney(data.sumBank, 0, "￥");
         this.paginationData.total = data.countCase;
         this.tableData = data.list.map(item => {
           return Object.assign(item, { "class-name": `color_${item.color}` });
