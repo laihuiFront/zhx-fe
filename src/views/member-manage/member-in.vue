@@ -35,6 +35,8 @@
         </el-form-item>
         <el-form-item>
           <el-button icon="el-icon-search" type="primary" @click="onClickQuery">查询</el-button>
+<!--          <el-button icon="el-icon-search" type="text" @click="onClickQuery">查询</el-button>
+-->          <el-button icon="el-icon-refresh" type="primary" @click="onClickReset">重置</el-button>
         </el-form-item>
         <el-form-item class="operation-item">
           <el-button type="primary" @click="onClickAdd" v-has="'新增员工'">新增员工</el-button>
@@ -47,7 +49,7 @@
             :on-success="uploadSuccess"
             :on-progress="onProgress"
           >
-            <el-button size="small" type="primary">导入用户信息</el-button>
+            <el-button type="primary" style="margin-left:10px;">导入用户信息</el-button>
           </el-upload>
         </el-form-item>
       </el-form>
