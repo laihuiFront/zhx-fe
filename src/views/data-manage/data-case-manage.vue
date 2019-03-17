@@ -326,8 +326,8 @@
           </ul>
           <img src="./down.png" width="12" height="12" alt="更多" slot="reference">
         </el-popover>
-        <el-button type="text" icon="el-icon-search" @click="search">查询</el-button>
-        <el-button type="text" icon="el-icon-refresh" @click=resetFormInline>重置</el-button>
+        <el-button type="primary" icon="el-icon-search" @click="search">查询</el-button>
+        <el-button type="primary" icon="el-icon-refresh" @click=resetFormInline>重置</el-button>
       </el-form-item>
       <el-form-item>
         <el-dropdown @command="fenancheck" v-has="'分案'" trigger="click">
