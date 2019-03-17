@@ -289,7 +289,7 @@
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
-          prop="accountAge"
+          prop="moneyMsg"
           align="center"
             width="110"
           label="委案金额"
@@ -316,9 +316,9 @@
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
-          prop="approveRepayAmt"
+          prop="approveRepayAmtMsg"
           align="center"
-          min-width="150"
+          min-width="120"
           label="批复还款金额"
           sortable="custom"
           :sort-orders="['ascending','descending']"
@@ -403,6 +403,7 @@
       class="table-wrap"
       ref="multipleTable"
       :data="tableData3"
+      height="1"
       style="width: 100%;"
        border
          stripe
@@ -438,7 +439,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        prop="collectStatus"
+        prop="collectStatusMsg"
         align="center"
         label="催收状态"
          width="110"
@@ -447,7 +448,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        prop="accountAge"
+        prop="moneyMsg"
         align="center"
         label="委案金额"
          width="110"
@@ -474,7 +475,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        prop="approveRepayAmt"
+        prop="approveRepayAmtMsg"
       align="center"
        sortable="custom"
         width="130"
@@ -492,7 +493,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        prop="reduceStatus" 
+        prop="reduceStatusMsg"
         align="center"
         label="减免状态"
          width="110"
@@ -510,7 +511,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        prop="enRepayAmt"
+        prop="enRepayAmtMsg"
       align="center"
        width="130"
        sortable="custom"
@@ -597,7 +598,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        prop="collectStatus"
+        prop="collectStatusMsg"
         align="center"
         label="催收状态"
          width="110"
@@ -606,7 +607,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        prop="accountAge"
+        prop="moneyMsg"
         align="center"
         label="委案金额"
          width="110"
@@ -633,7 +634,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        prop="approveRepayAmt"
+        prop="approveRepayAmtMsg"
       align="center"
         label="批复还款金额"
          width="130"
@@ -651,7 +652,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        prop="reduceStatus" 
+        prop="reduceStatusMsg"
         align="center"
         label="减免状态"
          width="110"
@@ -669,7 +670,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        prop="enRepayAmt"
+        prop="enRepayAmtMsg"
       align="center"
         label="实际还款金额"
          width="120"

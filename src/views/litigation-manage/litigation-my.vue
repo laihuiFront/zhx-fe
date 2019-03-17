@@ -32,11 +32,12 @@
    v-loading="tableLoad"
     class="table-wrap"
     height="1"
-    :data="DataList2"
+
+    :data="DataList"
     border
     stripe
-          tooltip-effect="dark"
-          @sort-change="handleSort"
+    tooltip-effect="dark"
+    @sort-change="handleSort"
      style="width: 100%">
     <el-table-column
       prop="legalStatusMsg"

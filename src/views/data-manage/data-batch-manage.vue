@@ -532,7 +532,6 @@ methods: {
         });
       },
 	editMessage(row){
-		console.log(row)
 		this.dialogVisible2=true
 		this.messageForm=row
     this.messageForm.client = parseInt(row.client)

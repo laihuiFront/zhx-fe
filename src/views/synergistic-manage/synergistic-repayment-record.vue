@@ -31,7 +31,7 @@
     <div class="statistics-wrap" v-if="queryForm.recordStatus==='0'">
       <span class="title">查询结果统计：</span>
       <span class="item">总还款额：{{sumForm.repayMoney?sumForm.repayMoney:0}}</span>
-      <span class="item">总M值：{{sumForm.dataCase.mVal?sumForm.dataCase.mVal:0}}</span>
+      <span class="item">总提成值：{{sumForm.dataCase.mVal?parseFloat(sumForm.dataCase.mVal).toFixed(2):0}}</span>
       <span class="item">总佣金额：{{sumForm.dataCase.commissionMoney?sumForm.dataCase.commissionMoney:0}}</span>
     </div>
      <el-table
@@ -59,13 +59,13 @@
       <el-table-column width="100"  sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.moneyMsg" label="委案金额" show-overflow-tooltip></el-table-column>
       <el-table-column width="140"  sortable="custom" :sort-orders="['ascending','descending']" prop="bankReconciliation.cpMoneyMsg" label="待银行查账金额" show-overflow-tooltip></el-table-column>
       <el-table-column width="140"  sortable="custom" :sort-orders="['ascending','descending']" prop="bankReconciliation.cpDate" label="待银行查账日期" show-overflow-tooltip></el-table-column>
-      <el-table-column width="120"  sortable="custom" :sort-orders="['ascending','descending']" prop="collectUser.name" label="回收催收员" show-overflow-tooltip></el-table-column>
-      <el-table-column width="120"  sortable="custom" :sort-orders="['ascending','descending']" prop="repayMoneyMsg" label="还款金额" show-overflow-tooltip></el-table-column>
-      <el-table-column width="80"  sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.overdueBalanceMsg" label="余额" show-overflow-tooltip></el-table-column>
+      <el-table-column width="120"  sortable="custom" :sort-orders="['ascending','descending']" prop="collectUser.userName" label="回收催收员" show-overflow-tooltip></el-table-column>
+      <el-table-column width="120"  sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.enRepayAmt" label="还款金额" show-overflow-tooltip></el-table-column>
+      <el-table-column width="80"  sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.balance" label="余额" show-overflow-tooltip></el-table-column>
       <el-table-column width="100"  sortable="custom" :sort-orders="['ascending','descending']" prop="repayDate" label="还款日期" show-overflow-tooltip></el-table-column>
       <el-table-column width="100"  sortable="custom" :sort-orders="['ascending','descending']" prop="repayUser" label="还款人" show-overflow-tooltip></el-table-column>
       <el-table-column width="100"  sortable="custom" :sort-orders="['ascending','descending']" prop="repayType.name" label="还款方式" show-overflow-tooltip></el-table-column>
-      <el-table-column width="100"  sortable="custom" :sort-orders="['ascending','descending']" prop="confirmUser.name" label="确认人" show-overflow-tooltip></el-table-column>
+      <el-table-column width="100"  sortable="custom" :sort-orders="['ascending','descending']" prop="confirmUser.userName" label="确认人" show-overflow-tooltip></el-table-column>
       <el-table-column width="100"  sortable="custom" :sort-orders="['ascending','descending']" prop="confirmTime" label="确认时间" show-overflow-tooltip></el-table-column>
       <el-table-column width="100"  sortable="custom" :sort-orders="['ascending','descending']" prop="remark" label="备注" show-overflow-tooltip></el-table-column>
       <el-table-column width="100"  sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.mVal" label="M值" show-overflow-tooltip></el-table-column>

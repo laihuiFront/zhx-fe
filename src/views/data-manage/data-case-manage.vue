@@ -1,9 +1,8 @@
 <template>
   <div id="data-case-manage" class="page-wraper-sub"
   	v-loading="loading2"
-  	   	   	  	  v-loading.fullscreen.lock="fullscreenLoading"
-
-    element-loading-text="正在导入中"
+  	v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-text="正在加载中"
     element-loading-spinner="el-icon-loading"
    element-loading-background="rgba(0, 0, 0, 0.7)">
     <el-form ref="form" :model="formInline" :inline="true" class="query-wrap">
@@ -18,7 +17,7 @@
         </el-select>
       </el-form-item>
       <el-form-item >
-        <el-select v-model="formInline.batchNos" filterable collapse-tags  multiple placeholder="请输入批次" clearable>
+        <el-select v-model="formInline.batchNos" style="min-width: 160px;" filterable collapse-tags  multiple placeholder="请输入批次" clearable>
           <el-option
             v-for="item in batchList"
             :key="item.id"
@@ -925,7 +924,7 @@
           children: 'children'
         },
         caseStatusList:[{name:"未退案",id:0},{name:"正常",id:1},{name:"暂停",id:2},{name:"关档",id:3},{name:"退档",id:4},{name:"全部",id:5}],
-        distributeStatusList:[{name:"已分配",id:1},{name:"未分配",id:0}],
+        distributeStatusList:[{name:"已分配",id:1},{name:"未分配",id:2}],
         shareList:[{name:"是",value:"true"},{name:"否",value:'false'}],
         departmentList:[],
         addressList:[],
