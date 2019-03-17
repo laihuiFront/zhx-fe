@@ -48,7 +48,7 @@
             :on-success="uploadSuccess"
             :on-progress="onProgress"
           >
-            <el-button type="primary">导入用户信息</el-button>
+            <el-button type="primary" style="margin-left:10px;">导入用户信息</el-button>
           </el-upload>
         </el-form-item>
       </el-form>
