@@ -226,8 +226,8 @@
           </ul>
           <img src="./zhankai.png" width="12" height="12" alt="更多" slot="reference">
         </el-popover>
-        <el-button icon="el-icon-search" type="text" @click="search">查询</el-button>
-        <el-button icon="el-icon-refresh" type="text" @click="clear">重置</el-button>
+        <el-button icon="el-icon-search" type="primary" @click="search">查询</el-button>
+        <el-button icon="el-icon-refresh" type="primary" @click="clear">重置</el-button>
       </el-form-item>
       <el-form-item class="operation-item">
         <el-button type="primary"　v-show="istrue1" v-has="'新增减免'" @click=addData >新增减免</el-button>
@@ -252,6 +252,7 @@
           @sort-change="handleSort"
         @selection-change="handleSelectionChange"
         v-loading="tableLoad"
+        @row-dblclick="dbeditCase"
             >
         <el-table-column
           type="selection"
@@ -265,6 +266,9 @@
           :sort-orders="['ascending','descending']"
            width="110"
         >
+           <template slot-scope="scope">
+          <el-button type="text" size="small" @click="editCase(scope.row.caseId, scope.row.targetName,scope.row.seqno)">{{scope.row.seqno}}</el-button>
+        </template>
         </el-table-column>
         <el-table-column
           prop="targetName"
@@ -378,7 +382,7 @@
           <template slot-scope="scope">
           <el-button type="text" size="small" @click="open7(scope.row)" v-has="'批量审核'">审核</el-button>
           <el-button type="text" size="small" @click="showMessage(scope.row)">查看</el-button>
-          <el-button type="text" size="small" @click="showMessage(scope.row)" v-has="'修改'">修改</el-button>
+          <el-button type="text" size="small" @click="editMessage(scope.row)" v-has="'修改'">修改</el-button>
             <el-button type="text" size="small" @click="deteleList(scope.row.id)" v-has="'删除'">删除</el-button>
         </template>
         </el-table-column>
@@ -406,6 +410,7 @@
           @sort-change="handleSort"
       @selection-change="handleSelectionChange"
      v-loading="tableLoad"
+             @row-dblclick="dbeditCase"
     >
       <el-table-column
         type="selection"
@@ -419,6 +424,9 @@
           width="110"
           :sort-orders="['ascending','descending']"
       >
+      <template slot-scope="scope">
+          <el-button type="text" size="small" @click="editCase(scope.row.caseId, scope.row.targetName,scope.row.seqno)">{{scope.row.seqno}}</el-button>
+        </template>
       </el-table-column>
       <el-table-column
         prop="targetName"
@@ -531,7 +539,7 @@
         label="操作"
         show-overflow-tooltip>
         <template slot-scope="scope">
-         <el-button type="text" size="small" @click="showMessage(scope.row)" v-has="'修改'">修改</el-button>
+         <el-button type="text" size="small" @click="editMessage(scope.row)" v-has="'修改'">修改</el-button>
            <el-button type="text" size="small" @click="deteleList(scope.row.id)" v-has="'删除'">删除</el-button>
        </template>
       </el-table-column>
@@ -561,6 +569,7 @@
           @sort-change="handleSort"
       @selection-change="handleSelectionChange"
       v-loading="tableLoad"
+              @row-dblclick="dbeditCase"
     >
       <el-table-column
         type="selection"
@@ -574,6 +583,9 @@
        sortable="custom"
           :sort-orders="['ascending','descending']"
       >
+         <template slot-scope="scope">
+          <el-button type="text" size="small" @click="editCase(scope.row.caseId, scope.row.targetName,scope.row.seqno)">{{scope.row.seqno}}</el-button>
+        </template>
       </el-table-column>
       <el-table-column
         prop="targetName"
@@ -712,7 +724,7 @@
   :visible.sync="dialogVisible"
   width="40%"
   >
-  <el-form :model="ruleForm" ref="ruleForm" :inline=true label-width="100px" class="demo-ruleForm">
+  <el-form :model="ruleForm" ref="ruleForm" :disabled="MessageTrue" :inline=true label-width="100px" class="demo-ruleForm">
  	<el-form-item label="个案序列号"
  		prop="seqno"
  		:rules="{
@@ -743,9 +755,11 @@
   </el-form>
   <span slot="footer" class="footer">
     <el-button @click="dialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="submitForm('ruleForm')">确 定</el-button>
+    <el-button type="primary" v-if=!MessageTrue @click="submitForm('ruleForm')">确 定</el-button>
   </span>
-</el-dialog><el-dialog
+</el-dialog>
+
+<el-dialog
   title="导出查询结果"
   :visible.sync="dialogVisible1"
   width="30%"
@@ -764,11 +778,17 @@
 </template>
 
 <script>
+	 const CaseDetail = () => import('@/views/data-manage/detail');
 	import {areaList,sureData,clientList,downDataList,PersonList,pageDataBatchExport,dataList,checkData,deleteStatusList,accountAgeList,collectStatusList,remoweData,addDataform,remoweDataList} from '@/common/js/relief-management.js'
+	
 export default {
   name: 'reliefManagement',
+  components: {
+      CaseDetail
+    },
   data(){
     return {
+    	MessageTrue:false,
     	fullscreenLoading:false,
     	loading:false,
       tableLoad:false,
@@ -783,8 +803,7 @@ export default {
     	activeName2:"first",
     	dialogTitle:'新增减免',
     	ruleForm:{
-    		reduceValidTime:'',
-    		seqno:''	
+    	
     	},
     	dialogVisible:false,
     	accountAgeList:[],
@@ -811,6 +830,20 @@ export default {
     }
 },
  methods: {
+ 	editCase(id, name, seqNo){
+        this.$router.push({
+          path:'case-detail',
+          query:{
+            id,
+            name,
+            seqNo
+          }
+        })
+    
+      },
+      dbeditCase(row){
+      	this.editCase(row.caseId, row.targetName,row.seqno)
+      },
  	  open7(row) {
         this.$confirm('确定审核通过减免申请转入待提交吗？', '提示', {
           confirmButtonText: '确定',
@@ -868,12 +901,16 @@ export default {
  	downloadList(name){
  		let downloadData=[]
  		downloadData.push(name);
+ 		this.fullscreenLoading=true
+    	this.loading=true
  			downDataList(this.downList).then((response)=>{
           this.$message({
             type: 'success',
             message: '下载成功!'
           });
           this.tableLoad = true
+          this.fullscreenLoading=false
+    	this.loading=false
           dataList(this.formInline,this.applyStatus,this.sort,this.orderBy,this.currentPage4,this.pageSize).then((response)=>{
           	this.tableData3=response.list
           	this.formInline={	time1:[],time2:[],time3:[]}
@@ -970,8 +1007,15 @@ this.search()
        }   },
  	showMessage(row){
  		this.ruleForm=row
+ 		this.dialogTitle="查看减免"
+ 		this.dialogVisible=true
+ 		this.MessageTrue=true
+ 	},
+ 		editMessage(row){
+ 		this.ruleForm=JSON.parse(JSON.stringify(row))
  		this.dialogTitle="修改减免"
  		this.dialogVisible=true
+ 			this.MessageTrue=false
  	},
  	moreDataList(){
  		if(this.deleteList.length>=1){
@@ -1090,6 +1134,7 @@ this.search()
         });
       },
  	addData(){
+ 		this.MessageTrue=false
  		this.dialogTitle='新增减免',
  		this.dialogVisible=true
  		this.ruleForm={

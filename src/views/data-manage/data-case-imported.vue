@@ -61,11 +61,11 @@
       </el-date-picker>
     </el-form-item>
     <el-form-item>
-      <el-button type="text" icon="el-icon-search" @click=search>查询</el-button> 
-      <el-button type="text" icon="el-icon-refresh" @click="resetForm()">重置</el-button> 
+      <el-button type="primary" icon="el-icon-search" @click=search>查询</el-button> 
+      <el-button type="primary" icon="el-icon-refresh" @click="resetForm()">重置</el-button> 
     </el-form-item>
     <el-form-item >
-      <el-button type="text" @click="downLoadZip">导入模板下载</el-button>
+      <el-button type="primary" @click="downLoadZip">导入模板下载</el-button>
       <el-button type="primary" @click="dialogVisible = true" v-has="'新增批次'">新增批次</el-button> 
       <el-button type="primary"  @click="open7" v-has="'删除批次'">删除批次</el-button>
       <el-upload
@@ -76,7 +76,7 @@
         :on-success="uploadSuccess"
         :on-progress="onProgress"
         >
-        <el-button size="small" type="primary" v-has="'导入更新案件'">导入更新案件</el-button>
+        <el-button size="small" style="padding: 7px 15px;" type="primary" v-has="'导入更新案件'">导入更新案件</el-button>
       </el-upload>
       <el-upload
         class="upload-demo"
@@ -87,7 +87,7 @@
         :on-progress="onProgress"
 
         >
-        <el-button size="small" type="primary" v-has="'导入案件评语'">导入案件评语</el-button>
+        <el-button size="small" style="padding: 7px 15px;" type="primary" v-has="'导入案件评语'">导入案件评语</el-button>
       </el-upload>
       <el-upload
         class="upload-demo"
@@ -98,7 +98,7 @@
         :on-progress="onProgress"
 
         >
-        <el-button size="small" type="primary" v-has="'导入案件利息'">导入案件利息</el-button>
+        <el-button size="small" style="padding: 7px 15px;" type="primary" v-has="'导入案件利息'">导入案件利息</el-button>
       </el-upload>
       <el-upload
         class="upload-demo"
@@ -109,7 +109,7 @@
         :on-progress="onProgress"
 
         >
-        <el-button size="small" type="primary" v-has="'导入案件电话'">导入案件电话</el-button>
+        <el-button size="small" style="padding: 7px 15px;" type="primary" v-has="'导入案件电话'">导入案件电话</el-button>
       </el-upload>
       <el-upload
         class="upload-demo"
@@ -120,7 +120,7 @@
         :on-progress="onProgress"
 
         >
-        <el-button size="small" type="primary" v-has="'导入案件地址'">导入案件地址</el-button>
+        <el-button size="small" style="padding: 7px 15px;" type="primary" v-has="'导入案件地址'">导入案件地址</el-button>
       </el-upload>
       <el-upload
         class="upload-demo"
@@ -130,7 +130,7 @@
         :on-success="uploadSuccess"
         :on-progress="onProgress"
         >
-        <el-button size="small" type="primary" v-has="'导入案件记录'">导入催收记录</el-button>
+        <el-button size="small" style="padding: 7px 15px;" type="primary" v-has="'导入案件记录'">导入催收记录</el-button>
       </el-upload>
     </el-form-item>
    </el-form>
@@ -412,7 +412,7 @@
   	<el-form-item label="委  托  方" 
   		prop="client"
     :rules="{required: true, message: '委托方不能为空', trigger: 'blur'}">
-    <el-select v-model="messageForm.client" @change="changeBotno1" placeholder="请选择委托方" clearable>
+    <el-select v-model="messageForm.client" @change="changeBotno2" placeholder="请选择委托方" clearable>
     <el-option
       v-for="item in clientList"
       :key="item.id"
@@ -445,7 +445,7 @@
     :rules="{required: true, message: '请选择日期', trigger: 'change'}">
      <div class="block">
     <el-date-picker
-    	@change="changeBotno1"
+    	@change="changeBotno3"
       v-model="messageForm.caseTime"
       align="right"
       type="date"
@@ -560,6 +560,24 @@ methods: {
 	    	if(this.formInline.client===this.clientList[i].id){
 	    		this.clientValue=this.clientList[i].name
 	    				      this.$set(this.formInline, 'batchNo', this.clientValue +'-'+this.formInline.caseTime)
+	    		return
+	    	}
+	    }
+	},
+	changeBotno2(){
+	    for(var i=0;i<=this.clientList.length;i++){
+	    	if(this.messageForm.client===this.clientList[i].id){
+	    		this.clientValue=this.clientList[i].name
+	    				      this.$set(this.messageForm, 'batchNo', this.clientValue +'-'+this.messageForm.caseTime)
+	    		return
+	    	}
+	    }
+	},
+	changeBotno3(){
+	    for(var i=0;i<=this.clientList.length;i++){
+	    	if(this.messageForm.client===this.clientList[i].id){
+	    		this.clientValue=this.clientList[i].name
+	    				      this.$set(this.messageForm, 'batchNo', this.clientValue +'-'+this.messageForm.caseTime)
 	    		return
 	    	}
 	    }
