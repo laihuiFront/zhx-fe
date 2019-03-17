@@ -35,6 +35,7 @@
         </el-form-item>
         <el-form-item>
           <el-button icon="el-icon-search" type="text" @click="onClickQuery">查询</el-button>
+          <el-button icon="el-icon-refresh" type="text" @click="onClickReset">重置</el-button>
         </el-form-item>
         <el-form-item class="operation-item">
           <el-button type="primary" @click="onClickAdd" v-has="'新增员工'">新增员工</el-button>
