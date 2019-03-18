@@ -44,7 +44,7 @@
           :headers="header"
           :show-file-list="false"
           :on-success="uploadSuccess"
-          style="display:inline-block;margin-left:5x;" 
+          style="display:inline-block;margin-left:10px;"
           >
           <el-button type="primary" v-has="'导入完成待办协催'">导入完成待办协催</el-button>
         </el-upload>
@@ -54,11 +54,11 @@
           :headers="header"
           :show-file-list="false"
           :on-success="uploadSuccess"
-          style="display:inline-block;margin-left:5x;" 
+          style="display:inline-block;margin-left:10px;"
           >
           <el-button type="primary" v-has="'导入协催记录'">导入协催记录</el-button>
         </el-upload>
-        <el-dropdown trigger="click" @command="handleCommand" v-if="queryForm.applyStatus==='1'" v-has="'导出查询结果'">
+        <el-dropdown trigger="click" @command="handleCommand" v-if="queryForm.applyStatus==='1'" style="display:inline-block;margin-left:10px;" v-has="'导出查询结果'">
           <el-button type="primary">导出查询结果<i class="el-icon-arrow-down el-icon--right"></i></el-button>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="all">导出全部</el-dropdown-item>

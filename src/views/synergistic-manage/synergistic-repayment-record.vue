@@ -21,11 +21,11 @@
         :headers="header"
         :show-file-list="false"
         :on-success="uploadSuccess"
-        style="display:inline-block;margin-left:5x;" 
+        style="display:inline-block;margin-left:10px;"
         >
         <el-button type="primary" v-if="queryForm.recordStatus==='0'" v-has="'导入还款记录'">导入还款记录</el-button>
       </el-upload>
-      <el-button type="primary" @click="onClickExportSelectedRecord" v-has="'导出选中数据'">导出选中数据</el-button>
+      <el-button type="primary" @click="onClickExportSelectedRecord" style="display:inline-block;margin-left:10px;" v-has="'导出选中数据'">导出选中数据</el-button>
       <el-button type="primary" @click="dialogExportVisible = true" v-has="'导出查询结果'">导出查询结果</el-button>
     </repay-record-query>
     <div class="statistics-wrap" v-if="queryForm.recordStatus==='0'">

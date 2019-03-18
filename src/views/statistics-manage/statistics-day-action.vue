@@ -46,7 +46,7 @@
           end-placeholder="催收结束日期">
         </el-date-picker>
       </el-form-item>
-      <el-form-item>
+      <el-form-item style="margin-left:10px;">
         <el-button type="primary" icon="el-icon-search" @click=query> 开始统计</el-button> 
         <el-button type="primary" icon="el-icon-refresh" @click=clench>重置</el-button> 
       </el-form-item>

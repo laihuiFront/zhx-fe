@@ -13,19 +13,19 @@
       @reset="onClickReset"
       @query="onClickQuery"
       :queryForm="queryForm">
-      <el-button type="primary" v-if="queryForm.status==='0'" @click="onClickBatchCancelBankRecon" v-has="'作废'">作废待银行查账金额</el-button>
+      <el-button type="primary" v-if="queryForm.status==='0'"  @click="onClickBatchCancelBankRecon" v-has="'作废'">作废待银行查账金额</el-button>
       <el-upload
         class="upload-demo upload-btn"
         :action="action+'/bankReconciliation/import'"
         :headers="header"
         :show-file-list="false"
         :on-success="uploadSuccess"
-        style="display:inline-block;margin-left:5x;" 
+        style="display:inline-block;"
         >
-        <el-button type="primary" v-if="queryForm.status==='0'" v-has="'导入待银行对账'">导入待银行查账</el-button>
+        <el-button type="primary" v-if="queryForm.status==='0'"  style="margin-left:10px;" v-has="'导入待银行对账'">导入待银行查账</el-button>
       </el-upload>
-      <el-button type="primary" @click="onClickExportSelectedRecord" v-has="'导出选中数据'">导出选中数据</el-button>
-      <el-button type="primary" @click="dialogExportVisible = true" v-has="'导出查询结果'">导出查询结果</el-button>
+      <el-button type="primary" @click="onClickExportSelectedRecord" style="margin-left:10px;" v-has="'导出选中数据'">导出选中数据</el-button>
+      <el-button type="primary" @click="dialogExportVisible = true" style="margin-left:10px;" v-has="'导出查询结果'">导出查询结果</el-button>
     </bank-record-query>
     <el-table
       v-loading="tableLoad"
