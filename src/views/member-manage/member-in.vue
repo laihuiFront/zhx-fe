@@ -41,6 +41,7 @@
         <el-form-item class="operation-item">
           <el-button type="primary" @click="onClickAdd" v-has="'新增员工'">新增员工</el-button>
           <el-button type="primary" @click="onClickImport" >导出员工信息</el-button>
+          <el-button type="primary" @click="onClickModuleImport" >导入模板下载</el-button>
           <el-upload
             class="upload-demo"
             :action="action+'/user/import'"
@@ -65,7 +66,7 @@
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="department" label="部门" show-overflow-tooltip></el-table-column>
         <el-table-column label="操作" width="200">
           <template slot-scope="scope">
-            <el-button type="text" @click="onClickEdit(scope.row)" v-has="'修改'">修改</el-button>
+            <el-button type="text" @click="onClickEdit(scope.row)"  v-has="'修改'">修改</el-button>
             <el-button type="text" @click="onClickPwdReset(scope.row)" >密码重置</el-button>
             <el-button
               v-has="'锁定'"
@@ -204,7 +205,7 @@
 <script>
   import {baseURL} from '@/common/js/request.js';
 import { getDepartmentTree, getRoleList } from '@/common/js/api-setting'
-import { listMember, deleteMember,exportList, resetMember,changeStatus, addMember, updateMember, getUserById, getPositionList,getLoginName} from '@/common/js/api-member'
+import { listMember, deleteMember,exportList,exportModule, resetMember,changeStatus, addMember, updateMember, getUserById, getPositionList,getLoginName} from '@/common/js/api-member'
 export default {
   name: 'memberIn',
   data () {
@@ -482,6 +483,18 @@ export default {
     onClickCancel () {
       this.$refs['ruleForm'].resetFields()
       this.$set(this.dialogData, 'editVisible', false)
+    },
+    onClickModuleImport(){
+      this.loading2=true
+      this.fullscreenLoading=true
+      exportModule().then(() => {
+        this.loading2=false
+        this.fullscreenLoading=false
+        this.$message({
+          message: "下载成功",
+          type: "success"
+        });
+      });
     },
     onClickImport(){
       this.loading2=true

@@ -36,6 +36,13 @@ export function exportList(data) {
   })
 }
 
+export function exportModule() {
+  return download({
+    url: '/fileManage/downloadUser',
+    method: 'post'
+  })
+}
+
 export function getLoginName(name) {
   return request({
     url: '/user/getLoginName',

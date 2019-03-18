@@ -214,6 +214,9 @@
         width="55">
       </el-table-column>
       <el-table-column
+        sortable="custom"
+        :sort-orders="['ascending','descending']"
+        prop="id"
         label="ID"
       >
         <template slot-scope="scope">{{ scope.row.id }}</template>
