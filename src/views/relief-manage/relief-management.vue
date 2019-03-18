@@ -264,7 +264,7 @@
           label="个案序列号"
           sortable="custom"
           :sort-orders="['ascending','descending']"
-           width="110"
+           width="120"
         >
            <template slot-scope="scope">
           <el-button type="text" size="small" @click="editCase(scope.row.caseId, scope.row.targetName,scope.row.seqno)">{{scope.row.seqno}}</el-button>
@@ -318,7 +318,7 @@
         <el-table-column
           prop="approveRepayAmtMsg"
           align="center"
-          min-width="120"
+          min-width="130"
           label="批复还款金额"
           sortable="custom"
           :sort-orders="['ascending','descending']"
@@ -422,7 +422,7 @@
         align="center"
         label="个案序列号"
          sortable="custom"
-          width="110"
+          width="120"
           :sort-orders="['ascending','descending']"
       >
       <template slot-scope="scope">
@@ -523,7 +523,7 @@
         prop="reduceUpdateTime"
         align="center"
         label="减免状态更新时间"
-         width="150"
+         width="155"
         sortable="custom"
           :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
@@ -580,7 +580,7 @@
         prop="seqno"
         align="center"
         label="个案序列号"
-         width="110"
+         width="120"
        sortable="custom"
           :sort-orders="['ascending','descending']"
       >
@@ -673,7 +673,7 @@
         prop="enRepayAmtMsg"
       align="center"
         label="实际还款金额"
-         width="120"
+         width="130"
         sortable="custom"
           :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
@@ -684,7 +684,7 @@
     sortable="custom"
           :sort-orders="['ascending','descending']"
         label="减免状态更新时间"
-         width="150"
+         width="155"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
