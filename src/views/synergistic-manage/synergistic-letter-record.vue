@@ -462,6 +462,7 @@ export default {
         },
         {
           prop: "synergyDate",
+          width:160,
           label: "协催时间"
         },
         {

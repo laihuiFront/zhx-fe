@@ -98,7 +98,7 @@
     >
       <el-table-column
         label="个案序列号"
-        min-width="90"
+        min-width="120"
         prop="seqno"
         sortable="custom"
         :sort-orders="['ascending','descending']"
@@ -119,7 +119,7 @@
         align="center"
         header-align="center"
       ></el-table-column>
-      <el-table-column label="操作" >
+      <el-table-column label="操作" align="center">
 
       <template slot-scope="scope">
           <el-button @click="dialogVisible=true;currentRow = scope;" v-has="'评语'">
@@ -208,12 +208,14 @@ export default {
           label:'姓名'
         },{
           prop:'cardNo',
+          width:200,
           label:'卡号'
         },{
           prop:'moneyMsg',
           label:'委案金额'
         },{
           prop:'caseDate',
+          width:160,
           label:'委案日期'
         },{
           prop:'collectStatusMsg',
@@ -223,9 +225,11 @@ export default {
           label:'上次通电'
         },{
           prop:'proRepayAmtMsg',
+          width:140,
           label:'承诺还款金额'
         },{
           prop:'enRepayAmtMsg',
+          width:140,
           label:'已还款金额'
         },{
           prop:'accountAge',

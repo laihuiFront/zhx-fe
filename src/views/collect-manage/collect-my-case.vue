@@ -737,12 +737,12 @@ export default {
         },
         {
           prop: "nextFollDate",
-          width: "140",
+          width: "160",
           label: "下次跟进日期"
         },
         {
           prop: "caseAllotTime",
-          width: 140,
+          width: 180,
           label: "案件分配时间"
         },
         {
@@ -774,10 +774,12 @@ export default {
         },
         {
           prop: "cardNo",
+          width: 200,
           label: "卡号"
         },
         {
           prop: "identNo",
+          width: 200,
           label: "证件号"
         },
         {
@@ -813,7 +815,7 @@ export default {
         },
         {
           prop: "lastPhoneTime",
-          width: "150",
+          width: "160",
           label: "上次通电时间"
         },
         {

@@ -213,6 +213,7 @@
         <el-table-column
           v-for="(item, index) in tablecol_data"
           v-bind="item"
+          align="center"
           :key="index"
         ></el-table-column>
       </el-table>
@@ -239,6 +240,7 @@ export default {
       },
       {
         label: "个案序列号",
+        width:"160",
         prop: "seqno"
       },
       {
@@ -295,26 +297,32 @@ export default {
         },
         {
           label: "待银行查账金额",
+          width:"140",
           prop: "bankAmt"
         },
         {
           label: "待银行查账日期",
+          width:"160",
           prop: "bankTime"
         },
         {
           label: "待银行查账提成金额",
+          width:"140",
           prop: "repaidAmtM"
         },
         {
           label: "还款金额",
+          width:"140",
           prop: "repayAmt"
         },
         {
           label: "还款日期",
+          width:"160",
           prop: "picih"
         },
         {
           label: "还款提成值",
+          width:"140",
           prop: "repaidBankAmtM"
         },
         {
@@ -331,6 +339,7 @@ export default {
         },
         {
           label: "确认时间",
+          width:"180",
           prop: "confimTime"
         },
         {

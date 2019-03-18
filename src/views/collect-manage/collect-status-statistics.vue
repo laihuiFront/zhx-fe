@@ -120,6 +120,7 @@
           <el-table-column
             v-for="(item, index) in tablecol_data2"
             :key="index"
+            align="center"
             v-bind="item"
           ></el-table-column>
         </el-table>
@@ -203,6 +204,7 @@
           <el-table-column
             v-for="(item, index) in tablecol_data3"
             :key="index"
+            align="center"
             v-bind="item"
           ></el-table-column>
         </el-table>

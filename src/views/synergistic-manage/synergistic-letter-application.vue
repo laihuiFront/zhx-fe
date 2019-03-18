@@ -236,7 +236,7 @@
             @row-dblclick="showCase"
             @sort-change="sortHandle"
           >
-            <el-table-column type="selection" width="55"> </el-table-column>
+            <el-table-column type="selection" width="55" align="center"> </el-table-column>
             <el-table-column
               label="个案序列号"
               prop="seqno"
@@ -441,6 +441,7 @@ export default {
         },
         {
           prop: "applyDate",
+          width:"180",
           label: "申请时间"
         },
         {
@@ -449,6 +450,7 @@ export default {
         },
         {
           prop: "synergyDate",
+          width:"180",
           label: "协催时间"
         },
         {

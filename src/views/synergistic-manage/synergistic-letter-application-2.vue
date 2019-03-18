@@ -182,6 +182,7 @@
             <el-form-item>
               <el-dropdown
                 v-has="'导出信函'"
+                trigger="click"
                 @command="exportXh"
               >
                 <el-button type="primary">导出信函</el-button>
@@ -231,7 +232,7 @@
       @row-dblclick="showCase"
       @sort-change="sortHandle"
     >
-      <el-table-column type="selection" width="55"> </el-table-column>
+      <el-table-column type="selection" width="55" align="center"> </el-table-column>
       <el-table-column
         label="个案序列号"
         prop="seqno"
@@ -256,7 +257,7 @@
         :key="index"
         v-bind="item"
         sortable="custom"
-        min-width="100"
+        min-width="120"
         :sort-orders="['ascending', 'descending']"
         header-align="center"
         align="center"

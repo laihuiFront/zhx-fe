@@ -523,6 +523,7 @@
         >
           <el-table-column
             type="selection"
+            align="center"
             width="55">
           </el-table-column>
           <el-table-column
@@ -710,13 +711,13 @@
           },
           {
             prop: "nextFollDate",
-            width:"140",
+            width:"160",
             label: "下次跟进日期"
           },
           {
             prop: "caseAllotTime",
-            width:140,
-            label: "案件分配日期"
+            width:180,
+            label: "案件分配时间"
           },
           {
             prop: "collectStatusMsg",
@@ -740,12 +741,12 @@
           },*/
           {
             prop: "caseDate",
-            width:"140",
+            width:"160",
             label: "委案日期"
           },
           {
             prop: "expectTime",
-            width:"140",
+            width:"160",
             label: "预计退案日期"
           },
           {
@@ -754,10 +755,12 @@
           },
           {
             prop: "cardNo",
+            width:"200",
             label: "卡号"
           },
           {
             prop: "identNo",
+            width:"200",
             label: "证件号"
           },
           {
@@ -797,7 +800,7 @@
           },
           {
             prop: "lastPhoneTime",
-            width:"140",
+            width:"180",
             label: "上次通电时间"
           },
           {
