@@ -109,7 +109,7 @@ return request({
 }
   export const backCase = function(id) {
 return request({
-    url: '/dataCase/updateStatus',
+    url: '/dataBatch/recoverCase',
     method: 'post',
     data:id
   })

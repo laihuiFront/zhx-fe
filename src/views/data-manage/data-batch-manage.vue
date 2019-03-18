@@ -604,7 +604,31 @@ dataList(this.form.area,this.form.batchNos,this.form.clients,this.form.batchStat
 })
       },
       returnCaseList(){
-      	this.open8()
+      	let _self=this 
+      	if(_self.deleteList.length>0){
+      		_self.$confirm('是否退案?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        }).then(() => {
+           	returnCase(this.deleteList).then((response)=>{
+            _self.$message({
+            type: 'success',
+            message: '退案成功!'
+          });
+          _self.search()
+}) 
+        }).catch(() => {
+
+        });
+      	} else{
+           	_self.$message({
+            type: 'info',
+            message: '请选择需要退案的数据!'
+          });
+          }
+      	
       },
 	deleteMessage(id){
 		let arry=[{id:id}]
