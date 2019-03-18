@@ -15,24 +15,7 @@ import { localCache } from "@/common/js/auth";
 
 import has from "./common/js/directives";
 Vue.use(ElementUI, { size: "mini" });
-Vue.directive("dropdown-patch", {
-  bind(el, binding, vnode){
-    let a = vnode.componentInstance.broadcast;
-    let clz = el.className;
-    vnode.componentInstance.broadcast= function(c,d,val) {
-      a(c,d,val);
-      if (val) {
-        el.classList += ' active';
-      }else{
-        el.classList = clz;
-      }
-    }
-  },
-  inserted(el, binding, vnode) {
-    el.querySelector(".el-dropdown-menu").style.minWidth =
-      el.querySelector(".el-button").offsetWidth + "px";
-  },
-});
+
 Vue.config.productionTip = false;
 
 const whiteList = ["/login"];
