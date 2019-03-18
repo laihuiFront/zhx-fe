@@ -5,7 +5,7 @@
    	   	  	  v-loading.fullscreen.lock="fullscreenLoading"
 
     element-loading-spinner="el-icon-loading"
-    element-loading-background="rgba(0, 0, 0, 0.7)">>
+    element-loading-background="rgba(0, 0, 0, 0.7)">
     <el-form ref="form" :model="formInline" :inline="true" class="query-wrap">
       <el-form-item>
         <el-select v-model="formInline.odv" multiple collapse-tags  filterable  placeholder="请选择催收员" clearable>
@@ -60,6 +60,7 @@
       </el-form-item>
     </el-form>
     <el-table
+      v-if="tableData3.length>0"
       v-loading="tableLoad"
       :data="tableData3"
       border
@@ -105,7 +106,9 @@
         </el-table-column>
       </el-table-column>
     </el-table>
+    <p v-else style="text-align:center">暂无数据</p>
     <el-pagination
+      v-if="total>0"
       class="pagination-wrap"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
@@ -136,23 +139,7 @@ export default {
     	PersonList:[],
     	areaList:[],
     	clientList:[],
-    	 tableData3: [{
-          date: '2016-05-03',
-          name:  1,
-          
-        }, {
-          date: '2016-05-02',
-          name:  1,
-          
-        }, {
-          date: '2016-05-04',
-          name:  1,
-          
-        }, {
-          date: '2016-05-01',
-          name:  1,
-         
-        },]
+    	 tableData3: []
     }
     },
     methods: {
@@ -227,6 +214,8 @@ this.pageNum=val;
           }
           this.tableLoad = false
           console.log(this.dataList)
+        }).catch(()=>{
+          this.tableLoad = false
         })
       }
  },
