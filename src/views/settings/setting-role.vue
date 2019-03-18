@@ -13,10 +13,10 @@
       </el-form-item>
     </el-form>
     <el-table v-loading="tableLoad" :data="roleList"  height="1" border stripe  style="width: 100%" class="table-wrap">
-      <el-table-column prop="roleName" label="角色名称" width="300"></el-table-column>
-      <el-table-column prop="roleDesc" label="角色描述" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="updateUser.userName" label="修改人" width="200"></el-table-column>
-      <el-table-column label="操作" width="150">
+      <el-table-column prop="roleName"  align="center" label="角色名称" width="300"></el-table-column>
+      <el-table-column prop="roleDesc"  align="center" label="角色描述" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="updateUser.userName"  align="center" label="修改人" width="200"></el-table-column>
+      <el-table-column label="操作"   align="center" width="180">
         <template slot-scope="scope">
           <el-button type="text" @click="onClickQueryOne(scope.row)" v-has="'查看'">查看</el-button>
           <el-button type="text" v-if="scope.row.id !== 1" @click="onClickEdit(scope.row)" v-has="'修改'">修改</el-button>

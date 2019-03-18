@@ -99,10 +99,12 @@
   >
   <el-table-column
       type="selection"
+      align="center"
       width="55">
     </el-table-column>
     <el-table-column
     	prop="areaMsg"
+      align="center"
       sortable="custom"
       min-width="140"
       :sort-orders="['ascending','descending']"
@@ -111,6 +113,7 @@
     </el-table-column>
     <el-table-column
     	prop="batchNo"
+      align="center"
       sortable="custom"
       min-width="140"
       :sort-orders="['ascending','descending']"
@@ -119,6 +122,7 @@
     </el-table-column>
     <el-table-column
       prop="clientMsg"
+      align="center"
       sortable="custom"
       min-width="120"
       :sort-orders="['ascending','descending']"
@@ -127,6 +131,7 @@
     </el-table-column>
     <el-table-column
       prop="statusMsg"
+      align="center"
       sortable="custom"
       min-width="120"
       :sort-orders="['ascending','descending']"
@@ -135,15 +140,16 @@
     </el-table-column>
     <el-table-column
       prop="caseTime"
+      align="center"
       label="委案日期"
       width="140"
       sortable="custom"
       :sort-orders="['ascending','descending']"
-      align="center"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
       prop="userCount"
+      align="center"
       sortable="custom"
       :sort-orders="['ascending','descending']"
       label="户数"
@@ -152,6 +158,7 @@
     <el-table-column
       label="总金额"
       min-width="120"
+      align="center"
       sortable="custom"
       prop="totalAmtMsg"
       :sort-orders="['ascending','descending']"
@@ -164,6 +171,7 @@
       prop="caseTypeMsg"
       label="案件类型"
       sortable="custom"
+      align="center"
       min-width="120"
       :sort-orders="['ascending','descending']"
       show-overflow-tooltip>
@@ -173,7 +181,7 @@
       label="预计退案时间"
       sortable="custom"
       :sort-orders="['ascending','descending']"
-      width="140"
+      width="180"
       align="center"
       show-overflow-tooltip>
     </el-table-column>
@@ -181,7 +189,7 @@
       prop="realReturnTime"
       sortable="custom"
       :sort-orders="['ascending','descending']"
-      width="140"
+      width="180"
       align="center"
       label="实际退案时间"
       show-overflow-tooltip>

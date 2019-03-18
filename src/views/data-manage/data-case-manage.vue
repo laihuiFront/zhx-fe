@@ -421,12 +421,14 @@
     >
       <el-table-column
         type="selection"
+        align="center"
         width="55">
       </el-table-column>
       <el-table-column
         sortable="custom"
         :sort-orders="['ascending','descending']"
         label="ID"
+        align="center"
         prop="id"
       >
 
@@ -501,7 +503,7 @@
         prop="identNo"
         sortable="custom"
         :sort-orders="['ascending','descending']"
-        min-width="120"
+        min-width="200"
         align="center"
         label="证件号"
         show-overflow-tooltip>
@@ -517,7 +519,7 @@
       </el-table-column>
       <el-table-column
         prop="cardNo"
-        min-width="140"
+        min-width="200"
         sortable="custom"
         :sort-orders="['ascending','descending']"
         align="center"
@@ -627,6 +629,7 @@
         min-width="140"
         prop="distributeHistory"
         sortable="custom"
+        align="center"
         :sort-orders="['ascending','descending']"
         label="分配历史"
         show-overflow-tooltip>
@@ -635,6 +638,7 @@
         prop="summary"
         min-width="180"
         sortable="custom"
+        align="center"
         :sort-orders="['ascending','descending']"
         label="催收小结"
         show-overflow-tooltip>
