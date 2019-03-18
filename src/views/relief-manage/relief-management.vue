@@ -688,7 +688,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        prop="newCase"
+        prop="fileName"
         label="附件"
          width="110"
         align="center"
@@ -904,7 +904,7 @@ export default {
  		downloadData.push(name);
  		this.fullscreenLoading=true
     	this.loading=true
- 			downDataList(this.downList).then((response)=>{
+ 			downDataList(downloadData).then((response)=>{
           this.$message({
             type: 'success',
             message: '下载成功!'
