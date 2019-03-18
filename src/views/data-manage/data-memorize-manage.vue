@@ -432,10 +432,10 @@
     >
       <el-form :inline="true">
         <el-form-item>
-          <el-button @click=totalDataCollectExport>按查询条件全部导出</el-button>
+          <el-radio v-model="radio" label="1" @change=totalDataCollectExport>按查询条件全部导出</el-radio>
         </el-form-item>
         <el-form-item>
-          <el-button @click='pageDataCollectExport'>按查询条件导出当前分页</el-button>
+          <el-radio v-model="radio" label="2" @change='pageDataCollectExport'>按查询条件导出当前分页</el-radio>
         </el-form-item>
         <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible2 = false">取 消</el-button>
@@ -451,6 +451,7 @@
     name: 'dataMemorizeManage',
     data(){
       return {
+      	radio:"",
         tableHeight:50,
         tableLoad:false,
         images:{background: "url(" + require("./down.png") + ") repeat-x",padding:"8px 5px 3px 6px",},

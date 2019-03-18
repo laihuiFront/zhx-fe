@@ -78,8 +78,8 @@
   <el-button type="primary" icon="el-icon-refresh" @click=resetForm>重置</el-button> 
   </el-form-item>
   <el-form-item>
-      <el-button type="primary" @click="returnCaseList" v-has="'批次退案'">批次退案</el-button>  
-      <el-button type="primary"  @click="open7" v-has="'批次删除'">批次删除</el-button>  
+      <el-button type="primary" @click="returnCaseList" v-has="'批次退案'">批量退案</el-button>  
+      <el-button type="primary"  @click="open7" v-has="'批次删除'">批量删除</el-button>  
       <el-button type="primary"  @click="dialogVisible1 = true" v-has="'导出查询结果'">导出查询结果</el-button>  
       <el-button type="primary" @click='selectDataExport' v-has="'导出所选批次'">导出所选批次</el-button>  
       <el-button type="primary" @click="selectDataByBatch" v-has="'批量导出批次催记'">批量导出批次催记</el-button>  
@@ -252,11 +252,11 @@
   >
   <el-row :gutter="20">
   <el-col :span="10"><div class="grid-content bg-purple"> 
-  	<el-button @click=totalDataExport>按查询条件全部导出</el-button>
+  	<el-radio  v-model="radio" label="1" @change=totalDataExport>按查询条件全部导出</el-radio>
 </div></el-col>
   <el-col :span="10">
   	<div class="grid-content bg-purple">  
-  		<el-button @click=pageDataExport>按查询条件导出当前分页</el-button>
+  		<el-radio  v-model="radio" label="2" @change=pageDataExport>按查询条件导出当前分页</el-radio>
 </div></el-col>
 </el-row>
 </el-dialog>
@@ -392,6 +392,7 @@ export default {
   name: 'dataBatchManage',
    data(){
     return {
+    	radio:'',
     	fullscreenLoading:false,
       tableLoad:false,
     	batchList:[],

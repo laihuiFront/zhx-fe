@@ -370,7 +370,7 @@
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
-          prop="newCase"
+          prop="fileName"
           label="附件"
           align="center"
           show-overflow-tooltip>
@@ -529,7 +529,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        prop="newCase"
+        prop="fileName"
         label="附件"
         align="center"
          width="110"
@@ -701,7 +701,7 @@
         show-overflow-tooltip>
         <template slot-scope="scope">
          <el-button type="text" size="small" @click="showMessage(scope.row)">查看</el-button>
-           <el-button type="text" size="small" @click="downloadList(scope.row.fileName)" v-has="'批量下载附件'">下载附件</el-button>
+           <el-button type="text" size="small" @click="downloadList(scope.row)" v-has="'批量下载附件'">下载附件</el-button>
        </template>
       </el-table-column>
     
@@ -767,11 +767,11 @@
   >
   <el-row :gutter="20">
   <el-col :span="10"><div class="grid-content bg-purple"> 
-  	<el-button @click=totalDataExport>按查询条件全部导出</el-button>
+  	<el-radio v-model="radio" label="1" @change=totalDataExport>按查询条件全部导出</el-radio>
 </div></el-col>
   <el-col :span="10">
   	<div class="grid-content bg-purple">  
-  		<el-button @click=pageDataExport>按查询条件导出当前分页</el-button>
+  		<el-radio v-model="radio" label="2" @change=pageDataExport>按查询条件导出当前分页</el-radio>
 </div></el-col>
 </el-row>
 </el-dialog>
@@ -789,6 +789,7 @@ export default {
     },
   data(){
     return {
+    	radio:"",
     	MessageTrue:false,
     	fullscreenLoading:false,
     	loading:false,
@@ -899,9 +900,16 @@ export default {
       this.search()
 
     },
- 	downloadList(name){
+ 	downloadList(row){
+ 		if(!row.fileName){
+ 			this.$message({
+            type: 'error',
+            message: '无下载数据!'
+          });
+          return
+ 		}
  		let downloadData=[]
- 		downloadData.push(name);
+ 		downloadData.push(row.id);
  		this.fullscreenLoading=true
     	this.loading=true
  			downDataList(downloadData).then((response)=>{
@@ -1063,10 +1071,21 @@ this.search()
  		}
  	},
  		moredownDataList(){
+   			for (var i=0;i<this.downList.length;i++){
+   				if(!this.downList[i]){
+   					this.$message({
+            type: 'error',
+            message: '无下载数据!'
+          });
+          return
+   				}
+   				
+   			}
+ 			
  		if(this.deleteList.length>=1){
  				this.fullscreenLoading=true
     	this.loading=true
- 			downDataList(this.downList).then((response)=>{
+ 			downDataList(this.deleteList).then((response)=>{
           this.$message({
             type: 'success',
             message: '下载成功!'
@@ -1159,7 +1178,6 @@ this.search()
 	   _self.deleteList.push(currentValue.id)
 	   _self.downList.push(currentValue.fileName)
 	})
-	console.log(_self.deleteList)
 },
 handleSizeChange(val){
 	this.pageSize=val

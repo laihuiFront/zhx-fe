@@ -273,6 +273,9 @@ this.pageNum=val;
        this.tableData3=response.list
        this.tableLoad = false
      })
+      setTimeout(() => {
+          this.tableLoad = false;
+        }, 2000);
    }
  },
  created() {

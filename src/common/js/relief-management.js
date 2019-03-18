@@ -143,7 +143,9 @@ export const downDataList = function(id) {
 return download({
     url: '/reduce/download',
     method: 'post',
-    data:id
+    data:{
+    	ids:id
+    }
   })
 }
 
