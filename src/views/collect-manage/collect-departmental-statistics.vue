@@ -175,7 +175,7 @@
         <el-form-item>
           <el-button type="primary" icon="el-icon-search" @click="getMainData">查询</el-button>
           <el-button
-            type="text"
+            type="primary"
             icon="el-icon-refresh"
             @click="resetForm('form1');getMainData()"
           >重置</el-button
