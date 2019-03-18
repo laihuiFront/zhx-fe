@@ -291,7 +291,7 @@ export default {
   	adduserName(){
   		if(this.memberInfo.userName){
   			getLoginName(this.memberInfo.userName).then(response => {
-  				if(response.loginNameCount==0){
+  				if(response.loginNameCount==1){
   					console.log(response)
   					 this.$set(this.memberInfo, 'number', response.loginName)
              this.$set(this.memberInfo, 'loginNameCount', response.loginNameCount)
