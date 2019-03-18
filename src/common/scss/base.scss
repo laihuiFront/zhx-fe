@@ -21,3 +21,30 @@ body, html{
 .el-loading-text{
   font-size: 24px!important;
 }
+body .el-dropdown-menu{
+  background-color: #0080FF;
+  border-color:#0080FF;
+}
+body .el-dropdown-menu__item{
+  color: white;
+}
+body .el-dropdown-menu__item:focus,body .el-dropdown-menu__item:not(.is-disabled):hover{
+  color: white;
+  background-color: #3499FE;
+}
+body .el-popper[x-placement^=bottom] .popper__arrow{
+  border-color: #0080FF;
+}
+body .el-popper[x-placement^=top] .popper__arrow::after{
+  border-color:#0080FF;
+}
+body .el-popper[x-placement^=bottom] .popper__arrow::after{
+  border-color:#0080FF;
+}
+body .el-dropdown.active .el-icon-arrow-down{
+  transform: rotate(180deg);
+  transition: all .2s linear;
+}
+body .el-dropdown .el-icon-arrow-down{
+  transition: all .2s linear;
+}

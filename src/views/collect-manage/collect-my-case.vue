@@ -411,8 +411,9 @@
                     trigger="click"
                     @command="colorHandle"
                     v-has="'案件标色'"
+                    v-dropdown-patch
                   >
-                    <el-button type="primary">案件标色</el-button>
+                    <el-button type="primary">案件标色<i class="el-icon-arrow-down el-icon--right"></i></el-button>
                     <el-dropdown-menu slot="dropdown">
                       <el-dropdown-item command="黑">黑色</el-dropdown-item>
                       <el-dropdown-item command="红">红色</el-dropdown-item>
@@ -428,8 +429,9 @@
                     trigger="click"
                     @command="modStatusHandle"
                     v-has="'修改催收状态'"
+                    v-dropdown-patch
                   >
-                    <el-button type="primary" @click>修改催收状态</el-button>
+                    <el-button type="primary" @click>修改催收状态<i class="el-icon-arrow-down el-icon--right"></i></el-button>
                     <el-dropdown-menu slot="dropdown">
                       <el-dropdown-item
                         :command="item.id"
@@ -930,6 +932,9 @@ export default {
     this.init();
   },
   methods: {
+    vis(){
+      console.log(...arguments)
+    },
     sortHandle({ prop, order }) {
       this.sort.sort = order.replace("ending", "");
       this.sort.orderBy = prop;

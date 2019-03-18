@@ -175,8 +175,9 @@
                 trigger="click"
                 @command="exportXh"
                 v-has="'导出信函'"
+                v-dropdown-patch
               >
-                <el-button type="primary">导出信函</el-button>
+                <el-button type="primary">导出信函<i class="el-icon-arrow-down el-icon--right"></i></el-button>
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item
                     v-for="(item, index) in moduleList"
@@ -188,19 +189,7 @@
               </el-dropdown>
             </el-form-item>
             <el-form-item>
-              <el-dropdown
-                trigger="click"
-                @command="exportCx"
-                v-has="'导出查询结果'"
-              >
-                <el-button type="primary">导出查询结果</el-button>
-                <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item command="1"
-                    >导出全部查询结果</el-dropdown-item
-                  >
-                  <el-dropdown-item command="2">导出当前页</el-dropdown-item>
-                </el-dropdown-menu>
-              </el-dropdown>
+              <el-button type="primary" @click="dialogVisibleCase=true;">导出查询结果</el-button>
             </el-form-item>
             <el-form-item>
               <el-upload
@@ -234,6 +223,21 @@
           </el-form>
         </div>
       </el-col>
+      <el-dialog
+        title="导出查询结果"
+        :visible.sync="dialogVisibleCase"
+        width="30%"
+      >
+        <el-row :gutter="20">
+          <el-col :span="10"><div class="grid-content bg-purple">
+            <el-radio label="1" @change='exportCx(1)'>按查询条件全部导出</el-radio>
+          </div></el-col>
+          <el-col :span="10">
+            <div class="grid-content bg-purple">
+              <el-radio label="2" @change='exportCx(2)'>按查询条件导出当前分页</el-radio>
+            </div></el-col>
+        </el-row>
+      </el-dialog>
       <el-col :span="22">
         <div class="grid-content bg-purple">
           <el-form :inline="true">
@@ -343,6 +347,7 @@ export default {
   },
   data() {
     return {
+      dialogVisibleCase:false,
       loading2: false,
       fullscreenLoading: false,
       tableLoad: false,
