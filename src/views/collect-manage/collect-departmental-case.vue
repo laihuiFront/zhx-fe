@@ -497,10 +497,10 @@
                 <span class="color_gray" style="display: inline-block; color: #66b1ff;font-size: 16px;"> 列表还款数额:</span>
                 <span style="display: inline-block; color: #66b1ff;font-size: 16px;">{{ fetchData.sumPayMoney }}, </span> </el-form-item
               ><el-form-item>
-                <span class="color_gray" style="display: inline-block; color: #66b1ff;font-size: 16px;"> 列表CP值:</span>
+                <span class="color_gray" style="display: inline-block; color: #66b1ff;font-size: 16px;"> 列表待银行对账金额:</span>
                 <span style="display: inline-block; color: #66b1ff;font-size: 16px;">{{ fetchData.sumRepay }}, </span> </el-form-item
               ><el-form-item>
-                <span class="color_gray" style="display: inline-block; color: #66b1ff;font-size: 16px;"> 列表PTP值:</span>
+                <span class="color_gray" style="display: inline-block; color: #66b1ff;font-size: 16px;"> 列表承诺还款金额:</span>
                 <span style="display: inline-block; color: #66b1ff;font-size: 16px;">{{ fetchData.sumBank }} </span>
               </el-form-item>
               </el-form>

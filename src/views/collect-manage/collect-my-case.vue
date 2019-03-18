@@ -520,7 +520,7 @@
                   <span
                     class="color_gray"
                     style="display: inline-block; color: #66b1ff;font-size: 16px;"
-                    >列表待銀行查账值:</span
+                    >列表待银行查账值:</span
                   >
                   <span
                     style="display: inline-block; color: #66b1ff;font-size: 16px;"

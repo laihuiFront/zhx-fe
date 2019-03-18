@@ -1250,7 +1250,7 @@
                       <el-radio label="电话管理">电话管理</el-radio>
                       <el-radio label="案件管理">案件管理</el-radio>
                       <el-radio label="电话催收">电话催收</el-radio>
-                      <el-radio label="CP管理">CP管理</el-radio>
+                      <el-radio label="待银行查账管理">待银行查账管理</el-radio>
                     </el-radio-group>
                   </div>
                 </div>

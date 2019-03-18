@@ -6,7 +6,7 @@
         ><span class="topSpan">上月还款金额:</span> {{ topData.lastPaidMoney }}</el-col
         >
         <el-col :span="4"
-        ><span class="topSpan">上月PTP值:</span> {{ topData.lastRepayAmt }}</el-col
+        ><span class="topSpan">上月承诺还款金额:</span> {{ topData.lastRepayAmt }}</el-col
         >
         <el-col :span="4"
         ><span class="topSpan">上月待银行查账金额:</span> {{ topData.lastBankAmt }}</el-col
@@ -141,8 +141,8 @@
             align="right"
             unlink-panels
             range-separator="至"
-            start-placeholder="PTP起始日期"
-            end-placeholder="PTP结束日期"
+            start-placeholder="承诺还款金额起始日期"
+            end-placeholder="承诺还款金额结束日期"
           >
           </el-date-picker>
         </el-form-item>
