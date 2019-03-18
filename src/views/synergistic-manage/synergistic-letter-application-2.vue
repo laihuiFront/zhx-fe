@@ -182,7 +182,6 @@
             <el-form-item>
               <el-dropdown
                 v-has="'导出信函'"
-                trigger="click"
                 @command="exportXh"
               >
                 <el-button type="primary">导出信函</el-button>

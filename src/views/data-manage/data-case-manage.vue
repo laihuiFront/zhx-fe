@@ -330,7 +330,7 @@
         <el-button type="primary" icon="el-icon-refresh" @click=resetFormInline>重置</el-button>
       </el-form-item>
       <el-form-item>
-        <el-dropdown @command="fenancheck" v-has="'分案'" >
+        <el-dropdown v-dropdown-patch @command="fenancheck" v-has="'分案'" >
           <el-button type="primary" >
             分案<i class="el-icon-arrow-down el-icon--right"></i>
           </el-button>
@@ -339,7 +339,7 @@
             <el-dropdown-item command="b">查询结果快速分案</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <el-dropdown @command="guanlianjian" v-has="'案件'">
+        <el-dropdown v-dropdown-patch @command="guanlianjian" v-has="'案件'">
           <el-button type="primary">
             案件<i class="el-icon-arrow-down el-icon--right"></i>
           </el-button>
@@ -352,7 +352,7 @@
             -->    <el-dropdown-item  command="a">删除案件</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <el-dropdown @command="handleCommand" v-has="'修改'">
+        <el-dropdown v-dropdown-patch @command="handleCommand" v-has="'修改'">
           <el-button type="primary">
             修改<i class="el-icon-arrow-down el-icon--right"></i>
           </el-button>
@@ -365,7 +365,7 @@
         </el-dropdown>
         <el-button type="primary" @click="addshow" v-has="'添加评语'">添加评语</el-button>
         <el-button type="primary"  @click="xiecui" v-has="'申请协催'">申请协催</el-button>
-        <el-dropdown @command="handleExport" v-has="'导出'">
+        <el-dropdown v-dropdown-patch @command="handleExport" v-has="'导出'">
           <el-button type="primary">
             导出<i class="el-icon-arrow-down el-icon--right"></i>
           </el-button>
@@ -376,7 +376,7 @@
             <el-dropdown-item command="exportCollect">所选催记</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <el-dropdown @command="biaose" v-has="'案件标色'">
+        <el-dropdown v-dropdown-patch @command="biaose" v-has="'案件标色'">
           <el-button type="primary" >
             案件标色<i class="el-icon-arrow-down el-icon--right"></i>
           </el-button>

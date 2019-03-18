@@ -408,7 +408,6 @@
                 </el-form-item>
                 <el-form-item>
                   <el-dropdown
-                    trigger="click"
                     @command="colorHandle"
                     v-has="'案件标色'"
                     v-dropdown-patch
@@ -426,7 +425,6 @@
                 </el-form-item>
                 <el-form-item>
                   <el-dropdown
-                    trigger="click"
                     @command="modStatusHandle"
                     v-has="'修改催收状态'"
                     v-dropdown-patch

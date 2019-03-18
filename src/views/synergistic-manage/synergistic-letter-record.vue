@@ -172,7 +172,6 @@
             </el-form-item>
             <el-form-item>
               <el-dropdown
-                trigger="click"
                 @command="exportXh"
                 v-has="'导出信函'"
                 v-dropdown-patch

@@ -24,6 +24,8 @@ body, html{
 body .el-dropdown-menu{
   background-color: #0080FF;
   border-color:#0080FF;
+  text-align: center;
+  overflow: initial;
 }
 body .el-dropdown-menu__item{
   color: white;
@@ -33,13 +35,20 @@ body .el-dropdown-menu__item:focus,body .el-dropdown-menu__item:not(.is-disabled
   background-color: #3499FE;
 }
 body .el-popper[x-placement^=bottom] .popper__arrow{
-  border-color: #0080FF;
+  border-color: transparent;
+  right: 10%;
+  left: initial!important;
+}
+body .el-popper .popper__arrow::after{
+  border-width: 9px;
 }
 body .el-popper[x-placement^=top] .popper__arrow::after{
   border-color:#0080FF;
 }
 body .el-popper[x-placement^=bottom] .popper__arrow::after{
-  border-color:#0080FF;
+  //border-color:#0080FF;
+  border-bottom-color: #0080FF;
+  top:-2px;
 }
 body .el-dropdown.active .el-icon-arrow-down{
   transform: rotate(180deg);
