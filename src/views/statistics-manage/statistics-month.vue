@@ -101,7 +101,7 @@
           label="个按量"
           align="center"
           prop="countCasePhoneNum"
-        >
+        > 
           <template slot-scope="scope">
             {{ scope.row.list[index].countCasePhoneNum }}
           </template>

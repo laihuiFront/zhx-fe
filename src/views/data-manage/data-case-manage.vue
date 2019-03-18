@@ -330,7 +330,7 @@
         <el-button type="primary" icon="el-icon-refresh" @click=resetFormInline>重置</el-button>
       </el-form-item>
       <el-form-item>
-        <el-dropdown @command="fenancheck" v-has="'分案'" trigger="click">
+        <el-dropdown @command="fenancheck" v-has="'分案'" >
           <el-button type="primary" >
             分案<i class="el-icon-arrow-down el-icon--right"></i>
           </el-button>
@@ -879,11 +879,11 @@
   >
   <el-row :gutter="20">
   <el-col :span="10"><div class="grid-content bg-purple"> 
-  	<el-button @click=totalDataExport>按查询条件全部导出</el-button>
+  	<el-radio v-model="radio" label="1" @change=totalDataExport>按查询条件全部导出</el-radio>
 </div></el-col>
   <el-col :span="10">
   	<div class="grid-content bg-purple">  
-  		<el-button @click=pageDataExport>按查询条件导出当前分页</el-button>
+  		<el-radio v-model="radio" label="2" @change=pageDataExport>按查询条件导出当前分页</el-radio>
 </div></el-col>
 </el-row>
 </el-dialog>
@@ -901,6 +901,7 @@
     },
     data(){
       return {
+      	radio:'',
       	formInline1:{},
         tableLoad:false,
       	dialogVisibleCase:false,
