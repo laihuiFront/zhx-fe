@@ -256,6 +256,7 @@
             >
         <el-table-column
           type="selection"
+          align="center"
           width="55">
         </el-table-column>
         <el-table-column
@@ -275,7 +276,7 @@
           align="center"
         label="案人姓名"
         sortable="custom"
-          width="110"
+          width="120"
         :sort-orders="['ascending','descending']"
           show-overflow-tooltip>
         </el-table-column>
@@ -283,7 +284,7 @@
           prop="collectStatusMsg"
           align="center"
           label="催收状态"
-            width="110"
+            width="120"
           sortable="custom"
           :sort-orders="['ascending','descending']"
           show-overflow-tooltip>
@@ -291,7 +292,7 @@
         <el-table-column
           prop="moneyMsg"
           align="center"
-            width="110"
+            width="120"
           label="委案金额"
           sortable="custom"
           :sort-orders="['ascending','descending']"
@@ -301,7 +302,7 @@
           prop="completeTime"
         align="center"
           label="完成时间"
-            width="110"
+            width="160"
           sortable="custom"
           :sort-orders="['ascending','descending']"
           show-overflow-tooltip>
@@ -309,7 +310,7 @@
         <el-table-column
           prop="completeUser"
           label="完成人"
-            width="110"
+            width="120"
           align="center"
           sortable="custom"
           :sort-orders="['ascending','descending']"
@@ -329,14 +330,14 @@
         align="center"
           label="有效日期"
           sortable="custom"
-            width="110"
+            width="160"
           :sort-orders="['ascending','descending']"
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
           prop="reduceStatusMsg"
           align="center"
-            width="110"
+            width="120"
           label="减免状态"
           sortable="custom"
           :sort-orders="['ascending','descending']"
@@ -346,7 +347,7 @@
           prop="reduceResult"
         label="减免结果"
           align="center"
-            width="110"
+            width="120"
           sortable="custom"
           :sort-orders="['ascending','descending']"
           show-overflow-tooltip>
@@ -363,7 +364,7 @@
         <el-table-column
           prop="reduceUpdateTime"
           align="center"
-            width="160"
+            width="180"
           label="减免状态更新时间"
           sortable="custom"
           :sort-orders="['ascending','descending']"
@@ -378,6 +379,7 @@
         <el-table-column
           label="操作"
           width="170"
+          align="center"
           show-overflow-tooltip>
           <template slot-scope="scope">
           <el-button type="text" size="small" @click="open7(scope.row)" v-has="'批量审核'">审核</el-button>
@@ -415,6 +417,7 @@
     >
       <el-table-column
         type="selection"
+        align="center"
         width="55">
       </el-table-column>
       <el-table-column
@@ -433,7 +436,7 @@
         prop="targetName"
         align="center"
        label="案人姓名"
-        width="110"
+        width="120"
         sortable="custom"
           :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
@@ -442,7 +445,7 @@
         prop="collectStatusMsg"
         align="center"
         label="催收状态"
-         width="110"
+         width="120"
         sortable="custom"
           :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
@@ -451,7 +454,7 @@
         prop="moneyMsg"
         align="center"
         label="委案金额"
-         width="110"
+         width="130"
          sortable="custom"
           :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
@@ -459,7 +462,7 @@
       <el-table-column
         prop="completeTime"
        align="center"
-        width="110"
+        width="180"
         label="完成时间"
          sortable="custom"
           :sort-orders="['ascending','descending']"
@@ -469,7 +472,7 @@
         prop="completeUser"
         label="完成人"
         align="center"
-         width="110"
+         width="120"
           sortable="custom"
           :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
@@ -488,7 +491,7 @@
       align="center"
         label="有效日期"
         sortable="custom"
-         width="110"
+         width="160"
           :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
@@ -496,7 +499,7 @@
         prop="reduceStatusMsg"
         align="center"
         label="减免状态"
-         width="110"
+         width="120"
        sortable="custom"
           :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
@@ -504,7 +507,7 @@
       <el-table-column
         prop="reduceResult"
       label="减免结果"
-       width="110"
+       width="120"
         align="center"
           sortable="custom"
           :sort-orders="['ascending','descending']"
@@ -523,7 +526,7 @@
         prop="reduceUpdateTime"
         align="center"
         label="减免状态更新时间"
-         width="155"
+         width="180"
         sortable="custom"
           :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
@@ -532,12 +535,13 @@
         prop="fileName"
         label="附件"
         align="center"
-         width="110"
+         width="120"
         show-overflow-tooltip>
       </el-table-column>
   
       <el-table-column
         label="操作"
+        align="center"
         show-overflow-tooltip>
         <template slot-scope="scope">
          <el-button type="text" size="small" @click="editMessage(scope.row)" v-has="'修改'">修改</el-button>
@@ -574,6 +578,7 @@
     >
       <el-table-column
         type="selection"
+        align="center"
         width="55">
       </el-table-column>
       <el-table-column
@@ -592,7 +597,7 @@
         prop="targetName"
         align="center"
        label="案人姓名"
-        width="110"
+        width="120"
         sortable="custom"
           :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
@@ -601,7 +606,7 @@
         prop="collectStatusMsg"
         align="center"
         label="催收状态"
-         width="110"
+         width="120"
         sortable="custom"
           :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
@@ -610,7 +615,7 @@
         prop="moneyMsg"
         align="center"
         label="委案金额"
-         width="110"
+         width="130"
     sortable="custom"
           :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
@@ -619,7 +624,7 @@
         prop="completeTime"
        align="center"
         label="完成时间"
-         width="110"
+         width="180"
          sortable="custom"
           :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
@@ -627,7 +632,7 @@
       <el-table-column
         prop="completeUser"
         label="完成人"
-         width="110"
+         width="120"
          sortable="custom"
           :sort-orders="['ascending','descending']"
         align="center"
@@ -646,7 +651,7 @@
         prop="reduceValidTime"
       align="center"
         label="有效日期"
-         width="110"
+         width="160"
        sortable="custom"
           :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
@@ -655,7 +660,7 @@
         prop="reduceStatusMsg"
         align="center"
         label="减免状态"
-         width="110"
+         width="120"
          sortable="custom"
           :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
@@ -664,7 +669,7 @@
         prop="reduceResult"
       label="减免结果"
         align="center"
-         width="110"
+         width="120"
        sortable="custom"
           :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
@@ -684,13 +689,13 @@
     sortable="custom"
           :sort-orders="['ascending','descending']"
         label="减免状态更新时间"
-         width="155"
+         width="180"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="fileName"
         label="附件"
-         width="110"
+         width="120"
         align="center"
         show-overflow-tooltip>
       </el-table-column>
@@ -698,6 +703,7 @@
       <el-table-column
         label="操作"
         width="120"
+        align="center"
         show-overflow-tooltip>
         <template slot-scope="scope">
          <el-button type="text" size="small" @click="showMessage(scope.row)">查看</el-button>
