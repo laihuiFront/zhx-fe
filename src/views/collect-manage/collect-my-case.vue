@@ -100,7 +100,7 @@
                   trigger="click"
                 >
                   <img
-                    style="cursor: pointer;vertical-align: middle;margin-top: 8px;"
+                    style="cursor: pointer;vertical-align: middle;margin-top: 8px;margin-right: 8px;"
                     src="./zhankai.png"
                     width="12"
                     height="12"

@@ -324,7 +324,7 @@
               </el-date-picker>
             </li>
           </ul>
-          <img src="./down.png" width="12" height="12" alt="更多" slot="reference">
+          <img src="./down.png" width="12" height="12" style="margin-left: 8px;margin-right: 8px;" alt="更多" slot="reference">
         </el-popover>
         <el-button type="primary" icon="el-icon-search" @click="search">查询</el-button>
         <el-button type="primary" icon="el-icon-refresh" @click=resetFormInline>重置</el-button>
