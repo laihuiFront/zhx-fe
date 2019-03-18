@@ -79,7 +79,8 @@
   </el-form-item>
   <el-form-item>
       <el-button type="primary" @click="returnCaseList" v-has="'批次退案'">批量退案</el-button>  
-       <el-button type="primary" @click="returnCaseList" >批量恢复</el-button>  
+       <el-button type="primary" @click="MorebackCase
+       	" >批量恢复</el-button>  
       <el-button type="primary"  @click="open7" v-has="'批次删除'">批量删除</el-button>  
       <el-button type="primary"  @click="dialogVisible1 = true" v-has="'导出查询结果'">导出查询结果</el-button>  
       <el-button type="primary" @click='selectDataExport' v-has="'导出所选批次'">导出所选批次</el-button>  
@@ -236,10 +237,10 @@
       label="操作"
       width="250">
       <template slot-scope="scope">
-        <el-button type="text" size="small" @click="open2(scope.row.id)" v-has="'退案'">退案</el-button>
-        <el-button type="text" size="small" @click="open2(scope.row.id)" v-has="'退案'">恢复</el-button>
+        <el-button type="text" size="small" v-if="scope.row.batchStatus!=2" @click="open2(scope.row.id)" v-has="'退案'">退案</el-button>
+        <el-button type="text" size="small" v-if="scope.row.batchStatus!=1" @click="backCaseList(scope.row.id)" v-has="'退案'">恢复</el-button>
         <el-button type="text" size="small" @click="editMessage(scope.row)" v-has="'编辑'">编辑</el-button>
-        <el-button type="text" size="small" @click="deleteMessage(scope.row.id,scope.row.batchNo)" v-has="'删除'">删除</el-button>
+        <el-button type="text" size="small" @click="open8(scope.row.id,scope.row.batchNo)" v-has="'删除'">删除</el-button>
         <el-button type="text" size="small" v-has="'批量导出批次催记'" @click="exportCollect(scope.row)">导出催记</el-button>
       </template>
     </el-table-column>
@@ -401,7 +402,7 @@
 </template>
 
 <script>
-	import {dataList,remoweData,addData,selectDataCollectExportByBatch,selectDataBatchExport,pageDataBatchExport,totalDataBatchExport,clientList,batchList,caseTypeList,areaList,returnCase,update} from '@/common/js/data-batch-manage.js'
+	import {dataList,remoweData,addData,selectDataCollectExportByBatch,selectDataBatchExport,pageDataBatchExport,totalDataBatchExport,clientList,batchList,caseTypeList,areaList,returnCase,update,backCase} from '@/common/js/data-batch-manage.js'
 export default {
   name: 'dataBatchManage',
    data(){
@@ -433,6 +434,7 @@ export default {
       currentPage4: 1,
       pages:1,
       total:0,
+      MoreBackCaseList:[],
     	form:{
     		time:[],
     		batchNos:[],
@@ -624,6 +626,16 @@ dataList(this.form.area,this.form.batchNos,this.form.clients,this.form.batchStat
           this.search()
 })
 	},
+		BackMessage(id){
+		let arry=[{id:id}]
+		backCase(arry).then((response)=>{
+				this.$message({
+            type: 'success',
+            message: '恢复成功!'
+          });
+          this.search()
+})
+	},
 	 handleSizeChange(val){
 	this.pageSize=val
 	this.search()
@@ -668,19 +680,23 @@ this.search()
 		handleSelectionChange(row){
   		let _self=this
   		_self.deleteList=[]
+  		_self.MoreBackCaseList=[]
   		_self.selectDataCollectExportByBatchList=[];
   		_self.selectDataBatchExportList=[];
 	row.forEach(function(currentValue, index, arr){
 		let Object={"id":""}
 		let Project={batchNo:""}
+		let BackCaseList={status:''}
 		Project.batchNo=currentValue.batchNo
 	   Object.id=currentValue.id
+	   BackCaseList.status=currentValue.batchStatus
     Object.batchNo=currentValue.batchNo
 	   _self.deleteList.push(Object)
+	   _self.MoreBackCaseList.push(BackCaseList)
 	   _self.selectDataBatchExportList.push(Object)
 	   _self.selectDataCollectExportByBatchList.push(Project)
 	})
-	console.log(_self.deleteList)
+	console.log(_self.MoreBackCaseList)
 },
       resetForm() {
         this.form={
@@ -716,31 +732,16 @@ this.search()
           });
           }
       },
-       open8() {
-      	let _self=this
-         if(_self.deleteList.length>0){
-           returnCase(this.deleteList).then((response)=>{
-             _self.$confirm('是否退案?', '提示', {
-               confirmButtonText: '确定',
-               cancelButtonText: '取消',
-               type: 'warning',
-               center: true
-             }).then(() => {
-                 _self.$message({
-                 type: 'success',
-                 message: '退案成功!'
-               });
-               _self.search()
-             }).catch(() => {
-
-             });
-
-           }) }else{
-           _self.$message({
-             type: 'info',
-             message: '请选择需要退案的数据!'
-           });
-         } 
+       open8(id) {
+      	this.$confirm(' 是否删除?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.deleteMessage(id)
+        }).catch(() => {
+                
+        });
       },
        open2(id) {
         this.$confirm(' 是否退案?', '提示', {
@@ -753,7 +754,66 @@ this.search()
                 
         });
       },
+       backCaseList(id) {
+        this.$confirm(' 是否恢复?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.BackMessage(id)
+        }).catch(() => {
+                
+        });
+      },
+//    MorebackCaseList() {
+//      this.$confirm(' 是否恢复?', '提示', {
+//        confirmButtonText: '确定',
+//        cancelButtonText: '取消',
+//        type: 'warning'
+//      }).then(() => {
+//        this.backCase()
+//      }).catch(() => {
+//              
+//      });
+//    },
+      MorebackCase(){
+      	let _self=this
+      	for( var i =0;i<_self.MoreBackCaseList.length;i++){
+      		if(_self.MoreBackCaseList[i].status!=2){
+      			 _self.$message({
+                 type: 'error',
+                 message: '含有不可恢复数据!'
+               });
+               	return
+      		}
+      	
+      	}
+         if(_self.deleteList.length>0){
+         	 this.$confirm('是否恢复案件?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          	backCase(this.deleteList).then((response)=>{
+				this.$message({
+            type: 'success',
+            message: '恢复成功!'
+          });
+          this.search()
+})
+        }).catch(() => {
+                
+        });
+          }else{
+           _self.$message({
+             type: 'info',
+             message: '请选择需要恢复的数据!'
+           });
+         } 
+      }
    },
+   
+
    created() {
      this.tableLoad = true
             dataList().then((response)=>{
