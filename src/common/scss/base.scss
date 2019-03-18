@@ -42,8 +42,14 @@ body .el-popper[x-placement^=bottom] .popper__arrow{
 body .el-popper .popper__arrow::after{
   border-width: 9px;
 }
+body .el-popper[x-placement^=top] .popper__arrow{
+  border-color: transparent;
+  right: 10%;
+  left: initial!important;
+}
 body .el-popper[x-placement^=top] .popper__arrow::after{
-  border-color:#0080FF;
+  border-top-color:#0080FF;
+  bottom: -2px;
 }
 body .el-popper[x-placement^=bottom] .popper__arrow::after{
   //border-color:#0080FF;
