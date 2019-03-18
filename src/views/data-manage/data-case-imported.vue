@@ -148,23 +148,27 @@
   >
   <el-table-column
       type="selection"
+      align="center"
       width="55">
     </el-table-column>
     <el-table-column
       sortable="custom"
       :sort-orders="['ascending','descending']"
       label="批次号"
+      align="center"
       prop="batchNo">
     </el-table-column>
     <el-table-column
       prop="clientMsg"
       sortable="custom"
+      align="center"
       label="委托方"
       :sort-orders="['ascending','descending']"
       width="140">
     </el-table-column>
     <el-table-column
       prop="statusMsg"
+      align="center"
       sortable="custom"
       label="批次状态"
       :sort-orders="['ascending','descending']"
@@ -175,12 +179,14 @@
       :sort-orders="['ascending','descending']"
       prop="caseTime"
       label="委案日期"
+      align="center"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
       sortable="custom"
       :sort-orders="['ascending','descending']"
       prop="userCount"
+      align="center"
       label="户数"
       show-overflow-tooltip>
     </el-table-column>
@@ -188,6 +194,7 @@
       sortable="custom"
       :sort-orders="['ascending','descending']"
       label="总金额"
+      align="center"
       prop="totalAmtMsg"
       show-overflow-tooltip>
       <template slot-scope="scope">
@@ -196,6 +203,7 @@
     </el-table-column>
     <el-table-column
       sortable="custom"
+      align="center"
       :sort-orders="['ascending','descending']"
       prop="uploadTime"
       label="上传时间"
@@ -204,6 +212,7 @@
     <el-table-column
       prop="remark"
       label="批次备注"
+      align="center"
       sortable="custom"
       :sort-orders="['ascending','descending']"
       show-overflow-tooltip>

@@ -45,19 +45,23 @@
       class="table-wrap">
       <el-table-column
         type="selection"
+        align="center"
         width="55">
       </el-table-column>
       <el-table-column
         prop="createTime"
+        align="center"
         label="日志时间">
       </el-table-column>
       <el-table-column
         prop="logContent"
+        align="center"
         label="日志内容"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="userName"
+        align="center"
         label="操作人"
         width="200">
       </el-table-column>

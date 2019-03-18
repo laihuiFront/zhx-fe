@@ -411,7 +411,7 @@ export default {
       tableCol_data: [
         {
           prop: "id",
-          label: "id"
+          label: "ID"
         },
         {
           prop: "name",

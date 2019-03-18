@@ -66,10 +66,13 @@
     @selection-change="handleSelectionChange">
     <el-table-column
       type="selection"
+      align="center"
       width="55">
     </el-table-column>
     <el-table-column
       label="证件号"
+      align="center"
+      min-width="200"
       sortable="custom"
       :sort-orders="['ascending','descending']"
        prop="identNo"
@@ -77,6 +80,7 @@
     </el-table-column>
     <el-table-column
       prop="name"
+      align="center"
       sortable="custom"
       :sort-orders="['ascending','descending']"
       label="姓名"
@@ -84,6 +88,7 @@
     </el-table-column>
     <el-table-column
       label="电话号码"
+      align="center"
       show-overflow-tooltip>
       <template slot-scope="scope" >
       	<div v-for="(domain, index) in scope.row.telList">
@@ -93,6 +98,8 @@
     </el-table-column>
     <el-table-column
       label="地址"
+      align="center"
+      min-width="200"
       show-overflow-tooltip>
       <template slot-scope="scope" >
       	<div v-for="(domain, index) in scope.row.addressList">
@@ -104,11 +111,14 @@
        label="档案变更日期"
        prop="updateTime"
        sortable="custom"
+       min-width="180"
+       align="center"
        :sort-orders="['ascending','descending']"
        show-overflow-tooltip>
      </el-table-column>
     <el-table-column
       label="备注"
+      align="center"
       show-overflow-tooltip>
       <template slot-scope="scope" >
         <div v-for="(domain, index) in scope.row.remarkList">

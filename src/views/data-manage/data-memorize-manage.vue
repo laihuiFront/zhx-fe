@@ -211,9 +211,14 @@
       @selection-change="handleSelectionChange">
       <el-table-column
         type="selection"
+        align="center"
         width="55">
       </el-table-column>
       <el-table-column
+        sortable="custom"
+        align="center"
+        :sort-orders="['ascending','descending']"
+        prop="id"
         label="ID"
       >
         <template slot-scope="scope">{{ scope.row.id }}</template>
@@ -221,6 +226,7 @@
       <el-table-column
         prop="seqno"
         sortable="custom"
+        align="center"
         min-width="120"
         :sort-orders="['ascending','descending']"
         label="个案序列号"
@@ -238,6 +244,7 @@
       <el-table-column
         prop="name"
         sortable="custom"
+        align="center"
         :sort-orders="['ascending','descending']"
         label="姓名"
         show-overflow-tooltip>
@@ -246,6 +253,7 @@
         prop="measure"
         sortable="custom"
         min-width="120"
+        align="center"
         :sort-orders="['ascending','descending']"
         label="催收措施"
         show-overflow-tooltip>
@@ -264,6 +272,7 @@
         sortable="custom"
         :sort-orders="['ascending','descending']"
         min-width="120"
+        align="center"
         label="对象姓名"
         show-overflow-tooltip>
       </el-table-column>
@@ -271,6 +280,7 @@
         prop="relation"
         label="与案人关系"
         min-width="120"
+        align="center"
         sortable="custom"
         :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
@@ -278,6 +288,7 @@
       <el-table-column
         prop="telType"
         label="电话类型"
+        align="center"
         min-width="120"
         sortable="custom"
         :sort-orders="['ascending','descending']"
@@ -296,6 +307,7 @@
         prop="collectInfo"
         label="催收记录"
         min-width="120"
+        align="center"
         sortable="custom"
         :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
@@ -311,20 +323,21 @@
       prop="methodMsg"
       label="谈判方式"
       min-width="120"
+      align="center"
       sortable="custom"
       :sort-orders="['ascending','descending']"
       show-overflow-tooltip>
     </el-table-column><el-table-column
       prop="repayTime"
       label="承诺还款日期"
-      width="140"
+      width="180"
       align="center"
       sortable="custom"
       :sort-orders="['ascending','descending']"
       show-overflow-tooltip>
     </el-table-column><el-table-column
       label="承诺还款金额"
-      width="140"
+      width="160"
       align="center"
       prop="repayAmtMsg"
       sortable="custom"
@@ -335,7 +348,7 @@
       </template>
     </el-table-column><el-table-column
       label="减免金额"
-      width="140"
+      width="160"
       sortable="custom"
       :sort-orders="['ascending','descending']"
       align="center"

@@ -12,15 +12,19 @@
       style="width: 100%">
       <el-table-column
         prop="id"
+        align="center"
+        width="100"
         label="ID">
       </el-table-column>
       <el-table-column
         prop="title"
+        align="center"
         label="模板名称">
       </el-table-column>
       <el-table-column
+        align="center"
         label="操作"
-        width="100">
+        width="120">
         <template slot-scope="scope">
           <el-button @click="handleClick(scope.row)" type="text" size="small" v-has="'编辑'">编辑</el-button>
           <el-button type="text" size="small" @click="deleteOne(scope.row)" v-has="'删除'">删除</el-button>

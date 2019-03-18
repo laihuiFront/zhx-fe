@@ -26,11 +26,13 @@
         :sortable='true' 
         :sort-orders="['ascending','descending']"         
         prop="number"
+        align="center"
         label="员工号">
       </el-table-column>
       <el-table-column
         :sortable='true' 
         :sort-orders="['ascending','descending']"
+        align="center"
         prop="userName"
         label="员工姓名"
         show-overflow-tooltip>
@@ -38,6 +40,7 @@
       <el-table-column
         :sortable='true' 
         :sort-orders="['ascending','descending']"
+        align="center"
         prop="department"
         label="原部门">
       </el-table-column>
@@ -45,6 +48,7 @@
         :sortable='true' 
         :sort-orders="['ascending','descending']"
         prop="leaveTime"
+        align="center"
         label="离职时间">
       </el-table-column>
     </el-table>

@@ -3,40 +3,40 @@
     <section class="topDataWp">
       <el-row :gutter="10">
         <el-col :span="3"
-          ><span class="topSpan">上月还款金额:</span>{{ topData.lastPaidMoney }}</el-col
+          ><span class="topSpan">上月还款金额：</span>{{ topData.lastPaidMoney }}</el-col
         >
         <el-col :span="4"
-          ><span class="topSpan">上月承诺还款金额:</span>{{ topData.lastRepayAmt }}</el-col
+          ><span class="topSpan">上月承诺还款金额：</span>{{ topData.lastRepayAmt }}</el-col
         >
         <el-col :span="4"
-          ><span class="topSpan">上月待银行查账金额:</span>{{ topData.lastBankAmt }}</el-col
+          ><span class="topSpan">上月待银行查账金额：</span>{{ topData.lastBankAmt }}</el-col
         >
         <el-col :span="4"
-          ><span class="topSpan">上月提成(已还款):</span>{{
+          ><span class="topSpan">上月提成(已还款)：</span>{{
             topData.lastRepaidAmt
           }}</el-col
         >
         <el-col :span="8"
-          ><span class="topSpan">上月提成(待银行查账金额):</span>{{ topData.lastRepaidBankAmt }}</el-col
+          ><span class="topSpan">上月提成(待银行查账金额)：</span>{{ topData.lastRepaidBankAmt }}</el-col
         >
       </el-row>
       <el-row :gutter="10" style="margin-top: 15px;">
         <el-col :span="3"
-          ><span class="topSpan">当月还款金额:</span>{{ topData.thisPaidMoney }}</el-col
+          ><span class="topSpan">当月还款金额：</span>{{ topData.thisPaidMoney }}</el-col
         >
         <el-col :span="4"
-          ><span class="topSpan">当月承诺还款金额:</span>{{ topData.thisRepayAmt }}</el-col
+          ><span class="topSpan">当月承诺还款金额：</span>{{ topData.thisRepayAmt }}</el-col
         >
         <el-col :span="4"
-          ><span class="topSpan">当月待银行查账金额:</span>{{ topData.thisBankAmt }}</el-col
+          ><span class="topSpan">当月待银行查账金额：</span>{{ topData.thisBankAmt }}</el-col
         >
         <el-col :span="4"
-          ><span class="topSpan">当月提成(已还款):</span>{{
+          ><span class="topSpan">当月提成(已还款)：</span>{{
             topData.thisRepaidAmt
           }}</el-col
         >
         <el-col :span="8"
-          ><span class="topSpan">当月提成(待银行查账金额):</span>{{ topData.thisRepaidBankAmt }}</el-col
+          ><span class="topSpan">当月提成(待银行查账金额)：</span>{{ topData.thisRepaidBankAmt }}</el-col
         >
       </el-row>
     </section>
@@ -154,17 +154,17 @@
     </section>
     <!-- <section class="table-wrap"> -->
       <div style="padding-bottom: 20px;">
-        <span style="color: black;font-size: 16px;">查询结果统计:</span>
+        <span style="color: black;font-size: 16px;">查询结果统计：</span>
         <span class="" v-if="form1.val1 == 0">
-          <span style="color: #66b1ff;font-size: 16px;">列表还款金额: {{ topData.paidMoney }}, </span>
-          <span style="color: #66b1ff;font-size: 16px;">还款M值金额: {{ topData.repaidAmt }}</span>
+          <span style="color: #66b1ff;font-size: 16px;">列表还款金额：{{ topData.paidMoney }}，</span>
+          <span style="color: #66b1ff;font-size: 16px;">还款M值金额：{{ topData.repaidAmt }}</span>
         </span>
         <span class="" v-if="form1.val1 == 1">
-          <span style="color: #66b1ff;font-size: 16px;">列表待银行查账金额: {{ topData.bankAmtC }}, </span>
-          <span style="color: #66b1ff;font-size: 16px;">待银行查账提成金额: {{ topData.repaidBankAmt }}</span>
+          <span style="color: #66b1ff;font-size: 16px;">列表待银行查账金额：{{ topData.bankAmtC }}，</span>
+          <span style="color: #66b1ff;font-size: 16px;">待银行查账提成金额：{{ topData.repaidBankAmt }}</span>
         </span>
         <span class="" v-if="form1.val1 == 2">
-          <span style="color: #66b1ff;font-size: 16px;">列表承诺还款金额: {{ topData.repayAmtP }} </span>
+          <span style="color: #66b1ff;font-size: 16px;">列表承诺还款金额：{{ topData.repayAmtP }} </span>
         </span>
       </div>
       <el-table

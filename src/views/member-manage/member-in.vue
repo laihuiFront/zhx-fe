@@ -41,6 +41,7 @@
         <el-form-item class="operation-item">
           <el-button type="primary" @click="onClickAdd" v-has="'新增员工'">新增员工</el-button>
           <el-button type="primary" @click="onClickImport" >导出员工信息</el-button>
+          <el-button type="primary" @click="onClickModuleImport" >导入模板下载</el-button>
           <el-upload
             class="upload-demo"
             :action="action+'/user/import'"
@@ -49,23 +50,23 @@
             :on-success="uploadSuccess"
             :on-progress="onProgress"
           >
-            <el-button type="primary" style="margin-left:10px;">导入用户信息</el-button>
+            <el-button type="primary" style="margin-left:10px;">导入员工信息</el-button>
           </el-upload>
         </el-form-item>
       </el-form>
       <el-table v-loading="tableLoad" sortable="custom" border stripe @sort-change="handleSort" @selection-change="handleSelectionChange"  height="1" :data="memberList" style="width: 100%" class="table-wrap">
-        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="id" label="员工id" show-overflow-tooltip></el-table-column>
-        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="userName" label="员工姓名" show-overflow-tooltip></el-table-column>
-        <el-table-column :sortable='true' :sort-orders="['ascending','descending']"  prop="number" show-overflow-tooltip label="账号"></el-table-column>
-        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="sex" label="性别" show-overflow-tooltip width="70"></el-table-column>
-        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="officePhone" label="座机号" show-overflow-tooltip></el-table-column>
-        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="mobile" label="手机" show-overflow-tooltip></el-table-column>
-        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="joinTime" label="入职日期" show-overflow-tooltip></el-table-column>
-        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="roleList" :formatter="formatRole" label="员工角色" show-overflow-tooltip></el-table-column>
-        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="department" label="部门" show-overflow-tooltip></el-table-column>
-        <el-table-column label="操作" width="200">
+        <el-table-column :sortable='true' :sort-orders="['ascending','descending']"  align="center" prop="id" min-width="60" label="员工ID" show-overflow-tooltip></el-table-column>
+        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center" prop="userName" min-width="120" label="员工姓名" show-overflow-tooltip></el-table-column>
+        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center"  prop="number" min-width="120" show-overflow-tooltip label="账号"></el-table-column>
+        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center" prop="sex" min-width="60" label="性别" show-overflow-tooltip width="70"></el-table-column>
+        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center" prop="officePhone" min-width="120" label="座机号" show-overflow-tooltip></el-table-column>
+        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center" prop="mobile" min-width="120" label="手机" show-overflow-tooltip></el-table-column>
+        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center" prop="joinTime" min-width="120" label="入职日期" show-overflow-tooltip></el-table-column>
+        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center" prop="roleList" :formatter="formatRole" min-width="140" label="员工角色" show-overflow-tooltip></el-table-column>
+        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center" prop="department" min-width="160" label="部门" show-overflow-tooltip></el-table-column>
+        <el-table-column label="操作" width="250"  align="center">
           <template slot-scope="scope">
-            <el-button type="text" @click="onClickEdit(scope.row)" v-has="'修改'">修改</el-button>
+            <el-button type="text" @click="onClickEdit(scope.row)"  v-has="'修改'">修改</el-button>
             <el-button type="text" @click="onClickPwdReset(scope.row)" >密码重置</el-button>
             <el-button
               v-has="'锁定'"
@@ -204,7 +205,7 @@
 <script>
   import {baseURL} from '@/common/js/request.js';
 import { getDepartmentTree, getRoleList } from '@/common/js/api-setting'
-import { listMember, deleteMember,exportList, resetMember,changeStatus, addMember, updateMember, getUserById, getPositionList,getLoginName} from '@/common/js/api-member'
+import { listMember, deleteMember,exportList,exportModule, resetMember,changeStatus, addMember, updateMember, getUserById, getPositionList,getLoginName} from '@/common/js/api-member'
 export default {
   name: 'memberIn',
   data () {
@@ -286,6 +287,12 @@ export default {
       }else{
         this.ImportdialogVisible=true
         this.ImportMsg= res.msg
+        this.$message({
+          type: 'error',
+          message: this.ImportMsg
+        });
+        this.loading2=false
+        this.fullscreenLoading=false
       }
     },
   	adduserName(){
@@ -482,6 +489,18 @@ export default {
     onClickCancel () {
       this.$refs['ruleForm'].resetFields()
       this.$set(this.dialogData, 'editVisible', false)
+    },
+    onClickModuleImport(){
+      this.loading2=true
+      this.fullscreenLoading=true
+      exportModule().then(() => {
+        this.loading2=false
+        this.fullscreenLoading=false
+        this.$message({
+          message: "下载成功",
+          type: "success"
+        });
+      });
     },
     onClickImport(){
       this.loading2=true
