@@ -54,7 +54,7 @@
         </el-form-item>
       </el-form>
       <el-table v-loading="tableLoad" sortable="custom" border stripe @sort-change="handleSort" @selection-change="handleSelectionChange"  height="1" :data="memberList" style="width: 100%" class="table-wrap">
-        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="id" label="员工id" show-overflow-tooltip></el-table-column>
+        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="id" label="员工ID" show-overflow-tooltip></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="userName" label="员工姓名" show-overflow-tooltip></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']"  prop="number" show-overflow-tooltip label="账号"></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" prop="sex" label="性别" show-overflow-tooltip width="70"></el-table-column>
