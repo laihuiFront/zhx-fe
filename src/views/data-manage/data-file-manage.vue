@@ -45,12 +45,19 @@
   :on-success="uploadSuccess"
   :on-progress="onProgress"
   >
-  <el-button size="small" type="primary" v-has="'导入'" >导入</el-button>
+  <el-button size="small" type="primary" style="padding: 7px 15px;" v-has="'导入'" >导入</el-button>
 </el-upload> 
+ </el-form-item>
+  <el-form-item style="margin-left: -6px;">
       <el-button type="primary" @click="downModule" v-has="'模板下载'">模板下载</el-button>
+       </el-form-item>
+  <el-form-item>
       <el-button type="primary" @click="dialogVisible2 = true" v-has="'新增'">新增</el-button> 
+       </el-form-item>
+  <el-form-item>
       <el-button type="primary" @click="open7" v-has="'删除'">删除</el-button> 
-  </el-form-item>
+       </el-form-item>
+
     </el-form>
    <el-table
     v-loading="tableLoad"

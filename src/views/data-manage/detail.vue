@@ -2411,6 +2411,7 @@ export default {
   		this.messageForm={}
   	},
   	editData(row){
+  		console.log(row)
   		this.adddialogVisible=true;
   		this.messageForm=row;
   		getReduceApplyList(this.id).then(data=>{

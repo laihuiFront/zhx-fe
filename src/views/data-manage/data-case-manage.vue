@@ -339,6 +339,8 @@
             <el-dropdown-item command="b">查询结果快速分案</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
+          </el-form-item>
+      <el-form-item style="margin-left: 10px;">
         <el-dropdown v-dropdown-patch @command="guanlianjian" v-has="'案件'">
           <el-button type="primary">
             案件<i class="el-icon-arrow-down el-icon--right"></i>
@@ -352,6 +354,8 @@
             -->    <el-dropdown-item  command="a">删除案件</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
+          </el-form-item>
+      <el-form-item style="margin-left: 10px;">
         <el-dropdown v-dropdown-patch @command="handleCommand" v-has="'修改'">
           <el-button type="primary">
             修改<i class="el-icon-arrow-down el-icon--right"></i>
@@ -363,8 +367,14 @@
             <el-dropdown-item command="mVal">修改M值系数</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
+          </el-form-item>
+      <el-form-item style="margin-left: 10px;">
         <el-button type="primary" @click="addshow" v-has="'添加评语'">添加评语</el-button>
+          </el-form-item>
+      <el-form-item style="margin-left: 10px;">
         <el-button type="primary"  @click="xiecui" v-has="'申请协催'">申请协催</el-button>
+          </el-form-item>
+      <el-form-item style="margin-left: 10px;">
         <el-dropdown v-dropdown-patch @command="handleExport" v-has="'导出'">
           <el-button type="primary">
             导出<i class="el-icon-arrow-down el-icon--right"></i>
@@ -376,6 +386,8 @@
             <el-dropdown-item command="exportCollect">所选催记</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
+          </el-form-item>
+      <el-form-item style="margin-left: 10px;">
         <el-dropdown v-dropdown-patch @command="biaose" v-has="'案件标色'">
           <el-button type="primary" >
             案件标色<i class="el-icon-arrow-down el-icon--right"></i>
@@ -389,7 +401,8 @@
             <el-dropdown-item command="棕">棕色</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-      </el-form-item>
+          </el-form-item>
+    
     </el-form>
     <el-row :gutter="24">
       <el-col :span="18">

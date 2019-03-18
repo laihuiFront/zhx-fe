@@ -78,9 +78,8 @@
   <el-button type="primary" icon="el-icon-refresh" @click=resetForm>重置</el-button> 
   </el-form-item>
   <el-form-item>
-      <el-button type="primary" @click="returnCaseList" v-has="'批次退案'">批量退案</el-button>  
-       <el-button type="primary" @click="MorebackCase
-       	" >批量恢复</el-button>  
+      <el-button type="primary" :disabled=returnTrue @click="returnCaseList" v-has="'批次退案'">批量退案</el-button>  
+       <el-button type="primary" @click="MorebackCase "  :disabled=backTrue >批量恢复</el-button>  
       <el-button type="primary"  @click="open7" v-has="'批次删除'">批量删除</el-button>  
       <el-button type="primary"  @click="dialogVisible1 = true" v-has="'导出查询结果'">导出查询结果</el-button>  
       <el-button type="primary" @click='selectDataExport' v-has="'导出所选批次'">导出所选批次</el-button>  
@@ -237,8 +236,8 @@
       label="操作"
       width="250">
       <template slot-scope="scope">
-        <el-button type="text" size="small" v-if="scope.row.batchStatus!=2" @click="open2(scope.row.id)" v-has="'退案'">退案</el-button>
-        <el-button type="text" size="small" v-if="scope.row.batchStatus!=1" @click="backCaseList(scope.row.id)" v-has="'退案'">恢复</el-button>
+        <el-button type="text" size="small" v-if="scope.row.batchStatus!=2 && scope.row.batchStatus!=0" @click="open2(scope.row.id)" v-has="'退案'">退案</el-button>
+        <el-button type="text" size="small" v-if="scope.row.batchStatus!=1 && scope.row.batchStatus!=0" @click="backCaseList(scope.row.id)" v-has="'退案'">恢复</el-button>
         <el-button type="text" size="small" @click="editMessage(scope.row)" v-has="'编辑'">编辑</el-button>
         <el-button type="text" size="small" @click="open8(scope.row.id,scope.row.batchNo)" v-has="'删除'">删除</el-button>
         <el-button type="text" size="small" v-has="'批量导出批次催记'" @click="exportCollect(scope.row)">导出催记</el-button>
@@ -444,6 +443,8 @@ export default {
         clients:[],
     		CasestatusList:[{id:0,name:"未导入"},{id:1,name:"未退案"},{id:2,name:"已退案"}]
     	},
+    	returnTrue:false,
+    	backTrue:false
     }
   },
 methods: {
@@ -717,6 +718,13 @@ this.search()
 		Project.batchNo=currentValue.batchNo
 	   Object.id=currentValue.id
 	   BackCaseList.status=currentValue.batchStatus
+	   if(BackCaseList.status==2){
+	   	_self.returnTrue=true
+	   	_self.backTrue=false
+	   }else if(BackCaseList.status==1){
+	   	_self.backTrue=true
+	   	_self.returnTrue=false
+	   }
     Object.batchNo=currentValue.batchNo
 	   _self.deleteList.push(Object)
 	   _self.MoreBackCaseList.push(BackCaseList)
