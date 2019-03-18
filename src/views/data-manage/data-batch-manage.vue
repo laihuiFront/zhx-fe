@@ -79,6 +79,7 @@
   </el-form-item>
   <el-form-item>
       <el-button type="primary" @click="returnCaseList" v-has="'批次退案'">批量退案</el-button>  
+       <el-button type="primary" @click="returnCaseList" >批量恢复</el-button>  
       <el-button type="primary"  @click="open7" v-has="'批次删除'">批量删除</el-button>  
       <el-button type="primary"  @click="dialogVisible1 = true" v-has="'导出查询结果'">导出查询结果</el-button>  
       <el-button type="primary" @click='selectDataExport' v-has="'导出所选批次'">导出所选批次</el-button>  
@@ -236,6 +237,7 @@
       width="250">
       <template slot-scope="scope">
         <el-button type="text" size="small" @click="open2(scope.row.id)" v-has="'退案'">退案</el-button>
+        <el-button type="text" size="small" @click="open2(scope.row.id)" v-has="'退案'">恢复</el-button>
         <el-button type="text" size="small" @click="editMessage(scope.row)" v-has="'编辑'">编辑</el-button>
         <el-button type="text" size="small" @click="deleteMessage(scope.row.id,scope.row.batchNo)" v-has="'删除'">删除</el-button>
         <el-button type="text" size="small" v-has="'批量导出批次催记'" @click="exportCollect(scope.row)">导出催记</el-button>
@@ -260,13 +262,17 @@
   >
   <el-row :gutter="20">
   <el-col :span="10"><div class="grid-content bg-purple"> 
-  	<el-radio  v-model="radio" label="1" @change=totalDataExport>按查询条件全部导出</el-radio>
+  	<el-radio  v-model="radio" label="1" >按查询条件全部导出</el-radio>
 </div></el-col>
   <el-col :span="10">
   	<div class="grid-content bg-purple">  
-  		<el-radio  v-model="radio" label="2" @change=pageDataExport>按查询条件导出当前分页</el-radio>
+  		<el-radio  v-model="radio" label="2" >按查询条件导出当前分页</el-radio>
 </div></el-col>
 </el-row>
+<span slot="footer" class="footer">
+    <el-button @click="dialogVisible1 = false">取 消</el-button>
+    <el-button type="primary" @click="changeRadio">确 定</el-button>
+  </span>
 </el-dialog>
 <el-dialog
   title="修改批次"
@@ -436,6 +442,13 @@ export default {
     }
   },
 methods: {
+	changeRadio(){
+		if(this.radio==1){
+			this.totalDataExport()
+		}else{
+			this.pageDataExport()
+		}
+	},
   exportCollect(row){
         var arr = [{"batchNo":row.batchNo}];
     selectDataCollectExportByBatch(arr).then((response)=>{

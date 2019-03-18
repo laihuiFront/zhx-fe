@@ -445,13 +445,14 @@
     >
       <el-form :inline="true">
         <el-form-item>
-          <el-radio v-model="radio" label="1" @change=totalDataCollectExport>按查询条件全部导出</el-radio>
+          <el-radio v-model="radio" label="1" >按查询条件全部导出</el-radio>
         </el-form-item>
         <el-form-item>
-          <el-radio v-model="radio" label="2" @change='pageDataCollectExport'>按查询条件导出当前分页</el-radio>
+          <el-radio v-model="radio" label="2" >按查询条件导出当前分页</el-radio>
         </el-form-item>
-        <span slot="footer" class="dialog-footer">
+       <span slot="footer" class="footer">
     <el-button @click="dialogVisible2 = false">取 消</el-button>
+    <el-button type="primary" @click="changeRadio">确 定</el-button>
   </span>
       </el-form>
     </el-dialog>
@@ -530,6 +531,13 @@
       }
     },
     methods: {
+    	 	changeRadio(){
+		if(this.radio==1){
+			this.totalDataCollectExport()
+		}else{
+			this.pageDataCollectExport()
+		}
+	},
       showCase(row){
         let id = row.caseId
         let name = row.name

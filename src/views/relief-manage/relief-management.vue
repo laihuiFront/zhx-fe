@@ -767,13 +767,17 @@
   >
   <el-row :gutter="20">
   <el-col :span="10"><div class="grid-content bg-purple"> 
-  	<el-radio v-model="radio" label="1" @change=totalDataExport>按查询条件全部导出</el-radio>
+  	<el-radio v-model="radio" label="1" >按查询条件全部导出</el-radio>
 </div></el-col>
   <el-col :span="10">
   	<div class="grid-content bg-purple">  
-  		<el-radio v-model="radio" label="2" @change=pageDataExport>按查询条件导出当前分页</el-radio>
+  		<el-radio v-model="radio" label="2" >按查询条件导出当前分页</el-radio>
 </div></el-col>
 </el-row>
+ <span slot="footer" class="footer">
+    <el-button @click="dialogVisible1 = false">取 消</el-button>
+    <el-button type="primary" @click="changeRadio">确 定</el-button>
+  </span>
 </el-dialog>
   </div>
 </template>
@@ -832,6 +836,13 @@ export default {
     }
 },
  methods: {
+ 	 	changeRadio(){
+		if(this.radio==1){
+			this.totalDataExport()
+		}else{
+			this.pageDataExport()
+		}
+	},
  	editCase(id, name, seqNo){
         this.$router.push({
           path:'case-detail',
