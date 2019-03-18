@@ -107,6 +107,13 @@ return request({
     data:id
   })
 }
+  export const backCase = function(id) {
+return request({
+    url: '/dataCase/updateStatus',
+    method: 'post',
+    data:id
+  })
+}
  
 export const caseTypeList = function() {
 return request({
