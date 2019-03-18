@@ -2,19 +2,19 @@
   <section id="home-page">
     <div class="item-wrap">
       <p class="header">锁定账号数量</p>
-      <div class="content">
+      <div class="content" @click="toAccount">
         10
       </div>
     </div>
     <div class="item-wrap">
       <p class="header">协催申请数量</p>
-      <div class="content">
+      <div class="content" @click="toSynergy">
         5
       </div>
     </div>
     <div class="item-wrap">
       <p class="header">新分配案件数</p>
-      <div class="content">
+      <div class="content" @click="toCase">
         2
       </div>
     </div>
@@ -23,8 +23,26 @@
 
 <script>
 export default {
-  name: 'homePage'
+  name: 'homePage',
+  methods: {
+    toAccount(){
+      this.$router.push({
+        path:'member-in'
+      })
+    },
+    toSynergy(){
+      this.$router.push({
+        path:'synergistic-application'
+      })
+    },
+    toCase(){
+      this.$router.push({
+        path:'data-case-manage'
+      })
+    }
+  }
 }
+
 </script>
 
 <style lang="scss">
@@ -38,12 +56,13 @@ export default {
     width: 250px;
     height: 250px;
     .header{
-      padding-left: 24px;
+      text-align: center;
       font-size: 24px;
       line-height: 60px;
       border-bottom: 1px solid #409eff;
     }
     .content{
+      cursor: pointer;
       line-height: 190px;
       text-align: center;
       font-size: 50px;

@@ -126,7 +126,7 @@
             <el-form-item label="对账单地址" class="whole">
               <el-input v-model="caseDetail.statementAddress" :disabled="true" ></el-input>
             </el-form-item>
-            <el-form-item label="PTP金额">
+            <el-form-item label="承诺还款金额">
               <el-input v-model="caseDetail.proRepayAmt" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="待银行查账金额">

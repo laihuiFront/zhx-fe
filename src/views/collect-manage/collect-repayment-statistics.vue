@@ -342,11 +342,11 @@ export default {
           prop: "mVal"
         },
         {
-          label: "PTP金额",
+          label: "承诺还款金额",
           prop: "repayAmt"
         },
         {
-          label: "PTP日期",
+          label: "承诺还款日期",
           prop: "repayTime"
         },
         {
