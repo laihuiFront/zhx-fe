@@ -172,7 +172,6 @@
             </el-form-item>
             <el-form-item>
               <el-dropdown
-                trigger="click"
                 @command="exportXh"
                 v-has="'导出信函'"
                 v-dropdown-patch
@@ -239,15 +238,9 @@
         </el-row>
       </el-dialog>
       <el-col :span="22">
-        <div class="grid-content bg-purple">
-          <el-form :inline="true">
-            <el-form-item>
-              <el-button type="primary" v-has="'撤销协催'" @click="cxHandle"
-                >撤销信函</el-button
-              >
-            </el-form-item>
-          </el-form>
-        </div>
+        <el-button type="primary" v-has="'撤销协催'" @click="cxHandle"
+        >撤销信函</el-button
+        >
       </el-col>
     </el-row>
     <el-table
@@ -463,6 +456,7 @@ export default {
         },
         {
           prop: "synergyDate",
+          width:160,
           label: "协催时间"
         },
         {

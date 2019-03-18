@@ -408,7 +408,6 @@
                 </el-form-item>
                 <el-form-item>
                   <el-dropdown
-                    trigger="click"
                     @command="colorHandle"
                     v-has="'案件标色'"
                     v-dropdown-patch
@@ -426,7 +425,6 @@
                 </el-form-item>
                 <el-form-item>
                   <el-dropdown
-                    trigger="click"
                     @command="modStatusHandle"
                     v-has="'修改催收状态'"
                     v-dropdown-patch
@@ -739,12 +737,12 @@ export default {
         },
         {
           prop: "nextFollDate",
-          width: "140",
+          width: "160",
           label: "下次跟进日期"
         },
         {
           prop: "caseAllotTime",
-          width: 140,
+          width: 180,
           label: "案件分配时间"
         },
         {
@@ -776,10 +774,12 @@ export default {
         },
         {
           prop: "cardNo",
+          width: 200,
           label: "卡号"
         },
         {
           prop: "identNo",
+          width: 200,
           label: "证件号"
         },
         {
@@ -815,7 +815,7 @@ export default {
         },
         {
           prop: "lastPhoneTime",
-          width: "150",
+          width: "160",
           label: "上次通电时间"
         },
         {
