@@ -186,16 +186,15 @@
                 </el-date-picker>
             </li>
           </ul>
-          <img src="./down.png" width="12" height="12" alt="更多" slot="reference">
+          <img src="./down.png" width="12"  height="12" style="margin-right: 8px;" alt="更多" slot="reference">
         </el-popover>
         <el-button type="primary" icon="el-icon-search" @click="search">查询</el-button>
         <el-button type="primary" icon="el-icon-refresh" @click="resetForm">重置</el-button>
-      </el-form-item>
-      <el-form-item class="operation-item">
         <el-button type="primary" @click="open7" v-has="'删除催记'">删除催记</el-button>
         <el-button type="primary" @click="selectDataCollectExport" v-has="'导出所选借改'">导出所选催记</el-button>
         <el-button type="primary" @click="dialogVisible2 = true" v-has="'导出查询结果'">导出查询结果</el-button>
       </el-form-item>
+
     </el-form>
     <el-table
       height="1"

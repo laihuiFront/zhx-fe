@@ -44,7 +44,7 @@
           :headers="header"
           :show-file-list="false"
           :on-success="uploadSuccess"
-          style="display:inline-block;margin-left:5x;" 
+          style="display:inline-block;margin-left:10px;"
           >
           <el-button type="primary" v-has="'导入完成待办协催'">导入完成待办协催</el-button>
         </el-upload>
@@ -54,11 +54,11 @@
           :headers="header"
           :show-file-list="false"
           :on-success="uploadSuccess"
-          style="display:inline-block;margin-left:5x;" 
+          style="display:inline-block;margin-left:10px;"
           >
           <el-button type="primary" v-has="'导入协催记录'">导入协催记录</el-button>
         </el-upload>
-        <el-dropdown trigger="click" @command="handleCommand" v-if="queryForm.applyStatus==='1'" v-has="'导出查询结果'">
+        <el-dropdown trigger="click" @command="handleCommand" v-if="queryForm.applyStatus==='1'" style="display:inline-block;margin-left:10px;" v-has="'导出查询结果'">
           <el-button type="primary">导出查询结果<i class="el-icon-arrow-down el-icon--right"></i></el-button>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="all">导出全部</el-dropdown-item>
@@ -76,22 +76,22 @@
       style="width: 100%"
       height="1"
       class="table-wrap">
-      <el-table-column type="selection" width="50"></el-table-column>
-      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="synergisticType.name" label="协催类型" show-overflow-tooltip></el-table-column>
-      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.collectStatusMsg" label="催收状态" show-overflow-tooltip></el-table-column>
-      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.seqNo" label="个案序列号" show-overflow-tooltip>
+      <el-table-column type="selection" width="50" align="center"></el-table-column>
+      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="synergisticType.name" align="center" min-width="120"  label="协催类型" show-overflow-tooltip></el-table-column>
+      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.collectStatusMsg" align="center" min-width="120"  label="催收状态" show-overflow-tooltip></el-table-column>
+      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.seqNo" align="center" min-width="130"  label="个案序列号" show-overflow-tooltip>
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="editCase(scope.row.dataCase.id, scope.row.dataCase.name,scope.row.dataCase.seqNo)">{{scope.row.dataCase.seqNo}}</el-button>
         </template>
       </el-table-column>
-      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.identNo" label="证件号" show-overflow-tooltip></el-table-column>
-      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.name" label="姓名" show-overflow-tooltip></el-table-column>
-      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.moneyMsg" label="委案金额" show-overflow-tooltip></el-table-column>
-      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.repayMoneyMsg" label="还款金额" show-overflow-tooltip></el-table-column>
-      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="applyContent" label="申请内容" show-overflow-tooltip></el-table-column>
-      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="applyTime" label="申请时间" show-overflow-tooltip></el-table-column>
-      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="applyUser.userName" label="催收员" show-overflow-tooltip></el-table-column>
-      <el-table-column label="操作" show-overflow-tooltip width="150">
+      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.identNo" align="center" min-width="200" label="证件号" show-overflow-tooltip></el-table-column>
+      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.name" align="center" min-width="120"  label="姓名" show-overflow-tooltip></el-table-column>
+      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.moneyMsg" align="center" min-width="120"  label="委案金额" show-overflow-tooltip></el-table-column>
+      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.repayMoneyMsg" align="center" min-width="120"  label="还款金额" show-overflow-tooltip></el-table-column>
+      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="applyContent" align="center" min-width="150"  label="申请内容" show-overflow-tooltip></el-table-column>
+      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="applyTime" align="center" min-width="180" label="申请时间" show-overflow-tooltip></el-table-column>
+      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" prop="applyUser.userName" align="center" min-width="120"  label="催收员" show-overflow-tooltip></el-table-column>
+      <el-table-column label="操作" show-overflow-tooltip width="150"  align="center">
         <template slot-scope="scope">
           <el-button type="text" v-if="queryForm.applyStatus==='0'" @click="onClickApprove(scope.row, 1)" v-has="'同意协催'">同意协催</el-button>
           <el-popover

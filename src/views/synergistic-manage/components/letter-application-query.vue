@@ -80,7 +80,7 @@
             </el-select>
           </li>
         </ul>
-        <img src="./zhankai.png" width="12" height="12" alt="更多" slot="reference">
+        <img src="./zhankai.png" width="12" height="12" alt="更多" slot="reference" style="margin-right:8px;">
       </el-popover>
       <el-button icon="el-icon-search" type="primary">查询</el-button>
       <el-button icon="el-icon-refresh" type="primary">重置</el-button>

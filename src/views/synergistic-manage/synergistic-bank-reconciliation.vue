@@ -13,19 +13,19 @@
       @reset="onClickReset"
       @query="onClickQuery"
       :queryForm="queryForm">
-      <el-button type="primary" v-if="queryForm.status==='0'" @click="onClickBatchCancelBankRecon" v-has="'作废'">作废待银行查账金额</el-button>
+      <el-button type="primary" v-if="queryForm.status==='0'"  @click="onClickBatchCancelBankRecon" v-has="'作废'">作废待银行查账金额</el-button>
       <el-upload
         class="upload-demo upload-btn"
         :action="action+'/bankReconciliation/import'"
         :headers="header"
         :show-file-list="false"
         :on-success="uploadSuccess"
-        style="display:inline-block;margin-left:5x;" 
+        style="display:inline-block;"
         >
-        <el-button type="primary" v-if="queryForm.status==='0'" v-has="'导入待银行对账'">导入待银行查账</el-button>
+        <el-button type="primary" v-if="queryForm.status==='0'"  style="margin-left:10px;" v-has="'导入待银行对账'">导入待银行查账</el-button>
       </el-upload>
-      <el-button type="primary" @click="onClickExportSelectedRecord" v-has="'导出选中数据'">导出选中数据</el-button>
-      <el-button type="primary" @click="dialogExportVisible = true" v-has="'导出查询结果'">导出查询结果</el-button>
+      <el-button type="primary" @click="onClickExportSelectedRecord" style="margin-left:10px;" v-has="'导出选中数据'">导出选中数据</el-button>
+      <el-button type="primary" @click="dialogExportVisible = true" style="margin-left:10px;" v-has="'导出查询结果'">导出查询结果</el-button>
     </bank-record-query>
     <el-table
       v-loading="tableLoad"
@@ -37,27 +37,27 @@
       height="1"
       style="width: 100%"
       class="table-wrap">
-      <el-table-column type="selection" width="50"></el-table-column>
-      <el-table-column sortable="custom" width="100" :sort-orders="['ascending','descending']" prop="dataCase.batchNo" label="批次号" show-overflow-tooltip></el-table-column>
-      <el-table-column sortable="custom" width="80" :sort-orders="['ascending','descending']" prop="dataCase.cardNo" label="卡号" show-overflow-tooltip></el-table-column>
-      <el-table-column sortable="custom" width="100" :sort-orders="['ascending','descending']" prop="dataCase.identNo" label="证件号" show-overflow-tooltip></el-table-column>
-      <el-table-column sortable="custom" width="80" :sort-orders="['ascending','descending']" prop="dataCase.name" label="姓名" show-overflow-tooltip></el-table-column>
-      <el-table-column sortable="custom" width="120" :sort-orders="['ascending','descending']" prop="dataCase.seqNo" label="个案序列号" show-overflow-tooltip>
+      <el-table-column type="selection" width="50" align="center" ></el-table-column>
+      <el-table-column sortable="custom" width="120" align="center"  :sort-orders="['ascending','descending']" prop="dataCase.batchNo" label="批次号" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" width="200" align="center"  :sort-orders="['ascending','descending']" prop="dataCase.cardNo" label="卡号" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" width="200" align="center"  :sort-orders="['ascending','descending']" prop="dataCase.identNo" label="证件号" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" width="120" align="center"  :sort-orders="['ascending','descending']" prop="dataCase.name" label="姓名" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" width="130" align="center"  :sort-orders="['ascending','descending']" prop="dataCase.seqNo" label="个案序列号" show-overflow-tooltip>
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="editCase(scope.row.dataCase.id, scope.row.dataCase.name,scope.row.dataCase.seqNo)">{{scope.row.dataCase.seqNo}}</el-button>
         </template>
       </el-table-column>
-      <el-table-column sortable="custom" width="100" :sort-orders="['ascending','descending']" prop="dataCase.client" label="委托方" show-overflow-tooltip></el-table-column>
-      <el-table-column sortable="custom" width="120" :sort-orders="['ascending','descending']" prop="dataCase.money" label="委案金额" show-overflow-tooltip></el-table-column>
-      <el-table-column sortable="custom" width="140" :sort-orders="['ascending','descending']" prop="dataCase.enRepayAmt" label="案件已还款" show-overflow-tooltip></el-table-column>
-      <el-table-column sortable="custom" width="160" :sort-orders="['ascending','descending']" prop="cpMoneyMsg" label="待银行查账金额" show-overflow-tooltip></el-table-column>
-      <el-table-column sortable="custom" width="160" :sort-orders="['ascending','descending']" prop="cpDate" label="待银行查账日期" show-overflow-tooltip></el-table-column>
-      <el-table-column sortable="custom" width="100" :sort-orders="['ascending','descending']" prop="repayUser" label="还款人" show-overflow-tooltip></el-table-column>
-      <el-table-column sortable="custom" width="120" :sort-orders="['ascending','descending']" prop="repayType" label="还款方式" show-overflow-tooltip></el-table-column>
-      <el-table-column sortable="custom" width="100" :sort-orders="['ascending','descending']" prop="submitUser.name" label="提交人" show-overflow-tooltip></el-table-column>
-      <el-table-column sortable="custom" width="100" :sort-orders="['ascending','descending']" prop="submitTime" label="提交时间" show-overflow-tooltip></el-table-column>
-      <el-table-column sortable="custom" width="100" :sort-orders="['ascending','descending']" prop="remark" label="备注" show-overflow-tooltip></el-table-column>
-      <el-table-column label="操作" width="100" v-if="queryForm.status==='0'">
+      <el-table-column sortable="custom" width="120" align="center"  :sort-orders="['ascending','descending']" prop="dataCase.client" label="委托方" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" width="120" align="center"  :sort-orders="['ascending','descending']" prop="dataCase.money" label="委案金额" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" width="140" align="center"  :sort-orders="['ascending','descending']" prop="dataCase.enRepayAmt" label="案件已还款" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" width="160" align="center"  :sort-orders="['ascending','descending']" prop="cpMoneyMsg" label="待银行查账金额" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" width="160" align="center"  :sort-orders="['ascending','descending']" prop="cpDate" label="待银行查账日期" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" width="100" align="center"  :sort-orders="['ascending','descending']" prop="repayUser" label="还款人" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" width="120" align="center"  :sort-orders="['ascending','descending']" prop="repayType" label="还款方式" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" width="100" align="center"  :sort-orders="['ascending','descending']" prop="submitUser.name" label="提交人" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" width="180" align="center"  :sort-orders="['ascending','descending']" prop="submitTime" label="提交时间" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" width="100" align="center"  :sort-orders="['ascending','descending']" prop="remark" label="备注" show-overflow-tooltip></el-table-column>
+      <el-table-column label="操作" width="100" v-if="queryForm.status==='0'" align="center" >
         <template slot-scope="scope">
           <el-button
             v-has="'作废'"
