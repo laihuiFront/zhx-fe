@@ -465,62 +465,62 @@
                   <span
                     class="color_gray"
                     style="display: inline-block; color: #66b1ff;font-size: 16px;"
-                    >列表案量:</span
+                    >列表案量：</span
                   >
                   <span
                     style="display: inline-block; color: #66b1ff;font-size: 16px;"
-                    >{{ fetchData.countCase }},</span
-                  >
-                </el-form-item>
-                <el-form-item>
-                  <span
-                    class="color_gray"
-                    style="display: inline-block; color: #66b1ff;font-size: 16px;"
-                    >列表金额:</span
-                  >
-                  <span
-                    style="display: inline-block; color: #66b1ff;font-size: 16px;"
-                    >{{ fetchData.sumMoney }},</span
+                    >{{ fetchData.countCase }}，</span
                   >
                 </el-form-item>
                 <el-form-item>
                   <span
                     class="color_gray"
                     style="display: inline-block; color: #66b1ff;font-size: 16px;"
-                    >列表还款案量:</span
+                    >列表金额：</span
                   >
                   <span
                     style="display: inline-block; color: #66b1ff;font-size: 16px;"
-                    >{{ fetchData.countCasePay }},</span
-                  >
-                </el-form-item>
-                <el-form-item>
-                  <span
-                    class="color_gray"
-                    style="display: inline-block; color: #66b1ff;font-size: 16px;"
-                    >列表还款数额:</span
-                  >
-                  <span
-                    style="display: inline-block; color: #66b1ff;font-size: 16px;"
-                    >{{ fetchData.sumPayMoney }},</span
+                    >{{ fetchData.sumMoney }}，</span
                   >
                 </el-form-item>
                 <el-form-item>
                   <span
                     class="color_gray"
                     style="display: inline-block; color: #66b1ff;font-size: 16px;"
-                    >列表提成值:</span
+                    >列表还款案量：</span
                   >
                   <span
                     style="display: inline-block; color: #66b1ff;font-size: 16px;"
-                    >{{ fetchData.sumRepay }},</span
+                    >{{ fetchData.countCasePay }}，</span
                   >
                 </el-form-item>
                 <el-form-item>
                   <span
                     class="color_gray"
                     style="display: inline-block; color: #66b1ff;font-size: 16px;"
-                    >列表待银行查账值:</span
+                    >列表还款数额：</span
+                  >
+                  <span
+                    style="display: inline-block; color: #66b1ff;font-size: 16px;"
+                    >{{ fetchData.sumPayMoney }}，</span
+                  >
+                </el-form-item>
+                <el-form-item>
+                  <span
+                    class="color_gray"
+                    style="display: inline-block; color: #66b1ff;font-size: 16px;"
+                    >列表提成值：</span
+                  >
+                  <span
+                    style="display: inline-block; color: #66b1ff;font-size: 16px;"
+                    >{{ fetchData.sumRepay }}，</span
+                  >
+                </el-form-item>
+                <el-form-item>
+                  <span
+                    class="color_gray"
+                    style="display: inline-block; color: #66b1ff;font-size: 16px;"
+                    >列表待银行查账值：</span
                   >
                   <span
                     style="display: inline-block; color: #66b1ff;font-size: 16px;"

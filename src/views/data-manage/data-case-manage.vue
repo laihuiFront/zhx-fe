@@ -395,12 +395,12 @@
       <el-col :span="18">
         <div class="grid-content bg-purple">
           <span>查询结果统计：</span>
-          <span class="textColor">列表案量:{{totalCaseNum}}件, </span>
-          <span class="textColor"> 列表金额:{{totalAmt}}, </span>
-          <span class="textColor"> 列表还款量:{{repayNum}}, </span>
-          <span class="textColor"> 列表还款额:{{repayTotalAmt}}, </span>
-          <span class="textColor"> 列表待银行查账金额:{{totalCp}}, </span>
-          <span class="textColor"> 列表承诺还款金额:{{totalPtp}}</span>
+          <span class="textColor">列表案量：{{totalCaseNum}}件，</span>
+          <span class="textColor"> 列表金额：{{totalAmt}}，</span>
+          <span class="textColor"> 列表还款量：{{repayNum}}，</span>
+          <span class="textColor"> 列表还款额：{{repayTotalAmt}}，</span>
+          <span class="textColor"> 列表待银行查账金额：{{totalCp}}，</span>
+          <span class="textColor"> 列表承诺还款金额：{{totalPtp}}</span>
         </div>
       </el-col>
     </el-row>
