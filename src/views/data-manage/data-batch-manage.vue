@@ -701,38 +701,62 @@ dataList(this.form.area,this.form.batchNos,this.form.clients,this.form.batchStat
       });
     }
   },
-handleCurrentChange(val){
-this.pageNum=val;
-this.search()
-},
+    handleCurrentChange(val){
+    this.pageNum=val;
+    this.search()
+    },
 		handleSelectionChange(row){
-  		let _self=this
-  		_self.deleteList=[]
-  		_self.MoreBackCaseList=[]
-  		_self.selectDataCollectExportByBatchList=[];
-  		_self.selectDataBatchExportList=[];
-	row.forEach(function(currentValue, index, arr){
-		let Object={"id":""}
-		let Project={batchNo:""}
-		let BackCaseList={status:''}
-		Project.batchNo=currentValue.batchNo
-	   Object.id=currentValue.id
-	   BackCaseList.status=currentValue.batchStatus
-	   if(BackCaseList.status==2){
-	   	_self.returnTrue=true
-	   	_self.backTrue=false
-	   }else if(BackCaseList.status==1){
-	   	_self.backTrue=true
-	   	_self.returnTrue=false
-	   }
-    Object.batchNo=currentValue.batchNo
-	   _self.deleteList.push(Object)
-	   _self.MoreBackCaseList.push(BackCaseList)
-	   _self.selectDataBatchExportList.push(Object)
-	   _self.selectDataCollectExportByBatchList.push(Project)
-	})
-	console.log(_self.MoreBackCaseList)
-},
+          let _self=this
+          _self.deleteList=[]
+          _self.MoreBackCaseList=[]
+          _self.selectDataCollectExportByBatchList=[];
+          _self.selectDataBatchExportList=[];
+          row.forEach(function(currentValue, index, arr){
+            let Object={"id":""}
+            let Project={batchNo:""}
+            let BackCaseList={status:''}
+            Project.batchNo=currentValue.batchNo
+             Object.id=currentValue.id
+             BackCaseList.status=currentValue.batchStatus
+
+            Object.batchNo=currentValue.batchNo
+             _self.deleteList.push(Object)
+             _self.MoreBackCaseList.push(BackCaseList)
+             _self.selectDataBatchExportList.push(Object)
+             _self.selectDataCollectExportByBatchList.push(Project)
+          })
+
+          if (_self.MoreBackCaseList.length==0){
+            this.backTrue=false
+            this.returnTrue=false
+          }else{
+            let returnFlag=0
+            let backFlag=0
+            for (var i=0;i<_self.MoreBackCaseList.length;i++)
+            {
+              var temp = _self.MoreBackCaseList[i];
+              if(temp.status==2){
+                returnFlag=2
+              }else if(temp.status==1){
+                backFlag=1
+              }
+            }
+            if (returnFlag>0 && backFlag>0){
+              this.returnTrue=true
+              this.backTrue=true
+            }else if (backFlag>0 && returnFlag==0){
+              this.returnTrue=false
+              this.backTrue=true
+            }else if (backFlag==0 && returnFlag>0){
+              this.returnTrue=true
+              this.backTrue=false
+            }else{
+              this.backTrue=false
+              this.returnTrue=false
+            }
+
+          }
+      },
       resetForm() {
         this.form={
     		time:[],
