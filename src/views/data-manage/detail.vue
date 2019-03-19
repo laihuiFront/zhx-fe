@@ -1385,7 +1385,7 @@
                     label="类型">
                   </el-table-column>
                   <el-table-column
-                    prop="applyStatus"
+                    prop="applyStatusMsg"
                     show-overflow-tooltip
                     label="处理状态">
                      <template slot-scope="scope">
@@ -1393,12 +1393,12 @@
       </template>
                   </el-table-column>
                   <el-table-column
-                    prop="applyStatus"
+                    prop="applyStatusMsg"
                     show-overflow-tooltip
                     label="减免/报备状态">
                   </el-table-column>
                   <el-table-column
-                    prop="user"
+                    prop="applyTime"
                     show-overflow-tooltip
                     label="申请日期">
                   </el-table-column>
@@ -1574,7 +1574,6 @@
               :data="syncMemorizeList"
               style="width: 100%"
               border stripe
-              height="1"
               class="table-wrap">
               <el-table-column prop="collectTime" width="120" label="时间" show-overflow-tooltip></el-table-column>
               <el-table-column prop="targetName" width="120" label="对象姓名" show-overflow-tooltip></el-table-column>
