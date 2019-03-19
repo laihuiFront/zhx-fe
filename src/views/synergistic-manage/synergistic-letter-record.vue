@@ -4,7 +4,7 @@
     class="page-wraper-sub"
     v-loading="loading2"
     v-loading.fullscreen.lock="fullscreenLoading"
-    element-loading-text="正在导入中"
+    element-loading-text="拼命加载中"
     element-loading-spinner="el-icon-loading"
     element-loading-background="rgba(0, 0, 0, 0.7)"
   >
@@ -229,13 +229,17 @@
       >
         <el-row :gutter="20">
           <el-col :span="10"><div class="grid-content bg-purple">
-            <el-radio label="1" @change='exportCx(1)'>按查询条件全部导出</el-radio>
+            <el-radio label="1" v-model="radio"  >按查询条件全部导出</el-radio>
           </div></el-col>
           <el-col :span="10">
             <div class="grid-content bg-purple">
-              <el-radio label="2" @change='exportCx(2)'>按查询条件导出当前分页</el-radio>
+              <el-radio label="2" v-model="radio" >按查询条件导出当前分页</el-radio>
             </div></el-col>
         </el-row>
+         <span slot="footer" class="footer">
+    <el-button @click="dialogVisibleCase = false">取 消</el-button>
+    <el-button type="primary" @click="changeRadio">确 定</el-button>
+  </span>
       </el-dialog>
       <el-col :span="22">
         <el-button type="primary" v-has="'撤销协催'" @click="cxHandle"
@@ -340,6 +344,7 @@ export default {
   },
   data() {
     return {
+    	radio:'',
       dialogVisibleCase:false,
       loading2: false,
       fullscreenLoading: false,
@@ -539,6 +544,13 @@ export default {
     this.init();
   },
   methods: {
+  	changeRadio(){
+  		if(this.radio==1){
+			this.exportCx(1)
+		}else{
+			this.exportCx(2)
+		}
+  	},
     fileStatu(res) {
       if (res.code == 100) {
         this.$message({

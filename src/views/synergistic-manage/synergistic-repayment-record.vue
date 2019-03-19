@@ -171,15 +171,17 @@
     >
       <el-form :inline="true">
         <el-form-item>
-          <el-button @click="handleCommand('all')">按查询条件全部导出</el-button>
+          <el-radio label="1" v-model="radio" @click="handleCommand('all')">按查询条件全部导出</el-radio>
         </el-form-item>
         <el-form-item>
-          <el-button @click="handleCommand('current')">按查询条件导出当前分页</el-button>
+          <el-radio label="2" v-model="radio" @click="handleCommand('current')">按查询条件导出当前分页</el-radio>
         </el-form-item>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="dialogExportVisible = false">取 消</el-button>
-        </span>
+       
       </el-form>
+       <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogExportVisible = false">取 消</el-button>
+                        <el-button type="primary" @click="changeRadio">确 定</el-button>  
+        </span>
     </el-dialog>
   </div>
 </template>
@@ -204,6 +206,7 @@ export default {
   },
   data(){
     return {
+    	radio:"",
     	loading2:false,
     	fullscreenLoading:false,
       dialogExportVisible:false,
@@ -263,6 +266,13 @@ export default {
     this.seqNoQuery()
   },
   methods: {
+  	changeRadio(){
+  			if(this.radio==1){
+			this.handleCommand('all')
+		}else{
+			this.handleCommand('current')
+		}
+  	},
     uploadSuccess(res,file,fileList){
     	 this.loading2=true
 					this.fullscreenLoading=true
