@@ -54,10 +54,11 @@
           </el-upload>
         </el-form-item>
       </el-form>
-      <el-table v-loading="tableLoad" sortable="custom" border stripe @sort-change="handleSort" @selection-change="handleSelectionChange"  height="1" :data="memberList" style="width: 100%" class="table-wrap">
+      <el-table v-loading="tableLoad" sortable="custom" border stripe @sort-change="handleSort" @selection-change="handleSelectionChange" :row-class-name="rowColor"  height="1" :data="memberList" style="width: 100%" class="table-wrap">
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']"  align="center" prop="id" min-width="100" label="员工ID" show-overflow-tooltip></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center" prop="userName" min-width="120" label="员工姓名" show-overflow-tooltip></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center"  prop="number" min-width="120" show-overflow-tooltip label="账号"></el-table-column>
+        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center"  prop="enableMsg" min-width="120" show-overflow-tooltip label="状态"></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center" prop="sex" min-width="60" label="性别" show-overflow-tooltip width="70"></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center" prop="officePhone" min-width="120" label="座机号" show-overflow-tooltip></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center" prop="mobile" min-width="120" label="手机" show-overflow-tooltip></el-table-column>
@@ -268,6 +269,9 @@ export default {
     })
   },
   methods: {
+    rowColor({row}){
+      return `color_${row.color}`;
+    },
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
@@ -620,6 +624,12 @@ export default {
   }
   .upload-demo{
     display: inline-block;
+  }
+  .color_BLACK {
+    color: #000000;
+  }
+  .color_RED {
+    color: #FF0000;
   }
   .dialog-wrap {
     .el-dialog__body {

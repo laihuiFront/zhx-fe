@@ -67,7 +67,7 @@
         v-if="currentEnum.name && currentEnum.name !== '地区'"
         border stripe
         :data="configData"
-        style="width: 100%"
+        style="width: 100%;"
         v-loading="tableLoad"
       >
         <el-table-column v-if="currentEnum.name==='催收区域'" prop="id" label="催收区域ID">
@@ -355,6 +355,9 @@ export default {
 #setting-enum {
   height: 100%;
   display: flex;
+  .el-table__body-wrapper{
+    overflow-x: hidden;
+  }
   .box-card-left {
     flex: 0 0 200px;
     margin-right: 20px;

@@ -76,7 +76,7 @@
         :on-success="uploadSuccess"
         :on-progress="onProgress"
         >
-        <el-button size="small" style="padding: 7px 15px;" type="primary" v-has="'导入更新案件'">导入更新案件</el-button>
+        <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入更新案件'">导入更新案件</el-button>
       </el-upload>
       <el-upload
         class="upload-demo"
@@ -87,7 +87,7 @@
         :on-progress="onProgress"
 
         >
-        <el-button size="small" style="padding: 7px 15px;" type="primary" v-has="'导入案件评语'">导入案件评语</el-button>
+        <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入案件评语'">导入案件评语</el-button>
       </el-upload>
       <el-upload
         class="upload-demo"
@@ -98,7 +98,7 @@
         :on-progress="onProgress"
 
         >
-        <el-button size="small" style="padding: 7px 15px;" type="primary" v-has="'导入案件利息'">导入案件利息</el-button>
+        <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入案件利息'">导入案件利息</el-button>
       </el-upload>
       <el-upload
         class="upload-demo"
@@ -109,7 +109,7 @@
         :on-progress="onProgress"
 
         >
-        <el-button size="small" style="padding: 7px 15px;" type="primary" v-has="'导入案件电话'">导入案件电话</el-button>
+        <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入案件电话'">导入案件电话</el-button>
       </el-upload>
       <el-upload
         class="upload-demo"
@@ -120,7 +120,7 @@
         :on-progress="onProgress"
 
         >
-        <el-button size="small" style="padding: 7px 15px;" type="primary" v-has="'导入案件地址'">导入案件地址</el-button>
+        <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入案件地址'">导入案件地址</el-button>
       </el-upload>
       <el-upload
         class="upload-demo"
@@ -130,7 +130,7 @@
         :on-success="uploadSuccess"
         :on-progress="onProgress"
         >
-        <el-button size="small" style="padding: 7px 15px;" type="primary" v-has="'导入案件记录'">导入催收记录</el-button>
+        <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入案件记录'">导入催收记录</el-button>
       </el-upload>
     </el-form-item>
    </el-form>

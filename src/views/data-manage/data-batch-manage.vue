@@ -441,7 +441,7 @@ export default {
     		time:[],
     		batchNos:[],
         clients:[],
-    		CasestatusList:[{id:0,name:"未导入"},{id:1,name:"未退案"},{id:2,name:"已退案"}]
+    		CasestatusList:[{id:4,name:"正常"},{id:0,name:"未导入"},{id:1,name:"未退案"},{id:2,name:"已退案"}]
     	},
     	returnTrue:false,
     	backTrue:false
@@ -732,6 +732,7 @@ dataList(this.form.area,this.form.batchNos,this.form.clients,this.form.batchStat
           }else{
             let returnFlag=0
             let backFlag=0
+            let unImport=0
             for (var i=0;i<_self.MoreBackCaseList.length;i++)
             {
               var temp = _self.MoreBackCaseList[i];
@@ -739,22 +740,28 @@ dataList(this.form.area,this.form.batchNos,this.form.clients,this.form.batchStat
                 returnFlag=2
               }else if(temp.status==1){
                 backFlag=1
+              }else{
+                unImport = 1
               }
             }
-            if (returnFlag>0 && backFlag>0){
-              this.returnTrue=true
+            if (unImport>0){
               this.backTrue=true
-            }else if (backFlag>0 && returnFlag==0){
-              this.returnTrue=false
-              this.backTrue=true
-            }else if (backFlag==0 && returnFlag>0){
               this.returnTrue=true
-              this.backTrue=false
             }else{
-              this.backTrue=false
-              this.returnTrue=false
+              if (returnFlag>0 && backFlag>0){
+                this.returnTrue=true
+                this.backTrue=true
+              }else if (backFlag>0 && returnFlag==0){
+                this.returnTrue=false
+                this.backTrue=true
+              }else if (backFlag==0 && returnFlag>0){
+                this.returnTrue=true
+                this.backTrue=false
+              }else{
+                this.backTrue=true
+                this.returnTrue=true
+              }
             }
-
           }
       },
       resetForm() {
