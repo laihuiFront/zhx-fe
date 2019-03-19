@@ -330,7 +330,7 @@
         <el-button type="primary" icon="el-icon-refresh" @click=resetFormInline>重置</el-button>
       </el-form-item>
       <el-form-item>
-        <el-dropdown v-dropdown-patch @command="fenancheck" v-has="'分案'" >
+        <el-dropdown v-dropdown-patch @command="fenancheck" style="margin-left:10px;" v-has="'分案'" >
           <el-button type="primary" >
             分案<i class="el-icon-arrow-down el-icon--right"></i>
           </el-button>

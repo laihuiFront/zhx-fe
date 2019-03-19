@@ -3,9 +3,10 @@
     <top-menu class="top-wrap"></top-menu>
     <tab-menu class="tab-wrap"></tab-menu>
     <section class="page-wrap">
-      <keep-alive>
+      <!--<keep-alive>
         <router-view/>
-      </keep-alive>
+      </keep-alive>-->
+      <router-view/>
     </section>
   </div>
 </template>

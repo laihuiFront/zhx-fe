@@ -63,10 +63,10 @@ export default {
     onClickLeft(){
       // this.$refs.tabList.scrollTo(this.$refs.tabList.scrollWidth, 0)
       // console.log(this.$refs.tabList.scrollLeft)
-      this.$refs.tabList.scrollLeft = this.$refs.tabList.scrollLeft + 50
+      this.$refs.tabList.scrollLeft = this.$refs.tabList.scrollLeft - 50
     },
     onClickRight(){
-      this.$refs.tabList.scrollLeft = this.$refs.tabList.scrollLeft - 50
+      this.$refs.tabList.scrollLeft = this.$refs.tabList.scrollLeft + 50
     },
     openMenu(tab, e){
       const menuMinWidth = 105
