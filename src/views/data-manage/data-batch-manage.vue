@@ -258,7 +258,6 @@
       :total="total">
     </el-pagination>
 <el-dialog
-  class="dialog-wrap"
   title="导出查询结果"
   :visible.sync="dialogVisible1"
   width="30%"
