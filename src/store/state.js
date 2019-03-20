@@ -2,7 +2,8 @@ const state = {
   userInfo: {},
   menu:[],
   tabMenus: [],
-  currentMenu: {}
+  currentMenu: {},
+  cacheflushFlag:false
 }
 
 export default state

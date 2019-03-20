@@ -17,7 +17,45 @@ import has from "./common/js/directives";
 Vue.use(ElementUI, { size: "mini" });
 
 Vue.config.productionTip = false;
-
+Vue.mixin({
+  beforeRouteLeave: function(to, from, next) {
+    if (
+      this.$route.meta.cacheflush
+    ) {
+      if (this.$vnode && this.$vnode.data.keepAlive) {
+        if (
+          this.$vnode.parent &&
+          this.$vnode.parent.componentInstance &&
+          this.$vnode.parent.componentInstance.cache
+        ) {
+          if (this.$vnode.componentOptions) {
+            var key =
+              this.$vnode.key == null
+                ? this.$vnode.componentOptions.Ctor.cid +
+                  (this.$vnode.componentOptions.tag
+                    ? `::${this.$vnode.componentOptions.tag}`
+                    : "")
+                : this.$vnode.key;
+            var cache = this.$vnode.parent.componentInstance.cache;
+            var keys = this.$vnode.parent.componentInstance.keys;
+            if (cache[key]) {
+              if (keys.length) {
+                var index = keys.indexOf(key);
+                if (index > -1) {
+                  keys.splice(index, 1);
+                }
+              }
+              delete cache[key];
+            }
+          }
+        }
+      }
+      this.$route.meta.cacheflush = false;
+      this.$destroy();
+    }
+    next();
+  }
+});
 const whiteList = ["/login"];
 router.beforeEach((to, from, next) => {
   if (localCache("token")) {
