@@ -777,6 +777,7 @@
   title="导出查询结果"
   :visible.sync="dialogVisible1"
   width="30%"
+  center
   >
   <el-row :gutter="20">
   <el-col :span="10"><div class="grid-content bg-purple"> 
@@ -806,7 +807,7 @@ export default {
     },
   data(){
     return {
-    	radio:"",
+    	radio:"1",
     	MessageTrue:false,
     	fullscreenLoading:false,
     	loading:false,

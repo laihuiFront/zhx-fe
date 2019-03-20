@@ -207,6 +207,7 @@
       title="导出查询结果"
       :visible.sync="dialogVisibleCase"
       width="30%"
+      center
     >
       <el-row :gutter="20">
         <el-col :span="10"><div class="grid-content bg-purple">
@@ -318,7 +319,7 @@ export default {
   props: ["active"],
   data() {
     return {
-    	radio:'',
+    	radio:'1',
       dialogVisibleCase:false,
       loading2: false,
       fullscreenLoading: false,
