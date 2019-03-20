@@ -14,13 +14,13 @@ export const selectDataCaseExport = function(form,pageSize,pageNum) {
     url: '/statistics/collection/month/export',
     method: 'post',
       data: {
-       odvAttr:form.odv,
-       area:form.area,
-       client:form.client,
-       monthStart:form.time[0],
-       monthEnd:form.time[1],
-       pageNum:pageNum ? pageNum : 1,
-       pageSize:pageSize ? pageSize : 10
+        odvAttr:form.odv,
+        area:form.area,
+        client:form.client,
+        monthStart:form.time,
+        monthEnd:form.time2,
+        pageNum:pageNum ? pageNum : 1,
+        pageSize:pageSize ? pageSize : 100
     }
   })
 
@@ -51,7 +51,7 @@ return request({
        monthStart:form.time,
        monthEnd:form.time2,
        pageNum:pageNum ? pageNum : 1,
-       pageSize:pageSize ? pageSize : 10
+       pageSize:pageSize ? pageSize : 100
     }
   })
 }

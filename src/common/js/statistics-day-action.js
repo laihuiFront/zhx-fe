@@ -19,7 +19,7 @@ export const selectDataCaseExport = function(form,pageSize,pageNum) {
        dateSearchStart:form.time[0],
        dateSearchEnd:form.time[1],
        pageNum:pageNum ? pageNum : 1,
-       pageSize:pageSize ? pageSize : 10
+       pageSize:pageSize ? pageSize : 100
     }
   })
 
@@ -51,7 +51,7 @@ return request({
        dateSearchStart:form.time[0],
        dateSearchEnd:form.time[1],
        pageNum:pageNum ? pageNum : 1,
-       pageSize:pageSize ? pageSize : 10
+       pageSize:pageSize ? pageSize : 100
     }
   })
 }

@@ -3127,12 +3127,12 @@ AddtableList(this.id,this.messageForm).then((response)=>{
       }
     },
   },
-  watch: {
+  /*watch: {
     '$route' (to, from) {
       // console.log(this.getStatus(this.$route.path))
       this.queryDetail()
     }
-  },
+  },*/
   created() {
   	this.queryDetail()
     this.batchForm = {sType:0}
