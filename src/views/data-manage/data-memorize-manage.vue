@@ -449,11 +449,12 @@
         <el-form-item>
           <el-radio v-model="radio" label="2" >按查询条件导出当前分页</el-radio>
         </el-form-item>
+      
+      </el-form>
        <span slot="footer" class="footer">
     <el-button @click="dialogVisible2 = false">取 消</el-button>
     <el-button type="primary" @click="changeRadio">确 定</el-button>
   </span>
-      </el-form>
     </el-dialog>
   </div>
 </template>
