@@ -120,6 +120,9 @@
       :sort-orders="['ascending','descending']"
       label="批次号"
       >
+       <template slot-scope="scope">
+        <el-button type="text" size="small"@click="dataCsae(scope.row.batchNo)">{{scope.row.batchNo}}</el-button>
+      </template>
     </el-table-column>
     <el-table-column
       prop="clientMsg"
@@ -400,15 +403,275 @@
     <el-button type="primary" @click="submitmsgForm('messageForm')">确 定</el-button>
   </span>
 </el-dialog>
+<el-dialog
+      title="批次案件"
+      class="dialog-wrap"
+      :visible.sync="detailVisibleCase"
+      :close-on-click-modal="false"
+      width="90%"
+    >
+     <el-table
+      class="table-wrap"
+      ref="CasetableData"
+      :data="CasetableData"
+      border
+      stripe
+      @sort-change="handleSort1"
+      @row-dblclick="showDetail"
+    >
+      <el-table-column
+        sortable="custom"
+        :sort-orders="['ascending','descending']"
+        label="ID"
+        align="center"
+        prop="id"
+      >
+
+      </el-table-column>
+      <el-table-column
+        prop="collectArea"
+        align="center"
+        sortable="custom"
+        :sort-orders="['ascending','descending']"
+        min-width="140"
+        label="催收区域"
+      >
+      </el-table-column>
+      <el-table-column
+        prop="collectStatusMsg"
+        align="center"
+        sortable="custom"
+        min-width="140"
+        :sort-orders="['ascending','descending']"
+        label="催收状态"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="batchNo"
+        sortable="custom"
+        :sort-orders="['ascending','descending']"
+        label="批次号"
+        min-width="120"
+        align="center"
+        show-overflow-tooltip>
+
+      </el-table-column>
+      <el-table-column
+        prop="seqNo"
+        width="140"
+        sortable="custom"
+        :sort-orders="['ascending','descending']"
+        align="center"
+        label="个案序列号"
+        show-overflow-tooltip>
+        <template slot-scope="scope">
+          <el-button type="text" size="small" @click="editCase(scope.row.id, scope.row.name,scope.row.seqNo)">{{scope.row.seqNo}}</el-button>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="caseDate"
+        align="center"
+        label="委案日期"
+        sortable="custom"
+        :sort-orders="['ascending','descending']"
+        width="140"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="expectTime"
+        width="140"
+        sortable="custom"
+        :sort-orders="['ascending','descending']"
+        align="center"
+        label="预计退案日期"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="name"
+        sortable="custom"
+        :sort-orders="['ascending','descending']"
+        label="姓名"
+        align="center"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="identNo"
+        sortable="custom"
+        :sort-orders="['ascending','descending']"
+        min-width="200"
+        align="center"
+        label="证件号"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="area"
+        min-width="140"
+        sortable="custom"
+        :sort-orders="['ascending','descending']"
+        align="center"
+        label="地区"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="cardNo"
+        min-width="200"
+        sortable="custom"
+        :sort-orders="['ascending','descending']"
+        align="center"
+        label="卡号"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="moneyMsg"
+        sortable="custom"
+        min-width="140"
+        :sort-orders="['ascending','descending']"
+        label="委案金额"
+        align="center"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="balanceMsg"
+        sortable="custom"
+        min-width="140"
+        :sort-orders="['ascending','descending']"
+        align="center"
+        label="委案余额"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="collectDate"
+        sortable="custom"
+        :sort-orders="['ascending','descending']"
+        width="140"
+        align="center"
+        label="上次通电时间"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="newCase"
+        sortable="custom"
+        :sort-orders="['ascending','descending']"
+        label="最新催记"
+        min-width="140"
+        align="center"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="odv"
+        sortable="custom"
+        :sort-orders="['ascending','descending']"
+        label="催收员"
+        min-width="140"
+        align="center"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="collectTimes"
+        label="跟进次数"
+        min-width="120"
+        align="center"
+        sortable="custom"
+        :sort-orders="['ascending','descending']"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="distributeTime"
+        width="140"
+        align="center"
+        sortable="custom"
+        :sort-orders="['ascending','descending']"
+        label="案件分配时间"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="proRepayAmtMsg"
+        label="承诺还款金额"
+        width="160"
+        sortable="custom"
+        :sort-orders="['ascending','descending']"
+        align="center"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="bankAmtMsg"
+        width="160"
+        sortable="custom"
+        :sort-orders="['ascending','descending']"
+        align="center"
+        label="待银行查账金额"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="enRepayAmtMsg"
+        width="140"
+        align="center"
+        sortable="custom"
+        :sort-orders="['ascending','descending']"
+        label="已还金额"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="accountAge"
+        min-width="120"
+        label="逾期账龄"
+        sortable="custom"
+        :sort-orders="['ascending','descending']"
+        align="center"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        min-width="140"
+        prop="distributeHistory"
+        sortable="custom"
+        align="center"
+        :sort-orders="['ascending','descending']"
+        label="分配历史"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="summary"
+        min-width="180"
+        sortable="custom"
+        align="center"
+        :sort-orders="['ascending','descending']"
+        label="催收小结"
+        show-overflow-tooltip>
+      </el-table-column>
+
+    </el-table>
+      <el-pagination
+        @size-change="handleSizeChange1"
+        @current-change="handleCurrentChange1"
+        :current-page="currentPage5"
+        :page-sizes="[100, 500, 2000, 10000, 1000000]"
+        :page-size="pages1"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total1">
+      </el-pagination>
+
+      <span slot="footer" class="footer">
+    <el-button @click="detailVisibleCase = false">取 消</el-button>
+  </span>
+
+
+    </el-dialog>
   </div>
 </template>
 
 <script>
-	import {dataList,remoweData,addData,selectDataCollectExportByBatch,selectDataBatchExport,pageDataBatchExport,totalDataBatchExport,clientList,batchList,caseTypeList,areaList,returnCase,update,backCase} from '@/common/js/data-batch-manage.js'
+	  const CaseDetail = () => import('@/views/data-manage/detail');
+
+	import {dataList,CasedataList,remoweData,addData,selectDataCollectExportByBatch,selectDataBatchExport,pageDataBatchExport,totalDataBatchExport,clientList,batchList,caseTypeList,areaList,returnCase,update,backCase} from '@/common/js/data-batch-manage.js'
 export default {
+	 components: {
+      CaseDetail
+    },
   name: 'dataBatchManage',
    data(){
     return {
+    	CasetableData:[],
+    	detailVisibleCase:false,
     	radio:'',
     	fullscreenLoading:false,
       tableLoad:false,
@@ -423,8 +686,11 @@ export default {
     	selectDataCollectExportByBatchList:[],
     	DataList:[],
     	pageSize:100,
+    	pageSize1:100,
       orderBy:"id",
       sort:"desc",
+       orderBy1:"id",
+      sort1:"desc",
     	pageNum:1,
     	areaList:[],
     	caseTypeList:[],
@@ -436,6 +702,9 @@ export default {
       currentPage4: 1,
       pages:1,
       total:0,
+       currentPage5: 1,
+      pages1:1,
+      total1:0,
       MoreBackCaseList:[],
     	form:{
     		time:[],
@@ -444,10 +713,46 @@ export default {
     		CasestatusList:[{id:4,name:"正常"},{id:0,name:"未导入"},{id:1,name:"未退案"},{id:2,name:"已退案"}]
     	},
     	returnTrue:false,
-    	backTrue:false
+    	backTrue:false,
+    	batchNos:[]
     }
   },
 methods: {
+	showDetail(row){
+			 	this.detailVisibleCase=false
+        let id = row.id
+        let name = row.name
+        let seqNo = row.seqNo
+        this.$router.push({
+          path:'case-detail',
+          query:{
+            id,
+            name,
+            seqNo
+          }
+        })
+      },
+	 editCase(id, name, seqNo){
+	 	this.detailVisibleCase=false
+        this.$router.push({
+          path:'case-detail',
+          query:{
+            id,
+            name,
+            seqNo
+          }
+        })
+       
+      },
+	dataCsae(batchNo){
+		let _self=this
+		_self.detailVisibleCase=true
+		_self.batchNos.push(batchNo)
+		CasedataList(_self.batchNos).then((response)=>{
+          	_self.CasetableData=response.pageInfo.list
+                   this.total1 = response.pageInfo.total
+          })
+	},
 	changeRadio(){
 		if(this.radio==1){
 			this.totalDataExport()
@@ -592,6 +897,16 @@ methods: {
       this.tableLoad = false
     })
   },
+    handleSort1( {column,prop,order}){
+    this.sort1 = order==null?"desc":order.replace("ending","")
+    this.orderBy1 = prop==null?"id":prop
+    CasedataList(this.batchNos,this.orderBy1,this.sort1,).then((response)=>{
+
+      this.CasetableData=response.pageInfo.list
+                        this.total1 = response.pageInfo.total
+
+    })
+  },
 	search(){
       	let startTime=this.form.time[0]
       	let endTime=this.form.time[1]
@@ -664,7 +979,14 @@ dataList(this.form.area,this.form.batchNos,this.form.clients,this.form.batchStat
           this.search()
 })
 	},
-	 handleSizeChange(val){
+	 handleSizeChange1(val){
+	this.pageSize1=val
+		CasedataList(this.batchNos,this.orderBy1,this.sort1,).then((response)=>{
+          	_self.CasetableData=response.pageInfo.list
+                   this.total1 = response.pageInfo.total
+          })
+},
+ handleSizeChange(val){
 	this.pageSize=val
 	this.search()
 },
@@ -704,6 +1026,14 @@ dataList(this.form.area,this.form.batchNos,this.form.clients,this.form.batchStat
     handleCurrentChange(val){
     this.pageNum=val;
     this.search()
+    },
+    handleCurrentChange1(val){
+    this.pageNum1=val;
+    CasedataList(this.batchNos,this.orderBy1,this.sort1,).then((response)=>{
+      this.CasetableData=response.pageInfo.list
+                   this.total1 = response.pageInfo.total
+    })
+    
     },
 		handleSelectionChange(row){
           let _self=this

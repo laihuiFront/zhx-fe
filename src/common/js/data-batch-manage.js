@@ -20,7 +20,18 @@ return request({
     }
   })
 }
-
+export const CasedataList = function(batchNos,orderBy,sort) {
+  return request({
+    url: '/dataCase/pageCaseList',
+    method: 'post',
+    data: {
+      batchNos:batchNos,  //批次编号
+      orderBy:orderBy,
+      sort:sort,
+//   
+    }
+  })
+}
 export const totalDataBatchExport = function(area,batchNos,clients,batchStatus,caseType,startTime,endTime,pageSize,pageNum) {
 return download({
     url: '/dataBatch/totalDataBatchExport',
