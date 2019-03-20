@@ -108,6 +108,8 @@ export default {
       }
     },
     closeTab(menu){
+
+      //this.$route.meta.keepalive=true
       const tabIndex = this.$store.getters.getTabIndex(menu.id)
       let nextPath = null
       let nextMenu = null

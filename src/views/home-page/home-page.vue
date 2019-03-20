@@ -3,27 +3,39 @@
     <div class="item-wrap">
       <p class="header">锁定账号数量</p>
       <div class="content" @click="toAccount">
-        10
+        {{userData.lockAccountNum}}
       </div>
     </div>
     <div class="item-wrap">
       <p class="header">协催申请数量</p>
       <div class="content" @click="toSynergy">
-        5
+        {{userData.distributeNum}}
       </div>
     </div>
     <div class="item-wrap">
       <p class="header">新分配案件数</p>
       <div class="content" @click="toCase">
-        2
+        {{userData.sysnergyNum}}
       </div>
     </div>
   </section>
 </template>
 
 <script>
-export default {
+  import { getUserHomeInfo} from '@/common/js/api-member'
+
+  export default {
   name: 'homePage',
+    data () {
+      return {
+        userData:{}
+      }
+    },
+  created () {
+    getUserHomeInfo().then(response => {
+      this.userData = response
+    })
+  },
   methods: {
     toAccount(){
       this.$router.push({
