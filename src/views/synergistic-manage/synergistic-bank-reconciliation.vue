@@ -48,8 +48,8 @@
         </template>
       </el-table-column>
       <el-table-column sortable="custom" width="120" align="center"  :sort-orders="['ascending','descending']" prop="dataCase.client" label="委托方" show-overflow-tooltip></el-table-column>
-      <el-table-column sortable="custom" width="120" align="center"  :sort-orders="['ascending','descending']" prop="dataCase.money" label="委案金额" show-overflow-tooltip></el-table-column>
-      <el-table-column sortable="custom" width="140" align="center"  :sort-orders="['ascending','descending']" prop="dataCase.enRepayAmt" label="案件已还款" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" width="120" align="center"  :sort-orders="['ascending','descending']" prop="dataCase.moneyMsg" label="委案金额" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" width="140" align="center"  :sort-orders="['ascending','descending']" prop="dataCase.enRepayAmtMsg" label="案件已还款" show-overflow-tooltip></el-table-column>
       <el-table-column sortable="custom" width="160" align="center"  :sort-orders="['ascending','descending']" prop="cpMoneyMsg" label="待银行查账金额" show-overflow-tooltip></el-table-column>
       <el-table-column sortable="custom" width="160" align="center"  :sort-orders="['ascending','descending']" prop="cpDate" label="待银行查账日期" show-overflow-tooltip></el-table-column>
       <el-table-column sortable="custom" width="100" align="center"  :sort-orders="['ascending','descending']" prop="repayUser" label="还款人" show-overflow-tooltip></el-table-column>
