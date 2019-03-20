@@ -94,3 +94,11 @@ export function getPositionList(){
   })
 
 }
+
+export function getUserHomeInfo(){
+  return request({
+    url: '/user/userHomeInfo',
+    method: 'post'
+  })
+
+}
