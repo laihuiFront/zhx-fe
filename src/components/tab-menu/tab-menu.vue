@@ -42,7 +42,6 @@ export default {
   },
   watch: {
     tabMenus(){
-      console.log('123')
       setTimeout(()=>{
         this.$refs.tabList.scrollTo(this.$refs.tabList.scrollWidth, 0)
       },250)
@@ -108,8 +107,7 @@ export default {
       }
     },
     closeTab(menu){
-
-      //this.$route.meta.keepalive=true
+      this.$route.meta.cacheflush=true;
       const tabIndex = this.$store.getters.getTabIndex(menu.id)
       let nextPath = null
       let nextMenu = null

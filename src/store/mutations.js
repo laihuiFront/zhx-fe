@@ -29,9 +29,13 @@ const mutations = {
       }
     }
     state.tabMenus = tabMenus
+    state.cacheflushFlag = true;
   },
   [types.SET_CURRENT_MENU](state, menu){
     state.currentMenu = menu
+  },
+  SET_CACHEFLUSHFLAG(state,flag){
+    state.cacheflushFlag = flag;
   },
 }
 
