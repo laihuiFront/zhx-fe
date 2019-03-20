@@ -441,6 +441,7 @@
       title="导出查询结果"
       :visible.sync="dialogVisible2"
       width="30%"
+      center
     >
       <el-form :inline="true">
         <el-form-item>
@@ -465,7 +466,7 @@
     name: 'dataMemorizeManage',
     data(){
       return {
-      	radio:"",
+      	radio:"1",
         tableHeight:50,
         tableLoad:false,
         images:{background: "url(" + require("./down.png") + ") repeat-x",padding:"8px 5px 3px 6px",},

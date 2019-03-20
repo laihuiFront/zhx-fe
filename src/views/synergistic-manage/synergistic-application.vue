@@ -65,7 +65,7 @@
             <el-dropdown-item command="current">导出当前分页</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>-->
-        <el-button type="primary" v-has="'导入协催记录'" @click="dialogVisible1=true">导出查询条件</el-button>
+        <el-button type="primary" v-has="'导出查询条件'" v-if="queryForm.applyStatus==='1'" style="display:inline-block;margin-left:10px;"@click="dialogVisible1=true">导出查询条件</el-button>
     </syn-record-query>
     <el-table
       v-loading="tableLoad"
@@ -135,6 +135,7 @@
   title="导出查询结果"
   :visible.sync="dialogVisible1"
   width="30%"
+  center
   >
   <el-row :gutter="20">
       <el-col :span="10">
@@ -167,7 +168,7 @@ export default {
   },
   data(){
     return {
-    	radio:'',
+    	radio:"1",
     	dialogVisible1:false,
     	loading2:false,
     	fullscreenLoading:false,

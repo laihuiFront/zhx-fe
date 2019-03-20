@@ -2,7 +2,7 @@
   <div id="data-case-imported" 
   	 v-loading="loading2"
   	  v-loading.fullscreen.lock="fullscreenLoading"
-    element-loading-text="正在导入中"
+    element-loading-text="拼命加载中"
     element-loading-spinner="el-icon-loading"
    element-loading-background="rgba(0, 0, 0, 0.7)"
    class="page-wraper-sub">
