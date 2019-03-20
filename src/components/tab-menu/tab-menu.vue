@@ -1,7 +1,7 @@
 <template>
   <section id="tab-menu">
     <span class="left-wrap" @click="onClickLeft"><i class="icon el-icon-arrow-left"></i></span>
-    <ul class="menu-wrap" ref='tabList'>
+    <ul class="menu-wrap" ref='tabList' style="overflow: hidden;">
       <li 
          @click="gotoPage(menu)"
          class="menu-item" 
