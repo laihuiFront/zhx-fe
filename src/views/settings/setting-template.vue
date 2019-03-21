@@ -164,6 +164,9 @@ export default {
 
 <style lang="scss">
 #setting-template{
+  .el-table__body-wrapper{
+    overflow-y: hidden;
+  }
   .r-list{
     min-width: 220px;
     box-sizing: border-box;

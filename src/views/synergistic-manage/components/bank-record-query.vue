@@ -48,6 +48,7 @@
     <el-form-item>
       <el-popover
         placement="bottom-end"
+        :visible-arrow="false"
         width="800"
         trigger="click">
         <ul class="condition-wrap">

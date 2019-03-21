@@ -30,9 +30,9 @@
     </repay-record-query>
     <div class="statistics-wrap" v-if="queryForm.recordStatus==='0'">
       <span class="title">查询结果统计：</span>
-      <span class="item">总还款额：{{sumForm.repayMoneyMsg?sumForm.repayMoneyMsg:0}}，</span>
-      <span class="item">总提成值：{{sumForm.dataCase.mVal?parseFloat(sumForm.dataCase.mVal).toFixed(2):0}}，</span>
-      <span class="item">总佣金额：{{sumForm.dataCase.commissionMoneyMsg?sumForm.dataCase.commissionMoneyMsg:0}}</span>
+      <span class="item" style="margin-right:0px;">总还款额：{{sumForm.repayMoneyMsg?sumForm.repayMoneyMsg:0}}，</span>
+      <span class="item" style="margin-right:0px;">总提成值：{{sumForm.dataCase.mVal?parseFloat(sumForm.dataCase.mVal).toFixed(2):0}}，</span>
+      <span class="item" style="margin-right:0px;">总佣金额：{{sumForm.dataCase.commissionMoneyMsg?sumForm.dataCase.commissionMoneyMsg:0}}</span>
     </div>
      <el-table
       v-loading="tableLoad"

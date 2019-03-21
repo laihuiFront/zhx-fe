@@ -101,6 +101,7 @@
             placement="bottom-end"
             trigger="click"
             title="编辑操作记录"
+
             width="500"
             v-model="scope.row.finishVisible">
             <div>

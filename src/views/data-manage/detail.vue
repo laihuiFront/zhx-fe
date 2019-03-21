@@ -208,7 +208,6 @@
           :data="dependCase"
           border stripe
           style="width: 100%"
-          height="1"
           class="table-wrap">
           <el-table-column
             prop="seqNo"
@@ -619,7 +618,6 @@
                   :data="caseDetail.dataCaseTelEntityList"
                   :row-class-name="telTableRowClassName"
                   style="width: 100%"
-                  height="1"
                   class="table-wrap">
                   <el-table-column
                     type="selection"
@@ -705,7 +703,6 @@
                   border stripe
                   @selection-change="onSelectAddrRow"
                   :data="addrList"
-                  height="1"
                   style="width: 100%"
                   class="table-wrap">
                   <el-table-column
@@ -779,7 +776,6 @@
                   border stripe
                   v-if="letterVisible"
                   style="width: 100%"
-                  height="1"
                   class="table-wrap">
                   <el-table-column
                     type="selection"

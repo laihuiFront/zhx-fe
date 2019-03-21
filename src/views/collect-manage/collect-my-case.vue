@@ -455,14 +455,14 @@
           <el-col :span="22">
             <div class="grid-content bg-purple">
               <el-form :inline="true">
-                <el-form-item>
+                <el-form-item style="margin-right:0px;">
                   <span
                     class="color_gray"
                     style="display: inline-block; color: black;font-size: 16px;"
                     >查询结果统计：</span
                   >
                 </el-form-item>
-                <el-form-item>
+                <el-form-item style="margin-right:0px;">
                   <span
                     class="color_gray"
                     style="display: inline-block; color: #66b1ff;font-size: 16px;"
@@ -473,7 +473,7 @@
                     >{{ fetchData.countCase }}，</span
                   >
                 </el-form-item>
-                <el-form-item>
+                <el-form-item style="margin-right:0px;">
                   <span
                     class="color_gray"
                     style="display: inline-block; color: #66b1ff;font-size: 16px;"
@@ -484,7 +484,7 @@
                     >{{ fetchData.sumMoneyMsg }}，</span
                   >
                 </el-form-item>
-                <el-form-item>
+                <el-form-item style="margin-right:0px;">
                   <span
                     class="color_gray"
                     style="display: inline-block; color: #66b1ff;font-size: 16px;"
@@ -495,7 +495,7 @@
                     >{{ fetchData.countCasePay }}，</span
                   >
                 </el-form-item>
-                <el-form-item>
+                <el-form-item style="margin-right:0px;">
                   <span
                     class="color_gray"
                     style="display: inline-block; color: #66b1ff;font-size: 16px;"
@@ -506,7 +506,7 @@
                     >{{ fetchData.sumPayMoneyMsg }}，</span
                   >
                 </el-form-item>
-                <el-form-item>
+                <el-form-item style="margin-right:0px;">
                   <span
                     class="color_gray"
                     style="display: inline-block; color: #66b1ff;font-size: 16px;"
@@ -517,7 +517,7 @@
                     >{{ fetchData.sumRepayMsg }}，</span
                   >
                 </el-form-item>
-                <el-form-item>
+                <el-form-item style="margin-right:0px;">
                   <span
                     class="color_gray"
                     style="display: inline-block; color: #66b1ff;font-size: 16px;"

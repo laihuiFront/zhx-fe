@@ -72,6 +72,7 @@
       :current-page.sync="queryForm.pageNum"
       :page-size.sync="queryForm.pageSize"
       layout="prev, pager, next, jumper,total, sizes"
+      :page-sizes="[50, 100, 200, 500]"
       :total="total"
       class="pagination-wrap">
     </el-pagination>
@@ -87,7 +88,7 @@ export default {
       tableLoad:false,
       queryForm: {
         pageNum: 1,
-        pageSize: 10,
+        pageSize: 50,
         date:[]
       },
       total: 0,

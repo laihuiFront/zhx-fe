@@ -36,6 +36,7 @@
       <el-popover
         placement="bottom-end"
         width="800"
+        :visible-arrow="false"
         trigger="click">
         <ul class="condition-wrap">
           <li class="condition-item">
