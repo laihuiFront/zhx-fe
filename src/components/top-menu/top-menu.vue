@@ -141,6 +141,7 @@ export default {
   .logo{
     width: 247px;
     height: 33px;
+    margin-right: 32px;
   }
   .el-dropdown{
     .el-dropdown-link{
@@ -149,6 +150,7 @@ export default {
     }
   }
   .el-menu-demo{
+    flex:1;
     border: 0;
     height: 80px;
     // .el-submenu. .el-submenu__title

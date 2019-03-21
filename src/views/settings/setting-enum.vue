@@ -12,7 +12,7 @@
         >{{config.name}}</li>
       </ul>
     </el-card>
-    <el-card class="box-card-right">
+    <el-card class="box-card-right" :class="{'table-class': isTable}">
       <div slot="header" class="header">
         <span class="title">{{currentEnum.name}}</span>
         <el-button
@@ -69,6 +69,8 @@
         :data="configData"
         style="width: 100%;"
         v-loading="tableLoad"
+        class="table-wrap"
+        height="1"
       >
         <el-table-column v-if="currentEnum.name==='催收区域'" prop="id" label="催收区域ID">
           <template slot-scope="scope">
@@ -170,6 +172,9 @@ export default {
     }
   },
   computed: {
+    isTable () {
+      return this.currentEnum.name && this.currentEnum.name !== '地区'
+    },
     currentEnum () {
       if (this.configList.length) {
         return this.configList[this.activeIndex]
@@ -420,10 +425,10 @@ export default {
       }
     }
     .el-card__body {
+      overflow-y: auto;
       flex: 1;
       padding: 0;
       text-align: center;
-      overflow-y: auto;
       .tree-wrap {
         display: inline-block;
         width: 400px;
@@ -442,6 +447,13 @@ export default {
             width: 150px;
           }
         }
+      }
+    }
+    &.table-class{
+      .el-card__body{
+        display: flex;
+        flex-direction: column;
+        overflow-y: hidden;
       }
     }
   }
