@@ -58,13 +58,14 @@
           >
           <el-button type="primary" v-has="'导入协催记录'">导入协催记录</el-button>
         </el-upload>
-        <el-dropdown trigger="click" @command="handleCommand" v-if="queryForm.applyStatus==='1'" style="display:inline-block;margin-left:10px;" v-has="'导出查询结果'">
+        <!--<el-dropdown trigger="click" @command="handleCommand" v-if="queryForm.applyStatus==='1'" style="display:inline-block;margin-left:10px;" v-has="'导出查询结果'">
           <el-button type="primary">导出查询结果<i class="el-icon-arrow-down el-icon--right"></i></el-button>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="all">导出全部</el-dropdown-item>
             <el-dropdown-item command="current">导出当前分页</el-dropdown-item>
           </el-dropdown-menu>
-        </el-dropdown>
+        </el-dropdown>-->
+        <el-button type="primary" v-has="'导出查询条件'" v-if="queryForm.applyStatus==='1'" style="display:inline-block;margin-left:10px;"@click="dialogVisible1=true">导出查询条件</el-button>
     </syn-record-query>
     <el-table
       v-loading="tableLoad"
@@ -130,6 +131,29 @@
       :total="total"
       class="pagination-wrap"
     ></el-pagination>
+    <el-dialog
+  title="导出查询结果"
+  :visible.sync="dialogVisible1"
+  width="30%"
+  center
+  >
+  <el-row :gutter="20">
+      <el-col :span="10">
+        <div class="grid-content bg-purple">
+          <el-radio  v-model="radio" label="1" >按查询条件全部导出</el-radio>
+        </div>
+      </el-col>
+      <el-col :span="10">
+  	    <div class="grid-content bg-purple">
+  		    <el-radio  v-model="radio" label="2" >按查询条件导出当前分页</el-radio>
+        </div>
+      </el-col>
+  </el-row>
+<span slot="footer" class="footer">
+    <el-button @click="dialogVisible1 = false">取 消</el-button>
+    <el-button type="primary" @click="changeRadio">确 定</el-button>
+  </span>
+</el-dialog>
   </div>
 </template>
 
@@ -144,6 +168,8 @@ export default {
   },
   data(){
     return {
+    	radio:"1",
+    	dialogVisible1:false,
     	loading2:false,
     	fullscreenLoading:false,
       tableLoad:false,
@@ -171,6 +197,20 @@ export default {
     this.onClickQuery()
   },
   methods: {
+  	changeRadio(){
+  		if(this.radio==1){
+expAllSynergisticRecord(this.queryForm).then(res => {
+          this.$message('导出成功')
+          	this.loading2=false
+					this.fullscreenLoading=false
+        })
+}else{
+expCurrentSynergisticRecord(this.queryForm).then(res => {
+          this.$message('导出成功')
+          	this.loading2=false
+					this.fullscreenLoading=false
+        })		}
+  	},
     editCase(id, name, seqNo){
       this.$router.push({
         path:'case-detail',

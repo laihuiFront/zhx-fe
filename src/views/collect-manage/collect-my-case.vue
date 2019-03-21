@@ -481,7 +481,7 @@
                   >
                   <span
                     style="display: inline-block; color: #66b1ff;font-size: 16px;"
-                    >{{ fetchData.sumMoney }}，</span
+                    >{{ fetchData.sumMoneyMsg }}，</span
                   >
                 </el-form-item>
                 <el-form-item>
@@ -503,7 +503,7 @@
                   >
                   <span
                     style="display: inline-block; color: #66b1ff;font-size: 16px;"
-                    >{{ fetchData.sumPayMoney }}，</span
+                    >{{ fetchData.sumPayMoneyMsg }}，</span
                   >
                 </el-form-item>
                 <el-form-item>
@@ -514,7 +514,7 @@
                   >
                   <span
                     style="display: inline-block; color: #66b1ff;font-size: 16px;"
-                    >{{ fetchData.sumRepay }}，</span
+                    >{{ fetchData.sumRepayMsg }}，</span
                   >
                 </el-form-item>
                 <el-form-item>
@@ -525,7 +525,7 @@
                   >
                   <span
                     style="display: inline-block; color: #66b1ff;font-size: 16px;"
-                    >{{ fetchData.sumBank }}</span
+                    >{{ fetchData.sumBankMsg }}</span
                   >
                 </el-form-item>
               </el-form>

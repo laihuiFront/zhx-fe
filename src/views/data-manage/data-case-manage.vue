@@ -364,7 +364,7 @@
             <el-dropdown-item command="important">修改重要等级</el-dropdown-item>
             <el-dropdown-item command="collectStatus">修改催收状态</el-dropdown-item>
             <el-dropdown-item command="collectArea">修改催收区域</el-dropdown-item>
-            <el-dropdown-item command="mVal">修改M值系数</el-dropdown-item>
+            <el-dropdown-item command="mVal">修改提成值系数</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
           </el-form-item>
@@ -839,7 +839,7 @@
   </span>
     </el-dialog>
     <el-dialog
-      title="修改M值"
+      title="修改提成值"
       class="dialog-wrap"
       :visible.sync="detailVisible7"
       :close-on-click-modal="false"
@@ -847,10 +847,10 @@
     >
       <el-form :inline="true" ref="formInline1" :model="formInline1" class="demo-form-inline" label-width="120px">
         <div class="grid-content bg-purple">
-          <el-form-item label="M值"
+          <el-form-item label="提成值"
           		prop="collectStatus"
     :rules="{required: true, message: '请选择', trigger: 'blur'}">
-            <el-input  v-model="formInline1.mVal" style="width: 100%;" placeholder="请输入M值" rows="4"></el-input>
+            <el-input  v-model="formInline1.mVal" style="width: 100%;" placeholder="请输入提成值" rows="4"></el-input>
           </el-form-item>
         </div>
       </el-form>
@@ -893,6 +893,7 @@
   title="导出查询结果"
   :visible.sync="dialogVisibleCase"
   width="30%"
+  center
   >
   <el-row :gutter="20">
   <el-col :span="10"><div class="grid-content bg-purple"> 
@@ -922,7 +923,7 @@
     },
     data(){
       return {
-      	radio:'',
+      	radio:"1",
       	formInline1:{},
         tableLoad:false,
       	dialogVisibleCase:false,

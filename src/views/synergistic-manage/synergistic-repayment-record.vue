@@ -30,9 +30,9 @@
     </repay-record-query>
     <div class="statistics-wrap" v-if="queryForm.recordStatus==='0'">
       <span class="title">查询结果统计：</span>
-      <span class="item">总还款额：{{sumForm.repayMoney?sumForm.repayMoney:0}}，</span>
+      <span class="item">总还款额：{{sumForm.repayMoneyMsg?sumForm.repayMoneyMsg:0}}，</span>
       <span class="item">总提成值：{{sumForm.dataCase.mVal?parseFloat(sumForm.dataCase.mVal).toFixed(2):0}}，</span>
-      <span class="item">总佣金额：{{sumForm.dataCase.commissionMoney?sumForm.dataCase.commissionMoney:0}}</span>
+      <span class="item">总佣金额：{{sumForm.dataCase.commissionMoneyMsg?sumForm.dataCase.commissionMoneyMsg:0}}</span>
     </div>
      <el-table
       v-loading="tableLoad"
@@ -60,16 +60,16 @@
       <el-table-column width="140"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="bankReconciliation.cpMoneyMsg" label="待银行查账金额" show-overflow-tooltip></el-table-column>
       <el-table-column width="160"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="bankReconciliation.cpDate" label="待银行查账日期" show-overflow-tooltip></el-table-column>
       <el-table-column width="120"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="collectUser.userName" label="回收催收员" show-overflow-tooltip></el-table-column>
-      <el-table-column width="130"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="dataCase.enRepayAmt" label="还款金额" show-overflow-tooltip></el-table-column>
-      <el-table-column width="120"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="dataCase.balance" label="余额" show-overflow-tooltip></el-table-column>
+      <el-table-column width="130"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="dataCase.enRepayAmtMsg" label="还款金额" show-overflow-tooltip></el-table-column>
+      <el-table-column width="120"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="dataCase.balanceMsg" label="余额" show-overflow-tooltip></el-table-column>
       <el-table-column width="160"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="repayDate" label="还款日期" show-overflow-tooltip></el-table-column>
       <el-table-column width="120"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="repayUser" label="还款人" show-overflow-tooltip></el-table-column>
       <el-table-column width="130"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="repayType.name" label="还款方式" show-overflow-tooltip></el-table-column>
       <el-table-column width="120"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="confirmUser.userName" label="确认人" show-overflow-tooltip></el-table-column>
       <el-table-column width="180"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="confirmTime" label="确认时间" show-overflow-tooltip></el-table-column>
       <el-table-column width="150"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="remark" label="备注" show-overflow-tooltip></el-table-column>
-      <el-table-column width="120"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="dataCase.mVal" label="M值" show-overflow-tooltip></el-table-column>
-      <el-table-column width="130"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="dataCase.commissionMoney" label="公司佣金" show-overflow-tooltip></el-table-column>
+      <el-table-column width="120"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="dataCase.mVal" label="提成值" show-overflow-tooltip></el-table-column>
+      <el-table-column width="130"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="dataCase.commissionMoneyMsg" label="公司佣金" show-overflow-tooltip></el-table-column>
       <el-table-column label="操作" width="100"  v-if="queryForm.recordStatus==='0'"  align="center">
         <template slot-scope="scope">
           <el-button
@@ -168,6 +168,7 @@
       title="导出查询结果"
       :visible.sync="dialogExportVisible"
       width="30%"
+      center
     >
       <el-form :inline="true">
         <el-form-item>
@@ -206,7 +207,7 @@ export default {
   },
   data(){
     return {
-    	radio:"",
+    	radio:"1",
     	loading2:false,
     	fullscreenLoading:false,
       dialogExportVisible:false,

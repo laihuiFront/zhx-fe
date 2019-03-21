@@ -373,6 +373,8 @@
         <el-table-column
           prop="fileName"
           label="附件"
+          sortable="custom"
+          :sort-orders="['ascending','descending']"
           align="center"
           show-overflow-tooltip>
         </el-table-column>
@@ -534,6 +536,8 @@
       <el-table-column
         prop="fileName"
         label="附件"
+        sortable="custom"
+        :sort-orders="['ascending','descending']"
         align="center"
          width="120"
         show-overflow-tooltip>
@@ -542,6 +546,7 @@
       <el-table-column
         label="操作"
         align="center"
+        width="170"
         show-overflow-tooltip>
         <template slot-scope="scope">
          <el-button type="text" size="small" @click="editMessage(scope.row)" v-has="'修改'">修改</el-button>
@@ -695,6 +700,8 @@
       <el-table-column
         prop="fileName"
         label="附件"
+        sortable="custom"
+        :sort-orders="['ascending','descending']"
          width="120"
         align="center"
         show-overflow-tooltip>
@@ -707,7 +714,7 @@
         show-overflow-tooltip>
         <template slot-scope="scope">
          <el-button type="text" size="small" @click="showMessage(scope.row)">查看</el-button>
-           <el-button type="text" size="small" @click="downloadList(scope.row)" v-has="'批量下载附件'">下载附件</el-button>
+           <el-button type="text" size="small" @click="downloadList(scope.row)" v-has="'下载附件'">下载附件</el-button>
        </template>
       </el-table-column>
     
@@ -770,6 +777,7 @@
   title="导出查询结果"
   :visible.sync="dialogVisible1"
   width="30%"
+  center
   >
   <el-row :gutter="20">
   <el-col :span="10"><div class="grid-content bg-purple"> 
@@ -780,7 +788,7 @@
   		<el-radio v-model="radio" label="2" >按查询条件导出当前分页</el-radio>
 </div></el-col>
 </el-row>
- <span slot="footer" class="footer">
+ <span slot="footer" class="footer" >
     <el-button @click="dialogVisible1 = false">取 消</el-button>
     <el-button type="primary" @click="changeRadio">确 定</el-button>
   </span>
@@ -799,7 +807,7 @@ export default {
     },
   data(){
     return {
-    	radio:"",
+    	radio:"1",
     	MessageTrue:false,
     	fullscreenLoading:false,
     	loading:false,
@@ -1088,41 +1096,41 @@ this.search()
  		}
  	},
  		moredownDataList(){
-   			for (var i=0;i<this.downList.length;i++){
+   	/*		for (var i=0;i<this.downList.length;i++){
    				if(!this.downList[i]){
-   					this.$message({
-            type: 'error',
-            message: '无下载数据!'
-          });
-          return
+              this.$message({
+                type: 'error',
+                message: '无下载数据!'
+              });
+            return
    				}
    				
-   			}
+   			}*/
  			
  		if(this.deleteList.length>=1){
  				this.fullscreenLoading=true
-    	this.loading=true
- 			downDataList(this.deleteList).then((response)=>{
-          this.$message({
-            type: 'success',
-            message: '下载成功!'
-          });
-          	this.fullscreenLoading=false
-    	this.loading=false
-          this.tableLoad = true
-          dataList(this.formInline,this.applyStatus,this.sort,this.orderBy,this.currentPage4,this.pageSize).then((response)=>{
-          	this.tableData3=response.list
-          	this.formInline={	time1:[],time2:[],time3:[]}
-            this.total = response.total
-            this.tableLoad = false
-          })
-          })    
- 		}else{
- 			this.$message({
-            type: 'error',
-            message: '请选择数据!'
-          });
- 		}
+          this.loading=true
+
+         for(var i=0;i<this.deleteList.length;i++){
+           if(this.downList[i]){
+             let realDeleteList = [];
+             realDeleteList[0] = this.deleteList[i]
+
+             downDataList(realDeleteList).then((response)=>{
+
+             })
+           }
+
+         }
+        this.fullscreenLoading=false
+        this.loading=false
+
+      }else{
+        this.$message({
+              type: 'error',
+              message: '请选择数据!'
+            });
+      }
  	},
  	search(){
      this.tableLoad = true

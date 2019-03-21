@@ -29,8 +29,8 @@
       </el-table-column>
       <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" min-width="200" align="center" prop="dataCase.identNo" label="证件号" show-overflow-tooltip></el-table-column>
       <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" min-width="130" align="center" prop="dataCase.name" label="姓名" show-overflow-tooltip></el-table-column>
-      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" min-width="120" align="center" prop="dataCase.money" label="委案金额" show-overflow-tooltip></el-table-column>
-      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" min-width="120" align="center" prop="dataCase.repayMoney" label="还款金额" show-overflow-tooltip></el-table-column>
+      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" min-width="120" align="center" prop="dataCase.moneyMsg" label="委案金额" show-overflow-tooltip></el-table-column>
+      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" min-width="120" align="center" prop="dataCase.repayMoneyMsg" label="还款金额" show-overflow-tooltip></el-table-column>
       <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" min-width="150" align="center" prop="applyContent" label="申请内容" show-overflow-tooltip></el-table-column>
       <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" min-width="180" align="center" prop="applyTime" label="申请时间" show-overflow-tooltip></el-table-column>
       <el-table-column   sortable="custom" :sort-orders="['ascending','descending']" min-width="120" align="center" prop="applyUser.userName" label="催收员" show-overflow-tooltip></el-table-column>
@@ -52,6 +52,7 @@
       title="导出查询结果"
       :visible.sync="dialogExportVisible"
       width="30%"
+      center
     >
       <el-form :inline="true">
         <el-form-item>
@@ -80,7 +81,7 @@ export default {
   },
   data(){
     return {
-    	radio:'',
+    	radio:'1',
     	loading2:false,
     	fullscreenLoading:false,
       dialogExportVisible:false,
