@@ -40,7 +40,7 @@
         </el-form-item>
         <el-form-item class="operation-item">
           <el-button type="primary" @click="onClickAdd" v-has="'新增员工'">新增员工</el-button>
-          <el-button type="primary" @click="onClickImport" >导出员工信息</el-button>
+
           <el-button type="primary" @click="onClickModuleImport" >导入模板下载</el-button>
           <el-upload
             class="upload-demo"
@@ -52,6 +52,7 @@
           >
             <el-button type="primary" style="margin-left:10px;">导入员工信息</el-button>
           </el-upload>
+          <el-button type="primary" @click="onClickImport" >导出员工信息</el-button>
         </el-form-item>
       </el-form>
       <el-table v-loading="tableLoad" sortable="custom" border stripe @sort-change="handleSort" @selection-change="handleSelectionChange" :row-class-name="rowColor"  height="1" :data="memberList" style="width: 100%" class="table-wrap">
