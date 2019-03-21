@@ -258,10 +258,10 @@
       :total="total">
     </el-pagination>
 <el-dialog
-  class="dialog-wrap"
   title="导出查询结果"
   :visible.sync="dialogVisible1"
   width="30%"
+  center
   >
   <el-row :gutter="20">
       <el-col :span="10">
@@ -672,7 +672,7 @@ export default {
     return {
     	CasetableData:[],
     	detailVisibleCase:false,
-    	radio:'',
+    	radio:"1",
     	fullscreenLoading:false,
       tableLoad:false,
     	batchList:[],

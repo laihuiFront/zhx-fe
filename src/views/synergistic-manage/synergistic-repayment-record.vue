@@ -68,7 +68,7 @@
       <el-table-column width="120"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="confirmUser.userName" label="确认人" show-overflow-tooltip></el-table-column>
       <el-table-column width="180"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="confirmTime" label="确认时间" show-overflow-tooltip></el-table-column>
       <el-table-column width="150"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="remark" label="备注" show-overflow-tooltip></el-table-column>
-      <el-table-column width="120"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="dataCase.mVal" label="M值" show-overflow-tooltip></el-table-column>
+      <el-table-column width="120"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="dataCase.mVal" label="提成值" show-overflow-tooltip></el-table-column>
       <el-table-column width="130"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="dataCase.commissionMoneyMsg" label="公司佣金" show-overflow-tooltip></el-table-column>
       <el-table-column label="操作" width="100"  v-if="queryForm.recordStatus==='0'"  align="center">
         <template slot-scope="scope">
@@ -168,6 +168,7 @@
       title="导出查询结果"
       :visible.sync="dialogExportVisible"
       width="30%"
+      center
     >
       <el-form :inline="true">
         <el-form-item>
@@ -206,7 +207,7 @@ export default {
   },
   data(){
     return {
-    	radio:"",
+    	radio:"1",
     	loading2:false,
     	fullscreenLoading:false,
       dialogExportVisible:false,

@@ -157,7 +157,7 @@
         <span style="color: black;font-size: 16px;">查询结果统计：</span>
         <span class="" v-if="form1.val1 == 0">
           <span style="color: #66b1ff;font-size: 16px;">列表还款金额：{{ topData.paidMoney }}，</span>
-          <span style="color: #66b1ff;font-size: 16px;">还款M值金额：{{ topData.repaidAmt }}</span>
+          <span style="color: #66b1ff;font-size: 16px;">还款提成值金额：{{ topData.repaidAmt }}</span>
         </span>
         <span class="" v-if="form1.val1 == 1">
           <span style="color: #66b1ff;font-size: 16px;">列表待银行查账金额：{{ topData.bankAmtC }}，</span>
@@ -314,7 +314,7 @@ export default {
       tablecol_raw2: [
         ...tablecol_common,
         {
-          label: "M值系数",
+          label: "提成值系数",
           prop: "mVal"
         },
         {
@@ -345,7 +345,7 @@ export default {
       tablecol_raw3: [
         ...tablecol_common,
         {
-          label: "M值系数",
+          label: "提成值系数",
           prop: "mVal"
         },
         {

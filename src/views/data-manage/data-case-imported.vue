@@ -2,7 +2,7 @@
   <div id="data-case-imported" 
   	 v-loading="loading2"
   	  v-loading.fullscreen.lock="fullscreenLoading"
-    element-loading-text="正在导入中"
+    element-loading-text="拼命加载中"
     element-loading-spinner="el-icon-loading"
    element-loading-background="rgba(0, 0, 0, 0.7)"
    class="page-wraper-sub">
@@ -269,97 +269,93 @@
   </el-col>
   <el-col :span="12">
   	<div class="grid-content bg-purple">
-  		<el-form-item label="回款率">
-        <el-input v-model="formInline.targetRate" placeholder="请输入回款率" clearable></el-input>
-  </el-form-item>
-  		
+      <el-form-item label="催收区域">
+        <el-select v-model="formInline.areaListId" placeholder="请选择催收区域" clearable>
+          <el-option
+            v-for="item in areaList"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id">
+          </el-option>
+        </el-select>
+      </el-form-item>
   	</div>
   </el-col>
 </el-row>
 <el-row :gutter="24">
   <el-col :span="12">
   	<div class="grid-content bg-purple">
-  	<el-form-item label="催收区域">
-<el-select v-model="formInline.areaListId" placeholder="请选择催收区域" clearable>
-    <el-option
-      v-for="item in areaList"
-      :key="item.id"
-      :label="item.name"
-      :value="item.id">
-    </el-option>
-  </el-select> 
-  	</el-form-item>
-  </div>
+      <el-form-item label="委  托  方"
+                    prop="client"
+                    :rules="{required: true, message: '委托方不能为空', trigger: 'blur'}">
+        <el-select v-model="formInline.client" placeholder="请选择委托方" clearable @change="changeBotno">
+          <el-option
+            v-for="item in clientList"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id">
+          </el-option>
+        </el-select>
+      </el-form-item>
+    </div>
   </el-col>
   <el-col :span="12">
   	<div class="grid-content bg-purple">
-  	<el-form-item label="委  托  方" 
-  		prop="client"
-    :rules="{required: true, message: '委托方不能为空', trigger: 'blur'}">
-    <el-select v-model="formInline.client" placeholder="请选择委托方" clearable @change="changeBotno">
-    <el-option
-      v-for="item in clientList"
-      :key="item.id"
-      :label="item.name"
-      :value="item.id">
-    </el-option>
-  </el-select>
-  </el-form-item>
+      <el-form-item label="案件类型">
+        <el-select v-model="formInline.caseType" placeholder="请选择案件类型" clearable>
+          <el-option
+            v-for="item in caseTypeList"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id">
+          </el-option>
+        </el-select>
+      </el-form-item>
   	</div>
   </el-col>
 </el-row><el-row :gutter="24">
   <el-col :span="12">
   	<div class="grid-content bg-purple">
-  	<el-form-item label="案件类型">
-<el-select v-model="formInline.caseType" placeholder="请选择案件类型" clearable>
-    <el-option
-      v-for="item in caseTypeList"
-      :key="item.id"
-      :label="item.name"
-      :value="item.id">
-    </el-option>
-  </el-select>   
-  	</el-form-item>
-  </div>
+      <el-form-item label="委案日期"
+                    prop="caseTime"
+                    :rules="{required: true, message: '请选择日期', trigger: 'change'}">
+        <div class="block">
+          <el-date-picker
+            @change="changeBotno"
+            v-model="formInline.caseTime"
+            align="right"
+            type="date"
+            placeholder="选择日期"
+            value-format="yyyy-MM-dd"
+          >
+          </el-date-picker>
+        </div>
+      </el-form-item>
+    </div>
   </el-col>
   <el-col :span="12">
   	<div class="grid-content bg-purple">
-  	<el-form-item label="委案日期" 
-  			prop="caseTime"
-    :rules="{required: true, message: '请选择日期', trigger: 'change'}">
-     <div class="block">
-    <el-date-picker
-    	@change="changeBotno"
-      v-model="formInline.caseTime"
-      align="right"
-      type="date"
-      placeholder="选择日期"
-      value-format="yyyy-MM-dd"
-      >
-    </el-date-picker>
-  </div>
-  </el-form-item>
-  		
+
   	</div>
   </el-col>
 </el-row>
 <el-row :gutter="24">
   <el-col :span="15">
   	<div class="grid-content bg-purple">
-  	<el-form-item label="预计退案日期">
- <div class="block">
-    <el-date-picker
-      v-model="formInline.returnTime"
-      align="right"
-      type="date"
-      placeholder="选择日期"
-      value-format="yyyy-MM-dd"
-     >
-    </el-date-picker>
+      <el-form-item label="预计退案日期">
+        <div class="block">
+          <el-date-picker
+            v-model="formInline.returnTime"
+            align="right"
+            type="date"
+            placeholder="选择日期"
+            value-format="yyyy-MM-dd"
+          >
+          </el-date-picker>
+        </div>
+      </el-form-item>
   </div>
-  	</el-form-item>
-  </div>
-  </el-col> 
+  </el-col>
 </el-row>
 <el-row :gutter="24">
   <el-col :span="24">

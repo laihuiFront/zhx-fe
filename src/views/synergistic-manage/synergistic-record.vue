@@ -52,6 +52,7 @@
       title="导出查询结果"
       :visible.sync="dialogExportVisible"
       width="30%"
+      center
     >
       <el-form :inline="true">
         <el-form-item>
@@ -80,7 +81,7 @@ export default {
   },
   data(){
     return {
-    	radio:'',
+    	radio:'1',
     	loading2:false,
     	fullscreenLoading:false,
       dialogExportVisible:false,
