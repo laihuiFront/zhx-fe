@@ -128,6 +128,7 @@
                   placement="bottom-end"
                   width="800"
                   popper-class="myCase-pop"
+                  :visible-arrow="false"
                   trigger="click">
                   <img style="cursor: pointer;vertical-align: middle;margin-top: 8px;margin-right: 8px;"
                       src="./zhankai.png"

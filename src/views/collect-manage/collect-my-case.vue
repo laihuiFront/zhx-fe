@@ -98,6 +98,7 @@
                   width="800"
                   popper-class="myCase-pop"
                   trigger="click"
+                  :visible-arrow="false"
                 >
                   <img
                     style="cursor: pointer;vertical-align: middle;margin-top: 8px;margin-right: 8px;"
