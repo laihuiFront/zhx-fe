@@ -62,6 +62,7 @@
         <el-popover
           placement="bottom-end"
           width="800"
+          :visible-arrow="false"
           trigger="click">
           <ul class="condition-wrap data-case-condition-wrap">
             <li class="condition-item five-one">
