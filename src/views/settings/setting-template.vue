@@ -1,11 +1,13 @@
 <template>
-  <div id="setting-template">
+  <div id="setting-template" class="page-wraper-sub">
     <el-row style="margin-bottom: 15px;">
       <el-button type="primary" style="float: right"
                  @click="dialogVisible=true;addmodule=true;" v-has="'添加信函模板'">添加信函模板
       </el-button>
     </el-row>
     <el-table
+      class="table-wrap"
+      height="1"
       :data="tableData"
       border stripe
       v-loading="tableLoad"
