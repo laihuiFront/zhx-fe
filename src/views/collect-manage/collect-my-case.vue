@@ -546,7 +546,7 @@
           :data="tableData"
           border
           stripe
-          style="width: 100%;height: calc(100% - 178px);"
+          style="width: 100%;min-height: 400px;"
           class="table-wrap"
           height="1"
           :row-class-name="rowColor"
@@ -1226,7 +1226,18 @@ export default {
 }
 
 #collect-my-case {
-
+  .el-tabs__content{
+    margin-bottom: 40px;
+    overflow-y: auto;
+  }
+  .pagination-wrap{
+    position: fixed;
+    bottom: 0;
+    z-index: 100;
+    min-height: 40px;
+    background-color: white;
+    width: 100%;
+  }
   .pad{
      .el-checkbox{
         width:24%;
