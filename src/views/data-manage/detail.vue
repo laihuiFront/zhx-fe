@@ -47,7 +47,7 @@
             </el-form-item>
             <el-form-item label="已还款">
             	<div class="inputDiv">
-								<span>{{caseDetail.enRepayAmt}}</span> <span style="color: red;">{{caseDetail.enRepayAmt}}</span>   
+								<span>{{caseDetail.enRepayAmt}}(委案余额:{{caseDetail.balanceMsg}})</span> <span style="color: red;" v-if="caseDetail.collectStatusMsg=='已结清'">[{{caseDetail.collectStatusMsg}}]</span>
 								</div>
             </el-form-item>
             <el-form-item label="逾期账龄">
@@ -3329,14 +3329,14 @@ AddtableList(this.id,this.messageForm).then((response)=>{
     border-color: #e4e7ed;
     color: black;
     cursor: not-allowed;
-        height: 28px;
+    //height: 28px;
     line-height: 28px;
-        border-radius: 4px;
+    border-radius: 4px;
     border: 1px solid #dcdfe6;
-        display: inline-block;
+    display: inline-block;
     font-size: inherit;
     padding: 0 15px;
-        width: 100%;
+    width: 100%;
   }
 </style>
 
