@@ -1500,7 +1500,7 @@
                 </el-select>
               </el-form-item>
               <el-form-item label="催收模板" prop="module">
-                <el-select v-model="batchForm.module" placeholder="请选择催收模板">
+                <el-select v-model="batchForm.module" placeholder="请选择催收模板" @change="selectCollectModule">
                   <el-option
                     v-for="item in csmbList"
                     :key="item.id"
@@ -2293,7 +2293,7 @@ export default {
       dependCase:[],//同批次公债案件
       activeNames: ['1','2','3','4','5'],
       otherActiveName:'1',
-      caseDetail:{currentuser:true},
+      caseDetail:{currentuser:true,seqNo:'',name:''},
       ligigationVisible:false,
       memorizeType:1,
       statusList:[{name:"有效",id:1,},{name:"无效",id:2,},{name:"未知",id:3,}],
@@ -2403,6 +2403,15 @@ export default {
           message: '导出成功'
         });
       })
+    },
+    selectCollectModule(){
+        let dicId = this.batchForm.module;
+        for(var i=0;i<this.csmbList.length;i++){
+          if (this.csmbList[i].id == dicId){
+            this.batchForm.collectInfo = this.csmbList[i].description;
+            break;
+          }
+        }
     },
   	showadddialogVisible(){
   		this.adddialogVisible=true;

@@ -408,6 +408,13 @@
                   >
                 </el-form-item>
                 <el-form-item>
+                  <el-button
+                    type="primary"
+                    @click="showQueryConf"
+                  >查询条件配置</el-button
+                  >
+                </el-form-item>
+                <el-form-item>
                   <el-dropdown
                     @command="colorHandle"
                     v-has="'案件标色'"
@@ -603,6 +610,27 @@
         <tab3></tab3>
       </el-tab-pane>
     </el-tabs>
+
+    <el-dialog
+      title="查询条件配置"
+      :visible.sync="showQueryConfVisible"
+      width="40%"
+      center
+    >
+      <el-row>
+
+            <el-checkbox v-model="queryConf.client" label="1" >委托方</el-checkbox>
+            <el-checkbox v-model="queryConf.batch" label="2" >批次号</el-checkbox>
+            <el-checkbox v-model="queryConf.seqNo" label="3" >个案序列号</el-checkbox>
+            <el-checkbox v-model="queryConf.gjrq" label="4" >跟进日期</el-checkbox>
+            <el-checkbox v-model="queryConf.area" label="5" >地区</el-checkbox>
+
+      </el-row>
+      <span slot="footer" class="footer">
+        <el-button @click="showQueryConfVisible = false">取 消</el-button>
+        <el-button type="primary" @click="saveConf">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -639,6 +667,8 @@ export default {
       activeName: "tab1",
       //表格数据
       tableData: [],
+      showQueryConfVisible:false,
+      queryConf:{},
       fetchData: {},
       form: {
         val0: null, //委托方
@@ -933,6 +963,12 @@ export default {
     this.init();
   },
   methods: {
+    saveConf(){
+      this.showQueryConfVisible = false;
+    },
+    showQueryConf(){
+        this.showQueryConfVisible = true;
+    },
     vis(){
       console.log(...arguments)
     },
@@ -1134,10 +1170,13 @@ export default {
     display: inline-block;
   }
 }
+
 #collect-my-case {
-  // height: 100%;
-  // .el-table .el-table__body-wrapper{
-  //   height: calc(100% - 72px);
-  // }
+
+  .pad{
+     /* .el-col{
+        margin-right: 40px;
+      }*/
+  }
 }
 </style>

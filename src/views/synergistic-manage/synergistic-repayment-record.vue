@@ -109,6 +109,7 @@
             v-model="recordInfo.dataCase.id"
             filterable
             remote
+            @change="selectCase"
             placeholder="请选择对应个案"
             :remote-method="seqNoQuery"
             :loading="loadingSeqNo">
@@ -267,6 +268,16 @@ export default {
     this.seqNoQuery()
   },
   methods: {
+    selectCase(){
+      let id = this.recordInfo.dataCase.id;
+      for(var i=0;i<this.seqNoList.length;i++){
+        if (this.seqNoList[i].id == id && this.seqNoList[i].odv!=null && this.seqNoList[i].odv!=""){
+          this.recordInfo.collectUser.id = parseInt(this.seqNoList[i].odv);
+          break;
+        }
+      }
+
+    },
   	changeRadio(){
   			if(this.radio==1){
 			this.handleCommand('all')
@@ -422,7 +433,8 @@ export default {
       this.loadingSeqNo = true
       getSeqNoList({
         seqNo: query,
-        pageNum: 1
+        pageNum: 1,
+        pageSize:10000
       }).then(data => {
         this.seqNoList = data.list
         this.loadingSeqNo = false
