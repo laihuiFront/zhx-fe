@@ -46,7 +46,9 @@
               <el-input v-model="caseDetail.foreignCurrency" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="已还款">
-              <el-input v-model="caseDetail.enRepayAmt" :disabled="true" ></el-input>
+            	<div class="inputDiv">
+								<span>{{caseDetail.enRepayAmt}}</span> <span style="color: red;">{{caseDetail.enRepayAmt}}</span>   
+								</div>
             </el-form-item>
             <el-form-item label="逾期账龄">
               <el-input v-model="caseDetail.accountAge" :disabled="true" ></el-input>
@@ -3321,6 +3323,20 @@ AddtableList(this.id,this.messageForm).then((response)=>{
     .stop-row{
       background:red
     }
+  }
+  .inputDiv{
+  	    background-color: #f5f7fa;
+    border-color: #e4e7ed;
+    color: black;
+    cursor: not-allowed;
+        height: 28px;
+    line-height: 28px;
+        border-radius: 4px;
+    border: 1px solid #dcdfe6;
+        display: inline-block;
+    font-size: inherit;
+    padding: 0 15px;
+        width: 100%;
   }
 </style>
 
