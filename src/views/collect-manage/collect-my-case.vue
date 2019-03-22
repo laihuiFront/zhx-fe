@@ -39,7 +39,7 @@
                 :model="form"
                 label-width="80px"
               >
-                <el-form-item prop="val0">
+                <el-form-item prop="val0" v-if="queryConf.wtf || queryConfFlag">
                   <el-select
                     v-model="form.val0"
                     placeholder="请选择委托方"
@@ -56,7 +56,7 @@
                     ></el-option>
                   </el-select>
                 </el-form-item>
-                <el-form-item prop="val1">
+                <el-form-item prop="val1" v-if="queryConf.pch || queryConfFlag">
                   <el-select
                     v-model="form.val1"
                     multiple
@@ -74,14 +74,14 @@
                     ></el-option>
                   </el-select>
                 </el-form-item>
-                <el-form-item prop="val3">
+                <el-form-item prop="val3" v-if="queryConf.gaxlh || queryConfFlag">
                   <el-input
                     v-model="form.val3"
                     placeholder="个案序列号"
                     clearable
                   ></el-input>
                 </el-form-item>
-                <el-form-item prop="val2">
+                <el-form-item prop="val2" v-if="queryConf.xcgjrq || queryConfFlag">
                   <el-date-picker
                     v-model="form.val2"
                     value-format="yyyy-MM-dd"
@@ -93,7 +93,289 @@
                     end-placeholder="下次跟进结束日期"
                   ></el-date-picker>
                 </el-form-item>
-                <el-popover
+                <el-form-item prop="val4" v-if="queryConf.dq || queryConfFlag">
+                  <el-cascader
+                    :options="val4_data"
+                    clearable
+                    placeholder="选择地区"
+                    v-model="form.val4"
+                  ></el-cascader>
+                </el-form-item>
+                <el-form-item prop="val5" v-if="queryConf.xm || queryConfFlag">
+                  <el-input
+                    v-model="form.val5"
+                    placeholder="姓名"
+                    clearable
+                  ></el-input>
+                </el-form-item>
+                <el-form-item prop="val6" v-if="queryConf.zjh || queryConfFlag">
+                  <el-input
+                    v-model="form.val6"
+                    placeholder="证件号"
+                    clearable
+                  ></el-input>
+                </el-form-item>
+                <el-form-item prop="val8" v-if="queryConf.yqzl || queryConfFlag">
+                  <el-select
+                    v-model="form.val8"
+                    placeholder="请选择逾期账龄"
+                    clearable
+                  >
+                    <el-option
+                      v-for="item in val8_data"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item prop="val9" v-if="queryConf.ajzt || queryConfFlag">
+                  <el-select
+                    v-model="form.val9"
+                    placeholder="请选择案件状态"
+                    clearable
+                  >
+                    <el-option
+                      v-for="item in val9_data"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item prop="val10" v-if="queryConf.cszt || queryConfFlag">
+                  <el-select
+                    v-model="form.val10"
+                    placeholder="请选择催收状态"
+                    clearable
+                  >
+                    <el-option
+                      v-for="item in val10_data"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item prop="val11" v-if="queryConf.ajlx || queryConfFlag">
+                  <el-select
+                    v-model="form.val11"
+                    placeholder="请选择案件类型"
+                    clearable
+                  >
+                    <el-option
+                      v-for="item in val11_data"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+
+                <el-form-item prop="val29" v-if="queryConf.waje || queryConfFlag">
+                  <el-input
+                    v-model="form.val29"
+                    placeholder="委案金额下限"
+                    clearable
+                  ></el-input>
+                </el-form-item>
+                <el-form-item prop="val13" v-if="queryConf.waje || queryConfFlag">
+                  <el-input
+                    v-model="form.val13"
+                    placeholder="委案金额上限"
+                    clearable
+                  ></el-input>
+                </el-form-item>
+
+                <el-form-item prop="val14" v-if="queryConf.bszt || queryConfFlag">
+                  <el-select
+                    v-model="form.val14"
+                    placeholder="请选择标色状态"
+                    clearable
+                  >
+                    <el-option
+                      v-for="item in val14_data"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item prop="val15" v-if="queryConf.kh || queryConfFlag">
+                  <el-input
+                    v-model="form.val15"
+                    placeholder="卡号"
+                    clearable
+                  ></el-input>
+                </el-form-item>
+                <el-form-item prop="val16" v-if="queryConf.dah || queryConfFlag">
+                  <el-input
+                    v-model="form.val16"
+                    placeholder="档案号"
+                    clearable
+                  ></el-input>
+                </el-form-item>
+                <el-form-item prop="val30" v-if="queryConf.gjcs || queryConfFlag">
+                  <el-input
+                    v-model="form.val30"
+                    placeholder="跟进次数下限"
+                    clearable
+                  ></el-input>
+                </el-form-item>
+                <el-form-item prop="val18" v-if="queryConf.gjcs || queryConfFlag">
+                  <el-input
+                    v-model="form.val18"
+                    placeholder="跟进次数上限"
+                    clearable
+                  ></el-input>
+                </el-form-item>
+
+                <el-form-item prop="val19" v-if="queryConf.sfxfp || queryConfFlag">
+                  <el-select
+                    v-model="form.val19"
+                    placeholder="是否新分配"
+                    clearable
+                  >
+                    <el-option
+                      v-for="item in val19_data"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item prop="val20" v-if="queryConf.hkqk || queryConfFlag">
+                  <el-select
+                    v-model="form.val20"
+                    placeholder="还款情况"
+                    clearable
+                  >
+                    <el-option
+                      v-for="item in val20_data"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+
+                <el-form-item prop="val22" v-if="queryConf.zdyxx || queryConfFlag">
+                  <el-input
+                    v-model="form.val22"
+                    placeholder="自定义信息"
+                    clearable
+                  ></el-input>
+                </el-form-item>
+                <el-form-item prop="val23" v-if="queryConf.csfl || queryConfFlag">
+                  <el-input
+                    v-model="form.val23"
+                    placeholder="催收分类"
+                    clearable
+                  ></el-input>
+                </el-form-item>
+                <el-form-item prop="val24" v-if="queryConf.jmzt || queryConfFlag">
+                  <el-select
+                    v-model="form.val24"
+                    placeholder="减免状态"
+                    clearable
+                  >
+                    <el-option
+                      v-for="item in val24_data"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item prop="val25" v-if="queryConf.bbzt || queryConfFlag">
+                  <el-select
+                    v-model="form.val25"
+                    placeholder="报备状态"
+                    clearable
+                  >
+                    <el-option
+                      v-for="item in val25_data"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item prop="val27" v-if="queryConf.dhhm || queryConfFlag">
+                  <el-input
+                    v-model="form.val27"
+                    placeholder="电话号码"
+                    clearable
+                  ></el-input>
+                </el-form-item>
+                <el-form-item prop="val28" v-if="queryConf.csjl || queryConfFlag">
+                  <el-input
+                    v-model="form.val28"
+                    placeholder="催收记录"
+                    clearable
+                  ></el-input>
+                </el-form-item>
+                <el-form-item prop="val31" v-if="queryConf.ajfprq || queryConfFlag">
+                  <el-date-picker
+                    v-model="form.val31"
+                    value-format="yyyy-MM-dd"
+                    type="daterange"
+                    align="right"
+                    unlink-panels
+                    range-separator="至"
+                    start-placeholder="案件分配起始日期"
+                    end-placeholder="案件分配结束日期"
+                  ></el-date-picker>
+                </el-form-item>
+                <el-form-item prop="val21" v-if="queryConf.yjtarq || queryConfFlag">
+                  <el-date-picker
+                    v-model="form.val21"
+                    value-format="yyyy-MM-dd"
+                    type="daterange"
+                    align="right"
+                    unlink-panels
+                    range-separator="至"
+                    start-placeholder="预计退案起始日期"
+                    end-placeholder="预计退案结束日期"
+                  ></el-date-picker>
+                </el-form-item>
+                <el-form-item prop="val17" v-if="queryConf.yjtarq || queryConfFlag">
+                  <el-date-picker
+                    v-model="form.val17"
+                    value-format="yyyy-MM-dd"
+                    type="daterange"
+                    align="right"
+                    unlink-panels
+                    range-separator="至"
+                    start-placeholder="最后跟进起始日期"
+                    end-placeholder="最后跟进结束日期"
+                  ></el-date-picker>
+                </el-form-item>
+                <el-form-item prop="val12" v-if="queryConf.hkrq || queryConfFlag">
+                  <el-date-picker
+                    v-model="form.val12"
+                    value-format="yyyy-MM-dd"
+                    type="daterange"
+                    align="right"
+                    unlink-panels
+                    range-separator="至"
+                    start-placeholder="还款起始日期"
+                    end-placeholder="还款结束日期"
+                  ></el-date-picker>
+                </el-form-item>
+                <el-form-item prop="val7" v-if="queryConf.warq || queryConfFlag">
+                  <el-date-picker
+                    v-model="form.val7"
+                    type="daterange"
+                    value-format="yyyy-MM-dd"
+                    align="right"
+                    unlink-panels
+                    range-separator="至"
+                    start-placeholder="委案起始日期"
+                    end-placeholder="委案结束日期"
+                  ></el-date-picker>
+                </el-form-item>
+               <!-- <el-popover
                   placement="bottom-end"
                   width="800"
                   popper-class="myCase-pop"
@@ -108,289 +390,8 @@
                     alt="更多"
                     slot="reference"
                   />
-                  <el-form-item prop="val4">
-                    <el-cascader
-                      :options="val4_data"
-                      clearable
-                      placeholder="选择地区"
-                      v-model="form.val4"
-                    ></el-cascader>
-                  </el-form-item>
-                  <el-form-item prop="val5">
-                    <el-input
-                      v-model="form.val5"
-                      placeholder="姓名"
-                      clearable
-                    ></el-input>
-                  </el-form-item>
-                  <el-form-item prop="val6">
-                    <el-input
-                      v-model="form.val6"
-                      placeholder="证件号"
-                      clearable
-                    ></el-input>
-                  </el-form-item>
-                  <el-form-item prop="val8">
-                    <el-select
-                      v-model="form.val8"
-                      placeholder="请选择逾期账龄"
-                      clearable
-                    >
-                      <el-option
-                        v-for="item in val8_data"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value"
-                      ></el-option>
-                    </el-select>
-                  </el-form-item>
-                  <el-form-item prop="val9">
-                    <el-select
-                      v-model="form.val9"
-                      placeholder="请选择案件状态"
-                      clearable
-                    >
-                      <el-option
-                        v-for="item in val9_data"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value"
-                      ></el-option>
-                    </el-select>
-                  </el-form-item>
-                  <el-form-item prop="val10">
-                    <el-select
-                      v-model="form.val10"
-                      placeholder="请选择催收状态"
-                      clearable
-                    >
-                      <el-option
-                        v-for="item in val10_data"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value"
-                      ></el-option>
-                    </el-select>
-                  </el-form-item>
-                  <el-form-item prop="val11">
-                    <el-select
-                      v-model="form.val11"
-                      placeholder="请选择案件类型"
-                      clearable
-                    >
-                      <el-option
-                        v-for="item in val11_data"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value"
-                      ></el-option>
-                    </el-select>
-                  </el-form-item>
 
-                  <el-form-item prop="val29">
-                    <el-input
-                      v-model="form.val29"
-                      placeholder="委案金额下限"
-                      clearable
-                    ></el-input>
-                  </el-form-item>
-                  <el-form-item prop="val13">
-                    <el-input
-                      v-model="form.val13"
-                      placeholder="委案金额上限"
-                      clearable
-                    ></el-input>
-                  </el-form-item>
-
-                  <el-form-item prop="val14">
-                    <el-select
-                      v-model="form.val14"
-                      placeholder="请选择标色状态"
-                      clearable
-                    >
-                      <el-option
-                        v-for="item in val14_data"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value"
-                      ></el-option>
-                    </el-select>
-                  </el-form-item>
-                  <el-form-item prop="val15">
-                    <el-input
-                      v-model="form.val15"
-                      placeholder="卡号"
-                      clearable
-                    ></el-input>
-                  </el-form-item>
-                  <el-form-item prop="val16">
-                    <el-input
-                      v-model="form.val16"
-                      placeholder="档案号"
-                      clearable
-                    ></el-input>
-                  </el-form-item>
-                  <el-form-item prop="val30">
-                    <el-input
-                      v-model="form.val30"
-                      placeholder="跟进次数下限"
-                      clearable
-                    ></el-input>
-                  </el-form-item>
-                  <el-form-item prop="val18">
-                    <el-input
-                      v-model="form.val18"
-                      placeholder="跟进次数上限"
-                      clearable
-                    ></el-input>
-                  </el-form-item>
-
-                  <el-form-item prop="val19">
-                    <el-select
-                      v-model="form.val19"
-                      placeholder="是否新分配"
-                      clearable
-                    >
-                      <el-option
-                        v-for="item in val19_data"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value"
-                      ></el-option>
-                    </el-select>
-                  </el-form-item>
-                  <el-form-item prop="val20">
-                    <el-select
-                      v-model="form.val20"
-                      placeholder="还款情况"
-                      clearable
-                    >
-                      <el-option
-                        v-for="item in val20_data"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value"
-                      ></el-option>
-                    </el-select>
-                  </el-form-item>
-
-                  <el-form-item prop="val22">
-                    <el-input
-                      v-model="form.val22"
-                      placeholder="自定义信息"
-                      clearable
-                    ></el-input>
-                  </el-form-item>
-                  <el-form-item prop="val23">
-                    <el-input
-                      v-model="form.val23"
-                      placeholder="催收分类"
-                      clearable
-                    ></el-input>
-                  </el-form-item>
-                  <el-form-item prop="val24">
-                    <el-select
-                      v-model="form.val24"
-                      placeholder="减免状态"
-                      clearable
-                    >
-                      <el-option
-                        v-for="item in val24_data"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value"
-                      ></el-option>
-                    </el-select>
-                  </el-form-item>
-                  <el-form-item prop="val25">
-                    <el-select
-                      v-model="form.val25"
-                      placeholder="报备状态"
-                      clearable
-                    >
-                      <el-option
-                        v-for="item in val25_data"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value"
-                      ></el-option>
-                    </el-select>
-                  </el-form-item>
-                  <el-form-item prop="val27">
-                    <el-input
-                      v-model="form.val27"
-                      placeholder="电话号码"
-                      clearable
-                    ></el-input>
-                  </el-form-item>
-                  <el-form-item prop="val28">
-                    <el-input
-                      v-model="form.val28"
-                      placeholder="催收记录"
-                      clearable
-                    ></el-input>
-                  </el-form-item>
-                  <el-form-item prop="val31">
-                    <el-date-picker
-                      v-model="form.val31"
-                      value-format="yyyy-MM-dd"
-                      type="daterange"
-                      align="right"
-                      unlink-panels
-                      range-separator="至"
-                      start-placeholder="案件分配起始日期"
-                      end-placeholder="案件分配结束日期"
-                    ></el-date-picker>
-                  </el-form-item>
-                  <el-form-item prop="val21">
-                    <el-date-picker
-                      v-model="form.val21"
-                      value-format="yyyy-MM-dd"
-                      type="daterange"
-                      align="right"
-                      unlink-panels
-                      range-separator="至"
-                      start-placeholder="预计退案起始日期"
-                      end-placeholder="预计退案结束日期"
-                    ></el-date-picker>
-                  </el-form-item>
-                  <el-form-item prop="val17">
-                    <el-date-picker
-                      v-model="form.val17"
-                      value-format="yyyy-MM-dd"
-                      type="daterange"
-                      align="right"
-                      unlink-panels
-                      range-separator="至"
-                      start-placeholder="最后跟进起始日期"
-                      end-placeholder="最后跟进结束日期"
-                    ></el-date-picker>
-                  </el-form-item>
-                  <el-form-item prop="val12">
-                    <el-date-picker
-                      v-model="form.val12"
-                      value-format="yyyy-MM-dd"
-                      type="daterange"
-                      align="right"
-                      unlink-panels
-                      range-separator="至"
-                      start-placeholder="还款起始日期"
-                      end-placeholder="还款结束日期"
-                    ></el-date-picker>
-                  </el-form-item>
-                  <el-form-item prop="val7">
-                    <el-date-picker
-                      v-model="form.val7"
-                      type="daterange"
-                      value-format="yyyy-MM-dd"
-                      align="right"
-                      unlink-panels
-                      range-separator="至"
-                      start-placeholder="委案起始日期"
-                      end-placeholder="委案结束日期"
-                    ></el-date-picker>
-                  </el-form-item>
-                </el-popover>
+                </el-popover>-->
                 <el-form-item>
                   <el-button
                     type="primary"
@@ -614,16 +615,45 @@
     <el-dialog
       title="查询条件配置"
       :visible.sync="showQueryConfVisible"
-      width="40%"
+      width="60%"
       center
     >
-      <el-row>
+      <el-row class="pad">
 
-            <el-checkbox v-model="queryConf.client" label="1" >委托方</el-checkbox>
-            <el-checkbox v-model="queryConf.batch" label="2" >批次号</el-checkbox>
-            <el-checkbox v-model="queryConf.seqNo" label="3" >个案序列号</el-checkbox>
-            <el-checkbox v-model="queryConf.gjrq" label="4" >跟进日期</el-checkbox>
-            <el-checkbox v-model="queryConf.area" label="5" >地区</el-checkbox>
+        <el-checkbox v-model="queryConf.wtf" label="1" >委托方</el-checkbox>
+        <el-checkbox v-model="queryConf.pch" label="2" >批次号</el-checkbox>
+        <el-checkbox v-model="queryConf.gaxlh" label="3" >个案序列号</el-checkbox>
+        <el-checkbox v-model="queryConf.xcgjrq" label="4" >下次跟进日期</el-checkbox>
+        <el-checkbox v-model="queryConf.dq" label="5" >地区</el-checkbox>
+
+        <el-checkbox v-model="queryConf.xm" label="1" >姓名</el-checkbox>
+        <el-checkbox v-model="queryConf.zjh" label="2" >证件号</el-checkbox>
+        <el-checkbox v-model="queryConf.yqzl" label="3" >逾期账龄</el-checkbox>
+        <el-checkbox v-model="queryConf.ajzt" label="4" >案件状态</el-checkbox>
+        <el-checkbox v-model="queryConf.cszt" label="5" >催收状态</el-checkbox>
+
+        <el-checkbox v-model="queryConf.ajlx" label="1" >案件类型</el-checkbox>
+        <el-checkbox v-model="queryConf.waje" label="2" >委案金额</el-checkbox>
+        <el-checkbox v-model="queryConf.bszt" label="4" >标色状态</el-checkbox>
+        <el-checkbox v-model="queryConf.kh" label="5" >卡号</el-checkbox>
+
+        <el-checkbox v-model="queryConf.dah" label="1" >档案号</el-checkbox>
+        <el-checkbox v-model="queryConf.gjcs" label="2" >跟进次数</el-checkbox>
+        <el-checkbox v-model="queryConf.sfxfp" label="3" >是否新分配</el-checkbox>
+        <el-checkbox v-model="queryConf.hkqk" label="4" >还款情况</el-checkbox>
+        <el-checkbox v-model="queryConf.zdyxx" label="5" >自定义信息</el-checkbox>
+
+        <el-checkbox v-model="queryConf.csfl" label="1" >催收分类</el-checkbox>
+        <el-checkbox v-model="queryConf.jmzt" label="2" >减免状态</el-checkbox>
+        <el-checkbox v-model="queryConf.bbzt" label="3" >报备状态</el-checkbox>
+        <el-checkbox v-model="queryConf.dhhm" label="4" >电话号码</el-checkbox>
+
+        <el-checkbox v-model="queryConf.csjl" label="5" >催收记录</el-checkbox>
+        <el-checkbox v-model="queryConf.ajfprq" label="5" >案件分配日期</el-checkbox>
+        <el-checkbox v-model="queryConf.yjtarq" label="5" >预计退案日期</el-checkbox>
+        <el-checkbox v-model="queryConf.zhgjrq" label="5" >最后跟进日期</el-checkbox>
+        <el-checkbox v-model="queryConf.hkrq" label="5" >还款日期</el-checkbox>
+        <el-checkbox v-model="queryConf.warq" label="5" >委案日期</el-checkbox>
 
       </el-row>
       <span slot="footer" class="footer">
@@ -639,6 +669,8 @@ import tab2 from "./collect-status-statistics";
 import tab3 from "./collect-repayment-statistics";
 import {
   pageMyCase,
+  saveSelectFilter,
+  selectByModule,
   getEnum,
   markColor,
   addSynergy,
@@ -669,6 +701,7 @@ export default {
       tableData: [],
       showQueryConfVisible:false,
       queryConf:{},
+      queryConfFlag:true,
       fetchData: {},
       form: {
         val0: null, //委托方
@@ -961,10 +994,31 @@ export default {
   },
   created() {
     this.init();
+    this.queryConfList();
   },
   methods: {
     saveConf(){
       this.showQueryConfVisible = false;
+      let queryObj = {module:"collect-my-case",menu:this.queryConf}
+      saveSelectFilter(queryObj).then(data => {
+        this.$message({
+          message: "配置成功",
+          type: "success"
+        });
+        this.queryConfList();
+      });
+    },
+    queryConfList(){
+
+      let queryObj = {module:"collect-my-case",menu:this.queryConf}
+      selectByModule(queryObj).then(data => {
+          if (data){
+            this.queryConf = JSON.parse(data.menu);
+            this.queryConfFlag = false;
+          }else{
+            this.queryConfFlag = true;
+          }
+      });
     },
     showQueryConf(){
         this.showQueryConfVisible = true;
@@ -1174,9 +1228,10 @@ export default {
 #collect-my-case {
 
   .pad{
-     /* .el-col{
-        margin-right: 40px;
-      }*/
+     .el-checkbox{
+        width:24%;
+       margin-right: 0px;
+     }
   }
 }
 </style>
