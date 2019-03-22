@@ -72,7 +72,7 @@
         class="table-wrap"
         height="1"
       >
-        <el-table-column v-if="currentEnum.name==='催收区域'" prop="id" label="催收区域ID">
+        <el-table-column v-if="currentEnum.name==='催收区域' || currentEnum.name==='催收结果'" prop="id" label="催收区域ID">
           <template slot-scope="scope">
             <span>{{scope.row.id}}</span>
           </template>

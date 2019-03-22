@@ -63,3 +63,9 @@ body .el-dropdown.active .el-icon-arrow-down{
 body .el-dropdown .el-icon-arrow-down{
   transition: all .2s linear;
 }
+.cell .el-button--text{
+  user-select: initial;
+}
+.el-select-dropdown .popper__arrow{
+  display: none !important;
+}

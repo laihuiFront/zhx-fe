@@ -45,6 +45,16 @@
             placeholder="请输入角色名称"
           ></el-input>
         </el-form-item>
+        <el-form-item label="数据权限" prop="dataAuth">
+          <el-select v-model="formInline.status" filterable  placeholder="请选择数据权限" clearable>
+            <el-option
+              v-for="item in dataAuthList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="角色描述" prop="roleDesc">
           <el-input
             type="textarea"
@@ -88,6 +98,7 @@ export default {
       queryForm: {
       },
       roleList: [],
+      dataAuthList:[{id:1,name:"具有数据权限"},{id:2,name:"不具有数据权限"}],
       dialogData: {
         editVisible: false,
         title: '新增角色',

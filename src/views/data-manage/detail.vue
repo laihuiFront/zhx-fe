@@ -171,6 +171,7 @@
                   placement="bottom-start"
                   title="添加评语"
                   width="400"
+                  :visible-arrow="false"
                   trigger="click"
                   v-model="addCommentVisible">
                   <div>

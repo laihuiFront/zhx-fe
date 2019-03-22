@@ -7,7 +7,7 @@
    element-loading-background="rgba(0, 0, 0, 0.7)">
     <el-form ref="form" :model="formInline" :inline="true" class="query-wrap">
       <el-form-item >
-        <el-select v-model="formInline.collectArea" placeholder="请选择催收区域" clearable>
+        <el-select v-model="formInline.collectArea" :visible-arrow="false" placeholder="请选择催收区域" clearable>
           <el-option
             v-for="item in areaList"
             :key="item.id"
@@ -102,7 +102,7 @@
               <el-input  type="textarea" v-model="formInline.cardNo" placeholder="请输入卡号" style="width: 100%;" rows="3"></el-input>
             </li>
             <li class="condition-item five-one">
-              <el-input v-model="formInline.seqNo" placeholder="请输入个案序列号"></el-input>
+              <el-input type="textarea" v-model="formInline.seqNo" placeholder="请输入个案序列号" style="width: 100%;" rows="3"></el-input>
             </li>
             <li class="condition-item five-one">
               <el-input  type="textarea" v-model="formInline.identNo" style="width: 100%;" placeholder="请输入证件号" rows="3"></el-input>
@@ -406,7 +406,7 @@
     
     </el-form>
     <el-row :gutter="24">
-      <el-col :span="18">
+      <el-col :span="18" style="    width: 100%;">
         <div class="grid-content bg-purple">
           <span>查询结果统计：</span>
           <span class="textColor">列表案量：{{totalCaseNum}}件，</span>
