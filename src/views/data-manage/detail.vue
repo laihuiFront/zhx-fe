@@ -1116,7 +1116,77 @@
                   </el-table-column>
                 </el-table>
               </el-tab-pane>
-
+              <el-tab-pane label="案件登帐" name="8" class="tabs-wrap billing-wrap">
+                <div class="first">
+                  <p style="line-height: 30px">PTP记录</p>
+                  <el-table
+                    width="100%"
+                    :data="ptpList">
+                    <el-table-column
+                      prop="content"
+                      show-overflow-tooltip
+                      label="PTP金额">
+                    </el-table-column>
+                    <el-table-column
+                      prop="content"
+                      show-overflow-tooltip
+                      label="PTP时间">
+                    </el-table-column>
+                    <el-table-column
+                      prop="content"
+                      show-overflow-tooltip
+                      label="录入人">
+                    </el-table-column>
+                  </el-table>
+                </div>
+                <div class="second">
+                  <p style="line-height: 30px">CP记录 <el-button type="text" @click="addCpInfo">新增</el-button></p>
+                  <el-table
+                    width="100%"
+                    :data="cpList">
+                    <el-table-column
+                      prop="cpMoneyMsg"
+                      show-overflow-tooltip
+                      label="CP金额">
+                    </el-table-column>
+                    <el-table-column
+                      prop="cpDate"
+                      show-overflow-tooltip
+                      label="CP时间">
+                    </el-table-column>
+                    <el-table-column
+                      prop="repayUser"
+                      show-overflow-tooltip
+                      label="还款人">
+                    </el-table-column>
+                    <el-table-column
+                      prop="repayType"
+                      show-overflow-tooltip
+                      label="还款方式">
+                    </el-table-column>
+                    <el-table-column
+                      prop="confirmMoneyMsg"
+                      show-overflow-tooltip
+                      label="确认还款">
+                    </el-table-column>
+                    <el-table-column
+                      prop="repayDate"
+                      show-overflow-tooltip
+                      label="还款日期">
+                    </el-table-column>
+                    <el-table-column
+                      prop="confirmDate"
+                      show-overflow-tooltip
+                      label="确认时间">
+                    </el-table-column>
+                    <el-table-column
+                      prop="remark"
+                      show-overflow-tooltip
+                      label="备注">
+                    </el-table-column>
+                  </el-table>
+                </div>
+              </el-tab-pane>
               <el-tab-pane label="协催" name="9" class="tabs-wrap">
                 <div class="operation">
                   <div class="left-oper">
@@ -1672,6 +1742,42 @@
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogAddrVisible = false">取 消</el-button>
         <el-button type="primary" @click="saveAddr">确 定</el-button>
+      </span>
+    </el-dialog>
+    <el-dialog
+      title="新建CP"
+      :visible.sync="dialogCpVisible"
+      width="45%"
+      append-to-body
+      class="addr-dialog-wrap"
+      >
+      <el-form :inline="true" :model="cpInfo" class="address-form" label-width="80px">
+        <el-form-item label="CP金额">
+          <el-input v-model="cpInfo.cpMoney" placeholder="请输入CP金额"></el-input>
+        </el-form-item>
+        <el-form-item label="CP时间">
+          <el-date-picker v-model="cpInfo.cpDate" type="date" placeholder="选择日期"></el-date-picker>
+        </el-form-item>
+        <el-form-item label="还款人">
+          <el-input v-model="cpInfo.repayUser" placeholder="请输入还款人"></el-input>
+        </el-form-item>
+        <el-form-item label="还款方式">
+          <el-select v-model="cpInfo.repayType" placeholder="请选择还款方式" clearable>
+            <el-option
+              v-for="item in repayTypeList"
+              :key="item.code"
+              :label="item.typeName"
+              :value="item.code">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="备注" class="whole">
+          <el-input type="textarea" v-model="cpInfo.remark"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogCpVisible = false">取 消</el-button>
+        <el-button type="primary" @click="saveCpInfo">确 定</el-button>
       </span>
     </el-dialog>
     <el-dialog
@@ -2241,6 +2347,9 @@ import {getCaseDetail,
         getHistoryAddrList,
         expDataCollect,
         saveDataCollectDetail,
+        getCPList,
+        getRepayList,
+        saveBank
         } from '@/common/js/api-detail'
 import {getEnum} from '@/common/js/api-sync'
 	  import {baseURL} from '@/common/js/request.js';
@@ -2322,12 +2431,17 @@ export default {
       header:{Authorization:localStorage.token},
       legalList:[],
       currentRow:{},
-        header:{Authorization:localStorage.token},
-        archiveInfo:{},
-        dialogArchiveVisible:false,
-        dataCollectInfo:{},
-        dialogDataCollectVisible:false,
-        fileNames:{file:'',caseId:'',id:''}
+      header:{Authorization:localStorage.token},
+      archiveInfo:{},
+      dialogArchiveVisible:false,
+      dataCollectInfo:{},
+      dialogDataCollectVisible:false,
+      fileNames:{file:'',caseId:'',id:''},
+      cpList: [],
+      cpInfo: {},
+      dialogCpVisible: false,
+      repayTypeList: [],
+      ptpList: []
     }
   },
   methods: {
@@ -2722,6 +2836,23 @@ AddtableList(this.id,this.messageForm).then((response)=>{
       this.dataCollectEditType = 'add'
   		this.dialogDataCollectVisible=true
     },
+    addCpInfo() {
+      this.cpInfo = {}
+      this.dialogCpVisible = true
+    },
+    saveCpInfo() {
+      this.cpInfo.dataCase = {id:this.id}
+      saveBank(this.cpInfo).then(data => {
+        getCPList(this.id).then(cpList => {
+          this.cpList = cpList
+        })
+        this.$message({
+          type: 'success',
+          message: '新建CP记录成功'
+        })
+        this.dialogCpVisible = false
+      })
+    },
     saveAddr(){
       let result = this.addressInfo
       result.caseId = this.id
@@ -3067,6 +3198,9 @@ AddtableList(this.id,this.messageForm).then((response)=>{
       pageDataFile(this.id).then((response)=>{
         this.uploadFileList=response
       })
+      getRepayList().then(data => {
+        this.repayTypeList = data
+      })
     },
     showPanel(tab,e){
       console.log(tab)
@@ -3095,6 +3229,10 @@ AddtableList(this.id,this.messageForm).then((response)=>{
       }else if (ind == '利息更新'){//利息
         getInterestDetail(this.id).then(data => {
           this.rateUpdateList = data
+        })
+      }else if (ind == '案件登帐'){//案件登帐
+        getCPList(this.id).then(data => {
+          this.cpList = data
         })
       }else if (ind == '协催'){//协催
         this.syncType = 1
@@ -3230,8 +3368,12 @@ AddtableList(this.id,this.messageForm).then((response)=>{
             justify-content: space-between;
           }
           &.billing-wrap{
+            width: 100%;
             display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
             .first{
+              flex: 0 0 35%;
               width: 35%;
             }
             .second{

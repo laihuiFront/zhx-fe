@@ -423,3 +423,30 @@ export function saveResult(data){
     data
   })
 }
+
+export function getCPList(caseId){
+  return request({
+    url: 'bankReconciliation/listByCaseId',
+    method: 'post',
+    data:{
+      dataCase: {
+        id: caseId
+      }
+    }
+  })
+}
+
+export function getRepayList() {
+  return request({
+    url: '/bankReconciliation/listRepayType',
+    method: 'post'
+  })
+}
+
+export function saveBank(data) {
+  return request({
+    url: 'bankReconciliation/saveBank',
+    method: 'post',
+    data
+  })
+}
