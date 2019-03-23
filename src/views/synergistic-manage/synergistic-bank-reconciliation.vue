@@ -35,7 +35,7 @@
       stripe
       :data="recordList"
       height="1"
-      style="width: 100%"
+      style="width: 100%;min-height: 400px;margin-bottom: 40px;"
       class="table-wrap">
       <el-table-column type="selection" width="50" align="center" ></el-table-column>
       <el-table-column sortable="custom" width="120" align="center"  :sort-orders="['ascending','descending']" prop="dataCase.batchNo" label="批次号" show-overflow-tooltip></el-table-column>
@@ -342,6 +342,18 @@ export default {
 
 <style lang="scss">
 #synergistic-bank-reconciliation{
+  .el-tabs__content{
+
+    overflow-y: auto;
+  }
+  .pagination-wrap{
+    position: fixed;
+    bottom: 0;
+    z-index: 100;
+    min-height: 40px;
+    background-color: white;
+    width: 100%;
+  }
   .add-form {
     display: flex;
     flex-wrap: wrap;

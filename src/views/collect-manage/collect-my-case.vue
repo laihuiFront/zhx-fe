@@ -375,23 +375,7 @@
                     end-placeholder="委案结束日期"
                   ></el-date-picker>
                 </el-form-item>
-               <!-- <el-popover
-                  placement="bottom-end"
-                  width="800"
-                  popper-class="myCase-pop"
-                  trigger="click"
-                  :visible-arrow="false"
-                >
-                  <img
-                    style="cursor: pointer;vertical-align: middle;margin-top: 8px;margin-right: 8px;"
-                    src="./zhankai.png"
-                    width="12"
-                    height="12"
-                    alt="更多"
-                    slot="reference"
-                  />
 
-                </el-popover>-->
                 <el-form-item>
                   <el-button
                     type="primary"
@@ -408,13 +392,7 @@
                     >重置</el-button
                   >
                 </el-form-item>
-                <el-form-item>
-                  <el-button
-                    type="primary"
-                    @click="showQueryConf"
-                  >查询条件配置</el-button
-                  >
-                </el-form-item>
+
                 <el-form-item>
                   <el-dropdown
                     @command="colorHandle"
@@ -585,13 +563,7 @@
             header-align="center"
             align="center"
           ></el-table-column>
-          <!--<el-table-column label="操作" show-overflow-tooltip>-->
-          <!--<template slot-scope="scope">-->
-          <!--<el-button type="text" size="small">导入</el-button>-->
-          <!--<el-button type="text" size="small">下载</el-button>-->
-          <!--<el-button type="text" size="small">编辑</el-button>-->
-          <!--</template>-->
-          <!--</el-table-column>-->
+
         </el-table>
         <el-pagination
           class="pagination-wrap"

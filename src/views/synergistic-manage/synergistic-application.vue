@@ -13,6 +13,7 @@
       @reset="onClickReset"
       @query="onClickQuery"
       :queryForm="queryForm">
+
         <el-button type="primary" v-if="queryForm.applyStatus==='0'" @click="onClickBatchApprove(1)" v-has="'同意协催'">同意协催</el-button>
         <el-popover
           v-has="'完成协催'"
@@ -74,7 +75,7 @@
       border
       stripe
       :data="recordList"
-      style="width: 100%"
+      style="width: 100%;min-height: 400px;margin-bottom: 40px;"
       height="1"
       class="table-wrap">
       <el-table-column type="selection" width="50" align="center"></el-table-column>
@@ -155,6 +156,8 @@
     <el-button type="primary" @click="changeRadio">确 定</el-button>
   </span>
 </el-dialog>
+
+
   </div>
 </template>
 
@@ -174,6 +177,7 @@ export default {
     	loading2:false,
     	fullscreenLoading:false,
       tableLoad:false,
+
       action:baseURL,
       header:{Authorization:localStorage.token},
       recordList: [],
@@ -195,9 +199,10 @@ export default {
     }
   },
   created() {
-    this.onClickQuery()
+    this.onClickQuery();
   },
   methods: {
+
   	changeRadio(){
   		if(this.radio==1){
 expAllSynergisticRecord(this.queryForm).then(res => {
@@ -379,6 +384,19 @@ expCurrentSynergisticRecord(this.queryForm).then(res => {
 </script>
 
 <style lang="scss">
-#synergistic-application{}
+#synergistic-application{
+  .el-tabs__content{
+
+    overflow-y: auto;
+  }
+  .pagination-wrap{
+    position: fixed;
+    bottom: 0;
+    z-index: 100;
+    min-height: 40px;
+    background-color: white;
+    width: 100%;
+  }
+}
 </style>
 

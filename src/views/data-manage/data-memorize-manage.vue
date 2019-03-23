@@ -7,7 +7,7 @@
     element-loading-background="rgba(0, 0, 0, 0.8)"
     class="page-wraper-sub">
     <el-form id="repay-record-query" :model="formInline" :inline="true" class="query-wrap">
-      <el-form-item >
+      <el-form-item  v-if="queryConf.csqy || queryConfFlag">
         <el-select v-model="formInline.area" placeholder="请选择催收区域" clearable>
           <el-option
             v-for="item in areaList"
@@ -17,7 +17,7 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item >
+      <el-form-item  v-if="queryConf.bm || queryConfFlag">
         <el-select v-model="formInline.dept" placeholder="部门" clearable>
           <el-option
             v-for="item in departmentList"
@@ -25,8 +25,9 @@
             :label="item.orgName"
             :value="item.id">
           </el-option>
-        </el-select>   </el-form-item>
-      <el-form-item >
+        </el-select>
+      </el-form-item>
+      <el-form-item v-if="queryConf.csy || queryConfFlag">
         <el-select v-model="formInline.odvs" filterable collapse-tags multiple  placeholder="请选择催收员" clearable>
           <el-option
             v-for="item in PersonList"
@@ -35,8 +36,8 @@
             :value="item.id">
           </el-option>
         </el-select>   </el-form-item>
-      <el-form-item >
-        <el-select v-model="formInline.measure" placeholder="催收措施" clearable>
+      <el-form-item v-if="queryConf.cscs || queryConfFlag">
+        <el-select v-model="formInline.measure"  placeholder="催收措施" clearable>
           <el-option
             v-for="item in sectionList"
             :key="item.id"
@@ -45,60 +46,23 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item>
-        <el-popover
-          placement="bottom-end"
-          width="700"
-          :visible-arrow="false"
-          trigger="click">
-          <ul class="condition-wrap">
-            <li class="condition-item">
-              <el-input v-model="formInline.batchNo" placeholder="请输入批次号"></el-input>
-            </li>
-            <li class="condition-item">
-              <el-input v-model="formInline.identNo" placeholder="请输入证件号"></el-input>
-            </li>
-            <li class="condition-item">
-              <el-input v-model="formInline.cardNo" placeholder="请输入卡号"></el-input>
-            </li>
-            <li class="condition-item">
-              <el-input v-model="formInline.collectInfo" placeholder="请输入催收记录"></el-input>
-            </li>
-            <li class="condition-item">
-              <el-input v-model="formInline.seqno" placeholder="请输入个案序列号"></el-input>
-            </li>
-            <li class="condition-item">
-              <el-select v-model="formInline.dept" placeholder="请选择部门" clearable>
-                <el-option
-                  v-for="item in departmentList"
-                  :key="item.id"
-                  :label="item.orgName"
-                  :value="item.id">
-                </el-option>
-              </el-select>
-            </li>
-            <li class="condition-item">
-              <el-select v-model="formInline.area" placeholder="请选择催收区域" clearable>
-                <el-option
-                  v-for="item in areaList"
-                  :key="item.id"
-                  :label="item.name"
-                  :value="item.id">
-                </el-option>
-              </el-select>
-            </li>
-            <li class="condition-item">
-              <el-select v-model="formInline.odvs" collapse-tags  filterable multiple  placeholder="请选择催收员" clearable>
-                <el-option
-                  v-for="item in PersonList"
-                  :key="item.createTime"
-                  :label="item.userName"
-                  :value="item.id">
-                </el-option>
-              </el-select>
-            </li>
-            <li class="condition-item">
-              <el-select v-model="formInline.result" placeholder="请选择催收结果" clearable>
+      <el-form-item v-if="queryConf.pch || queryConfFlag">
+              <el-input v-model="formInline.batchNo"  placeholder="请输入批次号"></el-input>
+      </el-form-item>
+        <el-form-item v-if="queryConf.zjh || queryConfFlag">
+              <el-input v-model="formInline.identNo"  placeholder="请输入证件号"></el-input>
+        </el-form-item>
+          <el-form-item v-if="queryConf.kh || queryConfFlag">
+              <el-input v-model="formInline.cardNo"  placeholder="请输入卡号"></el-input>
+          </el-form-item>
+            <el-form-item v-if="queryConf.csjl || queryConfFlag">
+              <el-input v-model="formInline.collectInfo"  placeholder="请输入催收记录"></el-input>
+            </el-form-item>
+            <el-form-item v-if="queryConf.gaxlh || queryConfFlag">
+              <el-input v-model="formInline.seqno"  placeholder="请输入个案序列号"></el-input>
+            </el-form-item>
+            <el-form-item v-if="queryConf.csjg || queryConfFlag">
+              <el-select v-model="formInline.result"  placeholder="请选择催收结果" clearable>
                 <el-option
                   v-for="item in EndList"
                   :key="item.id"
@@ -106,9 +70,9 @@
                   :value="item.id">
                 </el-option>
               </el-select>
-            </li>
-            <li class="condition-item">
-              <el-select v-model="formInline.clients" collapse-tags  filterable multiple placeholder="请选择委托方" clearable>
+            </el-form-item>
+            <el-form-item v-if="queryConf.wtf || queryConfFlag">
+              <el-select v-model="formInline.clients" collapse-tags   filterable multiple placeholder="请选择委托方" clearable>
                 <el-option
                   v-for="item in clientList"
                   :key="item.id"
@@ -116,18 +80,9 @@
                   :value="item.id">
                 </el-option>
               </el-select>
-            </li>
-            <li class="condition-item">
-              <el-select v-model="formInline.measure" placeholder="请选择催收措施" clearable>
-                <el-option
-                  v-for="item in EndList"
-                  :key="item.id"
-                  :label="item.name"
-                  :value="item.id">
-                </el-option>
-              </el-select>
-            </li>
-            <li class="condition-item">
+            </el-form-item>
+
+            <el-form-item v-if="queryConf.ajzt || queryConfFlag">
               <el-select v-model="formInline.caseStatus" filterable  placeholder="请选择案件状态" clearable>
                 <el-option
                   v-for="item in caseStatusList"
@@ -136,9 +91,9 @@
                   :value="item.id">
                 </el-option>
               </el-select>
-            </li>
-            <li class="condition-item">
-              <el-select v-model="formInline.color" filterable  placeholder="请选择标色状态" clearable>
+            </el-form-item>
+            <el-form-item v-if="queryConf.bszt || queryConfFlag">
+              <el-select v-model="formInline.color" filterable   placeholder="请选择标色状态" clearable>
                 <el-option
                   v-for="item in val14_data"
                   :key="item.label"
@@ -146,8 +101,8 @@
                   :value="item.value">
                 </el-option>
               </el-select>
-            </li>
-            <li class="condition-item half">
+            </el-form-item>
+           <el-form-item v-if="queryConf.csrq || queryConfFlag">
               <el-date-picker
                   v-model="formInline.collectTime"
                   type="daterange"
@@ -159,8 +114,8 @@
                   end-placeholder="催收结束日期"
                 >
                 </el-date-picker>
-            </li>
-            <li class="condition-item half">
+           </el-form-item>
+            <el-form-item v-if="queryConf.warq || queryConfFlag">
               <el-date-picker
                 v-model="formInline.bailTime"
                 type="daterange"
@@ -172,8 +127,8 @@
                 end-placeholder="委案结束日期"
               >
               </el-date-picker>
-            </li>
-            <li class="condition-item half">
+            </el-form-item>
+            <el-form-item v-if="queryConf.yjtarq || queryConfFlag">
               <el-date-picker
                   v-model="formInline.expectTime"
                   type="daterange"
@@ -185,12 +140,12 @@
                   end-placeholder="预计退案结束日期"
                 >
                 </el-date-picker>
-            </li>
-          </ul>
-          <img src="./down.png" width="12"  height="12" style="margin-right: 8px;" alt="更多" slot="reference">
-        </el-popover>
+          </el-form-item>
+
+      <el-form-item>
         <el-button type="primary" icon="el-icon-search" @click="search">查询</el-button>
         <el-button type="primary" icon="el-icon-refresh" @click="resetForm">重置</el-button>
+        <el-button type="primary" @click="showQueryConf">查询条件配置</el-button>
         <el-button type="primary" @click="open7" v-has="'删除催记'">删除催记</el-button>
         <el-button type="primary" @click="selectDataCollectExport" v-has="'导出所选借改'">导出所选催记</el-button>
         <el-button type="primary" @click="dialogVisible2 = true" v-has="'导出查询结果'">导出查询结果</el-button>
@@ -206,7 +161,7 @@
       stripe
       tooltip-effect="dark"
       @row-dblclick="showCase"
-      style="width: 100%"
+      style="width: 100%;margin-bottom: 40px;"
       @sort-change="handleSort"
       @selection-change="handleSelectionChange">
       <el-table-column
@@ -451,18 +406,53 @@
         <el-form-item>
           <el-radio v-model="radio" label="2" >按查询条件导出当前分页</el-radio>
         </el-form-item>
-      
+
       </el-form>
        <span slot="footer" class="footer">
     <el-button @click="dialogVisible2 = false">取 消</el-button>
     <el-button type="primary" @click="changeRadio">确 定</el-button>
   </span>
     </el-dialog>
+
+    <el-dialog
+      title="查询条件配置"
+      :visible.sync="showQueryConfVisible"
+      width="60%"
+      center
+    >
+      <el-row class="pad">
+
+        <el-checkbox v-model="queryConf.csqy" label="1" >催收区域</el-checkbox>
+        <el-checkbox v-model="queryConf.bm" label="2" >部门</el-checkbox>
+        <el-checkbox v-model="queryConf.csy" label="3" >催收员</el-checkbox>
+        <el-checkbox v-model="queryConf.cscs" label="4" >催收措施</el-checkbox>
+        <el-checkbox v-model="queryConf.pch" label="5" >批次号</el-checkbox>
+
+        <el-checkbox v-model="queryConf.zjh" label="2" >证件号</el-checkbox>
+        <el-checkbox v-model="queryConf.kh" label="3" >卡号</el-checkbox>
+        <el-checkbox v-model="queryConf.csjl" label="4" >催收记录</el-checkbox>
+        <el-checkbox v-model="queryConf.gaxlh" label="5" >个案序列号</el-checkbox>
+
+        <el-checkbox v-model="queryConf.csjg" label="1" >催收结果</el-checkbox>
+        <el-checkbox v-model="queryConf.wtf" label="2" >委托方</el-checkbox>
+        <el-checkbox v-model="queryConf.ajzt" label="4" >案件状态</el-checkbox>
+        <el-checkbox v-model="queryConf.bszt" label="5" >标色状态</el-checkbox>
+
+        <el-checkbox v-model="queryConf.csrq" label="1" >催收日期</el-checkbox>
+        <el-checkbox v-model="queryConf.wtrq" label="2" >委托日期</el-checkbox>
+        <el-checkbox v-model="queryConf.yjtarq" label="3" >预计退案日期</el-checkbox>
+
+      </el-row>
+      <span slot="footer" class="footer">
+        <el-button @click="showQueryConfVisible = false">取 消</el-button>
+        <el-button type="primary" @click="saveConf">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-  import {search,dataList,areaList,pageDataExport,selectDataExport,totalDataExport,remoweData,caseTypeList,clientList,EndList,PersonList,departmentList,deleteDataCollectRecord,updateDataCollectRecord} from '@/common/js/data-memorize-manage.js'
+  import {search,dataList,areaList,saveSelectFilter, selectByModule,pageDataExport,selectDataExport,totalDataExport,remoweData,caseTypeList,clientList,EndList,PersonList,departmentList,deleteDataCollectRecord,updateDataCollectRecord} from '@/common/js/data-memorize-manage.js'
   export default {
     name: 'dataMemorizeManage',
     data(){
@@ -501,6 +491,9 @@
         ],
         fullscreenLoading:false,
         EndList:[],
+        showQueryConfVisible:false,
+        queryConf:{},
+        queryConfFlag:true,
         selectDataCollectExportList:[],
         departmentList:[],
         PersonList:[],
@@ -533,6 +526,32 @@
       }
     },
     methods: {
+      saveConf(){
+        this.showQueryConfVisible = false;
+        let queryObj = {module:"data-memorize-manage",menu:this.queryConf}
+        saveSelectFilter(queryObj).then(data => {
+          this.$message({
+            message: "配置成功",
+            type: "success"
+          });
+          this.queryConfList();
+        });
+      },
+      queryConfList(){
+
+        let queryObj = {module:"data-memorize-manage",menu:this.queryConf}
+        selectByModule(queryObj).then(data => {
+          if (data){
+            this.queryConf = JSON.parse(data.menu);
+            this.queryConfFlag = false;
+          }else{
+            this.queryConfFlag = true;
+          }
+        });
+      },
+      showQueryConf(){
+        this.showQueryConfVisible = true;
+      },
     	 	changeRadio(){
 		if(this.radio==1){
 			this.totalDataCollectExport()
@@ -743,6 +762,7 @@
       },
     },
     created() {
+      this.queryConfList();
       this.tableLoad = true
       dataList(this.formInline,this.sort,this.orderBy,this.pageSize,this.pageNum).then((response)=>{
         this.tableData3=response.list
@@ -779,6 +799,24 @@
     .el-dialog__header{
       background-color: #f8f8f8;
 
+    }
+  /*  .el-tabs__content{
+      margin-bottom: 50px;
+      overflow-y: auto;
+    }*/
+    .pagination-wrap{
+      position: fixed;
+      bottom: 0;
+      z-index: 100;
+      min-height: 40px;
+      background-color: white;
+      width: 100%;
+    }
+    .pad{
+      .el-checkbox{
+        width:24%;
+        margin-right: 0px;
+      }
     }
     .el-form-item--mini .el-form-item__content, .el-form-item--mini .el-form-item__labe
     .el-form--inline .el-form-item{
