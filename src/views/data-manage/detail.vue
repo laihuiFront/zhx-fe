@@ -3269,7 +3269,14 @@ AddtableList(this.id,this.messageForm).then((response)=>{
      PersonList().then((response)=>{
           this.PersonDataList=response
         })
-  }
+  },
+  activated(){
+    this.queryDetail()
+    this.batchForm = {sType:0}
+    PersonList().then((response)=>{
+      this.PersonDataList=response
+    })
+  },
 }
 </script>
 

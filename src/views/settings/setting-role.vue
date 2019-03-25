@@ -46,7 +46,7 @@
           ></el-input>
         </el-form-item>
         <el-form-item label="数据权限" prop="dataAuth">
-          <el-select v-model="formInline.status" filterable  placeholder="请选择数据权限" clearable>
+          <el-select v-model="roleInfo.dataAuth" filterable  placeholder="请选择数据权限" clearable>
             <el-option
               v-for="item in dataAuthList"
               :key="item.id"
@@ -154,6 +154,7 @@ export default {
       this.currentRow = row
       this.roleInfo = {
         roleName: row.roleName,
+        dataAuth:row.dataAuth,
         roleDesc: row.roleDesc
       }
       listAuth(row.id).then(response => {
@@ -181,6 +182,7 @@ export default {
     onClickSave () {
       let roleSubmit = {
         roleName: this.roleInfo.roleName,
+        dataAuth:this.roleInfo.dataAuth,
         roleDesc: this.roleInfo.roleDesc
       }
       if (this.dialogData.type === 'edit') {

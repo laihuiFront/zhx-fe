@@ -1,7 +1,7 @@
 <template>
   <div id="synergistic-repayment-record" class="page-wraper-sub"
   		v-loading="loading2"
-  	   	   	  	  v-loading.fullscreen.lock="fullscreenLoading"
+  	  v-loading.fullscreen.lock="fullscreenLoading"
     element-loading-text="正在导入中"
     element-loading-spinner="el-icon-loading"
    element-loading-background="rgba(0, 0, 0, 0.7)">
@@ -21,6 +21,7 @@
         :headers="header"
         :show-file-list="false"
         :on-success="uploadSuccess"
+        :on-progress="onProgress"
         style="display:inline-block;margin-left:10px;"
         >
         <el-button type="primary" v-if="queryForm.recordStatus==='0'" style="margin-right:24px;" v-has="'导入还款记录'">导入还款记录</el-button>
@@ -284,13 +285,15 @@ export default {
 			this.handleCommand('current')
 		}
   	},
+    onProgress(){
+      this.loading2=true
+      this.fullscreenLoading=true
+    },
     uploadSuccess(res,file,fileList){
-    	 this.loading2=true
-					this.fullscreenLoading=true
       if (res.code ==100){
   		    this.$message({
             type: 'success',
-            message: res.msg
+            message: "导入成功"
           });
            this.onClickQuery()
             this.loading2=false
@@ -300,6 +303,8 @@ export default {
           type: 'error',
           message: res.msg
         });
+        this.loading2=false
+        this.fullscreenLoading=false
       }
     },
     editCase(id, name, seqNo){
