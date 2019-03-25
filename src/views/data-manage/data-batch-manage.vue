@@ -86,8 +86,7 @@
       <el-button type="primary" @click="selectDataByBatch" v-has="'批量导出批次催记'">批量导出批次催记</el-button>  
       </el-form-item>
     </el-form>
-   <el-table
-    v-loading="tableLoad"
+    <el-table highlight-current-row v-loading="tableLoad"
    	class="table-wrap"
     height="1"
     ref="multipleTable"
@@ -410,8 +409,7 @@
       :close-on-click-modal="false"
       width="90%"
     >
-     <el-table
-      class="table-wrap"
+      <el-table highlight-current-row class="table-wrap"
       ref="CasetableData"
       :data="CasetableData"
       border

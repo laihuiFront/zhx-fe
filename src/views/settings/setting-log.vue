@@ -35,8 +35,7 @@
         <el-button type="primary" @click="onClickDelete" v-has="'删除'">删除</el-button>
       </el-form-item>
     </el-form>
-    <el-table
-      v-loading="tableLoad"
+     <el-table highlight-current-row v-loading="tableLoad"
       @selection-change="onSelectRow"
       border stripe
       :data="logList"

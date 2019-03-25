@@ -27,8 +27,7 @@
       <el-button type="primary" @click="onClickExportSelectedRecord" style="margin-left:-6px;" v-has="'导出选中数据'">导出选中数据</el-button>
       <el-button type="primary" @click="dialogExportVisible = true" style="margin-left:10px;" v-has="'导出查询结果'">导出查询结果</el-button>
     </bank-record-query>
-    <el-table
-      v-loading="tableLoad"
+     <el-table highlight-current-row v-loading="tableLoad"
       @sort-change="handleSort"
       @selection-change="onSelectRow"
       border

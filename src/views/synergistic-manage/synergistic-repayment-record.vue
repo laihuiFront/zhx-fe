@@ -34,8 +34,7 @@
       <span class="item" style="margin-right:0px;">总提成值：{{sumForm.dataCase.mVal?parseFloat(sumForm.dataCase.mVal).toFixed(2):0}}，</span>
       <span class="item" style="margin-right:0px;">总佣金额：{{sumForm.dataCase.commissionMoneyMsg?sumForm.dataCase.commissionMoneyMsg:0}}</span>
     </div>
-     <el-table
-      v-loading="tableLoad"
+      <el-table highlight-current-row v-loading="tableLoad"
       @selection-change="onSelectRow"
       @sort-change="handleSort"
       border

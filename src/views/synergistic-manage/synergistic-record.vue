@@ -11,8 +11,7 @@
       :queryForm="queryForm">
       <el-button type="primary" @click="dialogExportVisible = true" v-has="'导出查询结果'">导出查询结果</el-button>
     </syn-record-query>
-    <el-table
-      v-loading="tableLoad"
+     <el-table highlight-current-row v-loading="tableLoad"
       @sort-change="handleSort"
       :data="recordList"
       border

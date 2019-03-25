@@ -223,8 +223,7 @@
               <el-button type="primary" @click="changeRadio">确 定</el-button>  
         </span>
     </el-dialog>
-    <el-table
-      v-loading="tableLoad"
+     <el-table highlight-current-row v-loading="tableLoad"
       class="table-wrap"
       height="1"
       ref="multipleTable"

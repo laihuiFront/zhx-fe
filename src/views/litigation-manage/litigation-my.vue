@@ -28,8 +28,7 @@
         </el-form-item> 
       </el-form>
   	
-  <el-table
-   v-loading="tableLoad"
+   <el-table highlight-current-row v-loading="tableLoad"
     class="table-wrap"
     height="1"
 
@@ -522,8 +521,7 @@
         </el-form-item>    
       </el-form>
   	
-  <el-table
-    v-loading="tableLoad"
+   <el-table highlight-current-row v-loading="tableLoad"
     class="table-wrap"
     height="1"
     :data="DataList2"

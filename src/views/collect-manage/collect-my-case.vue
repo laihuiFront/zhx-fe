@@ -518,8 +518,7 @@
             </div>
           </el-col>
         </el-row>
-        <el-table
-          v-loading="tableLoad"
+         <el-table highlight-current-row v-loading="tableLoad"
           ref="multipleTable"
           :data="tableData"
           border

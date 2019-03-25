@@ -61,8 +61,7 @@
         <el-button type="primary" @click="onSubmit">导出查询结果</el-button>
       </el-form-item>
     </el-form>
-    <el-table
-      v-if="tableData3.length>0"
+     <el-table highlight-current-row v-if="tableData3.length>0"
       v-loading="tableLoad"
       :data="tableData3"
       border

@@ -33,8 +33,7 @@
             >
           </el-form-item>
         </el-form>
-        <el-table
-          class="table-wrap"
+         <el-table highlight-current-row class="table-wrap"
           height="1"
           v-loading="tableLoad"
           :data="tableData1"
@@ -108,8 +107,7 @@
             >
           </el-form-item>
         </el-form>
-        <el-table
-          v-loading="tableLoad"
+         <el-table highlight-current-row v-loading="tableLoad"
           class="table-wrap"
           height="1"
           :data="tableData2"
@@ -192,8 +190,7 @@
             >
           </el-form-item>
         </el-form>
-        <el-table
-          v-loading="tableLoad"
+         <el-table highlight-current-row v-loading="tableLoad"
           class="table-wrap"
           height="1"
           :data="tableData3"

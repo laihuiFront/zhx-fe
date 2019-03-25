@@ -122,8 +122,7 @@
     </el-form>
  <el-tabs v-model="activeName2" type="card" @tab-click="handleClick" class="tabs-wrap">
     <el-tab-pane label="待审核" name="first" >
-      <el-table
-        class="table-wrap"
+       <el-table highlight-current-row class="table-wrap"
         height="1"
         ref="multipleTable"
         :data="tableData3"
@@ -285,8 +284,7 @@
       </el-pagination>
     </el-tab-pane>
     <el-tab-pane label="已审核" name="second">
-      <el-table
-      class="table-wrap"
+       <el-table highlight-current-row class="table-wrap"
       ref="multipleTable"
       :data="tableData3"
       height="1"
@@ -449,8 +447,7 @@
       </el-pagination>
     </el-tab-pane>
     <el-tab-pane label="已完成" name="third">
-      <el-table
-      class="table-wrap"
+       <el-table highlight-current-row class="table-wrap"
       height="1"
       ref="multipleTable"
       :data="tableData3"

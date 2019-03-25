@@ -207,8 +207,7 @@
         </div>
       </el-collapse-item>
       <el-collapse-item title="同批次共债案件" name="2">
-        <el-table
-          :data="dependCase"
+         <el-table highlight-current-row :data="dependCase"
           border stripe
           style="width: 100%"
           class="table-wrap">
@@ -615,8 +614,7 @@
                 <el-button type="primary" @click="_synchroSameTel" v-if="caseDetail.currentuser">同步共债</el-button>
               </div>
           </div>
-                <el-table
-                  @selection-change="onSelectPhoneRow"
+                 <el-table highlight-current-row @selection-change="onSelectPhoneRow"
                   border stripe
                   :data="caseDetail.dataCaseTelEntityList"
                   :row-class-name="telTableRowClassName"
@@ -701,8 +699,7 @@
                     <el-button type="primary" @click="addAddr" v-if="caseDetail.currentuser">新增地址</el-button>
                   </div>
                 </div>
-                <el-table
-                  v-if="letterVisible2"
+                 <el-table highlight-current-row v-if="letterVisible2"
                   border stripe
                   @selection-change="onSelectAddrRow"
                   :data="addrList"
@@ -774,8 +771,7 @@
                     </template>
                   </el-table-column>
                 </el-table>
-                <el-table
-                  :data="letterList"
+                 <el-table highlight-current-row :data="letterList"
                   border stripe
                   v-if="letterVisible"
                   style="width: 100%"
@@ -844,8 +840,7 @@
                     <el-button type="primary" @click="onClickAddArchive" v-if="caseDetail.currentuser">新增案人数据</el-button>
                   </div>
                 </div>
-                <el-table
-                  :data="dataList"
+                 <el-table highlight-current-row :data="dataList"
                   border stripe
                   style="width: 100%"
                   height="120px"
@@ -892,8 +887,7 @@
                     <el-button type="primary" @click="_expDataCollect" v-if="caseDetail.currentuser">导出本案催记</el-button>
                   </div>
                 </div>
-                <el-table
-                  :data="memorizeList"
+                 <el-table highlight-current-row :data="memorizeList"
                   style="width: 100%"
                   border stripe
                   height="120px"
@@ -989,8 +983,7 @@
                 </el-table>
               </el-tab-pane>
               <el-tab-pane label="评语" name="5" class="tabs-wrap">
-                <el-table
-                  :data="commentList"
+                 <el-table highlight-current-row :data="commentList"
                   border stripe
                   style="width: 100%"
                   height="120px"
@@ -1043,8 +1036,7 @@
                 </el-table>
               </el-tab-pane>
               <el-tab-pane label="利息更新" name="7" class="tabs-wrap">
-                <el-table
-                  :data="rateUpdateList"
+                 <el-table highlight-current-row :data="rateUpdateList"
                   border stripe
                   style="width: 100%"
                   height="120px"
@@ -1119,8 +1111,7 @@
               <el-tab-pane label="案件登帐" name="8" class="tabs-wrap billing-wrap">
                 <div class="first">
                   <p style="line-height: 30px">PTP记录</p>
-                  <el-table
-                    width="100%"
+                   <el-table highlight-current-row width="100%"
                     :data="ptpList">
                     <el-table-column
                       prop="content"
@@ -1141,8 +1132,7 @@
                 </div>
                 <div class="second">
                   <p style="line-height: 30px">CP记录 <el-button type="text" @click="addCpInfo">新增</el-button></p>
-                  <el-table
-                    width="100%"
+                   <el-table highlight-current-row width="100%"
                     :data="cpList">
                     <el-table-column
                       prop="cpMoneyMsg"
@@ -1203,8 +1193,7 @@
                     <el-button type="primary" @click="showSynergyResult" v-if="caseDetail.currentuser">添加协催记录</el-button>
                   </div>
                 </div>
-                <el-table
-                  :data="syncList"
+                 <el-table highlight-current-row :data="syncList"
                   style="width: 100%"
                   border stripe
                   height="120px"
@@ -1252,8 +1241,7 @@
                 </el-table>
               </el-tab-pane>
               <el-tab-pane label="共债案件" name="10" class="tabs-wrap" v-if="userInfo.sameBatch">
-                <el-table
-                  :data="caseSameList"
+                 <el-table highlight-current-row :data="caseSameList"
                   style="width: 100%"
                   border stripe
                   height="120px"
@@ -1323,8 +1311,7 @@
                     </el-radio-group>
                   </div>
                 </div>
-                <el-table
-                  :data="logList"
+                 <el-table highlight-current-row :data="logList"
                   border stripe
                   style="width: 100%"
                   height="120px"
@@ -1363,8 +1350,7 @@
                     <el-button type="primary"  @click="litigationApply" v-if="caseDetail.currentuser">申请诉讼</el-button>
                   </div>
                 </div>
-                <el-table
-                  border stripe
+                 <el-table highlight-current-row border stripe
                   :data="legalList"
                   style="width: 100%;margin-top:5px;"
                   height="120px"
@@ -1442,8 +1428,7 @@
                     <el-button type="primary" v-if="caseDetail.currentuser" @click="showadddialogVisible">添加减免申请</el-button>
                   </div>
                 </div>
-                <el-table
-                  :data="reduceApplyList"
+                 <el-table highlight-current-row :data="reduceApplyList"
                   style="width: 100%"
                   border stripe
                   height="120px"
@@ -1639,8 +1624,7 @@
           </div>
           <div class="right-panel">
             <p class="title">同批次共债催记</p>
-            <el-table
-              :data="syncMemorizeList"
+             <el-table highlight-current-row :data="syncMemorizeList"
               style="width: 100%"
               border stripe
               class="table-wrap">

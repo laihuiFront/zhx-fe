@@ -54,8 +54,7 @@
         <el-button type="primary" @click="onSubmit">导出查询结果</el-button>
       </el-form-item>
     </el-form>
-  <el-table
-    v-loading="tableLoad"
+   <el-table highlight-current-row v-loading="tableLoad"
     :data="tableData3"
     border
     stripe

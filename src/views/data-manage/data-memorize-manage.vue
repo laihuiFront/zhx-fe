@@ -152,8 +152,7 @@
       </el-form-item>
 
     </el-form>
-    <el-table
-      height="1"
+     <el-table highlight-current-row height="1"
       v-loading="tableLoad"
       class="table-wrap"
       :data="tableData3"

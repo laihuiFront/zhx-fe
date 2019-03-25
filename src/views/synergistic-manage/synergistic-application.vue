@@ -68,8 +68,7 @@
         </el-dropdown>-->
         <el-button type="primary" v-has="'导出查询条件'" v-if="queryForm.applyStatus==='1'" style="display:inline-block;margin-left:10px;"@click="dialogVisible1=true">导出查询条件</el-button>
     </syn-record-query>
-    <el-table
-      v-loading="tableLoad"
+     <el-table highlight-current-row v-loading="tableLoad"
       @selection-change="onSelectRow"
       @sort-change="handleSort"
       border
