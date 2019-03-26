@@ -106,7 +106,7 @@
     	prop="areaMsg"
       align="center"
       sortable="custom"
-      min-width="140"
+      width="130"
       :sort-orders="['ascending','descending']"
       label="催收区域"
       >
@@ -145,7 +145,7 @@
       prop="caseTime"
       align="center"
       label="委案日期"
-      width="140"
+      width="120"
       sortable="custom"
       :sort-orders="['ascending','descending']"
       show-overflow-tooltip>
@@ -184,7 +184,7 @@
       label="预计退案时间"
       sortable="custom"
       :sort-orders="['ascending','descending']"
-      width="180"
+      width="140"
       align="center"
       show-overflow-tooltip>
     </el-table-column>
@@ -192,14 +192,14 @@
       prop="realReturnTime"
       sortable="custom"
       :sort-orders="['ascending','descending']"
-      width="180"
+      width="140"
       align="center"
       label="实际退案时间"
       show-overflow-tooltip>
     </el-table-column>
     <el-table-column
       prop="createTime"
-      width="180"
+      width="140"
       sortable="custom"
       :sort-orders="['ascending','descending']"
       align="center"

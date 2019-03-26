@@ -181,7 +181,7 @@
         prop="seqno"
         sortable="custom"
         align="center"
-        min-width="120"
+        min-width="160"
         :sort-orders="['ascending','descending']"
         label="个案序列号"
       >
@@ -215,7 +215,7 @@
       <el-table-column
         prop="collectTime"
         label="催收时间"
-        width="140"
+        width="130"
         sortable="custom"
         :sort-orders="['ascending','descending']"
         align="center"
@@ -284,14 +284,14 @@
     </el-table-column><el-table-column
       prop="repayTime"
       label="承诺还款日期"
-      width="180"
+      width="120"
       align="center"
       sortable="custom"
       :sort-orders="['ascending','descending']"
       show-overflow-tooltip>
     </el-table-column><el-table-column
       label="承诺还款金额"
-      width="160"
+      width="130"
       align="center"
       prop="repayAmtMsg"
       sortable="custom"
@@ -302,7 +302,7 @@
       </template>
     </el-table-column><el-table-column
       label="减免金额"
-      width="160"
+      width="120"
       sortable="custom"
       :sort-orders="['ascending','descending']"
       align="center"
@@ -315,6 +315,7 @@
       prop="reduceStatusMsg"
       label="减免状态"
       sortable="custom"
+      align="center"
       min-width="130"
       :sort-orders="['ascending','descending']"
       show-overflow-tooltip>
@@ -322,6 +323,7 @@
       prop="odv"
       label="催收员"
       sortable="custom"
+      align="center"
       min-width="130"
       :sort-orders="['ascending','descending']"
       show-overflow-tooltip>
@@ -329,6 +331,7 @@
       prop="collectStatusMsg"
       label="催收状态"
       min-width="130"
+      align="center"
       sortable="custom"
       :sort-orders="['ascending','descending']"
       show-overflow-tooltip>

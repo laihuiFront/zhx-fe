@@ -78,7 +78,7 @@
     <el-table-column
       label="证件号"
       align="center"
-      min-width="200"
+      min-width="160"
       sortable="custom"
       :sort-orders="['ascending','descending']"
        prop="identNo"
@@ -117,7 +117,7 @@
        label="档案变更日期"
        prop="updateTime"
        sortable="custom"
-       min-width="180"
+       width="140"
        align="center"
        :sort-orders="['ascending','descending']"
        show-overflow-tooltip>
@@ -125,6 +125,7 @@
     <el-table-column
       label="备注"
       align="center"
+      min-width="200"
       show-overflow-tooltip>
       <template slot-scope="scope" >
         <div v-for="(domain, index) in scope.row.remarkList">

@@ -146,7 +146,7 @@
           label="个案序列号"
           sortable="custom"
           :sort-orders="['ascending','descending']"
-           width="120"
+           min-width="160"
         >
            <template slot-scope="scope">
           <el-button type="text" size="small" @click="editCase(scope.row.caseId, scope.row.targetName,scope.row.seqno)">{{scope.row.seqno}}</el-button>
@@ -183,7 +183,7 @@
           prop="completeTime"
         align="center"
           label="完成时间"
-            width="160"
+            width="130"
           sortable="custom"
           :sort-orders="['ascending','descending']"
           show-overflow-tooltip>
@@ -191,7 +191,7 @@
         <el-table-column
           prop="completeUser"
           label="完成人"
-            width="120"
+          width="120"
           align="center"
           sortable="custom"
           :sort-orders="['ascending','descending']"
@@ -211,7 +211,7 @@
         align="center"
           label="有效日期"
           sortable="custom"
-            width="160"
+            width="120"
           :sort-orders="['ascending','descending']"
           show-overflow-tooltip>
         </el-table-column>
@@ -228,7 +228,7 @@
           prop="reduceResult"
         label="减免结果"
           align="center"
-            width="120"
+          width="120"
           sortable="custom"
           :sort-orders="['ascending','descending']"
           show-overflow-tooltip>
@@ -245,7 +245,7 @@
         <el-table-column
           prop="reduceUpdateTime"
           align="center"
-            width="180"
+            width="150"
           label="减免状态更新时间"
           sortable="custom"
           :sort-orders="['ascending','descending']"
@@ -307,7 +307,7 @@
         align="center"
         label="个案序列号"
          sortable="custom"
-          width="120"
+          min-width="160"
           :sort-orders="['ascending','descending']"
       >
       <template slot-scope="scope">
@@ -336,7 +336,7 @@
         prop="moneyMsg"
         align="center"
         label="委案金额"
-         width="130"
+         width="120"
          sortable="custom"
           :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
@@ -344,7 +344,7 @@
       <el-table-column
         prop="completeTime"
        align="center"
-        width="180"
+        width="130"
         label="完成时间"
          sortable="custom"
           :sort-orders="['ascending','descending']"
@@ -363,7 +363,7 @@
         prop="approveRepayAmtMsg"
       align="center"
        sortable="custom"
-        width="130"
+        width="120"
           :sort-orders="['ascending','descending']"
         label="批复还款金额"
         show-overflow-tooltip>
@@ -373,7 +373,7 @@
       align="center"
         label="有效日期"
         sortable="custom"
-         width="160"
+         width="120"
           :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
@@ -408,7 +408,7 @@
         prop="reduceUpdateTime"
         align="center"
         label="减免状态更新时间"
-         width="180"
+         width="150"
         sortable="custom"
           :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
@@ -469,7 +469,7 @@
         prop="seqno"
         align="center"
         label="个案序列号"
-         width="120"
+         min-width="160"
        sortable="custom"
           :sort-orders="['ascending','descending']"
       >
@@ -499,7 +499,7 @@
         prop="moneyMsg"
         align="center"
         label="委案金额"
-         width="130"
+         width="120"
     sortable="custom"
           :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
@@ -508,7 +508,7 @@
         prop="completeTime"
        align="center"
         label="完成时间"
-         width="180"
+         width="120"
          sortable="custom"
           :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
@@ -535,7 +535,7 @@
         prop="reduceValidTime"
       align="center"
         label="有效日期"
-         width="160"
+         width="120"
        sortable="custom"
           :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
@@ -573,7 +573,7 @@
     sortable="custom"
           :sort-orders="['ascending','descending']"
         label="减免状态更新时间"
-         width="180"
+         width="150"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
@@ -1186,6 +1186,10 @@ this.search()
 
 <style lang="scss">
 #relief-management{
+  .el-tabs__content{
+    margin-bottom: 40px;
+    overflow-y: auto;
+  }
   .pagination-wrap{
     position: fixed;
     bottom: 0;

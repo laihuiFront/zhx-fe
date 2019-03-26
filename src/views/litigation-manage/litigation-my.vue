@@ -74,7 +74,7 @@
     </el-table-column><el-table-column
       prop="legalDate"
       align="center"
-      min-width="120"
+      width="120"
       label="委案日期"
        sortable="custom"
           :sort-orders="['ascending','descending']"
@@ -109,7 +109,7 @@
     <el-table-column
       prop="costMsg"
       align="center"
-      min-width="120"
+      width="120"
       label="费用"
        sortable="custom"
           :sort-orders="['ascending','descending']"

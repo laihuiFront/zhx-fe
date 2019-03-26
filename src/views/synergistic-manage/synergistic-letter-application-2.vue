@@ -242,7 +242,7 @@
         prop="seqno"
         sortable="custom"
         :sort-orders="['ascending', 'descending']"
-        min-width="120"
+        min-width="160"
         header-align="center"
         align="center"
       >
@@ -392,10 +392,12 @@ export default {
         },
         {
           prop: "caseAmtMsg",
+          width:"120",
           label: "委案金额"
         },
         {
           prop: "repayAmtMsg",
+          width:"120",
           label: "还款金额"
         },
         {
@@ -424,6 +426,7 @@ export default {
         },
         {
           prop: "applyDate",
+          width:"130",
           label: "申请时间"
         },
         {
@@ -432,6 +435,7 @@ export default {
         },
         {
           prop: "synergyDate",
+          width:"130",
           label: "协催时间"
         },
         {

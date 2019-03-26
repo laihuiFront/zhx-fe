@@ -538,7 +538,7 @@
             prop="seqno"
             sortable="custom"
             :sort-orders="['ascending', 'descending']"
-            min-width="120"
+            min-width="160"
             header-align="center"
             align="center"
           >
@@ -772,12 +772,12 @@ export default {
         },
         {
           prop: "nextFollDate",
-          width: "160",
+          width: "130",
           label: "下次跟进日期"
         },
         {
           prop: "caseAllotTime",
-          width: 180,
+          width: 130,
           label: "案件分配时间"
         },
         {
@@ -795,12 +795,12 @@ export default {
 
         {
           prop: "caseDate",
-          width: "140",
+          width: "120",
           label: "委案日期"
         },
         {
           prop: "expectTime",
-          width: "140",
+          width: "120",
           label: "预计退案日期"
         },
         {
@@ -809,24 +809,27 @@ export default {
         },
         {
           prop: "cardNo",
-          width: 200,
+          width: 160,
           label: "卡号"
         },
         {
           prop: "identNo",
-          width: 200,
+          width: 160,
           label: "证件号"
         },
         {
           prop: "moneyMsg",
+          width: 120,
           label: "委案金额"
         },
         {
           prop: "balanceMsg",
+          width: 120,
           label: "委案余额"
         },
         {
           prop: "moneyStartMsg",
+          width: 120,
           label: "最新欠款"
         },
         {
@@ -835,22 +838,22 @@ export default {
         },
         {
           prop: "enRepayAmtMsg",
-          width: "140",
+          width: "120",
           label: "已还款金额"
         },
         {
           prop: "repayAmtMsg",
-          width: "150",
+          width: "120",
           label: "承诺还款金额"
         },
         {
           prop: "bankAmtMsg",
-          width: "150",
+          width: "130",
           label: "待银行查账金额"
         },
         {
           prop: "lastPhoneTime",
-          width: "160",
+          width: "130",
           label: "上次通电时间"
         },
         {

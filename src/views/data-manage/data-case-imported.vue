@@ -178,6 +178,7 @@
       :sort-orders="['ascending','descending']"
       prop="caseTime"
       label="委案日期"
+      width="120"
       align="center"
       show-overflow-tooltip>
     </el-table-column>
@@ -194,6 +195,7 @@
       :sort-orders="['ascending','descending']"
       label="总金额"
       align="center"
+      width="120"
       prop="totalAmtMsg"
       show-overflow-tooltip>
       <template slot-scope="scope">
@@ -205,6 +207,7 @@
       align="center"
       :sort-orders="['ascending','descending']"
       prop="uploadTime"
+      width="140"
       label="上传时间"
       show-overflow-tooltip>
     </el-table-column>
