@@ -384,7 +384,7 @@
       border
       stripe
       :row-class-name="rowColor"
-      style="margin-top:10px;min-height:400px;"
+      style="margin-top:10px;min-height:400px;margin-bottom: 40px;"
       @selection-change="handleSelectionChange"
       @row-dblclick="showDetail"
       @sort-change="handleSort"

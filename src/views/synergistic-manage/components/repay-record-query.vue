@@ -199,7 +199,7 @@
       <el-checkbox v-model="queryConf.zjh" label="2" >证件号</el-checkbox>
       <el-checkbox v-model="queryConf.zh" label="2" >账号</el-checkbox>
       <el-checkbox v-model="queryConf.kh" label="2" >卡号</el-checkbox>
-      <el-checkbox v-model="queryConf.qrr label="2" >确认人</el-checkbox>
+      <el-checkbox v-model="queryConf.qrr" label="2" >确认人</el-checkbox>
       <el-checkbox v-model="queryConf.qrrq" label="2" >确认日期</el-checkbox>
       <el-checkbox v-model="queryConf.hkrq" label="2" >还款日期</el-checkbox>
 
