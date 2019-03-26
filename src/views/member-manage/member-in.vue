@@ -359,6 +359,9 @@ export default {
     },
     onClickAdd () {
       // this.memberInfo.roleList = null
+      this.$nextTick(()=>{
+        this.$refs['ruleForm'].resetFields()
+      });
       if(!this.queryDepartment){
         this.memberInfo = {
           status: 1,
@@ -379,6 +382,9 @@ export default {
       this.$set(this.dialogData, 'editVisible', true)
     },
     onClickEdit (row) {
+      this.$nextTick(()=>{
+        this.$refs['ruleForm'].resetFields()
+      });
       this.$set(this.dialogData, 'title', '修改员工')
       this.$set(this.dialogData, 'type', 'edit')
       getUserById(row.id).then(response => {
