@@ -70,7 +70,7 @@
               ></el-input>
             </el-form-item>
             <el-form-item label="已还款">
-              <div class="inputDiv">
+              <div class="inputDiv" style="font-size: 12px;">
                 <span
                   >{{ caseDetail.enRepayAmt }}(委案余额:{{
                     caseDetail.balanceMsg
@@ -102,7 +102,7 @@
               ></el-input>
             </el-form-item>
             <el-form-item label="最新欠款" class="half">
-              <el-input v-model="caseDetail.latestOverdueMoney" :disabled="true" ></el-input>
+              <el-input v-model="caseDetail.interestDate" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="地区">
               <el-input v-model="caseDetail.area" :disabled="true"></el-input>
@@ -305,7 +305,9 @@
               ></el-date-picker>
             </el-form-item>
             <el-form-item label="催收小结" class="width-75">
-              <el-input v-model="caseDetail.collectInfo" :disabled="true" ></el-input>
+              <div class="inputDiv" style="font-size: 12px;" >
+                <span>{{caseDetail.collectInfo}}</span>
+              </div>
             </el-form-item>
             <el-form-item label="最新评语" class="whole">
               <div class="content-wrap">
@@ -1081,7 +1083,11 @@
                   </el-table-column>
                   <el-table-column prop="telStatusMsg" label="状态">
                   </el-table-column>
-                  <el-table-column prop="tel" label="电话"> </el-table-column>
+                  <el-table-column prop="tel" label="电话">
+                    <template slot-scope="scope">
+                      <el-button type="text" size="small" @click="copyToCollect(scope.row.tel, scope.row.name,scope.row.relation)">{{scope.row.tel}}</el-button>
+                    </template>
+                  </el-table-column>
                   <el-table-column prop="name" label="姓名"> </el-table-column>
                   <el-table-column prop="relation" label="关系">
                   </el-table-column>
@@ -3644,6 +3650,11 @@ export default {
   },
 
   methods: {
+    copyToCollect(tel, name,relation){
+      this.batchForm.mobile = tel
+      this.batchForm.targetName = name
+      this.batchForm.relation = relation
+    },
     handleChange(file) {
       this.fileNames.file = file.name;
       this.fileNames.caseId = this.id;
@@ -4522,7 +4533,7 @@ export default {
   watch: {
     $route(n, o) {
       if (n.name == "case-detail") {
-        // this.sameRouteChange();
+         this.sameRouteChange();
 
       }
     }
