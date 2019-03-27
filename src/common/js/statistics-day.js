@@ -57,3 +57,10 @@ export const selectDataCaseExport = function(form,pageSize,pageNum) {
   })
 
 }
+
+export const getUserTree = function(){
+  return request({
+    url: 'user/select/userTree',
+    method: 'post'
+  })
+}

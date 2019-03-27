@@ -8,14 +8,7 @@
     element-loading-background="rgba(0, 0, 0, 0.7)">
     <el-form ref="form" :model="formInline" :inline="true" class="query-wrap">
       <el-form-item>
-        <el-select v-model="formInline.odv" multiple collapse-tags  filterable  placeholder="请选择催收员" clearable>
-          <el-option
-            v-for="item in PersonList"
-            :key="item.id"
-            :label="item.userName"
-            :value="item.id">
-          </el-option>
-        </el-select> 
+        <el-input v-model="odvName" width="200" @focus="onClickSelectUser" clearable placeholder="请选择催收员"></el-input>
       </el-form-item>
       <el-form-item>
         <el-select v-model="formInline.area" placeholder="请选择催收区域" clearable>
@@ -183,15 +176,42 @@
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
     </el-pagination>
+    <el-dialog
+      title="选择催收员"
+      class="dialog-wrap"
+      :visible.sync="selectUserVisible"
+      :close-on-click-modal="false"
+      width="300"
+    >
+      <el-tree
+        :data="selectUserTree"
+        show-checkbox
+        default-expand-all
+        node-key="id"
+        ref="tree"
+        highlight-current
+        :props="defaultProps">
+      </el-tree>
+      <span slot="footer" class="footer">
+        <el-button @click="selectUserVisible = false">取 消</el-button>
+        <el-button type="primary" @click="onClickSaveUser">保 存</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-	import {areaList,clientList,PersonList,dataList,selectDataCaseExport} from '@/common/js/statistics-day.js'
+	import {getUserTree, areaList,clientList,PersonList,dataList,selectDataCaseExport} from '@/common/js/statistics-day.js'
 export default {
   name: 'statisticsDay',
   data(){
     return {
+      defaultProps: {
+        children: 'children',
+        label: 'name'
+      },
+      selectUserTree: [],
+      selectUserVisible: false,
     	fullscreenLoading:false,
     	loading:false,
       tableLoad:false,
@@ -202,7 +222,8 @@ export default {
     	formInline:{
     		odv:[],
     		time:[]
-    	},
+      },
+      odvName: "",
     	PersonList:[],
     	areaList:[],
     	clientList:[],
@@ -210,6 +231,36 @@ export default {
     }
 },
  methods: {
+   onClickSaveUser() {
+     let selectDataArr = this.$refs.tree.getCheckedNodes()
+     let selectUserNames = ''
+     let selectUserIds = []
+     if(selectDataArr.length > 0){
+       selectUserNames = selectDataArr.filter((item)=>{
+         return item.type === 'user'
+       }).map((item) => {
+         return item.name
+       })
+       selectUserIds = selectDataArr.filter((item)=>{
+         return item.type === 'user'
+       }).map((item) => {
+         return item.id
+       })
+     }
+     this.odvName = selectUserNames.join(',')
+     this.$set(this.formInline,'odv', selectUserIds)
+     this.selectUserVisible = false
+   },
+   onClickSelectUser() {
+     this.selectUserVisible = true
+     if(!this.odvName){
+       this.$set(this.formInline, 'odv', [])
+     }
+
+     this.$nextTick(() => {
+       this.$refs.tree.setCheckedKeys(this.formInline.odv);
+     })
+   },
  	   getSummaries(param) {
  	     const { columns, data } = param;
                 const sums = [];
@@ -289,6 +340,9 @@ this.pageNum=val;
            
              PersonList().then((response)=>{
           	this.PersonList=response
+          })
+          getUserTree().then(data => {
+            this.selectUserTree = [data]
           })
 //        this.tableLoad = true
 //            dataList(this.formInline).then((response)=>{
