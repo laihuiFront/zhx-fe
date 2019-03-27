@@ -33,8 +33,12 @@
               ></el-date-picker>
             </el-form-item>
             <el-form-item label="证件号">
-              <div class="inputDiv" style="font-size: 11px;"  :class="[userInfo.busiData?'inputUnSelect':'']">
-                <span>{{caseDetail.identNo}}</span>
+              <div
+                class="inputDiv"
+                style="font-size: 11px;"
+                :class="[userInfo.busiData ? 'inputUnSelect' : '']"
+              >
+                <span>{{ caseDetail.identNo }}</span>
               </div>
             </el-form-item>
             <el-form-item label="卡号">
@@ -102,7 +106,10 @@
               ></el-input>
             </el-form-item>
             <el-form-item label="最新欠款" class="half">
-              <el-input v-model="caseDetail.interestDate" :disabled="true" ></el-input>
+              <el-input
+                v-model="caseDetail.interestDate"
+                :disabled="true"
+              ></el-input>
             </el-form-item>
             <el-form-item label="地区">
               <el-input v-model="caseDetail.area" :disabled="true"></el-input>
@@ -305,8 +312,8 @@
               ></el-date-picker>
             </el-form-item>
             <el-form-item label="催收小结" class="width-75">
-              <div class="inputDiv" style="font-size: 12px;" >
-                <span>{{caseDetail.collectInfo}}</span>
+              <div class="inputDiv" style="font-size: 12px;">
+                <span>{{ caseDetail.collectInfo }}</span>
               </div>
             </el-form-item>
             <el-form-item label="最新评语" class="whole">
@@ -1085,7 +1092,18 @@
                   </el-table-column>
                   <el-table-column prop="tel" label="电话">
                     <template slot-scope="scope">
-                      <el-button type="text" size="small" @click="copyToCollect(scope.row.tel, scope.row.name,scope.row.relation)">{{scope.row.tel}}</el-button>
+                      <el-button
+                        type="text"
+                        size="small"
+                        @click="
+                          copyToCollect(
+                            scope.row.tel,
+                            scope.row.name,
+                            scope.row.relation
+                          )
+                        "
+                        >{{ scope.row.tel }}</el-button
+                      >
                     </template>
                   </el-table-column>
                   <el-table-column prop="name" label="姓名"> </el-table-column>
@@ -3645,15 +3663,15 @@ export default {
       dialogCpVisible: false,
       repayTypeList: [],
       ptpList: [],
-      $routeKey: ''
+      $routeKey: ""
     };
   },
 
   methods: {
-    copyToCollect(tel, name,relation){
-      this.batchForm.mobile = tel
-      this.batchForm.targetName = name
-      this.batchForm.relation = relation
+    copyToCollect(tel, name, relation) {
+      this.batchForm.mobile = tel;
+      this.batchForm.targetName = name;
+      this.batchForm.relation = relation;
     },
     handleChange(file) {
       this.fileNames.file = file.name;
@@ -4492,15 +4510,16 @@ export default {
         return "stop-row";
       }
     },
-    initPageData() {
-      let id = this.$route.query.id || "";
+    initPageData(ida) {
+      let id = ida||this.$route.query.id || "";
       let data = sessionStorage.getItem(id) || "";
-      console.log(data == "")
+      console.log(data == "");
       if (data) {
         let obj = JSON.parse(data);
         for (let [k, v] of Object.entries(obj)) {
-          this.$set(this,k,v);
+          this.$set(this, k, v);
         }
+        console.log(obj.caseDetail.name)
       } else {
         this.queryDetail();
         this.batchForm = { sType: 0 };
@@ -4509,58 +4528,68 @@ export default {
         });
       }
     },
-    sameRouteChange(){
-      if (this.$routeKey) {
-        sessionStorage.setItem(this.$routeKey, JSON.stringify(this._data,function(key,value) {
-          if (key == '$routeKey') {
-            return void (0);
-          };
+    sameRouteChange() {
+      sessionStorage.setItem(
+        this.$route.query.id,
+        JSON.stringify(this._data, function(key, value) {
+          if (key == "$routeKey") {
+            return void 0;
+          }
           return value;
-        }));
-      }
-    },
-  },
-  deactivated() {
-    this.sameRouteChange();
-  },
-
-  activated() {
-    let id = this.$route.query.id || "";
-    this.$routeKey = id;
-    console.log(id);
-    this.initPageData();
-  },
-  watch: {
-    $route(n, o) {
-      if (n.name == "case-detail") {
-         this.sameRouteChange();
-
-      }
+        })
+      );
     }
   },
-  beforeRouteUpdate (to, from, next) {
+  watch: {
+    $route: {
+      handler(n, o) {
+        if (n.name == "case-detail") {
+          // console.log('routeWatch',n.query.id)
+          // this.sameRouteChange();
+          // this.$routeKey = n.query.id;
+          this.initPageData();
+
+        }
+      },
+      immediate: true
+    }
+  },
+  beforeRouteUpdate(to, from, next) {
     // 导航离开该组件的对应路由时调用
     // 可以访问组件实例 `this`
-    console.log(to)
-    console.log(from)
-    console.log(this)
-    this.initPageData();
-    console.log(next())
+    // console.log(this);
+    // this.sameRouteChange();
+
+    // console.log("routerLify",this.$route.query.id)
+    this.sameRouteChange();
+    next();
+    this.initPageData(this.$route.query.id);
+    // console.log("routerLify1",this.$route.query.id)
+
+  },
+  beforeRouteLeave (to, from, next) {
+    // 导航离开该组件的对应路由时调用
+    // 可以访问组件实例 `this`
+    this.sameRouteChange();
+    next();
   },
   created() {
-  	this.queryDetail()
-    this.batchForm = {sType:0}
-     PersonList().then((response)=>{
-          this.PersonDataList=response
-        })
+    window.addEventListener("beforeunload", () => {
+      sessionStorage.clear();
+    });
+    this.queryDetail();
+    this.batchForm = { sType: 0 };
+    PersonList().then(response => {
+      this.PersonDataList = response;
+    });
   }
-}
+};
 </script>
 
 <style lang="scss">
 #case-detail {
-  .inputUnSelect{
-     user-select: none;
+  .inputUnSelect {
+    user-select: none;
   }
   .items-wrap {
     padding: 24px 24px 24px 0;
@@ -4753,7 +4782,7 @@ export default {
   cursor: not-allowed;
   //height: 28px;
   line-height: 28px;
-    min-height: 28px;
+  min-height: 28px;
   border-radius: 4px;
   border: 1px solid #dcdfe6;
   display: inline-block;
