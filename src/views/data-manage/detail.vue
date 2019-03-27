@@ -5,9 +5,6 @@
         :title="caseDetail.name + '-[ ' + caseDetail.seqNo + ']-案件详情'"
         name="1"
       >
-        <div style="text-align: right; margin-right:20px;">
-          <el-button type="primary" align="right" size="mini" @click="showCollectInfo">催收小结</el-button>
-        </div>
         <div class="items-wrap">
           <el-form
             :model="caseDetail"
@@ -36,12 +33,8 @@
               ></el-date-picker>
             </el-form-item>
             <el-form-item label="证件号">
-              <div
-                class="inputDiv"
-                style="font-size: 11px;"
-                :class="[userInfo.busiData ? 'inputUnSelect' : '']"
-              >
-                <span>{{ caseDetail.identNo }}</span>
+              <div class="inputDiv" style="font-size: 11px;"  :class="[userInfo.busiData?'inputUnSelect':'']">
+                <span>{{caseDetail.identNo}}</span>
               </div>
             </el-form-item>
             <el-form-item label="卡号">
@@ -109,10 +102,7 @@
               ></el-input>
             </el-form-item>
             <el-form-item label="最新欠款" class="half">
-              <el-input
-                v-model="caseDetail.interestDate"
-                :disabled="true"
-              ></el-input>
+              <el-input v-model="caseDetail.interestDate" :disabled="true" ></el-input>
             </el-form-item>
             <el-form-item label="地区">
               <el-input v-model="caseDetail.area" :disabled="true"></el-input>
@@ -315,8 +305,8 @@
               ></el-date-picker>
             </el-form-item>
             <el-form-item label="催收小结" class="width-75">
-              <div class="inputDiv" style="font-size: 12px;">
-                <span>{{ caseDetail.collectInfo }}</span>
+              <div class="inputDiv" style="font-size: 12px;" >
+                <span>{{caseDetail.collectInfo}}</span>
               </div>
             </el-form-item>
             <el-form-item label="最新评语" class="whole">
@@ -1008,7 +998,7 @@
               type="card"
               @tab-click="showPanel"
             >
-              <el-tab-pane label="电话" name="1" class="tabs-wrap">
+              <el-tab-pane label="电话" name="1" class="tabs-wrap telPanel">
                 <div class="operation">
                   <div class="left-oper">
                     <el-button
@@ -1086,7 +1076,7 @@
                   stripe
                   :data="caseDetail.dataCaseTelEntityList"
                   :row-class-name="telTableRowClassName"
-                  style="width: 100%"
+                  style="width: 100%;"
                   class="table-wrap"
                 >
                   <el-table-column type="selection" width="55">
@@ -1095,18 +1085,7 @@
                   </el-table-column>
                   <el-table-column prop="tel" label="电话">
                     <template slot-scope="scope">
-                      <el-button
-                        type="text"
-                        size="small"
-                        @click="
-                          copyToCollect(
-                            scope.row.tel,
-                            scope.row.name,
-                            scope.row.relation
-                          )
-                        "
-                        >{{ scope.row.tel }}</el-button
-                      >
+                      <el-button type="text" size="small" @click="copyToCollect(scope.row.tel, scope.row.name,scope.row.relation)">{{scope.row.tel}}</el-button>
                     </template>
                   </el-table-column>
                   <el-table-column prop="name" label="姓名"> </el-table-column>
@@ -1216,7 +1195,7 @@
                   </el-table-column>
                 </el-table>
               </el-tab-pane>
-              <el-tab-pane label="地址" name="2" class="tabs-wrap">
+              <el-tab-pane label="地址" name="2" class="tabs-wrap telPanel">
                 <div class="operation" v-if="letterVisible2">
                   <div class="left-oper">
                     <el-button
@@ -1443,7 +1422,7 @@
                   </el-table-column>
                 </el-table>
               </el-tab-pane>
-              <el-tab-pane label="案人数据" name="3" class="tabs-wrap">
+              <el-tab-pane label="案人数据" name="3" class="tabs-wrap telPanel">
                 <div class="operation" v-if="letterVisible2">
                   <div class="left-oper"></div>
                   <div class="right-oper">
@@ -1644,7 +1623,7 @@
                   </el-table-column>
                 </el-table>
               </el-tab-pane>
-              <el-tab-pane label="评语" name="5" class="tabs-wrap">
+              <el-tab-pane label="评语" name="5" class="tabs-wrap telPanel">
                 <el-table
                   highlight-current-row
                   :data="commentList"
@@ -1730,7 +1709,7 @@
                   </el-table-column>
                 </el-table>
               </el-tab-pane>
-              <el-tab-pane label="利息更新" name="7" class="tabs-wrap">
+              <el-tab-pane label="利息更新" name="7" class="tabs-wrap telPanel">
                 <el-table
                   highlight-current-row
                   :data="rateUpdateList"
@@ -1905,7 +1884,7 @@
                   </el-table>
                 </div>
               </el-tab-pane>
-              <el-tab-pane label="协催" name="9" class="tabs-wrap">
+              <el-tab-pane label="协催" name="9" class="tabs-wrap telPanel">
                 <div class="operation">
                   <div class="left-oper">
                     <el-radio-group v-model="syncType" @change="syncTypeChange">
@@ -1990,19 +1969,14 @@
                   </el-table-column>
                 </el-table>
               </el-tab-pane>
-              <el-tab-pane
-                label="共债案件"
-                name="10"
-                class="tabs-wrap"
-                v-if="userInfo.sameBatch"
-              >
+              <el-tab-pane label="共债案件" name="10" class="tabs-wrap telPanel" v-if="userInfo.sameBatch">
                 <el-table
                   highlight-current-row
                   :data="caseSameList"
                   style="width: 100%"
                   border
                   stripe
-                  height="120px"
+                  height="160px"
                   class="table-wrap"
                 >
                   <el-table-column
@@ -2067,7 +2041,7 @@
                   </el-table-column>
                 </el-table>
               </el-tab-pane>
-              <el-tab-pane label="操作记录" name="11" class="tabs-wrap">
+              <el-tab-pane label="操作记录" name="11" class="tabs-wrap telPanel">
                 <div class="operation">
                   <div class="left-oper">
                     <el-radio-group v-model="logType" @change="logTypeChange">
@@ -2086,7 +2060,7 @@
                   border
                   stripe
                   style="width: 100%"
-                  height="120px"
+                  height="130px"
                   class="table-wrap"
                 >
                   <el-table-column
@@ -2118,7 +2092,7 @@
                   </el-table-column>
                 </el-table>
               </el-tab-pane>
-              <el-tab-pane label="诉讼案件" name="12" class="tabs-wrap">
+              <el-tab-pane label="诉讼案件" name="12" class="tabs-wrap telPanel">
                 <div class="operation">
                   <div class="left-oper"></div>
                   <div class="right-oper">
@@ -3506,35 +3480,6 @@
         >
       </span>
     </el-dialog>
-
-
-    <el-dialog
-      title="催收小结(带*为必填字段)"
-      :visible.sync="showCollectInfoVisible"
-      width="30%"
-      append-to-body
-      class="addr-dialog-wrap"
-    >
-      <el-form
-        :inline="true"
-        :model="caseDetail"
-        class="address-form"
-        label-width="80px"
-      >
-        <el-form-item label="内容" class="whole">
-          <el-input
-            type="textarea"
-            :rows="7"
-            v-model="caseDetail.collectInfo"
-            style="width:90%"
-          ></el-input>
-        </el-form-item>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="showCollectInfoVisible = false">取 消</el-button>
-        <el-button type="primary" @click="saveCollectInfo">确 定</el-button>
-      </span>
-    </el-dialog>
   </div>
 </template>
 
@@ -3612,7 +3557,6 @@ export default {
     return {
       action: baseURL,
       messageForm: {},
-      showCollectInfoVisible:false,
       adddialogVisible: false,
       addCommentVisible: false,
       commentAddContent: null,
@@ -3696,21 +3640,15 @@ export default {
       dialogCpVisible: false,
       repayTypeList: [],
       ptpList: [],
-      $routeKey: ""
+      $routeKey: ''
     };
   },
 
   methods: {
-    saveCollectInfo(){
-
-    },
-    showCollectInfo(){
-        this.showCollectInfoVisible = true;
-    },
-    copyToCollect(tel, name, relation) {
-      this.batchForm.mobile = tel;
-      this.batchForm.targetName = name;
-      this.batchForm.relation = relation;
+    copyToCollect(tel, name,relation){
+      this.batchForm.mobile = tel
+      this.batchForm.targetName = name
+      this.batchForm.relation = relation
     },
     handleChange(file) {
       this.fileNames.file = file.name;
@@ -4549,16 +4487,15 @@ export default {
         return "stop-row";
       }
     },
-    initPageData(ida) {
-      let id = ida||this.$route.query.id || "";
+    initPageData() {
+      let id = this.$route.query.id || "";
       let data = sessionStorage.getItem(id) || "";
-      console.log(data == "");
+      console.log(data == "")
       if (data) {
         let obj = JSON.parse(data);
         for (let [k, v] of Object.entries(obj)) {
-          this.$set(this, k, v);
+          this.$set(this,k,v);
         }
-        console.log(obj.caseDetail.name)
       } else {
         this.queryDetail();
         this.batchForm = { sType: 0 };
@@ -4567,68 +4504,58 @@ export default {
         });
       }
     },
-    sameRouteChange() {
-      sessionStorage.setItem(
-        this.$route.query.id,
-        JSON.stringify(this._data, function(key, value) {
-          if (key == "$routeKey") {
-            return void 0;
-          }
+    sameRouteChange(){
+      if (this.$routeKey) {
+        sessionStorage.setItem(this.$routeKey, JSON.stringify(this._data,function(key,value) {
+          if (key == '$routeKey') {
+            return void (0);
+          };
           return value;
-        })
-      );
-    }
+        }));
+      }
+    },
+  },
+  deactivated() {
+    this.sameRouteChange();
+  },
+
+  activated() {
+    let id = this.$route.query.id || "";
+    this.$routeKey = id;
+    console.log(id);
+    this.initPageData();
   },
   watch: {
-    $route: {
-      handler(n, o) {
-        if (n.name == "case-detail") {
-          // console.log('routeWatch',n.query.id)
-          // this.sameRouteChange();
-          // this.$routeKey = n.query.id;
-          this.initPageData();
+    $route(n, o) {
+      if (n.name == "case-detail") {
+         this.sameRouteChange();
 
-        }
-      },
-      immediate: true
+      }
     }
   },
-  beforeRouteUpdate(to, from, next) {
+  beforeRouteUpdate (to, from, next) {
     // 导航离开该组件的对应路由时调用
     // 可以访问组件实例 `this`
-    // console.log(this);
-    // this.sameRouteChange();
-
-    // console.log("routerLify",this.$route.query.id)
-    this.sameRouteChange();
-    next();
-    this.initPageData(this.$route.query.id);
-    // console.log("routerLify1",this.$route.query.id)
-
-  },
-  beforeRouteLeave (to, from, next) {
-    // 导航离开该组件的对应路由时调用
-    // 可以访问组件实例 `this`
-    this.sameRouteChange();
-    next();
+    console.log(to)
+    console.log(from)
+    console.log(this)
+    this.initPageData();
+    console.log(next())
   },
   created() {
-    window.addEventListener("beforeunload", () => {
-      sessionStorage.clear();
-    });
-    this.queryDetail();
-    this.batchForm = { sType: 0 };
-    PersonList().then(response => {
-      this.PersonDataList = response;
-    });
+  	this.queryDetail()
+    this.batchForm = {sType:0}
+     PersonList().then((response)=>{
+          this.PersonDataList=response
+        })
   }
-};
+}
 </script>
 
 <style lang="scss">
 #case-detail {
-  .inputUnSelect {
-    user-select: none;
+  .inputUnSelect{
+     user-select: none;
   }
   .items-wrap {
     padding: 24px 24px 24px 0;
@@ -4821,7 +4748,7 @@ export default {
   cursor: not-allowed;
   //height: 28px;
   line-height: 28px;
-  min-height: 28px;
+    min-height: 28px;
   border-radius: 4px;
   border: 1px solid #dcdfe6;
   display: inline-block;
@@ -4829,4 +4756,7 @@ export default {
   padding: 0 15px;
   width: 100%;
 }
+  .telPanel .el-table__body-wrapper{
+    overflow-x: hidden;
+  }
 </style>
