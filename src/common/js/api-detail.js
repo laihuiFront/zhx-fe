@@ -20,6 +20,17 @@ export function getSameBatchCollect(id) {
   })
 }
 
+export function saveCollectInfo(id,collectInfo) {
+  return request({
+    url: '/dataCase/updateCollectInfo',
+    method: 'post',
+    data: {
+      "id":id,
+      "collectInfo":collectInfo
+    }
+  })
+}
+
 export function DeteleData(id) {
   return request({
     url: '/reduce/apply/update/status',

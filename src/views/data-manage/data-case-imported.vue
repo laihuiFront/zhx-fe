@@ -60,82 +60,82 @@
         >
       </el-date-picker>
     </el-form-item>
-    <el-form-item>
-      <el-button type="primary" icon="el-icon-search" @click=search>查询</el-button> 
-      <el-button type="primary" icon="el-icon-refresh" @click="resetForm()">重置</el-button> 
-    </el-form-item>
-    <el-form-item >
-      <el-button type="primary" @click="downLoadZip">导入模板下载</el-button>
-      <el-button type="primary" @click="dialogVisible = true" v-has="'新增批次'">新增批次</el-button> 
-      <el-button type="primary"  @click="open7" v-has="'删除批次'">删除批次</el-button>
-      <el-upload
-        class="upload-demo"
-        :action="action+'/updateCase/import'"
-        :headers="header"
-        :show-file-list=false
-        :on-success="uploadSuccess"
-        :on-progress="onProgress"
-        >
-        <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入更新案件'">导入更新案件</el-button>
-      </el-upload>
-      <el-upload
-        class="upload-demo"
-        :action="action+'/comment/import'"
-        :headers="header"
-        :show-file-list=false
-        :on-success="uploadSuccess"
-        :on-progress="onProgress"
+     <el-row>
+      <el-form-item >
+        <el-button type="primary" icon="el-icon-search" @click=search>查询</el-button>
+        <el-button type="primary" icon="el-icon-refresh" @click="resetForm()">重置</el-button>
+        <el-button type="primary" @click="downLoadZip">导入模板下载</el-button>
+          <el-button type="primary" @click="dialogVisible = true" v-has="'新增批次'">新增批次</el-button>
+          <el-button type="primary"  @click="open7" v-has="'删除批次'">删除批次</el-button>
+          <el-upload
+            class="upload-demo"
+            :action="action+'/updateCase/import'"
+            :headers="header"
+            :show-file-list=false
+            :on-success="uploadSuccess"
+            :on-progress="onProgress"
+            >
+            <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入更新案件'">导入更新案件</el-button>
+          </el-upload>
+          <el-upload
+            class="upload-demo"
+            :action="action+'/comment/import'"
+            :headers="header"
+            :show-file-list=false
+            :on-success="uploadSuccess"
+            :on-progress="onProgress"
 
-        >
-        <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入案件评语'">导入案件评语</el-button>
-      </el-upload>
-      <el-upload
-        class="upload-demo"
-        :action="action+'/interest/import'"
-        :headers="header"
-        :show-file-list=false
-        :on-success="uploadSuccess"
-        :on-progress="onProgress"
+            >
+            <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入案件评语'">导入案件评语</el-button>
+          </el-upload>
+          <el-upload
+            class="upload-demo"
+            :action="action+'/interest/import'"
+            :headers="header"
+            :show-file-list=false
+            :on-success="uploadSuccess"
+            :on-progress="onProgress"
 
-        >
-        <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入案件利息'">导入案件利息</el-button>
-      </el-upload>
-      <el-upload
-        class="upload-demo"
-        :action="action+'/tel/import'"
-        :headers="header"
-        :show-file-list=false
-        :on-success="uploadSuccess"
-        :on-progress="onProgress"
+            >
+            <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入案件利息'">导入案件利息</el-button>
+          </el-upload>
+          <el-upload
+            class="upload-demo"
+            :action="action+'/tel/import'"
+            :headers="header"
+            :show-file-list=false
+            :on-success="uploadSuccess"
+            :on-progress="onProgress"
 
-        >
-        <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入案件电话'">导入案件电话</el-button>
-      </el-upload>
-      <el-upload
-        class="upload-demo"
-        :action="action+'/address/import'"
-        :headers="header"
-        :show-file-list=false
-        :on-success="uploadSuccess"
-        :on-progress="onProgress"
+            >
+            <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入案件电话'">导入案件电话</el-button>
+          </el-upload>
+          <el-upload
+            class="upload-demo"
+            :action="action+'/address/import'"
+            :headers="header"
+            :show-file-list=false
+            :on-success="uploadSuccess"
+            :on-progress="onProgress"
 
-        >
-        <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入案件地址'">导入案件地址</el-button>
-      </el-upload>
-      <el-upload
-        class="upload-demo"
-        :action="collectAction+'/dataCollect/import'"
-        :headers="header"
-        :show-file-list=false
-        :on-success="uploadSuccess"
-        :on-progress="onProgress"
-        >
-        <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入案件记录'">导入催收记录</el-button>
-      </el-upload>
-    </el-form-item>
+            >
+            <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入案件地址'">导入案件地址</el-button>
+          </el-upload>
+          <el-upload
+            class="upload-demo"
+            :action="collectAction+'/dataCollect/import'"
+            :headers="header"
+            :show-file-list=false
+            :on-success="uploadSuccess"
+            :on-progress="onProgress"
+            >
+            <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入案件记录'">导入催收记录</el-button>
+          </el-upload>
+
+      </el-form-item>
+     </el-row>
    </el-form>
-   <el-table
-    v-loading="tableLoad"
+    <el-table highlight-current-row v-loading="tableLoad"
    	class="table-wrap"
     height="1"
     ref="multipleTable"
@@ -179,6 +179,7 @@
       :sort-orders="['ascending','descending']"
       prop="caseTime"
       label="委案日期"
+      width="120"
       align="center"
       show-overflow-tooltip>
     </el-table-column>
@@ -195,6 +196,7 @@
       :sort-orders="['ascending','descending']"
       label="总金额"
       align="center"
+      width="120"
       prop="totalAmtMsg"
       show-overflow-tooltip>
       <template slot-scope="scope">
@@ -206,6 +208,7 @@
       align="center"
       :sort-orders="['ascending','descending']"
       prop="uploadTime"
+      width="140"
       label="上传时间"
       show-overflow-tooltip>
     </el-table-column>

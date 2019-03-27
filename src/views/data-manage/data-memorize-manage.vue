@@ -141,19 +141,18 @@
                 >
                 </el-date-picker>
           </el-form-item>
-
-      <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="search">查询</el-button>
-        <el-button type="primary" icon="el-icon-refresh" @click="resetForm">重置</el-button>
-        <el-button type="primary" @click="showQueryConf">查询条件配置</el-button>
-        <el-button type="primary" @click="open7" v-has="'删除催记'">删除催记</el-button>
-        <el-button type="primary" @click="selectDataCollectExport" v-has="'导出所选借改'">导出所选催记</el-button>
-        <el-button type="primary" @click="dialogVisible2 = true" v-has="'导出查询结果'">导出查询结果</el-button>
-      </el-form-item>
-
+      <el-row>
+        <el-form-item>
+          <el-button type="primary" icon="el-icon-search" @click="search">查询</el-button>
+          <el-button type="primary" icon="el-icon-refresh" @click="resetForm">重置</el-button>
+          <el-button type="primary" @click="showQueryConf">查询条件配置</el-button>
+          <el-button type="primary" @click="open7" v-has="'删除催记'">删除催记</el-button>
+          <el-button type="primary" @click="selectDataCollectExport" v-has="'导出所选借改'">导出所选催记</el-button>
+          <el-button type="primary" @click="dialogVisible2 = true" v-has="'导出查询结果'">导出查询结果</el-button>
+        </el-form-item>
+      </el-row>
     </el-form>
-    <el-table
-      height="1"
+     <el-table highlight-current-row height="1"
       v-loading="tableLoad"
       class="table-wrap"
       :data="tableData3"
@@ -182,7 +181,7 @@
         prop="seqno"
         sortable="custom"
         align="center"
-        min-width="120"
+        min-width="160"
         :sort-orders="['ascending','descending']"
         label="个案序列号"
       >
@@ -216,7 +215,7 @@
       <el-table-column
         prop="collectTime"
         label="催收时间"
-        width="140"
+        width="130"
         sortable="custom"
         :sort-orders="['ascending','descending']"
         align="center"
@@ -285,14 +284,14 @@
     </el-table-column><el-table-column
       prop="repayTime"
       label="承诺还款日期"
-      width="180"
+      width="120"
       align="center"
       sortable="custom"
       :sort-orders="['ascending','descending']"
       show-overflow-tooltip>
     </el-table-column><el-table-column
       label="承诺还款金额"
-      width="160"
+      width="130"
       align="center"
       prop="repayAmtMsg"
       sortable="custom"
@@ -303,7 +302,7 @@
       </template>
     </el-table-column><el-table-column
       label="减免金额"
-      width="160"
+      width="120"
       sortable="custom"
       :sort-orders="['ascending','descending']"
       align="center"
@@ -316,6 +315,7 @@
       prop="reduceStatusMsg"
       label="减免状态"
       sortable="custom"
+      align="center"
       min-width="130"
       :sort-orders="['ascending','descending']"
       show-overflow-tooltip>
@@ -323,6 +323,7 @@
       prop="odv"
       label="催收员"
       sortable="custom"
+      align="center"
       min-width="130"
       :sort-orders="['ascending','descending']"
       show-overflow-tooltip>
@@ -330,6 +331,7 @@
       prop="collectStatusMsg"
       label="催收状态"
       min-width="130"
+      align="center"
       sortable="custom"
       :sort-orders="['ascending','descending']"
       show-overflow-tooltip>

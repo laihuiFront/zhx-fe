@@ -55,7 +55,7 @@
           <el-button type="primary" @click="onClickImport" >导出员工信息</el-button>
         </el-form-item>
       </el-form>
-      <el-table v-loading="tableLoad" sortable="custom" border stripe @sort-change="handleSort" @selection-change="handleSelectionChange" :row-class-name="rowColor"  height="1" :data="memberList" style="width: 100%" class="table-wrap">
+      <el-table v-loading="tableLoad" highlight-current-row sortable="custom" border stripe @sort-change="handleSort"  @selection-change="handleSelectionChange" :row-class-name="rowColor"  height="1" :data="memberList" style="width: 100%" class="table-wrap">
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']"  align="center" prop="id" min-width="100" label="员工ID" show-overflow-tooltip></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center" prop="userName" min-width="120" label="员工姓名" show-overflow-tooltip></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center"  prop="number" min-width="120" show-overflow-tooltip label="账号"></el-table-column>
@@ -270,6 +270,7 @@ export default {
     })
   },
   methods: {
+
     rowColor({row}){
       return `color_${row.color}`;
     },
@@ -358,6 +359,9 @@ export default {
     },
     onClickAdd () {
       // this.memberInfo.roleList = null
+      this.$nextTick(()=>{
+        this.$refs['ruleForm'].resetFields()
+      });
       if(!this.queryDepartment){
         this.memberInfo = {
           status: 1,
@@ -378,6 +382,9 @@ export default {
       this.$set(this.dialogData, 'editVisible', true)
     },
     onClickEdit (row) {
+      this.$nextTick(()=>{
+        this.$refs['ruleForm'].resetFields()
+      });
       this.$set(this.dialogData, 'title', '修改员工')
       this.$set(this.dialogData, 'type', 'edit')
       getUserById(row.id).then(response => {

@@ -46,9 +46,19 @@
           ></el-input>
         </el-form-item>
         <el-form-item label="数据权限" prop="dataAuth">
-          <el-select v-model="formInline.status" filterable  placeholder="请选择数据权限" clearable>
+          <el-select v-model="roleInfo.dataAuth" filterable  placeholder="请选择数据权限" clearable>
             <el-option
               v-for="item in dataAuthList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="业务权限" prop="busiAuth">
+          <el-select v-model="roleInfo.busiAuth" filterable  placeholder="请选择业务权限" clearable>
+            <el-option
+              v-for="item in busiAuthList"
               :key="item.id"
               :label="item.name"
               :value="item.id">
@@ -99,8 +109,10 @@ export default {
       },
       roleList: [],
       dataAuthList:[{id:1,name:"具有数据权限"},{id:2,name:"不具有数据权限"}],
+      busiAuthList:[{id:1,name:"具有业务权限"},{id:2,name:"不具有业务权限"}],
       dialogData: {
         editVisible: false,
+        roleDesc:'',
         title: '新增角色',
         type: 'add'
       },
@@ -111,7 +123,13 @@ export default {
         ],
         roleDesc: [
           { max: 200, message: '角色描述不能大于200个字符', trigger: 'blur' }
-        ]
+        ],
+        dataAuth:[
+          { required: true, message: '请选择数据权限' }
+        ],
+        busiAuth:[
+          { required: true, message: '请选择业务权限'}
+        ],
       },
       roleInfo: {},
       authConfig: []
@@ -128,7 +146,11 @@ export default {
       this.queryForm = {}
     },
     onClickAdd () {
+      this.$nextTick(()=>{
+        this.$refs['ruleForm'].resetFields()
+      });
       this.roleInfo = {}
+
       this.$set(this.dialogData, 'title', '新增角色')
       this.$set(this.dialogData, 'type', 'add')
       listAuth().then(response => {
@@ -139,7 +161,7 @@ export default {
     onClickQueryOne (row) {
       this.roleInfo = {
         roleName: row.roleName,
-        roleDesc: row.roleDesc
+        roleDesc: row.roleDesc==""?" ":row.roleDesc
       }
       this.$set(this.dialogData, 'title', '查看角色')
       this.$set(this.dialogData, 'type', 'query')
@@ -149,11 +171,16 @@ export default {
       })
     },
     onClickEdit (row) {
+      this.$nextTick(()=>{
+        this.$refs['ruleForm'].resetFields()
+      });
       this.$set(this.dialogData, 'title', '修改角色')
       this.$set(this.dialogData, 'type', 'edit')
       this.currentRow = row
       this.roleInfo = {
         roleName: row.roleName,
+        dataAuth:row.dataAuth,
+        busiAuth:row.busiAuth,
         roleDesc: row.roleDesc
       }
       listAuth(row.id).then(response => {
@@ -179,21 +206,30 @@ export default {
       this.$set(this.dialogData, 'editVisible', false)
     },
     onClickSave () {
-      let roleSubmit = {
-        roleName: this.roleInfo.roleName,
-        roleDesc: this.roleInfo.roleDesc
-      }
-      if (this.dialogData.type === 'edit') {
-        roleSubmit.id = this.currentRow.id
-      }
-      saveRole(roleSubmit).then(response => {
-        const id = this.dialogData.type === 'edit' ? this.currentRow.id : response.id
-        saveAuth({ id, menus: this.authConfig }).then(response => {
-          this.$message('角色保存成功')
-          this.onClickCancel()
-          this.initRoleList()
-        })
-      })
+      this.$refs['ruleForm'].validate((valid) => {
+        if (!valid) {
+            return;
+        }else{
+          let roleSubmit = {
+            roleName: this.roleInfo.roleName,
+            dataAuth:this.roleInfo.dataAuth,
+            busiAuth:this.roleInfo.busiAuth,
+            roleDesc: this.roleInfo.roleDesc
+          }
+          if (this.dialogData.type === 'edit') {
+            roleSubmit.id = this.currentRow.id
+          }
+          saveRole(roleSubmit).then(response => {
+            const id = this.dialogData.type === 'edit' ? this.currentRow.id : response.id
+            saveAuth({ id, menus: this.authConfig }).then(response => {
+              this.$message('角色保存成功')
+              this.onClickCancel()
+              this.initRoleList()
+            })
+          })
+        }
+      });
+
     },
     initRoleList () {
       this.roleList = []

@@ -15,8 +15,7 @@
         <el-button type="primary" v-has="'添加诉讼案件'" @click="addDataform">添加诉讼案件</el-button>
       </el-form-item>
     </el-form>
-  <el-table
-    v-loading="tableLoad"
+   <el-table highlight-current-row v-loading="tableLoad"
     class="table-wrap"
     height="1"
     :data="DataList"
@@ -68,7 +67,7 @@
     <el-table-column
       prop="legalDate"
       align="center"
-      min-width="120"
+      width="120"
       label="委案日期"
       show-overflow-tooltip
         sortable="custom"
@@ -108,7 +107,7 @@
     <el-table-column
       prop="costMsg"
       align="center"
-      min-width="120"
+      width="120"
       label="费用"
       show-overflow-tooltip
         sortable="custom"
@@ -517,8 +516,7 @@
                 </el-col>
                 <el-button type="primary" @click="adddialogVisible = true"> 添加办理记录</el-button>
               </el-row>
-              <el-table
-                :data="handleList"
+               <el-table highlight-current-row :data="handleList"
                 border
                 stripe
                 style="width: 100%">
@@ -621,8 +619,7 @@
               </el-col>
               <el-button type="primary" @click="add1dialogVisible = true"> 添加收费记录</el-button>
             </el-row>
-              <el-table
-                :data="feeList"
+               <el-table highlight-current-row :data="feeList"
                 border
                 stripe
                 style="width: 100%">

@@ -32,6 +32,7 @@
       >
     </el-date-picker>
   </el-form-item>
+      <el-row>
   <el-form-item>
   <el-button type="primary" icon="el-icon-search" @click=search>查询</el-button> 
   <el-button type="primary" icon="el-icon-refresh" @click=clench>重置</el-button> 
@@ -57,10 +58,9 @@
   <el-form-item>
       <el-button type="primary" @click="open7" v-has="'删除'">删除</el-button> 
        </el-form-item>
-
+      </el-row>
     </el-form>
-   <el-table
-    v-loading="tableLoad"
+    <el-table highlight-current-row v-loading="tableLoad"
     class="table-wrap"
     height="1"
      border
@@ -79,7 +79,7 @@
     <el-table-column
       label="证件号"
       align="center"
-      min-width="200"
+      min-width="160"
       sortable="custom"
       :sort-orders="['ascending','descending']"
        prop="identNo"
@@ -118,7 +118,7 @@
        label="档案变更日期"
        prop="updateTime"
        sortable="custom"
-       min-width="180"
+       width="140"
        align="center"
        :sort-orders="['ascending','descending']"
        show-overflow-tooltip>
@@ -126,6 +126,7 @@
     <el-table-column
       label="备注"
       align="center"
+      min-width="200"
       show-overflow-tooltip>
       <template slot-scope="scope" >
         <div v-for="(domain, index) in scope.row.remarkList">

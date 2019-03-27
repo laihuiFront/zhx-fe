@@ -12,8 +12,7 @@
         <el-button icon="el-icon-refresh" type="primary" @click="onClickReset">重置</el-button>
       </el-form-item>
     </el-form>
-    <el-table
-      v-loading="tableLoad"
+     <el-table highlight-current-row v-loading="tableLoad"
       sortable="custom"
       border
       stripe

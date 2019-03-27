@@ -164,14 +164,16 @@
               end-placeholder="还款结束日期">
             </el-date-picker>
     </el-form-item>
-    <el-form-item>
-      <el-button icon="el-icon-search" type="primary" @click="$emit('query')">查询</el-button>
-      <el-button icon="el-icon-refresh" type="primary" @click="$emit('reset')">重置</el-button>
-      <el-button  type="primary" @click="showQueryConf">查询条件配置</el-button>
-    </el-form-item>
-    <el-form-item>
-      <slot></slot>
-    </el-form-item>
+    <el-row>
+      <el-form-item>
+        <el-button icon="el-icon-search" type="primary" @click="$emit('query')">查询</el-button>
+        <el-button icon="el-icon-refresh" type="primary" @click="$emit('reset')">重置</el-button>
+        <el-button  type="primary" @click="showQueryConf">查询条件配置</el-button>
+      </el-form-item>
+      <el-form-item>
+        <slot></slot>
+      </el-form-item>
+    </el-row>
   </el-form>
   <el-dialog
     title="查询条件配置"
@@ -199,7 +201,7 @@
       <el-checkbox v-model="queryConf.zjh" label="2" >证件号</el-checkbox>
       <el-checkbox v-model="queryConf.zh" label="2" >账号</el-checkbox>
       <el-checkbox v-model="queryConf.kh" label="2" >卡号</el-checkbox>
-      <el-checkbox v-model="queryConf.qrr label="2" >确认人</el-checkbox>
+      <el-checkbox v-model="queryConf.qrr" label="2" >确认人</el-checkbox>
       <el-checkbox v-model="queryConf.qrrq" label="2" >确认日期</el-checkbox>
       <el-checkbox v-model="queryConf.hkrq" label="2" >还款日期</el-checkbox>
 

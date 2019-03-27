@@ -5,8 +5,7 @@
                  @click="dialogVisible=true;addmodule=true;" v-has="'添加信函模板'">添加信函模板
       </el-button>
     </el-row>
-    <el-table
-      class="table-wrap"
+     <el-table highlight-current-row class="table-wrap"
       height="1"
       :data="tableData"
       border stripe

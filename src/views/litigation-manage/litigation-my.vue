@@ -28,8 +28,7 @@
         </el-form-item> 
       </el-form>
   	
-  <el-table
-   v-loading="tableLoad"
+   <el-table highlight-current-row v-loading="tableLoad"
     class="table-wrap"
     height="1"
 
@@ -75,7 +74,7 @@
     </el-table-column><el-table-column
       prop="legalDate"
       align="center"
-      min-width="120"
+      width="120"
       label="委案日期"
        sortable="custom"
           :sort-orders="['ascending','descending']"
@@ -110,7 +109,7 @@
     <el-table-column
       prop="costMsg"
       align="center"
-      min-width="120"
+      width="120"
       label="费用"
        sortable="custom"
           :sort-orders="['ascending','descending']"
@@ -522,8 +521,7 @@
         </el-form-item>    
       </el-form>
   	
-  <el-table
-    v-loading="tableLoad"
+   <el-table highlight-current-row v-loading="tableLoad"
     class="table-wrap"
     height="1"
     :data="DataList2"

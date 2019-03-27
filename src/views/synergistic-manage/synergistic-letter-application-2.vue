@@ -156,49 +156,51 @@
                 </el-option>
               </el-select>
             </el-form-item>
-            <el-form-item>
-              <el-button type="primary" icon="el-icon-search" @click="searchHandle"
-                >查询</el-button
-              >
-            </el-form-item>
-            <el-form-item>
-              <el-button
-                type="primary"
-                icon="el-icon-refresh"
-                @click="resetForm('form')"
-                >重置</el-button
-              >
-            </el-form-item>
-            <el-form-item>
-              <el-button v-has="'批量确认信函'" type="primary" @click="qrHandle"
-                >批量确认信函</el-button
-              >
-            </el-form-item>
-            <el-form-item>
-              <el-button v-has="'撤销信函'" type="primary" @click="cxHandle"
-                >撤销信函</el-button
-              >
-            </el-form-item>
-            <el-form-item>
-              <el-dropdown
-                v-has="'导出信函'"
-                trigger="click"
-                @command="exportXh"
-              >
-                <el-button type="primary">导出信函</el-button>
-                <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item
-                    v-for="(item, index) in moduleList"
-                    :key="index"
-                    :command="item.id"
-                    >{{ item.title }}
-                  </el-dropdown-item>
-                </el-dropdown-menu>
-              </el-dropdown>
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" @click="dialogVisibleCase=true;">导出查询结果</el-button>
-            </el-form-item>
+            <el-row>
+              <el-form-item>
+                <el-button type="primary" icon="el-icon-search" @click="searchHandle"
+                  >查询</el-button
+                >
+              </el-form-item>
+              <el-form-item>
+                <el-button
+                  type="primary"
+                  icon="el-icon-refresh"
+                  @click="resetForm('form')"
+                  >重置</el-button
+                >
+              </el-form-item>
+              <el-form-item>
+                <el-button v-has="'批量确认信函'" type="primary" @click="qrHandle"
+                  >批量确认信函</el-button
+                >
+              </el-form-item>
+              <el-form-item>
+                <el-button v-has="'撤销信函'" type="primary" @click="cxHandle"
+                  >撤销信函</el-button
+                >
+              </el-form-item>
+              <el-form-item>
+                <el-dropdown
+                  v-has="'导出信函'"
+                  trigger="click"
+                  @command="exportXh"
+                >
+                  <el-button type="primary">导出信函</el-button>
+                  <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item
+                      v-for="(item, index) in moduleList"
+                      :key="index"
+                      :command="item.id"
+                      >{{ item.title }}
+                    </el-dropdown-item>
+                  </el-dropdown-menu>
+                </el-dropdown>
+              </el-form-item>
+              <el-form-item>
+                <el-button type="primary" @click="dialogVisibleCase=true;">导出查询结果</el-button>
+              </el-form-item>
+            </el-row>
           </el-form>
         </div>
       </el-col>
@@ -223,8 +225,7 @@
               <el-button type="primary" @click="changeRadio">确 定</el-button>  
         </span>
     </el-dialog>
-    <el-table
-      v-loading="tableLoad"
+     <el-table highlight-current-row v-loading="tableLoad"
       class="table-wrap"
       height="1"
       ref="multipleTable"
@@ -243,7 +244,7 @@
         prop="seqno"
         sortable="custom"
         :sort-orders="['ascending', 'descending']"
-        min-width="120"
+        min-width="160"
         header-align="center"
         align="center"
       >
@@ -393,10 +394,12 @@ export default {
         },
         {
           prop: "caseAmtMsg",
+          width:"120",
           label: "委案金额"
         },
         {
           prop: "repayAmtMsg",
+          width:"120",
           label: "还款金额"
         },
         {
@@ -425,6 +428,7 @@ export default {
         },
         {
           prop: "applyDate",
+          width:"130",
           label: "申请时间"
         },
         {
@@ -433,6 +437,7 @@ export default {
         },
         {
           prop: "synergyDate",
+          width:"130",
           label: "协催时间"
         },
         {

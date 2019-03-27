@@ -189,41 +189,42 @@
                       </el-option>
                     </el-select>
                   </el-form-item>
-                  <el-form-item>
-                    <el-button
-                      type="primary"
-                      icon="el-icon-search"
-                      @click="searchHandle"
-                      >查询</el-button
-                    >
-                  </el-form-item>
-                  <el-form-item>
-                    <el-button
-                      type="primary"
-                      icon="el-icon-refresh"
-                      @click="resetForm('form')"
-                      >重置</el-button
-                    >
-                  </el-form-item>
-                  <el-form-item>
-                    <el-button type="primary" v-has="'同意协催'" @click="showXc"
-                      >同意协催</el-button
-                    >
-                  </el-form-item>
-                  <el-form-item>
-                    <el-button
-                      type="primary"
-                      v-has="'撤销信函'"
-                      @click="cxHandle"
-                      >撤销信函</el-button
-                    >
-                  </el-form-item>
+                  <el-row>
+                    <el-form-item>
+                      <el-button
+                        type="primary"
+                        icon="el-icon-search"
+                        @click="searchHandle"
+                        >查询</el-button
+                      >
+                    </el-form-item>
+                    <el-form-item>
+                      <el-button
+                        type="primary"
+                        icon="el-icon-refresh"
+                        @click="resetForm('form')"
+                        >重置</el-button
+                      >
+                    </el-form-item>
+                    <el-form-item>
+                      <el-button type="primary" v-has="'同意协催'" @click="showXc"
+                        >同意协催</el-button
+                      >
+                    </el-form-item>
+                    <el-form-item>
+                      <el-button
+                        type="primary"
+                        v-has="'撤销信函'"
+                        @click="cxHandle"
+                        >撤销信函</el-button
+                      >
+                    </el-form-item>
+                  </el-row>
                 </el-form>
               </div>
             </el-col>
           </el-row>
-          <el-table
-            v-loading="tableLoad"
+           <el-table highlight-current-row v-loading="tableLoad"
             class="table-wrap"
             height="1"
             ref="multipleTable"
@@ -242,7 +243,7 @@
               prop="seqno"
               sortable="custom"
               :sort-orders="['ascending', 'descending']"
-              min-width="120"
+              min-width="160"
               header-align="center"
               align="center"
             >
@@ -409,10 +410,12 @@ export default {
         },
         {
           prop: "caseAmtMsg",
+          width:"120",
           label: "委案金额"
         },
         {
           prop: "repayAmtMsg",
+          width:"120",
           label: "还款金额"
         },
         {
@@ -441,7 +444,7 @@ export default {
         },
         {
           prop: "applyDate",
-          width:"180",
+          width:"130",
           label: "申请时间"
         },
         {
@@ -450,7 +453,7 @@ export default {
         },
         {
           prop: "synergyDate",
-          width:"180",
+          width:"130",
           label: "协催时间"
         },
         {

@@ -12,16 +12,40 @@ import { Message, MessageBox } from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 import "@/common/scss/element-variables.scss";
 import { localCache } from "@/common/js/auth";
-
 import has from "./common/js/directives";
+
 Vue.use(ElementUI, { size: "mini" });
 
+var com = {
+  nane: 'ElTableBody',
+  extends:ElementUI.Table.components.TableBody,
+  props:{
+    highlight:{
+      default:true
+    },
+    highlightCurrentRow:{
+      default:true
+    }
+  },
+  methods:{
+    handleEvent(a,b){
+      this.$parent.setCurrentRow(b)
+    }
+  }
+}
+Vue.component(
+  "ElTable",
+  Vue.extend({
+    extends: ElementUI.Table,
+    components:{
+      TableBody:com
+    }
+  })
+);
 Vue.config.productionTip = false;
 Vue.mixin({
   beforeRouteLeave: function(to, from, next) {
-    if (
-      this.$route.meta.cacheflush
-    ) {
+    if (this.$route.meta.cacheflush) {
       if (this.$vnode && this.$vnode.data.keepAlive) {
         if (
           this.$vnode.parent &&

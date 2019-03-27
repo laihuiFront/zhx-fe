@@ -2,7 +2,7 @@
   <div  id="syn-record-query" >
   <el-form  :model="queryForm" :inline="true" class="query-wrap">
     <el-form-item  v-if="queryConf.csqy || queryConfFlag">
-      <el-select style="width: 150px;" clearable v-model="queryForm.dataCase.collectionArea.id" filterable placeholder="请选择催收区域">
+      <el-select style="min-width: 250px;" clearable v-model="queryForm.dataCase.collectionArea.id" filterable placeholder="请选择催收区域">
         <el-option
           v-for="item in collectionAreaList"
           :key="item.id"
@@ -12,7 +12,7 @@
       </el-select>
     </el-form-item>
     <el-form-item  v-if="queryConf.pc || queryConfFlag">
-      <el-select style="width: 150px;" v-model="queryForm.dataCase.batchNo" filterable placeholder="请选择批次" clearable>
+      <el-select style="min-width: 250px;" v-model="queryForm.dataCase.batchNos" filterable multiple collapse-tags placeholder="请选择批次" clearable>
         <el-option
           v-for="item in batchList"
           :key="item.id"
@@ -22,7 +22,7 @@
       </el-select>
     </el-form-item>
     <el-form-item  v-if="queryConf.wtf || queryConfFlag">
-      <el-select style="width: 150px;" clearable v-model="queryForm.dataCase.client" filterable placeholder="请选择委托方">
+      <el-select style="width: 150px;" clearable v-model="queryForm.dataCase.clients" filterable placeholder="请选择委托方">
         <el-option
           v-for="item in clientList"
           :key="item.id"
@@ -94,6 +94,7 @@
     <el-form-item v-if="queryConf.sqr || queryConfFlag">
             <el-input v-model="queryForm.applyUser.name" clearable placeholder="请输入申请人"></el-input>
     </el-form-item>
+    <el-row>
     <el-form-item>
       <el-button icon="el-icon-search" type="primary" @click="$emit('query')">查询</el-button>
       <el-button icon="el-icon-refresh" type="primary" @click="$emit('reset')">重置</el-button>
@@ -102,6 +103,7 @@
     <el-form-item>
       <slot></slot>
     </el-form-item>
+    </el-row>
   </el-form>
 
   <el-dialog
@@ -205,7 +207,6 @@ export default {
       getEnum('协催类型').then(data => this.synergisticTypeList = data)
     },
     namesChange(val){
-      console.log(val)
       if(val){
         this.queryForm.dataCase.names = val.split('\n')
       }else{

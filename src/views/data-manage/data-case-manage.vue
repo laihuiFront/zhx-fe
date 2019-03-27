@@ -280,87 +280,88 @@
               >
               </el-date-picker>
       </el-form-item>
-      <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="search" style="margin-left:10px;">查询</el-button>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" icon="el-icon-refresh" @click="resetFormInline" style="margin-left:10px;">重置</el-button>
-      </el-form-item>
-      <el-form-item><el-button type="primary" @click="showQueryConf"  style="margin-left:10px;">查询条件配置</el-button></el-form-item>
-      <el-form-item>
-        <el-dropdown v-dropdown-patch @command="fenancheck" style="margin-left:10px;" v-has="'分案'" >
-          <el-button type="primary" >
-            分案<i class="el-icon-arrow-down el-icon--right"></i>
-          </el-button>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="a">快速分案</el-dropdown-item>
-            <el-dropdown-item command="b">查询结果快速分案</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-          </el-form-item>
-      <el-form-item style="margin-left: 10px;">
-        <el-dropdown v-dropdown-patch @command="guanlianjian" v-has="'案件'">
-          <el-button type="primary">
-            案件<i class="el-icon-arrow-down el-icon--right"></i>
-          </el-button>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item  command="2">暂停案件</el-dropdown-item>
-            <el-dropdown-item  command="3">关闭案件</el-dropdown-item>
-            <el-dropdown-item  command="4">退案</el-dropdown-item>
-            <el-dropdown-item  command="1">恢复案件</el-dropdown-item>
-            <!--    <el-dropdown-item>案件标色</el-dropdown-item>
-            -->    <el-dropdown-item  command="a">删除案件</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-          </el-form-item>
-      <el-form-item style="margin-left: 10px;">
-        <el-dropdown v-dropdown-patch @command="handleCommand" v-has="'修改'">
-          <el-button type="primary">
-            修改<i class="el-icon-arrow-down el-icon--right"></i>
-          </el-button>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="important">修改重要等级</el-dropdown-item>
-            <el-dropdown-item command="collectStatus">修改催收状态</el-dropdown-item>
-            <el-dropdown-item command="collectArea">修改催收区域</el-dropdown-item>
-            <el-dropdown-item command="mVal">修改提成值系数</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-          </el-form-item>
-      <el-form-item style="margin-left: 10px;">
-        <el-button type="primary" @click="addshow" v-has="'添加评语'">添加评语</el-button>
-          </el-form-item>
-      <el-form-item style="margin-left: 10px;">
-        <el-button type="primary"  @click="xiecui" v-has="'申请协催'">申请协催</el-button>
-          </el-form-item>
-      <el-form-item style="margin-left: 10px;">
-        <el-dropdown v-dropdown-patch @command="handleExport" v-has="'导出'">
-          <el-button type="primary">
-            导出<i class="el-icon-arrow-down el-icon--right"></i>
-          </el-button>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="exportTotalCase">查询结果</el-dropdown-item>
-            <el-dropdown-item command="exportSelectCase">所选案件</el-dropdown-item>
-            <el-dropdown-item command="exportTel">所选电话</el-dropdown-item>
-            <el-dropdown-item command="exportCollect">所选催记</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-          </el-form-item>
-      <el-form-item style="margin-left: 10px;">
-        <el-dropdown v-dropdown-patch @command="biaose" v-has="'案件标色'">
-          <el-button type="primary" >
-            案件标色<i class="el-icon-arrow-down el-icon--right"></i>
-          </el-button>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="黑">黑色</el-dropdown-item>
-            <el-dropdown-item command="红">红色</el-dropdown-item>
-            <el-dropdown-item command="蓝">蓝色</el-dropdown-item>
-            <el-dropdown-item command="橙">橙色</el-dropdown-item>
-            <el-dropdown-item command="紫">紫色</el-dropdown-item>
-            <el-dropdown-item command="棕">棕色</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-          </el-form-item>
-    
+      <el-row>
+        <el-form-item>
+          <el-button type="primary" icon="el-icon-search" @click="search" style="margin-left:10px;">查询</el-button>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" icon="el-icon-refresh" @click="resetFormInline" style="margin-left:10px;">重置</el-button>
+        </el-form-item>
+        <el-form-item><el-button type="primary" @click="showQueryConf"  style="margin-left:10px;">查询条件配置</el-button></el-form-item>
+        <el-form-item>
+          <el-dropdown v-dropdown-patch @command="fenancheck" style="margin-left:10px;" v-has="'分案'" >
+            <el-button type="primary" >
+              分案<i class="el-icon-arrow-down el-icon--right"></i>
+            </el-button>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item command="a">快速分案</el-dropdown-item>
+              <el-dropdown-item command="b">查询结果快速分案</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+            </el-form-item>
+        <el-form-item style="margin-left: 10px;">
+          <el-dropdown v-dropdown-patch @command="guanlianjian" v-has="'案件'">
+            <el-button type="primary">
+              案件<i class="el-icon-arrow-down el-icon--right"></i>
+            </el-button>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item  command="2">暂停案件</el-dropdown-item>
+              <el-dropdown-item  command="3">关闭案件</el-dropdown-item>
+              <el-dropdown-item  command="4">退案</el-dropdown-item>
+              <el-dropdown-item  command="1">恢复案件</el-dropdown-item>
+              <!--    <el-dropdown-item>案件标色</el-dropdown-item>
+              -->    <el-dropdown-item  command="a">删除案件</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+            </el-form-item>
+        <el-form-item style="margin-left: 10px;">
+          <el-dropdown v-dropdown-patch @command="handleCommand" v-has="'修改'">
+            <el-button type="primary">
+              修改<i class="el-icon-arrow-down el-icon--right"></i>
+            </el-button>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item command="important">修改重要等级</el-dropdown-item>
+              <el-dropdown-item command="collectStatus">修改催收状态</el-dropdown-item>
+              <el-dropdown-item command="collectArea">修改催收区域</el-dropdown-item>
+              <el-dropdown-item command="mVal">修改提成值系数</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+            </el-form-item>
+        <el-form-item style="margin-left: 10px;">
+          <el-button type="primary" @click="addshow" v-has="'添加评语'">添加评语</el-button>
+            </el-form-item>
+        <el-form-item style="margin-left: 10px;">
+          <el-button type="primary"  @click="xiecui" v-has="'申请协催'">申请协催</el-button>
+            </el-form-item>
+        <el-form-item style="margin-left: 10px;">
+          <el-dropdown v-dropdown-patch @command="handleExport" v-has="'导出'">
+            <el-button type="primary">
+              导出<i class="el-icon-arrow-down el-icon--right"></i>
+            </el-button>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item command="exportTotalCase">查询结果</el-dropdown-item>
+              <el-dropdown-item command="exportSelectCase">所选案件</el-dropdown-item>
+              <el-dropdown-item command="exportTel">所选电话</el-dropdown-item>
+              <el-dropdown-item command="exportCollect">所选催记</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+            </el-form-item>
+        <el-form-item style="margin-left: 10px;">
+          <el-dropdown v-dropdown-patch @command="biaose" v-has="'案件标色'">
+            <el-button type="primary" >
+              案件标色<i class="el-icon-arrow-down el-icon--right"></i>
+            </el-button>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item command="黑">黑色</el-dropdown-item>
+              <el-dropdown-item command="红">红色</el-dropdown-item>
+              <el-dropdown-item command="蓝">蓝色</el-dropdown-item>
+              <el-dropdown-item command="橙">橙色</el-dropdown-item>
+              <el-dropdown-item command="紫">紫色</el-dropdown-item>
+              <el-dropdown-item command="棕">棕色</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+            </el-form-item>
+      </el-row>
     </el-form>
     <el-row :gutter="24">
       <el-col :span="18" style="    width: 100%;">
@@ -376,8 +377,7 @@
       </el-col>
     </el-row>
     
-    <el-table
-      v-loading="tableLoad"
+     <el-table highlight-current-row v-loading="tableLoad"
       class="table-wrap"
       height="1"
       ref="multipleTable"
@@ -385,7 +385,7 @@
       border
       stripe
       :row-class-name="rowColor"
-      style="margin-top:10px;min-height:400px;"
+      style="margin-top:10px;min-height:400px;margin-bottom: 40px;"
       @selection-change="handleSelectionChange"
       @row-dblclick="showDetail"
       @sort-change="handleSort"
@@ -409,7 +409,7 @@
         align="center"
         sortable="custom"
         :sort-orders="['ascending','descending']"
-        min-width="140"
+        width="140"
         label="催收区域"
       >
       </el-table-column>
@@ -434,7 +434,7 @@
       </el-table-column>
       <el-table-column
         prop="seqNo"
-        width="140"
+        width="160"
         sortable="custom"
         :sort-orders="['ascending','descending']"
         align="center"
@@ -450,12 +450,12 @@
         label="委案日期"
         sortable="custom"
         :sort-orders="['ascending','descending']"
-        width="140"
+        width="120"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="expectTime"
-        width="140"
+        width="120"
         sortable="custom"
         :sort-orders="['ascending','descending']"
         align="center"
@@ -474,14 +474,14 @@
         prop="identNo"
         sortable="custom"
         :sort-orders="['ascending','descending']"
-        min-width="200"
+        min-width="160"
         align="center"
         label="证件号"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="area"
-        min-width="140"
+        min-width="130"
         sortable="custom"
         :sort-orders="['ascending','descending']"
         align="center"
@@ -490,7 +490,7 @@
       </el-table-column>
       <el-table-column
         prop="cardNo"
-        min-width="200"
+        min-width="160"
         sortable="custom"
         :sort-orders="['ascending','descending']"
         align="center"
@@ -500,7 +500,7 @@
       <el-table-column
         prop="moneyMsg"
         sortable="custom"
-        min-width="140"
+        min-width="120"
         :sort-orders="['ascending','descending']"
         label="委案金额"
         align="center"
@@ -509,7 +509,7 @@
       <el-table-column
         prop="balanceMsg"
         sortable="custom"
-        min-width="140"
+        min-width="120"
         :sort-orders="['ascending','descending']"
         align="center"
         label="委案余额"
@@ -519,7 +519,7 @@
         prop="collectDate"
         sortable="custom"
         :sort-orders="['ascending','descending']"
-        width="140"
+        width="130"
         align="center"
         label="上次通电时间"
         show-overflow-tooltip>
@@ -553,7 +553,7 @@
       </el-table-column>
       <el-table-column
         prop="distributeTime"
-        width="140"
+        width="130"
         align="center"
         sortable="custom"
         :sort-orders="['ascending','descending']"
@@ -563,7 +563,7 @@
       <el-table-column
         prop="proRepayAmtMsg"
         label="承诺还款金额"
-        width="160"
+        width="120"
         sortable="custom"
         :sort-orders="['ascending','descending']"
         align="center"
@@ -571,7 +571,7 @@
       </el-table-column>
       <el-table-column
         prop="bankAmtMsg"
-        width="160"
+        width="130"
         sortable="custom"
         :sort-orders="['ascending','descending']"
         align="center"
@@ -580,7 +580,7 @@
       </el-table-column>
       <el-table-column
         prop="enRepayAmtMsg"
-        width="140"
+        width="120"
         align="center"
         sortable="custom"
         :sort-orders="['ascending','descending']"

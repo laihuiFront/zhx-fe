@@ -108,22 +108,23 @@
               >
               </el-date-picker>
       </el-form-item>
-      <el-form-item>
-        <el-button icon="el-icon-search" type="primary" @click="search">查询</el-button>
-        <el-button icon="el-icon-refresh" type="primary" @click="clear">重置</el-button>
-        <el-form-item><el-button type="primary" @click="showQueryConf"  style="margin-left:10px;">查询条件配置</el-button></el-form-item>
-        <el-button type="primary"　v-show="istrue1" v-has="'新增减免'" @click=addData >新增减免</el-button>
-        <el-button type="primary"　v-show="istrue2" v-has="'批量撤销'" @click=open8 >批量撤销</el-button>
-        <el-button type="primary"　v-show="istrue3" v-has="'批量审核'" @click=open9 >批量审核</el-button>
-        <el-button type="primary"　v-show="istrue6" v-has="'批量确认'" @click=open10 >批量确认</el-button>
-        <el-button type="primary"　v-show="istrue4" v-has="'批量下载附件'" @click=moredownDataList >批量下载附件</el-button>
-        <el-button type="primary"　v-show="istrue5" v-has="'导出减免结果'" @click="dialogVisible1 = true"  >导出减免结果</el-button>
-      </el-form-item>
+      <el-row>
+        <el-form-item>
+          <el-button icon="el-icon-search" type="primary" @click="search">查询</el-button>
+          <el-button icon="el-icon-refresh" type="primary" @click="clear">重置</el-button>
+          <el-form-item><el-button type="primary" @click="showQueryConf"  style="margin-left:10px;">查询条件配置</el-button></el-form-item>
+          <el-button type="primary"　v-show="istrue1" v-has="'新增减免'" @click=addData >新增减免</el-button>
+          <el-button type="primary"　v-show="istrue2" v-has="'批量撤销'" @click=open8 >批量撤销</el-button>
+          <el-button type="primary"　v-show="istrue3" v-has="'批量审核'" @click=open9 >批量审核</el-button>
+          <el-button type="primary"　v-show="istrue6" v-has="'批量确认'" @click=open10 >批量确认</el-button>
+          <el-button type="primary"　v-show="istrue4" v-has="'批量下载附件'" @click=moredownDataList >批量下载附件</el-button>
+          <el-button type="primary"　v-show="istrue5" v-has="'导出减免结果'" @click="dialogVisible1 = true"  >导出减免结果</el-button>
+        </el-form-item>
+      </el-row>
     </el-form>
  <el-tabs v-model="activeName2" type="card" @tab-click="handleClick" class="tabs-wrap">
     <el-tab-pane label="待审核" name="first" >
-      <el-table
-        class="table-wrap"
+       <el-table highlight-current-row class="table-wrap"
         height="1"
         ref="multipleTable"
         :data="tableData3"
@@ -147,7 +148,7 @@
           label="个案序列号"
           sortable="custom"
           :sort-orders="['ascending','descending']"
-           width="120"
+           min-width="160"
         >
            <template slot-scope="scope">
           <el-button type="text" size="small" @click="editCase(scope.row.caseId, scope.row.targetName,scope.row.seqno)">{{scope.row.seqno}}</el-button>
@@ -184,7 +185,7 @@
           prop="completeTime"
         align="center"
           label="完成时间"
-            width="160"
+            width="130"
           sortable="custom"
           :sort-orders="['ascending','descending']"
           show-overflow-tooltip>
@@ -192,7 +193,7 @@
         <el-table-column
           prop="completeUser"
           label="完成人"
-            width="120"
+          width="120"
           align="center"
           sortable="custom"
           :sort-orders="['ascending','descending']"
@@ -212,7 +213,7 @@
         align="center"
           label="有效日期"
           sortable="custom"
-            width="160"
+            width="120"
           :sort-orders="['ascending','descending']"
           show-overflow-tooltip>
         </el-table-column>
@@ -229,7 +230,7 @@
           prop="reduceResult"
         label="减免结果"
           align="center"
-            width="120"
+          width="120"
           sortable="custom"
           :sort-orders="['ascending','descending']"
           show-overflow-tooltip>
@@ -246,7 +247,7 @@
         <el-table-column
           prop="reduceUpdateTime"
           align="center"
-            width="180"
+            width="150"
           label="减免状态更新时间"
           sortable="custom"
           :sort-orders="['ascending','descending']"
@@ -285,8 +286,7 @@
       </el-pagination>
     </el-tab-pane>
     <el-tab-pane label="已审核" name="second">
-      <el-table
-      class="table-wrap"
+       <el-table highlight-current-row class="table-wrap"
       ref="multipleTable"
       :data="tableData3"
       height="1"
@@ -309,7 +309,7 @@
         align="center"
         label="个案序列号"
          sortable="custom"
-          width="120"
+          min-width="160"
           :sort-orders="['ascending','descending']"
       >
       <template slot-scope="scope">
@@ -338,7 +338,7 @@
         prop="moneyMsg"
         align="center"
         label="委案金额"
-         width="130"
+         width="120"
          sortable="custom"
           :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
@@ -346,7 +346,7 @@
       <el-table-column
         prop="completeTime"
        align="center"
-        width="180"
+        width="130"
         label="完成时间"
          sortable="custom"
           :sort-orders="['ascending','descending']"
@@ -365,7 +365,7 @@
         prop="approveRepayAmtMsg"
       align="center"
        sortable="custom"
-        width="130"
+        width="120"
           :sort-orders="['ascending','descending']"
         label="批复还款金额"
         show-overflow-tooltip>
@@ -375,7 +375,7 @@
       align="center"
         label="有效日期"
         sortable="custom"
-         width="160"
+         width="120"
           :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
@@ -410,7 +410,7 @@
         prop="reduceUpdateTime"
         align="center"
         label="减免状态更新时间"
-         width="180"
+         width="150"
         sortable="custom"
           :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
@@ -449,8 +449,7 @@
       </el-pagination>
     </el-tab-pane>
     <el-tab-pane label="已完成" name="third">
-      <el-table
-      class="table-wrap"
+       <el-table highlight-current-row class="table-wrap"
       height="1"
       ref="multipleTable"
       :data="tableData3"
@@ -472,7 +471,7 @@
         prop="seqno"
         align="center"
         label="个案序列号"
-         width="120"
+         min-width="160"
        sortable="custom"
           :sort-orders="['ascending','descending']"
       >
@@ -502,7 +501,7 @@
         prop="moneyMsg"
         align="center"
         label="委案金额"
-         width="130"
+         width="120"
     sortable="custom"
           :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
@@ -511,7 +510,7 @@
         prop="completeTime"
        align="center"
         label="完成时间"
-         width="180"
+         width="120"
          sortable="custom"
           :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
@@ -538,7 +537,7 @@
         prop="reduceValidTime"
       align="center"
         label="有效日期"
-         width="160"
+         width="120"
        sortable="custom"
           :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
@@ -576,7 +575,7 @@
     sortable="custom"
           :sort-orders="['ascending','descending']"
         label="减免状态更新时间"
-         width="180"
+         width="150"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
@@ -1189,6 +1188,10 @@ this.search()
 
 <style lang="scss">
 #relief-management{
+  .el-tabs__content{
+    margin-bottom: 40px;
+    overflow-y: auto;
+  }
   .pagination-wrap{
     position: fixed;
     bottom: 0;

@@ -11,8 +11,7 @@
       :queryForm="queryForm">
       <el-button type="primary" @click="dialogExportVisible = true" v-has="'导出查询结果'">导出查询结果</el-button>
     </syn-record-query>
-    <el-table
-      v-loading="tableLoad"
+     <el-table highlight-current-row v-loading="tableLoad"
       @sort-change="handleSort"
       :data="recordList"
       border
@@ -22,21 +21,21 @@
       class="table-wrap">
       <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" min-width="120" align="center" prop="synergisticType.name" label="协催类型" show-overflow-tooltip></el-table-column>
       <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" min-width="120" align="center" prop="dataCase.collectStatusMsg" label="催收状态" show-overflow-tooltip></el-table-column>
-      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" min-width="130" align="center" prop="dataCase.seqNo" label="个案序列号" show-overflow-tooltip>
+      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" min-width="160" align="center" prop="dataCase.seqNo" label="个案序列号" show-overflow-tooltip>
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="editCase(scope.row.dataCase.id, scope.row.dataCase.name,scope.row.dataCase.seqNo)">{{scope.row.dataCase.seqNo}}</el-button>
         </template>
       </el-table-column>
-      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" min-width="200" align="center" prop="dataCase.identNo" label="证件号" show-overflow-tooltip></el-table-column>
+      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" min-width="160" align="center" prop="dataCase.identNo" label="证件号" show-overflow-tooltip></el-table-column>
       <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" min-width="130" align="center" prop="dataCase.name" label="姓名" show-overflow-tooltip></el-table-column>
       <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" min-width="120" align="center" prop="dataCase.moneyMsg" label="委案金额" show-overflow-tooltip></el-table-column>
       <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" min-width="120" align="center" prop="dataCase.repayMoneyMsg" label="还款金额" show-overflow-tooltip></el-table-column>
       <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" min-width="150" align="center" prop="applyContent" label="申请内容" show-overflow-tooltip></el-table-column>
-      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" min-width="180" align="center" prop="applyTime" label="申请时间" show-overflow-tooltip></el-table-column>
+      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" min-width="140" align="center" prop="applyTime" label="申请时间" show-overflow-tooltip></el-table-column>
       <el-table-column   sortable="custom" :sort-orders="['ascending','descending']" min-width="120" align="center" prop="applyUser.userName" label="催收员" show-overflow-tooltip></el-table-column>
-      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" min-width="180" align="center" prop="synergisticTime" label="协催时间" show-overflow-tooltip></el-table-column>
+      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" min-width="140" align="center" prop="synergisticTime" label="协催时间" show-overflow-tooltip></el-table-column>
       <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" min-width="120" align="center" prop="synergisticUser.name" label="协催人" show-overflow-tooltip></el-table-column>
-      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" min-width="130" align="center" prop="synergisticResult" label="协催结果" show-overflow-tooltip></el-table-column>
+      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" min-width="140" align="center" prop="synergisticResult" label="协催结果" show-overflow-tooltip></el-table-column>
     </el-table>
     <el-pagination
       @size-change="onClickQuery"

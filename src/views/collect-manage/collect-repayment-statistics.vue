@@ -167,8 +167,7 @@
           <span style="color: #66b1ff;font-size: 16px;">列表承诺还款金额：{{ topData.repayAmtP }} </span>
         </span>
       </div>
-      <el-table
-        v-loading="tableLoad"
+       <el-table highlight-current-row v-loading="tableLoad"
         class="table-wrap"
         height="1"
         ref="multipleTable"

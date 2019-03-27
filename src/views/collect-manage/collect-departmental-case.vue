@@ -517,8 +517,7 @@
             </div>
           </el-col>
         </el-row>
-        <el-table
-          v-loading="tableLoad"
+         <el-table highlight-current-row v-loading="tableLoad"
           class="table-wrap"
           height="1"
           ref="multipleTable"
@@ -541,7 +540,7 @@
             prop="seqno"
             sortable="custom"
             :sort-orders="['ascending', 'descending']"
-            min-width="120"
+            min-width="160"
             header-align="center"
             align="center"
           >
@@ -770,12 +769,12 @@
           },
           {
             prop: "nextFollDate",
-            width:"160",
+            width:"120",
             label: "下次跟进日期"
           },
           {
             prop: "caseAllotTime",
-            width:180,
+            width:130,
             label: "案件分配时间"
           },
           {
@@ -800,12 +799,12 @@
           },*/
           {
             prop: "caseDate",
-            width:"160",
+            width:"120",
             label: "委案日期"
           },
           {
             prop: "expectTime",
-            width:"160",
+            width:"120",
             label: "预计退案日期"
           },
           {
@@ -814,27 +813,27 @@
           },
           {
             prop: "cardNo",
-            width:"200",
+            width:"160",
             label: "卡号"
           },
           {
             prop: "identNo",
-            width:"200",
+            width:"160",
             label: "证件号"
           },
           {
             prop: "moneyMsg",
-            width:130,
+            width:120,
             label: "委案金额"
           },
           {
             prop: "balanceMsg",
-            width:130,
+            width:120,
             label: "委案余额"
           },
           {
             prop: "moneyStartMsg",
-            width:130,
+            width:120,
             label: "最新欠款"
           },
           {
@@ -844,22 +843,22 @@
           },
           {
             prop: "enRepayAmtMsg",
-            width:130,
+            width:120,
             label: "已还款金额"
           },
           {
             prop: "repayAmtMsg",
-            width:"180",
+            width:"130",
             label: "承诺还款金额"
           },
           {
             prop: "bankAmtMsg",
-            width:"180",
+            width:"130",
             label: "待银行查账金额"
           },
           {
             prop: "lastPhoneTime",
-            width:"180",
+            width:"130",
             label: "上次通电时间"
           },
           {
