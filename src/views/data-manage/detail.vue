@@ -4529,7 +4529,6 @@ export default {
       }
     },
     sameRouteChange() {
-      this.caseDetail = { currentuser: true, seqNo: "", name: "" };
       sessionStorage.setItem(
         this.$route.query.id,
         JSON.stringify(this._data, function(key, value) {
@@ -4539,7 +4538,10 @@ export default {
           return value;
         })
       );
-    }
+    },
+    resetContent(){
+      this.caseDetail = { currentuser: true, seqNo: "", name: "" };
+    },
   },
   watch: {
     $route: {
@@ -4548,6 +4550,7 @@ export default {
           // console.log('routeWatch',n.query.id)
           // this.sameRouteChange();
           // this.$routeKey = n.query.id;
+          this.resetContent();
           this.initPageData();
 
         }
@@ -4564,6 +4567,7 @@ export default {
     // console.log("routerLify",this.$route.query.id)
     this.sameRouteChange();
     next();
+    this.resetContent();
     this.initPageData(this.$route.query.id);
     // console.log("routerLify1",this.$route.query.id)
 
