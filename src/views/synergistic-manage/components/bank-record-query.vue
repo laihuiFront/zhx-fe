@@ -151,14 +151,16 @@
               end-placeholder="提交结束日期">
             </el-date-picker>
     </el-form-item>
-    <el-form-item >
-      <el-button icon="el-icon-search" type="primary" @click="$emit('query')">查询</el-button>
-      <el-button icon="el-icon-refresh" type="primary" @click="$emit('reset')">重置</el-button>
-      <el-button  type="primary" @click="showQueryConf">查询条件配置</el-button>
-    </el-form-item>
-    <el-form-item>
-      <slot></slot>
-    </el-form-item>
+    <el-row>
+      <el-form-item >
+        <el-button icon="el-icon-search" type="primary" @click="$emit('query')">查询</el-button>
+        <el-button icon="el-icon-refresh" type="primary" @click="$emit('reset')">重置</el-button>
+        <el-button  type="primary" @click="showQueryConf">查询条件配置</el-button>
+      </el-form-item>
+      <el-form-item>
+        <slot></slot>
+      </el-form-item>
+    </el-row>
   </el-form>
 
     <el-dialog

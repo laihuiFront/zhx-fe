@@ -157,6 +157,7 @@
                 </el-option>
               </el-select>
             </el-form-item>
+            <el-row>
             <el-form-item>
               <el-button type="primary" icon="el-icon-search" @click="searchHandle"
                 >查询</el-button
@@ -219,6 +220,7 @@
                 >
               </el-upload>
             </el-form-item>
+            </el-row>
           </el-form>
         </div>
       </el-col>

@@ -108,17 +108,19 @@
               >
               </el-date-picker>
       </el-form-item>
-      <el-form-item>
-        <el-button icon="el-icon-search" type="primary" @click="search">查询</el-button>
-        <el-button icon="el-icon-refresh" type="primary" @click="clear">重置</el-button>
-        <el-form-item><el-button type="primary" @click="showQueryConf"  style="margin-left:10px;">查询条件配置</el-button></el-form-item>
-        <el-button type="primary"　v-show="istrue1" v-has="'新增减免'" @click=addData >新增减免</el-button>
-        <el-button type="primary"　v-show="istrue2" v-has="'批量撤销'" @click=open8 >批量撤销</el-button>
-        <el-button type="primary"　v-show="istrue3" v-has="'批量审核'" @click=open9 >批量审核</el-button>
-        <el-button type="primary"　v-show="istrue6" v-has="'批量确认'" @click=open10 >批量确认</el-button>
-        <el-button type="primary"　v-show="istrue4" v-has="'批量下载附件'" @click=moredownDataList >批量下载附件</el-button>
-        <el-button type="primary"　v-show="istrue5" v-has="'导出减免结果'" @click="dialogVisible1 = true"  >导出减免结果</el-button>
-      </el-form-item>
+      <el-row>
+        <el-form-item>
+          <el-button icon="el-icon-search" type="primary" @click="search">查询</el-button>
+          <el-button icon="el-icon-refresh" type="primary" @click="clear">重置</el-button>
+          <el-form-item><el-button type="primary" @click="showQueryConf"  style="margin-left:10px;">查询条件配置</el-button></el-form-item>
+          <el-button type="primary"　v-show="istrue1" v-has="'新增减免'" @click=addData >新增减免</el-button>
+          <el-button type="primary"　v-show="istrue2" v-has="'批量撤销'" @click=open8 >批量撤销</el-button>
+          <el-button type="primary"　v-show="istrue3" v-has="'批量审核'" @click=open9 >批量审核</el-button>
+          <el-button type="primary"　v-show="istrue6" v-has="'批量确认'" @click=open10 >批量确认</el-button>
+          <el-button type="primary"　v-show="istrue4" v-has="'批量下载附件'" @click=moredownDataList >批量下载附件</el-button>
+          <el-button type="primary"　v-show="istrue5" v-has="'导出减免结果'" @click="dialogVisible1 = true"  >导出减免结果</el-button>
+        </el-form-item>
+      </el-row>
     </el-form>
  <el-tabs v-model="activeName2" type="card" @tab-click="handleClick" class="tabs-wrap">
     <el-tab-pane label="待审核" name="first" >

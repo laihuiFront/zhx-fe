@@ -156,49 +156,51 @@
                 </el-option>
               </el-select>
             </el-form-item>
-            <el-form-item>
-              <el-button type="primary" icon="el-icon-search" @click="searchHandle"
-                >查询</el-button
-              >
-            </el-form-item>
-            <el-form-item>
-              <el-button
-                type="primary"
-                icon="el-icon-refresh"
-                @click="resetForm('form')"
-                >重置</el-button
-              >
-            </el-form-item>
-            <el-form-item>
-              <el-button v-has="'批量确认信函'" type="primary" @click="qrHandle"
-                >批量确认信函</el-button
-              >
-            </el-form-item>
-            <el-form-item>
-              <el-button v-has="'撤销信函'" type="primary" @click="cxHandle"
-                >撤销信函</el-button
-              >
-            </el-form-item>
-            <el-form-item>
-              <el-dropdown
-                v-has="'导出信函'"
-                trigger="click"
-                @command="exportXh"
-              >
-                <el-button type="primary">导出信函</el-button>
-                <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item
-                    v-for="(item, index) in moduleList"
-                    :key="index"
-                    :command="item.id"
-                    >{{ item.title }}
-                  </el-dropdown-item>
-                </el-dropdown-menu>
-              </el-dropdown>
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" @click="dialogVisibleCase=true;">导出查询结果</el-button>
-            </el-form-item>
+            <el-row>
+              <el-form-item>
+                <el-button type="primary" icon="el-icon-search" @click="searchHandle"
+                  >查询</el-button
+                >
+              </el-form-item>
+              <el-form-item>
+                <el-button
+                  type="primary"
+                  icon="el-icon-refresh"
+                  @click="resetForm('form')"
+                  >重置</el-button
+                >
+              </el-form-item>
+              <el-form-item>
+                <el-button v-has="'批量确认信函'" type="primary" @click="qrHandle"
+                  >批量确认信函</el-button
+                >
+              </el-form-item>
+              <el-form-item>
+                <el-button v-has="'撤销信函'" type="primary" @click="cxHandle"
+                  >撤销信函</el-button
+                >
+              </el-form-item>
+              <el-form-item>
+                <el-dropdown
+                  v-has="'导出信函'"
+                  trigger="click"
+                  @command="exportXh"
+                >
+                  <el-button type="primary">导出信函</el-button>
+                  <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item
+                      v-for="(item, index) in moduleList"
+                      :key="index"
+                      :command="item.id"
+                      >{{ item.title }}
+                    </el-dropdown-item>
+                  </el-dropdown-menu>
+                </el-dropdown>
+              </el-form-item>
+              <el-form-item>
+                <el-button type="primary" @click="dialogVisibleCase=true;">导出查询结果</el-button>
+              </el-form-item>
+            </el-row>
           </el-form>
         </div>
       </el-col>

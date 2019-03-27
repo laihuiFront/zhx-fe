@@ -72,19 +72,18 @@
       >
     </el-date-picker>
   </el-form-item>
- 
-  <el-form-item>
-  <el-button type="primary" icon="el-icon-search" @click="search">查询</el-button> 
-  <el-button type="primary" icon="el-icon-refresh" @click=resetForm>重置</el-button> 
-  </el-form-item>
-  <el-form-item>
-      <el-button type="primary" :disabled=returnTrue @click="returnCaseList" v-has="'批次退案'">批量退案</el-button>  
-       <el-button type="primary" @click="MorebackCase "  :disabled=backTrue >批量恢复</el-button>  
-      <el-button type="primary"  @click="open7" v-has="'批次删除'">批量删除</el-button>  
-      <el-button type="primary"  @click="dialogVisible1 = true" v-has="'导出查询结果'">导出查询结果</el-button>  
-      <el-button type="primary" @click='selectDataExport' v-has="'导出所选批次'">导出所选批次</el-button>  
-      <el-button type="primary" @click="selectDataByBatch" v-has="'批量导出批次催记'">批量导出批次催记</el-button>  
-      </el-form-item>
+      <el-row>
+        <el-form-item>
+          <el-button type="primary" icon="el-icon-search" @click="search">查询</el-button>
+          <el-button type="primary" icon="el-icon-refresh" @click=resetForm>重置</el-button>
+          <el-button type="primary" :disabled=returnTrue @click="returnCaseList" v-has="'批次退案'">批量退案</el-button>
+           <el-button type="primary" @click="MorebackCase "  :disabled=backTrue >批量恢复</el-button>
+          <el-button type="primary"  @click="open7" v-has="'批次删除'">批量删除</el-button>
+          <el-button type="primary"  @click="dialogVisible1 = true" v-has="'导出查询结果'">导出查询结果</el-button>
+          <el-button type="primary" @click='selectDataExport' v-has="'导出所选批次'">导出所选批次</el-button>
+          <el-button type="primary" @click="selectDataByBatch" v-has="'批量导出批次催记'">批量导出批次催记</el-button>
+        </el-form-item>
+      </el-row>
     </el-form>
     <el-table highlight-current-row v-loading="tableLoad"
    	class="table-wrap"

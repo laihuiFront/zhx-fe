@@ -94,6 +94,7 @@
     <el-form-item v-if="queryConf.sqr || queryConfFlag">
             <el-input v-model="queryForm.applyUser.name" clearable placeholder="请输入申请人"></el-input>
     </el-form-item>
+    <el-row>
     <el-form-item>
       <el-button icon="el-icon-search" type="primary" @click="$emit('query')">查询</el-button>
       <el-button icon="el-icon-refresh" type="primary" @click="$emit('reset')">重置</el-button>
@@ -102,6 +103,7 @@
     <el-form-item>
       <slot></slot>
     </el-form-item>
+    </el-row>
   </el-form>
 
   <el-dialog

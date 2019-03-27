@@ -141,16 +141,16 @@
                 >
                 </el-date-picker>
           </el-form-item>
-
-      <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="search">查询</el-button>
-        <el-button type="primary" icon="el-icon-refresh" @click="resetForm">重置</el-button>
-        <el-button type="primary" @click="showQueryConf">查询条件配置</el-button>
-        <el-button type="primary" @click="open7" v-has="'删除催记'">删除催记</el-button>
-        <el-button type="primary" @click="selectDataCollectExport" v-has="'导出所选借改'">导出所选催记</el-button>
-        <el-button type="primary" @click="dialogVisible2 = true" v-has="'导出查询结果'">导出查询结果</el-button>
-      </el-form-item>
-
+      <el-row>
+        <el-form-item>
+          <el-button type="primary" icon="el-icon-search" @click="search">查询</el-button>
+          <el-button type="primary" icon="el-icon-refresh" @click="resetForm">重置</el-button>
+          <el-button type="primary" @click="showQueryConf">查询条件配置</el-button>
+          <el-button type="primary" @click="open7" v-has="'删除催记'">删除催记</el-button>
+          <el-button type="primary" @click="selectDataCollectExport" v-has="'导出所选借改'">导出所选催记</el-button>
+          <el-button type="primary" @click="dialogVisible2 = true" v-has="'导出查询结果'">导出查询结果</el-button>
+        </el-form-item>
+      </el-row>
     </el-form>
      <el-table highlight-current-row height="1"
       v-loading="tableLoad"
