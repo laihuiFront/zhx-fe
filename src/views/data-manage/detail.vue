@@ -5,6 +5,9 @@
         :title="caseDetail.name + '-[ ' + caseDetail.seqNo + ']-案件详情'"
         name="1"
       >
+        <div style="text-align: right; margin-right:20px;">
+          <el-button type="primary" align="right" size="mini" @click="showCollectInfo">催收小结</el-button>
+        </div>
         <div class="items-wrap">
           <el-form
             :model="caseDetail"
@@ -1005,7 +1008,7 @@
               type="card"
               @tab-click="showPanel"
             >
-              <el-tab-pane label="电话" name="1" class="tabs-wrap">
+              <el-tab-pane label="电话" name="1" class="tabs-wrap telPanel">
                 <div class="operation">
                   <div class="left-oper">
                     <el-button
@@ -1083,7 +1086,7 @@
                   stripe
                   :data="caseDetail.dataCaseTelEntityList"
                   :row-class-name="telTableRowClassName"
-                  style="width: 100%"
+                  style="width: 100%;"
                   class="table-wrap"
                 >
                   <el-table-column type="selection" width="55">
@@ -1213,7 +1216,7 @@
                   </el-table-column>
                 </el-table>
               </el-tab-pane>
-              <el-tab-pane label="地址" name="2" class="tabs-wrap">
+              <el-tab-pane label="地址" name="2" class="tabs-wrap telPanel">
                 <div class="operation" v-if="letterVisible2">
                   <div class="left-oper">
                     <el-button
@@ -1440,7 +1443,7 @@
                   </el-table-column>
                 </el-table>
               </el-tab-pane>
-              <el-tab-pane label="案人数据" name="3" class="tabs-wrap">
+              <el-tab-pane label="案人数据" name="3" class="tabs-wrap telPanel">
                 <div class="operation" v-if="letterVisible2">
                   <div class="left-oper"></div>
                   <div class="right-oper">
@@ -1641,7 +1644,7 @@
                   </el-table-column>
                 </el-table>
               </el-tab-pane>
-              <el-tab-pane label="评语" name="5" class="tabs-wrap">
+              <el-tab-pane label="评语" name="5" class="tabs-wrap telPanel">
                 <el-table
                   highlight-current-row
                   :data="commentList"
@@ -1727,7 +1730,7 @@
                   </el-table-column>
                 </el-table>
               </el-tab-pane>
-              <el-tab-pane label="利息更新" name="7" class="tabs-wrap">
+              <el-tab-pane label="利息更新" name="7" class="tabs-wrap telPanel">
                 <el-table
                   highlight-current-row
                   :data="rateUpdateList"
@@ -1902,7 +1905,7 @@
                   </el-table>
                 </div>
               </el-tab-pane>
-              <el-tab-pane label="协催" name="9" class="tabs-wrap">
+              <el-tab-pane label="协催" name="9" class="tabs-wrap telPanel">
                 <div class="operation">
                   <div class="left-oper">
                     <el-radio-group v-model="syncType" @change="syncTypeChange">
@@ -1987,19 +1990,14 @@
                   </el-table-column>
                 </el-table>
               </el-tab-pane>
-              <el-tab-pane
-                label="共债案件"
-                name="10"
-                class="tabs-wrap"
-                v-if="userInfo.sameBatch"
-              >
+              <el-tab-pane label="共债案件" name="10" class="tabs-wrap telPanel" v-if="userInfo.sameBatch">
                 <el-table
                   highlight-current-row
                   :data="caseSameList"
                   style="width: 100%"
                   border
                   stripe
-                  height="120px"
+                  height="160px"
                   class="table-wrap"
                 >
                   <el-table-column
@@ -2064,7 +2062,7 @@
                   </el-table-column>
                 </el-table>
               </el-tab-pane>
-              <el-tab-pane label="操作记录" name="11" class="tabs-wrap">
+              <el-tab-pane label="操作记录" name="11" class="tabs-wrap telPanel">
                 <div class="operation">
                   <div class="left-oper">
                     <el-radio-group v-model="logType" @change="logTypeChange">
@@ -2083,7 +2081,7 @@
                   border
                   stripe
                   style="width: 100%"
-                  height="120px"
+                  height="130px"
                   class="table-wrap"
                 >
                   <el-table-column
@@ -2115,7 +2113,7 @@
                   </el-table-column>
                 </el-table>
               </el-tab-pane>
-              <el-tab-pane label="诉讼案件" name="12" class="tabs-wrap">
+              <el-tab-pane label="诉讼案件" name="12" class="tabs-wrap telPanel">
                 <div class="operation">
                   <div class="left-oper"></div>
                   <div class="right-oper">
@@ -3503,6 +3501,35 @@
         >
       </span>
     </el-dialog>
+
+
+    <el-dialog
+      title="催收小结(带*为必填字段)"
+      :visible.sync="showCollectInfoVisible"
+      width="30%"
+      append-to-body
+      class="addr-dialog-wrap"
+    >
+      <el-form
+        :inline="true"
+        :model="caseDetail"
+        class="address-form"
+        label-width="80px"
+      >
+        <el-form-item label="内容" class="whole">
+          <el-input
+            type="textarea"
+            :rows="7"
+            v-model="caseDetail.collectInfo"
+            style="width:90%"
+          ></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="showCollectInfoVisible = false">取 消</el-button>
+        <el-button type="primary" @click="saveCollectInfo">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -3555,6 +3582,7 @@ import {
   getHistoryAddrList,
   expDataCollect,
   saveDataCollectDetail,
+  saveCollectInfo,
   getCPList,
   getRepayList,
   saveBank
@@ -3580,6 +3608,7 @@ export default {
     return {
       action: baseURL,
       messageForm: {},
+      showCollectInfoVisible:false,
       adddialogVisible: false,
       addCommentVisible: false,
       commentAddContent: null,
@@ -3663,15 +3692,27 @@ export default {
       dialogCpVisible: false,
       repayTypeList: [],
       ptpList: [],
-      $routeKey: ""
+      $routeKey: ''
     };
   },
 
   methods: {
+    saveCollectInfo(){
+      saveCollectInfo(this.id,this.caseDetail.collectInfo).then(data => {
+        this.$message({
+          type: "success",
+          message: "保存成功"
+        });
+        this.showCollectInfoVisible = false;
+      });
+    },
+    showCollectInfo(){
+        this.showCollectInfoVisible = true;
+    },
     copyToCollect(tel, name, relation) {
-      this.batchForm.mobile = tel;
-      this.batchForm.targetName = name;
-      this.batchForm.relation = relation;
+      this.batchForm.mobile = tel
+      this.batchForm.targetName = name
+      this.batchForm.relation = relation
     },
     handleChange(file) {
       this.fileNames.file = file.name;
@@ -4795,4 +4836,7 @@ export default {
   padding: 0 15px;
   width: 100%;
 }
+  .telPanel .el-table__body-wrapper{
+    overflow-x: hidden;
+  }
 </style>
