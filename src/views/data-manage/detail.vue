@@ -5,6 +5,9 @@
         :title="caseDetail.name + '-[ ' + caseDetail.seqNo + ']-案件详情'"
         name="1"
       >
+        <div style="text-align: right; margin-right:20px;">
+          <el-button type="primary" align="right" size="mini" @click="showCollectInfo">催收小结</el-button>
+        </div>
         <div class="items-wrap">
           <el-form
             :model="caseDetail"
@@ -1083,9 +1086,20 @@
                   </el-table-column>
                   <el-table-column prop="telStatusMsg" label="状态">
                   </el-table-column>
-                  <el-table-column prop="tel" label="电话">
+                  <el-table-column prop="tel" label="电话"  >
                     <template slot-scope="scope">
-                      <el-button type="text" size="small" @click="copyToCollect(scope.row.tel, scope.row.name,scope.row.relation)">{{scope.row.tel}}</el-button>
+                      <el-button
+                        type="text"
+                        size="small"
+                        @click="
+                          copyToCollect(
+                            scope.row.tel,
+                            scope.row.name,
+                            scope.row.relation
+                          )
+                        "
+                        >{{ scope.row.tel }}</el-button
+                      >
                     </template>
                   </el-table-column>
                   <el-table-column prop="name" label="姓名"> </el-table-column>
@@ -3480,6 +3494,35 @@
         >
       </span>
     </el-dialog>
+
+
+    <el-dialog
+      title="催收小结(带*为必填字段)"
+      :visible.sync="showCollectInfoVisible"
+      width="30%"
+      append-to-body
+      class="addr-dialog-wrap"
+    >
+      <el-form
+        :inline="true"
+        :model="caseDetail"
+        class="address-form"
+        label-width="80px"
+      >
+        <el-form-item label="内容" class="whole">
+          <el-input
+            type="textarea"
+            :rows="7"
+            v-model="caseDetail.collectInfo"
+            style="width:90%"
+          ></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="showCollectInfoVisible = false">取 消</el-button>
+        <el-button type="primary" @click="saveCollectInfo">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -3532,6 +3575,7 @@ import {
   getHistoryAddrList,
   expDataCollect,
   saveDataCollectDetail,
+  saveCollectInfo,
   getCPList,
   getRepayList,
   saveBank
@@ -3557,6 +3601,7 @@ export default {
     return {
       action: baseURL,
       messageForm: {},
+      showCollectInfoVisible:false,
       adddialogVisible: false,
       addCommentVisible: false,
       commentAddContent: null,
@@ -3645,6 +3690,18 @@ export default {
   },
 
   methods: {
+    saveCollectInfo(){
+      saveCollectInfo(this.id,this.caseDetail.collectInfo).then(data => {
+        this.$message({
+          type: "success",
+          message: "保存成功"
+        });
+        this.showCollectInfoVisible = false;
+      });
+    },
+    showCollectInfo(){
+        this.showCollectInfoVisible = true;
+    },
     copyToCollect(tel, name,relation){
       this.batchForm.mobile = tel
       this.batchForm.targetName = name
