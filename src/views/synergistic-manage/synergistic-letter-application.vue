@@ -189,35 +189,37 @@
                       </el-option>
                     </el-select>
                   </el-form-item>
-                  <el-form-item>
-                    <el-button
-                      type="primary"
-                      icon="el-icon-search"
-                      @click="searchHandle"
-                      >查询</el-button
-                    >
-                  </el-form-item>
-                  <el-form-item>
-                    <el-button
-                      type="primary"
-                      icon="el-icon-refresh"
-                      @click="resetForm('form')"
-                      >重置</el-button
-                    >
-                  </el-form-item>
-                  <el-form-item>
-                    <el-button type="primary" v-has="'同意协催'" @click="showXc"
-                      >同意协催</el-button
-                    >
-                  </el-form-item>
-                  <el-form-item>
-                    <el-button
-                      type="primary"
-                      v-has="'撤销信函'"
-                      @click="cxHandle"
-                      >撤销信函</el-button
-                    >
-                  </el-form-item>
+                  <el-row>
+                    <el-form-item>
+                      <el-button
+                        type="primary"
+                        icon="el-icon-search"
+                        @click="searchHandle"
+                        >查询</el-button
+                      >
+                    </el-form-item>
+                    <el-form-item>
+                      <el-button
+                        type="primary"
+                        icon="el-icon-refresh"
+                        @click="resetForm('form')"
+                        >重置</el-button
+                      >
+                    </el-form-item>
+                    <el-form-item>
+                      <el-button type="primary" v-has="'同意协催'" @click="showXc"
+                        >同意协催</el-button
+                      >
+                    </el-form-item>
+                    <el-form-item>
+                      <el-button
+                        type="primary"
+                        v-has="'撤销信函'"
+                        @click="cxHandle"
+                        >撤销信函</el-button
+                      >
+                    </el-form-item>
+                  </el-row>
                 </el-form>
               </div>
             </el-col>
