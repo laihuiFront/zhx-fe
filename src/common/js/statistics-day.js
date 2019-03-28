@@ -30,11 +30,11 @@ return request({
     url: '/statistics/collection/day',
     method: 'post',
     data: {
-       odv:form.odv,
+      odvAttr:form.odv,
        area:form.area,
        client:form.client,
-       exceptTimeStart:form.time[0],
-       exceptTimeEnd:form.time[1],
+      dateSearchStart:form.time[0],
+      dateSearchEnd:form.time[1],
        pageNum:pageNum ? pageNum : 1,
        pageSize:pageSize ? pageSize : 100
     }

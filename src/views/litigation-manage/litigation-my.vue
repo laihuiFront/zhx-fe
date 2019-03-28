@@ -1085,7 +1085,6 @@ export default {
    		this.dialogVisible=true;
    		this.dialogTitle="修改";
    		this.formInline=JSON.parse(JSON.stringify(row))
-   		
    		this.formInline.progress=parseInt(row.progress)
    		this.formInline.owner=parseInt(row.owner)
    		this.isTrue=false

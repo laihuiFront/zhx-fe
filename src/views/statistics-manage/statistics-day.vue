@@ -34,6 +34,7 @@
         <el-date-picker
           v-model="formInline.time"
           type="daterange"
+          value-format="yyyy-MM-dd"
           range-separator="至"
           start-placeholder="催收开始日期"
           end-placeholder="催收结束日期">
@@ -180,7 +181,7 @@
       class="dialog-wrap"
       :visible.sync="selectUserVisible"
       :close-on-click-modal="false"
-      width="300"
+      width="600px"
     >
       <el-tree
         :data="selectUserTree"
@@ -303,6 +304,14 @@ this.pageNum=val;
           })
 },
  	onSubmit(){
+
+     if (this.formInline.time==null || this.formInline.time.length==0){
+       this.$message({
+         type: 'error',
+         message: '请选择查询时间段!'
+       });
+       return;
+     }
  		this.loading=true
 			this.fullscreenLoading=true
  		selectDataCaseExport(this.formInline,this.pageSize,this.pageNum).then((response)=>{
@@ -318,6 +327,13 @@ this.pageNum=val;
  		this.formInline={}
  	},
    query(){
+     if (this.formInline.time==null || this.formInline.time.length==0){
+       this.$message({
+         type: 'error',
+         message: '请选择查询时间段!'
+       });
+       return;
+     }
      this.tableLoad = true
      dataList(this.formInline).then((response)=>{
        this.tableData3=response.list

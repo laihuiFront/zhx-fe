@@ -8,14 +8,7 @@
     element-loading-background="rgba(0, 0, 0, 0.7)">
     <el-form ref="form" :model="formInline" :inline="true" class="query-wrap">
       <el-form-item>
-        <el-select v-model="formInline.odv" multiple collapse-tags  filterable  placeholder="请选择催收员" clearable>
-          <el-option
-            v-for="item in PersonList"
-            :key="item.id"
-            :label="item.userName"
-            :value="item.id">
-          </el-option>
-        </el-select> 
+        <el-input v-model="odvName" width="200" @focus="onClickSelectUser" clearable placeholder="请选择催收员"></el-input>
       </el-form-item>
       <el-form-item>
         <el-select v-model="formInline.area" placeholder="请选择催收区域" clearable>
@@ -41,6 +34,7 @@
         <el-date-picker
           v-model="formInline.time"
           type="daterange"
+          value-format="yyyy-MM-dd"
           range-separator="至"
           start-placeholder="催收开始日期"
           end-placeholder="催收结束日期">
@@ -218,15 +212,43 @@
     :total="total">
   </el-pagination>
 </el-dialog>
+
+    <el-dialog
+      title="选择催收员"
+      class="dialog-wrap"
+      :visible.sync="selectUserVisible"
+      :close-on-click-modal="false"
+      width="600px"
+    >
+      <el-tree
+        :data="selectUserTree"
+        show-checkbox
+        default-expand-all
+        node-key="id"
+        ref="tree"
+        highlight-current
+        :props="defaultProps">
+      </el-tree>
+      <span slot="footer" class="footer">
+        <el-button @click="selectUserVisible = false">取 消</el-button>
+        <el-button type="primary" @click="onClickSaveUser">保 存</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-		import {areaList,clientList,PersonList,dataList,messageList,selectDataCaseExport} from '@/common/js/statistics-day-action.js'
+		import {areaList,clientList,PersonList,getUserTree,dataList,messageList,selectDataCaseExport} from '@/common/js/statistics-day-action.js'
 export default {
   name: 'statisticsDayAction',
   data(){
     return {
+      defaultProps: {
+        children: 'children',
+        label: 'name'
+      },
+      selectUserTree: [],
+      selectUserVisible: false,
     	fullscreenLoading:false,
     	loading:false,
       tableLoad:false,
@@ -240,6 +262,7 @@ export default {
     		time:[]
     	},
     	PersonList:[],
+      odvName: "",
     	areaList:[],
     	clientList:[],
     	 tableData3: [],
@@ -247,6 +270,37 @@ export default {
     }
     },
     methods: {
+      onClickSaveUser() {
+        let selectDataArr = this.$refs.tree.getCheckedNodes()
+        let selectUserNames = ''
+        let selectUserIds = []
+        if(selectDataArr.length > 0){
+          selectUserNames = selectDataArr.filter((item)=>{
+            return item.type === 'user'
+          }).map((item) => {
+            return item.name
+          })
+          selectUserIds = selectDataArr.filter((item)=>{
+            return item.type === 'user'
+          }).map((item) => {
+            return item.id
+          })
+        }
+        this.odvName = selectUserNames.join(',')
+        this.$set(this.formInline,'odv', selectUserIds)
+        this.selectUserVisible = false
+      },
+      onClickSelectUser() {
+        this.selectUserVisible = true
+        if(!this.odvName){
+          this.$set(this.formInline, 'odv', [])
+        }
+
+        this.$nextTick(() => {
+          this.$refs.tree.setCheckedKeys(this.formInline.odv);
+        })
+      },
+
     	showMessage(row){
     		this.dialogTableVisible=true
     		this.dialogTitle=row.column.label
@@ -325,6 +379,10 @@ this.pageNum=val;
              PersonList().then((response)=>{
           	this.PersonList=response
           })
+
+   getUserTree().then(data => {
+     this.selectUserTree = [data]
+   })
 //        this.tableLoad = true
 //             dataList(this.formInline).then((response)=>{
 //          this.tableData3=response.list

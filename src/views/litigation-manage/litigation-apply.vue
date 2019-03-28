@@ -198,7 +198,7 @@
         <el-col :span="8">
           <div class="grid-content bg-purple">
             <el-form-item label="姓名">
-              <el-input v-model="formInline.accused" placeholder="请输入姓名"></el-input>
+              <el-input v-model="formInline.cstName" placeholder="请输入姓名"></el-input>
             </el-form-item>
           </div></el-col>
         <el-col :span="8">

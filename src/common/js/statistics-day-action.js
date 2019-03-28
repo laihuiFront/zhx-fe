@@ -70,3 +70,11 @@ return request({
     }
   })
 }
+
+
+export const getUserTree = function(){
+  return request({
+    url: 'user/select/userTree',
+    method: 'post'
+  })
+}

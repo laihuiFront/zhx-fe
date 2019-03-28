@@ -8,14 +8,7 @@
     element-loading-background="rgba(0, 0, 0, 0.7)">
     <el-form ref="form" :model="formInline" :inline="true" class="query-wrap">
       <el-form-item>
-        <el-select v-model="formInline.odv" multiple collapse-tags  filterable  placeholder="请选择催收员" clearable>
-          <el-option
-            v-for="item in PersonList"
-            :key="item.id"
-            :label="item.userName"
-            :value="item.id">
-          </el-option>
-        </el-select> 
+        <el-input v-model="odvName" width="200" @focus="onClickSelectUser" clearable placeholder="请选择催收员"></el-input>
       </el-form-item>
       <el-form-item>
         <el-select v-model="formInline.area" placeholder="请选择催收区域" clearable>
@@ -119,22 +112,51 @@
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
     </el-pagination>
+
+    <el-dialog
+      title="选择催收员"
+      class="dialog-wrap"
+      :visible.sync="selectUserVisible"
+      :close-on-click-modal="false"
+      width="600px"
+    >
+      <el-tree
+        :data="selectUserTree"
+        show-checkbox
+        default-expand-all
+        node-key="id"
+        ref="tree"
+        highlight-current
+        :props="defaultProps">
+      </el-tree>
+      <span slot="footer" class="footer">
+        <el-button @click="selectUserVisible = false">取 消</el-button>
+        <el-button type="primary" @click="onClickSaveUser">保 存</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-		import {areaList,clientList,PersonList,dataList,selectDataCaseExport} from '@/common/js/statistics-month.js'
+		import {areaList,clientList,PersonList,getUserTree,dataList,selectDataCaseExport} from '@/common/js/statistics-month.js'
 
 export default {
   name: 'statisticsMonth',
   data(){
     return {
+      defaultProps: {
+        children: 'children',
+        label: 'name'
+      },
+      selectUserTree: [],
+      selectUserVisible: false,
     	fullscreenLoading:false,
     	loading:false,
       tableLoad:false,
     	 currentPage4: 1,
         pages:1,
         total:0,
+      odvName: "",
         dataList:[],
     	formInline:{time:"",time2:""},
     	PersonList:[],
@@ -144,6 +166,37 @@ export default {
     }
     },
     methods: {
+
+      onClickSaveUser() {
+        let selectDataArr = this.$refs.tree.getCheckedNodes()
+        let selectUserNames = ''
+        let selectUserIds = []
+        if(selectDataArr.length > 0){
+          selectUserNames = selectDataArr.filter((item)=>{
+            return item.type === 'user'
+          }).map((item) => {
+            return item.name
+          })
+          selectUserIds = selectDataArr.filter((item)=>{
+            return item.type === 'user'
+          }).map((item) => {
+            return item.id
+          })
+        }
+        this.odvName = selectUserNames.join(',')
+        this.$set(this.formInline,'odv', selectUserIds)
+        this.selectUserVisible = false
+      },
+      onClickSelectUser() {
+        this.selectUserVisible = true
+        if(!this.odvName){
+          this.$set(this.formInline, 'odv', [])
+        }
+
+        this.$nextTick(() => {
+          this.$refs.tree.setCheckedKeys(this.formInline.odv);
+        })
+      },
     	  getSummaries(param) {
  	     const { columns, data } = param;
                 const sums = [];
@@ -183,21 +236,37 @@ handleCurrentChange(val){
 this.pageNum=val;
 },
   	onSubmit(){
+
+      if ((this.formInline.time==null || this.formInline.time=="") ||  (this.formInline.time2==null  || this.formInline.time2=="")){
+        this.$message({
+          type: 'error',
+          message: '请选择查询时间段!'
+        });
+        return;
+      }
   			this.loading=true
 			this.fullscreenLoading=true
  		selectDataCaseExport(this.formInline,this.pageSize,this.pageNum).then((response)=>{
+ 		  console.info(response)
           	this.$message({
-            type: 'success',
-            message: '导出成功!'
-          });
+              type: 'success',
+              message: '导出成功!'
+            });
           	this.loading=false
-			this.fullscreenLoading=false
+			      this.fullscreenLoading=false
           })
  	},
  	clench(){
  		this.formInline={}
  	},
       query(){
+        if ((this.formInline.time==null || this.formInline.time=="") ||  (this.formInline.time2==null  || this.formInline.time2=="")){
+          this.$message({
+            type: 'error',
+            message: '请选择查询时间段!'
+          });
+          return;
+        }
         this.tableLoad = true
         dataList(this.formInline).then((response)=>{
           this.tableData3=response.list
@@ -214,7 +283,7 @@ this.pageNum=val;
 
           }
           this.tableLoad = false
-          console.log(this.dataList)
+
         }).catch(()=>{
           this.tableLoad = false
         })
@@ -251,6 +320,10 @@ this.pageNum=val;
              PersonList().then((response)=>{
           	this.PersonList=response
           })
+
+   getUserTree().then(data => {
+     this.selectUserTree = [data]
+   })
             
 },
 }
