@@ -103,10 +103,9 @@
               ></el-input>
             </el-form-item>
             <el-form-item label="币种">
-              <el-input
-                v-model="caseDetail.currencyType"
-                :disabled="true"
-              ></el-input>
+              <div class="inputDiv" style="font-size: 12px;">
+                <span>{{ caseDetail.currencyType}}</span>
+              </div>
             </el-form-item>
             <el-form-item label="最新欠款" class="half">
               <el-input
@@ -213,10 +212,9 @@
               ></el-input>
             </el-form-item>
             <el-form-item label="家庭地址" class="whole">
-              <el-input
-                v-model="caseDetail.homeAddress"
-                :disabled="true"
-              ></el-input>
+              <div class="inputDiv" style="font-size: 12px;">
+                <span>{{ caseDetail.homeAddress}}</span>
+              </div>
             </el-form-item>
             <el-form-item label="单位名称" class="whole">
               <el-input
@@ -225,22 +223,19 @@
               ></el-input>
             </el-form-item>
             <el-form-item label="单位地址" class="whole">
-              <el-input
-                v-model="caseDetail.unitAddress"
-                :disabled="true"
-              ></el-input>
+              <div class="inputDiv" style="font-size: 12px;">
+                <span>{{ caseDetail.unitAddress}}</span>
+              </div>
             </el-form-item>
             <el-form-item label="户籍地址" class="whole">
-              <el-input
-                v-model="caseDetail.censusRegisterAddress"
-                :disabled="true"
-              ></el-input>
+              <div class="inputDiv" style="font-size: 12px;">
+                <span>{{ caseDetail.censusRegisterAddress}}</span>
+              </div>
             </el-form-item>
             <el-form-item label="对账单地址" class="whole">
-              <el-input
-                v-model="caseDetail.statementAddress"
-                :disabled="true"
-              ></el-input>
+              <div class="inputDiv" style="font-size: 12px;">
+                <span>{{ caseDetail.statementAddress}}</span>
+              </div>
             </el-form-item>
             <el-form-item label="承诺还款金额">
               <el-input
@@ -304,7 +299,9 @@
               ></el-date-picker>
             </el-form-item>
             <el-form-item label="最后外访">
-              <el-input v-model="caseDetail.zhwf" :disabled="true"></el-input>
+              <div class="inputDiv" style="font-size: 12px;">
+                <span>{{ caseDetail.zhwf}}</span>
+              </div>
             </el-form-item>
             <el-form-item label="自动收回时间">
               <el-date-picker
@@ -431,10 +428,9 @@
               ></el-input>
             </el-form-item>
             <el-form-item label="分配历史">
-              <el-input
-                v-model="caseDetail.distributeHistory"
-                :disabled="true"
-              ></el-input>
+              <div class="inputDiv" style="font-size: 12px;">
+                <span>{{ caseDetail.distributeHistory}}</span>
+              </div>
             </el-form-item>
             <el-form-item label="家庭邮编">
               <el-input
@@ -689,16 +685,14 @@
               ></el-input>
             </el-form-item>
             <el-form-item label="联系人1单位">
-              <el-input
-                v-model="caseDetail.contactUnit1"
-                :disabled="true"
-              ></el-input>
+              <div class="inputDiv" style="font-size: 12px;">
+                <span>{{ caseDetail.contactUnit1}}</span>
+              </div>
             </el-form-item>
             <el-form-item label="联系人1地址">
-              <el-input
-                v-model="caseDetail.contactAddress1"
-                :disabled="true"
-              ></el-input>
+              <div class="inputDiv" style="font-size: 12px;">
+                <span>{{ caseDetail.contactAddress1}}</span>
+              </div>
             </el-form-item>
             <el-form-item label=""> </el-form-item>
             <el-form-item label="联系人2姓名">
@@ -732,16 +726,14 @@
               ></el-input>
             </el-form-item>
             <el-form-item label="联系人2单位">
-              <el-input
-                v-model="caseDetail.contactUnit2"
-                :disabled="true"
-              ></el-input>
+              <div class="inputDiv" style="font-size: 12px;">
+                <span>{{ caseDetail.contactUnit2}}</span>
+              </div>
             </el-form-item>
             <el-form-item label="联系人2地址">
-              <el-input
-                v-model="caseDetail.contactAddress2"
-                :disabled="true"
-              ></el-input>
+              <div class="inputDiv" style="font-size: 12px;">
+                <span>{{ caseDetail.contactAddress2}}</span>
+              </div>
             </el-form-item>
             <el-form-item label=""> </el-form-item>
             <el-form-item label="联系人3姓名">
@@ -775,16 +767,14 @@
               ></el-input>
             </el-form-item>
             <el-form-item label="联系人3单位">
-              <el-input
-                v-model="caseDetail.contactUnit3"
-                :disabled="true"
-              ></el-input>
+              <div class="inputDiv" style="font-size: 12px;">
+                <span>{{ caseDetail.contactUnit3}}</span>
+              </div>
             </el-form-item>
             <el-form-item label="联系人3地址">
-              <el-input
-                v-model="caseDetail.contactAddress3"
-                :disabled="true"
-              ></el-input>
+              <div class="inputDiv" style="font-size: 12px;">
+                <span>{{ caseDetail.contactAddress3}}</span>
+              </div>
             </el-form-item>
             <el-form-item label=""> </el-form-item>
             <el-form-item label="联系人4姓名">
@@ -818,16 +808,14 @@
               ></el-input>
             </el-form-item>
             <el-form-item label="联系人4单位">
-              <el-input
-                v-model="caseDetail.contactUnit4"
-                :disabled="true"
-              ></el-input>
+              <div class="inputDiv" style="font-size: 12px;">
+                <span>{{ caseDetail.contactUnit4}}</span>
+              </div>
             </el-form-item>
             <el-form-item label="联系人4地址">
-              <el-input
-                v-model="caseDetail.contactAddress4"
-                :disabled="true"
-              ></el-input>
+              <div class="inputDiv" style="font-size: 12px;">
+                <span>{{ caseDetail.contactAddress4}}</span>
+              </div>
             </el-form-item>
             <el-form-item label=""> </el-form-item>
             <el-form-item label="联系人5姓名">
@@ -861,16 +849,14 @@
               ></el-input>
             </el-form-item>
             <el-form-item label="联系人5单位">
-              <el-input
-                v-model="caseDetail.contactUnit5"
-                :disabled="true"
-              ></el-input>
+              <div class="inputDiv" style="font-size: 12px;">
+                <span>{{ caseDetail.contactUnit5}}</span>
+              </div>
             </el-form-item>
             <el-form-item label="联系人5地址">
-              <el-input
-                v-model="caseDetail.contactAddress5"
-                :disabled="true"
-              ></el-input>
+              <div class="inputDiv" style="font-size: 12px;">
+                <span>{{ caseDetail.contactAddress5}}</span>
+              </div>
             </el-form-item>
             <el-form-item label=""> </el-form-item>
             <el-form-item label="联系人6姓名">
@@ -904,58 +890,49 @@
               ></el-input>
             </el-form-item>
             <el-form-item label="联系人6单位">
-              <el-input
-                v-model="caseDetail.contactUnit6"
-                :disabled="true"
-              ></el-input>
+              <div class="inputDiv" style="font-size: 12px;">
+                <span>{{ caseDetail.contactUnit6}}</span>
+              </div>
             </el-form-item>
             <el-form-item label="联系人6地址">
-              <el-input
-                v-model="caseDetail.contactAddress6"
-                :disabled="true"
-              ></el-input>
+              <div class="inputDiv" style="font-size: 12px;">
+                <span>{{ caseDetail.contactAddress6}}</span>
+              </div>
             </el-form-item>
             <el-form-item label="原催收记录">
-              <el-input
-                v-model="caseDetail.lastCollectionRecord"
-                :disabled="true"
-              ></el-input>
+              <div class="inputDiv" style="font-size: 12px;">
+                <span>{{ caseDetail.lastCollectionRecord}}</span>
+              </div>
             </el-form-item>
             <el-form-item label="备注1">
-              <el-input
-                v-model="caseDetail.remark1"
-                :disabled="true"
-              ></el-input>
+              <div class="inputDiv" style="font-size: 12px;">
+                <span>{{ caseDetail.remark1}}</span>
+              </div>
             </el-form-item>
             <el-form-item label="备注2">
-              <el-input
-                v-model="caseDetail.remark2"
-                :disabled="true"
-              ></el-input>
+              <div class="inputDiv" style="font-size: 12px;">
+                <span>{{ caseDetail.remark2 }}</span>
+              </div>
             </el-form-item>
             <el-form-item label="备注3">
-              <el-input
-                v-model="caseDetail.remark3"
-                :disabled="true"
-              ></el-input>
+              <div class="inputDiv" style="font-size: 12px;">
+                <span>{{ caseDetail.remark3}}</span>
+              </div>
             </el-form-item>
             <el-form-item label="备注4">
-              <el-input
-                v-model="caseDetail.remark4"
-                :disabled="true"
-              ></el-input>
+              <div class="inputDiv" style="font-size: 12px;">
+                <span>{{ caseDetail.remark4}}</span>
+              </div>
             </el-form-item>
             <el-form-item label="备注5">
-              <el-input
-                v-model="caseDetail.remark5"
-                :disabled="true"
-              ></el-input>
+              <div class="inputDiv" style="font-size: 12px;">
+                <span>{{ caseDetail.remark5}}</span>
+              </div>
             </el-form-item>
             <el-form-item label="备注6">
-              <el-input
-                v-model="caseDetail.remark6"
-                :disabled="true"
-              ></el-input>
+              <div class="inputDiv" style="font-size: 12px;">
+                <span>{{ caseDetail.remark6}}</span>
+              </div>
             </el-form-item>
             <el-form-item label="附件" class="upload-wrap">
               <el-popover
@@ -1826,18 +1803,18 @@
                 class="tabs-wrap billing-wrap"
               >
                 <div class="first">
-                  <p style="line-height: 30px">PTP记录</p>
+                  <p style="line-height: 30px">承诺还款记录</p>
                   <el-table highlight-current-row width="100%" :data="ptpList">
                     <el-table-column
                       prop="content"
                       show-overflow-tooltip
-                      label="PTP金额"
+                      label="承诺还款金额"
                     >
                     </el-table-column>
                     <el-table-column
                       prop="content"
                       show-overflow-tooltip
-                      label="PTP时间"
+                      label="承诺还款时间"
                     >
                     </el-table-column>
                     <el-table-column
@@ -1850,20 +1827,20 @@
                 </div>
                 <div class="second">
                   <p style="line-height: 30px">
-                    CP记录
+                    待银行查账记录
                     <el-button type="text" @click="addCpInfo">新增</el-button>
                   </p>
                   <el-table highlight-current-row width="100%" :data="cpList">
                     <el-table-column
                       prop="cpMoneyMsg"
                       show-overflow-tooltip
-                      label="CP金额"
+                      label="待银行查账金额"
                     >
                     </el-table-column>
                     <el-table-column
                       prop="cpDate"
                       show-overflow-tooltip
-                      label="CP时间"
+                      label="待银行查账时间"
                     >
                     </el-table-column>
                     <el-table-column
@@ -2435,6 +2412,20 @@
                     :value="item.id"
                   ></el-option>
                 </el-select>
+              </el-form-item>
+              <el-form-item label="承诺还款金额" prop="repayAmt">
+                <el-input
+                  v-model="batchForm.repayAmt"
+                  placeholder="请输入承诺还款金额"
+                ></el-input>
+              </el-form-item>
+              <el-form-item label="承诺还款时间" prop="repayTime">
+                <el-date-picker
+                  v-model="batchForm.repayTime"
+                  type="date"
+                  value-format="yyyy-MM-dd"
+                  placeholder="请输入承诺还款时间"
+                ></el-date-picker>
               </el-form-item>
               <el-form-item label="通话记录" prop="collectInfo" class="whole">
                 <el-input

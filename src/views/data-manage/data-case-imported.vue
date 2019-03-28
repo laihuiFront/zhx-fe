@@ -266,7 +266,7 @@
   	<el-form-item label="批  次  号"	
   			prop="batchNo"
         :rules="{ required: true, message: '批次号不能为空', trigger: 'blur'}">
-    <el-input v-model="formInline.batchNo" :disabled=true placeholder="请输入批次号" clearable></el-input>
+    <el-input v-model="formInline.batchNo" :disabled=true placeholder="请输入批次号" maxlength="80" clearable></el-input>
   </el-form-item>
   </div>
   </el-col>
@@ -363,7 +363,7 @@
 <el-row :gutter="24">
   <el-col :span="24">
   <el-form-item label="批次备注" >
-    <el-input type="textarea" v-model="formInline.remark" style="width: 200%;height: 180px;">></el-input>
+    <el-input type="textarea" v-model="formInline.remark" style="width: 200%;height: 180px;"  maxlength="500"></el-input>
   </el-form-item>
    </el-col>
 </el-row>
@@ -387,7 +387,7 @@
   	<el-form-item label="批  次  号"	
   			prop="batchNo"
         :rules="{ required: true, message: '批次号不能为空', trigger: 'blur'}">
-    <el-input v-model="messageForm.batchNo" :disabled=true placeholder="请输入批次号" clearable></el-input>
+    <el-input v-model="messageForm.batchNo" :disabled=true placeholder="请输入批次号"   maxlength="80" clearable></el-input>
   </el-form-item>
   </div>
   </el-col>
@@ -471,7 +471,7 @@
   <el-col :span="15">
   	<div class="grid-content bg-purple">
   	<el-form-item label="预计退案日期">
- <div class="block">
+    <div class="block">
     <el-date-picker
       v-model="messageForm.returnTime"
       align="right"
@@ -488,7 +488,7 @@
 <el-row :gutter="24">
   <el-col :span="24">
   <el-form-item label="批次备注" >
-    <el-input type="textarea" v-model="messageForm.remark" style="width: 200%;">></el-input>
+    <el-input type="textarea" v-model="messageForm.remark" style="width: 200%;"  maxlength="500"></el-input>
   </el-form-item>
    </el-col>
 </el-row>

@@ -642,9 +642,9 @@
       :close-on-click-modal="false"
       width="40%"
     >
-      <el-form :inline="true" :model="formInline" class="demo-form-inline" label-width="120px">
+      <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline" label-width="120px">
         <div class="grid-content bg-purple">
-          <el-form-item label="添加评语">
+          <el-form-item label="添加评语"  :rules="{required: true, message: '评语不能为空', trigger: 'blur'}">
             <el-input type=textarea style="width: 200%;" v-model="value12" placeholder="请输入评语"></el-input>
           </el-form-item>
         </div>
@@ -652,7 +652,7 @@
 
       <span slot="footer" class="footer">
     <el-button @click="detailVisible2 = false">取 消</el-button>
-    <el-button type="primary" @click=sureAddShow>确 定</el-button>
+    <el-button type="primary" @click="sureAddShow('formInline')">确 定</el-button>
   </span>
 
 
@@ -723,8 +723,7 @@
       <el-form :inline="true" ref="formInline1" :model="formInline1" class="demo-form-inline" label-width="120px">
         <div class="grid-content bg-purple">
           <el-form-item label="案件等级"
-          	prop="importLeave"
-    :rules="{required: true, message: '请选择', trigger: 'blur'}">
+          	prop="importLeave" :rules="{required: true, message: '请选择案件等级', trigger: 'blur'}">
             <el-select v-model=" formInline1.importLeave" filterable  placeholder="请选择案件等级" clearable>
               <el-option
                 v-for="item in LeaveList"
@@ -752,7 +751,7 @@
         <div class="grid-content bg-purple">
           <el-form-item label="催收状态"
           		prop="collectStatus"
-    :rules="{required: true, message: '请选择', trigger: 'blur'}">
+    :rules="{required: true, message: '请选择催收状态', trigger: 'blur'}">
             <el-select v-model="formInline1.collectStatus" filterable  placeholder="请选择催收状态" clearable>
               <el-option
                 v-for="item in collectStatusList"
@@ -780,7 +779,7 @@
         <div class="grid-content bg-purple">
           <el-form-item label="催收区域"
           		prop="collectStatus"
-    :rules="{required: true, message: '请选择', trigger: 'blur'}">
+    :rules="{required: true, message: '请选择催收区域', trigger: 'blur'}">
             <el-select v-model="formInline1.collectArea" placeholder="请选择催收区域" clearable>
               <el-option
                 v-for="item in areaList"
@@ -808,7 +807,7 @@
         <div class="grid-content bg-purple">
           <el-form-item label="提成值"
           		prop="collectStatus"
-    :rules="{required: true, message: '请选择', trigger: 'blur'}">
+    :rules="{required: true, message: '请选择提成值', trigger: 'blur'}">
             <el-input  v-model="formInline1.mVal" style="width: 100%;" placeholder="请输入提成值" rows="4"></el-input>
           </el-form-item>
         </div>
@@ -827,8 +826,7 @@
     >
       <el-form  :model="addSynergyForm" class="demo-form-inline" label-width="120px">
         <div class="grid-content bg-purple">
-        	<el-form-item label="协催类型"
-        		>
+        	<el-form-item label="协催类型">
             <el-select v-model="addSynergyForm.Synergytype" placeholder="请选择协催类型" clearable>
               <el-option
                 v-for="item in addSynergyFormList"
@@ -1099,9 +1097,8 @@
       submitmsgForm4(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-         this.sureAddShow4()
+              this.sureAddShow4()
           } else {
-            console.log('error submit!!');
             return false;
           }
         });
@@ -1111,7 +1108,7 @@
           if (valid) {
          this.sureAddShow5()
           } else {
-            console.log('error submit!!');
+
             return false;
           }
         });
@@ -1121,7 +1118,6 @@
           if (valid) {
          this.sureAddShow6()
           } else {
-            console.log('error submit!!');
             return false;
           }
         });
@@ -1533,22 +1529,29 @@ this.loading2=false
           });
         }
       },
-      sureAddShow(){
-      	let datasList=[]
-       	for (var i=0;i<this.deleteList.length;i++){
-       		let dataObject={id:'',comment:this.value12}
-       		dataObject.id=this.deleteList[i].id
-       		datasList.push(dataObject)
-       	}
-       addpingyu(datasList).then((response)=>{
-       this.$message({
-          type: 'success',
-          message: '操作成功!'
+      sureAddShow(formName){
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            let datasList=[]
+            for (var i=0;i<this.deleteList.length;i++){
+              let dataObject={id:'',comment:this.value12}
+              dataObject.id=this.deleteList[i].id
+              datasList.push(dataObject)
+            }
+            addpingyu(datasList).then((response)=>{
+              this.$message({
+                type: 'success',
+                message: '操作成功!'
+              });
+              this.detailVisible2=false
+              this.fenan.value12=''
+              this.search()
+            })
+          } else {
+            return false;
+          }
         });
-        this.detailVisible2=false
-        this.fenan.value12=''
-        this.search()
-      })
+
       },
       xiecui(){
         if(this.deleteList.length>=1){
