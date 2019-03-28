@@ -5,7 +5,7 @@
         :title="caseDetail.name + '-[ ' + caseDetail.seqNo + ']-案件详情'"
         name="1"
       >
-        <div style="text-align: right; margin-right:20px;">
+        <div style="text-align: right; margin-right:20px;"    v-if="caseDetail.currentuser">
           <el-button type="primary" align="right" size="mini" @click="showCollectInfo">催收小结</el-button>
         </div>
         <div class="items-wrap">
@@ -3657,7 +3657,7 @@ export default {
         { name: "未知", id: 3 }
       ],
       phoneSelectList: [],
-      batchForm: { sType: 0 },
+      batchForm: { sType: 0 ,mobile:''},
       tpfsList: [],
       csmbList: [],
       csjgList: [],
@@ -3710,9 +3710,9 @@ export default {
         this.showCollectInfoVisible = true;
     },
     copyToCollect(tel, name, relation) {
-      this.batchForm.mobile = tel
-      this.batchForm.targetName = name
-      this.batchForm.relation = relation
+      this.$set(this.batchForm,'mobile',tel);
+      this.$set(this.batchForm,'targetName',name);
+      this.$set(this.batchForm,'relation',relation);
     },
     handleChange(file) {
       this.fileNames.file = file.name;

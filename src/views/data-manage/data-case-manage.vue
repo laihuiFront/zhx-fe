@@ -606,7 +606,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        prop="summary"
+        prop="collectInfo"
         min-width="180"
         sortable="custom"
         align="center"

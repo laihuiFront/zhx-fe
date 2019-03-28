@@ -28,7 +28,9 @@
   name: 'homePage',
     data () {
       return {
-        userData:{}
+        userData:{
+          roleName:""
+        }
       }
     },
   created () {
