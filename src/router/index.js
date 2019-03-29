@@ -169,6 +169,10 @@ export default new Router({
           path: 'case-detail',
           component: () => import('@/views/data-manage/detail'),
           name: 'case-detail'
+        },{
+          path: 'setting-reward',
+          component: () => import('@/views/settings/setting-reward'),
+          name: 'setting-reward'
         }
       ]
     },
