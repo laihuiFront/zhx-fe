@@ -54,9 +54,8 @@
             v-if="scope.row.editType==='edit' "
             clearable
             align="center"
-            @blur="changeLow(scope.row)"
+            @input="changeLow(scope.row)"
             v-model="scope.row.odvLowMsg"
-            :placeholder="'请输入低标'"
           ></el-input>
           <span v-else>{{scope.row.odvLowMsg}}</span>
         </template>
@@ -72,7 +71,6 @@
             clearable
             align="center"
             v-model="scope.row.odvBasic"
-            :placeholder="'请输入基础提成'"
           ></el-input>
           <span v-else>{{scope.row.odvBasic}}</span>
         </template>
@@ -89,7 +87,6 @@
             align="center"
             :disabled="scope.row.rewardDisable"
             v-model="scope.row.odvReward"
-            :placeholder="'请输入奖励提成'"
           ></el-input>
           <span v-else>{{scope.row.odvReward}}</span>
         </template>
@@ -105,7 +102,6 @@
              align="center"
              :disabled="scope.row.remarkDisable"
              v-model="scope.row.odvRemark"
-             :placeholder="'请输入提成说明'"
            ></el-input>
            <span v-else>{{scope.row.odvRemark}}</span>
          </template>
@@ -123,7 +119,6 @@
             clearable
             align="center"
             v-model="scope.row.manageReward"
-            :placeholder="'请输入提成'"
           ></el-input>
           <span v-else>{{scope.row.manageReward}}</span>
         </template>
@@ -141,7 +136,6 @@
             align="center"
             :disabled="scope.row.remarkDisable"
             v-model="scope.row.manageRemark"
-            :placeholder="'请输入提成说明'"
           ></el-input>
           <span v-else>{{scope.row.manageRemark}}</span>
         </template>
