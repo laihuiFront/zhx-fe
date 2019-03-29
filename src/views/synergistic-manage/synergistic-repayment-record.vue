@@ -60,7 +60,7 @@
       <el-table-column width="140"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="bankReconciliation.cpMoneyMsg" label="待银行查账金额" show-overflow-tooltip></el-table-column>
       <el-table-column width="140"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="bankReconciliation.cpDate" label="待银行查账日期" show-overflow-tooltip></el-table-column>
       <el-table-column width="120"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="collectUser.userName" label="回收催收员" show-overflow-tooltip></el-table-column>
-      <el-table-column width="120"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="dataCase.enRepayAmtMsg" label="还款金额" show-overflow-tooltip></el-table-column>
+      <el-table-column width="120"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="repayMoneyMsg" label="还款金额" show-overflow-tooltip></el-table-column>
       <el-table-column width="120"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="dataCase.balanceMsg" label="余额" show-overflow-tooltip></el-table-column>
       <el-table-column width="120"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="repayDate" label="还款日期" show-overflow-tooltip></el-table-column>
       <el-table-column width="120"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="repayUser" label="还款人" show-overflow-tooltip></el-table-column>
@@ -104,13 +104,13 @@
         label-width="120px"
         class="add-form"
       >
-        <el-form-item label="对应个案" prop="dyga">
+        <el-form-item label="个案案序列号" prop="dyga">
           <el-select
             v-model="recordInfo.dataCase.id"
             filterable
             remote
             @change="selectCase"
-            placeholder="请选择对应个案"
+            placeholder="请选择个案序列号"
             :remote-method="seqNoQuery"
             :loading="loadingSeqNo">
             <el-option
@@ -149,15 +149,22 @@
         <el-form-item label="还款方式" prop="dyga">
           <el-select v-model="recordInfo.repayType.id" clearable placeholder="请选择还款方式">
             <el-option
-              v-for="item in repayTypeList"
-              :key="item.code"
-              :label="item.typeName"
-              :value="item.code"
+              v-for="item in payMethod"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="备注" prop="dyga" class="whole">
-          <el-input type="textarea" :rows="4" v-model="recordInfo.remark"></el-input>
+        <el-form-item label="还款备注" prop="dyga" class="whole">
+          <el-select v-model="recordInfo.remark" clearable placeholder="请选择还款备注">
+            <el-option
+              v-for="item in payRemark"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            ></el-option>
+          </el-select>
         </el-form-item>
       </el-form>
       <span slot="footer" class="footer">
@@ -194,7 +201,8 @@ import {RepayRecordQuery} from './components'
 import {getRepayRecordList, 
         getRepayRecordQuerySum,
         getCollectionUserList, 
-        saveRepayRecord, 
+        saveRepayRecord,
+        getEnum,
         revokeRepayRecord,
         expSelectedRepayRecord,
         expAllRepayRecord,
@@ -217,6 +225,8 @@ export default {
       header:{Authorization:localStorage.token},
       sumForm:{dataCase:{}},
       recordList: [],
+      payMethod:[],
+      payRemark:[],
       collectionUserList: [],
       total:0,
       dialogData:{
@@ -250,6 +260,12 @@ export default {
   },
   created() {
     this.tableLoad = true
+    getEnum('还款方式').then(data => {
+      this.payMethod = data
+    })
+    getEnum('还款备注').then(data => {
+      this.payRemark = data
+    })
     getRepayRecordList(this.queryForm).then(data => {
       this.recordList = data.list
       this.total = data.total
@@ -354,6 +370,7 @@ export default {
         collectUser:{id:null},
         repayType:{id:null}
       }
+      this.seqNoQuery("")
       this.$set(this.dialogData, 'editVisible', true)
     },
     onClickBatchRevoke(){
