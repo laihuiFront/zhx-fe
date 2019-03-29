@@ -64,6 +64,15 @@
             <el-form-item label="委案金额">
               <el-input v-model="caseDetail.money" :disabled="true"></el-input>
             </el-form-item>
+            <el-form-item label="预计提成金额">
+              <div class="inputDiv" style="font-size: 12px;width: 91%;">
+                <span>{{ caseDetail.prePercent}}</span>
+              </div>
+              <el-tooltip class="item" effect="dark" :content="caseDetail.prePercentTips" placement="bottom">
+                <i class="el-icon-question" style="color:deepskyblue;"></i>
+              </el-tooltip>
+
+            </el-form-item>
             <el-form-item label="人民币">
               <el-input v-model="caseDetail.rmb" :disabled="true"></el-input>
             </el-form-item>
