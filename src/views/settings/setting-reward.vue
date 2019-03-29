@@ -13,8 +13,10 @@
     :data="dataList"
     border
     stripe
-    style="width: 100%;overflow-x: hidden;"
-    highlight-current-row>
+    style="width: 100%;"
+    highlight-current-row
+    height="1"
+    class="table-wrap">
     <el-table-column
       prop="client"
       align="center"
@@ -142,7 +144,7 @@
       </el-table-column>
     </el-table-column>
 
-     <el-table-column prop="address" label="操作">
+     <el-table-column prop="address" label="操作" align="center">
        <template slot-scope="scope">
          <el-button
            type="text"
@@ -245,6 +247,10 @@
     }
   .el-input .el-input__inner{
     text-align: center;
+  }
+
+  .has-gutter .gutter{
+    display:block !important;
   }
 }
 </style>
