@@ -77,3 +77,6 @@ body .el-dropdown .el-icon-arrow-down{
 .el-date-range-picker  .popper__arrow{
   display: none !important;
 }
+body .el-popover .popper__arrow{
+  display: none;
+}

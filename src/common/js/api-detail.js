@@ -337,6 +337,30 @@ export const getSynergyTypeList = function() {
   })
 }
 
+export const getSynergyContextList = function() {
+  return request({
+    url: '/sys/dictionary/select/list/name',
+    method: 'post',
+    data:{name:"申请协催内容"}
+  })
+}
+
+export const getRepayRemark = function() {
+  return request({
+    url: '/sys/dictionary/select/list/name',
+    method: 'post',
+    data:{name:"还款备注"}
+  })
+}
+
+export const getRepayType = function() {
+  return request({
+    url: '/sys/dictionary/select/list/name',
+    method: 'post',
+    data:{name:"还款方式"}
+  })
+}
+
 export function detailTelCurrentCollect(data){
   return request({
     url: 'dataCollect/tel/detailTelCurentCollect',

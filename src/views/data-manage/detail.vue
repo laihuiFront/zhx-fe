@@ -2686,7 +2686,7 @@
       </span>
     </el-dialog>
     <el-dialog
-      title="新建CP"
+      title="新建待银行查账"
       :visible.sync="dialogCpVisible"
       width="45%"
       append-to-body
@@ -2696,15 +2696,15 @@
         :inline="true"
         :model="cpInfo"
         class="address-form"
-        label-width="80px"
+        label-width="120px"
       >
-        <el-form-item label="CP金额">
+        <el-form-item label="待银行查账金额">
           <el-input
             v-model="cpInfo.cpMoney"
-            placeholder="请输入CP金额"
+            placeholder="请输入待银行查账金额"
           ></el-input>
         </el-form-item>
-        <el-form-item label="CP时间">
+        <el-form-item label="待银行查账时间">
           <el-date-picker
             v-model="cpInfo.cpDate"
             type="date"
@@ -2725,15 +2725,27 @@
           >
             <el-option
               v-for="item in repayTypeList"
-              :key="item.code"
-              :label="item.typeName"
-              :value="item.code"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
             >
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="备注" class="whole">
-          <el-input type="textarea" v-model="cpInfo.remark"></el-input>
+        <el-form-item label="还款备注" class="whole">
+          <el-select
+            v-model="cpInfo.remark"
+            placeholder="请选择还款备注"
+            clearable
+          >
+            <el-option
+              v-for="item in repayRemarkList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            >
+            </el-option>
+          </el-select>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -3409,12 +3421,20 @@
           </el-select>
         </el-form-item>
         <el-form-item label="申请内容" class="whole">
-          <el-input
-            type="textarea"
-            :rows="7"
+          <el-select
             v-model="synergyInfo.applyContent"
-            style="width:100%"
-          ></el-input>
+            placeholder="请选择协催内容"
+            clearable
+            style="width:70%"
+          >
+            <el-option
+              v-for="item in synergyContextList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            >
+            </el-option>
+          </el-select>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -3568,6 +3588,7 @@ import {
   getReduceApplyList,
   pageDataFile,
   getSynergyTypeList,
+  getSynergyContextList,
   getLegalList,
   saveLegal,
   saveApply,
@@ -3585,6 +3606,8 @@ import {
   saveCollectInfo,
   getCPList,
   getRepayList,
+  getRepayRemark,
+  getRepayType,
   saveBank
 } from "@/common/js/api-detail";
 import { getEnum } from "@/common/js/api-sync";
@@ -3621,6 +3644,7 @@ export default {
       formInline: {},
       legalForm: {},
       synergyTypeList: [],
+      synergyContextList:[],
       PhonetypeList: [],
       syncMemorizeList: [],
       memorizeList: [], //催記
@@ -3691,6 +3715,7 @@ export default {
       cpInfo: {},
       dialogCpVisible: false,
       repayTypeList: [],
+      repayRemarkList:[],
       ptpList: [],
       $routeKey: ''
     };
@@ -3724,6 +3749,9 @@ export default {
     showSynergyApply() {
       getSynergyTypeList().then(data => {
         this.synergyTypeList = data;
+      });
+      getSynergyContextList().then(data => {
+        this.synergyContextList = data;
       });
       this.dialogSyergyAplVisible = true;
     },
@@ -3938,6 +3966,7 @@ export default {
           type: "success",
           message: "新增催收记录成功"
         });
+        this.batchForm = { sType: 0 }
         let batchNo = this.caseDetail.batchNo;
         let identNo = this.caseDetail.identNo;
         let cardNo = this.caseDetail.cardNo;
@@ -4470,8 +4499,11 @@ export default {
       pageDataFile(this.id).then(response => {
         this.uploadFileList = response;
       });
-      getRepayList().then(data => {
+      getRepayType().then(data => {
         this.repayTypeList = data;
+      });
+      getRepayRemark().then(data => {
+        this.repayRemarkList = data;
       });
     },
     showPanel(tab, e) {

@@ -227,8 +227,8 @@ expCurrentSynergisticRecord(this.queryForm).then(res => {
       })
     },
     uploadSuccess(res,file,fileList){
-    		  this.loading2=true
-					this.fullscreenLoading=true
+    	this.loading2=true
+			this.fullscreenLoading=true
       if (res.code ==100){
   		    this.$message({
             type: 'success',
@@ -242,6 +242,8 @@ expCurrentSynergisticRecord(this.queryForm).then(res => {
           type: 'error',
           message: res.msg
         });
+        this.loading2=false
+        this.fullscreenLoading=false
       }
   	},
     onClickReset(){
@@ -396,6 +398,7 @@ expCurrentSynergisticRecord(this.queryForm).then(res => {
     background-color: white;
     width: 100%;
   }
+
 }
 </style>
 
