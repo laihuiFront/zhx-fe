@@ -75,74 +75,107 @@
       </template>
       </el-table-column>
       <el-table-column
-        prop="list[0].countPhoneNum"
+        prop="countPhoneNum"
         label="总通电量"
         align="center"
        >
+        <template slot-scope="scope">
+          {{scope.row.list[0].countPhoneNum}}
+        </template>
       </el-table-column>
       <el-table-column
-        prop="list[0].countCasePhoneNum"
+        prop="countCasePhoneNum"
         label="个按量"
         align="center"
        >
+        <template slot-scope="scope">
+          {{scope.row.list[0].countCasePhoneNum}}
+        </template>
       </el-table-column>
     </el-table-column> 
        <el-table-column label="8:00-12:00" align="center">
       <el-table-column
-        prop="list[1].countConPhoneNum"
+        prop="countConPhoneNum"
         label="有效通电"
         align="center"
        >
+        <template slot-scope="scope">
+          {{scope.row.list[1].countConPhoneNum}}
+        </template>
       </el-table-column>
       <el-table-column
-        prop="list[1].countPhoneNum"
+        prop="countPhoneNum"
         label="总通电量"
         align="center"
        >
+        <template slot-scope="scope">
+          {{scope.row.list[1].countPhoneNum}}
+        </template>
       </el-table-column>
       <el-table-column
-        prop="list[1].countCasePhoneNum"
+        prop="countCasePhoneNum"
         label="个按量"
         align="center"
        >
+        <template slot-scope="scope">
+          {{scope.row.list[1].countCasePhoneNum}}
+        </template>
       </el-table-column>
     </el-table-column>  <el-table-column label="12:00-18:00" align="center">
       <el-table-column
-        prop="list[2].countConPhoneNum"
+        prop="countConPhoneNum"
         label="有效通电"
         align="center"
        >
+        <template slot-scope="scope">
+          {{scope.row.list[2].countConPhoneNum}}
+        </template>
       </el-table-column>
       <el-table-column
-        prop="list[2].countPhoneNum"
+        prop="countPhoneNum"
         label="总通电量"
         align="center"
        >
+        <template slot-scope="scope">
+          {{scope.row.list[2].countPhoneNum}}
+        </template>
       </el-table-column>
       <el-table-column
-        prop="list[2].countCasePhoneNum"
+        prop="countCasePhoneNum"
         label="个按量"
         align="center"
        >
+        <template slot-scope="scope">
+          {{scope.row.list[2].countCasePhoneNum}}
+        </template>
       </el-table-column>
     </el-table-column>  <el-table-column label="18:00以后" align="center">
       <el-table-column
-        prop="list[3].countConPhoneNum"
+        prop="countConPhoneNum"
         label="有效通电"
         align="center"
        >
+        <template slot-scope="scope">
+          {{scope.row.list[3].countConPhoneNum}}
+        </template>
       </el-table-column>
       <el-table-column
-        prop="list[3].countPhoneNum"
+        prop="countPhoneNum"
         label="总通电量"
         align="center"
        >
+        <template slot-scope="scope">
+          {{scope.row.list[3].countPhoneNum}}
+        </template>
       </el-table-column>
       <el-table-column
-        prop="list[3].countCasePhoneNum"
+        prop="countCasePhoneNum"
         label="个按量"
         align="center"
        >
+        <template slot-scope="scope">
+          {{scope.row.list[3].countCasePhoneNum}}
+        </template>
       </el-table-column>
     </el-table-column> 
     <el-table-column label="合计" align="center">
@@ -151,6 +184,7 @@
         label="有效通电"
         align="center"
        >
+
       </el-table-column>
       <el-table-column
         prop="sumPhoneNum"
@@ -269,7 +303,9 @@ export default {
                         sums[index] = '合计';
                         return;
                     }
-                    const values = data.map(item => Number(item[column.property]));
+
+                    const values = data[0].list.map(item => Number(item[column.property]));
+
                     if (!values.every(value => isNaN(value))) {
                         sums[index] = values.reduce((prev, curr) => {
                             const value = Number(curr);
@@ -374,8 +410,11 @@ this.pageNum=val;
 <style lang="scss">
 #statistics-day{
 	.el-form--inline .el-form-item{
-	margin-right:0px;
-}
+	  margin-right:0px;
+  }
+  .el-table .el-table__body-wrapper{
+    overflow-x: hidden !important;
+  }
 }
 </style>
 

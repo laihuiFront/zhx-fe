@@ -1813,21 +1813,21 @@
               >
                 <div class="first">
                   <p style="line-height: 30px">承诺还款记录</p>
-                  <el-table highlight-current-row width="100%" :data="ptpList">
+                  <el-table highlight-current-row width="100%" :data="memorizeList">
                     <el-table-column
-                      prop="content"
+                      prop="repayAmtMsg"
                       show-overflow-tooltip
                       label="承诺还款金额"
                     >
                     </el-table-column>
                     <el-table-column
-                      prop="content"
+                      prop="repayTime"
                       show-overflow-tooltip
                       label="承诺还款时间"
                     >
                     </el-table-column>
                     <el-table-column
-                      prop="content"
+                      prop="createUser.userName"
                       show-overflow-tooltip
                       label="录入人"
                     >
@@ -4537,6 +4537,10 @@ export default {
         });
       } else if (ind == "案件登帐") {
         //案件登帐
+        this.memorizeType = 1;
+        getCollectDetail(this.id, 1).then(data => {
+          this.memorizeList = data;
+        });
         getCPList(this.id).then(data => {
           this.cpList = data;
         });

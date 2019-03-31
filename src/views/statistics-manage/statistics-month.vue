@@ -61,7 +61,6 @@
       stripe
       show-summary
       height="350"
-      :summary-method="getSummaries"
       style="width: 100%"
       class="table-wrap">
       <el-table-column
@@ -208,10 +207,10 @@ export default {
                         return;
                     }
 
-                    const values = data[index-1].list.map(item => Number(item[column.property]));
+                    const values1 = data[0].list.map(item => Number(item[column.property]));
 
+                    const values = values1[Math.ceil(index/3)-1];
                     if (!values.every(value => isNaN(value))) {
-
                         sums[index] = values.reduce((prev, curr) => {
                             const value = Number(curr);
                             if (!isNaN(value)) {

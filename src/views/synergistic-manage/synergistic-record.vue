@@ -34,7 +34,7 @@
       <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" min-width="140" align="center" prop="applyTime" label="申请时间" show-overflow-tooltip></el-table-column>
       <el-table-column   sortable="custom" :sort-orders="['ascending','descending']" min-width="120" align="center" prop="applyUser.userName" label="催收员" show-overflow-tooltip></el-table-column>
       <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" min-width="140" align="center" prop="synergisticTime" label="协催时间" show-overflow-tooltip></el-table-column>
-      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" min-width="120" align="center" prop="synergisticUser.name" label="协催人" show-overflow-tooltip></el-table-column>
+      <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" min-width="120" align="center" prop="synergisticUser.userName" label="协催人" show-overflow-tooltip></el-table-column>
       <el-table-column  sortable="custom" :sort-orders="['ascending','descending']" min-width="140" align="center" prop="synergisticResult" label="协催结果" show-overflow-tooltip></el-table-column>
     </el-table>
     <el-pagination
