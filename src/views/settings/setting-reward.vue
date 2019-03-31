@@ -176,10 +176,9 @@
      let odvLow = row.odvLowMsg.replace(/\s\r/g, "");
      if (odvLow=="-"){
        row.rewardDisable = true
-      // this.$set(row,'rewardDisable',true);
+       row.odvReward = '';
      }else{
        row.rewardDisable = false
-      // this.$set(row,'rewardDisable',false);
      }
    },
 
@@ -199,8 +198,11 @@
 
      if(row.enable==1){
        row.remarkDisable = false;
+
      }else{
        row.remarkDisable = true;
+       row.odvRemark = '';
+       row.manageRemark = '';
      }
 
 
