@@ -1,11 +1,11 @@
 <template>
   <div id="statistics-month" class="page-wraper-sub"
-  		v-loading="loading"
-   	 element-loading-text="拼命加载中"
-   	   	  	  v-loading.fullscreen.lock="fullscreenLoading"
+       v-loading="loading"
+       element-loading-text="拼命加载中"
+       v-loading.fullscreen.lock="fullscreenLoading"
 
-    element-loading-spinner="el-icon-loading"
-    element-loading-background="rgba(0, 0, 0, 0.7)">
+       element-loading-spinner="el-icon-loading"
+       element-loading-background="rgba(0, 0, 0, 0.7)">
     <el-form ref="form" :model="formInline" :inline="true" class="query-wrap">
       <el-form-item>
         <el-input v-model="odvName" width="200" @focus="onClickSelectUser" clearable placeholder="请选择催收员"></el-input>
@@ -18,7 +18,7 @@
             :label="item.name"
             :value="item.id">
           </el-option>
-        </el-select>  
+        </el-select>
       </el-form-item>
       <el-form-item>
         <el-select v-model="formInline.client" placeholder="请选择委托方" clearable>
@@ -36,34 +36,35 @@
           type="month"
           value-format="yyyy-MM"
           placeholder="选择开始月份"
-          >
-        </el-date-picker>至
+        >
+        </el-date-picker>
+        至
         <el-date-picker
           v-model="formInline.time2"
           type="month"
           value-format="yyyy-MM"
           placeholder="选择结束月份"
-          >
+        >
         </el-date-picker>
       </el-form-item>
       <el-form-item style="margin-left:10px;">
         <el-button type="primary" icon="el-icon-search" @click="query">开始统计</el-button>
-        <el-button type="primary" icon="el-icon-refresh" @click="clench">重置</el-button> 
+        <el-button type="primary" icon="el-icon-refresh" @click="clench">重置</el-button>
       </el-form-item>
       <el-form-item class="operation-item">
         <el-button type="primary" @click="onSubmit">导出查询结果</el-button>
       </el-form-item>
     </el-form>
-     <el-table highlight-current-row v-if="tableData3.length>0"
-      v-loading="tableLoad"
-      :data="tableData3"
-      border
-      stripe
-      show-summary
-      :summary-method="getSummaries"
-      height="350"
-      style="width: 100%"
-      class="table-wrap">
+    <el-table highlight-current-row v-if="tableData3.length>0"
+              v-loading="tableLoad"
+              :data="tableData3"
+              border
+              stripe
+              show-summary
+              :summary-method="getSummaries"
+              height="350"
+              style="width: 100%"
+              class="table-wrap">
       <el-table-column
         prop="odv"
         align="center"
@@ -93,7 +94,7 @@
           label="个按量"
           align="center"
           prop="countCasePhoneNum"
-        > 
+        >
           <template slot-scope="scope">
             {{ scope.row.list[index].countCasePhoneNum }}
           </template>
@@ -138,32 +139,39 @@
 </template>
 
 <script>
-		import {areaList,clientList,PersonList,getUserTree,dataList,selectDataCaseExport} from '@/common/js/statistics-month.js'
+  import {
+    areaList,
+    clientList,
+    PersonList,
+    getUserTree,
+    dataList,
+    selectDataCaseExport
+  } from '@/common/js/statistics-month.js'
 
-export default {
-  name: 'statisticsMonth',
-  data(){
-    return {
-      defaultProps: {
-        children: 'children',
-        label: 'name'
-      },
-      selectUserTree: [],
-      selectUserVisible: false,
-    	fullscreenLoading:false,
-    	loading:false,
-      tableLoad:false,
-    	 currentPage4: 1,
-        pages:1,
-        total:0,
-      odvName: "",
-        dataList:[],
-    	formInline:{time:"",time2:""},
-    	PersonList:[],
-    	areaList:[],
-    	clientList:[],
-    	 tableData3: []
-    }
+  export default {
+    name: 'statisticsMonth',
+    data() {
+      return {
+        defaultProps: {
+          children: 'children',
+          label: 'name'
+        },
+        selectUserTree: [],
+        selectUserVisible: false,
+        fullscreenLoading: false,
+        loading: false,
+        tableLoad: false,
+        currentPage4: 1,
+        pages: 1,
+        total: 0,
+        odvName: "",
+        dataList: [],
+        formInline: {time: "", time2: ""},
+        PersonList: [],
+        areaList: [],
+        clientList: [],
+        tableData3: []
+      }
     },
     methods: {
 
@@ -171,25 +179,25 @@ export default {
         let selectDataArr = this.$refs.tree.getCheckedNodes()
         let selectUserNames = ''
         let selectUserIds = []
-        if(selectDataArr.length > 0){
-          selectUserNames = selectDataArr.filter((item)=>{
+        if (selectDataArr.length > 0) {
+          selectUserNames = selectDataArr.filter((item) => {
             return item.type === 'user'
           }).map((item) => {
             return item.name
           })
-          selectUserIds = selectDataArr.filter((item)=>{
+          selectUserIds = selectDataArr.filter((item) => {
             return item.type === 'user'
           }).map((item) => {
             return item.id
           })
         }
         this.odvName = selectUserNames.join(',')
-        this.$set(this.formInline,'odv', selectUserIds)
+        this.$set(this.formInline, 'odv', selectUserIds)
         this.selectUserVisible = false
       },
       onClickSelectUser() {
         this.selectUserVisible = true
-        if(!this.odvName){
+        if (!this.odvName) {
           this.$set(this.formInline, 'odv', [])
         }
 
@@ -197,70 +205,70 @@ export default {
           this.$refs.tree.setCheckedKeys(this.formInline.odv);
         })
       },
-    	  getSummaries(param) {
- 	     const { columns, data } = param;
-                const sums = [];
+      getSummaries(param) {
+        const {columns, data} = param;
+        const sums = [];
 
-                columns.forEach((column, index) => {
+        columns.forEach((column, index) => {
 
-                    if (index === 0) {
-                        sums[index] = '合计';
-                        return;
-                    }
+          if (index === 0) {
+            sums[index] = '合计';
+            return;
+          }
 
-                    const values = data[0].list.map(item => Number(item[column.property]));
+          const values = data[0].list.map(item => Number(item[column.property]));
 
-                    //const values = values1[Math.ceil(index/3)-1];
-                    if (!values.every(value => isNaN(value))) {
-                        sums[index] = values.reduce((prev, curr) => {
-                            const value = Number(curr);
-                            if (!isNaN(value)) {
-                                return prev + curr;
-                            } else {
-                                return prev;
-                            }
-                        }, 0);
-                        sums[index] += ' ';
-                    } else {
+          //const values = values1[Math.ceil(index/3)-1];
+          if (!values.every(value => isNaN(value))) {
+            sums[index] = values.reduce((prev, curr) => {
+              const value = Number(curr);
+              if (!isNaN(value)) {
+                return prev + curr;
+              } else {
+                return prev;
+              }
+            }, 0);
+            sums[index] += ' ';
+          } else {
 
-                        sums[index] = 'N/A';
-                    }
-                });
-
-                return sums;
-            },
-    	handleSizeChange(val){
-	this.pageSize=val
-},
-handleCurrentChange(val){
-this.pageNum=val;
-},
-  	onSubmit(){
-
-      if ((this.formInline.time==null || this.formInline.time=="") ||  (this.formInline.time2==null  || this.formInline.time2=="")){
-        this.$message({
-          type: 'error',
-          message: '请选择查询时间段!'
+            sums[index] = 'N/A';
+          }
         });
-        return;
-      }
-  			this.loading=true
-			this.fullscreenLoading=true
- 		selectDataCaseExport(this.formInline,this.pageSize,this.pageNum).then((response)=>{
- 		  console.info(response)
-          	this.$message({
-              type: 'success',
-              message: '导出成功!'
-            });
-          	this.loading=false
-			      this.fullscreenLoading=false
-          })
- 	},
- 	clench(){
- 		this.formInline={}
- 	},
-      query(){
-        if ((this.formInline.time==null || this.formInline.time=="") ||  (this.formInline.time2==null  || this.formInline.time2=="")){
+
+        return sums;
+      },
+      handleSizeChange(val) {
+        this.pageSize = val
+      },
+      handleCurrentChange(val) {
+        this.pageNum = val;
+      },
+      onSubmit() {
+
+        if ((this.formInline.time == null || this.formInline.time == "") || (this.formInline.time2 == null || this.formInline.time2 == "")) {
+          this.$message({
+            type: 'error',
+            message: '请选择查询时间段!'
+          });
+          return;
+        }
+        this.loading = true
+        this.fullscreenLoading = true
+        selectDataCaseExport(this.formInline, this.pageSize, this.pageNum).then((response) => {
+          console.info(response)
+          this.$message({
+            type: 'success',
+            message: '导出成功!'
+          });
+          this.loading = false
+          this.fullscreenLoading = false
+        })
+      },
+      clench() {
+        this.formInline = {}
+      },
+      query() {
+        if ((this.formInline.time == null || this.formInline.time == "") || (this.formInline.time2 == null || this.formInline.time2 == "")) {
           this.$message({
             type: 'error',
             message: '请选择查询时间段!'
@@ -268,15 +276,15 @@ this.pageNum=val;
           return;
         }
         this.tableLoad = true
-        dataList(this.formInline).then((response)=>{
-          this.tableData3=response.list
-          this.dataList=[]
-          for(var i=0;i<=response.list[0].list.length;i++){
-            for(var j in response.list[0].list[i]) {
+        dataList(this.formInline).then((response) => {
+          this.tableData3 = response.list
+          this.dataList = []
+          for (var i = 0; i <= response.list[0].list.length; i++) {
+            for (var j in response.list[0].list[i]) {
               // debugger
-              if(j==="area"){
-                let item={area:''}
-                item.area=response.list[0].list[i].area
+              if (j === "area") {
+                let item = {area: ''}
+                item.area = response.list[0].list[i].area
                 this.dataList.push(item)
               }
             }
@@ -284,12 +292,12 @@ this.pageNum=val;
           }
           this.tableLoad = false
 
-        }).catch(()=>{
+        }).catch(() => {
           this.tableLoad = false
         })
       }
- },
- created() {
+    },
+    created() {
 // this.tableLoad = true
 // 	 dataList(this.formInline).then((response)=>{
 // 	 	         this.total=response.totalNum
@@ -309,32 +317,32 @@ this.pageNum=val;
 //        	   this.tableLoad = false
 //          console.log(this.dataList)
 //        })
-          areaList().then((response)=>{
-          	this.areaList=response
-          })
-       
-            clientList().then((response)=>{
-          	this.clientList=response
-          })
-           
-             PersonList().then((response)=>{
-          	this.PersonList=response
-          })
+      areaList().then((response) => {
+        this.areaList = response
+      })
 
-   getUserTree().then(data => {
-     this.selectUserTree = [data]
-   })
-            
-},
-}
+      clientList().then((response) => {
+        this.clientList = response
+      })
+
+      PersonList().then((response) => {
+        this.PersonList = response
+      })
+
+      getUserTree().then(data => {
+        this.selectUserTree = [data]
+      })
+
+    },
+  }
 </script>
 
 <style lang="scss">
-#statistics-month{
-	.el-form--inline .el-form-item{
-	margin-right:0px;
-}
-}
+  #statistics-month {
+    .el-form--inline .el-form-item {
+      margin-right: 0px;
+    }
+  }
 </style>
 
 
