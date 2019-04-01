@@ -60,6 +60,7 @@
       border
       stripe
       show-summary
+      :summary-method="getSummaries"
       height="350"
       style="width: 100%"
       class="table-wrap">
@@ -207,9 +208,9 @@ export default {
                         return;
                     }
 
-                    const values1 = data[0].list.map(item => Number(item[column.property]));
+                    const values = data[0].list.map(item => Number(item[column.property]));
 
-                    const values = values1[Math.ceil(index/3)-1];
+                    //const values = values1[Math.ceil(index/3)-1];
                     if (!values.every(value => isNaN(value))) {
                         sums[index] = values.reduce((prev, curr) => {
                             const value = Number(curr);

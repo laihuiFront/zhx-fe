@@ -44,8 +44,14 @@
                 <span>{{ caseDetail.identNo }}</span>
               </div>
             </el-form-item>
+            <el-form-item label="证件类型">
+              <el-input v-model="caseDetail.identType" :disabled="true"></el-input>
+            </el-form-item>
             <el-form-item label="卡号">
               <el-input v-model="caseDetail.cardNo" :disabled="true"></el-input>
+            </el-form-item>
+            <el-form-item label="合同编号">
+              <el-input v-model="caseDetail.contractNo" :disabled="true"></el-input>
             </el-form-item>
             <el-form-item label="催收状态">
               <el-input
@@ -116,6 +122,21 @@
                 <span>{{ caseDetail.currencyType}}</span>
               </div>
             </el-form-item>
+            <el-form-item label="M值系数">
+              <div class="inputDiv" style="font-size: 12px;">
+                <span>{{ caseDetail.mVal}}</span>
+              </div>
+            </el-form-item>
+            <el-form-item label="公司佣金比率">
+              <div class="inputDiv" style="font-size: 12px;">
+                <span>{{ caseDetail.commissionRate}}</span>
+              </div>
+            </el-form-item>
+            <el-form-item label="公司佣金金额">
+              <div class="inputDiv" style="font-size: 12px;">
+                <span>{{ caseDetail.commissionMoney}}</span>
+              </div>
+            </el-form-item>
             <el-form-item label="最新欠款" class="half">
               <el-input
                 v-model="caseDetail.interestDate"
@@ -128,6 +149,12 @@
             <el-form-item label="催收手别">
               <el-input
                 v-model="caseDetail.collectHand"
+                :disabled="true"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="卡类">
+              <el-input
+                v-model="caseDetail.cardType"
                 :disabled="true"
               ></el-input>
             </el-form-item>
@@ -163,9 +190,21 @@
                 :disabled="true"
               ></el-input>
             </el-form-item>
-            <el-form-item label="每月还款">
+            <el-form-item label="车价">
+            <el-input
+              v-model="caseDetail.cardModel"
+              :disabled="true"
+            ></el-input>
+          </el-form-item>
+            <el-form-item label="车价">
               <el-input
-                v-model="caseDetail.monthlyRepayments"
+                v-model="caseDetail.cardPrice"
+                :disabled="true"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="车型">
+              <el-input
+                v-model="caseDetail.cardModel"
                 :disabled="true"
               ></el-input>
             </el-form-item>
@@ -175,7 +214,7 @@
                 :disabled="true"
               ></el-input>
             </el-form-item>
-            <el-form-item label="预期本金">
+            <el-form-item label="逾期本金">
               <el-input
                 v-model="caseDetail.overduePrinciple"
                 :disabled="true"
@@ -202,6 +241,60 @@
             <el-form-item label="滞纳金">
               <el-input
                 v-model="caseDetail.lateFee"
+                :disabled="true"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="案人职位">
+            <el-input
+              v-model="caseDetail.caseUserPosition"
+              :disabled="true"
+            ></el-input>
+          </el-form-item>
+            <el-form-item label="案人部门">
+              <el-input
+                v-model="caseDetail.caseUserDepart"
+                :disabled="true"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="银行">
+              <el-input
+                v-model="caseDetail.bank"
+                :disabled="true"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="账号">
+              <el-input
+                v-model="caseDetail.account"
+                :disabled="true"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="牌照号">
+            <el-input
+              v-model="caseDetail.license"
+              :disabled="true"
+            ></el-input>
+          </el-form-item>
+            <el-form-item label="品牌">
+              <el-input
+                v-model="caseDetail.brand"
+                :disabled="true"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="车架号">
+              <el-input
+                v-model="caseDetail.vin"
+                :disabled="true"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="发动机号">
+              <el-input
+                v-model="caseDetail.engineNo"
+                :disabled="true"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="经销商">
+              <el-input
+                v-model="caseDetail.dealer"
                 :disabled="true"
               ></el-input>
             </el-form-item>
@@ -465,6 +558,18 @@
                 :disabled="true"
               ></el-input>
             </el-form-item>
+            <el-form-item label="对账单邮编">
+            <el-input
+              v-model="caseDetail.statementZipCode"
+              :disabled="true"
+            ></el-input>
+          </el-form-item>
+            <el-form-item label="户籍地邮编">
+              <el-input
+                v-model="caseDetail.censusRegisterZipCode"
+                :disabled="true"
+              ></el-input>
+            </el-form-item>
             <el-form-item label="账号">
               <el-input
                 v-model="caseDetail.account"
@@ -522,6 +627,18 @@
                 :disabled="true"
               ></el-input>
             </el-form-item>
+            <el-form-item label="停卡日">
+              <el-input
+                v-model="caseDetail.stopCardDate"
+                :disabled="true"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="开卡日">
+              <el-input
+                v-model="caseDetail.activeCardDate"
+                :disabled="true"
+              ></el-input>
+            </el-form-item>
             <el-form-item label="逾期日期">
               <el-input
                 v-model="caseDetail.overdueDate"
@@ -576,6 +693,18 @@
             <el-form-item label="拖欠级别">
               <el-input
                 v-model="caseDetail.defaultLevel"
+                :disabled="true"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="最后还款金额">
+              <el-input
+                v-model="caseDetail.lastRepayMoney"
+                :disabled="true"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="最后还款日">
+              <el-input
+                v-model="caseDetail.lastRepayDate"
                 :disabled="true"
               ></el-input>
             </el-form-item>
@@ -651,6 +780,24 @@
                 :disabled="true"
               ></el-input>
             </el-form-item>
+            <el-form-item label="省份">
+              <el-input
+                v-model="caseDetail.province.name"
+                :disabled="true"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="城市">
+              <el-input
+                v-model="caseDetail.city.name"
+                :disabled="true"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="区县">
+              <el-input
+                v-model="caseDetail.county.name"
+                :disabled="true"
+              ></el-input>
+            </el-form-item>
             <el-form-item label="社保电脑号">
               <el-input
                 v-model="caseDetail.socialSecurityComputerNo"
@@ -660,6 +807,12 @@
             <el-form-item label="社保卡号">
               <el-input
                 v-model="caseDetail.socialSecurityCardNo"
+                :disabled="true"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="保单到期日">
+              <el-input
+                v-model="caseDetail.policyExpiryDate"
                 :disabled="true"
               ></el-input>
             </el-form-item>
@@ -3612,7 +3765,7 @@ import {
 } from "@/common/js/api-detail";
 import { getEnum } from "@/common/js/api-sync";
 import { baseURL } from "@/common/js/request.js";
-
+const resetObj = { currentuser: true, seqNo: "", name: "" ,city:{name:""},province:{name:""},county:{name:""}}
 export default {
   name: "caseDetail",
   // props:{
@@ -3672,7 +3825,7 @@ export default {
       dependCase: [], //同批次公债案件
       activeNames: ["1", "2", "3", "4", "5"],
       otherActiveName: "1",
-      caseDetail: { currentuser: true, seqNo: "", name: "" },
+      caseDetail: resetObj,
       ligigationVisible: false,
       memorizeType: 1,
       statusList: [
@@ -4617,10 +4770,11 @@ export default {
       );
     },
     resetContent(){
-      this.caseDetail = { currentuser: true, seqNo: "", name: "" };
+      this.caseDetail = resetObj;
     },
   },
   watch: {
+
     $route: {
       handler(n, o) {
         if (n.name == "case-detail") {
