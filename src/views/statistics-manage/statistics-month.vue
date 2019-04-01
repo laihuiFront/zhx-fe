@@ -5,7 +5,7 @@
     v-loading="loading"
     element-loading-text="拼命加载中"
     v-loading.fullscreen.lock="fullscreenLoading"
-    element-loading-spinner="el-icon-loading"
+       element-loading-spinner="el-icon-loading"
     element-loading-background="rgba(0, 0, 0, 0.7)"
   >
     <el-form ref="form" :model="formInline" :inline="true" class="query-wrap">
@@ -55,8 +55,7 @@
           value-format="yyyy-MM"
           placeholder="选择开始月份"
         >
-        </el-date-picker
-        >至
+        </el-date-picker>至
         <el-date-picker
           v-model="formInline.time2"
           type="month"
@@ -80,14 +79,14 @@
     <el-table
       highlight-current-row
       v-if="tableData3.length > 0"
-      v-loading="tableLoad"
-      :data="tableData3"
-      border
-      stripe
-      show-summary
-      :summary-method="getSummaries"
-      height="350"
-      style="width: 100%"
+              v-loading="tableLoad"
+              :data="tableData3"
+              border
+              stripe
+              show-summary
+              :summary-method="getSummaries"
+              height="350"
+              style="width: 100%"
       class="table-wrap"
     >
       <el-table-column prop="odv" align="center" label="催收员">
@@ -159,16 +158,9 @@
 </template>
 
 <script>
-import {
-  areaList,
-  clientList,
-  PersonList,
-  getUserTree,
-  dataList,
-  selectDataCaseExport
-} from "@/common/js/statistics-month.js";
+		import {areaList,clientList,PersonList,getUserTree,dataList,selectDataCaseExport} from '@/common/js/statistics-month.js'
 
-export default {
+  export default {
   name: "statisticsMonth",
   data() {
     return {
@@ -269,12 +261,12 @@ export default {
         this.formInline.time == "" ||
         (this.formInline.time2 == null || this.formInline.time2 == "")
       ) {
-        this.$message({
+          this.$message({
           type: "error",
           message: "请选择查询时间段!"
-        });
-        return;
-      }
+          });
+          return;
+        }
       this.loading = true;
       this.fullscreenLoading = true;
       selectDataCaseExport(this.formInline, this.pageSize, this.pageNum).then(
