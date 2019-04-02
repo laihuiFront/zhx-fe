@@ -1,6 +1,6 @@
 <template>
   <div id="setting-enum">
-    <el-card class="box-card-left">
+    <el-card class="box-card-left" style="overflow-y: auto;">
       <template slot="header">配置项目</template>
       <ul class="config-wrap">
         <li

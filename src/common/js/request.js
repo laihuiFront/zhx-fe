@@ -3,8 +3,8 @@ import { Message, MessageBox } from 'element-ui'
 import store from '../../store'
 import router from '../../router'
 import { localCache, removeCache } from '@/common/js/auth'
-//export const baseURL = 'http://116.62.124.251/zxh';
-export const baseURL='http://116.62.124.251:9119';
+export const baseURL = 'http://127.0.0.1:9119';
+//export const baseURL='http://116.62.124.251:9119';
 //export const baseURL = 'http://192.168.25.208:9119';
 // 创建axios实例
 const service = axios.create({

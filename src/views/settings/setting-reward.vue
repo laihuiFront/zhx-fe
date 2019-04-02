@@ -33,7 +33,7 @@
        label="适用"
      >
        <template slot-scope="scope">
-         <el-select v-model="scope.row.enable" align="center" style="text-align: center;" v-if="scope.row.editType==='edit'" clearable @change="changeEnable(scope.row)">
+         <el-select v-model="scope.row.enable" align="center" style="text-align: center;" v-if="scope.row.editType==='edit'"  @change="changeEnable(scope.row)">
            <el-option
              v-for="item in enableList"
              :key="item.id"
@@ -56,6 +56,7 @@
             v-if="scope.row.editType==='edit' "
             clearable
             align="center"
+            :disabled="!scope.row.remarkDisable"
             @input="changeLow(scope.row)"
             v-model="scope.row.odvLowMsg"
           ></el-input>
@@ -72,6 +73,7 @@
             v-if="scope.row.editType==='edit'"
             clearable
             align="center"
+            :disabled="!scope.row.remarkDisable"
             v-model="scope.row.odvBasic"
           ></el-input>
           <span v-else>{{scope.row.odvBasic}}</span>
@@ -87,7 +89,7 @@
             v-if="scope.row.editType==='edit'"
             clearable
             align="center"
-            :disabled="scope.row.rewardDisable"
+            :disabled="scope.row.rewardDisable || !scope.row.remarkDisable"
             v-model="scope.row.odvReward"
           ></el-input>
           <span v-else>{{scope.row.odvReward}}</span>
@@ -120,6 +122,7 @@
             v-if="scope.row.editType==='edit'"
             clearable
             align="center"
+            :disabled="!scope.row.remarkDisable"
             v-model="scope.row.manageReward"
           ></el-input>
           <span v-else>{{scope.row.manageReward}}</span>
@@ -195,14 +198,17 @@
      }
    },
    changeEnable(row){
-
+     console.info(row.enable);
      if(row.enable==1){
-       row.remarkDisable = false;
-
-     }else{
        row.remarkDisable = true;
        row.odvRemark = '';
        row.manageRemark = '';
+     }else{
+       row.remarkDisable = false;
+       row.odvLowMsg = '';
+       row.odvBasic = '';
+       row.odvReward = '';
+       row.manageReward = '';
      }
 
 
@@ -227,9 +233,9 @@
        row.rewardDisable = false
      }
      if(row.enable==1){
-       row.remarkDisable = false;
-     }else{
        row.remarkDisable = true;
+     }else{
+       row.remarkDisable = false;
      }
    }
  },

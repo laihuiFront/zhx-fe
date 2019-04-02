@@ -1,5 +1,9 @@
 <template>
-  <div id="setting-role" class="page-wraper-sub">
+  <div id="setting-role" class="page-wraper-sub" v-loading="loading2"
+       v-loading.fullscreen.lock="fullscreenLoading"
+       element-loading-text="正在保存中"
+       element-loading-spinner="el-icon-loading"
+       element-loading-background="rgba(0, 0, 0, 0.7)">
     <el-form ref="form" :model="queryForm" :inline="true" class="query-wrap">
       <el-form-item>
         <el-input v-model="queryForm.roleName" clearable placeholder="请输入角色组名"></el-input>
@@ -107,6 +111,8 @@ export default {
       tableLoad:false,
       queryForm: {
       },
+      loading2:false,
+      fullscreenLoading:false,
       roleList: [],
       dataAuthList:[{id:1,name:"具有数据权限"},{id:2,name:"不具有数据权限"}],
       busiAuthList:[{id:1,name:"具有业务权限"},{id:2,name:"不具有业务权限"}],
@@ -206,8 +212,12 @@ export default {
       this.$set(this.dialogData, 'editVisible', false)
     },
     onClickSave () {
+      this.loading2=true
+      this.fullscreenLoading=true
       this.$refs['ruleForm'].validate((valid) => {
         if (!valid) {
+          this.loading2=false
+          this.fullscreenLoading=false
             return;
         }else{
           let roleSubmit = {
@@ -219,12 +229,14 @@ export default {
           if (this.dialogData.type === 'edit') {
             roleSubmit.id = this.currentRow.id
           }
+          this.onClickCancel()
           saveRole(roleSubmit).then(response => {
             const id = this.dialogData.type === 'edit' ? this.currentRow.id : response.id
             saveAuth({ id, menus: this.authConfig }).then(response => {
               this.$message('角色保存成功')
-              this.onClickCancel()
               this.initRoleList()
+              this.loading2=false
+              this.fullscreenLoading=false
             })
           })
         }

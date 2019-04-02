@@ -32,7 +32,6 @@
                 v-model="caseDetail.caseDate"
                 type="date"
                 :disabled="true"
-                placeholder="选择日期"
               ></el-date-picker>
             </el-form-item>
             <el-form-item label="证件号">
@@ -64,7 +63,6 @@
                 v-model="caseDetail.expectTime"
                 type="date"
                 :disabled="true"
-                placeholder="选择日期"
               ></el-date-picker>
             </el-form-item>
             <el-form-item label="委案金额">
@@ -174,7 +172,6 @@
               <el-date-picker
                 v-model="caseDetail.loanDate"
                 type="date"
-                placeholder="选择日期"
                 :disabled="true"
               ></el-date-picker>
             </el-form-item>
@@ -374,7 +371,6 @@
                 v-model="caseDetail.caseDate"
                 type="date"
                 :disabled="true"
-                placeholder="选择日期"
               ></el-date-picker>
             </el-form-item>
             <el-form-item label="跟进次数">
@@ -397,7 +393,6 @@
                 v-model="caseDetail.latestCollectMomorize"
                 :disabled="true"
                 type="datetime"
-                placeholder="选择日期时间"
               ></el-date-picker>
             </el-form-item>
             <el-form-item label="最后外访">
@@ -410,7 +405,6 @@
                 v-model="caseDetail.zdshsj"
                 type="datetime"
                 :disabled="true"
-                placeholder="选择日期时间"
               ></el-date-picker>
             </el-form-item>
             <el-form-item label="催收小结" class="width-75">
@@ -2581,12 +2575,12 @@
                   placeholder="请输入承诺还款金额"
                 ></el-input>
               </el-form-item>
-              <el-form-item label="承诺还款时间" prop="repayTime">
+              <el-form-item label="承诺还款日期" prop="repayTime">
                 <el-date-picker
                   v-model="batchForm.repayTime"
                   type="date"
                   value-format="yyyy-MM-dd"
-                  placeholder="请输入承诺还款时间"
+                  placeholder="请输入承诺还款日期"
                 ></el-date-picker>
               </el-form-item>
               <el-form-item label="通话记录" prop="collectInfo" class="whole">
@@ -3224,7 +3218,7 @@
         <el-row :gutter="24">
           <el-col :span="12">
             <div class="grid-content bg-purple">
-              <el-form-item label="承诺还款">
+              <el-form-item label="承诺还款金额">
                 <el-input
                   v-model="messageForm.repayAmt"
                   placeholder="请输入还款金额"

@@ -91,7 +91,7 @@ export const dataList = function(form,applyStatus,sort,orderBy,pageNum,pageSize)
 //  }
 //})
 //}
-export const pageDataBatchExport = function(form,applyStatus,sType,sort,orderBy,pageNum,pageSize) {
+export const pageDataBatchExport = function(form,exportConf,applyStatus,sType,sort,orderBy,pageNum,pageSize) {
 return download({
     url: '/reduce/dataExport',
     method: 'post',
@@ -112,6 +112,7 @@ return download({
       reduceStatus:form.reduceStatus,
       reduceValidTimeStart:form.time2[0],
       reduceValidTimeEnd:form.time2[1],
+      exportConf:exportConf,
       pageNum:pageNum ? pageNum : 1,
       pageSize:pageSize ? pageSize : 100
        
