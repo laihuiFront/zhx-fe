@@ -847,6 +847,7 @@
         this.showQueryConfVisible = true;
       },
       exportData(){
+        this.showExportConfVisible = false;
          if (this.exportType==1){
            this.totalDataExport()
          }else if (this.exportType==2){
@@ -859,7 +860,9 @@
         } else {
           this.exportType = 2;
         }
+        this.dialogVisible1 = false;
         this.showExportConfVisible = true;
+
       },
       editCase(id, name, seqNo) {
         this.$router.push({
@@ -961,6 +964,22 @@
         this.fullscreenLoading = true
         this.loading = true
         this.sType = 0
+        let successNum =0;
+        for(var p in this.exportConf){//遍历json对象的每个key/value对,p为key
+          if (this.exportConf[p]){
+            successNum = successNum+1;
+          }
+        }
+        if (successNum==0){
+          this.$message({
+            type: 'error',
+            message: '请先选择导出项!'
+          });
+          this.fullscreenLoading = false
+          this.loading = false
+          return ;
+        }
+
         pageDataBatchExport(this.formInline,this.exportConf, this.applyStatus, this.sType, this.sort, this.orderBy, this.currentPage4, this.pageSize).then((response) => {
           this.fullscreenLoading = false
           this.loading = false
@@ -971,6 +990,21 @@
         this.fullscreenLoading = true
         this.loading = true
         this.sType = 1
+        let successNum =0;
+        for(var p in this.exportConf){//遍历json对象的每个key/value对,p为key
+          if (this.exportConf[p]){
+            successNum = successNum+1;
+          }
+        }
+        if (successNum==0){
+          this.$message({
+            type: 'error',
+            message: '请先选择导出项!'
+          });
+          this.fullscreenLoading = false
+          this.loading = false
+          return ;
+        }
         pageDataBatchExport(this.formInline, this.exportConf,this.applyStatus, this.sType, this.sort, this.orderBy, this.currentPage4, this.pageSize).then((response) => {
           this.fullscreenLoading = false
           this.loading = false
