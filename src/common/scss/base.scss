@@ -80,3 +80,36 @@ body .el-dropdown .el-icon-arrow-down{
 body .el-popover .popper__arrow{
   display: none;
 }
+.el-tooltip__popper.is-dark {
+  background: #0080ff !important;
+  color: black  !important;;
+}
+
+.el-table--striped .el-table__body tr.el-table__row--striped td{
+  background: #f2f2f2 !important;
+}
+.el-checkbox__input.is-checked .el-checkbox__inner, .el-checkbox__input.is-indeterminate .el-checkbox__inner {
+  background-color: white !important;
+}
+.el-checkbox__inner::after {
+  border-color: #0080ff !important;
+}
+.el-checkbox__inner{
+  border: 1px solid #0080ff  !important;
+}
+
+.el-table--striped .el-table__body tr.el-table__row--striped.current-row td, .el-table__body tr.current-row>td, .el-table__body tr.hover-row.current-row>td, .el-table__body tr.hover-row.el-table__row--striped.current-row>td, .el-table__body tr.hover-row.el-table__row--striped>td, .el-table__body tr.hover-row>td {
+  background-color: #ecf6fd  !important;
+
+}
+.el-table__body tr.current-row > td{
+  border-top: 1px solid #0080ff  !important;
+  border-bottom: 1px solid #0080ff  !important;
+}
+.el-table__body tr.current-row > td:first-child{
+  border-left: 1px solid #0080ff  !important;
+}
+.el-table__body tr.current-row > td:last-child{
+  border-right: 1px solid #0080ff  !important;
+}
+
