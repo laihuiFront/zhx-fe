@@ -95,11 +95,12 @@ export function revokeRepayRecord(ids){
   })
 }
 
-export function expSelectedRepayRecord(ids){
+export function expSelectedRepayRecord(ids,exportConf){
   return download({
     url: '/repayRecord/selectDataExport',
     data: {
-      ids
+      ids,
+      exportConf
     }
   })
 }
@@ -134,11 +135,12 @@ export function cancelBankRecon(ids){
   })
 }
 
-export function expSelectedBankReconRecord(ids){
+export function expSelectedBankReconRecord(ids,exportConf){
   return download({
     url: '/bankReconciliation/selectDataExport',
     data: {
-      ids
+      ids,
+      exportConf
     }
   })
 }

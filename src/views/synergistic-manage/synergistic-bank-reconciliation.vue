@@ -154,6 +154,74 @@
               <el-button type="primary" @click="changeRadio">确 定</el-button>  
         </span>
     </el-dialog>
+
+    <el-dialog
+      title="导出选择"
+      :visible.sync="showExportConfVisible"
+      width="60%"
+      center
+    >
+      <el-row class="pad">
+
+        <el-checkbox v-model="exportConf.id" label="2">ID</el-checkbox>
+        <el-checkbox v-model="exportConf.batchNo" label="3">批次号</el-checkbox>
+        <el-checkbox v-model="exportConf.cardNo" label="3">卡号</el-checkbox>
+        <el-checkbox v-model="exportConf.identNo" label="3">证件号</el-checkbox>
+        <el-checkbox v-model="exportConf.name" label="1">姓名</el-checkbox>
+        <el-checkbox v-model="exportConf.seqNo" label="1">个案序列号</el-checkbox>
+        <el-checkbox v-model="exportConf.client" label="4">委托方</el-checkbox>
+        <el-checkbox v-model="exportConf.money" label="5">委案金额</el-checkbox>
+        <el-checkbox v-model="exportConf.balance" label="2">当前委案余额</el-checkbox>
+        <el-checkbox v-model="exportConf.account" label="4">账号</el-checkbox>
+        <el-checkbox v-model="exportConf.archiveNo" label="5">档案号</el-checkbox>
+        <el-checkbox v-model="exportConf.applyOrderNo" label="5">申请单号</el-checkbox>
+        <el-checkbox v-model="exportConf.cpMoney" label="5">CP金额</el-checkbox>
+        <el-checkbox v-model="exportConf.cpDate" label="5">CP日期</el-checkbox>
+        <el-checkbox v-model="exportConf.caseOdv" label="5">案件催收员</el-checkbox>
+        <el-checkbox v-model="exportConf.backOdv" label="5">回收催收员</el-checkbox>
+        <el-checkbox v-model="exportConf.backDept" label="5">回收部门</el-checkbox>
+        <el-checkbox v-model="exportConf.submitUser" label="5">提交人</el-checkbox>
+        <el-checkbox v-model="exportConf.submitTime" label="5">提交时间</el-checkbox>
+        <el-checkbox v-model="exportConf.enRepayAmt" label="5">还款金额</el-checkbox>
+        <el-checkbox v-model="exportConf.repayDate" label="5">还款日期</el-checkbox>
+        <el-checkbox v-model="exportConf.repayBalance" label="5">还款余额</el-checkbox>
+        <el-checkbox v-model="exportConf.mMoney" label="5">M值金额</el-checkbox>
+        <el-checkbox v-model="exportConf.mVal" label="5">M值系数</el-checkbox>
+        <el-checkbox v-model="exportConf.repayUser" label="5">还款人</el-checkbox>
+        <el-checkbox v-model="exportConf.repayType" label="5">还款方式</el-checkbox>
+        <el-checkbox v-model="exportConf.confirmUser" label="5">确认人</el-checkbox>
+        <el-checkbox v-model="exportConf.ConfirmTime" label="5">确认时间</el-checkbox>
+        <el-checkbox v-model="exportConf.repayRemark" label="5">还款备注</el-checkbox>
+        <el-checkbox v-model="exportConf.accountAge" label="5">逾期账龄</el-checkbox>
+        <el-checkbox v-model="exportConf.overduePeriods" label="5">逾期期数</el-checkbox>
+        <el-checkbox v-model="exportConf.overdueDate" label="5">逾期日期</el-checkbox>
+        <el-checkbox v-model="exportConf.overdueDays" label="5">逾期天数</el-checkbox>
+        <el-checkbox v-model="exportConf.caseDate" label="5">委案日期</el-checkbox>
+        <el-checkbox v-model="exportConf.expectTime" label="5">预计退案日</el-checkbox>
+        <el-checkbox v-model="exportConf.province" label="5">省份</el-checkbox>
+        <el-checkbox v-model="exportConf.city" label="5">城市</el-checkbox>
+        <el-checkbox v-model="exportConf.county" label="5">区县</el-checkbox>
+        <el-checkbox v-model="exportConf.tel" label="5">手机</el-checkbox>
+        <el-checkbox v-model="exportConf.currencyType" label="5">币种</el-checkbox>
+        <el-checkbox v-model="exportConf.distributeHistory" label="5">分配历史</el-checkbox>
+        <el-checkbox v-model="exportConf.defaultLevel" label="5">拖欠级别</el-checkbox>
+        <el-checkbox v-model="exportConf.latestOverdueMoney" label="5">案件最新欠款</el-checkbox>
+        <el-checkbox v-model="exportConf.inteviewStatus" label="5">外访状态</el-checkbox>
+        <el-checkbox v-model="exportConf.commissionMoney" label="5">公司佣金</el-checkbox>
+        <el-checkbox v-model="exportConf.commissionRate" label="5">公司佣金比率</el-checkbox>
+        <el-checkbox v-model="exportConf.caseRemarks0" label="5">案件备注1</el-checkbox>
+        <el-checkbox v-model="exportConf.caseRemarks1" label="5">案件备注2</el-checkbox>
+        <el-checkbox v-model="exportConf.caseRemarks2" label="5">案件备注3</el-checkbox>
+        <el-checkbox v-model="exportConf.caseRemarks3" label="5">案件备注4</el-checkbox>
+        <el-checkbox v-model="exportConf.caseRemarks4" label="5">案件备注5</el-checkbox>
+        <el-checkbox v-model="exportConf.caseRemarks5" label="5">案件备注6</el-checkbox>
+        <el-checkbox v-model="exportConf.collectionArea" label="5">催收区域</el-checkbox>
+      </el-row>
+      <span slot="footer" class="footer">
+        <el-button @click="showExportConfVisible = false">取 消</el-button>
+        <el-button type="primary" @click="exportExcel">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -172,6 +240,9 @@ export default {
     	loading2:false,
     	fullscreenLoading:false,
       dialogExportVisible:false,
+      exportType:0,
+      showExportConfVisible: false,
+      exportConf:{},
       tableLoad:false,
       action:baseURL,
       header:{Authorization:localStorage.token},
@@ -298,19 +369,42 @@ export default {
         })
       }).catch(() => { })
     },
+    exportExcel(){
+        if (this.exportType==1){
+          if(!this.selectList.length){
+            this.$message('请选择需要导出的记录')
+            return
+          }
+          this.loading2=true
+          this.fullscreenLoading=true
+          const ids = this.selectList.map(item => item.id)
+          expSelectedBankReconRecord(ids,this.exportConf).then(() => {
+            this.$message('导出成功')
+            this.loading2=false
+            this.fullscreenLoading=false
+          }).catch(() => { })
+        }else if (this.exportType ==2){
+          this.loading2=true
+          this.fullscreenLoading=true
+          this.queryForm.exportConf = this.exportConf
+          expCurrentBankReconRecord(this.queryForm).then(res => {
+            this.$message('导出成功')
+            this.loading2=false
+            this.fullscreenLoading=false
+          })
+        }else if (this.exportType==3){
+          this.queryForm.exportConf = this.exportConf
+          expAllBankReconRecord(this.queryForm).then(res => {
+            this.$message('导出成功')
+            this.loading2=false
+            this.fullscreenLoading=false
+          })
+        }
+      this.showExportConfVisible = false;
+    },
     onClickExportSelectedRecord(){
-      if(!this.selectList.length){
-        this.$message('请选择需要导出的记录')
-        return
-      }
-      this.loading2=true
-					this.fullscreenLoading=true
-      const ids = this.selectList.map(item => item.id)
-      expSelectedBankReconRecord(ids).then(() => {
-        this.$message('导出成功')
-        this.loading2=false
-					this.fullscreenLoading=false
-      }).catch(() => { })
+      this.showExportConfVisible = true;
+  		  this.exportType = 1;
     },
     onSelectRow(val){
       this.selectList = val
@@ -318,20 +412,11 @@ export default {
     onClickCancel(){},
     onClickSave(){},
     handleCommand(command){
+      this.showExportConfVisible = true;
       if(command === 'current'){
-      	this.loading2=true
-					this.fullscreenLoading=true
-        expCurrentBankReconRecord(this.queryForm).then(res => {
-          this.$message('导出成功')
-          this.loading2=false
-					this.fullscreenLoading=false
-        })
+        this.exportType = 2;
       }else {
-        expAllBankReconRecord(this.queryForm).then(res => {
-          this.$message('导出成功')
-          this.loading2=false
-					this.fullscreenLoading=false
-        })
+        this.exportType = 3;
       }
       this.dialogExportVisible = false
     }
@@ -341,6 +426,12 @@ export default {
 
 <style lang="scss">
 #synergistic-bank-reconciliation{
+  .pad {
+    .el-checkbox {
+      width: 24%;
+      margin-right: 0px;
+    }
+  }
   .el-tabs__content{
 
     overflow-y: auto;

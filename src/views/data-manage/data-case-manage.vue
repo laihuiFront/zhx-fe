@@ -922,6 +922,35 @@
         <el-button type="primary" @click="saveConf">确 定</el-button>
       </span>
     </el-dialog>
+
+    <el-dialog
+      title="导出选择"
+      :visible.sync="showExportTelConfVisible"
+      width="60%"
+      center
+    >
+      <el-row class="pad">
+
+        <el-checkbox v-model="exportTelConf.seqno" label="2">个案序列号</el-checkbox>
+        <el-checkbox v-model="exportTelConf.name" label="3">姓名</el-checkbox>
+        <el-checkbox v-model="exportTelConf.cardNo" label="3">卡号</el-checkbox>
+        <el-checkbox v-model="exportTelConf.identNo" label="3">证件号</el-checkbox>
+        <el-checkbox v-model="exportTelConf.archiveNo" label="1">档案号</el-checkbox>
+        <el-checkbox v-model="exportTelConf.account" label="1">账号</el-checkbox>
+        <el-checkbox v-model="exportTelConf.accountAge" label="4">逾期账龄</el-checkbox>
+        <el-checkbox v-model="exportTelConf.caseDate" label="5">委案日期</el-checkbox>
+        <el-checkbox v-model="exportTelConf.telName" label="2">电话姓名</el-checkbox>
+        <el-checkbox v-model="exportTelConf.telStatusMsg" label="4">电话状态</el-checkbox>
+        <el-checkbox v-model="exportTelConf.tel" label="5">电话号码</el-checkbox>
+        <el-checkbox v-model="exportTelConf.telType" label="5">电话类型</el-checkbox>
+        <el-checkbox v-model="exportTelConf.relation" label="5">关系</el-checkbox>
+        <el-checkbox v-model="exportTelConf.remark" label="5">电话备注</el-checkbox>
+      </el-row>
+      <span slot="footer" class="footer">
+        <el-button @click="showExportTelConfVisible = false">取 消</el-button>
+        <el-button type="primary" @click="">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -942,6 +971,8 @@
       	dialogVisibleCase:false,
         detailId: -1,
         showQueryConfVisible:false,
+        showExportTelConfVisible: false,
+        exportTelConf:{},
         queryConf:{},
         queryConfFlag:true,
       	addSynergyForm:{

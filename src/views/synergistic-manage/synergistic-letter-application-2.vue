@@ -269,13 +269,6 @@
         align="center"
       >
       </el-table-column>
-      <!--<el-table-column label="操作" show-overflow-tooltip>-->
-      <!--<template slot-scope="scope">-->
-      <!--<el-button type="text" size="small">导入</el-button>-->
-      <!--<el-button type="text" size="small">下载</el-button>-->
-      <!--<el-button type="text" size="small">编辑</el-button>-->
-      <!--</template>-->
-      <!--</el-table-column>-->
     </el-table>
     <el-pagination
       class="pagination-wrap"
@@ -288,6 +281,57 @@
       :total="paginationData.total"
     >
     </el-pagination>
+
+
+    <el-dialog
+      title="导出选择"
+      :visible.sync="showExportConfVisible"
+      width="60%"
+      center
+    >
+      <el-row class="pad">
+
+        <el-checkbox v-model="exportConf.id" label="2">ID</el-checkbox>
+        <el-checkbox v-model="exportConf.batchNo" label="3">批次号</el-checkbox>
+        <el-checkbox v-model="exportConf.client" label="3">委托方</el-checkbox>
+        <el-checkbox v-model="exportConf.seqNo" label="3">个案序列号</el-checkbox>
+        <el-checkbox v-model="exportConf.name" label="1">姓名</el-checkbox>
+        <el-checkbox v-model="exportConf.address" label="1">信函地址</el-checkbox>
+        <el-checkbox v-model="exportConf.addressType" label="4">地址类型</el-checkbox>
+        <el-checkbox v-model="exportConf.applyContext" label="5">申请内容</el-checkbox>
+        <el-checkbox v-model="exportConf.applyDate" label="2">申请时间</el-checkbox>
+        <el-checkbox v-model="exportConf.synergyDate" label="4">协催时间</el-checkbox>
+        <el-checkbox v-model="exportConf.synergyer" label="5">协催人</el-checkbox>
+        <el-checkbox v-model="exportConf.synergyResult" label="5">协催结果</el-checkbox>
+        <el-checkbox v-model="exportConf.identNo" label="5">证件号</el-checkbox>
+        <el-checkbox v-model="exportConf.cardNo" label="5">卡号</el-checkbox>
+        <el-checkbox v-model="exportConf.cardType" label="5">卡类</el-checkbox>
+        <el-checkbox v-model="exportConf.account" label="5">账号</el-checkbox>
+        <el-checkbox v-model="exportConf.currencyType" label="5">币种</el-checkbox>
+        <el-checkbox v-model="exportConf.archiveNo" label="5">档案号</el-checkbox>
+        <el-checkbox v-model="exportConf.applyNo" label="5">申请单号</el-checkbox>
+        <el-checkbox v-model="exportConf.money" label="5">委案金额</el-checkbox>
+        <el-checkbox v-model="exportConf.enRepayAmt" label="5">还款金额</el-checkbox>
+        <el-checkbox v-model="exportConf.principle" label="5">本金</el-checkbox>
+        <el-checkbox v-model="exportConf.lastRepayDate" label="5">最后还款日</el-checkbox>
+        <el-checkbox v-model="exportConf.caseDate" label="5">委案日期</el-checkbox>
+        <el-checkbox v-model="exportConf.odv" label="5">催收员</el-checkbox>
+        <el-checkbox v-model="exportConf.creditLine" label="5">信用额度</el-checkbox>
+        <el-checkbox v-model="exportConf.homeAddress" label="5">家庭地址</el-checkbox>
+        <el-checkbox v-model="exportConf.homeTelNumber" label="5">家庭号码</el-checkbox>
+        <el-checkbox v-model="exportConf.unitName" label="5">单位名称</el-checkbox>
+        <el-checkbox v-model="exportConf.unitAddress" label="5">单位地址</el-checkbox>
+        <el-checkbox v-model="exportConf.tel" label="5">手机</el-checkbox>
+        <el-checkbox v-model="exportConf.unitTelNumber" label="5">单位号码</el-checkbox>
+        <el-checkbox v-model="exportConf.latestOverdueMoney" label="5">最新欠款</el-checkbox>
+        <el-checkbox v-model="exportConf.latestOverdueDate" label="5">最新欠款导入时间</el-checkbox>
+      </el-row>
+      <span slot="footer" class="footer">
+        <el-button @click="showExportConfVisible = false">取 消</el-button>
+        <el-button type="primary" @click="">确 定</el-button>
+      </span>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -322,6 +366,8 @@ export default {
     return {
     	radio:'1',
       dialogVisibleCase:false,
+      showExportConfVisible: false,
+      exportConf:{},
       loading2: false,
       fullscreenLoading: false,
       tableLoad: false,

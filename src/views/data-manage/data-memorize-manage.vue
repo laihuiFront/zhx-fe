@@ -450,6 +450,61 @@
         <el-button type="primary" @click="saveConf">确 定</el-button>
       </span>
     </el-dialog>
+
+    <el-dialog
+      title="导出选择"
+      :visible.sync="showExportConfVisible"
+      width="60%"
+      center
+    >
+      <el-row class="pad">
+
+        <el-checkbox v-model="exportConf.name" label="2">姓名</el-checkbox>
+        <el-checkbox v-model="exportConf.account" label="3">账号</el-checkbox>
+        <el-checkbox v-model="exportConf.cardNo" label="3">卡号</el-checkbox>
+        <el-checkbox v-model="exportConf.identNo" label="3">证件号</el-checkbox>
+        <el-checkbox v-model="exportConf.archiveNo" label="1">档案号</el-checkbox>
+        <el-checkbox v-model="exportConf.seqNo" label="1">个案序列号</el-checkbox>
+        <el-checkbox v-model="exportConf.accountAge" label="4">逾期账龄</el-checkbox>
+        <el-checkbox v-model="exportConf.money" label="5">委案金额</el-checkbox>
+        <el-checkbox v-model="exportConf.residualPrinciple" label="2">欠款余额</el-checkbox>
+        <el-checkbox v-model="exportConf.targetName" label="4">对象姓名</el-checkbox>
+        <el-checkbox v-model="exportConf.relation" label="5">关系</el-checkbox>
+        <el-checkbox v-model="exportConf.collectPhoneAddr" label="5">电话/地址</el-checkbox>
+        <el-checkbox v-model="exportConf.contractType" label="5">联络类型</el-checkbox>
+        <el-checkbox v-model="exportConf.result" label="5">催收内容</el-checkbox>
+        <el-checkbox v-model="exportConf.odv" label="5">催收人员</el-checkbox>
+        <el-checkbox v-model="exportConf.method" label="5">谈判方式</el-checkbox>
+        <el-checkbox v-model="exportConf.collectStatus" label="5">催收状态</el-checkbox>
+        <el-checkbox v-model="exportConf.proRepayDate" label="5">承诺日期</el-checkbox>
+        <el-checkbox v-model="exportConf.proRepayAmt" label="5">承诺金额</el-checkbox>
+        <el-checkbox v-model="exportConf.reduceAmt" label="5">减免金额</el-checkbox>
+        <el-checkbox v-model="exportConf.reduceStatus" label="5">减免状态</el-checkbox>
+        <el-checkbox v-model="exportConf.collectInfo" label="5">催收小结</el-checkbox>
+        <el-checkbox v-model="exportConf.overDays" label="5">逾期天数</el-checkbox>
+        <el-checkbox v-model="exportConf.batchNo" label="5">批次号</el-checkbox>
+        <el-checkbox v-model="exportConf.caseDate" label="5">委案日期</el-checkbox>
+        <el-checkbox v-model="exportConf.expectTime" label="5">预计退案日期</el-checkbox>
+        <el-checkbox v-model="exportConf.newMoney" label="5">最新欠款</el-checkbox>
+        <el-checkbox v-model="exportConf.province" label="5">省份</el-checkbox>
+        <el-checkbox v-model="exportConf.city" label="5">城市</el-checkbox>
+        <el-checkbox v-model="exportConf.county" label="5">区县</el-checkbox>
+        <el-checkbox v-model="exportConf.currencyType" label="5">币种</el-checkbox>
+        <el-checkbox v-model="exportConf.applyOrderNo" label="5">申请单号</el-checkbox>
+        <el-checkbox v-model="exportConf.overdueMoney" label="5">逾期金额</el-checkbox>
+        <el-checkbox v-model="exportConf.remark" label="5">自定义信息</el-checkbox>
+        <el-checkbox v-model="exportConf.odv2" label="5">催收员</el-checkbox>
+        <el-checkbox v-model="exportConf.collectStatus2" label="5">催收状态</el-checkbox>
+        <el-checkbox v-model="exportConf.nextFollDate" label="5">下次跟进日期</el-checkbox>
+        <el-checkbox v-model="exportConf.minimumPayment" label="5">最低还款额</el-checkbox>
+        <el-checkbox v-model="exportConf.creditLine" label="5">信用额度</el-checkbox>
+        <el-checkbox v-model="exportConf.module" label="5">催收模板</el-checkbox>
+      </el-row>
+      <span slot="footer" class="footer">
+        <el-button @click="showExportConfVisible = false">取 消</el-button>
+        <el-button type="primary" @click="">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -462,6 +517,8 @@
       	radio:"1",
         tableHeight:50,
         tableLoad:false,
+        showExportConfVisible: false,
+        exportConf:{},
         images:{background: "url(" + require("./down.png") + ") repeat-x",padding:"8px 5px 3px 6px",},
         loading:false,
         caseStatusList:[{name:"未退案",id:0},{name:"正常",id:1},{name:"暂停",id:2},{name:"关档",id:3},{name:"退档",id:4},{name:"全部",id:5}],
