@@ -243,7 +243,7 @@
           >
             <el-button type="text" size="small" v-has="'导入'">导入</el-button>
           </el-upload>
-          <el-button type="text" size="small" v-if="scope.row.batchStatus!=0" @click="downCaseModule(scope.row)"
+          <el-button type="text" size="small" v-if="scope.row.batchStatus!=0" @click="showExport(scope.row)"
                      v-has="'下载'">下载
           </el-button>
           <el-button type="text" size="small" @click="editMessage(scope.row)" v-has="'编辑'">编辑</el-button>
@@ -721,7 +721,7 @@
       </el-row>
       <span slot="footer" class="footer">
         <el-button @click="showExportConfVisible = false">取 消</el-button>
-        <el-button type="primary" @click="">确 定</el-button>
+        <el-button type="primary" @click="downCaseModule">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -751,6 +751,7 @@
         action: baseURL + '/dataCase',
         showExportConfVisible: false,
         exportConf: {},
+        currentBatchNo:'',
         collectAction: baseURL,
         ImportdialogVisible: false,
         ImportMsg: '',
@@ -902,13 +903,18 @@
 
         })
       },
-      downCaseModule(row) {
+      showExport(row){
+        this.showExportConfVisible = true;
+        this.currentBatchNo = row.batchNo
+      },
+      downCaseModule() {
         this.loading2 = true
         this.fullscreenLoading = true
-        downCaseModule(row.batchNo).then((response) => {
+        downCaseModule(this.currentBatchNo,this.exportConf).then((response) => {
           this.loading2 = false
           this.fullscreenLoading = false
         })
+        this.showExportConfVisible = false;
       },
       editMessage(row) {
         this.dialogVisible2 = true
@@ -1079,6 +1085,12 @@
 
 <style lang="scss">
   #data-case-imported {
+    .pad {
+      .el-checkbox {
+        width: 24%;
+        margin-right: 0px;
+      }
+    }
     .el-dialog__header {
       background-color: #f8f8f8;
 

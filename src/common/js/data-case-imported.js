@@ -94,12 +94,13 @@ export const downLoadZip = function() {
     }
   })
 }
-export const downCaseModule = function(batchNo) {
+export const downCaseModule = function(batchNo,exportConf) {
   return download({
     url: '/dataCase/selectDataCaseExportByBatch',
     method: 'post',
     data:{
-      batchNo
+      batchNo,
+      exportConf
     }
   })
 }

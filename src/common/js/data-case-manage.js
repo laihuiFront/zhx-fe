@@ -224,11 +224,14 @@ export const selectDataCollect = function(datasList) {
     data:datasList
   })
 }
-export const selectDataTel = function(datasList) {
+export const selectDataTel = function(datasList,exportConf) {
   return download({
     url: '/dataCase/selectDataCaseTel',
     method: 'post',
-    data:datasList
+    data:{
+      ids:datasList,
+      exportConf:exportConf
+    },
   })
 }
 export const selectDataCaseExport = function(datasList) {
