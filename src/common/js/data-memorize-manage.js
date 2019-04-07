@@ -76,11 +76,14 @@ return request({
     }
   })
 }
-export const selectDataExport = function(id) {
+export const selectDataExport = function(ids,exportConf) {
 return download({
     url: '/dataCollect/selectDataCollectExport',
     method: 'post',
-    data:id
+    data:{
+      ids:ids,
+      exportConf:exportConf
+    }
   })
 }
 
@@ -149,11 +152,12 @@ return request({
   })
 }
 
-export const totalDataExport = function(area,dept,batchNo,clients,odvs,caseStatus,measure,result,identNo,cardNo,collectInfo,color,seqno,bailStartDate,bailEndDate,expectStartTime,expectEndTime,collectStartTime,collectEndTime,orderBy,sort,pageSize,pageNum) {
+export const totalDataExport = function(exportConf,area,dept,batchNo,clients,odvs,caseStatus,measure,result,identNo,cardNo,collectInfo,color,seqno,bailStartDate,bailEndDate,expectStartTime,expectEndTime,collectStartTime,collectEndTime,orderBy,sort,pageSize,pageNum) {
 return download({
     url: 'dataCollect/totalDataCollectExport',
     method: 'post',
     data: {
+      exportConf:exportConf,
        area:  area,
        dept:  dept,
        batchNo:  batchNo ,
@@ -181,10 +185,11 @@ return download({
   })
 }
 
-export const pageDataExport = function(area,dept,batchNo,clients,odvs,caseStatus,measure,result,identNo,cardNo,collectInfo,color,seqno,bailStartDate,bailEndDate,expectStartTime,expectEndTime,collectStartTime,collectEndTime,orderBy,sort,pageSize,pageNum) {
+export const pageDataExport = function(exportConf,area,dept,batchNo,clients,odvs,caseStatus,measure,result,identNo,cardNo,collectInfo,color,seqno,bailStartDate,bailEndDate,expectStartTime,expectEndTime,collectStartTime,collectEndTime,orderBy,sort,pageSize,pageNum) {
 return download({
     url: '/dataCollect/pageDataCollectExport',
     data: {
+      exportConf:exportConf,
        area:  area,
        dept:  dept,
        batchNo:  batchNo ,
