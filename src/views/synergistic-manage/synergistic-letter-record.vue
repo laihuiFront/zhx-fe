@@ -351,7 +351,7 @@
       </el-row>
       <span slot="footer" class="footer">
         <el-button @click="showExportConfVisible = false">取 消</el-button>
-        <el-button type="primary" @click="">确 定</el-button>
+        <el-button type="primary" @click="exportExcel">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -393,6 +393,7 @@ export default {
       loading2: false,
       showExportConfVisible: false,
       exportConf:{},
+      exportType:0,
       fullscreenLoading: false,
       tableLoad: false,
       ImportdialogVisible: false,
@@ -590,12 +591,22 @@ export default {
     this.init();
   },
   methods: {
+    exportExcel(){
+      if (this.exportType==2){
+        this.exportCx(1)
+      }else if (this.exportType==3){
+        this.exportCx(2)
+      }
+      this.showExportConfVisible = false;
+    },
   	changeRadio(){
-  		if(this.radio==1){
-			this.exportCx(1)
-		}else{
-			this.exportCx(2)
-		}
+      if(this.radio==1){
+        this.exportType=2;
+      }else{
+        this.exportType=3;
+      }
+      this.dialogVisibleCase = false;
+      this.showExportConfVisible = true;
   	},
     fileStatu(res) {
       if (res.code == 100) {
@@ -632,10 +643,12 @@ export default {
       this.fullscreenLoading = true;
 
       if (command == 1) {
+        this.realFetchFormData.exportConf = this.exportConf;
         dccxjgInfo(this.realFetchFormData).then(()=>{
           this.fullscreenLoading = false;
         });
       } else {
+        this.realFetchFormData.exportConf = this.exportConf;
         dccxjgInfoThis(this.realFetchFormData).then(()=>{
           this.fullscreenLoading = false;
         });
@@ -795,6 +808,12 @@ export default {
 
 <style lang="scss">
 #xhjl {
+  .pad {
+    .el-checkbox {
+      width: 24%;
+      margin-right: 0px;
+    }
+  }
   height: calc(100% - 21px);
   .el-table {
     height: calc(100% - 143px);
@@ -814,5 +833,11 @@ export default {
   }
 }
 #synergistic-letter-application {
+  .pad {
+    .el-checkbox {
+      width: 24%;
+      margin-right: 0px;
+    }
+  }
 }
 </style>

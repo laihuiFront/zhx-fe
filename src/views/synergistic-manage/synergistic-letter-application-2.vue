@@ -328,7 +328,7 @@
       </el-row>
       <span slot="footer" class="footer">
         <el-button @click="showExportConfVisible = false">取 消</el-button>
-        <el-button type="primary" @click="">确 定</el-button>
+        <el-button type="primary" @click="exportExcel">确 定</el-button>
       </span>
     </el-dialog>
 
@@ -368,6 +368,7 @@ export default {
       dialogVisibleCase:false,
       showExportConfVisible: false,
       exportConf:{},
+      exportType:0,
       loading2: false,
       fullscreenLoading: false,
       tableLoad: false,
@@ -571,12 +572,22 @@ export default {
     this.init();
   },
   methods: {
+    exportExcel(){
+        if (this.exportType==2){
+          this.exportCx(1)
+        }else if (this.exportType==3){
+          this.exportCx(2)
+        }
+      this.showExportConfVisible = false;
+    },
   	changeRadio(){
-  			if(this.radio==1){
-			this.exportCx(1)
-		}else{
-			this.exportCx(2)
-		}
+      if(this.radio==1){
+        this.exportType=2;
+      }else{
+        this.exportType=3;
+      }
+      this.dialogVisibleCase = false;
+      this.showExportConfVisible = true;
   	},
     exportXh(command) {
       if (this.multipleSelection.length == 0) {
@@ -593,10 +604,12 @@ export default {
     exportCx(command) {
       this.fullscreenLoading = true;
       if (command == 1) {
+        this.realFetchFormData.exportConf = this.exportConf;
         dccxjg(this.realFetchFormData).then(()=>{
           this.fullscreenLoading = false;
         });
       } else {
+        this.realFetchFormData.exportConf = this.exportConf;
         dccxjgThis(this.realFetchFormData).then(()=>{
           this.fullscreenLoading = false;
         });
@@ -765,5 +778,12 @@ export default {
 
 <style lang="scss">
 #synergistic-letter-application {
+
+  .pad {
+    .el-checkbox {
+      width: 24%;
+      margin-right: 0px;
+    }
+  }
 }
 </style>
