@@ -32,11 +32,12 @@ export const CasedataList = function(batchNos,orderBy,sort) {
     }
   })
 }
-export const totalDataBatchExport = function(area,batchNos,clients,batchStatus,caseType,startTime,endTime,pageSize,pageNum) {
+export const totalDataBatchExport = function(exportConf,area,batchNos,clients,batchStatus,caseType,startTime,endTime,pageSize,pageNum) {
 return download({
     url: '/dataBatch/totalDataBatchExport',
     method: 'post',
     data: {
+      exportConf:exportConf,
     	batchStatus: batchStatus,
        area:area ? area : "",
        batchNos:batchNos,
@@ -50,11 +51,12 @@ return download({
     }
   })
 }
-export const pageDataBatchExport = function(area,batchNos,clients,batchStatus,caseType,startTime,endTime,orderBy,sort,pageSize,pageNum) {
+export const pageDataBatchExport = function(exportConf,area,batchNos,clients,batchStatus,caseType,startTime,endTime,orderBy,sort,pageSize,pageNum) {
 return download({
     url: '/dataBatch/pageDataBatchExport',
     method: 'post',
     data: {
+      exportConf:exportConf,
     	batchStatus: batchStatus,
        area:area ? area : "",
        batchNos:batchNos,
@@ -96,18 +98,24 @@ return request({
   })
 }
 
-export const selectDataBatchExport = function(id) {
+export const selectDataBatchExport = function(id,exporttBatchConf) {
 return download({
     url: '/dataBatch/selectDataBatchExport',
     method: 'post',
-    data:id
+    data:{
+      ids:id,
+      exportConf:exporttBatchConf
+    }
   })
 }
-export const selectDataCollectExportByBatch = function(id) {
+export const selectDataCollectExportByBatch = function(id,exportCollectConf) {
 return download({
     url: '/dataBatch/selectDataCollectExportByBatch',
     method: 'post',
-    data:id
+    data:{
+      batchNos:id,
+      exportConf:exportCollectConf
+    }
   })
 }
 

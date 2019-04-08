@@ -969,6 +969,260 @@
         <el-button type="primary" @click="exportTel">确 定</el-button>
       </span>
     </el-dialog>
+
+    <el-dialog
+      title="导出选择"
+      :visible.sync="showExportCollectConfVisible"
+      width="60%"
+      center
+    >
+      <el-row class="pad">
+
+        <el-checkbox v-model="exportCollectConf.name" label="2">姓名</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.account" label="3">账号</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.cardNo" label="3">卡号</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.identNo" label="3">证件号</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.archiveNo" label="1">档案号</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.seqNo" label="1">个案序列号</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.accountAge" label="4">逾期账龄</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.money" label="5">委案金额</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.residualPrinciple" label="2">欠款余额</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.targetName" label="4">对象姓名</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.relation" label="5">关系</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.collectPhoneAddr" label="5">电话/地址</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.contractType" label="5">联络类型</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.result" label="5">催收内容</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.odv" label="5">催收人员</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.method" label="5">谈判方式</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.collectStatus" label="5">催收状态</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.proRepayDate" label="5">承诺日期</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.proRepayAmt" label="5">承诺金额</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.reduceAmt" label="5">减免金额</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.reduceStatus" label="5">减免状态</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.collectInfo" label="5">催收小结</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.overDays" label="5">逾期天数</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.batchNo" label="5">批次号</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.caseDate" label="5">委案日期</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.expectTime" label="5">预计退案日期</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.newMoney" label="5">最新欠款</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.province" label="5">省份</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.city" label="5">城市</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.county" label="5">区县</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.currencyType" label="5">币种</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.applyOrderNo" label="5">申请单号</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.overdueMoney" label="5">逾期金额</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.remark" label="5">自定义信息</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.odv2" label="5">催收员</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.collectStatus2" label="5">催收状态</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.nextFollDate" label="5">下次跟进日期</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.minimumPayment" label="5">最低还款额</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.creditLine" label="5">信用额度</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.module" label="5">催收模板</el-checkbox>
+      </el-row>
+      <span slot="footer" class="footer">
+        <el-button @click="showExportCollectConfVisible = false">取 消</el-button>
+        <el-button type="primary" @click="exportCollect">确 定</el-button>
+      </span>
+    </el-dialog>
+
+    <el-dialog
+      title="导出选择"
+      :visible.sync="showExportConfVisible"
+      width="60%"
+      center
+    >
+      <el-row class="pad">
+        <el-checkbox v-model="exportConf.id" label="2">ID</el-checkbox>
+        <el-checkbox v-model="exportConf.seqNo" label="3">个案序列号</el-checkbox>
+        <el-checkbox v-model="exportConf.name" label="3">姓名</el-checkbox>
+        <el-checkbox v-model="exportConf.client" label="3">委托方</el-checkbox>
+        <el-checkbox v-model="exportConf.batchNo" label="1">批次号</el-checkbox>
+        <el-checkbox v-model="exportConf.status" label="1">案件状态</el-checkbox>
+        <el-checkbox v-model="exportConf.identNo" label="4">证件号</el-checkbox>
+        <el-checkbox v-model="exportConf.identType" label="5">证件类型</el-checkbox>
+        <el-checkbox v-model="exportConf.gender" label="2">性别</el-checkbox>
+        <el-checkbox v-model="exportConf.collectStatus" label="4">催收状态</el-checkbox>
+        <el-checkbox v-model="exportConf.inteviewStatus" label="5">外访状态</el-checkbox>
+        <el-checkbox v-model="exportConf.bank" label="5">开户行</el-checkbox>
+        <el-checkbox v-model="exportConf.cardNo" label="5">卡号</el-checkbox>
+        <el-checkbox v-model="exportConf.account" label="5">账号</el-checkbox>
+
+        <el-checkbox v-model="exportConf.accountName" label="2">账户名称</el-checkbox>
+        <el-checkbox v-model="exportConf.cardType" label="3">卡类</el-checkbox>
+        <el-checkbox v-model="exportConf.archiveNo" label="3">档案号</el-checkbox>
+        <el-checkbox v-model="exportConf.caseDate" label="3">委案日期</el-checkbox>
+        <el-checkbox v-model="exportConf.money" label="1">委案金额</el-checkbox>
+        <el-checkbox v-model="exportConf.proRepayAmt" label="1">PTP金额</el-checkbox>
+        <el-checkbox v-model="exportConf.bankAmt" label="4">CP金额</el-checkbox>
+        <el-checkbox v-model="exportConf.latestOverdueMoney" label="5">最新欠款（导入利息后更新）</el-checkbox>
+        <el-checkbox v-model="exportConf.rmb" label="2">人民币</el-checkbox>
+        <el-checkbox v-model="exportConf.hkd" label="4">港币</el-checkbox>
+        <el-checkbox v-model="exportConf.foreignCurrency" label="5">外币</el-checkbox>
+        <el-checkbox v-model="exportConf.odv" label="5">催收员</el-checkbox>
+        <el-checkbox v-model="exportConf.collectionUser" label="5">催收员ID</el-checkbox>
+        <el-checkbox v-model="exportConf.dept" label="5">催收员部门</el-checkbox>
+
+        <el-checkbox v-model="exportConf.collectArea" label="2">催收区域</el-checkbox>
+        <el-checkbox v-model="exportConf.collectInfo" label="3">催收小结</el-checkbox>
+        <el-checkbox v-model="exportConf.lastCall" label="3">最后通电</el-checkbox>
+        <el-checkbox v-model="exportConf.repayMoney" label="3">已还款</el-checkbox>
+        <el-checkbox v-model="exportConf.distributeHistory" label="1">分配历史</el-checkbox>
+        <el-checkbox v-model="exportConf.distributeDate" label="1">分配时间</el-checkbox>
+        <el-checkbox v-model="exportConf.nextFollowDate" label="4">下次跟进日期</el-checkbox>
+        <el-checkbox v-model="exportConf.collectTimes" label="5">跟进次数</el-checkbox>
+        <el-checkbox v-model="exportConf.mVal" label="2">M值系数</el-checkbox>
+        <el-checkbox v-model="exportConf.accountAge" label="4">逾期账龄</el-checkbox>
+        <el-checkbox v-model="exportConf.email" label="5">邮箱</el-checkbox>
+        <el-checkbox v-model="exportConf.qq" label="5">QQ</el-checkbox>
+        <el-checkbox v-model="exportConf.tel" label="5">手机</el-checkbox>
+        <el-checkbox v-model="exportConf.homeTelNumber" label="5">家庭号码</el-checkbox>
+
+        <el-checkbox v-model="exportConf.unitTelNumber" label="2">单位号码</el-checkbox>
+        <el-checkbox v-model="exportConf.unitName" label="3">单位名称</el-checkbox>
+        <el-checkbox v-model="exportConf.unitAddress" label="3">单位地址</el-checkbox>
+        <el-checkbox v-model="exportConf.unitZipCode" label="3">单位邮编</el-checkbox>
+        <el-checkbox v-model="exportConf.homeAddress" label="3">家庭地址</el-checkbox>
+        <el-checkbox v-model="exportConf.homeZipCode" label="1">家庭邮编</el-checkbox>
+        <el-checkbox v-model="exportConf.statementAddress" label="1">对账单地址</el-checkbox>
+        <el-checkbox v-model="exportConf.statementZipCode" label="4">对账单邮编</el-checkbox>
+        <el-checkbox v-model="exportConf.censusRegisterAddress" label="5">户籍地址</el-checkbox>
+        <el-checkbox v-model="exportConf.censusRegisterZipCode" label="2">户籍地邮编</el-checkbox>
+        <el-checkbox v-model="exportConf.dept" label="4">部门</el-checkbox>
+        <el-checkbox v-model="exportConf.province" label="5">省份</el-checkbox>
+        <el-checkbox v-model="exportConf.city" label="5">城市</el-checkbox>
+        <el-checkbox v-model="exportConf.county" label="5">区县</el-checkbox>
+        <el-checkbox v-model="exportConf.birthday" label="5">生日</el-checkbox>
+
+        <el-checkbox v-model="exportConf.age" label="2">年龄</el-checkbox>
+        <el-checkbox v-model="exportConf.outstandingAmount" label="3">未出账金额</el-checkbox>
+        <el-checkbox v-model="exportConf.currencyType" label="3">币种</el-checkbox>
+        <el-checkbox v-model="exportConf.lastCollectionRecord" label="3">原催收记录</el-checkbox>
+        <el-checkbox v-model="exportConf.principle" label="1">本金</el-checkbox>
+        <el-checkbox v-model="exportConf.minimumPayment" label="1">最低还款额</el-checkbox>
+        <el-checkbox v-model="exportConf.creditLine" label="4">信用额度</el-checkbox>
+        <el-checkbox v-model="exportConf.defaultLevel" label="5">拖欠级别</el-checkbox>
+        <el-checkbox v-model="exportConf.loanType" label="2">信贷分类</el-checkbox>
+        <el-checkbox v-model="exportConf.collectionType" label="4">催收分类</el-checkbox>
+        <el-checkbox v-model="exportConf.overdueInterest" label="5">逾期利息</el-checkbox>
+        <el-checkbox v-model="exportConf.lateFee" label="5">滞纳金</el-checkbox>
+        <el-checkbox v-model="exportConf.lastRepayDate" label="5">最后还款日</el-checkbox>
+        <el-checkbox v-model="exportConf.lastConsumeDate" label="5">最后消费日</el-checkbox>
+
+        <el-checkbox v-model="exportConf.lastWithdrawDate" label="2">最后提现日</el-checkbox>
+        <el-checkbox v-model="exportConf.stopCardDate" label="3">停卡日</el-checkbox>
+        <el-checkbox v-model="exportConf.activeCardDate" label="3">开卡日</el-checkbox>
+        <el-checkbox v-model="exportConf.repayDeadline" label="3">还款期限</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsName0" label="1">联系人1姓名</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsIdentNo0" label="1">联系人1证件号</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsRelation0" label="4">联系人1关系</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsUnit0" label="5">联系人1单位</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsHomeTel0" label="2">联系人1家庭电话</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsUnitTel0" label="4">联系人1单位电话</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsMobile0" label="5">联系人1手机</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsAddress0" label="5">联系人1地址</el-checkbox>
+
+        <el-checkbox v-model="exportConf.contactsName1" label="1">联系人2姓名</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsIdentNo1" label="1">联系人2证件号</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsRelation1" label="4">联系人2关系</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsUnit1" label="5">联系人2单位</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsHomeTel1" label="2">联系人2家庭电话</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsUnitTel1" label="4">联系人2单位电话</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsMobile1" label="5">联系人2手机</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsAddress1" label="5">联系人2地址</el-checkbox>
+
+        <el-checkbox v-model="exportConf.contactsName2" label="1">联系人3姓名</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsIdentNo2" label="1">联系人3证件号</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsRelation2" label="4">联系人3关系</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsUnit2" label="5">联系人3单位</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsHomeTel2" label="2">联系人3家庭电话</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsUnitTel2" label="4">联系人3单位电话</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsMobile2" label="5">联系人3手机</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsAddress2" label="5">联系人3地址</el-checkbox>
+
+        <el-checkbox v-model="exportConf.contactsName3" label="1">联系人4姓名</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsIdentNo3" label="1">联系人4证件号</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsRelation3" label="4">联系人4关系</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsUnit3" label="5">联系人4单位</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsHomeTel3" label="2">联系人4家庭电话</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsUnitTel3" label="4">联系人4单位电话</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsMobile3" label="5">联系人4手机</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsAddress3" label="5">联系人4地址</el-checkbox>
+
+        <el-checkbox v-model="exportConf.contactsName4" label="1">联系人5姓名</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsIdentNo4" label="1">联系人5证件号</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsRelation4" label="4">联系人5关系</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsUnit4" label="5">联系人5单位</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsHomeTel4" label="2">联系人5家庭电话</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsUnitTel4" label="4">联系人5单位电话</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsMobile4" label="5">联系人5手机</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsAddress4" label="5">联系人5地址</el-checkbox>
+
+        <el-checkbox v-model="exportConf.contactsName5" label="1">联系人6姓名</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsIdentNo5" label="1">联系人6证件号</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsRelation5" label="4">联系人6关系</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsUnit5" label="5">联系人6单位</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsHomeTel5" label="2">联系人6家庭电话</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsUnitTel5" label="4">联系人6单位电话</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsMobile5" label="5">联系人6手机</el-checkbox>
+        <el-checkbox v-model="exportConf.contactsAddress5" label="5">联系人6地址</el-checkbox>
+
+        <el-checkbox v-model="exportConf.remark0" label="1">备注1</el-checkbox>
+        <el-checkbox v-model="exportConf.remark1" label="1">备注2</el-checkbox>
+        <el-checkbox v-model="exportConf.remark2" label="4">备注3</el-checkbox>
+        <el-checkbox v-model="exportConf.remark3" label="5">备注4</el-checkbox>
+        <el-checkbox v-model="exportConf.remark4" label="2">备注5</el-checkbox>
+        <el-checkbox v-model="exportConf.remark5" label="4">备注6</el-checkbox>
+        <el-checkbox v-model="exportConf.goods" label="5">商品</el-checkbox>
+        <el-checkbox v-model="exportConf.commercialTenant" label="5">商户</el-checkbox>
+        <el-checkbox v-model="exportConf.totalOverdueMoney" label="5">总欠款(委案金额+公司佣金)</el-checkbox>
+        <el-checkbox v-model="exportConf.overdueBalance" label="5">欠款余额</el-checkbox>
+        <el-checkbox v-model="exportConf.applyOrderNo" label="5">申请单号</el-checkbox>
+        <el-checkbox v-model="exportConf.overdueDate" label="5">逾期日期</el-checkbox>
+        <el-checkbox v-model="exportConf.collectHand" label="5">催收手别</el-checkbox>
+        <el-checkbox v-model="exportConf.overDays" label="5">逾期天数</el-checkbox>
+        <el-checkbox v-model="exportConf.caseDeadline" label="5">委托期限</el-checkbox>
+        <el-checkbox v-model="exportConf.entrustPeriods" label="5">委案期数</el-checkbox>
+        <el-checkbox v-model="exportConf.repaidPeriods" label="5">已还期数</el-checkbox>
+        <el-checkbox v-model="exportConf.billDate" label="5">账单日</el-checkbox>
+
+        <el-checkbox v-model="exportConf.fixedQuota" label="5">固定额度</el-checkbox>
+        <el-checkbox v-model="exportConf.billCycle" label="5">账单周期</el-checkbox>
+        <el-checkbox v-model="exportConf.lastRepayMoney" label="5">最后还款额</el-checkbox>
+        <el-checkbox v-model="exportConf.expectTime" label="5">预计退案日期</el-checkbox>
+        <el-checkbox v-model="exportConf.mainCard" label="5">是否主卡</el-checkbox>
+        <el-checkbox v-model="exportConf.deputyCardUserName" label="5">副卡卡人</el-checkbox>
+        <el-checkbox v-model="exportConf.loanDate" label="5">贷款日期</el-checkbox>
+        <el-checkbox v-model="exportConf.residualPrinciple" label="5">剩余本金</el-checkbox>
+        <el-checkbox v-model="exportConf.overduePeriods" label="5">逾期期数</el-checkbox>
+        <el-checkbox v-model="exportConf.overdueTimes" label="5">曾逾期次数</el-checkbox>
+        <el-checkbox v-model="exportConf.loanRate" label="5">贷款利率</el-checkbox>
+
+        <el-checkbox v-model="exportConf.monthlyRepayments" label="5">每月还款</el-checkbox>
+        <el-checkbox v-model="exportConf.overdueMoney" label="5">逾期金额</el-checkbox>
+        <el-checkbox v-model="exportConf.overduePrinciple" label="5">逾期本金</el-checkbox>
+        <el-checkbox v-model="exportConf.overdueDefaultInterest" label="5">逾期罚息</el-checkbox>
+        <el-checkbox v-model="exportConf.overdueManagementCost" label="5">逾期管理费</el-checkbox>
+        <el-checkbox v-model="exportConf.penalty" label="5">违约金</el-checkbox>
+        <el-checkbox v-model="exportConf.overrunFee" label="5">超限费</el-checkbox>
+        <el-checkbox v-model="exportConf.loanDeadline" label="5">贷款截止日</el-checkbox>
+        <el-checkbox v-model="exportConf.bail" label="5">保证金</el-checkbox>
+        <el-checkbox v-model="exportConf.socialSecurityComputerNo" label="5">社保电脑号</el-checkbox>
+        <el-checkbox v-model="exportConf.socialSecurityCardNo" label="5">社保卡号</el-checkbox>
+
+        <el-checkbox v-model="exportConf.realReturnTime" label="5">实际退案日</el-checkbox>
+        <el-checkbox v-model="exportConf.cardModel" label="5">车型</el-checkbox>
+        <el-checkbox v-model="exportConf.license" label="5">牌照号</el-checkbox>
+        <el-checkbox v-model="exportConf.vin" label="5">车架号</el-checkbox>
+        <el-checkbox v-model="exportConf.warning" label="5">警告</el-checkbox>
+        <el-checkbox v-model="exportConf.selfInfo" label="5">自定义信息</el-checkbox>
+        <el-checkbox v-model="exportConf.newCase" label="5">最新催记</el-checkbox>
+        <el-checkbox v-model="exportConf.commissionRate" label="5">公司佣金比率</el-checkbox>
+      </el-row>
+      <span slot="footer" class="footer">
+        <el-button @click="showExportConfVisible = false">取 消</el-button>
+        <el-button type="primary" @click="exportCase">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -1026,8 +1280,13 @@
         detailId: -1,
         showQueryConfVisible: false,
         showExportTelConfVisible: false,
+        showExportCollectConfVisible:false,
+        showExportConfVisible:false,
         exportTelConf: {},
+        exportCollectConf: {},
+        exportConf:{},
         queryConf: {},
+        exportType: 0,
         queryConfFlag: true,
         addSynergyForm: {
           Synergytype: '',
@@ -1173,10 +1432,11 @@
       },
       changeRadio() {
         if (this.radio == 1) {
-          this.totalDataExport()
+          this.exportType == 2;
         } else {
-          this.pageDataExport()
+          this.exportType == 3;
         }
+        this.showExportConfVisible = true;
       },
       submitmsgForm(formName) {
         this.$refs[formName].validate((valid) => {
@@ -1350,11 +1610,11 @@
         if (command === "exportTotalCase") {
           this.dialogVisibleCase = true
         } else if (command === "exportSelectCase") {
-          this.exportSelectCase()
+          this.showExportConfVisible = true;
         } else if (command === "exportTel") {
           this.showExportTelConfVisible = true;
         } else if (command === "exportCollect") {
-          this.exportCollect();
+          this.showExportCollectConfVisible = true;
         }
 
       },
@@ -1421,6 +1681,7 @@
         this.fullscreenLoading = true
         let startTime = this.formInline.time2[0]
         let endTime = this.formInline.time2[1]
+        this.formInline.exportConf = this.exportConf
         totalDataBatchExport(this.formInline).then((response) => {
           this.loading2 = false
           this.fullscreenLoading = false
@@ -1446,6 +1707,7 @@
         this.fullscreenLoading = true
         let startTime = this.formInline.time2[0]
         let endTime = this.formInline.time2[1]
+        this.formInline.exportConf = this.exportConf
         pageDataExport(this.formInline).then((response) => {
           this.loading2 = false
           this.fullscreenLoading = false
@@ -1455,17 +1717,24 @@
           });
         })
       },
+      exportCase(){
+          if (this.exportType == 1){
+            this.exportSelectCase();
+          }else if (this.exportType == 2){
+            this.totalDataExport();
+          }else if (this.exportType == 3){
+            this.pageDataExport();
+          }
+      },
       exportSelectCase() {
         let datasList = []
         if (this.deleteList.length >= 1) {
           for (var i = 0; i < this.deleteList.length; i++) {
-            let dataObject = {}
-            dataObject.id = this.deleteList[i].id
             datasList.push(dataObject)
           }
           this.loading2 = true
           this.fullscreenLoading = true
-          selectDataCaseExport(datasList).then((response) => {
+          selectDataCaseExport(datasList,this.exportConf).then((response) => {
             this.loading2 = false
             this.fullscreenLoading = false
           })
@@ -1475,7 +1744,7 @@
             message: '请选择数据!'
           });
         }
-
+        this.showExportConfVisible = false;
       },
       exportTel() {
 
@@ -1504,13 +1773,11 @@
         let _self = this;
         if (this.deleteList.length >= 1) {
           for (var i = 0; i < this.deleteList.length; i++) {
-            let dataObject = {}
-            dataObject.id = this.deleteList[i].id
-            datasList.push(dataObject)
+            datasList.push(this.deleteList[i].id)
           }
           this.loading2 = true
           this.fullscreenLoading = true
-          selectDataCollect(datasList).then((response) => {
+          selectDataCollect(datasList,this.exportCollectConf).then((response) => {
             this.loading2 = false
             this.fullscreenLoading = false
           })
@@ -1520,6 +1787,7 @@
             message: '请选择需要导出的数据!'
           });
         }
+        this.showExportCollectConfVisible = true;
       },
       fenancheckone() {
         let datasList = []

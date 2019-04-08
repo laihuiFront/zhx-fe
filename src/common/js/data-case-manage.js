@@ -217,11 +217,14 @@ export const exportSelectCase = function() {
     data:{}
   })
 }
-export const selectDataCollect = function(datasList) {
+export const selectDataCollect = function(datasList,exportCollectConf) {
   return download({
     url: '/dataCase/selectDataCollectExportByBatch',
     method: 'post',
-    data:datasList
+    data:{
+      ids:datasList,
+      exportConf:exportCollectConf
+    }
   })
 }
 export const selectDataTel = function(datasList,exportConf) {
@@ -234,11 +237,14 @@ export const selectDataTel = function(datasList,exportConf) {
     },
   })
 }
-export const selectDataCaseExport = function(datasList) {
+export const selectDataCaseExport = function(datasList,exportConf) {
   return download({
     url: '/dataCase/selectDataCaseExport',
     method: 'post',
-    data:datasList
+    data:{
+      ids:datasList,
+      exportConf:exportConf
+    }
   })
 }
 
@@ -404,6 +410,7 @@ export const totalDataBatchExport = function(form) {
       expectEndTime:form.time3==null?"":form.time3[1],
       orderBy:form.orderBy,
       sort:form.sort,
+      exportConf:form.exportConf
     }
   })
 }
@@ -454,6 +461,7 @@ export const pageDataExport = function(form) {
       expectEndTime:form.time3==null?"":form.time3[1],
       orderBy:form.orderBy,
       sort:form.sort,
+      exportConf:form.exportConf
     }
   })
 }
