@@ -92,7 +92,7 @@
       center
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span></div>
-      <el-row class="pad">
+      <el-row class="pad" ref="boxWrapper">
         <el-checkbox v-model="exportConf.id" label="2">ID</el-checkbox>
         <el-checkbox v-model="exportConf.batchNo" label="3">批次号</el-checkbox>
         <el-checkbox v-model="exportConf.client" label="3">委托方</el-checkbox>
@@ -137,7 +137,7 @@
 
 <script>
   import {SynRecordQuery} from './components'
-  import {getSynergisticRecordList, expAllSynergisticRecord, expCurrentSynergisticRecord} from '@/common/js/api-sync'
+  import {getSynergisticRecordList,saveSelectFilter,selectByModule, expAllSynergisticRecord, expCurrentSynergisticRecord} from '@/common/js/api-sync'
 
   export default {
     name: 'synergisticRecord',
@@ -187,6 +187,7 @@
         });
       },
       selectAllExport(){
+        this._selectAllInit('exportConf');
         for(var p in this.exportConf){//遍历json对象的每个key/value对,p为key
           this.exportConf[p] = true;
         }

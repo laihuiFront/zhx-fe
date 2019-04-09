@@ -468,7 +468,7 @@
       center
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span></div>
-      <el-row class="pad">
+      <el-row class="pad" ref="boxWrapper">
 
         <el-checkbox v-model="exportConf.name" label="2">姓名</el-checkbox>
         <el-checkbox v-model="exportConf.account" label="3">账号</el-checkbox>
@@ -715,6 +715,7 @@
         });
       },
       selectAllExport(){
+        this._selectAllInit('exportConf');
         for(var p in this.exportConf){//遍历json对象的每个key/value对,p为key
           this.exportConf[p] = true;
         }
@@ -797,9 +798,17 @@
         this.showExportConfVisible = false;
       },
       selectDataCollectExport() {
-        this.exportType = 1;
-        this.queryExportCollectConfList();
-        this.showExportConfVisible = true;
+        if (this.selectDataCollectExportList.length >= 1) {
+          this.exportType = 1;
+          this.queryExportCollectConfList();
+          this.showExportConfVisible = true;
+        }else{
+          this.$message({
+            type: 'error',
+            message: '请先选择导出记录!'
+          });
+        }
+
       },
       totalDataCollectExport() {
         this.exportType = 2;

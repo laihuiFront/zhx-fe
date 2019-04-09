@@ -181,7 +181,7 @@
       center
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span></div>
-      <el-row class="pad">
+      <el-row class="pad" ref="boxWrapper">
 
         <el-checkbox v-model="exportConf.id" label="2">ID</el-checkbox>
         <el-checkbox v-model="exportConf.batchNo" label="3">批次号</el-checkbox>
@@ -232,6 +232,8 @@
   import {
     getSynergisticRecordList,
     expAllSynergisticRecord,
+    saveSelectFilter,
+    selectByModule,
     expCurrentSynergisticRecord,
     approveSynergisticRecord,
     finishSynergisticRecord
@@ -290,6 +292,7 @@
         });
       },
       selectAllExport(){
+        this._selectAllInit('exportConf');
         for(var p in this.exportConf){//遍历json对象的每个key/value对,p为key
           this.exportConf[p] = true;
         }

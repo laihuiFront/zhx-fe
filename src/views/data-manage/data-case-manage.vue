@@ -948,7 +948,7 @@
       center
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllTelExport" style="cursor: pointer;">全选</span></div>
-      <el-row class="pad">
+      <el-row class="pad" ref="boxWrapper">
 
         <el-checkbox v-model="exportTelConf.seqno" label="2">个案序列号</el-checkbox>
         <el-checkbox v-model="exportTelConf.name" label="3">姓名</el-checkbox>
@@ -978,7 +978,7 @@
       center
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllCollectExport" style="cursor: pointer;">全选</span></div>
-      <el-row class="pad">
+      <el-row class="pad" ref="boxWrapper">
 
         <el-checkbox v-model="exportCollectConf.name" label="2">姓名</el-checkbox>
         <el-checkbox v-model="exportCollectConf.account" label="3">账号</el-checkbox>
@@ -1034,7 +1034,7 @@
       center
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span></div>
-      <el-row class="pad">
+      <el-row class="pad" ref="boxWrapper">
         <el-checkbox v-model="exportConf.id" label="2">ID</el-checkbox>
         <el-checkbox v-model="exportConf.seqNo" label="3">个案序列号</el-checkbox>
         <el-checkbox v-model="exportConf.name" label="3">姓名</el-checkbox>
@@ -1788,6 +1788,7 @@
         })
       },
       selectAllExport(){
+        this._selectAllInit('exportConf');
         for(var p in this.exportConf){//遍历json对象的每个key/value对,p为key
           this.exportConf[p] = true;
         }
@@ -1839,6 +1840,7 @@
         this.showExportConfVisible = false;
       },
       selectAllTelExport(){
+        this._selectAllInit('exportTelConf');
         for(var p in this.exportTelConf){//遍历json对象的每个key/value对,p为key
           this.exportTelConf[p] = true;
         }
@@ -1881,6 +1883,7 @@
         this.showExportTelConfVisible = false;
       },
       selectAllCollectExport(){
+        this._selectAllInit('exportCollectConf');
         for(var p in this.exportCollectConf){//遍历json对象的每个key/value对,p为key
           this.exportCollectConf[p] = true;
         }

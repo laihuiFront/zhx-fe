@@ -666,7 +666,7 @@
       center
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span></div>
-      <el-row class="pad">
+      <el-row class="pad"  ref="boxWrapper">
 
         <el-checkbox v-model="exporttBatchConf.batchNo" label="2">批次号</el-checkbox>
         <el-checkbox v-model="exporttBatchConf.batchStatus" label="3">批次状态</el-checkbox>
@@ -695,7 +695,7 @@
       center
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllCollectExport" style="cursor: pointer;">全选</span></div>
-      <el-row class="pad">
+      <el-row class="pad"  ref="boxWrapper">
 
         <el-checkbox v-model="exportCollectConf.name" label="2">姓名</el-checkbox>
         <el-checkbox v-model="exportCollectConf.account" label="3">账号</el-checkbox>
@@ -754,6 +754,8 @@
     CasedataList,
     remoweData,
     addData,
+    saveSelectFilter,
+    selectByModule,
     selectDataCollectExportByBatch,
     selectDataBatchExport,
     pageDataBatchExport,
@@ -890,6 +892,7 @@
         });
       },
       selectAllExport(){
+        this._selectAllInit('exporttBatchConf');
         for(var p in this.exporttBatchConf){//遍历json对象的每个key/value对,p为key
           this.exporttBatchConf[p] = true;
         }
@@ -910,6 +913,7 @@
           this.loading = false
           return;
         }
+        this.showExportBatchConfVisible = false;
         if (this.exportType == 1) {
           this.selectDataExport();
         } else if (this.exportType == 2) {
@@ -918,7 +922,7 @@
           this.pageDataExport()
         }
         this.saveExportBatchConf();
-        this.showExportBatchConfVisible = false;
+
       },
       changeRadio() {
         if (this.radio == 1) {
@@ -993,6 +997,7 @@
         this.showExportCollectConfVisible = true;
       },
       selectAllCollectExport(){
+        this._selectAllInit('exportCollectConf');
         for(var p in this.exportCollectConf){//遍历json对象的每个key/value对,p为key
           this.exportCollectConf[p] = true;
         }
