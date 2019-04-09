@@ -17,28 +17,28 @@ import has from "./common/js/directives";
 Vue.use(ElementUI, { size: "mini" });
 
 var com = {
-  nane: 'ElTableBody',
-  extends:ElementUI.Table.components.TableBody,
-  props:{
-    highlight:{
-      default:true
+  nane: "ElTableBody",
+  extends: ElementUI.Table.components.TableBody,
+  props: {
+    highlight: {
+      default: true
     },
-    highlightCurrentRow:{
-      default:true
+    highlightCurrentRow: {
+      default: true
     }
   },
-  methods:{
-    handleEvent(a,b){
-      this.$parent.setCurrentRow(b)
+  methods: {
+    handleEvent(a, b) {
+      this.$parent.setCurrentRow(b);
     }
   }
-}
+};
 Vue.component(
   "ElTable",
   Vue.extend({
     extends: ElementUI.Table,
-    components:{
-      TableBody:com
+    components: {
+      TableBody: com
     }
   })
 );
@@ -78,6 +78,17 @@ Vue.mixin({
       this.$destroy();
     }
     next();
+  },
+  methods: {
+    _selectAllInit(target) {
+      let o = {};
+      this.$refs.boxWrapper.$children.forEach(item => {
+        if (item.$options._componentTag === "el-checkbox") {
+          o[item.$vnode.data.model.expression.split(".")[1]] = false;
+        }
+      });
+      this[target] = Object.assign({}, o, this[target]);
+    }
   }
 });
 const whiteList = ["/login"];
