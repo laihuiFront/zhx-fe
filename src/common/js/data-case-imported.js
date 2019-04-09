@@ -112,3 +112,20 @@ return request({
     data:{name:"催收区域"}
   })
 }
+//保存查询配置
+export function saveSelectFilter(data={}) {
+  return request({
+    method:'post',
+    url:'/saveSelectFilter',
+    data
+  })
+}
+
+//保存查询配置
+export function selectByModule(data={}) {
+  return request({
+    method:'post',
+    url:'/selectByModule',
+    data
+  })
+}

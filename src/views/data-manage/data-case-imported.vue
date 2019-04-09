@@ -736,6 +736,8 @@
     remoweData,
     addData,
     clientList,
+    selectByModule,
+    saveSelectFilter,
     caseTypeList,
     areaList,
     update,
@@ -923,6 +925,7 @@
         this.currentBatchNo = row.batchNo
       },
       selectAllExport(){
+
         for(var p in this.exportConf){//遍历json对象的每个key/value对,p为key
           this.exportConf[p] = true;
         }
