@@ -113,3 +113,6 @@ body .el-popover .popper__arrow{
   border-right: 1px solid #0080ff  !important;
 }
 
+body .el-checkbox+.el-checkbox{
+  margin-left: initial;
+}
