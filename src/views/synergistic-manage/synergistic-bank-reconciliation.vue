@@ -1,19 +1,21 @@
 <template>
   <div id="synergistic-bank-reconciliation" class="page-wraper-sub"
-  	v-loading="loading2"
-  	   	   	  	  v-loading.fullscreen.lock="fullscreenLoading"
-    element-loading-text="拼命加载中"
-    element-loading-spinner="el-icon-loading"
-   element-loading-background="rgba(0, 0, 0, 0.7)">
+       v-loading="loading2"
+       v-loading.fullscreen.lock="fullscreenLoading"
+       element-loading-text="拼命加载中"
+       element-loading-spinner="el-icon-loading"
+       element-loading-background="rgba(0, 0, 0, 0.7)">
     <el-tabs v-model="queryForm.status" @tab-click="onClickQuery">
       <el-tab-pane label="待银行对帐" name="0"></el-tab-pane>
       <el-tab-pane label="已作废" name="1"></el-tab-pane>
     </el-tabs>
-    <bank-record-query 
+    <bank-record-query
       @reset="onClickReset"
       @query="onClickQuery"
       :queryForm="queryForm">
-      <el-button type="primary" v-if="queryForm.status==='0'"  @click="onClickBatchCancelBankRecon" v-has="'作废'">作废待银行查账金额</el-button>
+      <el-button type="primary" v-if="queryForm.status==='0'" @click="onClickBatchCancelBankRecon" v-has="'作废'">
+        作废待银行查账金额
+      </el-button>
       <el-upload
         class="upload-demo upload-btn"
         :action="action+'/bankReconciliation/import'"
@@ -21,48 +23,71 @@
         :show-file-list="false"
         :on-success="uploadSuccess"
         style="display:inline-block;"
-        >
-        <el-button type="primary" v-if="queryForm.status==='0'"  style="margin-left:10px;margin-right: 16px;" v-has="'导入待银行对账'">导入待银行查账</el-button>
+      >
+        <el-button type="primary" v-if="queryForm.status==='0'" style="margin-left:10px;margin-right: 16px;"
+                   v-has="'导入待银行对账'">导入待银行查账
+        </el-button>
       </el-upload>
-      <el-button type="primary" @click="onClickExportSelectedRecord" style="margin-left:-6px;" v-has="'导出选中数据'">导出选中数据</el-button>
-      <el-button type="primary" @click="dialogExportVisible = true" style="margin-left:10px;" v-has="'导出查询结果'">导出查询结果</el-button>
+      <el-button type="primary" @click="onClickExportSelectedRecord" style="margin-left:-6px;" v-has="'导出选中数据'">导出选中数据
+      </el-button>
+      <el-button type="primary" @click="dialogExportVisible = true" style="margin-left:10px;" v-has="'导出查询结果'">导出查询结果
+      </el-button>
     </bank-record-query>
-     <el-table highlight-current-row v-loading="tableLoad"
-      @sort-change="handleSort"
-      @selection-change="onSelectRow"
-      border
-      stripe
-      :data="recordList"
-      height="1"
-      style="width: 100%;min-height: 400px;margin-bottom: 40px;"
-      class="table-wrap">
-      <el-table-column type="selection" width="50" align="center" ></el-table-column>
-      <el-table-column sortable="custom" width="120" align="center"  :sort-orders="['ascending','descending']" prop="dataCase.batchNo" label="批次号" show-overflow-tooltip></el-table-column>
-      <el-table-column sortable="custom" width="160" align="center"  :sort-orders="['ascending','descending']" prop="dataCase.cardNo" label="卡号" show-overflow-tooltip></el-table-column>
-      <el-table-column sortable="custom" width="160" align="center"  :sort-orders="['ascending','descending']" prop="dataCase.identNo" label="证件号" show-overflow-tooltip></el-table-column>
-      <el-table-column sortable="custom" width="120" align="center"  :sort-orders="['ascending','descending']" prop="dataCase.name" label="姓名" show-overflow-tooltip></el-table-column>
-      <el-table-column sortable="custom" min-width="160" align="center"  :sort-orders="['ascending','descending']" prop="dataCase.seqNo" label="个案序列号" show-overflow-tooltip>
+    <el-table highlight-current-row v-loading="tableLoad"
+              @sort-change="handleSort"
+              @selection-change="onSelectRow"
+              border
+              stripe
+              :data="recordList"
+              height="1"
+              style="width: 100%;min-height: 400px;margin-bottom: 40px;"
+              class="table-wrap">
+      <el-table-column type="selection" width="50" align="center"></el-table-column>
+      <el-table-column sortable="custom" width="120" align="center" :sort-orders="['ascending','descending']"
+                       prop="dataCase.batchNo" label="批次号" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" width="160" align="center" :sort-orders="['ascending','descending']"
+                       prop="dataCase.cardNo" label="卡号" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" width="160" align="center" :sort-orders="['ascending','descending']"
+                       prop="dataCase.identNo" label="证件号" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" width="120" align="center" :sort-orders="['ascending','descending']"
+                       prop="dataCase.name" label="姓名" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" min-width="160" align="center" :sort-orders="['ascending','descending']"
+                       prop="dataCase.seqNo" label="个案序列号" show-overflow-tooltip>
         <template slot-scope="scope">
-          <el-button type="text" size="small" @click="editCase(scope.row.dataCase.id, scope.row.dataCase.name,scope.row.dataCase.seqNo)">{{scope.row.dataCase.seqNo}}</el-button>
+          <el-button type="text" size="small"
+                     @click="editCase(scope.row.dataCase.id, scope.row.dataCase.name,scope.row.dataCase.seqNo)">
+            {{scope.row.dataCase.seqNo}}
+          </el-button>
         </template>
       </el-table-column>
-      <el-table-column sortable="custom" width="120" align="center"  :sort-orders="['ascending','descending']" prop="dataCase.client" label="委托方" show-overflow-tooltip></el-table-column>
-      <el-table-column sortable="custom" width="120" align="center"  :sort-orders="['ascending','descending']" prop="dataCase.moneyMsg" label="委案金额" show-overflow-tooltip></el-table-column>
-      <el-table-column sortable="custom" width="120" align="center"  :sort-orders="['ascending','descending']" prop="dataCase.enRepayAmtMsg" label="案件已还款" show-overflow-tooltip></el-table-column>
-      <el-table-column sortable="custom" width="130" align="center"  :sort-orders="['ascending','descending']" prop="cpMoneyMsg" label="待银行查账金额" show-overflow-tooltip></el-table-column>
-      <el-table-column sortable="custom" width="130" align="center"  :sort-orders="['ascending','descending']" prop="cpDate" label="待银行查账日期" show-overflow-tooltip></el-table-column>
-      <el-table-column sortable="custom" width="100" align="center"  :sort-orders="['ascending','descending']" prop="repayUser" label="还款人" show-overflow-tooltip></el-table-column>
-      <el-table-column sortable="custom" width="120" align="center"  :sort-orders="['ascending','descending']" prop="repayType" label="还款方式" show-overflow-tooltip></el-table-column>
-      <el-table-column sortable="custom" width="100" align="center"  :sort-orders="['ascending','descending']" prop="submitUser.name" label="提交人" show-overflow-tooltip></el-table-column>
-      <el-table-column sortable="custom" width="140" align="center"  :sort-orders="['ascending','descending']" prop="submitTime" label="提交时间" show-overflow-tooltip></el-table-column>
-      <el-table-column sortable="custom" width="100" align="center"  :sort-orders="['ascending','descending']" prop="remark" label="备注" show-overflow-tooltip></el-table-column>
-      <el-table-column label="操作" width="100" v-if="queryForm.status==='0'" align="center" >
+      <el-table-column sortable="custom" width="120" align="center" :sort-orders="['ascending','descending']"
+                       prop="dataCase.client" label="委托方" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" width="120" align="center" :sort-orders="['ascending','descending']"
+                       prop="dataCase.moneyMsg" label="委案金额" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" width="120" align="center" :sort-orders="['ascending','descending']"
+                       prop="dataCase.enRepayAmtMsg" label="案件已还款" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" width="130" align="center" :sort-orders="['ascending','descending']"
+                       prop="cpMoneyMsg" label="待银行查账金额" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" width="130" align="center" :sort-orders="['ascending','descending']"
+                       prop="cpDate" label="待银行查账日期" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" width="100" align="center" :sort-orders="['ascending','descending']"
+                       prop="repayUser" label="还款人" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" width="120" align="center" :sort-orders="['ascending','descending']"
+                       prop="repayType" label="还款方式" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" width="100" align="center" :sort-orders="['ascending','descending']"
+                       prop="submitUser.name" label="提交人" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" width="140" align="center" :sort-orders="['ascending','descending']"
+                       prop="submitTime" label="提交时间" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" width="100" align="center" :sort-orders="['ascending','descending']"
+                       prop="remark" label="备注" show-overflow-tooltip></el-table-column>
+      <el-table-column label="操作" width="100" v-if="queryForm.status==='0'" align="center">
         <template slot-scope="scope">
           <el-button
             v-has="'作废'"
             type="text"
             @click="onClicCancelBankRecon(scope.row.id)"
-          >作废待银行查账</el-button>
+          >作废待银行查账
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -113,7 +138,7 @@
           <el-input v-model="recordInfo.mobile" clearable placeholder="确认还款金额"></el-input>
         </el-form-item>
         <el-form-item label="还款人" prop="dyga">
-           <el-input v-model="recordInfo.mobile" clearable placeholder="请输入还款人"></el-input>
+          <el-input v-model="recordInfo.mobile" clearable placeholder="请输入还款人"></el-input>
         </el-form-item>
         <el-form-item label="还款方式" prop="dyga">
           <el-select v-model="recordInfo.dyga" clearable placeholder="请选择还款方式">
@@ -142,12 +167,12 @@
     >
       <el-form :inline="true">
         <el-form-item>
-          <el-radio label="1" v-model="radio" >按查询条件全部导出</el-radio>
+          <el-radio label="1" v-model="radio">按查询条件全部导出</el-radio>
         </el-form-item>
         <el-form-item>
-          <el-radio label="2" v-model="radio" >按查询条件导出当前分页</el-radio>
+          <el-radio label="2" v-model="radio">按查询条件导出当前分页</el-radio>
         </el-form-item>
-        
+
       </el-form>
       <span slot="footer" class="dialog-footer">
           <el-button @click="dialogExportVisible = false">取 消</el-button>
@@ -161,8 +186,8 @@
       width="60%"
       center
     >
+      <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span></div>
       <el-row class="pad">
-
         <el-checkbox v-model="exportConf.id" label="2">ID</el-checkbox>
         <el-checkbox v-model="exportConf.batchNo" label="3">批次号</el-checkbox>
         <el-checkbox v-model="exportConf.cardNo" label="3">卡号</el-checkbox>
@@ -226,243 +251,296 @@
 </template>
 
 <script>
-import {BankRecordQuery} from './components'
-import {baseURL} from '@/common/js/request.js';
-import {getBankReconList,cancelBankRecon,expSelectedBankReconRecord,expAllBankReconRecord,expCurrentBankReconRecord} from '@/common/js/api-sync'
-export default {
-  name: 'synergisticBankReconciliation',
-  components:{
-    BankRecordQuery
-  },
-  data(){
-    return {
-    	radio:'1',
-    	loading2:false,
-    	fullscreenLoading:false,
-      dialogExportVisible:false,
-      exportType:0,
-      showExportConfVisible: false,
-      exportConf:{},
-      tableLoad:false,
-      action:baseURL,
-      header:{Authorization:localStorage.token},
-      recordList: [],
-      total:0,
-      dialogData:{
-        title:'',
-        editVisible: false
-      },
-      rules: {
+  import {BankRecordQuery} from './components'
+  import {baseURL} from '@/common/js/request.js';
+  import {
+    getBankReconList,
+    cancelBankRecon,
+    expSelectedBankReconRecord,
+    expAllBankReconRecord,
+    expCurrentBankReconRecord
+  } from '@/common/js/api-sync'
 
-      },
-      recordInfo:{},
-      queryForm:{
-        status: '0',
-        pageNum: 1,
-        pageSize: 100,
-        dataCase: {
-          collectionArea:{},
-          collectionUser:{},
-          caseArea:{},
+  export default {
+    name: 'synergisticBankReconciliation',
+    components: {
+      BankRecordQuery
+    },
+    data() {
+      return {
+        radio: '1',
+        loading2: false,
+        fullscreenLoading: false,
+        dialogExportVisible: false,
+        exportType: 0,
+        showExportConfVisible: false,
+        exportConf: {},
+        tableLoad: false,
+        action: baseURL,
+        header: {Authorization: localStorage.token},
+        recordList: [],
+        total: 0,
+        dialogData: {
+          title: '',
+          editVisible: false
         },
-      },
-      selectList:[]
-    }
-  },
-  created() {
-    this.tableLoad = true
-    getBankReconList(this.queryForm).then(data => {
-      this.recordList = data.list
-      this.total = data.total
-      this.tableLoad = false
-    })
-  },
-  methods: {
-  		changeRadio(){
-  				if(this.radio==1){
-			this.handleCommand('all')
-		}else{
-			this.handleCommand('current')
-		}
-  	},
-     uploadSuccess(res,file,fileList){
-     	this.loading2=true
-					this.fullscreenLoading=true
-      if (res.code ==100){
-  		    this.$message({
-            type: 'success',
-            message: "导入成功"
-          });
-           this.onClickQuery()
-           this.loading2=false
-					this.fullscreenLoading=false
-      }else{
-        this.$message({
-          type: 'error',
-          message: res.msg
-        });
+        rules: {},
+        recordInfo: {},
+        queryForm: {
+          status: '0',
+          pageNum: 1,
+          pageSize: 100,
+          dataCase: {
+            collectionArea: {},
+            collectionUser: {},
+            caseArea: {},
+          },
+        },
+        selectList: []
       }
     },
-    editCase(id, name, seqNo){
-      this.$router.push({
-        path:'case-detail',
-        query:{
-          id,
-          name,
-          seqNo
-        }
-      })
-    },
-    onClickReset(){
-      this.queryForm = {
-        status: this.queryForm.status,
-        pageNum: this.queryForm.pageNum,
-        pageSize: this.queryForm.pageSize,
-        dataCase: {
-          collectionArea:{id: null},
-          collectionUser:{id: null},
-          caseArea:{id: null},
-        }
-      }
-    },
-    onClickQuery(){
+    created() {
       this.tableLoad = true
-      this.recordList = []
       getBankReconList(this.queryForm).then(data => {
         this.recordList = data.list
         this.total = data.total
         this.tableLoad = false
       })
     },
-    handleSort({column,prop,order}){
-      // console.log(prop,'@',order)
-      this.queryForm.orderBy = prop
-      this.queryForm.sort = order === 'ascending' ? 'asc':'desc'
-      this.onClickQuery()
-    },
-    onClickBatchCancelBankRecon(){
-      if(!this.selectList.length){
-        this.$message('请选择需要作废记录')
-        return
-      }
-      this.$confirm('此操作将作废记录，是否继续？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        const ids = this.selectList.map(item => item.id)
-        cancelBankRecon(ids).then(() => {
-          this.$message('作废待银行查账成功')
+    methods: {
+      changeRadio() {
+        if (this.radio == 1) {
+          this.handleCommand('all')
+        } else {
+          this.handleCommand('current')
+        }
+      },
+      uploadSuccess(res, file, fileList) {
+        this.loading2 = true
+        this.fullscreenLoading = true
+        if (res.code == 100) {
+          this.$message({
+            type: 'success',
+            message: "导入成功"
+          });
           this.onClickQuery()
+          this.loading2 = false
+          this.fullscreenLoading = false
+        } else {
+          this.$message({
+            type: 'error',
+            message: res.msg
+          });
+        }
+      },
+      editCase(id, name, seqNo) {
+        this.$router.push({
+          path: 'case-detail',
+          query: {
+            id,
+            name,
+            seqNo
+          }
         })
-      }).catch(() => { })
-    },
-    onClicCancelBankRecon(id){
-      this.$confirm('此操作将作废记录，是否继续？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        cancelBankRecon([id]).then(() => {
-          this.$message('作废待银行查账成功')
-          this.onClickQuery()
+      },
+      onClickReset() {
+        this.queryForm = {
+          status: this.queryForm.status,
+          pageNum: this.queryForm.pageNum,
+          pageSize: this.queryForm.pageSize,
+          dataCase: {
+            collectionArea: {id: null},
+            collectionUser: {id: null},
+            caseArea: {id: null},
+          }
+        }
+      },
+      onClickQuery() {
+        this.tableLoad = true
+        this.recordList = []
+        getBankReconList(this.queryForm).then(data => {
+          this.recordList = data.list
+          this.total = data.total
+          this.tableLoad = false
         })
-      }).catch(() => { })
-    },
-    exportExcel(){
-        if (this.exportType==1){
-          if(!this.selectList.length){
+      },
+      handleSort({column, prop, order}) {
+        // console.log(prop,'@',order)
+        this.queryForm.orderBy = prop
+        this.queryForm.sort = order === 'ascending' ? 'asc' : 'desc'
+        this.onClickQuery()
+      },
+      onClickBatchCancelBankRecon() {
+        if (!this.selectList.length) {
+          this.$message('请选择需要作废记录')
+          return
+        }
+        this.$confirm('此操作将作废记录，是否继续？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          const ids = this.selectList.map(item => item.id)
+          cancelBankRecon(ids).then(() => {
+            this.$message('作废待银行查账成功')
+            this.onClickQuery()
+          })
+        }).catch(() => {
+        })
+      },
+      onClicCancelBankRecon(id) {
+        this.$confirm('此操作将作废记录，是否继续？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          cancelBankRecon([id]).then(() => {
+            this.$message('作废待银行查账成功')
+            this.onClickQuery()
+          })
+        }).catch(() => {
+        })
+      },
+      saveExportBankConf() {
+        let queryObj = {module: "data-bank-record-exportBank", menu: this.exportConf}
+        saveSelectFilter(queryObj).then(data => {
+        });
+      },
+      queryExportBankConfList() {
+        let queryObj = {module: "data-bank-record-exportBank", menu: this.exportConf}
+        selectByModule(queryObj).then(data => {
+          if (data) {
+            this.exportConf = JSON.parse(data.menu);
+          }
+        });
+      },
+      selectAllExport(){
+        for(var p in this.exportConf){//遍历json对象的每个key/value对,p为key
+          this.exportConf[p] = true;
+        }
+      },
+      exportExcel() {
+        let successNum =0;
+        for(var p in this.exportConf){//遍历json对象的每个key/value对,p为key
+          if (this.exportConf[p]){
+            successNum = successNum+1;
+          }
+        }
+        if (successNum==0){
+          this.$message({
+            type: 'error',
+            message: '请先选择导出项!'
+          });
+          this.fullscreenLoading = false
+          this.loading2 = false
+          return ;
+        }
+        if (this.exportType == 1) {
+          if (!this.selectList.length) {
             this.$message('请选择需要导出的记录')
             return
           }
-          this.loading2=true
-          this.fullscreenLoading=true
+          this.loading2 = true
+          this.fullscreenLoading = true
           const ids = this.selectList.map(item => item.id)
-          expSelectedBankReconRecord(ids,this.exportConf).then(() => {
+          expSelectedBankReconRecord(ids, this.exportConf).then(() => {
             this.$message('导出成功')
-            this.loading2=false
-            this.fullscreenLoading=false
-          }).catch(() => { })
-        }else if (this.exportType ==2){
-          this.loading2=true
-          this.fullscreenLoading=true
+            this.loading2 = false
+            this.fullscreenLoading = false
+          }).catch(() => {
+          })
+        } else if (this.exportType == 2) {
+          this.loading2 = true
+          this.fullscreenLoading = true
           this.queryForm.exportConf = this.exportConf
           expCurrentBankReconRecord(this.queryForm).then(res => {
             this.$message('导出成功')
-            this.loading2=false
-            this.fullscreenLoading=false
+            this.loading2 = false
+            this.fullscreenLoading = false
           })
-        }else if (this.exportType==3){
+        } else if (this.exportType == 3) {
           this.queryForm.exportConf = this.exportConf
           expAllBankReconRecord(this.queryForm).then(res => {
             this.$message('导出成功')
-            this.loading2=false
-            this.fullscreenLoading=false
+            this.loading2 = false
+            this.fullscreenLoading = false
           })
         }
-      this.showExportConfVisible = false;
-    },
-    onClickExportSelectedRecord(){
-      this.showExportConfVisible = true;
-  		  this.exportType = 1;
-    },
-    onSelectRow(val){
-      this.selectList = val
-    },
-    onClickCancel(){},
-    onClickSave(){},
-    handleCommand(command){
-      this.showExportConfVisible = true;
-      if(command === 'current'){
-        this.exportType = 2;
-      }else {
-        this.exportType = 3;
+        this.saveExportBankConf();
+        this.showExportConfVisible = false;
+      },
+      onClickExportSelectedRecord() {
+        this.queryExportBankConfList();
+        this.showExportConfVisible = true;
+        this.exportType = 1;
+      },
+      onSelectRow(val) {
+        this.selectList = val
+      },
+      onClickCancel() {
+      },
+      onClickSave() {
+      },
+      handleCommand(command) {
+        this.queryExportBankConfList();
+        this.showExportConfVisible = true;
+        if (command === 'current') {
+          this.exportType = 2;
+        } else {
+          this.exportType = 3;
+        }
+        this.dialogExportVisible = false
       }
-      this.dialogExportVisible = false
     }
   }
-}
 </script>
 
 <style lang="scss">
-#synergistic-bank-reconciliation{
-  .pad {
-    .el-checkbox {
-      width: 24%;
-      margin-right: 0px;
-    }
-  }
-  .el-tabs__content{
-
-    overflow-y: auto;
-  }
-  .pagination-wrap{
-    position: fixed;
-    bottom: 0;
-    z-index: 100;
-    min-height: 40px;
-    background-color: white;
-    width: 100%;
-  }
-  .add-form {
-    display: flex;
-    flex-wrap: wrap;
-    .el-form-item {
-      display: flex;
-      width: 50%;
-      &.whole{
-        width: 100%;
+  #synergistic-bank-reconciliation {
+    .pad {
+      .el-checkbox {
+        width: 24%;
+        margin-right: 0px;
       }
-      .el-form-item__content {
-        flex: 1;
-        margin-left: 0 !important;
-        .el-select {
+    }
+
+    .el-tabs__content {
+
+      overflow-y: auto;
+    }
+
+    .pagination-wrap {
+      position: fixed;
+      bottom: 0;
+      z-index: 100;
+      min-height: 40px;
+      background-color: white;
+      width: 100%;
+    }
+
+    .add-form {
+      display: flex;
+      flex-wrap: wrap;
+
+      .el-form-item {
+        display: flex;
+        width: 50%;
+
+        &.whole {
           width: 100%;
+        }
+
+        .el-form-item__content {
+          flex: 1;
+          margin-left: 0 !important;
+
+          .el-select {
+            width: 100%;
+          }
         }
       }
     }
   }
-}
 </style>
 
 

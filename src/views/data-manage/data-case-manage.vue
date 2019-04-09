@@ -947,6 +947,7 @@
       width="60%"
       center
     >
+      <div style="margin-bottom: 10px;"><span @click="selectAllTelExport" style="cursor: pointer;">全选</span></div>
       <el-row class="pad">
 
         <el-checkbox v-model="exportTelConf.seqno" label="2">个案序列号</el-checkbox>
@@ -976,6 +977,7 @@
       width="60%"
       center
     >
+      <div style="margin-bottom: 10px;"><span @click="selectAllCollectExport" style="cursor: pointer;">全选</span></div>
       <el-row class="pad">
 
         <el-checkbox v-model="exportCollectConf.name" label="2">姓名</el-checkbox>
@@ -1031,6 +1033,7 @@
       width="60%"
       center
     >
+      <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span></div>
       <el-row class="pad">
         <el-checkbox v-model="exportConf.id" label="2">ID</el-checkbox>
         <el-checkbox v-model="exportConf.seqNo" label="3">个案序列号</el-checkbox>
@@ -1415,8 +1418,48 @@
           this.queryConfList();
         });
       },
-      queryConfList() {
+      saveExportCaseConf() {
+        let queryObj = {module: "data-case-manage-exportCase", menu: this.exportConf}
+        saveSelectFilter(queryObj).then(data => {
+        });
+      },
+      queryExportCaseConfList() {
+        let queryObj = {module: "data-case-manage-exportCase", menu: this.exportConf}
+        selectByModule(queryObj).then(data => {
+          if (data) {
+            this.exportConf = JSON.parse(data.menu);
+          }
+        });
+      },
+      saveExportTelConf() {
+        let queryObj = {module: "data-case-manage-exportTel", menu: this.exportTelConf}
+        saveSelectFilter(queryObj).then(data => {
+        });
+      },
+      queryExportTelConfList() {
+        let queryObj = {module: "data-case-manage-exportTel", menu: this.exportTelConf}
+        selectByModule(queryObj).then(data => {
+          if (data) {
+            this.exportTelConf = JSON.parse(data.menu);
+          }
+        });
+      },
+      saveExportCollectConf() {
+        let queryObj = {module: "data-case-manage-exportCollect", menu: this.exportCollectConf}
+        saveSelectFilter(queryObj).then(data => {
+        });
+      },
+      queryExportCollectConfList() {
+        let queryObj = {module: "data-case-manage-exportCollect", menu: this.exportCollectConf}
+        selectByModule(queryObj).then(data => {
+          if (data) {
+            this.exportCollectConf = JSON.parse(data.menu);
+          }
+        });
+      },
 
+
+      queryConfList() {
         let queryObj = {module: "data-case-manage", menu: this.queryConf}
         selectByModule(queryObj).then(data => {
           if (data) {
@@ -1432,10 +1475,12 @@
       },
       changeRadio() {
         if (this.radio == 1) {
-          this.exportType == 2;
+          this.exportType = 2;
         } else {
-          this.exportType == 3;
+          this.exportType = 3;
         }
+        this.dialogVisibleCase = false;
+        this.queryExportCaseConfList();
         this.showExportConfVisible = true;
       },
       submitmsgForm(formName) {
@@ -1605,16 +1650,41 @@
 
       },
       handleExport(command) {
-        console.info(command, this.deleteList.length)
 
         if (command === "exportTotalCase") {
           this.dialogVisibleCase = true
         } else if (command === "exportSelectCase") {
-          this.showExportConfVisible = true;
+          if (this.deleteList.length >= 1) {
+            this.showExportConfVisible = true;
+            this.exportType = 1;
+          } else {
+            this.$message({
+              type: 'info',
+              message: '请选择需要导出的数据!'
+            });
+          }
         } else if (command === "exportTel") {
-          this.showExportTelConfVisible = true;
+          if (this.deleteList.length >= 1) {
+            this.queryExportTelConfList();
+            this.showExportTelConfVisible = true;
+          } else {
+            this.$message({
+              type: 'info',
+              message: '请选择需要导出的数据!'
+            });
+          }
+
         } else if (command === "exportCollect") {
-          this.showExportCollectConfVisible = true;
+          if (this.deleteList.length >= 1) {
+            this.queryExportCollectConfList();
+            this.showExportCollectConfVisible = true;
+          } else {
+            this.$message({
+              type: 'info',
+              message: '请选择需要导出的数据!'
+            });
+          }
+
         }
 
       },
@@ -1717,7 +1787,28 @@
           });
         })
       },
+      selectAllExport(){
+        for(var p in this.exportConf){//遍历json对象的每个key/value对,p为key
+          this.exportConf[p] = true;
+        }
+      },
       exportCase(){
+        let successNum = 0;
+        for (var p in this.exportConf) {//遍历json对象的每个key/value对,p为key
+          if (this.exportConf[p]) {
+            successNum = successNum + 1;
+          }
+        }
+        if (successNum == 0) {
+          this.$message({
+            type: 'error',
+            message: '请先选择导出项!'
+          });
+          this.fullscreenLoading = false
+          this.loading2 = false
+          return;
+        }
+        this.saveExportCaseConf();
           if (this.exportType == 1){
             this.exportSelectCase();
           }else if (this.exportType == 2){
@@ -1725,12 +1816,13 @@
           }else if (this.exportType == 3){
             this.pageDataExport();
           }
+          this.showExportConfVisible = false;
       },
       exportSelectCase() {
         let datasList = []
         if (this.deleteList.length >= 1) {
           for (var i = 0; i < this.deleteList.length; i++) {
-            datasList.push(dataObject)
+            datasList.push(this.deleteList[i].id)
           }
           this.loading2 = true
           this.fullscreenLoading = true
@@ -1746,8 +1838,27 @@
         }
         this.showExportConfVisible = false;
       },
+      selectAllTelExport(){
+        for(var p in this.exportTelConf){//遍历json对象的每个key/value对,p为key
+          this.exportTelConf[p] = true;
+        }
+      },
       exportTel() {
-
+        let successNum = 0;
+        for (var p in this.exportTelConf) {//遍历json对象的每个key/value对,p为key
+          if (this.exportTelConf[p]) {
+            successNum = successNum + 1;
+          }
+        }
+        if (successNum == 0) {
+          this.$message({
+            type: 'error',
+            message: '请先选择导出项!'
+          });
+          this.fullscreenLoading = false
+          this.loading2 = false
+          return;
+        }
         let datasList = []
         let _self = this;
         if (this.deleteList.length >= 1) {
@@ -1760,6 +1871,7 @@
             this.loading2 = false
             this.fullscreenLoading = false
           })
+          this.saveExportTelConf();
         } else {
           _self.$message({
             type: 'info',
@@ -1768,7 +1880,27 @@
         }
         this.showExportTelConfVisible = false;
       },
+      selectAllCollectExport(){
+        for(var p in this.exportCollectConf){//遍历json对象的每个key/value对,p为key
+          this.exportCollectConf[p] = true;
+        }
+      },
       exportCollect() {
+        let successNum = 0;
+        for (var p in this.exportCollectConf) {//遍历json对象的每个key/value对,p为key
+          if (this.exportCollectConf[p]) {
+            successNum = successNum + 1;
+          }
+        }
+        if (successNum == 0) {
+          this.$message({
+            type: 'error',
+            message: '请先选择导出项!'
+          });
+          this.fullscreenLoading = false
+          this.loading2 = false
+          return;
+        }
         let datasList = []
         let _self = this;
         if (this.deleteList.length >= 1) {
@@ -1781,13 +1913,14 @@
             this.loading2 = false
             this.fullscreenLoading = false
           })
+          this.saveExportCollectConf();
         } else {
           _self.$message({
             type: 'info',
             message: '请选择需要导出的数据!'
           });
         }
-        this.showExportCollectConfVisible = true;
+        this.showExportCollectConfVisible = false
       },
       fenancheckone() {
         let datasList = []

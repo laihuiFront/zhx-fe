@@ -467,6 +467,7 @@
       width="60%"
       center
     >
+      <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span></div>
       <el-row class="pad">
 
         <el-checkbox v-model="exportConf.name" label="2">姓名</el-checkbox>
@@ -617,6 +618,19 @@
       }
     },
     methods: {
+      saveExportCollectConf() {
+        let queryObj = {module: "data-memorize-manage-exportCollect", menu: this.exportCollectConf}
+        saveSelectFilter(queryObj).then(data => {
+        });
+      },
+      queryExportCollectConfList() {
+        let queryObj = {module: "data-memorize-manage-exportCollect", menu: this.exportCollectConf}
+        selectByModule(queryObj).then(data => {
+          if (data) {
+            this.exportCollectConf = JSON.parse(data.menu);
+          }
+        });
+      },
       saveConf() {
         this.showQueryConfVisible = false;
         let queryObj = {module: "data-memorize-manage", menu: this.queryConf}
@@ -700,7 +714,27 @@
         }).catch(() => {
         });
       },
+      selectAllExport(){
+        for(var p in this.exportConf){//遍历json对象的每个key/value对,p为key
+          this.exportConf[p] = true;
+        }
+      },
       exportExcel(){
+        let successNum = 0;
+        for (var p in this.exportConf) {//遍历json对象的每个key/value对,p为key
+          if (this.exportConf[p]) {
+            successNum = successNum + 1;
+          }
+        }
+        if (successNum == 0) {
+          this.$message({
+            type: 'error',
+            message: '请先选择导出项!'
+          });
+          this.fullscreenLoading = false
+          this.loading = false
+          return;
+        }
           if (this.exportType==1){
             this.loading = true
             this.fullscreenLoading = true
@@ -759,10 +793,12 @@
               });
             })
           }
+          this.saveExportCollectConf();
         this.showExportConfVisible = false;
       },
       selectDataCollectExport() {
         this.exportType = 1;
+        this.queryExportCollectConfList();
         this.showExportConfVisible = true;
       },
       totalDataCollectExport() {

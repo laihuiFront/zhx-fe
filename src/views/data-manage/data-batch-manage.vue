@@ -665,6 +665,7 @@
       width="60%"
       center
     >
+      <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span></div>
       <el-row class="pad">
 
         <el-checkbox v-model="exporttBatchConf.batchNo" label="2">批次号</el-checkbox>
@@ -693,6 +694,7 @@
       width="60%"
       center
     >
+      <div style="margin-bottom: 10px;"><span @click="selectAllCollectExport" style="cursor: pointer;">全选</span></div>
       <el-row class="pad">
 
         <el-checkbox v-model="exportCollectConf.name" label="2">姓名</el-checkbox>
@@ -778,12 +780,12 @@
         fullscreenLoading: false,
         tableLoad: false,
         batchList: [],
-        showExportBatchConfVisible:false,
-        exporttBatchConf:{},
-        exportCollectConf:{},
+        showExportBatchConfVisible: false,
+        exporttBatchConf: {},
+        exportCollectConf: {},
         exportType: 0,
-        exportCollectType:0,
-        showExportCollectConfVisible:false,
+        exportCollectType: 0,
+        showExportCollectConfVisible: false,
         header: {Authorization: localStorage.token},
         loading: false,
         userCount: '',
@@ -861,14 +863,61 @@
           this.total1 = response.pageInfo.total
         })
       },
-      exportExcel(){
-          if (this.exportType == 1){
-            this.selectDataExport();
-          }else if (this.exportType == 2){
-            this.totalDataExport()
-          }else if (this.exportType == 3){
-            this.pageDataExport()
+      saveExportCollectConf() {
+        let queryObj = {module: "data-batch-manage-exportCollect", menu: this.exportCollectConf}
+        saveSelectFilter(queryObj).then(data => {
+        });
+      },
+      queryExportCollectConfList() {
+        let queryObj = {module: "data-batch-manage-exportCollect", menu: this.exportCollectConf}
+        selectByModule(queryObj).then(data => {
+          if (data) {
+            this.exportCollectConf = JSON.parse(data.menu);
           }
+        });
+      },
+      saveExportBatchConf() {
+        let queryObj = {module: "data-batch-manage-exportBatch", menu: this.exporttBatchConf}
+        saveSelectFilter(queryObj).then(data => {
+        });
+      },
+      queryExportBatchConfList() {
+        let queryObj = {module: "data-batch-manage-exportBatch", menu: this.exporttBatchConf}
+        selectByModule(queryObj).then(data => {
+          if (data) {
+            this.exporttBatchConf = JSON.parse(data.menu);
+          }
+        });
+      },
+      selectAllExport(){
+        for(var p in this.exporttBatchConf){//遍历json对象的每个key/value对,p为key
+          this.exporttBatchConf[p] = true;
+        }
+      },
+      exportExcel() {
+        let successNum = 0;
+        for (var p in this.exporttBatchConf) {//遍历json对象的每个key/value对,p为key
+          if (this.exporttBatchConf[p]) {
+            successNum = successNum + 1;
+          }
+        }
+        if (successNum == 0) {
+          this.$message({
+            type: 'error',
+            message: '请先选择导出项!'
+          });
+          this.fullscreenLoading = false
+          this.loading = false
+          return;
+        }
+        if (this.exportType == 1) {
+          this.selectDataExport();
+        } else if (this.exportType == 2) {
+          this.totalDataExport()
+        } else if (this.exportType == 3) {
+          this.pageDataExport()
+        }
+        this.saveExportBatchConf();
         this.showExportBatchConfVisible = false;
       },
       changeRadio() {
@@ -877,25 +926,41 @@
         } else {
           this.exportType = 3;
         }
+        this.queryExportBatchConfList();
         this.showExportBatchConfVisible = true;
         this.dialogVisible1 = false;
       },
       exportCollect() {
+        let successNum = 0;
+        for (var p in this.exportCollectConf) {//遍历json对象的每个key/value对,p为key
+          if (this.exportCollectConf[p]) {
+            successNum = successNum + 1;
+          }
+        }
+        if (successNum == 0) {
+          this.$message({
+            type: 'error',
+            message: '请先选择导出项!'
+          });
+          this.fullscreenLoading = false
+          this.loading = false
+          return;
+        }
         this.loading = true
         this.fullscreenLoading = true
 
-          selectDataCollectExportByBatch(this.batchNos,this.exportCollectConf).then((response) => {
-            this.loading = false;
-            this.fullscreenLoading = false
-            this.$message({
-              type: 'success',
-              message: '导出成功!'
-            });
-          })
-
+        selectDataCollectExportByBatch(this.batchNos, this.exportCollectConf).then((response) => {
+          this.loading = false;
+          this.fullscreenLoading = false
+          this.$message({
+            type: 'success',
+            message: '导出成功!'
+          });
+        })
+        this.saveExportCollectConf();
         this.showExportCollectConfVisible = false;
       },
-      showSelectBatch(){
+      showSelectBatch() {
         if (this.selectDataBatchExportList.length > 0) {
           this.exportType = 1;
           this.showExportBatchConfVisible = true;
@@ -908,9 +973,10 @@
           });
         }
       },
-      showSelectCollect1(){
+      showSelectCollect1() {
         this.exportCollectType = 1;
         if (this.batchNos.length > 0) {
+          this.queryExportCollectConfList();
           this.showExportCollectConfVisible = true;
         } else {
           this.loading = false;
@@ -921,15 +987,20 @@
           });
         }
       },
-      showSelectCollect2(row){
+      showSelectCollect2(row) {
         this.batchNos = [row.batchNo];
         this.exportCollectType = 2;
         this.showExportCollectConfVisible = true;
       },
-      exportCollectExcel(){
-        if (this.exportCollectType==1){
+      selectAllCollectExport(){
+        for(var p in this.exportCollectConf){//遍历json对象的每个key/value对,p为key
+          this.exportCollectConf[p] = true;
+        }
+      },
+      exportCollectExcel() {
+        if (this.exportCollectType == 1) {
           this.exportCollect();
-        }else if (this.exportCollectType==2){
+        } else if (this.exportCollectType == 2) {
           this.selectDataByBatch();
         }
       },
@@ -938,7 +1009,7 @@
         this.fullscreenLoading = true
         let _self = this;
         if (this.batchNos.length > 0) {
-          selectDataCollectExportByBatch(this.batchNos,this.exportCollectConf).then((response) => {
+          selectDataCollectExportByBatch(this.batchNos, this.exportCollectConf).then((response) => {
             this.loading = false;
             this.fullscreenLoading = false
             this.$message({
@@ -961,7 +1032,7 @@
         this.fullscreenLoading = true
         let _self = this;
         if (this.selectDataBatchExportList.length > 0) {
-          selectDataBatchExport(this.selectDataBatchExportList,this.exporttBatchConf).then((response) => {
+          selectDataBatchExport(this.selectDataBatchExportList, this.exporttBatchConf).then((response) => {
             this.loading = false;
             this.fullscreenLoading = false
             this.$message({
@@ -986,7 +1057,7 @@
 
         let startTime = this.form.time[0]
         let endTime = this.form.time[1]
-        totalDataBatchExport(this.exporttBatchConf,this.form.area, this.form.batchNos, this.form.clients, this.form.batchStatus, this.form.caseType, startTime, endTime, this.pageSize, this.pageNum).then((response) => {
+        totalDataBatchExport(this.exporttBatchConf, this.form.area, this.form.batchNos, this.form.clients, this.form.batchStatus, this.form.caseType, startTime, endTime, this.pageSize, this.pageNum).then((response) => {
           this.loading = false;
           this.fullscreenLoading = false
           this.$message({
@@ -1000,7 +1071,7 @@
         this.fullscreenLoading = true
         let startTime = this.form.time[0]
         let endTime = this.form.time[1]
-        pageDataBatchExport(this.exporttBatchConf,this.form.area, this.form.batchNos, this.form.clients, this.form.batchStatus, this.form.caseType, startTime, endTime, this.orderBy, this.sort, this.pageSize, this.pageNum).then((response) => {
+        pageDataBatchExport(this.exporttBatchConf, this.form.area, this.form.batchNos, this.form.clients, this.form.batchStatus, this.form.caseType, startTime, endTime, this.orderBy, this.sort, this.pageSize, this.pageNum).then((response) => {
           this.loading = false;
           this.fullscreenLoading = false
           this.$message({
@@ -1411,6 +1482,7 @@
         margin-right: 0px;
       }
     }
+
     .textColor {
       display: inline-block;
       color: #66b1ff;

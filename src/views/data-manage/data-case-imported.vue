@@ -532,6 +532,7 @@
       width="60%"
       center
     >
+      <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span></div>
       <el-row class="pad">
         <el-checkbox v-model="exportConf.id" label="2">ID</el-checkbox>
         <el-checkbox v-model="exportConf.seqNo" label="3">个案序列号</el-checkbox>
@@ -903,17 +904,52 @@
 
         })
       },
+      saveExportCaseConf() {
+        let queryObj = {module: "data-case-import-exportCase", menu: this.exportConf}
+        saveSelectFilter(queryObj).then(data => {
+        });
+      },
+      queryExportCaseConfList() {
+        let queryObj = {module: "data-case-import-exportCase", menu: this.exportConf}
+        selectByModule(queryObj).then(data => {
+          if (data) {
+            this.exportConf = JSON.parse(data.menu);
+          }
+        });
+      },
       showExport(row){
+        this.queryExportCaseConfList();
         this.showExportConfVisible = true;
         this.currentBatchNo = row.batchNo
       },
+      selectAllExport(){
+        for(var p in this.exportConf){//遍历json对象的每个key/value对,p为key
+          this.exportConf[p] = true;
+        }
+      },
       downCaseModule() {
+        let successNum = 0;
+        for (var p in this.exportConf) {//遍历json对象的每个key/value对,p为key
+          if (this.exportConf[p]) {
+            successNum = successNum + 1;
+          }
+        }
+        if (successNum == 0) {
+          this.$message({
+            type: 'error',
+            message: '请先选择导出项!'
+          });
+          this.fullscreenLoading = false
+          this.loading2 = false
+          return;
+        }
         this.loading2 = true
         this.fullscreenLoading = true
         downCaseModule(this.currentBatchNo,this.exportConf).then((response) => {
           this.loading2 = false
           this.fullscreenLoading = false
         })
+        this.saveExportCaseConf();
         this.showExportConfVisible = false;
       },
       editMessage(row) {

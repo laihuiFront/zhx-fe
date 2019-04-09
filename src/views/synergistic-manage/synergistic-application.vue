@@ -180,6 +180,7 @@
       width="60%"
       center
     >
+      <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span></div>
       <el-row class="pad">
 
         <el-checkbox v-model="exportConf.id" label="2">ID</el-checkbox>
@@ -275,7 +276,40 @@
       this.onClickQuery();
     },
     methods: {
+      saveExportApplyConf() {
+        let queryObj = {module: "data-application-manage-exportApply", menu: this.exportConf}
+        saveSelectFilter(queryObj).then(data => {
+        });
+      },
+      queryExportApplyConfList() {
+        let queryObj = {module: "data-application-manage-exportApply", menu: this.exportConf}
+        selectByModule(queryObj).then(data => {
+          if (data) {
+            this.exportConf = JSON.parse(data.menu);
+          }
+        });
+      },
+      selectAllExport(){
+        for(var p in this.exportConf){//遍历json对象的每个key/value对,p为key
+          this.exportConf[p] = true;
+        }
+      },
       exportExcel(){
+        let successNum =0;
+        for(var p in this.exportConf){//遍历json对象的每个key/value对,p为key
+          if (this.exportConf[p]){
+            successNum = successNum+1;
+          }
+        }
+        if (successNum==0){
+          this.$message({
+            type: 'error',
+            message: '请先选择导出项!'
+          });
+          this.fullscreenLoading = false
+          this.loading2 = false
+          return ;
+        }
         if (this.exportType==2){
           this.queryForm.exportConf = this.exportConf;
           expAllSynergisticRecord(this.queryForm).then(res => {
@@ -291,6 +325,7 @@
             this.fullscreenLoading = false
           })
         }
+        this.saveExportApplyConf();
         this.showExportConfVisible = false;
       },
       changeRadio() {
@@ -299,6 +334,7 @@
         } else {
           this.exportType=3;
         }
+        this.queryExportApplyConfList();
         this.dialogVisible1 = false;
         this.showExportConfVisible = true;
       },

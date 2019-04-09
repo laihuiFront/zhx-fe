@@ -720,6 +720,7 @@
       width="60%"
       center
     >
+      <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span></div>
       <el-row class="pad">
 
         <el-checkbox v-model="exportConf.seqno" label="2">个案序列号</el-checkbox>
@@ -820,6 +821,19 @@
       }
     },
     methods: {
+      saveExportReliefConf() {
+        let queryObj = {module: "data-relief-record-exportRelief", menu: this.exportConf}
+        saveSelectFilter(queryObj).then(data => {
+        });
+      },
+      queryExportReliefonfList() {
+        let queryObj = {module: "data-relief-record-exportRelief", menu: this.exportConf}
+        selectByModule(queryObj).then(data => {
+          if (data) {
+            this.exportConf = JSON.parse(data.menu);
+          }
+        });
+      },
       saveConf() {
         this.showQueryConfVisible = false;
         let queryObj = {module: "data-case-manage", menu: this.queryConf}
@@ -853,6 +867,7 @@
          }else if (this.exportType==2){
            this.pageDataExport()
          }
+         this.saveExportReliefConf();
       },
       changeRadio() {
         if (this.radio == 1) {
@@ -860,6 +875,7 @@
         } else {
           this.exportType = 2;
         }
+        this.queryExportReliefonfList();
         this.dialogVisible1 = false;
         this.showExportConfVisible = true;
 
@@ -959,6 +975,11 @@
             this.tableLoad = false
           })
         })
+      },
+      selectAllExport(){
+        for(var p in this.exportConf){//遍历json对象的每个key/value对,p为key
+          this.exportConf[p] = true;
+        }
       },
       totalDataExport() {
         this.fullscreenLoading = true
