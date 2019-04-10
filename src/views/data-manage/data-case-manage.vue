@@ -1655,6 +1655,7 @@
           this.dialogVisibleCase = true
         } else if (command === "exportSelectCase") {
           if (this.deleteList.length >= 1) {
+            this.queryExportCaseConfList();
             this.showExportConfVisible = true;
             this.exportType = 1;
           } else {
