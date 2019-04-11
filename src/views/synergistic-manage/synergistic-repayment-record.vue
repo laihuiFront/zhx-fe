@@ -2,7 +2,7 @@
   <div id="synergistic-repayment-record" class="page-wraper-sub"
   		v-loading="loading2"
   	  v-loading.fullscreen.lock="fullscreenLoading"
-    element-loading-text="正在导入中"
+    element-loading-text="拼命加载中"
     element-loading-spinner="el-icon-loading"
    element-loading-background="rgba(0, 0, 0, 0.7)">
     <el-tabs v-model="queryForm.recordStatus" @tab-click="onClickQuery">

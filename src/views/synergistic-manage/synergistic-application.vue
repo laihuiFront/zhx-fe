@@ -188,7 +188,6 @@
         <el-checkbox v-model="exportConf.client" label="3">委托方</el-checkbox>
         <el-checkbox v-model="exportConf.seqNo" label="3">个案序列号</el-checkbox>
         <el-checkbox v-model="exportConf.name" label="1">姓名</el-checkbox>
-        <el-checkbox v-model="exportConf.address" label="1">信函地址</el-checkbox>
         <el-checkbox v-model="exportConf.synergisticType" label="4">协催类型</el-checkbox>
         <el-checkbox v-model="exportConf.applyContent" label="5">申请内容</el-checkbox>
         <el-checkbox v-model="exportConf.applyTime" label="2">申请时间</el-checkbox>

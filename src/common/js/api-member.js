@@ -18,6 +18,14 @@ export function deleteMember(id) {
   })
 }
 
+export function updateDept(data) {
+  return request({
+    url: '/user/updateDept',
+    method: 'post',
+    data
+  })
+}
+
 export function resetMember(id) {
   return request({
     url: '/user/set/password',

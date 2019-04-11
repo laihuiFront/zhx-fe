@@ -28,34 +28,38 @@
     <div class="right-wrap page-wraper-sub">
       <el-form ref="form" :model="queryForm" :inline="true" class="query-wrap">
         <el-form-item>
+          <el-input type="textarea" v-model="queryForm.id" style="width: 100%;" placeholder="请输入员工ID"
+                    rows="3"></el-input>
+        </el-form-item>
+        <el-form-item>
           <el-input v-model="queryForm.number" clearable placeholder="请输入账号"></el-input>
         </el-form-item>
         <el-form-item>
           <el-input v-model="queryForm.userName" clearable placeholder="请输入员工姓名"></el-input>
         </el-form-item>
-        <el-form-item>
-          <el-button icon="el-icon-search" type="primary" @click="onClickQuery">查询</el-button>
-<!--          <el-button icon="el-icon-search" type="text" @click="onClickQuery">查询</el-button>
--->          <el-button icon="el-icon-refresh" type="primary" @click="onClickReset">重置</el-button>
-        </el-form-item>
-        <el-form-item class="operation-item">
-          <el-button type="primary" @click="onClickAdd" v-has="'新增员工'">新增员工</el-button>
-
-          <el-button type="primary" @click="onClickModuleImport" >导入模板下载</el-button>
-          <el-upload
-            class="upload-demo"
-            :action="action+'/user/import'"
-            :headers="header"
-            :show-file-list=false
-            :on-success="uploadSuccess"
-            :on-progress="onProgress"
-          >
-            <el-button type="primary" style="margin-left:10px;">导入员工信息</el-button>
-          </el-upload>
-          <el-button type="primary" @click="onClickImport" >导出员工信息</el-button>
-        </el-form-item>
+        <el-row>
+          <el-form-item>
+            <el-button icon="el-icon-search" type="primary" @click="onClickQuery">查询</el-button>
+            <el-button icon="el-icon-refresh" type="primary" @click="onClickReset">重置</el-button>
+            <el-button type="primary" @click="onClickAdd" v-has="'新增员工'">新增员工</el-button>
+            <el-button type="primary" @click="onClickUpdateDept" >批量修改部门</el-button>
+            <el-button type="primary" @click="onClickModuleImport" >导入模板下载</el-button>
+            <el-upload
+              class="upload-demo"
+              :action="action+'/user/import'"
+              :headers="header"
+              :show-file-list=false
+              :on-success="uploadSuccess"
+              :on-progress="onProgress"
+            >
+              <el-button type="primary" style="margin-left:10px;">导入员工信息</el-button>
+            </el-upload>
+            <el-button type="primary" @click="onClickImport" >导出员工信息</el-button>
+          </el-form-item>
+        </el-row>
       </el-form>
-      <el-table v-loading="tableLoad" highlight-current-row sortable="custom" border stripe @sort-change="handleSort"  @selection-change="handleSelectionChange" :row-class-name="rowColor"  height="1" :data="memberList" style="width: 100%" class="table-wrap">
+      <el-table v-loading="tableLoad" highlight-current-row sortable="custom" border stripe  @sort-change="handleSort"  @selection-change="handleSelectionChange" :row-class-name="rowColor"  height="1" :data="memberList" style="width: 100%" class="table-wrap">
+        <el-table-column type="selection" align="center" width="55"></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']"  align="center" prop="id" min-width="100" label="员工ID" show-overflow-tooltip></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center" prop="userName" min-width="120" label="员工姓名" show-overflow-tooltip></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center"  prop="number" min-width="120" show-overflow-tooltip label="账号"></el-table-column>
@@ -200,14 +204,46 @@
           <el-button type="primary" @click="onClickSaveDept">确 定</el-button>
         </span>
       </el-dialog>
+
+
     </el-dialog>
+      <el-dialog
+        width="300px"
+        title="选择部门"
+        class="dialog-wrap department-wrap"
+        :visible.sync="dialogData.departmentVisible2"
+        :close-on-click-modal="false"
+        append-to-body
+      >
+        <el-tree
+          v-if="departmentTree.length>0"
+          ref="tree"
+          :data="departmentTree"
+          node-key="id"
+          :expand-on-click-node="false"
+          :default-expanded-keys="[departmentTree[0].id]"
+          @node-click="onSelectDepartment"
+          class="tree-wrap"
+          width="200px"
+        >
+          <span
+            :class="{active:queryForm.department === data.id}"
+            class="custom-tree-node"
+            slot-scope="{ node, data }"
+          >{{data.orgName}}</span>
+        </el-tree>
+        <span slot="footer" class="footer">
+          <el-button @click="$set(dialogData, 'departmentVisible2' ,false)">取 消</el-button>
+          <el-button type="primary" @click="updateDept">确 定</el-button>
+        </span>
+      </el-dialog>
   </div>
 </template>
 
 <script>
   import {baseURL} from '@/common/js/request.js';
 import { getDepartmentTree, getRoleList } from '@/common/js/api-setting'
-import { listMember, deleteMember,exportList,exportModule, resetMember,changeStatus, addMember, updateMember, getUserById, getPositionList,getLoginName} from '@/common/js/api-member'
+import { listMember, deleteMember,updateDept,exportList,exportModule, resetMember,changeStatus, addMember, updateMember, getUserById, getPositionList,getLoginName} from '@/common/js/api-member'
 export default {
   name: 'memberIn',
   data () {
@@ -223,6 +259,7 @@ export default {
       queryForm: {
         pageNum: 1,
         pageSize: 50,
+        id:'',
         department: null,
         orderBy:null,
         sort:null
@@ -232,6 +269,7 @@ export default {
         title: '新增权限组',
         type: 'add',
         departmentVisible: false,
+        departmentVisible2:false,
       },
       total: 0,
       memberList: [],
@@ -274,8 +312,11 @@ export default {
     rowColor({row}){
       return `color_${row.color}`;
     },
-    handleSelectionChange(val) {
-      this.multipleSelection = val;
+    handleSelectionChange(row) {
+      let _self = this
+      row.forEach(function (currentValue, index, arr) {
+        _self.multipleSelection.push(currentValue.id)
+      })
     },
     onProgress(){
       this.loading2=true
@@ -344,6 +385,7 @@ export default {
       this.memberList = []
       const data = {
         status: 1,
+        ids: this.queryForm.id.trim()==""?null:this.queryForm.id.split('\n'),
         department: this.queryForm.department,
         number: this.queryForm.number,
         userName: this.queryForm.userName,
@@ -356,6 +398,17 @@ export default {
         this.total = response.total
         this.tableLoad = false
       })
+    },
+    onClickUpdateDept(){
+      if (this.multipleSelection.length<=0){
+        this.$message({
+          message: "请先选择员工信息",
+          type: "error"
+        });
+        return;
+      }
+      this.$set(this.dialogData, 'departmentVisible2', true);
+      this.dialogData.departmentVisible2 = true;
     },
     onClickAdd () {
       // this.memberInfo.roleList = null
@@ -491,6 +544,23 @@ export default {
       this.$set(this.memberInfo, 'departId', this.currentDept.id)
       this.$set(this.memberInfo, 'department', this.currentDept.orgName)
       this.$set(this.dialogData, 'departmentVisible', false)
+    },
+    updateDept () {
+      this.$set(this.memberInfo, 'departId', this.currentDept.id)
+      this.$set(this.memberInfo, 'department', this.currentDept.orgName)
+      this.$set(this.memberInfo, 'ids', this.multipleSelection)
+      this.$set(this.dialogData, 'departmentVisible2', false)
+      let { ...resultData } = this.memberInfo
+
+      updateDept(resultData).then(response => {
+        this.onClickQuery()
+        this.onClickCancel()
+        this.$message({
+          message: "修改部门成功",
+          type: "success"
+        });
+      })
+
     },
     onClickReset () {
       this.queryForm = {

@@ -406,16 +406,6 @@
           </el-col>
           <el-col :span="12">
             <div class="grid-content bg-purple">
-              <el-form-item label="回款率">
-                <el-input v-model="messageForm.targetRate" placeholder="请输入回款率" clearable></el-input>
-              </el-form-item>
-
-            </div>
-          </el-col>
-        </el-row>
-        <el-row :gutter="24">
-          <el-col :span="12">
-            <div class="grid-content bg-purple">
               <el-form-item label="催收区域">
                 <el-select v-model="messageForm.area" placeholder="请选择催收区域" clearable>
                   <el-option
@@ -426,8 +416,11 @@
                   </el-option>
                 </el-select>
               </el-form-item>
+
             </div>
           </el-col>
+        </el-row>
+        <el-row :gutter="24">
           <el-col :span="12">
             <div class="grid-content bg-purple">
               <el-form-item label="委  托  方"
@@ -444,8 +437,6 @@
               </el-form-item>
             </div>
           </el-col>
-        </el-row>
-        <el-row :gutter="24">
           <el-col :span="12">
             <div class="grid-content bg-purple">
               <el-form-item label="案件类型">
@@ -460,7 +451,9 @@
               </el-form-item>
             </div>
           </el-col>
-          <el-col :span="12">
+        </el-row>
+        <el-row :gutter="24">
+          <el-col :span="15">
             <div class="grid-content bg-purple">
               <el-form-item label="委案日期"
                             prop="caseTime"
@@ -477,9 +470,9 @@
                   </el-date-picker>
                 </div>
               </el-form-item>
-
             </div>
           </el-col>
+
         </el-row>
         <el-row :gutter="24">
           <el-col :span="15">
@@ -507,7 +500,6 @@
           </el-col>
         </el-row>
       </el-form>
-
       <span slot="footer" class="footer">
     <el-button @click="backForm2">取 消</el-button>
     <el-button type="primary" @click="submitmsgForm('messageForm')">确 定</el-button>
