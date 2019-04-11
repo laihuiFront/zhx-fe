@@ -404,8 +404,7 @@
     >
       <el-table-column
         type="selection"
-        align="center"
-        width="55">
+        align="center">
       </el-table-column>
       <el-table-column
         sortable="custom"
@@ -421,7 +420,6 @@
         align="center"
         sortable="custom"
         :sort-orders="['ascending','descending']"
-        width="140"
         label="催收区域"
       >
       </el-table-column>
@@ -429,7 +427,6 @@
         prop="collectStatusMsg"
         align="center"
         sortable="custom"
-        min-width="140"
         :sort-orders="['ascending','descending']"
         label="催收状态"
         show-overflow-tooltip>
@@ -439,14 +436,12 @@
         sortable="custom"
         :sort-orders="['ascending','descending']"
         label="批次号"
-        min-width="120"
         align="center"
         show-overflow-tooltip>
 
       </el-table-column>
       <el-table-column
         prop="seqNo"
-        width="160"
         sortable="custom"
         :sort-orders="['ascending','descending']"
         align="center"
@@ -464,12 +459,10 @@
         label="委案日期"
         sortable="custom"
         :sort-orders="['ascending','descending']"
-        width="120"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="expectTime"
-        width="120"
         sortable="custom"
         :sort-orders="['ascending','descending']"
         align="center"
@@ -488,14 +481,12 @@
         prop="identNo"
         sortable="custom"
         :sort-orders="['ascending','descending']"
-        min-width="160"
         align="center"
         label="证件号"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="area"
-        min-width="130"
         sortable="custom"
         :sort-orders="['ascending','descending']"
         align="center"
@@ -504,7 +495,6 @@
       </el-table-column>
       <el-table-column
         prop="cardNo"
-        min-width="160"
         sortable="custom"
         :sort-orders="['ascending','descending']"
         align="center"
@@ -514,7 +504,6 @@
       <el-table-column
         prop="moneyMsg"
         sortable="custom"
-        min-width="120"
         :sort-orders="['ascending','descending']"
         label="委案金额"
         align="center"
@@ -523,7 +512,6 @@
       <el-table-column
         prop="balanceMsg"
         sortable="custom"
-        min-width="120"
         :sort-orders="['ascending','descending']"
         align="center"
         label="委案余额"
@@ -533,7 +521,6 @@
         prop="collectDate"
         sortable="custom"
         :sort-orders="['ascending','descending']"
-        width="130"
         align="center"
         label="上次通电时间"
         show-overflow-tooltip>
@@ -543,7 +530,6 @@
         sortable="custom"
         :sort-orders="['ascending','descending']"
         label="最新催记"
-        min-width="140"
         align="center"
         show-overflow-tooltip>
       </el-table-column>
@@ -552,14 +538,12 @@
         sortable="custom"
         :sort-orders="['ascending','descending']"
         label="催收员"
-        min-width="140"
         align="center"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="collectTimes"
         label="跟进次数"
-        min-width="120"
         align="center"
         sortable="custom"
         :sort-orders="['ascending','descending']"
@@ -567,7 +551,6 @@
       </el-table-column>
       <el-table-column
         prop="distributeTime"
-        width="130"
         align="center"
         sortable="custom"
         :sort-orders="['ascending','descending']"
@@ -577,7 +560,6 @@
       <el-table-column
         prop="proRepayAmtMsg"
         label="承诺还款金额"
-        width="120"
         sortable="custom"
         :sort-orders="['ascending','descending']"
         align="center"
@@ -585,7 +567,6 @@
       </el-table-column>
       <el-table-column
         prop="bankAmtMsg"
-        width="130"
         sortable="custom"
         :sort-orders="['ascending','descending']"
         align="center"
@@ -594,7 +575,6 @@
       </el-table-column>
       <el-table-column
         prop="enRepayAmtMsg"
-        width="120"
         align="center"
         sortable="custom"
         :sort-orders="['ascending','descending']"
@@ -603,7 +583,6 @@
       </el-table-column>
       <el-table-column
         prop="accountAge"
-        min-width="120"
         label="逾期账龄"
         sortable="custom"
         :sort-orders="['ascending','descending']"
@@ -611,7 +590,6 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        min-width="140"
         prop="distributeHistory"
         sortable="custom"
         align="center"
@@ -621,7 +599,6 @@
       </el-table-column>
       <el-table-column
         prop="collectInfo"
-        min-width="180"
         sortable="custom"
         align="center"
         :sort-orders="['ascending','descending']"

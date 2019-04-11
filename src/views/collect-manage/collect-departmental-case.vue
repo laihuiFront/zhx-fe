@@ -532,15 +532,13 @@
         >
           <el-table-column
             type="selection"
-            align="center"
-            width="55">
+            align="center">
           </el-table-column>
           <el-table-column
             label="个案序列号"
             prop="seqno"
             sortable="custom"
             :sort-orders="['ascending', 'descending']"
-            min-width="160"
             header-align="center"
             align="center"
           >
@@ -559,7 +557,6 @@
             :key="index"
             v-bind="item"
             header-align="center"
-            min-width="90"
             sortable="custom"
             :sort-orders="['ascending','descending']"
             align="center"
@@ -760,7 +757,6 @@
         tableCol_data: [
           {
             prop: "countFollow",
-            width:120,
             label: "跟进次数"
           },
           {
@@ -769,27 +765,22 @@
           },
           {
             prop: "nextFollDate",
-            width:"120",
             label: "下次跟进日期"
           },
           {
             prop: "caseAllotTime",
-            width:130,
             label: "案件分配时间"
           },
           {
             prop: "collectStatusMsg",
-            width:130,
             label: "催收状态"
           },
           {
             prop: "collectionType",
-            width:130,
             label: "催收分类"
           },
           {
             prop: "accountAge",
-            width:130,
             label: "逾期账龄"
           },
          /* {
@@ -799,12 +790,10 @@
           },*/
           {
             prop: "caseDate",
-            width:"120",
             label: "委案日期"
           },
           {
             prop: "expectTime",
-            width:"120",
             label: "预计退案日期"
           },
           {
@@ -813,62 +802,50 @@
           },
           {
             prop: "cardNo",
-            width:"160",
             label: "卡号"
           },
           {
             prop: "identNo",
-            width:"160",
             label: "证件号"
           },
           {
             prop: "moneyMsg",
-            width:120,
             label: "委案金额"
           },
           {
             prop: "balanceMsg",
-            width:120,
             label: "委案余额"
           },
           {
             prop: "moneyStartMsg",
-            width:120,
             label: "最新欠款"
           },
           {
             prop: "overDays",
-            width:130,
             label: "逾期天数"
           },
           {
             prop: "enRepayAmtMsg",
-            width:120,
             label: "已还款金额"
           },
           {
             prop: "repayAmtMsg",
-            width:"130",
             label: "承诺还款金额"
           },
           {
             prop: "bankAmtMsg",
-            width:"130",
             label: "待银行查账金额"
           },
           {
             prop: "lastPhoneTime",
-            width:"130",
             label: "上次通电时间"
           },
           {
             prop: "leaveDays",
-            width:130,
             label: "闲置天数"
           },
           {
             prop: "collectInfo",
-            width:"180",
             label: "催收小结"
           }
         ],
