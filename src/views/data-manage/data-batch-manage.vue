@@ -80,7 +80,7 @@
           <el-button type="primary" :disabled=returnTrue @click="returnCaseList" v-has="'批次退案'">批量退案</el-button>
           <el-button type="primary" @click="MorebackCase " :disabled=backTrue>批量恢复</el-button>
           <el-button type="primary" @click="open7" v-has="'批次删除'">批量删除</el-button>
-          <el-button type="primary" @click="dialogVisible1 = true" v-has="'导出查询结果'">导出查询结果</el-button>
+          <el-button type="primary" @click="changeRadio" v-has="'导出查询结果'">导出查询结果</el-button>
           <el-button type="primary" @click='showSelectBatch' v-has="'导出所选批次'">导出所选批次</el-button>
           <el-button type="primary" @click="showSelectCollect1" v-has="'批量导出批次催记'">批量导出批次催记</el-button>
         </el-form-item>
@@ -1302,14 +1302,15 @@
 
       },
       changeRadio() {
-        if (this.radio == 1) {
-          this.exportType = 2;
-        } else {
-          this.exportType = 3;
-        }
+        // if (this.radio == 1) {
+        //   this.exportType = 2;
+        // } else {
+        //   this.exportType = 3;
+        // }
+        this.exportType = 2;
         this.queryExportBatchConfList();
         this.showExportBatchConfVisible = true;
-        this.dialogVisible1 = false;
+        //this.dialogVisible1 = false;
       },
       exportCollect() {
         let successNum = 0;

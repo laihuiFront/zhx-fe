@@ -30,7 +30,7 @@
       </el-upload>
       <el-button type="primary" @click="onClickExportSelectedRecord" style="margin-left:-6px;" v-has="'导出选中数据'">导出选中数据
       </el-button>
-      <el-button type="primary" @click="dialogExportVisible = true" style="margin-left:10px;" v-has="'导出查询结果'">导出查询结果
+      <el-button type="primary" @click="changeRadio" style="margin-left:10px;" v-has="'导出查询结果'">导出查询结果
       </el-button>
     </bank-record-query>
     <el-table highlight-current-row v-loading="tableLoad"
@@ -311,11 +311,12 @@
     },
     methods: {
       changeRadio() {
-        if (this.radio == 1) {
+        /*if (this.radio == 1) {
           this.handleCommand('all')
         } else {
           this.handleCommand('current')
-        }
+        }*/
+        this.handleCommand('all')
       },
       uploadSuccess(res, file, fileList) {
         this.loading2 = true

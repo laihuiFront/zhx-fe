@@ -1476,12 +1476,13 @@
         this.showQueryConfVisible = true;
       },
       changeRadio() {
-        if (this.radio == 1) {
+        /*if (this.radio == 1) {
           this.exportType = 2;
         } else {
           this.exportType = 3;
-        }
-        this.dialogVisibleCase = false;
+        }*/
+        this.exportType = 2;
+        //this.dialogVisibleCase = false;
         this.queryExportCaseConfList();
         this.showExportConfVisible = true;
       },
@@ -1654,7 +1655,8 @@
       handleExport(command) {
 
         if (command === "exportTotalCase") {
-          this.dialogVisibleCase = true
+          //this.dialogVisibleCase = true
+          this.changeRadio();
         } else if (command === "exportSelectCase") {
           if (this.deleteList.length >= 1) {
             this.queryExportCaseConfList();

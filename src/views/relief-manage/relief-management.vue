@@ -118,7 +118,7 @@
           <el-button type="primary" 　v-show="istrue3" v-has="'批量审核'" @click=open9>批量审核</el-button>
           <el-button type="primary" 　v-show="istrue6" v-has="'批量确认'" @click=open10>批量确认</el-button>
           <el-button type="primary" 　v-show="istrue4" v-has="'批量下载附件'" @click=moredownDataList>批量下载附件</el-button>
-          <el-button type="primary" 　v-show="istrue5" v-has="'导出减免结果'" @click="dialogVisible1 = true">导出减免结果</el-button>
+          <el-button type="primary" 　v-show="istrue5" v-has="'导出减免结果'" @click="changeRadio">导出减免结果</el-button>
         </el-form-item>
       </el-row>
     </el-form>
@@ -870,13 +870,14 @@
          this.saveExportReliefConf();
       },
       changeRadio() {
-        if (this.radio == 1) {
+        /*if (this.radio == 1) {
           this.exportType = 1;
         } else {
           this.exportType = 2;
-        }
+        }*/
+        this.exportType = 1;
         this.queryExportReliefonfList();
-        this.dialogVisible1 = false;
+        //this.dialogVisible1 = false;
         this.showExportConfVisible = true;
 
       },

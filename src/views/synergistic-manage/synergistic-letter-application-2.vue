@@ -198,7 +198,7 @@
                 </el-dropdown>
               </el-form-item>
               <el-form-item>
-                <el-button type="primary" @click="dialogVisibleCase=true;">导出查询结果</el-button>
+                <el-button type="primary" @click="changeRadio">导出查询结果</el-button>
               </el-form-item>
             </el-row>
           </el-form>
@@ -619,13 +619,14 @@ export default {
       this.showExportConfVisible = false;
     },
   	changeRadio(){
-      if(this.radio==1){
+      /*if(this.radio==1){
         this.exportType=2;
       }else{
         this.exportType=3;
-      }
+      }*/
+      this.exportType=2;
       this.queryExportLetterConfList();
-      this.dialogVisibleCase = false;
+      //this.dialogVisibleCase = false;
       this.showExportConfVisible = true;
   	},
     exportXh(command) {

@@ -36,7 +36,7 @@
           <el-button size="mini" type="text" @click="finishVisible=false">取消</el-button>
           <el-button type="primary" size="mini" @click="onClickBatchSaveFinish">确定</el-button>
         </div>
-        <el-button type="primary" slot="reference" @click="onclickBatchFinish">完成协催</el-button>
+        <el-button type="primary" slot="reference" @click="onclickBatchFinish" style="margin-right:10px;">完成协催1</el-button>
       </el-popover>
 
       <el-button type="primary" @click="onClickBatchApprove(-1)" v-has="'撤销协催'">撤销协催</el-button>
@@ -68,7 +68,7 @@
         </el-dropdown-menu>
       </el-dropdown>-->
       <el-button type="primary" v-has="'导出查询条件'" v-if="queryForm.applyStatus==='1'"
-                 style="display:inline-block;margin-left:10px;" @click="dialogVisible1=true">导出查询条件
+                 style="display:inline-block;margin-left:10px;" @click="changeRadio">导出查询结果
       </el-button>
     </syn-record-query>
     <el-table highlight-current-row v-loading="tableLoad"
@@ -331,13 +331,14 @@
         this.showExportConfVisible = false;
       },
       changeRadio() {
-        if (this.radio == 1) {
+        /*if (this.radio == 1) {
           this.exportType=2;
         } else {
           this.exportType=3;
-        }
+        }*/
+        this.exportType=2;
         this.queryExportApplyConfList();
-        this.dialogVisible1 = false;
+        //this.dialogVisible1 = false;
         this.showExportConfVisible = true;
       },
       editCase(id, name, seqNo) {

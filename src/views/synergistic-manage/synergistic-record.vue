@@ -9,7 +9,7 @@
       @reset="onClickReset"
       @query="onClickQuery"
       :queryForm="queryForm">
-      <el-button type="primary" @click="dialogExportVisible = true" v-has="'导出查询结果'">导出查询结果</el-button>
+      <el-button type="primary" @click="changeRadio" v-has="'导出查询结果'">导出查询结果</el-button>
     </syn-record-query>
     <el-table highlight-current-row v-loading="tableLoad"
               @sort-change="handleSort"
@@ -216,13 +216,14 @@
         this.showExportConfVisible = false;
       },
       changeRadio() {
-        if (this.radio == 1) {
+        /*if (this.radio == 1) {
           this.exportType=2;
         } else {
           this.exportType=3;
-        }
+        }*/
+        this.exportType=2;
         this.queryExportApplyConfList();
-        this.dialogExportVisible = false;
+        //this.dialogExportVisible = false;
         this.showExportConfVisible = true;
       },
       editCase(id, name, seqNo) {
