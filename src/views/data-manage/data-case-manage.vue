@@ -397,16 +397,18 @@
               border
               stripe
               :row-class-name="rowColor"
-              style="margin-top:10px;min-height:400px;margin-bottom: 40px;"
+              style="margin-top:10px;min-height:390px;margin-bottom: 40px;"
               @selection-change="handleSelectionChange"
               @row-dblclick="showDetail"
               @sort-change="handleSort"
     >
       <el-table-column
+        min-width="5"
         type="selection"
         align="center">
       </el-table-column>
       <el-table-column
+        min-width="5"
         sortable="custom"
         :sort-orders="['ascending','descending']"
         label="ID"
@@ -416,6 +418,7 @@
 
       </el-table-column>
       <el-table-column
+        min-width="5"
         prop="collectArea"
         align="center"
         sortable="custom"
@@ -424,6 +427,7 @@
       >
       </el-table-column>
       <el-table-column
+        min-width="5"
         prop="collectStatusMsg"
         align="center"
         sortable="custom"
@@ -432,6 +436,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
+        min-width="5"
         prop="batchNo"
         sortable="custom"
         :sort-orders="['ascending','descending']"
@@ -441,6 +446,7 @@
 
       </el-table-column>
       <el-table-column
+        min-width="5"
         prop="seqNo"
         sortable="custom"
         :sort-orders="['ascending','descending']"
@@ -454,6 +460,7 @@
         </template>
       </el-table-column>
       <el-table-column
+        min-width="5"
         prop="caseDate"
         align="center"
         label="委案日期"
@@ -462,6 +469,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
+        min-width="5"
         prop="expectTime"
         sortable="custom"
         :sort-orders="['ascending','descending']"
@@ -470,6 +478,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
+        min-width="5"
         prop="name"
         sortable="custom"
         :sort-orders="['ascending','descending']"
@@ -478,6 +487,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
+        min-width="5"
         prop="identNo"
         sortable="custom"
         :sort-orders="['ascending','descending']"
@@ -486,6 +496,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
+        min-width="5"
         prop="area"
         sortable="custom"
         :sort-orders="['ascending','descending']"
@@ -494,6 +505,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
+        min-width="5"
         prop="cardNo"
         sortable="custom"
         :sort-orders="['ascending','descending']"
@@ -502,6 +514,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
+        min-width="5"
         prop="moneyMsg"
         sortable="custom"
         :sort-orders="['ascending','descending']"
@@ -510,6 +523,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
+        min-width="5"
         prop="balanceMsg"
         sortable="custom"
         :sort-orders="['ascending','descending']"
@@ -518,6 +532,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
+        min-width="5"
         prop="collectDate"
         sortable="custom"
         :sort-orders="['ascending','descending']"
@@ -526,6 +541,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
+        min-width="5"
         prop="newCase"
         sortable="custom"
         :sort-orders="['ascending','descending']"
@@ -534,6 +550,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
+        min-width="5"
         prop="odv"
         sortable="custom"
         :sort-orders="['ascending','descending']"
@@ -542,6 +559,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
+        min-width="5"
         prop="collectTimes"
         label="跟进次数"
         align="center"
@@ -550,6 +568,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
+        min-width="5"
         prop="distributeTime"
         align="center"
         sortable="custom"
@@ -558,6 +577,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
+        min-width="5"
         prop="proRepayAmtMsg"
         label="承诺还款金额"
         sortable="custom"
@@ -566,6 +586,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
+        min-width="5"
         prop="bankAmtMsg"
         sortable="custom"
         :sort-orders="['ascending','descending']"
@@ -574,6 +595,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
+        min-width="5"
         prop="enRepayAmtMsg"
         align="center"
         sortable="custom"
@@ -582,6 +604,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
+        min-width="5"
         prop="accountAge"
         label="逾期账龄"
         sortable="custom"
@@ -590,6 +613,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
+        min-width="5"
         prop="distributeHistory"
         sortable="custom"
         align="center"
@@ -598,6 +622,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
+        min-width="5"
         prop="collectInfo"
         sortable="custom"
         align="center"

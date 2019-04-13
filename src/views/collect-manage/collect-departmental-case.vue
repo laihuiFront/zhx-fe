@@ -532,12 +532,14 @@
         >
           <el-table-column
             type="selection"
+            min-width="5"
             align="center">
           </el-table-column>
           <el-table-column
             label="个案序列号"
             prop="seqno"
             sortable="custom"
+            min-width="5"
             :sort-orders="['ascending', 'descending']"
             header-align="center"
             align="center"
@@ -556,6 +558,7 @@
             v-for="(item, index) in tableCol_data"
             :key="index"
             v-bind="item"
+            min-width="5"
             header-align="center"
             sortable="custom"
             :sort-orders="['ascending','descending']"

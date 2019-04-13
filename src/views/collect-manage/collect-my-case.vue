@@ -537,8 +537,8 @@
             label="个案序列号"
             prop="seqno"
             sortable="custom"
+            min-width="5"
             :sort-orders="['ascending', 'descending']"
-            min-width="160"
             header-align="center"
             align="center"
           >
@@ -556,8 +556,8 @@
             v-for="(item, index) in tableCol_data"
             :key="index"
             v-bind="item"
+            min-width="5"
             sortable="custom"
-            min-width="100"
             :sort-orders="['ascending', 'descending']"
             header-align="center"
             align="center"
@@ -772,12 +772,10 @@ export default {
         },
         {
           prop: "nextFollDate",
-          width: "130",
           label: "下次跟进日期"
         },
         {
           prop: "caseAllotTime",
-          width: 130,
           label: "案件分配时间"
         },
         {
@@ -795,12 +793,10 @@ export default {
 
         {
           prop: "caseDate",
-          width: "120",
           label: "委案日期"
         },
         {
           prop: "expectTime",
-          width: "120",
           label: "预计退案日期"
         },
         {
@@ -809,12 +805,10 @@ export default {
         },
         {
           prop: "cardNo",
-          width: 160,
           label: "卡号"
         },
         {
           prop: "identNo",
-          width: 160,
           label: "证件号"
         },
         {
@@ -824,12 +818,10 @@ export default {
         },
         {
           prop: "balanceMsg",
-          width: 120,
           label: "委案余额"
         },
         {
           prop: "moneyStartMsg",
-          width: 120,
           label: "最新欠款"
         },
         {
@@ -838,22 +830,18 @@ export default {
         },
         {
           prop: "enRepayAmtMsg",
-          width: "120",
           label: "已还款金额"
         },
         {
           prop: "repayAmtMsg",
-          width: "120",
           label: "承诺还款金额"
         },
         {
           prop: "bankAmtMsg",
-          width: "130",
           label: "待银行查账金额"
         },
         {
           prop: "lastPhoneTime",
-          width: "130",
           label: "上次通电时间"
         },
         {
@@ -862,7 +850,6 @@ export default {
         },
         {
           prop: "collectInfo",
-          width: "180",
           label: "催收小结"
         }
       ],

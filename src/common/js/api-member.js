@@ -26,6 +26,14 @@ export function updateDept(data) {
   })
 }
 
+export function batchDelete(data) {
+  return request({
+    url: '/user/batchDelete',
+    method: 'post',
+    data
+  })
+}
+
 export function resetMember(id) {
   return request({
     url: '/user/set/password',
@@ -64,6 +72,14 @@ export function getLoginName(name) {
 export function changeStatus(data){
   return request({
     url: '/user/update/status',
+    method: 'post',
+    data
+  })
+}
+
+export function changeBatchStatus(data){
+  return request({
+    url: '/user/update/batchStatus',
     method: 'post',
     data
   })

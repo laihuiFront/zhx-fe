@@ -7,7 +7,27 @@ body, html{
   background: #fff;
   color: #000;
 }
-
+body input{
+  color: #000 !important;
+  &::placeholder{
+    color: #000 !important;
+  }
+}
+body textarea{
+  color: #000 !important;
+  &::placeholder{
+    color: #000 !important;
+  }
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  color:    #000;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+  color:    #000;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+  color:    #000;
+}
 .tabs-h{
   height: 100%;
   .el-tabs__content{

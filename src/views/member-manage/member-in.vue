@@ -42,7 +42,9 @@
             <el-button icon="el-icon-search" type="primary" @click="onClickQuery">查询</el-button>
             <el-button icon="el-icon-refresh" type="primary" @click="onClickReset">重置</el-button>
             <el-button type="primary" @click="onClickAdd" v-has="'新增员工'">新增员工</el-button>
-            <el-button type="primary" @click="onClickUpdateDept" >批量修改部门</el-button>
+            <el-button type="primary" @click="onClickUpdateDept" >修改部门</el-button>
+            <el-button type="primary" @click="onClickBatchDelete" >刪除</el-button>
+            <el-button type="primary" @click="onClickBatchLeave" >离职</el-button>
             <el-button type="primary" @click="onClickModuleImport" >导入模板下载</el-button>
             <el-upload
               class="upload-demo"
@@ -54,7 +56,7 @@
             >
               <el-button type="primary" style="margin-left:10px;">导入员工信息</el-button>
             </el-upload>
-            <el-button type="primary" @click="onClickImport" >导出员工信息</el-button>
+            <el-button type="primary" @click="onClickImport" style="margin-left:10px;">导出员工信息</el-button>
           </el-form-item>
         </el-row>
       </el-form>
@@ -243,7 +245,7 @@
 <script>
   import {baseURL} from '@/common/js/request.js';
 import { getDepartmentTree, getRoleList } from '@/common/js/api-setting'
-import { listMember, deleteMember,updateDept,exportList,exportModule, resetMember,changeStatus, addMember, updateMember, getUserById, getPositionList,getLoginName} from '@/common/js/api-member'
+import { listMember, deleteMember,changeBatchStatus,batchDelete,updateDept,exportList,exportModule, resetMember,changeStatus, addMember, updateMember, getUserById, getPositionList,getLoginName} from '@/common/js/api-member'
 export default {
   name: 'memberIn',
   data () {
@@ -314,6 +316,7 @@ export default {
     },
     handleSelectionChange(row) {
       let _self = this
+      _self.multipleSelection = []
       row.forEach(function (currentValue, index, arr) {
         _self.multipleSelection.push(currentValue.id)
       })
@@ -398,6 +401,62 @@ export default {
         this.total = response.total
         this.tableLoad = false
       })
+    },
+    onClickBatchLeave () {
+      if (this.multipleSelection.length<=0){
+        this.$message({
+          message: "请先选择员工信息",
+          type: "error"
+        });
+        return;
+      }
+
+      this.$confirm('确定对该员工执行离职操作？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        debugger;
+        const data = {
+          ids: this.multipleSelection,
+          status: 0,
+          enable: 0
+        }
+        changeBatchStatus(data).then(() => {
+          this.$message({
+            message: "员工离职操作成功",
+            type: "success"
+          });
+          this.onClickQuery()
+        })
+      }).catch(() => { })
+    },
+    onClickBatchDelete(){
+      if (this.multipleSelection.length<=0){
+        this.$message({
+          message: "请先选择员工信息",
+          type: "error"
+        });
+        return;
+      }
+      this.$confirm('此操作将永久删除该员工，是否继续？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.memberInfo = {
+          ids:this.multipleSelection
+        }
+        batchDelete(this.memberInfo).then(response => {
+          this.$message({
+            message: "刪除成功",
+            type: "success"
+          });
+          this.onClickQuery();
+        })
+      }).catch(() => { })
+
+
     },
     onClickUpdateDept(){
       if (this.multipleSelection.length<=0){

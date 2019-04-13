@@ -97,7 +97,7 @@
     >
       <el-table-column
         label="个案序列号"
-        min-width="160"
+        min-width="5"
         prop="seqno"
         sortable="custom"
         :sort-orders="['ascending','descending']"
@@ -112,14 +112,13 @@
         v-for="(item, index) in tablecol_data"
         v-bind="item"
         :key="index"
-        min-width="90"
+        min-width="5"
         sortable="custom"
         :sort-orders="['ascending','descending']"
         align="center"
         header-align="center"
       ></el-table-column>
-      <el-table-column label="操作" align="center">
-
+      <el-table-column label="操作" align="center"  min-width="5">
       <template slot-scope="scope">
           <el-button @click="dialogVisible=true;currentRow = scope;" v-has="'评语'">
             评语
