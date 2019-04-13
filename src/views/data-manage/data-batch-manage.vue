@@ -76,6 +76,7 @@
         <el-form-item>
           <el-button type="primary" icon="el-icon-search" @click="search">查询</el-button>
           <el-button type="primary" icon="el-icon-refresh" @click=resetForm>重置</el-button>
+          <el-button type="primary" @click="dialogVisible = true">新增批次</el-button>
           <el-button type="primary" :disabled=returnTrue @click="returnCaseList" v-has="'批次退案'">批量退案</el-button>
           <el-button type="primary" @click="MorebackCase " :disabled=backTrue>批量恢复</el-button>
           <el-button type="primary" @click="open7" v-has="'批次删除'">批量删除</el-button>
@@ -205,7 +206,7 @@
         label="录入时间"
         show-overflow-tooltip>
       </el-table-column>
-      <el-table-column
+      <!--<el-table-column
         prop="batchRemark"
         min-width="250"
         sortable="custom"
@@ -213,7 +214,7 @@
         align="center"
         label="批次备注"
         show-overflow-tooltip>
-      </el-table-column>
+      </el-table-column>-->
       <el-table-column
         prop="creatUser"
         sortable="custom"
@@ -294,20 +295,11 @@
               <el-form-item label="批  次  号"
                             prop="batchNo"
                             :rules="{ required: true, message: '批次号不能为空', trigger: 'blur'}">
-                <el-input v-model="messageForm.batchNo" :disabled=true placeholder="请输入批次号" clearable></el-input>
+                <el-input v-model="messageForm.batchNo" :disabled=true placeholder="请输入批次号" maxlength="80"
+                          clearable></el-input>
               </el-form-item>
             </div>
           </el-col>
-          <el-col :span="12">
-            <div class="grid-content bg-purple">
-              <el-form-item label="回款率">
-                <el-input v-model="messageForm.targetRate" placeholder="请输入回款率" clearable></el-input>
-              </el-form-item>
-
-            </div>
-          </el-col>
-        </el-row>
-        <el-row :gutter="24">
           <el-col :span="12">
             <div class="grid-content bg-purple">
               <el-form-item label="催收区域">
@@ -320,14 +312,17 @@
                   </el-option>
                 </el-select>
               </el-form-item>
+
             </div>
           </el-col>
+        </el-row>
+        <el-row :gutter="24">
           <el-col :span="12">
             <div class="grid-content bg-purple">
               <el-form-item label="委  托  方"
                             prop="client"
                             :rules="{required: true, message: '委托方不能为空', trigger: 'blur'}">
-                <el-select v-model="messageForm.client" placeholder="请选择委托方" clearable>
+                <el-select v-model="messageForm.client" @change="changeBotno2" placeholder="请选择委托方" clearable>
                   <el-option
                     v-for="item in clientList"
                     :key="item.id"
@@ -338,8 +333,6 @@
               </el-form-item>
             </div>
           </el-col>
-        </el-row>
-        <el-row :gutter="24">
           <el-col :span="12">
             <div class="grid-content bg-purple">
               <el-form-item label="案件类型">
@@ -354,13 +347,16 @@
               </el-form-item>
             </div>
           </el-col>
-          <el-col :span="12">
+        </el-row>
+        <el-row :gutter="24">
+          <el-col :span="15">
             <div class="grid-content bg-purple">
               <el-form-item label="委案日期"
                             prop="caseTime"
                             :rules="{required: true, message: '请选择日期', trigger: 'change'}">
                 <div class="block">
                   <el-date-picker
+                    @change="changeBotno3"
                     v-model="messageForm.caseTime"
                     align="right"
                     type="date"
@@ -370,9 +366,9 @@
                   </el-date-picker>
                 </div>
               </el-form-item>
-
             </div>
           </el-col>
+
         </el-row>
         <el-row :gutter="24">
           <el-col :span="15">
@@ -395,12 +391,11 @@
         <el-row :gutter="24">
           <el-col :span="24">
             <el-form-item label="批次备注">
-              <el-input type="textarea" v-model="messageForm.remark" style="width: 200%;">></el-input>
+              <el-input type="textarea" v-model="messageForm.remark" style="width: 200%;" maxlength="500"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
-
       <span slot="footer" class="footer">
     <el-button @click="dialogVisible2 = false">取 消</el-button>
     <el-button type="primary" @click="submitmsgForm('messageForm')">确 定</el-button>
@@ -642,7 +637,17 @@
           label="催收小结"
           show-overflow-tooltip>
         </el-table-column>
-
+        <el-table-column
+          label="操作"
+          align="center"
+          width="200"
+        >
+          <template slot-scope="scope">
+            <el-button type="text" size="small" @click="editMessage(scope.row)" >编辑</el-button>
+            <el-button type="text" size="small" @click="deleteMessage(scope.row.id,scope.row.batchNo)" >删除
+            </el-button>
+          </template>
+        </el-table-column>
       </el-table>
       <el-pagination
         @size-change="handleSizeChange1"
@@ -666,7 +671,7 @@
       center
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span></div>
-      <el-row class="pad"  ref="boxWrapper">
+      <el-row class="pad" ref="boxWrapper">
 
         <el-checkbox v-model="exporttBatchConf.batchNo" label="2">批次号</el-checkbox>
         <el-checkbox v-model="exporttBatchConf.batchStatus" label="3">批次状态</el-checkbox>
@@ -695,7 +700,7 @@
       center
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllCollectExport" style="cursor: pointer;">全选</span></div>
-      <el-row class="pad"  ref="boxWrapper">
+      <el-row class="pad" ref="boxWrapper">
 
         <el-checkbox v-model="exportCollectConf.name" label="2">姓名</el-checkbox>
         <el-checkbox v-model="exportCollectConf.account" label="3">账号</el-checkbox>
@@ -743,6 +748,250 @@
         <el-button type="primary" @click="exportCollectExcel">确 定</el-button>
       </span>
     </el-dialog>
+
+    <el-dialog
+      class="dialog-wrap"
+      title="新增批次"
+      :visible.sync="dialogVisible"
+      width="55%"
+    >
+      <el-form :inline="true" :model="formInline" ref="formInline" label-width="100px" class="demo-dynamic">
+        <el-row :gutter="24">
+          <el-col :span="12">
+            <div class="grid-content bg-purple">
+              <el-form-item label="批  次  号"
+                            prop="batchNo"
+                            :rules="{ required: true, message: '批次号不能为空', trigger: 'blur'}">
+                <el-input v-model="formInline.batchNo" :disabled=true placeholder="请输入批次号" maxlength="80"
+                          clearable></el-input>
+              </el-form-item>
+            </div>
+          </el-col>
+          <el-col :span="12">
+            <div class="grid-content bg-purple">
+              <el-form-item label="催收区域">
+                <el-select v-model="formInline.areaListId" placeholder="请选择催收区域" clearable>
+                  <el-option
+                    v-for="item in areaList"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row :gutter="24">
+          <el-col :span="12">
+            <div class="grid-content bg-purple">
+              <el-form-item label="委  托  方"
+                            prop="client"
+                            :rules="{required: true, message: '委托方不能为空', trigger: 'blur'}">
+                <el-select v-model="formInline.client" placeholder="请选择委托方" clearable @change="changeBotno">
+                  <el-option
+                    v-for="item in clientList"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+          <el-col :span="12">
+            <div class="grid-content bg-purple">
+              <el-form-item label="案件类型">
+                <el-select v-model="formInline.caseType" placeholder="请选择案件类型" clearable>
+                  <el-option
+                    v-for="item in caseTypeList"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row :gutter="24">
+          <el-col :span="12">
+            <div class="grid-content bg-purple">
+              <el-form-item label="委案日期"
+                            prop="caseTime"
+                            :rules="{required: true, message: '请选择日期', trigger: 'change'}">
+                <div class="block">
+                  <el-date-picker
+                    @change="changeBotno"
+                    v-model="formInline.caseTime"
+                    align="right"
+                    type="date"
+                    placeholder="选择日期"
+                    value-format="yyyy-MM-dd"
+                  >
+                  </el-date-picker>
+                </div>
+              </el-form-item>
+            </div>
+          </el-col>
+          <el-col :span="12">
+            <div class="grid-content bg-purple">
+
+            </div>
+          </el-col>
+        </el-row>
+        <el-row :gutter="24">
+          <el-col :span="15">
+            <div class="grid-content bg-purple">
+              <el-form-item label="预计退案日期">
+                <div class="block">
+                  <el-date-picker
+                    v-model="formInline.returnTime"
+                    align="right"
+                    type="date"
+                    placeholder="选择日期"
+                    value-format="yyyy-MM-dd"
+                  >
+                  </el-date-picker>
+                </div>
+              </el-form-item>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row :gutter="24">
+          <el-col :span="24">
+            <el-form-item label="批次备注">
+              <el-input type="textarea" v-model="formInline.remark" style="width: 200%;height: 180px;"
+                        maxlength="500"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+
+      <span slot="footer" class="footer">
+    <el-button @click="backForm">取 消</el-button>
+    <el-button type="primary" @click="submitForm('formInline')">确 定</el-button>
+  </span>
+    </el-dialog>
+    <el-dialog
+      class="dialog-wrap"
+      title="修改批次"
+      :visible.sync="dialogVisible3"
+      width="55%"
+    >
+      <el-form :inline="true" :model="messageForm" ref="messageForm" label-width="100px" class="demo-dynamic">
+        <el-row :gutter="24">
+          <el-col :span="12">
+            <div class="grid-content bg-purple">
+              <el-form-item label="批  次  号"
+                            prop="batchNo"
+                            :rules="{ required: true, message: '批次号不能为空', trigger: 'blur'}">
+                <el-input v-model="messageForm.batchNo" :disabled=true placeholder="请输入批次号" maxlength="80"
+                          clearable></el-input>
+              </el-form-item>
+            </div>
+          </el-col>
+          <el-col :span="12">
+            <div class="grid-content bg-purple">
+              <el-form-item label="催收区域">
+                <el-select v-model="messageForm.area" placeholder="请选择催收区域" clearable>
+                  <el-option
+                    v-for="item in areaList"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+
+            </div>
+          </el-col>
+        </el-row>
+        <el-row :gutter="24">
+          <el-col :span="12">
+            <div class="grid-content bg-purple">
+              <el-form-item label="委  托  方"
+                            prop="client"
+                            :rules="{required: true, message: '委托方不能为空', trigger: 'blur'}">
+                <el-select v-model="messageForm.client" @change="changeBotno2" placeholder="请选择委托方" clearable>
+                  <el-option
+                    v-for="item in clientList"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+          <el-col :span="12">
+            <div class="grid-content bg-purple">
+              <el-form-item label="案件类型">
+                <el-select v-model="messageForm.caseType" placeholder="请选择案件类型" clearable>
+                  <el-option
+                    v-for="item in caseTypeList"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row :gutter="24">
+          <el-col :span="15">
+            <div class="grid-content bg-purple">
+              <el-form-item label="委案日期"
+                            prop="caseTime"
+                            :rules="{required: true, message: '请选择日期', trigger: 'change'}">
+                <div class="block">
+                  <el-date-picker
+                    @change="changeBotno3"
+                    v-model="messageForm.caseTime"
+                    align="right"
+                    type="date"
+                    placeholder="选择日期"
+                    value-format="yyyy-MM-dd"
+                  >
+                  </el-date-picker>
+                </div>
+              </el-form-item>
+            </div>
+          </el-col>
+
+        </el-row>
+        <el-row :gutter="24">
+          <el-col :span="15">
+            <div class="grid-content bg-purple">
+              <el-form-item label="预计退案日期">
+                <div class="block">
+                  <el-date-picker
+                    v-model="messageForm.returnTime"
+                    align="right"
+                    type="date"
+                    placeholder="选择日期"
+                    value-format="yyyy-MM-dd"
+                  >
+                  </el-date-picker>
+                </div>
+              </el-form-item>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row :gutter="24">
+          <el-col :span="24">
+            <el-form-item label="批次备注">
+              <el-input type="textarea" v-model="messageForm.remark" style="width: 200%;" maxlength="500"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+      <span slot="footer" class="footer">
+    <el-button @click="backForm2">取 消</el-button>
+    <el-button type="primary" @click="submitmsgForm('messageForm')">确 定</el-button>
+  </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -782,6 +1031,8 @@
         fullscreenLoading: false,
         tableLoad: false,
         batchList: [],
+        dialogVisible: false,
+        dialogVisible3: false,
         showExportBatchConfVisible: false,
         exporttBatchConf: {},
         exportCollectConf: {},
@@ -807,7 +1058,11 @@
         areaList: [],
         caseTypeList: [],
         clientList: [],
-        formInline: {},
+        formInline: {
+          batchNo: '',
+          targetRate: '',
+          returnTime: '',
+          caseTime: ''},
         dialogVisible1: false,
         dialogVisible2: false,
         tableData3: [],
@@ -830,6 +1085,51 @@
       }
     },
     methods: {
+      changeBotno2() {
+        for (var i = 0; i <= this.clientList.length; i++) {
+          if (this.messageForm.client === this.clientList[i].id) {
+            this.clientValue = this.clientList[i].name
+            this.$set(this.messageForm, 'batchNo', this.clientValue + '-' + this.messageForm.caseTime)
+            return
+          }
+        }
+      },
+      changeBotno() {
+        for (var i = 0; i <= this.clientList.length; i++) {
+          if (this.formInline.client === this.clientList[i].id) {
+            this.clientValue = this.clientList[i].name
+            this.$set(this.formInline, 'batchNo', this.clientValue + '-' + this.formInline.caseTime)
+            return
+          }
+        }
+      },
+      changeBotno3() {
+        for (var i = 0; i <= this.clientList.length; i++) {
+          if (this.messageForm.client === this.clientList[i].id) {
+            this.clientValue = this.clientList[i].name
+            this.$set(this.messageForm, 'batchNo', this.clientValue + '-' + this.messageForm.caseTime)
+            return
+          }
+        }
+      },
+      changeBotno1() {
+        for (var i = 0; i <= this.clientList.length; i++) {
+          if (this.formInline.client === this.clientList[i].id) {
+            this.clientValue = this.clientList[i].name
+            this.$set(this.formInline, 'batchNo', this.clientValue + '-' + this.formInline.caseTime)
+            return
+          }
+        }
+      },
+      backForm() {
+        this.dialogVisible = false;
+        this.formInline = {
+          batchNo: '',
+          targetRate: '',
+          returnTime: '',
+          caseTime: ''
+        }
+      },
       showDetail(row) {
         this.detailVisibleCase = false
         let id = row.id
@@ -855,6 +1155,83 @@
           }
         })
 
+      },
+      submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            addData(this.formInline).then((response) => {
+              this.dialogVisible = false
+              this.search()
+              batchList().then((response) => {
+                this.batchList = response;
+              })
+              this.$message({
+                type: 'success',
+                message: '保存成功!'
+              });
+              this.formInline = {
+                batchNo: '',
+                targetRate: '',
+                returnTime: '',
+                caseTime: ''
+              }
+            })
+          } else {
+            return false;
+          }
+        });
+      },
+      submitmsgForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            update(this.messageForm).then((response) => {
+              this.dialogVisible3 = false
+              batchList().then((response) => {
+                this.batchList = response;
+              })
+              this.search()
+              this.$message({
+                type: 'success',
+                message: '保存成功!'
+              });
+            })
+          } else {
+            return false;
+          }
+        });
+      },
+      editMessage(row) {
+        this.dialogVisible2 = true
+        this.messageForm = row
+        if (this.messageForm.client) {
+          this.messageForm.client = parseInt(row.client)
+        }
+        if (this.messageForm.caseType) {
+          this.messageForm.caseType = parseInt(row.caseType)
+        }
+        if (this.messageForm.area) {
+          this.messageForm.area = parseInt(row.area)
+        }
+
+      },
+      deleteMessage(id) {
+        let arry = [{id: id}]
+        let _self = this
+        _self.$confirm('是否删除?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        }).then(() => {
+          remoweData(arry).then((response) => {
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            });
+            _self.search()
+          })
+        }).catch(() => {
+        });
       },
       dataCsae(batchNo) {
         let _self = this
@@ -891,9 +1268,9 @@
           }
         });
       },
-      selectAllExport(){
+      selectAllExport() {
         this._selectAllInit('exporttBatchConf');
-        for(var p in this.exporttBatchConf){//遍历json对象的每个key/value对,p为key
+        for (var p in this.exporttBatchConf) {//遍历json对象的每个key/value对,p为key
           this.exporttBatchConf[p] = true;
         }
       },
@@ -996,9 +1373,9 @@
         this.exportCollectType = 2;
         this.showExportCollectConfVisible = true;
       },
-      selectAllCollectExport(){
+      selectAllCollectExport() {
         this._selectAllInit('exportCollectConf');
-        for(var p in this.exportCollectConf){//遍历json对象的每个key/value对,p为key
+        for (var p in this.exportCollectConf) {//遍历json对象的每个key/value对,p为key
           this.exportCollectConf[p] = true;
         }
       },

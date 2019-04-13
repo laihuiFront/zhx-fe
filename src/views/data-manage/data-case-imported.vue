@@ -949,7 +949,6 @@
       },
       editMessage(row) {
         this.dialogVisible2 = true
-        console.log(row)
         this.messageForm = row
         if (this.messageForm.client) {
           this.messageForm.client = parseInt(row.client)
