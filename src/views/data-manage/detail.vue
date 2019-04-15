@@ -5,7 +5,11 @@
         :title="caseDetail.name + '-[ ' + caseDetail.seqNo + ']-案件详情'"
         name="1"
       >
-        <div style="text-align: right; margin-right:20px;"    v-if="caseDetail.currentuser">
+        <div style="text-align: right; margin-right:20px;" v-if="caseDetail.currentuser">
+          <el-button type="primary" align="right" size="mini" @click="lastCase">上条</el-button>
+          <el-button type="primary" align="right" size="mini" @click="nextCase">下条</el-button>
+          <el-button type="primary" align="right" size="mini" @click="showCommentVisible=true">评语</el-button>
+          <el-button type="primary" align="right" size="mini" @click="showCollectInfo">警告</el-button>
           <el-button type="primary" align="right" size="mini" @click="showCollectInfo">催收小结</el-button>
         </div>
         <div class="items-wrap">
@@ -92,14 +96,14 @@
             <el-form-item label="已还款">
               <div class="inputDiv" style="font-size: 12px;">
                 <span
-                  >{{ caseDetail.enRepayAmt }}(委案余额:{{
+                >{{ caseDetail.enRepayAmt }}(委案余额:{{
                     caseDetail.balanceMsg
                   }})</span
                 >
                 <span
                   style="color: red;"
                   v-if="caseDetail.collectStatusMsg == '已结清'"
-                  >[{{ caseDetail.collectStatusMsg }}]</span
+                >[{{ caseDetail.collectStatusMsg }}]</span
                 >
               </div>
             </el-form-item>
@@ -188,11 +192,11 @@
               ></el-input>
             </el-form-item>
             <el-form-item label="车价">
-            <el-input
-              v-model="caseDetail.cardModel"
-              :disabled="true"
-            ></el-input>
-          </el-form-item>
+              <el-input
+                v-model="caseDetail.cardModel"
+                :disabled="true"
+              ></el-input>
+            </el-form-item>
             <el-form-item label="车价">
               <el-input
                 v-model="caseDetail.cardPrice"
@@ -242,11 +246,11 @@
               ></el-input>
             </el-form-item>
             <el-form-item label="案人职位">
-            <el-input
-              v-model="caseDetail.caseUserPosition"
-              :disabled="true"
-            ></el-input>
-          </el-form-item>
+              <el-input
+                v-model="caseDetail.caseUserPosition"
+                :disabled="true"
+              ></el-input>
+            </el-form-item>
             <el-form-item label="案人部门">
               <el-input
                 v-model="caseDetail.caseUserDepart"
@@ -266,11 +270,11 @@
               ></el-input>
             </el-form-item>
             <el-form-item label="牌照号">
-            <el-input
-              v-model="caseDetail.license"
-              :disabled="true"
-            ></el-input>
-          </el-form-item>
+              <el-input
+                v-model="caseDetail.license"
+                :disabled="true"
+              ></el-input>
+            </el-form-item>
             <el-form-item label="品牌">
               <el-input
                 v-model="caseDetail.brand"
@@ -445,13 +449,15 @@
                       size="mini"
                       type="text"
                       @click="addCommentVisible = false"
-                      >取消</el-button
+                    >取消
+                    </el-button
                     >
                     <el-button
                       type="primary"
                       size="mini"
                       @click="onClickAddComment"
-                      >确定</el-button
+                    >确定
+                    </el-button
                     >
                   </div>
                   <el-button
@@ -490,11 +496,11 @@
           style="width: 100%"
           class="table-wrap"
         >
-          <el-table-column prop="seqNo" label="个案序列号"> </el-table-column>
-          <el-table-column prop="cardNo" label="卡号"> </el-table-column>
-          <el-table-column prop="account" label="账号"> </el-table-column>
-          <el-table-column prop="moneyMsg" label="委案金额"> </el-table-column>
-          <el-table-column prop="currencyType" label="币种"> </el-table-column>
+          <el-table-column prop="seqNo" label="个案序列号"></el-table-column>
+          <el-table-column prop="cardNo" label="卡号"></el-table-column>
+          <el-table-column prop="account" label="账号"></el-table-column>
+          <el-table-column prop="moneyMsg" label="委案金额"></el-table-column>
+          <el-table-column prop="currencyType" label="币种"></el-table-column>
           <el-table-column prop="proRepayAmtMsg" label="承诺还款金额">
           </el-table-column>
           <el-table-column prop="bankAmtMsg" label="待银行查账金额">
@@ -553,11 +559,11 @@
               ></el-input>
             </el-form-item>
             <el-form-item label="对账单邮编">
-            <el-input
-              v-model="caseDetail.statementZipCode"
-              :disabled="true"
-            ></el-input>
-          </el-form-item>
+              <el-input
+                v-model="caseDetail.statementZipCode"
+                :disabled="true"
+              ></el-input>
+            </el-form-item>
             <el-form-item label="户籍地邮编">
               <el-input
                 v-model="caseDetail.censusRegisterZipCode"
@@ -850,7 +856,7 @@
                 <span>{{ caseDetail.contactAddress1}}</span>
               </div>
             </el-form-item>
-            <el-form-item label=""> </el-form-item>
+            <el-form-item label=""></el-form-item>
             <el-form-item label="联系人2姓名">
               <el-input
                 v-model="caseDetail.contactName2"
@@ -891,7 +897,7 @@
                 <span>{{ caseDetail.contactAddress2}}</span>
               </div>
             </el-form-item>
-            <el-form-item label=""> </el-form-item>
+            <el-form-item label=""></el-form-item>
             <el-form-item label="联系人3姓名">
               <el-input
                 v-model="caseDetail.contactName3"
@@ -932,7 +938,7 @@
                 <span>{{ caseDetail.contactAddress3}}</span>
               </div>
             </el-form-item>
-            <el-form-item label=""> </el-form-item>
+            <el-form-item label=""></el-form-item>
             <el-form-item label="联系人4姓名">
               <el-input
                 v-model="caseDetail.contactName4"
@@ -973,7 +979,7 @@
                 <span>{{ caseDetail.contactAddress4}}</span>
               </div>
             </el-form-item>
-            <el-form-item label=""> </el-form-item>
+            <el-form-item label=""></el-form-item>
             <el-form-item label="联系人5姓名">
               <el-input
                 v-model="caseDetail.contactName5"
@@ -1014,7 +1020,7 @@
                 <span>{{ caseDetail.contactAddress5}}</span>
               </div>
             </el-form-item>
-            <el-form-item label=""> </el-form-item>
+            <el-form-item label=""></el-form-item>
             <el-form-item label="联系人6姓名">
               <el-input
                 v-model="caseDetail.contactName6"
@@ -1110,7 +1116,8 @@
                     style="position:absolute;top:10px;right:10px;"
                     size="mini"
                     type="primary"
-                    >上传附件</el-button
+                  >上传附件
+                  </el-button
                   >
                 </el-upload>
                 <el-table
@@ -1126,7 +1133,8 @@
                   ></el-table-column>
                 </el-table>
                 <el-button type="text" class="upload-btn" slot="reference"
-                  >附件列表</el-button
+                >附件列表
+                </el-button
                 >
               </el-popover>
             </el-form-item>
@@ -1147,17 +1155,20 @@
                     <el-button
                       @click="changePhoneStatus('有效')"
                       v-if="caseDetail.currentuser"
-                      >标记为有效</el-button
+                    >标记为有效
+                    </el-button
                     >
                     <el-button
                       @click="changePhoneStatus('未知')"
                       v-if="caseDetail.currentuser"
-                      >标记为未知</el-button
+                    >标记为未知
+                    </el-button
                     >
                     <el-button
                       @click="changePhoneStatus('无效')"
                       v-if="caseDetail.currentuser"
-                      >标记为无效</el-button
+                    >标记为无效
+                    </el-button
                     >
                     <el-button @click="showAllTel">显示全部电话</el-button>
                   </div>
@@ -1166,7 +1177,8 @@
                       type="primary"
                       @click="addPhone"
                       v-if="caseDetail.currentuser"
-                      >新增电话</el-button
+                    >新增电话
+                    </el-button
                     >
                     <el-popover
                       placement="bottom-end"
@@ -1190,17 +1202,20 @@
                           size="mini"
                           type="text"
                           @click="batchAddTelVisible = false"
-                          >取消</el-button
+                        >取消
+                        </el-button
                         >
                         <el-button
                           type="primary"
                           size="mini"
                           @click="onClickBatchAddTel"
-                          >确定</el-button
+                        >确定
+                        </el-button
                         >
                       </div>
                       <el-button type="primary" slot="reference"
-                        >批量新增电话</el-button
+                      >批量新增电话
+                      </el-button
                       >
                     </el-popover>
                     <!-- <el-button type="primary">批量电催</el-button> -->
@@ -1208,7 +1223,8 @@
                       type="primary"
                       @click="_synchroSameTel"
                       v-if="caseDetail.currentuser"
-                      >同步共债</el-button
+                    >同步共债
+                    </el-button
                     >
                   </div>
                 </div>
@@ -1238,11 +1254,12 @@
                             scope.row.relation
                           )
                         "
-                        >{{ scope.row.tel }}</el-button
+                      >{{ scope.row.tel }}
+                      </el-button
                       >
                     </template>
                   </el-table-column>
-                  <el-table-column prop="name" label="姓名"> </el-table-column>
+                  <el-table-column prop="name" label="姓名"></el-table-column>
                   <el-table-column prop="relation" label="关系">
                   </el-table-column>
                   <el-table-column prop="typeMsg" label="类型">
@@ -1308,14 +1325,16 @@
                           <el-button
                             type="primary"
                             @click="$set(scope.row, 'showHistory', false)"
-                            >关闭</el-button
+                          >关闭
+                          </el-button
                           >
                         </div>
                         <el-button
                           slot="reference"
                           type="text"
                           @click="showHistoryTel(scope.row)"
-                          >历史记录</el-button
+                        >历史记录
+                        </el-button
                         >
                       </el-popover>
                       <el-button
@@ -1325,7 +1344,8 @@
                           caseDetail.currentuser &&
                             scope.row.telStatusMsg !== '停止跟进'
                         "
-                        >编辑</el-button
+                      >编辑
+                      </el-button
                       >
                       <el-button
                         type="text"
@@ -1334,7 +1354,8 @@
                           caseDetail.currentuser &&
                             scope.row.telStatusMsg !== '停止跟进'
                         "
-                        >删除</el-button
+                      >删除
+                      </el-button
                       >
                       <el-button
                         type="text"
@@ -1343,7 +1364,8 @@
                             scope.row.telStatusMsg !== '停止跟进'
                         "
                         @click="stopTel(scope.row.id)"
-                        >停止跟进</el-button
+                      >停止跟进
+                      </el-button
                       >
                     </template>
                   </el-table-column>
@@ -1355,17 +1377,20 @@
                     <el-button
                       @click="changeAddrStatus('有效')"
                       v-if="caseDetail.currentuser"
-                      >标记为有效</el-button
+                    >标记为有效
+                    </el-button
                     >
                     <el-button
                       @click="changeAddrStatus('未知')"
                       v-if="caseDetail.currentuser"
-                      >标记为未知</el-button
+                    >标记为未知
+                    </el-button
                     >
                     <el-button
                       @click="changeAddrStatus('无效')"
                       v-if="caseDetail.currentuser"
-                      >标记为无效</el-button
+                    >标记为无效
+                    </el-button
                     >
                     <!-- <el-button @click="saveAddr">显示全部地址</el-button> -->
                     <el-button @click="showLetterList">查看信函记录</el-button>
@@ -1375,7 +1400,8 @@
                       type="primary"
                       @click="addAddr"
                       v-if="caseDetail.currentuser"
-                      >新增地址</el-button
+                    >新增地址
+                    </el-button
                     >
                   </div>
                 </div>
@@ -1471,7 +1497,8 @@
                           <el-button
                             type="primary"
                             @click="$set(scope.row, 'showHistory', false)"
-                            >关闭</el-button
+                          >关闭
+                          </el-button
                           >
                         </div>
                         <el-button
@@ -1479,26 +1506,30 @@
                           type="text"
                           @click="showHistoryAddr(scope.row)"
                           v-if="letterVisible2"
-                          >历史记录</el-button
+                        >历史记录
+                        </el-button
                         >
                       </el-popover>
                       <el-button
                         type="text"
                         @click="applyLetter(scope.row)"
                         v-if="caseDetail.currentuser && letterVisible2"
-                        >申请信函</el-button
+                      >申请信函
+                      </el-button
                       >
                       <el-button
                         type="text"
                         @click="editAddr(scope.row)"
                         v-if="caseDetail.currentuser && letterVisible2"
-                        >编辑</el-button
+                      >编辑
+                      </el-button
                       >
                       <el-button
                         type="text"
                         @click="deleteAddr(scope.row.id)"
                         v-if="caseDetail.currentuser && letterVisible2"
-                        >删除</el-button
+                      >删除
+                      </el-button
                       >
                     </template>
                   </el-table-column>
@@ -1584,7 +1615,8 @@
                       type="primary"
                       @click="onClickAddArchive"
                       v-if="caseDetail.currentuser"
-                      >新增案人数据</el-button
+                    >新增案人数据
+                    </el-button
                     >
                   </div>
                 </div>
@@ -1647,13 +1679,15 @@
                       type="primary"
                       @click="addDataCollect"
                       v-if="caseDetail.currentuser"
-                      >添加辅助催记</el-button
+                    >添加辅助催记
+                    </el-button
                     >
                     <el-button
                       type="primary"
                       @click="_expDataCollect"
                       v-if="caseDetail.currentuser"
-                      >导出本案催记</el-button
+                    >导出本案催记
+                    </el-button
                     >
                   </div>
                 </div>
@@ -1768,10 +1802,12 @@
                         type="text"
                         @click="editDataCollect(scope.row)"
                         v-if="caseDetail.currentuser"
-                        >编辑</el-button
+                      >编辑
+                      </el-button
                       >
                       <el-button type="text" v-if="caseDetail.currentuser"
-                        >删除</el-button
+                      >删除
+                      </el-button
                       >
                     </template>
                   </el-table-column>
@@ -1836,13 +1872,15 @@
                             @click="
                               $set(scope.row, 'editCommentVisible', false)
                             "
-                            >取消</el-button
+                          >取消
+                          </el-button
                           >
                           <el-button
                             type="primary"
                             size="mini"
                             @click="onClickSaveComment"
-                            >确定</el-button
+                          >确定
+                          </el-button
                           >
                         </div>
                         <el-button
@@ -1850,14 +1888,16 @@
                           @click="editComment(scope.row)"
                           slot="reference"
                           v-if="caseDetail.currentuser"
-                          >修改</el-button
+                        >修改
+                        </el-button
                         >
                       </el-popover>
                       <el-button
                         type="text"
                         v-if="caseDetail.currentuser"
                         @click="_deleteComment(scope.row.id)"
-                        >删除</el-button
+                      >删除
+                      </el-button
                       >
                     </template>
                   </el-table-column>
@@ -2054,13 +2094,15 @@
                       type="primary"
                       @click="showSynergyApply"
                       v-if="caseDetail.currentuser"
-                      >添加协催申请</el-button
+                    >添加协催申请
+                    </el-button
                     >
                     <el-button
                       type="primary"
                       @click="showSynergyResult"
                       v-if="caseDetail.currentuser"
-                      >添加协催记录</el-button
+                    >添加协催记录
+                    </el-button
                     >
                   </div>
                 </div>
@@ -2254,7 +2296,8 @@
                       type="primary"
                       @click="litigationApply"
                       v-if="caseDetail.currentuser"
-                      >申请诉讼</el-button
+                    >申请诉讼
+                    </el-button
                     >
                   </div>
                 </div>
@@ -2354,7 +2397,8 @@
                       type="primary"
                       v-if="caseDetail.currentuser"
                       @click="showadddialogVisible"
-                      >添加减免申请</el-button
+                    >添加减免申请
+                    </el-button
                     >
                   </div>
                 </div>
@@ -2380,11 +2424,11 @@
                   >
                     <template slot-scope="scope">
                       {{
-                        scope.row.applyStatus == 0
-                          ? "待审核"
-                          : scope.row.applyStatus == 1
-                          ? "已审核"
-                          : "已完成"
+                      scope.row.applyStatus == 0
+                      ? "待审核"
+                      : scope.row.applyStatus == 1
+                      ? "已审核"
+                      : "已完成"
                       }}
                     </template>
                   </el-table-column>
@@ -2461,20 +2505,23 @@
                           size="small"
                           @click="moreId(scope.row.id)"
                           type="text"
-                          >上传</el-button
+                        >上传
+                        </el-button
                         >
                       </el-upload>
                       <el-button
                         type="text"
                         size="small"
                         @click="editData(scope.row)"
-                        >修改</el-button
+                      >修改
+                      </el-button
                       >
                       <el-button
                         type="text"
                         size="small"
                         @click="deteleData(scope.row.id)"
-                        >删除</el-button
+                      >删除
+                      </el-button
                       >
                     </template>
                   </el-table-column>
@@ -2490,7 +2537,8 @@
                   style="float: right; padding: 3px 0"
                   type="text"
                   @click="saveSelfInfo"
-                  >保存</el-button
+                >保存
+                </el-button
                 >
               </div>
               <el-input
@@ -2610,7 +2658,8 @@
                   v-model="batchForm.sType"
                   :true-label="1"
                   :false-label="0"
-                  >更新批次共债案件催收状态</el-checkbox
+                >更新批次共债案件催收状态
+                </el-checkbox
                 >
               </el-form-item>
               <el-form-item label="减免金额" prop="reduceAmt">
@@ -2643,7 +2692,8 @@
             </el-form>
             <div class="operation">
               <el-button type="primary" @click="onClickSaveCollection"
-                >保存</el-button
+              >保存
+              </el-button
               >
               <el-button @click="batchForm = { sType: 0 }">清空</el-button>
             </div>
@@ -2659,7 +2709,7 @@
               class="table-wrap"
             >
               <el-table-column
-                prop="collectTime"
+                prop="repayTime"
                 width="120"
                 label="时间"
                 show-overflow-tooltip
@@ -2677,7 +2727,7 @@
                 show-overflow-tooltip
               ></el-table-column>
               <el-table-column
-                prop="telPhone"
+                prop="mobile"
                 width="120"
                 label="电话/地址"
                 show-overflow-tooltip
@@ -3275,7 +3325,8 @@
                 type="textarea"
                 v-model="messageForm.remark"
                 style="width: 200%;"
-                >></el-input
+              >>
+              </el-input
               >
             </el-form-item>
           </el-col>
@@ -3664,7 +3715,7 @@
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogSyergyResultVisible = false">取 消</el-button>
         <el-button type="primary" @click="saveSynergyResult('synergyInfo')"
-          >确 定</el-button
+        >确 定</el-button
         >
       </span>
     </el-dialog>
@@ -3697,1330 +3748,1533 @@
         <el-button type="primary" @click="saveCollectInfo">确 定</el-button>
       </span>
     </el-dialog>
+
+    <el-dialog
+      title="添加评语"
+      :visible.sync="showCommentVisible"
+      width="30%"
+      append-to-body
+      class="addr-dialog-wrap"
+    >
+      <div style="    padding-top: 10px;">
+        <el-input
+          type="textarea"
+          :rows="4"
+          placeholder="请输入评语"
+          v-model="commentAddContent"
+        >
+        </el-input>
+        <el-radio-group
+          v-model="commentAddColor"
+          style="margin-top:10px;"
+        >
+          <el-radio label="黑">正常</el-radio>
+          <el-radio label="蓝">标蓝</el-radio>
+          <el-radio label="红">标红</el-radio>
+          <el-radio label="">不更改</el-radio>
+        </el-radio-group>
+      </div>
+      <div style="text-align: right; margin-top: 12px">
+        <el-button
+          size="mini"
+          type="text"
+          @click="showCommentVisible = false"
+        >取消
+        </el-button
+        >
+        <el-button
+          type="primary"
+          size="mini"
+          @click="onClickAddComment"
+        >确定
+        </el-button
+        >
+      </div>
+      <el-button
+        size="small"
+        type="text"
+        icon="el-icon-plus"
+        title="添加"
+        slot="reference"
+      ></el-button>
+    </el-dialog>
+    <el-dialog
+      title="添加警告"
+      :visible.sync="showWarningVisible"
+      width="30%"
+      append-to-body
+      class="addr-dialog-wrap"
+    >
+      <div style="    padding-top: 10px;">
+        <el-input
+          type="textarea"
+          :rows="4"
+          placeholder="请输入警告"
+          v-model="warningAddContent"
+        >
+        </el-input>
+      </div>
+      <div style="text-align: right; margin-top: 12px">
+        <el-button
+          size="mini"
+          type="text"
+          @click="showWarningVisible = false"
+        >取消
+        </el-button
+        >
+        <el-button
+          type="primary"
+          size="mini"
+          @click="onClickAddWarning"
+        >确定
+        </el-button
+        >
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import {
-  getCaseDetail,
-  getSameBatchCollect,
-  getAddressDetail,
-  getLetterList,
-  getArchiveDetail,
-  getCollectDetail,
-  PhonetypeList,
-  getCommentDetail,
-  getInterestDetail,
-  getSynergyDetail,
-  getSameBatchCase,
-  updateRemark,
-  saveCaseTel,
-  getTelList,
-  delTel,
-  updateTelStatus,
-  addComment,
-  listComment,
-  addBatchCaseTel,
-  saveCaseAddress,
-  delAddr,
-  updateAddrStatus,
-  synchroSameTel,
-  pageDataLog,
-  updateDataLog,
-  delDataLog,
-  sameCaseList,
-  dataCollectionSave,
-  addLetter,
-  getReduceApplyList,
-  pageDataFile,
-  getSynergyTypeList,
-  getSynergyContextList,
-  getLegalList,
-  saveLegal,
-  saveApply,
-  saveResult,
-  detailTelCurrentCollect,
-  updateDataComment,
-  delDataComment,
-  PersonList,
-  AddtableList,
-  DeteleData,
-  saveArchive,
-  getHistoryAddrList,
-  expDataCollect,
-  saveDataCollectDetail,
-  saveCollectInfo,
-  getCPList,
-  getRepayList,
-  getRepayRemark,
-  getRepayType,
-  saveBank
-} from "@/common/js/api-detail";
-import { getEnum } from "@/common/js/api-sync";
-import { baseURL } from "@/common/js/request.js";
-const resetObj = { currentuser: true, seqNo: "", name: "" ,city:{name:""},province:{name:""},county:{name:""}}
-export default {
-  name: "caseDetail",
-  // props:{
-  //   id:{
-  //     type: Number,
-  //     default: -1
-  //   }
-  // },
-  computed: {
-    ...mapGetters(["userInfo"]),
-    id() {
-      return this.$route.query.id;
-    }
-  },
-  data() {
-    return {
-      action: baseURL,
-      messageForm: {},
-      showCollectInfoVisible:false,
-      adddialogVisible: false,
-      addCommentVisible: false,
-      commentAddContent: null,
-      commentAddColor: "黑",
-      dialogVisible: false,
-      letterVisible: false,
-      letterVisible2: true,
-      dialogSyergyAplVisible: false,
-      dialogSyergyResultVisible: false,
-      formInline: {},
-      legalForm: {},
-      synergyTypeList: [],
-      synergyContextList:[],
-      PhonetypeList: [],
-      syncMemorizeList: [],
-      memorizeList: [], //催記
-      commentList: [], //评语
-      addrList: [], //地址
-      progressList: [{ name: "判决", id: 1 }, { name: "收案", id: 2 }],
-      PersonDataList: [],
-      legalStatusMsgList: [
-        { name: "已审核", id: 1 },
-        { name: "审核中", id: 2 },
-        { name: "未申请", id: 0 }
-      ],
-      caseStatusList: [
-        { name: "未退案", id: 0 },
-        { name: "正常", id: 1 },
-        { name: "暂停", id: 2 },
-        { name: "关档", id: 3 },
-        { name: "退档", id: 4 },
-        { name: "全部", id: 5 }
-      ],
-      letterList: [], //信函记录
-      dataList: [], //案人信息
-      rateUpdateList: [], //利息
-      syncList: [], //协催
-      dependCase: [], //同批次公债案件
-      activeNames: ["1", "2", "3", "4", "5"],
-      otherActiveName: "1",
-      caseDetail: resetObj,
-      ligigationVisible: false,
-      memorizeType: 1,
-      statusList: [
-        { name: "有效", id: 1 },
-        { name: "无效", id: 2 },
-        { name: "未知", id: 3 }
-      ],
-      phoneSelectList: [],
-      batchForm: { sType: 0 ,mobile:''},
-      tpfsList: [],
-      csmbList: [],
-      csjgList: [],
-      csztList: [],
-      jmztList: [],
-      batchAddTelVisible: false,
-      batchAddTelContent: null,
-      dialogAddrVisible: false,
-      addressInfo: {},
-      synergyInfo: {},
-      addrSelectList: [],
-      logType: "",
-      logList: [],
-      caseSameList: [],
-      dialogLetterVisible: false,
-      letterInfo: {},
-      syncType: 1,
-      reduceApplyList: [],
-      uploadVisible: false,
-      uploadFileList: [],
-      header: { Authorization: localStorage.token },
-      legalList: [],
-      currentRow: {},
-      header: { Authorization: localStorage.token },
-      archiveInfo: {},
-      dialogArchiveVisible: false,
-      dataCollectInfo: {},
-      dialogDataCollectVisible: false,
-      fileNames: { file: "", caseId: "", id: "" },
-      cpList: [],
-      cpInfo: {},
-      dialogCpVisible: false,
-      repayTypeList: [],
-      repayRemarkList:[],
-      ptpList: [],
-      $routeKey: ''
-    };
-  },
+  import {mapGetters} from "vuex";
+  import {
+    getCaseDetail,
+    onClickAddWarning,
+    lastCase,
+    nextCase,
+    getSameBatchCollect,
+    getAddressDetail,
+    getLetterList,
+    getArchiveDetail,
+    getCollectDetail,
+    PhonetypeList,
+    getCommentDetail,
+    getInterestDetail,
+    getSynergyDetail,
+    getSameBatchCase,
+    updateRemark,
+    saveCaseTel,
+    getTelList,
+    delTel,
+    updateTelStatus,
+    addComment,
+    listComment,
+    addBatchCaseTel,
+    saveCaseAddress,
+    delAddr,
+    updateAddrStatus,
+    synchroSameTel,
+    pageDataLog,
+    updateDataLog,
+    delDataLog,
+    sameCaseList,
+    dataCollectionSave,
+    addLetter,
+    getReduceApplyList,
+    pageDataFile,
+    getSynergyTypeList,
+    getSynergyContextList,
+    getLegalList,
+    saveLegal,
+    saveApply,
+    saveResult,
+    detailTelCurrentCollect,
+    updateDataComment,
+    delDataComment,
+    PersonList,
+    AddtableList,
+    DeteleData,
+    saveArchive,
+    getHistoryAddrList,
+    expDataCollect,
+    saveDataCollectDetail,
+    saveCollectInfo,
+    getCPList,
+    getRepayList,
+    getRepayRemark,
+    getRepayType,
+    saveBank
+  } from "@/common/js/api-detail";
+  import {getEnum} from "@/common/js/api-sync";
+  import {baseURL} from "@/common/js/request.js";
 
-  methods: {
-    saveCollectInfo(){
-      saveCollectInfo(this.id,this.caseDetail.collectInfo).then(data => {
-        this.$message({
-          type: "success",
-          message: "保存成功"
-        });
-        this.showCollectInfoVisible = false;
-      });
-    },
-    showCollectInfo(){
-        this.showCollectInfoVisible = true;
-    },
-    copyToCollect(tel, name, relation) {
-      this.$set(this.batchForm,'mobile',tel);
-      this.$set(this.batchForm,'targetName',name);
-      this.$set(this.batchForm,'relation',relation);
-    },
-    handleChange(file) {
-      this.fileNames.file = file.name;
-      this.fileNames.caseId = this.id;
-    },
-    moreId(id) {
-      this.fileNames.id = id;
-    },
-    showSynergyApply() {
-      getSynergyTypeList().then(data => {
-        this.synergyTypeList = data;
-      });
-      getSynergyContextList().then(data => {
-        this.synergyContextList = data;
-      });
-      this.dialogSyergyAplVisible = true;
-    },
-    showSynergyResult() {
-      getSynergyTypeList().then(data => {
-        this.synergyTypeList = data;
-      });
-      this.dialogSyergyResultVisible = true;
-    },
-    saveSynergyApply() {
-      this.synergyInfo.caseId = this.id;
-      saveApply(this.synergyInfo).then(data => {
-        this.dialogSyergyAplVisible = false;
-        getSynergyDetail(this.id).then(data => {
-          this.syncList = data.list;
-        });
-      });
-    },
-    saveSynergyResult(formName) {
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          this.synergyInfo.caseId = this.id;
-          saveResult(this.synergyInfo).then(data => {
-            this.dialogSyergyResultVisible = false;
-            getSynergyDetail(this.id).then(data => {
-              this.syncList = data.list;
-            });
-          });
-        } else {
-          console.log("error submit!!");
-          return false;
-        }
-      });
-    },
-    //  saveSynergyResult(formName){
-    //
-    //  	this.$refs[formName].validate((valid) => {
-    //        if (valid) {
-    //       this.synergyInfo.caseId = this.id
-    //    saveResult(this.synergyInfo).then(data=>{
-    //      this.dialogSyergyResultVisible = false;
-    //      getSynergyDetail(this.id).then(data => {
-    //        this.syncList = data.list
-    //      })
-    //    })
-    //        } else {
-    //          console.log('error submit!!');
-    //          return false;
-    //        }
-    //      });
-    //
-    //
-    //  },
-    _expDataCollect() {
-      expDataCollect([{ id: this.id }]).then(() => {
-        this.$message({
-          type: "success",
-          message: "导出成功"
-        });
-      });
-    },
-    selectCollectModule() {
-      let dicId = this.batchForm.module;
-      for (var i = 0; i < this.csmbList.length; i++) {
-        if (this.csmbList[i].id == dicId) {
-          this.batchForm.collectInfo = this.csmbList[i].description;
-          break;
-        }
+  const resetObj = {currentuser: true, seqNo: "", name: "", city: {name: ""}, province: {name: ""}, county: {name: ""}}
+  export default {
+    name: "caseDetail",
+    // props:{
+    //   id:{
+    //     type: Number,
+    //     default: -1
+    //   }
+    // },
+    computed: {
+      ...mapGetters(["userInfo"]),
+      id() {
+        return this.$route.query.id;
       }
     },
-    showadddialogVisible() {
-      this.adddialogVisible = true;
-      this.messageForm = {};
-    },
-    editData(row) {
-      console.log(row);
-      this.adddialogVisible = true;
-      this.messageForm = row;
-      getReduceApplyList(this.id).then(data => {
-        this.reduceApplyList = data.list;
-      });
-    },
-    saveLegal() {
-      this.legalForm.caseId = this.id;
-      saveLegal(this.legalForm).then(data => {
-        this.$message({
-          type: "success",
-          message: "申请成功"
-        });
-        this.ligigationVisible = false;
-        getLegalList(this.id).then(data => {
-          this.legalList = data;
-        });
-      });
-    },
-    deteleData(id) {
-      DeteleData(id).then(response => {
-        this.$message({
-          type: "success",
-          message: "删除成功"
-        });
-        getReduceApplyList(this.id).then(data => {
-          this.reduceApplyList = data.list;
-        });
-      });
-    },
-    saveData() {
-      AddtableList(this.id, this.messageForm).then(response => {
-        this.$message({
-          type: "success",
-          message: "操作成功"
-        });
-        this.adddialogVisible = false;
-        this.messageForm = {};
-        getReduceApplyList(this.id).then(data => {
-          this.reduceApplyList = data.list;
-        });
-      });
-    },
-    showHistoryAddr(row) {
-      this.$set(row, "showHistory", true);
-      getHistoryAddrList(row.id).then(data => {
-        this.$set(row, "history", data);
-      });
-    },
-    showHistoryTel(row) {
-      this.$set(row, "historyType", 1);
-      this.$set(row, "showHistory", true);
-      this.currentRow = row;
-      this.getHistoryTel(1);
+    data() {
+      return {
+        action: baseURL,
+        messageForm: {},
+        showCommentVisible:false,
+        showWarningVisible:false,
+        showCollectInfoVisible: false,
+        adddialogVisible: false,
+        addCommentVisible: false,
+        commentAddContent: null,
+        commentAddColor: "黑",
+        warningAddContent:null,
+        dialogVisible: false,
+        letterVisible: false,
+        letterVisible2: true,
+        dialogSyergyAplVisible: false,
+        dialogSyergyResultVisible: false,
+        formInline: {},
+        legalForm: {},
+        synergyTypeList: [],
+        synergyContextList: [],
+        PhonetypeList: [],
+        syncMemorizeList: [],
+        memorizeList: [], //催記
+        commentList: [], //评语
+        addrList: [], //地址
+        progressList: [{name: "判决", id: 1}, {name: "收案", id: 2}],
+        PersonDataList: [],
+        legalStatusMsgList: [
+          {name: "已审核", id: 1},
+          {name: "审核中", id: 2},
+          {name: "未申请", id: 0}
+        ],
+        caseStatusList: [
+          {name: "未退案", id: 0},
+          {name: "正常", id: 1},
+          {name: "暂停", id: 2},
+          {name: "关档", id: 3},
+          {name: "退档", id: 4},
+          {name: "全部", id: 5}
+        ],
+        letterList: [], //信函记录
+        dataList: [], //案人信息
+        rateUpdateList: [], //利息
+        syncList: [], //协催
+        dependCase: [], //同批次公债案件
+        activeNames: ["1", "2", "3", "4", "5"],
+        otherActiveName: "1",
+        caseDetail: resetObj,
+        ligigationVisible: false,
+        memorizeType: 1,
+        statusList: [
+          {name: "有效", id: 1},
+          {name: "无效", id: 2},
+          {name: "未知", id: 3}
+        ],
+        phoneSelectList: [],
+        batchForm: {sType: 0, mobile: ''},
+        tpfsList: [],
+        csmbList: [],
+        csjgList: [],
+        csztList: [],
+        jmztList: [],
+        batchAddTelVisible: false,
+        batchAddTelContent: null,
+        dialogAddrVisible: false,
+        addressInfo: {},
+        synergyInfo: {},
+        addrSelectList: [],
+        logType: "",
+        logList: [],
+        caseSameList: [],
+        dialogLetterVisible: false,
+        letterInfo: {},
+        syncType: 1,
+        reduceApplyList: [],
+        uploadVisible: false,
+        uploadFileList: [],
+        header: {Authorization: localStorage.token},
+        legalList: [],
+        currentRow: {},
+        header: {Authorization: localStorage.token},
+        archiveInfo: {},
+        dialogArchiveVisible: false,
+        dataCollectInfo: {},
+        dialogDataCollectVisible: false,
+        fileNames: {file: "", caseId: "", id: ""},
+        cpList: [],
+        cpInfo: {},
+        dialogCpVisible: false,
+        repayTypeList: [],
+        repayRemarkList: [],
+        ptpList: [],
+        $routeKey: ''
+      };
     },
 
-    getHistoryTel(val) {
-      detailTelCurrentCollect({
-        caseId: this.id,
-        detailType: val,
-        mobile: this.currentRow.tel
-      }).then(data => {
-        this.$set(this.currentRow, "history", data);
-      });
-    },
-    uploadSuccess(res, file, fileList) {
-      if (res.code == 100) {
-        this.$message({
-          type: "success",
-          message: res.msg
+    methods: {
+      lastCase(){
+        let id = null;
+        let name = null;
+        let seqNo = null;
+        let thisData = {id:this.id};
+        lastCase(thisData).then(data => {
+          id = data.id;
+          name = data.name;
+          seqNo = data.seqNo;
+          this.$router.push({
+            path: 'case-detail',
+            query: {
+              id,
+              name,
+              seqNo
+            }
+          })
+        });
+      },
+      nextCase(){
+        let id = null;
+        let name = null;
+        let seqNo = null;
+        let thisData = {id:this.id};
+        nextCase(thisData).then(data => {
+          id = data.id;
+          name = data.name;
+          seqNo = data.seqNo;
+          this.$router.push({
+            path: 'case-detail',
+            query: {
+              id,
+              name,
+              seqNo
+            }
+          })
+        });
+      },
+      saveCollectInfo() {
+        saveCollectInfo(this.id, this.caseDetail.collectInfo).then(data => {
+          this.$message({
+            type: "success",
+            message: "保存成功"
+          });
+          this.showCollectInfoVisible = false;
+        });
+      },
+      showCollectInfo() {
+        this.showCollectInfoVisible = true;
+      },
+      copyToCollect(tel, name, relation) {
+        this.$set(this.batchForm, 'mobile', tel);
+        this.$set(this.batchForm, 'targetName', name);
+        this.$set(this.batchForm, 'relation', relation);
+      },
+      handleChange(file) {
+        this.fileNames.file = file.name;
+        this.fileNames.caseId = this.id;
+      },
+      moreId(id) {
+        this.fileNames.id = id;
+      },
+      showSynergyApply() {
+        getSynergyTypeList().then(data => {
+          this.synergyTypeList = data;
+        });
+        getSynergyContextList().then(data => {
+          this.synergyContextList = data;
+        });
+        this.dialogSyergyAplVisible = true;
+      },
+      showSynergyResult() {
+        getSynergyTypeList().then(data => {
+          this.synergyTypeList = data;
+        });
+        this.dialogSyergyResultVisible = true;
+      },
+      saveSynergyApply() {
+        this.synergyInfo.caseId = this.id;
+        saveApply(this.synergyInfo).then(data => {
+          this.dialogSyergyAplVisible = false;
+          getSynergyDetail(this.id).then(data => {
+            this.syncList = data.list;
+          });
+        });
+      },
+      saveSynergyResult(formName) {
+        this.$refs[formName].validate(valid => {
+          if (valid) {
+            this.synergyInfo.caseId = this.id;
+            saveResult(this.synergyInfo).then(data => {
+              this.dialogSyergyResultVisible = false;
+              getSynergyDetail(this.id).then(data => {
+                this.syncList = data.list;
+              });
+            });
+          } else {
+            console.log("error submit!!");
+            return false;
+          }
+        });
+      },
+      //  saveSynergyResult(formName){
+      //
+      //  	this.$refs[formName].validate((valid) => {
+      //        if (valid) {
+      //       this.synergyInfo.caseId = this.id
+      //    saveResult(this.synergyInfo).then(data=>{
+      //      this.dialogSyergyResultVisible = false;
+      //      getSynergyDetail(this.id).then(data => {
+      //        this.syncList = data.list
+      //      })
+      //    })
+      //        } else {
+      //          console.log('error submit!!');
+      //          return false;
+      //        }
+      //      });
+      //
+      //
+      //  },
+      _expDataCollect() {
+        expDataCollect([{id: this.id}]).then(() => {
+          this.$message({
+            type: "success",
+            message: "导出成功"
+          });
+        });
+      },
+      selectCollectModule() {
+        let dicId = this.batchForm.module;
+        for (var i = 0; i < this.csmbList.length; i++) {
+          if (this.csmbList[i].id == dicId) {
+            this.batchForm.collectInfo = this.csmbList[i].description;
+            break;
+          }
+        }
+      },
+      showadddialogVisible() {
+        this.adddialogVisible = true;
+        this.messageForm = {};
+      },
+      editData(row) {
+        console.log(row);
+        this.adddialogVisible = true;
+        this.messageForm = row;
+        getReduceApplyList(this.id).then(data => {
+          this.reduceApplyList = data.list;
+        });
+      },
+      saveLegal() {
+        this.legalForm.caseId = this.id;
+        saveLegal(this.legalForm).then(data => {
+          this.$message({
+            type: "success",
+            message: "申请成功"
+          });
+          this.ligigationVisible = false;
+          getLegalList(this.id).then(data => {
+            this.legalList = data;
+          });
+        });
+      },
+      deteleData(id) {
+        DeteleData(id).then(response => {
+          this.$message({
+            type: "success",
+            message: "删除成功"
+          });
+          getReduceApplyList(this.id).then(data => {
+            this.reduceApplyList = data.list;
+          });
+        });
+      },
+      saveData() {
+        AddtableList(this.id, this.messageForm).then(response => {
+          this.$message({
+            type: "success",
+            message: "操作成功"
+          });
+          this.adddialogVisible = false;
+          this.messageForm = {};
+          getReduceApplyList(this.id).then(data => {
+            this.reduceApplyList = data.list;
+          });
+        });
+      },
+      showHistoryAddr(row) {
+        this.$set(row, "showHistory", true);
+        getHistoryAddrList(row.id).then(data => {
+          this.$set(row, "history", data);
+        });
+      },
+      showHistoryTel(row) {
+        this.$set(row, "historyType", 1);
+        this.$set(row, "showHistory", true);
+        this.currentRow = row;
+        this.getHistoryTel(1);
+      },
+
+      getHistoryTel(val) {
+        detailTelCurrentCollect({
+          caseId: this.id,
+          detailType: val,
+          mobile: this.currentRow.tel
+        }).then(data => {
+          this.$set(this.currentRow, "history", data);
+        });
+      },
+      uploadSuccess(res, file, fileList) {
+        if (res.code == 100) {
+          this.$message({
+            type: "success",
+            message: res.msg
+          });
+          pageDataFile(this.id).then(response => {
+            this.uploadFileList = response;
+          });
+        } else {
+          this.$message({
+            type: "error",
+            message: res.msg
+          });
+        }
+      },
+      uploadSuccess2(res, file, fileList) {
+        if (res.code == 100) {
+          this.$message({
+            type: "success",
+            message: res.msg
+          });
+        } else {
+          this.$message({
+            type: "error",
+            message: res.msg
+          });
+        }
+      },
+      logTypeChange(val) {
+        pageDataLog({
+          caseId: this.id,
+          type: val
+        }).then(data => {
+          this.logList = data;
+        });
+      },
+      syncTypeChange(val) {
+        let applyStatus;
+        let finishStatus;
+        if (val == 1) {
+        } else if (val == 2) {
+          applyStatus = 0;
+          finishStatus = 0;
+        } else if (val == 3) {
+          applyStatus = 1;
+          finishStatus = 0;
+        } else if (val == 4) {
+          applyStatus = 1;
+          finishStatus = 1;
+        } else if (val == 5) {
+          applyStatus = -1;
+        }
+        getSynergyDetail(this.id, applyStatus, finishStatus).then(data => {
+          this.syncList = data.list;
+        });
+      },
+      memorizeTypeChange(val) {
+        let batchNo = this.caseDetail.batchNo;
+        let identNo = this.caseDetail.identNo;
+        let cardNo = this.caseDetail.cardNo;
+        getCollectDetail(this.id, batchNo, identNo, cardNo, val).then(data => {
+          this.memorizeList = data;
+        });
+      },
+
+      onClickSaveCollection() {
+        this.batchForm.caseId = this.id;
+        dataCollectionSave(this.batchForm).then(data => {
+          this.$message({
+            type: "success",
+            message: "新增催收记录成功"
+          });
+          this.batchForm = {sType: 0}
+          let batchNo = this.caseDetail.batchNo;
+          let identNo = this.caseDetail.identNo;
+          let cardNo = this.caseDetail.cardNo;
+          getCollectDetail(this.id, batchNo, identNo, cardNo, 1).then(data => {
+            this.memorizeList = data;
+          });
+          getSameBatchCollect(this.id).then(data => {
+            this.syncMemorizeList = data;
+          });
+        });
+      },
+      _deleteLog(id) {
+        this.$confirm("此操作将删除该操作记录且无法恢复,是否继续？", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            delDataLog(id).then(res => {
+              pageDataLog({caseId: this.id, type: this.logType}).then(data => {
+                this.logList = data;
+              });
+              this.$message({
+                type: "success",
+                message: "操作记录删除成功"
+              });
+            });
+          })
+          .catch(() => {
+          });
+      },
+      _deleteComment(id) {
+        this.$confirm("此操作将删除该评语且无法恢复,是否继续？", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            delDataComment(id).then(res => {
+              getCommentDetail(this.id).then(data => {
+                this.commentList = data;
+              });
+              this.$message({
+                type: "success",
+                message: "评语删除成功"
+              });
+            });
+          })
+          .catch(() => {
+          });
+      },
+      editLog(row) {
+        this.editLogRow = row;
+        this.$set(row, "editContext", row.context);
+        this.$set(row, "editLogVisible", true);
+      },
+      editComment(row) {
+        this.editCommentRow = row;
+        this.$set(row, "editContext", row.comment);
+        this.$set(row, "editCommentVisible", true);
+      },
+      onClickSaveLog() {
+        updateDataLog({
+          id: this.editLogRow.id,
+          context: this.editLogRow.editContext
+        }).then(res => {
+          pageDataLog({caseId: this.id, type: this.logType}).then(data => {
+            this.logList = data;
+          });
+          this.$message({
+            type: "success",
+            message: "操作记录修改成功"
+          });
+        });
+      },
+      onClickSaveComment() {
+        updateDataComment({
+          id: this.editCommentRow.id,
+          comment: this.editCommentRow.editContext
+        }).then(res => {
+          getCommentDetail(this.id).then(data => {
+            this.$message({
+              type: "success",
+              message: "评语修改成功"
+            });
+            this.commentList = data;
+            // this.$set(this.editCommentRow,'editCommentVisible',false)
+          });
+        });
+      },
+      saveSelfInfo() {
+        updateRemark({
+          id: this.id,
+          remark: this.caseDetail.selfInfo
+        }).then(res => {
+          this.$message({
+            type: "success",
+            message: "修改自定义信息成功"
+          });
+        });
+      },
+      applyLetter(row) {
+        // letterCount
+        this.letterInfo = {
+          caseId: this.id,
+          addressId: row.id,
+          periods: row.letterCount + 1,
+          address: row.address
+        };
+        this.dialogLetterVisible = true;
+      },
+      saveApplyLetter() {
+        addLetter(this.letterInfo).then(data => {
+          getAddressDetail(this.id).then(data => {
+            this.addrList = data;
+          });
+          this.$message({
+            type: "success",
+            message: "信函申请提交成功"
+          });
+          this.dialogLetterVisible = false;
+        });
+      },
+
+      showLetterList() {
+        getLetterList(this.id).then(data => {
+          this.letterList = data;
+          this.letterVisible2 = false;
+          this.letterVisible = true;
+        });
+      },
+      saveDataCollect() {
+        let result = this.dataCollectInfo;
+        result.caseId = this.id;
+        if (this.dataCollectEditType === "add") {
+          result.id = 0;
+        }
+        saveDataCollectDetail(result).then(res => {
+          if (this.dataCollectEditType === "add") {
+            getCollectDetail(this.id, this.memorizeType).then(data => {
+              this.memorizeList = data;
+            });
+            this.$message({
+              type: "success",
+              message: "新增辅助催记成功"
+            });
+          } else {
+            getCollectDetail(this.id, this.memorizeType).then(data => {
+              this.memorizeList = data;
+            });
+            this.$message({
+              type: "success",
+              message: "修改辅助催记成功"
+            });
+          }
+          this.dialogDataCollectVisible = false;
+        });
+      },
+      editDataCollect(row, index) {
+        this.dataCollectInfo = {...row};
+        this.dataCollectEditType = "edit";
+        this.dialogDataCollectVisible = true;
+      },
+      addDataCollect() {
+        this.dataCollectInfo = {};
+        this.dataCollectEditType = "add";
+        this.dialogDataCollectVisible = true;
+      },
+      addCpInfo() {
+        this.cpInfo = {};
+        this.dialogCpVisible = true;
+      },
+      saveCpInfo() {
+        this.cpInfo.dataCase = {id: this.id};
+        saveBank(this.cpInfo).then(data => {
+          getCPList(this.id).then(cpList => {
+            this.cpList = cpList;
+          });
+          this.$message({
+            type: "success",
+            message: "新建CP记录成功"
+          });
+          this.dialogCpVisible = false;
+        });
+      },
+      saveAddr() {
+        let result = this.addressInfo;
+        result.caseId = this.id;
+        if (this.addrEditType === "add") {
+          result.id = 0;
+        }
+        saveCaseAddress(result).then(res => {
+          if (this.addrEditType === "add") {
+            // this.caseDetail.dataCaseTelEntityList.push(res)
+            getAddressDetail(this.id).then(data => {
+              this.addrList = data;
+            });
+            this.$message({
+              type: "success",
+              message: "新增地址成功"
+            });
+          } else {
+            getAddressDetail(this.id).then(data => {
+              this.addrList = data;
+            });
+            this.$message({
+              type: "success",
+              message: "修改地址成功"
+            });
+          }
+          this.dialogAddrVisible = false;
+        });
+      },
+      addAddr() {
+        this.addressInfo = {};
+        this.addrEditType = "add";
+        this.dialogAddrVisible = true;
+      },
+      editAddr(addr, index) {
+        this.addressInfo = {...addr};
+        this.addrEditType = "edit";
+        this.dialogAddrVisible = true;
+      },
+      showAllAddr() {
+        getAddressDetail(this.id).then(data => {
+          this.addrList = data;
+        });
+      },
+      saveAddr() {
+        let result = this.addressInfo;
+        result.caseId = this.id;
+        if (this.addrEditType === "add") {
+          result.id = 0;
+        }
+        saveCaseAddress(result).then(res => {
+          if (this.addrEditType === "add") {
+            // this.caseDetail.dataCaseTelEntityList.push(res)
+            getAddressDetail(this.id).then(data => {
+              this.addrList = data;
+            });
+            this.$message({
+              type: "success",
+              message: "新增地址成功"
+            });
+          } else {
+            getAddressDetail(this.id).then(data => {
+              this.addrList = data;
+            });
+            this.$message({
+              type: "success",
+              message: "修改地址成功"
+            });
+          }
+          this.dialogAddrVisible = false;
+        });
+      },
+      deleteAddr(id) {
+        this.$confirm("此操作将删除该地址且无法恢复,是否继续？", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            delAddr(id).then(res => {
+              getAddressDetail(this.id).then(data => {
+                this.addrList = data;
+              });
+              this.$message({
+                type: "success",
+                message: "删除地址成功"
+              });
+            });
+          })
+          .catch(() => {
+          });
+      },
+      changeAddrStatus(status) {
+        if (!this.addrSelectList.length) {
+          this.$message("请勾选需要修改的地址");
+          return;
+        }
+
+        this.$confirm("确认修改地址状态？", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            const data = this.addrSelectList.map(item => {
+              return {
+                id: item.id,
+                status: status
+              };
+            });
+            updateAddrStatus(data).then(() => {
+              getAddressDetail(this.id).then(data => {
+                this.addrList = data;
+              });
+              this.$message({
+                type: "success",
+                message: "地址状态修改成功"
+              });
+            });
+          })
+          .catch(() => {
+          });
+      },
+      onClickAddArchive() {
+        this.archiveInfo = {};
+        this.dialogArchiveVisible = true;
+      },
+      _saveArchive() {
+        let result = this.archiveInfo;
+        result.caseId = this.id;
+        saveArchive(result).then(res => {
+          this.$message({
+            type: "success",
+            message: "新增案人数据成功"
+          });
+          getArchiveDetail(this.id).then(data => {
+            this.dataList = data;
+          });
+          this.dialogArchiveVisible = false;
+        });
+      },
+      showAllTel() {
+        getTelList(this.id).then(data => {
+          this.$set(this.caseDetail, "dataCaseTelEntityList", data);
+        });
+      },
+      saveTel() {
+        let result = this.formInline;
+        result.caseId = this.id;
+        if (this.phoneEditType === "add") {
+          result.id = 0;
+        }
+        saveCaseTel(result).then(res => {
+          if (this.phoneEditType === "add") {
+            // this.caseDetail.dataCaseTelEntityList.push(res)
+            getTelList(this.id).then(data => {
+              this.$set(this.caseDetail, "dataCaseTelEntityList", data);
+            });
+            this.$message({
+              type: "success",
+              message: "新增电话成功"
+            });
+          } else {
+            getTelList(this.id).then(data => {
+              this.$set(this.caseDetail, "dataCaseTelEntityList", data);
+            });
+            this.$message({
+              type: "success",
+              message: "修改电话成功"
+            });
+          }
+          this.dialogVisible = false;
+        });
+      },
+      addPhone() {
+        this.formInline = {};
+        this.phoneEditType = "add";
+        this.dialogVisible = true;
+      },
+      editPhone(phone, index) {
+        this.formInline = {...phone};
+        this.phoneEditType = "edit";
+        this.dialogVisible = true;
+      },
+      deleteTel(id) {
+        this.$confirm("此操作将删除该电话且无法恢复,是否继续？", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            delTel(id).then(res => {
+              getTelList(this.id).then(data => {
+                this.$set(this.caseDetail, "dataCaseTelEntityList", data);
+              });
+              this.$message({
+                type: "success",
+                message: "删除电话成功"
+              });
+            });
+          })
+          .catch(() => {
+          });
+      },
+      _synchroSameTel() {
+        this.$confirm("确认同步共债？", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            synchroSameTel(this.id).then(res => {
+              this.$message({
+                type: "success",
+                message: "同步共债成功"
+              });
+            });
+          })
+          .catch(() => {
+          });
+      },
+      changePhoneStatus(status) {
+        if (!this.phoneSelectList.length) {
+          this.$message("请勾选需要修改的电话号码");
+          return;
+        }
+
+        this.$confirm("确认修改电话状态？", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            const data = this.phoneSelectList.map(item => {
+              return {
+                id: item.id,
+                telStatusMsg: status
+              };
+            });
+            updateTelStatus(data).then(() => {
+              getTelList(this.id).then(data => {
+                this.$set(this.caseDetail, "dataCaseTelEntityList", data);
+              });
+              this.$message({
+                type: "success",
+                message: "电话状态修改成功"
+              });
+            });
+          })
+          .catch(() => {
+          });
+      },
+      stopTel(id) {
+        this.$confirm("确认停止跟进该电话？", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            updateTelStatus([
+              {
+                id,
+                telStatusMsg: "停止跟进"
+              }
+            ]).then(res => {
+              getTelList(this.id).then(data => {
+                this.$set(this.caseDetail, "dataCaseTelEntityList", data);
+              });
+              this.$message("该电话已停止跟进");
+            });
+          })
+          .catch(() => {
+          });
+      },
+      onClickAddWarning(){
+        if (!this.warningAddContent) {
+          this.$message("请输入警告内容");
+          return;
+        }
+        addWarning([
+          {
+            id: this.id,
+            warning: this.warningAddContent
+          }
+        ]).then(res => {
+          this.$message({
+            type: "success",
+            message: "警告添加成功"
+          });
+         this.showWarningVisible=false;
+        });
+      },
+      onClickAddComment() {
+        if (!this.commentAddContent) {
+          this.$message("请输入评语内容");
+          return;
+        }
+        addComment([
+          {
+            id: this.id,
+            comment: this.commentAddContent,
+            color: this.commentAddColor
+          }
+        ]).then(res => {
+          this.$message({
+            type: "success",
+            message: "评语添加成功"
+          });
+          getCommentDetail(this.id).then(data => {
+            this.commentList = data;
+            this.addCommentVisible = false;
+            this.showCommentVisible = false;
+            this.commentAddContent = "";
+            this.commentAddColor = "黑";
+          });
+        });
+      },
+      litigationApply() {
+        this.ligigationVisible = true;
+        PersonList().then(response => {
+          this.PersonDataList = response;
+        });
+      },
+      onClickBatchAddTel() {
+        if (!this.batchAddTelContent) {
+          this.$message("请输入评语内容");
+          return;
+        }
+        addBatchCaseTel({
+          caseId: this.id,
+          remark: this.batchAddTelContent
+        }).then(res => {
+          this.$message({
+            type: "success",
+            message: "电话添加成功"
+          });
+          getTelList(this.id).then(data => {
+            this.$set(this.caseDetail, "dataCaseTelEntityList", data);
+            this.batchAddTelContent = null;
+            this.batchAddTelVisible = false;
+          });
+        });
+      },
+      queryDetail() {
+        this.otherActiveName = "1";
+        getCaseDetail(this.id).then(data => {
+          this.caseDetail = data;
+        });
+        getSameBatchCollect(this.id).then(data => {
+          this.syncMemorizeList = data;
+        });
+        getSameBatchCase(this.id).then(data => {
+          this.dependCase = data;
+        });
+        getCommentDetail(this.id).then(data => {
+          this.commentList = data;
+        });
+        getEnum("谈判方式").then(data => {
+          this.tpfsList = data;
+        });
+        getEnum("催收模板").then(data => {
+          this.csmbList = data;
+        });
+        getEnum("催收结果").then(data => {
+          this.csjgList = data;
+        });
+        getEnum("催收状态").then(data => {
+          this.csztList = data;
+        });
+        getEnum("减免状态").then(data => {
+          this.jmztList = data;
+        });
+        getEnum("电话类型").then(data => {
+          this.PhonetypeList = data;
         });
         pageDataFile(this.id).then(response => {
           this.uploadFileList = response;
         });
-      } else {
-        this.$message({
-          type: "error",
-          message: res.msg
+        getRepayType().then(data => {
+          this.repayTypeList = data;
         });
-      }
-    },
-    uploadSuccess2(res, file, fileList) {
-      if (res.code == 100) {
-        this.$message({
-          type: "success",
-          message: res.msg
+        getRepayRemark().then(data => {
+          this.repayRemarkList = data;
         });
-      } else {
-        this.$message({
-          type: "error",
-          message: res.msg
-        });
-      }
-    },
-    logTypeChange(val) {
-      pageDataLog({
-        caseId: this.id,
-        type: val
-      }).then(data => {
-        this.logList = data;
-      });
-    },
-    syncTypeChange(val) {
-      let applyStatus;
-      let finishStatus;
-      if (val == 1) {
-      } else if (val == 2) {
-        applyStatus = 0;
-        finishStatus = 0;
-      } else if (val == 3) {
-        applyStatus = 1;
-        finishStatus = 0;
-      } else if (val == 4) {
-        applyStatus = 1;
-        finishStatus = 1;
-      } else if (val == 5) {
-        applyStatus = -1;
-      }
-      getSynergyDetail(this.id, applyStatus, finishStatus).then(data => {
-        this.syncList = data.list;
-      });
-    },
-    memorizeTypeChange(val) {
-      let batchNo = this.caseDetail.batchNo;
-      let identNo = this.caseDetail.identNo;
-      let cardNo = this.caseDetail.cardNo;
-      getCollectDetail(this.id, batchNo, identNo, cardNo, val).then(data => {
-        this.memorizeList = data;
-      });
-    },
-
-    onClickSaveCollection() {
-      this.batchForm.caseId = this.id;
-      dataCollectionSave(this.batchForm).then(data => {
-        this.$message({
-          type: "success",
-          message: "新增催收记录成功"
-        });
-        this.batchForm = { sType: 0 }
-        let batchNo = this.caseDetail.batchNo;
-        let identNo = this.caseDetail.identNo;
-        let cardNo = this.caseDetail.cardNo;
-        getCollectDetail(this.id, batchNo, identNo, cardNo, 1).then(data => {
-          this.memorizeList = data;
-        });
-      });
-    },
-    _deleteLog(id) {
-      this.$confirm("此操作将删除该操作记录且无法恢复,是否继续？", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      })
-        .then(() => {
-          delDataLog(id).then(res => {
-            pageDataLog({ caseId: this.id, type: this.logType }).then(data => {
-              this.logList = data;
-            });
-            this.$message({
-              type: "success",
-              message: "操作记录删除成功"
-            });
+      },
+      showPanel(tab, e) {
+        var ind = tab.label;
+        if (ind == "地址") {
+          getAddressDetail(this.id).then(data => {
+            this.addrList = data;
+            this.letterVisible = false;
+            this.letterVisible2 = true;
           });
-        })
-        .catch(() => {});
-    },
-    _deleteComment(id) {
-      this.$confirm("此操作将删除该评语且无法恢复,是否继续？", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      })
-        .then(() => {
-          delDataComment(id).then(res => {
-            getCommentDetail(this.id).then(data => {
-              this.commentList = data;
-            });
-            this.$message({
-              type: "success",
-              message: "评语删除成功"
-            });
+        } else if (ind == "案人数据") {
+          getArchiveDetail(this.id).then(data => {
+            this.dataList = data;
           });
-        })
-        .catch(() => {});
-    },
-    editLog(row) {
-      this.editLogRow = row;
-      this.$set(row, "editContext", row.context);
-      this.$set(row, "editLogVisible", true);
-    },
-    editComment(row) {
-      this.editCommentRow = row;
-      this.$set(row, "editContext", row.comment);
-      this.$set(row, "editCommentVisible", true);
-    },
-    onClickSaveLog() {
-      updateDataLog({
-        id: this.editLogRow.id,
-        context: this.editLogRow.editContext
-      }).then(res => {
-        pageDataLog({ caseId: this.id, type: this.logType }).then(data => {
-          this.logList = data;
-        });
-        this.$message({
-          type: "success",
-          message: "操作记录修改成功"
-        });
-      });
-    },
-    onClickSaveComment() {
-      updateDataComment({
-        id: this.editCommentRow.id,
-        comment: this.editCommentRow.editContext
-      }).then(res => {
-        getCommentDetail(this.id).then(data => {
-          this.$message({
-            type: "success",
-            message: "评语修改成功"
-          });
-          this.commentList = data;
-          // this.$set(this.editCommentRow,'editCommentVisible',false)
-        });
-      });
-    },
-    saveSelfInfo() {
-      updateRemark({
-        id: this.id,
-        remark: this.caseDetail.selfInfo
-      }).then(res => {
-        this.$message({
-          type: "success",
-          message: "修改自定义信息成功"
-        });
-      });
-    },
-    applyLetter(row) {
-      // letterCount
-      this.letterInfo = {
-        caseId: this.id,
-        addressId: row.id,
-        periods: row.letterCount + 1,
-        address: row.address
-      };
-      this.dialogLetterVisible = true;
-    },
-    saveApplyLetter() {
-      addLetter(this.letterInfo).then(data => {
-        getAddressDetail(this.id).then(data => {
-          this.addrList = data;
-        });
-        this.$message({
-          type: "success",
-          message: "信函申请提交成功"
-        });
-        this.dialogLetterVisible = false;
-      });
-    },
-
-    showLetterList() {
-      getLetterList(this.id).then(data => {
-        this.letterList = data;
-        this.letterVisible2 = false;
-        this.letterVisible = true;
-      });
-    },
-    saveDataCollect() {
-      let result = this.dataCollectInfo;
-      result.caseId = this.id;
-      if (this.dataCollectEditType === "add") {
-        result.id = 0;
-      }
-      saveDataCollectDetail(result).then(res => {
-        if (this.dataCollectEditType === "add") {
-          getCollectDetail(this.id, this.memorizeType).then(data => {
+        } else if (ind == "催记") {
+          //催記
+          this.memorizeType = 1;
+          getCollectDetail(this.id, 1).then(data => {
+            console.info(data);
             this.memorizeList = data;
           });
-          this.$message({
-            type: "success",
-            message: "新增辅助催记成功"
+        } else if (ind == "评语") {
+          //评语
+          getCommentDetail(this.id).then(data => {
+            this.commentList = data;
           });
-        } else {
-          getCollectDetail(this.id, this.memorizeType).then(data => {
+        } else if (ind == "利息更新") {
+          //利息
+          getInterestDetail(this.id).then(data => {
+            this.rateUpdateList = data;
+          });
+        } else if (ind == "案件登帐") {
+          //案件登帐
+          this.memorizeType = 1;
+          getCollectDetail(this.id, 1).then(data => {
             this.memorizeList = data;
           });
-          this.$message({
-            type: "success",
-            message: "修改辅助催记成功"
+          getCPList(this.id).then(data => {
+            this.cpList = data;
+          });
+        } else if (ind == "协催") {
+          //协催
+          this.syncType = 1;
+          getSynergyDetail(this.id).then(data => {
+            this.syncList = data.list;
+          });
+        } else if (ind == "共债案件") {
+          //共债案件
+          sameCaseList(this.id).then(data => {
+            this.caseSameList = data;
+          });
+        } else if (ind == "操作记录") {
+          //操作记录
+          this.logType = "";
+          pageDataLog({
+            caseId: this.id,
+            type: ""
+          }).then(data => {
+            this.logList = data;
+          });
+        } else if (ind == "诉讼案件") {
+          //诉讼案件
+          getLegalList(this.id).then(data => {
+            this.legalList = data;
+          });
+        } else if (ind == "减免管理") {
+          //减免管理
+          getReduceApplyList(this.id).then(data => {
+            this.reduceApplyList = data.list;
           });
         }
-        this.dialogDataCollectVisible = false;
-      });
-    },
-    editDataCollect(row, index) {
-      this.dataCollectInfo = { ...row };
-      this.dataCollectEditType = "edit";
-      this.dialogDataCollectVisible = true;
-    },
-    addDataCollect() {
-      this.dataCollectInfo = {};
-      this.dataCollectEditType = "add";
-      this.dialogDataCollectVisible = true;
-    },
-    addCpInfo() {
-      this.cpInfo = {};
-      this.dialogCpVisible = true;
-    },
-    saveCpInfo() {
-      this.cpInfo.dataCase = { id: this.id };
-      saveBank(this.cpInfo).then(data => {
-        getCPList(this.id).then(cpList => {
-          this.cpList = cpList;
-        });
-        this.$message({
-          type: "success",
-          message: "新建CP记录成功"
-        });
-        this.dialogCpVisible = false;
-      });
-    },
-    saveAddr() {
-      let result = this.addressInfo;
-      result.caseId = this.id;
-      if (this.addrEditType === "add") {
-        result.id = 0;
-      }
-      saveCaseAddress(result).then(res => {
-        if (this.addrEditType === "add") {
-          // this.caseDetail.dataCaseTelEntityList.push(res)
-          getAddressDetail(this.id).then(data => {
-            this.addrList = data;
-          });
-          this.$message({
-            type: "success",
-            message: "新增地址成功"
-          });
+      },
+      onSelectPhoneRow(val) {
+        this.phoneSelectList = val;
+      },
+      onSelectAddrRow(val) {
+        this.addrSelectList = val;
+      },
+      telTableRowClassName({row, rowIndex}) {
+        if (row.telStatusMsg === "停止跟进") {
+          return "stop-row";
+        }
+      },
+      initPageData(ida) {
+        let id = ida || this.$route.query.id || "";
+        let data = sessionStorage.getItem(id) || "";
+        console.log(data == "");
+        if (data) {
+          let obj = JSON.parse(data);
+          for (let [k, v] of Object.entries(obj)) {
+            this.$set(this, k, v);
+          }
+          console.log(obj.caseDetail.name)
         } else {
-          getAddressDetail(this.id).then(data => {
-            this.addrList = data;
-          });
-          this.$message({
-            type: "success",
-            message: "修改地址成功"
+          this.queryDetail();
+          this.batchForm = {sType: 0};
+          PersonList().then(response => {
+            this.PersonDataList = response;
           });
         }
-        this.dialogAddrVisible = false;
-      });
-    },
-    addAddr() {
-      this.addressInfo = {};
-      this.addrEditType = "add";
-      this.dialogAddrVisible = true;
-    },
-    editAddr(addr, index) {
-      this.addressInfo = { ...addr };
-      this.addrEditType = "edit";
-      this.dialogAddrVisible = true;
-    },
-    showAllAddr() {
-      getAddressDetail(this.id).then(data => {
-        this.addrList = data;
-      });
-    },
-    saveAddr() {
-      let result = this.addressInfo;
-      result.caseId = this.id;
-      if (this.addrEditType === "add") {
-        result.id = 0;
-      }
-      saveCaseAddress(result).then(res => {
-        if (this.addrEditType === "add") {
-          // this.caseDetail.dataCaseTelEntityList.push(res)
-          getAddressDetail(this.id).then(data => {
-            this.addrList = data;
-          });
-          this.$message({
-            type: "success",
-            message: "新增地址成功"
-          });
-        } else {
-          getAddressDetail(this.id).then(data => {
-            this.addrList = data;
-          });
-          this.$message({
-            type: "success",
-            message: "修改地址成功"
-          });
-        }
-        this.dialogAddrVisible = false;
-      });
-    },
-    deleteAddr(id) {
-      this.$confirm("此操作将删除该地址且无法恢复,是否继续？", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      })
-        .then(() => {
-          delAddr(id).then(res => {
-            getAddressDetail(this.id).then(data => {
-              this.addrList = data;
-            });
-            this.$message({
-              type: "success",
-              message: "删除地址成功"
-            });
-          });
-        })
-        .catch(() => {});
-    },
-    changeAddrStatus(status) {
-      if (!this.addrSelectList.length) {
-        this.$message("请勾选需要修改的地址");
-        return;
-      }
-
-      this.$confirm("确认修改地址状态？", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      })
-        .then(() => {
-          const data = this.addrSelectList.map(item => {
-            return {
-              id: item.id,
-              status: status
-            };
-          });
-          updateAddrStatus(data).then(() => {
-            getAddressDetail(this.id).then(data => {
-              this.addrList = data;
-            });
-            this.$message({
-              type: "success",
-              message: "地址状态修改成功"
-            });
-          });
-        })
-        .catch(() => {});
-    },
-    onClickAddArchive() {
-      this.archiveInfo = {};
-      this.dialogArchiveVisible = true;
-    },
-    _saveArchive() {
-      let result = this.archiveInfo;
-      result.caseId = this.id;
-      saveArchive(result).then(res => {
-        this.$message({
-          type: "success",
-          message: "新增案人数据成功"
-        });
-        getArchiveDetail(this.id).then(data => {
-          this.dataList = data;
-        });
-        this.dialogArchiveVisible = false;
-      });
-    },
-    showAllTel() {
-      getTelList(this.id).then(data => {
-        this.$set(this.caseDetail, "dataCaseTelEntityList", data);
-      });
-    },
-    saveTel() {
-      let result = this.formInline;
-      result.caseId = this.id;
-      if (this.phoneEditType === "add") {
-        result.id = 0;
-      }
-      saveCaseTel(result).then(res => {
-        if (this.phoneEditType === "add") {
-          // this.caseDetail.dataCaseTelEntityList.push(res)
-          getTelList(this.id).then(data => {
-            this.$set(this.caseDetail, "dataCaseTelEntityList", data);
-          });
-          this.$message({
-            type: "success",
-            message: "新增电话成功"
-          });
-        } else {
-          getTelList(this.id).then(data => {
-            this.$set(this.caseDetail, "dataCaseTelEntityList", data);
-          });
-          this.$message({
-            type: "success",
-            message: "修改电话成功"
-          });
-        }
-        this.dialogVisible = false;
-      });
-    },
-    addPhone() {
-      this.formInline = {};
-      this.phoneEditType = "add";
-      this.dialogVisible = true;
-    },
-    editPhone(phone, index) {
-      this.formInline = { ...phone };
-      this.phoneEditType = "edit";
-      this.dialogVisible = true;
-    },
-    deleteTel(id) {
-      this.$confirm("此操作将删除该电话且无法恢复,是否继续？", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      })
-        .then(() => {
-          delTel(id).then(res => {
-            getTelList(this.id).then(data => {
-              this.$set(this.caseDetail, "dataCaseTelEntityList", data);
-            });
-            this.$message({
-              type: "success",
-              message: "删除电话成功"
-            });
-          });
-        })
-        .catch(() => {});
-    },
-    _synchroSameTel() {
-      this.$confirm("确认同步共债？", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      })
-        .then(() => {
-          synchroSameTel(this.id).then(res => {
-            this.$message({
-              type: "success",
-              message: "同步共债成功"
-            });
-          });
-        })
-        .catch(() => {});
-    },
-    changePhoneStatus(status) {
-      if (!this.phoneSelectList.length) {
-        this.$message("请勾选需要修改的电话号码");
-        return;
-      }
-
-      this.$confirm("确认修改电话状态？", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      })
-        .then(() => {
-          const data = this.phoneSelectList.map(item => {
-            return {
-              id: item.id,
-              telStatusMsg: status
-            };
-          });
-          updateTelStatus(data).then(() => {
-            getTelList(this.id).then(data => {
-              this.$set(this.caseDetail, "dataCaseTelEntityList", data);
-            });
-            this.$message({
-              type: "success",
-              message: "电话状态修改成功"
-            });
-          });
-        })
-        .catch(() => {});
-    },
-    stopTel(id) {
-      this.$confirm("确认停止跟进该电话？", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      })
-        .then(() => {
-          updateTelStatus([
-            {
-              id,
-              telStatusMsg: "停止跟进"
+      },
+      sameRouteChange() {
+        sessionStorage.setItem(
+          this.$route.query.id,
+          JSON.stringify(this._data, function (key, value) {
+            if (key == "$routeKey") {
+              return void 0;
             }
-          ]).then(res => {
-            getTelList(this.id).then(data => {
-              this.$set(this.caseDetail, "dataCaseTelEntityList", data);
-            });
-            this.$message("该电话已停止跟进");
-          });
-        })
-        .catch(() => {});
+            return value;
+          })
+        );
+      },
+      resetContent() {
+        this.caseDetail = resetObj;
+      },
     },
-    onClickAddComment() {
-      if (!this.commentAddContent) {
-        this.$message("请输入评语内容");
-        return;
+    watch: {
+
+      $route: {
+        handler(n, o) {
+          if (n.name == "case-detail") {
+            // console.log('routeWatch',n.query.id)
+            // this.sameRouteChange();
+            // this.$routeKey = n.query.id;
+            this.resetContent();
+            this.initPageData();
+
+          }
+        },
+        immediate: true
       }
-      addComment([
-        {
-          id: this.id,
-          comment: this.commentAddContent,
-          color: this.commentAddColor
-        }
-      ]).then(res => {
-        this.$message({
-          type: "success",
-          message: "评语添加成功"
-        });
-        getCommentDetail(this.id).then(data => {
-          this.commentList = data;
-          this.addCommentVisible = false;
-          this.commentAddContent = "";
-          this.commentAddColor = "黑";
-        });
-      });
     },
-    litigationApply() {
-      this.ligigationVisible = true;
+    beforeRouteUpdate(to, from, next) {
+      // 导航离开该组件的对应路由时调用
+      // 可以访问组件实例 `this`
+      // console.log(this);
+      // this.sameRouteChange();
+
+      // console.log("routerLify",this.$route.query.id)
+      this.sameRouteChange();
+      next();
+      this.resetContent();
+      this.initPageData(this.$route.query.id);
+      // console.log("routerLify1",this.$route.query.id)
+
+    },
+    beforeRouteLeave(to, from, next) {
+      // 导航离开该组件的对应路由时调用
+      // 可以访问组件实例 `this`
+      this.sameRouteChange();
+      next();
+    },
+    created() {
+      window.addEventListener("beforeunload", () => {
+        sessionStorage.clear();
+      });
+      this.queryDetail();
+      this.batchForm = {sType: 0};
       PersonList().then(response => {
         this.PersonDataList = response;
       });
-    },
-    onClickBatchAddTel() {
-      if (!this.batchAddTelContent) {
-        this.$message("请输入评语内容");
-        return;
-      }
-      addBatchCaseTel({
-        caseId: this.id,
-        remark: this.batchAddTelContent
-      }).then(res => {
-        this.$message({
-          type: "success",
-          message: "电话添加成功"
-        });
-        getTelList(this.id).then(data => {
-          this.$set(this.caseDetail, "dataCaseTelEntityList", data);
-          this.batchAddTelContent = null;
-          this.batchAddTelVisible = false;
-        });
-      });
-    },
-    queryDetail() {
-      this.otherActiveName = "1";
-      getCaseDetail(this.id).then(data => {
-        this.caseDetail = data;
-      });
-      getSameBatchCollect(this.id).then(data => {
-        this.syncMemorizeList = data;
-      });
-      getSameBatchCase(this.id).then(data => {
-        this.dependCase = data;
-      });
-      getCommentDetail(this.id).then(data => {
-        this.commentList = data;
-      });
-      getEnum("谈判方式").then(data => {
-        this.tpfsList = data;
-      });
-      getEnum("催收模板").then(data => {
-        this.csmbList = data;
-      });
-      getEnum("催收结果").then(data => {
-        this.csjgList = data;
-      });
-      getEnum("催收状态").then(data => {
-        this.csztList = data;
-      });
-      getEnum("减免状态").then(data => {
-        this.jmztList = data;
-      });
-      getEnum("电话类型").then(data => {
-        this.PhonetypeList = data;
-      });
-      pageDataFile(this.id).then(response => {
-        this.uploadFileList = response;
-      });
-      getRepayType().then(data => {
-        this.repayTypeList = data;
-      });
-      getRepayRemark().then(data => {
-        this.repayRemarkList = data;
-      });
-    },
-    showPanel(tab, e) {
-      var ind = tab.label;
-      if (ind == "地址") {
-        getAddressDetail(this.id).then(data => {
-          this.addrList = data;
-          this.letterVisible = false;
-          this.letterVisible2 = true;
-        });
-      } else if (ind == "案人数据") {
-        getArchiveDetail(this.id).then(data => {
-          this.dataList = data;
-        });
-      } else if (ind == "催记") {
-        //催記
-        this.memorizeType = 1;
-        getCollectDetail(this.id, 1).then(data => {
-          console.info(data);
-          this.memorizeList = data;
-        });
-      } else if (ind == "评语") {
-        //评语
-        getCommentDetail(this.id).then(data => {
-          this.commentList = data;
-        });
-      } else if (ind == "利息更新") {
-        //利息
-        getInterestDetail(this.id).then(data => {
-          this.rateUpdateList = data;
-        });
-      } else if (ind == "案件登帐") {
-        //案件登帐
-        this.memorizeType = 1;
-        getCollectDetail(this.id, 1).then(data => {
-          this.memorizeList = data;
-        });
-        getCPList(this.id).then(data => {
-          this.cpList = data;
-        });
-      } else if (ind == "协催") {
-        //协催
-        this.syncType = 1;
-        getSynergyDetail(this.id).then(data => {
-          this.syncList = data.list;
-        });
-      } else if (ind == "共债案件") {
-        //共债案件
-        sameCaseList(this.id).then(data => {
-          this.caseSameList = data;
-        });
-      } else if (ind == "操作记录") {
-        //操作记录
-        this.logType = "";
-        pageDataLog({
-          caseId: this.id,
-          type: ""
-        }).then(data => {
-          this.logList = data;
-        });
-      } else if (ind == "诉讼案件") {
-        //诉讼案件
-        getLegalList(this.id).then(data => {
-          this.legalList = data;
-        });
-      } else if (ind == "减免管理") {
-        //减免管理
-        getReduceApplyList(this.id).then(data => {
-          this.reduceApplyList = data.list;
-        });
-      }
-    },
-    onSelectPhoneRow(val) {
-      this.phoneSelectList = val;
-    },
-    onSelectAddrRow(val) {
-      this.addrSelectList = val;
-    },
-    telTableRowClassName({ row, rowIndex }) {
-      if (row.telStatusMsg === "停止跟进") {
-        return "stop-row";
-      }
-    },
-    initPageData(ida) {
-      let id = ida||this.$route.query.id || "";
-      let data = sessionStorage.getItem(id) || "";
-      console.log(data == "");
-      if (data) {
-        let obj = JSON.parse(data);
-        for (let [k, v] of Object.entries(obj)) {
-          this.$set(this, k, v);
-        }
-        console.log(obj.caseDetail.name)
-      } else {
-        this.queryDetail();
-        this.batchForm = { sType: 0 };
-        PersonList().then(response => {
-          this.PersonDataList = response;
-        });
-      }
-    },
-    sameRouteChange() {
-      sessionStorage.setItem(
-        this.$route.query.id,
-        JSON.stringify(this._data, function(key, value) {
-          if (key == "$routeKey") {
-            return void 0;
-          }
-          return value;
-        })
-      );
-    },
-    resetContent(){
-      this.caseDetail = resetObj;
-    },
-  },
-  watch: {
-
-    $route: {
-      handler(n, o) {
-        if (n.name == "case-detail") {
-          // console.log('routeWatch',n.query.id)
-          // this.sameRouteChange();
-          // this.$routeKey = n.query.id;
-          this.resetContent();
-          this.initPageData();
-
-        }
-      },
-      immediate: true
     }
-  },
-  beforeRouteUpdate(to, from, next) {
-    // 导航离开该组件的对应路由时调用
-    // 可以访问组件实例 `this`
-    // console.log(this);
-    // this.sameRouteChange();
-
-    // console.log("routerLify",this.$route.query.id)
-    this.sameRouteChange();
-    next();
-    this.resetContent();
-    this.initPageData(this.$route.query.id);
-    // console.log("routerLify1",this.$route.query.id)
-
-  },
-  beforeRouteLeave (to, from, next) {
-    // 导航离开该组件的对应路由时调用
-    // 可以访问组件实例 `this`
-    this.sameRouteChange();
-    next();
-  },
-  created() {
-    window.addEventListener("beforeunload", () => {
-      sessionStorage.clear();
-    });
-    this.queryDetail();
-    this.batchForm = { sType: 0 };
-    PersonList().then(response => {
-      this.PersonDataList = response;
-    });
-  }
-};
+  };
 </script>
 
 <style lang="scss">
-#case-detail {
-  .inputUnSelect {
-    user-select: none;
-  }
-  .items-wrap {
-    padding: 24px 24px 24px 0;
-    background: #fafafa;
-    .rule-form {
-      display: flex;
-      flex-wrap: wrap;
-      .el-form-item {
-        margin-bottom: 8px;
-        display: flex;
-        width: 25%;
-        &.half {
-          width: 50%;
-        }
-        &.whole {
-          width: 100%;
-        }
-        &.width-75 {
-          width: 75%;
-        }
-        .el-form-item__content {
-          flex: 1;
-          margin-left: 0 !important;
-          .el-date-editor {
-            width: 100%;
-          }
-          .el-select {
-            width: 100%;
-          }
-        }
-        .content-wrap {
-          display: flex;
-          justify-content: flex-start;
-          align-items: flex-start;
-          .comments-wrap {
-            margin-left: 12px;
-            flex: 1;
-            border: 1px solid #dcdfe6;
-            background: #fff;
-            border-radius: 5px;
-            padding: 8px;
-            .item {
-              margin-bottom: 4px;
-              line-height: 1;
-              color: #000;
-              &.blue {
-                color: #409eff;
-              }
-              &.red {
-                color: red;
-              }
-              &:last-child {
-                margin-bottom: 0;
-              }
-            }
-          }
-        }
-      }
+  #case-detail {
+    .inputUnSelect {
+      user-select: none;
     }
-  }
-  .other-wrap {
-    margin-top: 24px;
-    display: flex;
-    align-items: flex-start;
-    .left-wrap {
-      flex: 1;
-      overflow: hidden;
-      .el-tabs {
-        .el-tabs__item {
-          padding: 0 8px;
-        }
-        .tabs-wrap {
-          .operation {
-            margin-bottom: 12px;
-            display: flex;
-            justify-content: space-between;
-          }
-          &.billing-wrap {
-            width: 100%;
-            display: flex;
-            flex-direction: row;
-            flex-wrap: nowrap;
-            .first {
-              flex: 0 0 35%;
-              width: 35%;
-            }
-            .second {
-              margin-left: 12px;
-              flex: 1;
-            }
-          }
-        }
-      }
-    }
-    .right-wrap {
-      width: 250px;
-      margin-left: 20px;
-      .el-card {
-        .el-card__header {
-          padding: 10px;
-        }
-        .el-card__body {
-          padding: 10px;
-        }
-      }
-    }
-  }
-  .memorize-wrap {
-    display: flex;
-    .left-panel {
-      padding: 12px;
-      flex: 0 0 35%;
-      width: 35%;
-      margin-right: 24px;
-      border: 1px solid #d1d1d1;
-      box-sizing: border-box;
-      .el-form {
+
+    .items-wrap {
+      padding: 24px 24px 24px 0;
+      background: #fafafa;
+
+      .rule-form {
         display: flex;
         flex-wrap: wrap;
-        width: 100%;
+
         .el-form-item {
+          margin-bottom: 8px;
           display: flex;
-          width: 50%;
+          width: 25%;
+
+          &.half {
+            width: 50%;
+          }
+
           &.whole {
             width: 100%;
           }
+
+          &.width-75 {
+            width: 75%;
+          }
+
           .el-form-item__content {
             flex: 1;
             margin-left: 0 !important;
+
+            .el-date-editor {
+              width: 100%;
+            }
+
             .el-select {
               width: 100%;
             }
+          }
+
+          .content-wrap {
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+
+            .comments-wrap {
+              margin-left: 12px;
+              flex: 1;
+              border: 1px solid #dcdfe6;
+              background: #fff;
+              border-radius: 5px;
+              padding: 8px;
+
+              .item {
+                margin-bottom: 4px;
+                line-height: 1;
+                color: #000;
+
+                &.blue {
+                  color: #409eff;
+                }
+
+                &.red {
+                  color: red;
+                }
+
+                &:last-child {
+                  margin-bottom: 0;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .other-wrap {
+      margin-top: 24px;
+      display: flex;
+      align-items: flex-start;
+
+      .left-wrap {
+        flex: 1;
+        overflow: hidden;
+
+        .el-tabs {
+          .el-tabs__item {
+            padding: 0 8px;
+          }
+
+          .tabs-wrap {
+            .operation {
+              margin-bottom: 12px;
+              display: flex;
+              justify-content: space-between;
+            }
+
+            &.billing-wrap {
+              width: 100%;
+              display: flex;
+              flex-direction: row;
+              flex-wrap: nowrap;
+
+              .first {
+                flex: 0 0 35%;
+                width: 35%;
+              }
+
+              .second {
+                margin-left: 12px;
+                flex: 1;
+              }
+            }
+          }
+        }
+      }
+
+      .right-wrap {
+        width: 250px;
+        margin-left: 20px;
+
+        .el-card {
+          .el-card__header {
+            padding: 10px;
+          }
+
+          .el-card__body {
+            padding: 10px;
+          }
+        }
+      }
+    }
+
+    .memorize-wrap {
+      display: flex;
+
+      .left-panel {
+        padding: 12px;
+        flex: 0 0 35%;
+        width: 35%;
+        margin-right: 24px;
+        border: 1px solid #d1d1d1;
+        box-sizing: border-box;
+
+        .el-form {
+          display: flex;
+          flex-wrap: wrap;
+          width: 100%;
+
+          .el-form-item {
+            display: flex;
+            width: 50%;
+
+            &.whole {
+              width: 100%;
+            }
+
+            .el-form-item__content {
+              flex: 1;
+              margin-left: 0 !important;
+
+              .el-select {
+                width: 100%;
+              }
+
+              .el-date-editor {
+                width: 100%;
+              }
+            }
+          }
+        }
+
+        .operation {
+          margin-top: 20px;
+          text-align: center;
+        }
+      }
+
+      .right-panel {
+        flex: 0 0 65%;
+        width: 65%;
+      }
+    }
+  }
+
+  .addr-dialog-wrap {
+    .el-dialog__body {
+      .el-form {
+        display: flex;
+        flex-wrap: wrap;
+
+        .el-form-item {
+          display: flex;
+          width: 50%;
+          margin-right: 0;
+
+          &.whole {
+            width: 100%;
+          }
+
+          .el-form-item__content {
+            flex: 1;
+            margin-left: 0 !important;
+
+            .el-select {
+              width: 100%;
+            }
+
             .el-date-editor {
               width: 100%;
             }
           }
         }
       }
-      .operation {
-        margin-top: 20px;
-        text-align: center;
-      }
-    }
-    .right-panel {
-      flex: 0 0 65%;
-      width: 65%;
     }
   }
-}
-.addr-dialog-wrap {
-  .el-dialog__body {
-    .el-form {
-      display: flex;
-      flex-wrap: wrap;
-      .el-form-item {
-        display: flex;
-        width: 50%;
-        margin-right: 0;
-        &.whole {
-          width: 100%;
-        }
-        .el-form-item__content {
-          flex: 1;
-          margin-left: 0 !important;
-          .el-select {
-            width: 100%;
-          }
-          .el-date-editor {
-            width: 100%;
-          }
-        }
-      }
+
+  .upload-wrap {
+    .upload-btn {
+      display: inline-block;
     }
   }
-}
-.upload-wrap {
-  .upload-btn {
+
+  .el-table {
+    .stop-row {
+      background: red;
+    }
+  }
+
+  .inputDiv {
+    background-color: #f5f7fa;
+    border-color: #e4e7ed;
+    color: black;
+    cursor: not-allowed;
+    //height: 28px;
+    line-height: 28px;
+    min-height: 28px;
+    border-radius: 4px;
+    border: 1px solid #dcdfe6;
     display: inline-block;
+    font-size: inherit;
+    padding: 0 15px;
+    width: 100%;
   }
-}
-.el-table {
-  .stop-row {
-    background: red;
-  }
-}
-.inputDiv {
-  background-color: #f5f7fa;
-  border-color: #e4e7ed;
-  color: black;
-  cursor: not-allowed;
-  //height: 28px;
-  line-height: 28px;
-  min-height: 28px;
-  border-radius: 4px;
-  border: 1px solid #dcdfe6;
-  display: inline-block;
-  font-size: inherit;
-  padding: 0 15px;
-  width: 100%;
-}
-  .telPanel .el-table__body-wrapper{
+
+  .telPanel .el-table__body-wrapper {
     overflow-x: hidden;
   }
 </style>

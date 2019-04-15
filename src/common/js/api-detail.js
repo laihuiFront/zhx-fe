@@ -214,6 +214,14 @@ export function addComment(data){
   })
 }
 
+export function addWarning(data){
+  return request({
+    url: '/dataCase/addWarning',
+    method: 'post',
+    data
+  })
+}
+
 export function listComment(id){
   return request({
     url: '/dataCase/listComment',
@@ -481,6 +489,22 @@ export function getRepayList() {
 export function saveBank(data) {
   return request({
     url: 'bankReconciliation/saveBank',
+    method: 'post',
+    data
+  })
+}
+
+export function nextCase(data) {
+  return request({
+    url: 'dataCase/nextCase',
+    method: 'post',
+    data
+  })
+}
+
+export function lastCase(data) {
+  return request({
+    url: 'dataCase/lastCase',
     method: 'post',
     data
   })
