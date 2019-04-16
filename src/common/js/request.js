@@ -9,8 +9,8 @@ export const baseURL = 'http://127.0.0.1:9119';
 // 创建axios实例
 const service = axios.create({
   // baseURL: 'http://zhx.zaijushou.xyz',
-  baseURL,
-  timeout: 10000 // 请求超时时间
+  baseURL
+  //timeout: 10000 // 请求超时时间
 })
 
 // request拦截器

@@ -6,10 +6,10 @@
         name="1"
       >
         <div style="text-align: right; margin-right:20px;" v-if="caseDetail.currentuser">
-          <el-button type="primary" align="right" size="mini" @click="lastCase">上条</el-button>
-          <el-button type="primary" align="right" size="mini" @click="nextCase">下条</el-button>
+          <el-button type="primary" align="right" size="mini" @click="lastCase"  v-if="mycaseFlag">上条</el-button>
+          <el-button type="primary" align="right" size="mini" @click="nextCase" v-if="mycaseFlag">下条</el-button>
           <el-button type="primary" align="right" size="mini" @click="showCommentVisible=true">评语</el-button>
-          <el-button type="primary" align="right" size="mini" @click="showCollectInfo">警告</el-button>
+          <el-button type="primary" align="right" size="mini" @click="showWarningVisible=true">警告</el-button>
           <el-button type="primary" align="right" size="mini" @click="showCollectInfo">催收小结</el-button>
         </div>
         <div class="items-wrap">
@@ -795,6 +795,12 @@
             <el-form-item label="区县">
               <el-input
                 v-model="caseDetail.county.name"
+                :disabled="true"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="警告">
+              <el-input
+                v-model="caseDetail.warning"
                 :disabled="true"
               ></el-input>
             </el-form-item>
@@ -3803,14 +3809,14 @@
       :visible.sync="showWarningVisible"
       width="30%"
       append-to-body
-      class="addr-dialog-wrap"
+      class="addr-dialog-wrap warninghead"
     >
-      <div style="    padding-top: 10px;">
+      <div style="    padding-top: 10px ;">
         <el-input
           type="textarea"
           :rows="4"
           placeholder="请输入警告"
-          v-model="warningAddContent"
+          v-model="caseDetail.warning"
         >
         </el-input>
       </div>
@@ -3839,6 +3845,7 @@
   import {
     getCaseDetail,
     onClickAddWarning,
+    addWarning,
     lastCase,
     nextCase,
     getSameBatchCollect,
@@ -3916,6 +3923,7 @@
       return {
         action: baseURL,
         messageForm: {},
+        mycaseFlag:false,
         showCommentVisible:false,
         showWarningVisible:false,
         showCollectInfoVisible: false,
@@ -3923,7 +3931,6 @@
         addCommentVisible: false,
         commentAddContent: null,
         commentAddColor: "黑",
-        warningAddContent:null,
         dialogVisible: false,
         letterVisible: false,
         letterVisible2: true,
@@ -3993,7 +4000,6 @@
         header: {Authorization: localStorage.token},
         legalList: [],
         currentRow: {},
-        header: {Authorization: localStorage.token},
         archiveInfo: {},
         dialogArchiveVisible: false,
         dataCollectInfo: {},
@@ -4752,16 +4758,16 @@
           });
       },
       onClickAddWarning(){
-        if (!this.warningAddContent) {
+        if (!this.caseDetail.warning) {
           this.$message("请输入警告内容");
           return;
         }
-        addWarning([
+        addWarning(
           {
             id: this.id,
-            warning: this.warningAddContent
+            warning: this.caseDetail.warning
           }
-        ]).then(res => {
+        ).then(res => {
           this.$message({
             type: "success",
             message: "警告添加成功"
@@ -4975,6 +4981,11 @@
       resetContent() {
         this.caseDetail = resetObj;
       },
+      showMyCaseFlag(){
+        if (this.$route.query.mycase){
+          this.mycaseFlag = true;
+        }
+      }
     },
     watch: {
 
@@ -5017,6 +5028,7 @@
         sessionStorage.clear();
       });
       this.queryDetail();
+      this.showMyCaseFlag();
       this.batchForm = {sType: 0};
       PersonList().then(response => {
         this.PersonDataList = response;
@@ -5276,5 +5288,9 @@
 
   .telPanel .el-table__body-wrapper {
     overflow-x: hidden;
+  }
+
+  .warninghead .el-dialog__body{
+    padding-top: 10px;
   }
 </style>

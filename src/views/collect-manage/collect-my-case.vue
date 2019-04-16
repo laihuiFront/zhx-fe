@@ -392,7 +392,13 @@
                     >重置</el-button
                   >
                 </el-form-item>
-
+                <el-form-item>
+                  <el-button
+                    type="primary"
+                    @click="showQueryConf"
+                  >查询条件配置</el-button
+                  >
+                </el-form-item>
                 <el-form-item>
                   <el-dropdown
                     @command="colorHandle"
@@ -1106,6 +1112,7 @@ export default {
         query: {
           id,
           name,
+          mycase:true,
           seqNo
         }
       });
@@ -1119,6 +1126,7 @@ export default {
         query: {
           id,
           name,
+          mycase:true,
           seqNo
         }
       });
