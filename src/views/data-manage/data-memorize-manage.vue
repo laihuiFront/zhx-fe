@@ -1003,5 +1003,6 @@
     .el-loading-spinner .el-loading-text {
       font-size: 18px;
     }
+
   }
 </style>

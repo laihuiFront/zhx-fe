@@ -538,10 +538,11 @@
           @selection-change="handleSelectionChange"
           @sort-change="sortHandle"
         >
-          <el-table-column type="selection" width="55"></el-table-column>
+          <el-table-column type="selection" min-width="5"></el-table-column>
           <el-table-column
             label="个案序列号"
             prop="seqno"
+            show-overflow-tooltip
             sortable="custom"
             min-width="5"
             :sort-orders="['ascending', 'descending']"
@@ -563,6 +564,7 @@
             :key="index"
             v-bind="item"
             min-width="5"
+            show-overflow-tooltip
             sortable="custom"
             :sort-orders="['ascending', 'descending']"
             header-align="center"
@@ -800,6 +802,10 @@ export default {
         {
           prop: "caseDate",
           label: "委案日期"
+        },
+        {
+          prop: "distributeStatusMsg",
+          label: "案件分配状态"
         },
         {
           prop: "expectTime",
@@ -1195,6 +1201,15 @@ export default {
 }
 
 #collect-my-case {
+  .el-table th.gutter{
+    display: table-cell!important;
+  }
+  .el-table th>.cell{
+    white-space: nowrap;
+  }
+  .el-table .el-table__body-wrapper {
+    overflow-x: hidden;
+  }
   .el-tabs__content{
     margin-bottom: 40px;
     overflow-y: auto;

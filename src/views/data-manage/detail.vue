@@ -1713,7 +1713,7 @@
                   >
                   </el-table-column>
                   <el-table-column
-                    prop="collectTime"
+                    prop="repayTime"
                     show-overflow-tooltip
                     label="时间"
                   >
@@ -2251,8 +2251,7 @@
                       <el-radio label="电话催收">电话催收</el-radio>
                       <el-radio label="电话管理">电话管理</el-radio>
                       <el-radio label="案件管理">案件管理</el-radio>
-                      <el-radio label="电话催收">电话催收</el-radio>
-                      <el-radio label="待银行查账管理">待银行查账管理</el-radio>
+                      <el-radio label="待银行查账管理">待银行查账</el-radio>
                     </el-radio-group>
                   </div>
                 </div>
@@ -2566,10 +2565,15 @@
               class="demo-ruleForm"
             >
               <el-form-item label="电话" prop="mobile">
-                <el-input
-                  v-model="batchForm.mobile"
-                  placeholder="请输入电话号码"
-                ></el-input>
+                <el-col :span="20">
+                  <el-input
+                    v-model="batchForm.mobile"
+                    placeholder="请输入电话号码"
+                  ></el-input>
+                </el-col>
+                <el-col :span="4">
+                  <img src="./tel.png" style="padding-left:7px;margin-top: 8px;cursor: pointer;" @click="sendTel"/>
+                </el-col>
               </el-form-item>
               <el-form-item label="姓名" prop="targetName">
                 <el-input
@@ -3840,7 +3844,7 @@
   </div>
 </template>
 
-<script>
+<script >
   import {mapGetters} from "vuex";
   import {
     getCaseDetail,
@@ -3898,12 +3902,14 @@
     getCPList,
     getRepayList,
     getRepayRemark,
+    sendTel,
     getRepayType,
     saveBank
   } from "@/common/js/api-detail";
   import {getEnum} from "@/common/js/api-sync";
   import {baseURL} from "@/common/js/request.js";
-
+  import axios from 'axios'
+  const md5 = require('js-md5')
   const resetObj = {currentuser: true, seqNo: "", name: "", city: {name: ""}, province: {name: ""}, county: {name: ""}}
   export default {
     name: "caseDetail",
@@ -4016,6 +4022,45 @@
     },
 
     methods: {
+      sendTel(){
+        const customer = this.caseDetail.telIpManage.customer
+        const psw = this.caseDetail.telIpManage.psw
+        // 呼出的分机号(坐席号)
+        const agent = this.caseDetail.officePhone==null?"":this.caseDetail.officePhone;
+        // 被叫号码
+        const callee = this.batchForm.mobile
+
+        const url = "http://"+this.caseDetail.telIpManage.address+"/openapi/V2.0.6/CallNumber"
+        const time = new Date().getTime()
+        const seq = this.caseDetail.id
+        const auth = `${customer}@${time}@${seq}@${psw}`
+        const digest = md5(auth)
+        const data = {
+          authentication : {
+            customer,
+            timestamp: time,
+            seq:seq,
+            digest
+          },
+          param: {
+            debug: "true",
+            lang: "zh_CN"
+          },
+          request : {
+            seq,
+            userData:"",
+            agent,
+            callee
+          }
+        }
+        sendTel(data,this.caseDetail.telIpManage.address).then(data => {
+          this.$message({
+            type: "success",
+            message: "拨号成功"
+          });
+        });
+
+      },
       lastCase(){
         let id = null;
         let name = null;
@@ -4030,6 +4075,7 @@
             query: {
               id,
               name,
+              mycase:this.$route.query.mycase,
               seqNo
             }
           })
@@ -4049,6 +4095,7 @@
             query: {
               id,
               name,
+              mycase:this.$route.query.mycase,
               seqNo
             }
           })
@@ -4772,7 +4819,7 @@
             type: "success",
             message: "警告添加成功"
           });
-         this.showWarningVisible=false;
+          this.showWarningVisible=false;
         });
       },
       onClickAddComment() {

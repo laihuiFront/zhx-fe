@@ -396,6 +396,7 @@
               :data="tableData3"
               border
               stripe
+              show-overflow-tooltip
               :row-class-name="rowColor"
               style="margin-top:10px;min-height:390px;margin-bottom: 40px;"
               @selection-change="handleSelectionChange"
@@ -424,6 +425,7 @@
         sortable="custom"
         :sort-orders="['ascending','descending']"
         label="催收区域"
+        show-overflow-tooltip
       >
       </el-table-column>
       <el-table-column
@@ -1321,7 +1323,7 @@
           name: "关档",
           id: 3
         }, {name: "退档", id: 4}, {name: "全部", id: 5}],
-        distributeStatusList: [{name: "已分配", id: 1}, {name: "未分配", id: 2}],
+        distributeStatusList: [{name: "新分配", id: 1}, {name: "未分配", id: 2},{name: "已分配", id: 3}],
         shareList: [{name: "是", value: "true"}, {name: "否", value: 'false'}],
         departmentList: [],
         addressList: [],
@@ -2292,6 +2294,12 @@
 
 <style lang="scss">
   #data-case-manage {
+    .el-table th>.cell{
+      white-space: nowrap;
+    }
+    .el-table .el-table__body-wrapper {
+      overflow-x: hidden;
+    }
     .pagination-wrap {
       position: fixed;
       bottom: 0;
@@ -2367,4 +2375,5 @@
     overflow-x: hidden;
     overflow-y: scroll;
   }
+
 </style>

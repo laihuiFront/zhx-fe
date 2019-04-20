@@ -67,7 +67,7 @@
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center"  prop="number" min-width="120" show-overflow-tooltip label="账号"></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center"  prop="enableMsg" min-width="120" show-overflow-tooltip label="状态"></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center" prop="sex" min-width="60" label="性别" show-overflow-tooltip width="70"></el-table-column>
-        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center" prop="officePhone" min-width="120" label="座机号" show-overflow-tooltip></el-table-column>
+        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center" prop="officePhone" min-width="120" label="坐席号" show-overflow-tooltip></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center" prop="mobile" min-width="120" label="手机" show-overflow-tooltip></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center" prop="joinTime" min-width="120" label="入职日期" show-overflow-tooltip></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center" prop="roleList" :formatter="formatRole" min-width="140" label="员工角色" show-overflow-tooltip></el-table-column>
@@ -160,8 +160,8 @@
         <el-form-item label="手机号" prop="mobile">
           <el-input v-model="memberInfo.mobile" placeholder="请输入手机号"></el-input>
         </el-form-item>
-        <el-form-item label="座机号" prop="officePhone">
-          <el-input v-model="memberInfo.officePhone" placeholder="请输入座机号"></el-input>
+        <el-form-item label="坐席号" prop="officePhone">
+          <el-input v-model="memberInfo.officePhone" placeholder="请输入坐席号"></el-input>
         </el-form-item>
         <el-form-item label="入职日期" prop="joinTime">
           <el-date-picker

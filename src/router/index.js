@@ -291,6 +291,13 @@ export default new Router({
             require(['@/views/settings/setting-reward'], spinRoute.resolve(resolve))
           },
           name: 'setting-reward'
+        },{
+          path: 'setting-tel',
+          component: resolve => {
+            spinRoute.show();
+            require(['@/views/settings/setting-tel'], spinRoute.resolve(resolve))
+          },
+          name: 'setting-tel'
         }
       ]
     },

@@ -10,6 +10,17 @@ export function getCaseDetail(id) {
     }
   })
 }
+
+export function sendTel(context,address) {
+  return request({
+    url: '/telIp/send',
+    method: 'post',
+    data: {
+      context:context,
+      address:address
+    }
+  })
+}
 export function getSameBatchCollect(id) {
   return request({
     url: '/case/batch/idno',

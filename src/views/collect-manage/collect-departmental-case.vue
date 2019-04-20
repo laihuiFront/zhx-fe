@@ -542,6 +542,7 @@
             min-width="5"
             :sort-orders="['ascending', 'descending']"
             header-align="center"
+            show-overflow-tooltip
             align="center"
           >
             <template slot-scope="scope">
@@ -561,6 +562,7 @@
             min-width="5"
             header-align="center"
             sortable="custom"
+            show-overflow-tooltip
             :sort-orders="['ascending','descending']"
             align="center"
           ></el-table-column>
@@ -758,6 +760,10 @@
         val31_data: [],  //部门
         val32_data: [],  //催收员
         tableCol_data: [
+          {
+            prop: "odv",
+            label: "催收员"
+          },
           {
             prop: "countFollow",
             label: "跟进次数"
@@ -1163,10 +1169,19 @@
   }
 
   #collect-departmental-case {
+    .el-table th.gutter{
+      display: table-cell!important;
+    }
     // height: 100%;
     // .el-table .el-table__body-wrapper{
     //   height: calc(100% - 50px);
     // }
+    .el-table .el-table__body-wrapper {
+      overflow-x: hidden;
+    }
+    .el-table th>.cell{
+      white-space: nowrap;
+    }
     .el-tabs__content{
       margin-bottom: 40px;
       overflow-y: auto;
