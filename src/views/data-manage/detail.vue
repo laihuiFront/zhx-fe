@@ -5,12 +5,12 @@
         :title="caseDetail.name + '-[ ' + caseDetail.seqNo + ']-案件详情'"
         name="1"
       >
-        <div style="text-align: right; margin-right:20px;" v-if="caseDetail.currentuser">
+        <div style="text-align: right; margin-right:20px;" >
           <el-button type="primary" align="right" size="mini" @click="lastCase"  v-if="mycaseFlag">上条</el-button>
           <el-button type="primary" align="right" size="mini" @click="nextCase" v-if="mycaseFlag">下条</el-button>
-          <el-button type="primary" align="right" size="mini" @click="showCommentVisible=true">评语</el-button>
-          <el-button type="primary" align="right" size="mini" @click="showWarningVisible=true">警告</el-button>
-          <el-button type="primary" align="right" size="mini" @click="showCollectInfo">催收小结</el-button>
+          <el-button type="primary" align="right" size="mini" v-if="caseDetail.currentuser" @click="showCommentVisible=true">评语</el-button>
+          <el-button type="primary" align="right" size="mini" v-if="caseDetail.currentuser" @click="showWarningVisible=true">警告</el-button>
+          <el-button type="primary" align="right" size="mini" v-if="caseDetail.currentuser" @click="showCollectInfo">催收小结</el-button>
         </div>
         <div class="items-wrap">
           <el-form
@@ -71,15 +71,6 @@
             </el-form-item>
             <el-form-item label="委案金额">
               <el-input v-model="caseDetail.money" :disabled="true"></el-input>
-            </el-form-item>
-            <el-form-item label="预计提成金额">
-              <div class="inputDiv" style="font-size: 12px;width: 91%;">
-                <span>{{ caseDetail.prePercent}}</span>
-              </div>
-              <el-tooltip class="item" effect="dark" :content="caseDetail.prePercentTips" placement="bottom">
-                <i class="el-icon-question" style="color:deepskyblue;"></i>
-              </el-tooltip>
-
             </el-form-item>
             <el-form-item label="人民币">
               <el-input v-model="caseDetail.rmb" :disabled="true"></el-input>
@@ -2719,7 +2710,7 @@
               class="table-wrap"
             >
               <el-table-column
-                prop="repayTime"
+                prop="createTime"
                 width="120"
                 label="时间"
                 show-overflow-tooltip
@@ -3910,7 +3901,7 @@
   import {baseURL} from "@/common/js/request.js";
   import axios from 'axios'
   const md5 = require('js-md5')
-  const resetObj = {currentuser: true, seqNo: "", name: "", city: {name: ""}, province: {name: ""}, county: {name: ""}}
+  const resetObj = {currentuser: false, seqNo: "", name: "", city: {name: ""}, province: {name: ""}, county: {name: ""}}
   export default {
     name: "caseDetail",
     // props:{

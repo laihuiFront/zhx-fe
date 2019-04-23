@@ -996,6 +996,7 @@
           query:{
             id,
             name,
+            mycase:true,
             seqNo
           }
         })

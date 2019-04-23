@@ -122,7 +122,7 @@ export function pay(data={}) {
 export function listOrganization(data={}) {
   return request({
     method:'post',
-    url:'/organization/listOrganization',
+    url:'/organization/listChildOrganization',
     data
   })
 }

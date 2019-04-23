@@ -248,6 +248,17 @@ export const selectDataCaseExport = function(datasList,exportConf) {
   })
 }
 
+export const selectOpExport = function(datasList) {
+  return download({
+    url: '/dataCase/selectOpExport',
+    method: 'post',
+    data:{
+      ids:datasList
+    }
+  })
+}
+
+
 export const fenan1 = function(datasList) {
   return request({
     url: '/dataCase/sendOdv',

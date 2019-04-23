@@ -355,6 +355,7 @@
               <el-dropdown-item command="exportSelectCase">所选案件</el-dropdown-item>
               <el-dropdown-item command="exportTel">所选电话</el-dropdown-item>
               <el-dropdown-item command="exportCollect">所选催记</el-dropdown-item>
+              <el-dropdown-item command="exportLog">所选操作记录</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </el-form-item>
@@ -1268,6 +1269,7 @@
     addSynergy,
     selectDataTel,
     selectDataCollect,
+    selectOpExport,
     pageDataExport,
     selectDataCaseExport,
     totalDataBatchExport
@@ -1692,6 +1694,25 @@
             });
           }
 
+        }else if (command === "exportLog"){
+          if (this.deleteList.length >= 1) {
+            this.loading2 = true
+            this.fullscreenLoading = true
+            let datasList = [];
+            for (var i = 0; i < this.deleteList.length; i++) {
+              datasList.push(this.deleteList[i].id)
+            }
+            selectOpExport(datasList).then((response) => {
+              this.loading2 = false
+              this.fullscreenLoading = false
+            })
+
+          } else {
+            this.$message({
+              type: 'info',
+              message: '请选择需要导出的数据!'
+            });
+          }
         }
 
       },
