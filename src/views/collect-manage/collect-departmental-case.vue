@@ -39,19 +39,7 @@
               >
 
                   <el-form-item prop="val31" v-if="queryConf.bm || queryConfFlag">
-                    <el-select
-                      v-model="form.val31"
-                      placeholder="请选择部门"
-                      clearable
-                    >
-                      <el-option
-                        v-for="item in val31_data"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value"
-                      >
-                      </el-option>
-                    </el-select>
+                    <el-input v-model="deptName" width="200" @focus="onClickSelectUser" clearable placeholder="请选择部门"></el-input>
                   </el-form-item>
                   <el-form-item prop="val32" v-if="queryConf.csy || queryConfFlag">
                     <el-select
@@ -633,6 +621,37 @@
         <el-button type="primary" @click="saveConf">确 定</el-button>
       </span>
     </el-dialog>
+
+    <el-dialog
+      width="300px"
+      title="选择部门"
+      class="dialog-wrap department-wrap"
+      :visible.sync="departmentVisible"
+      :close-on-click-modal="false"
+      append-to-body
+    >
+      <el-tree
+        v-if="departmentTree.length>0"
+        ref="tree"
+        :data="departmentTree"
+        node-key="id"
+        :expand-on-click-node="false"
+        @node-click="onSelectDepartment"
+        :default-expanded-keys="[departmentTree[0].id]"
+        class="tree-wrap"
+        width="200px"
+      >
+          <span
+            :class="{active:form.val31 === data.id}"
+            class="custom-tree-node"
+            slot-scope="{ node, data }"
+          >{{data.orgName}}</span>
+      </el-tree>
+      <span slot="footer" class="footer">
+          <el-button @click="departmentVisible=false">取 消</el-button>
+          <el-button type="primary" @click="onClickSaveDept">确 定</el-button>
+        </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -650,6 +669,9 @@
     name: "collectMyCase",
     data() {
       return {
+        deptName:"",
+        departmentVisible:false,
+        departmentTree: [],
         tableLoad:false,
         paginationData:{
           pageSize:100,
@@ -959,8 +981,22 @@
     created(){
       this.queryConfList();
       this.init();
+      listOrganization().then((data)=>{
+        this.departmentTree = data;
+      });
     },
     methods: {
+      onClickSelectUser() {
+        this.departmentVisible = true
+      },
+      onSelectDepartment (data, node) {
+        this.currentDept = data
+      },
+      onClickSaveDept () {
+        this.$set(this.form, 'val31', this.currentDept.id)
+        this.deptName = this.currentDept.orgName;
+        this.departmentVisible = false;
+      },
       saveConf(){
         this.showQueryConfVisible = false;
         let queryObj = {module:"data-memorize-manage",menu:this.queryConf}
@@ -1088,6 +1124,9 @@
       },
       getMainData(){
         this.tableLoad = true
+        if (this.deptName==null || this.deptName==""){
+          this.form.val31 = '';
+        }
         pageMyCase(this.realFetchFormData).then((data)=>{
           if(!data){
             data = {total:0,list:[]}

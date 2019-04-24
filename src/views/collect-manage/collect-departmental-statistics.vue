@@ -59,19 +59,7 @@
             </el-select>
           </el-form-item>
             <el-form-item prop="val8">
-              <el-select
-                v-model="form1.val8"
-                placeholder="请选择部门"
-                clearable
-              >
-                <el-option
-                  v-for="item in val8_data"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                >
-                </el-option>
-              </el-select>
+              <el-input v-model="deptName" width="200" @focus="onClickSelectUser" clearable placeholder="请选择部门"></el-input>
             </el-form-item>
           <el-form-item prop="val9">
             <el-select
@@ -217,6 +205,37 @@
         ></el-table-column>
       </el-table>
     <!-- </section> -->
+
+    <el-dialog
+      width="300px"
+      title="选择部门"
+      class="dialog-wrap department-wrap"
+      :visible.sync="departmentVisible"
+      :close-on-click-modal="false"
+      append-to-body
+    >
+      <el-tree
+        v-if="departmentTree.length>0"
+        ref="tree"
+        :data="departmentTree"
+        node-key="id"
+        :expand-on-click-node="false"
+        @node-click="onSelectDepartment"
+        :default-expanded-keys="[departmentTree[0].id]"
+        class="tree-wrap"
+        width="200px"
+      >
+          <span
+            :class="{active:form1.val8 === data.id}"
+            class="custom-tree-node"
+            slot-scope="{ node, data }"
+          >{{data.orgName}}</span>
+      </el-tree>
+      <span slot="footer" class="footer">
+          <el-button @click="departmentVisible=false">取 消</el-button>
+          <el-button type="primary" @click="onClickSaveDept">确 定</el-button>
+        </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -228,6 +247,7 @@ import {role} from '@/common/js/collect-departmental-case'
 export default {
   name: "collectRepaymentStatistics",
   data() {
+
     const tablecol_common = [
       {
         label: "批次号",
@@ -256,6 +276,9 @@ export default {
       }
     ];
     return {
+      deptName:"",
+      departmentVisible:false,
+      departmentTree: [],
       tableLoad:false,
       topData: {},
       form1: {
@@ -405,6 +428,9 @@ export default {
   created() {
     this.tablecol_data = this.tablecol_raw1;
     this.init();
+    listOrganization().then((data)=>{
+      this.departmentTree = data;
+    });
   },
   computed: {
     fetchData() {
@@ -437,6 +463,17 @@ export default {
     }
   },
   methods: {
+    onClickSelectUser() {
+      this.departmentVisible = true
+    },
+    onSelectDepartment (data, node) {
+      this.currentDept = data
+    },
+    onClickSaveDept () {
+      this.$set(this.form1, 'val8', this.currentDept.id)
+      this.deptName = this.currentDept.orgName;
+      this.departmentVisible = false;
+    },
     formatMoney(value,places, symbol, thousand, decimal) {
       places = !isNaN(places = Math.abs(places)) ? places : 2;
       symbol = symbol !== undefined ? symbol : "¥";
@@ -484,6 +521,9 @@ export default {
     },
     getMainData() {
       this.tableLoad = true
+      if (this.deptName==null || this.deptName==""){
+        this.form1.val8 = '';
+      }
       pay(this.fetchData).then(data => {
         this.tableData = data.list;
         this.topData = data;
