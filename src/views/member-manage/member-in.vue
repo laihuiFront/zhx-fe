@@ -70,6 +70,7 @@
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center" prop="officePhone" min-width="120" label="坐席号" show-overflow-tooltip></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center" prop="mobile" min-width="120" label="手机" show-overflow-tooltip></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center" prop="joinTime" min-width="120" label="入职日期" show-overflow-tooltip></el-table-column>
+        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center" prop="actualTime" min-width="120" label="下组日期" show-overflow-tooltip></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center" prop="roleList" :formatter="formatRole" min-width="140" label="员工角色" show-overflow-tooltip></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center" prop="department" min-width="160" label="部门" show-overflow-tooltip></el-table-column>
         <el-table-column label="操作" width="250"  align="center">
@@ -162,6 +163,14 @@
         </el-form-item>
         <el-form-item label="坐席号" prop="officePhone">
           <el-input v-model="memberInfo.officePhone" placeholder="请输入坐席号"></el-input>
+        </el-form-item>
+        <el-form-item label="下组日期" prop="actualTime">
+          <el-date-picker
+            v-model="memberInfo.actualTime"
+            type="date"
+            value-format="yyyy-MM-dd"
+            placeholder="请选择下组日期"
+          ></el-date-picker>
         </el-form-item>
         <el-form-item label="入职日期" prop="joinTime">
           <el-date-picker
