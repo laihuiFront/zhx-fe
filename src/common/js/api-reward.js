@@ -31,3 +31,20 @@ export function findRemark(){
     method: 'post'
   })
 }
+
+
+export function clientList2(){
+  return request({
+    url: '/listStandard',
+    method: 'post'
+  })
+}
+
+
+export function updateStandard(data){
+  return request({
+    url: '/updateStandard',
+    method: 'post',
+    data
+  })
+}

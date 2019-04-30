@@ -220,14 +220,47 @@
                     rows="4"></el-input>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="总监" name="tab2"></el-tab-pane>
-    </el-tabs>
-  </div>
+      <el-tab-pane label="总监" name="tab2">
+     <el-button type="primary" class="baocun" @click="onclickSave2">保存</el-button>
 
+				<el-table v-loading="tableLoad2" :data="tableData" border style="width: 100%;margin-top:50px;">
+					<el-table-column align="center" label="标准" prop="msg" >
+          
+					<!-- <template slot-scope="scope">
+          {{scope.row.editType}}
+
+              <span v-if="scope.row.editType==='edit' && scope.row.id===0">
+                <template>
+                  团队业务员提成<<el-input align="center" v-model="form.standard1Msg"></el-input>
+                </template>
+                <template v-if="scope.row.id===1">            
+                   <el-input align="center" v-model="form.standard1Msg"></el-input>≤团队业务员提成<<el-input align="center" v-model="form.standard2Msg"></el-input>
+                </template>
+                <template v-if="scope.row.id===2"> 
+                  团队业务员提成≥<el-input align="center" v-model="form.standard2Msg"></el-input> 
+                </template>  
+             </span>
+             	<span v-if="scope.row.editType!='edit' ">
+              {{scope.row.msg}}
+             	</span>
+						</template> -->
+        </el-table-column>
+				
+					<el-table-column align="center" label="奖励金额（元/人）" prop="reward"></el-table-column>
+					<el-table-column  label="操作" align="center" width="80">
+						<template slot-scope="scope">
+							<el-button type="text" @click="onClickEdit2(scope.row)">修改</el-button>
+						</template>
+					</el-table-column>
+				</el-table>
+			</el-tab-pane>
+		</el-tabs>
+	</div>
 </template>
 
+
 <script>
-  import {clientList, updatePercent, updateRemark, findRemark} from '@/common/js/api-reward.js'
+  import {clientList, updatePercent, updateRemark, findRemark, clientList2, updateStandard} from '@/common/js/api-reward.js'
 
   export default {
     name: 'setting-reward',
@@ -241,7 +274,17 @@
         loading: false,
         methodList: [{"id": "按提成", "userName": "按提成"}, {"id": "按业绩", "userName": "按业绩"}],
         fullscreenLoading: false,
-        dataList: []
+        dataList: [],
+        dataList2: [],
+        tableData: [],
+        form:{
+          standard1Msg:'',
+          standard2Msg:'',      
+          reward1Msg:'',
+          reward2Msg:'',
+          reward3Msg:'',
+        },
+        tableLoad2: false,
       }
     },
     methods: {
@@ -319,15 +362,53 @@
         this.disableSave = false;
 
       },
+
+      onClickEdit2(row) {
+       row.editType = "edit";
+      },
+
+      onclickSave2() {
+       updateStandard(this.dataList2).then(response => {
+         this.$message({
+           type: "success",
+           message: "保存成功!"
+         });
+         clientList2().then(response => {
+           this.dataList2 = response;
+         });
+       });
+     }
     },
-    created() {
+
+     created() {
       clientList().then((response) => {
         this.dataList = response
       })
       findRemark().then((response) => {
         this.tips = response.remark
       })
-
+      clientList2().then(response => {
+				this.dataList2 = response;
+				this.tableData = [
+					{
+            id:0,
+						msg: `团队业务员提成<${response.standard1Msg}`,
+						reward:response.reward1Msg
+					},
+					{
+            id:1,
+						msg: `${response.standard1Msg}≤团队业务员提成<${
+							response.standard2Msg
+						}`,
+						reward:response.reward2Msg
+					},
+					{
+            id:2,
+						msg: `团队业务员提成≥${response.standard2Msg}`,
+						reward: response.reward3Msg
+					}
+				];
+			});
     },
   }
 </script>
