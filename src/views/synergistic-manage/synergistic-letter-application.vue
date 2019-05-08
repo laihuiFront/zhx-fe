@@ -25,7 +25,7 @@
     </el-upload>
 
     <div id="synergistic-letter-application" class="page-wraper-sub">
-      <el-tabs v-model="activeName" type="card" class="tabs-wrap">
+      <el-tabs v-model="activeName" class="tabs-wrap">
         <el-tab-pane label="信函申请" name="tab1">
           <el-dialog
             :title="detailTitle"

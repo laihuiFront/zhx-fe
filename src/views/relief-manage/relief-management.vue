@@ -122,7 +122,7 @@
         </el-form-item>
       </el-row>
     </el-form>
-    <el-tabs v-model="activeName2" type="card" @tab-click="handleClick" class="tabs-wrap">
+    <el-tabs v-model="activeName2"  @tab-click="handleClick" class="tabs-wrap">
       <el-tab-pane label="待审核" name="first">
         <el-table highlight-current-row class="table-wrap"
                   height="1"

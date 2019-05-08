@@ -1,6 +1,6 @@
 <template>
   <div id="collect-my-case" class="page-wraper-sub">
-    <el-tabs v-model="activeName" type="card" class="tabs-wrap">
+    <el-tabs v-model="activeName"  class="tabs-wrap">
       <el-tab-pane label="我的案件" style="height: 100%" name="tab1">
         <el-dialog
           :title="detailTitle"

@@ -1,6 +1,6 @@
 <template>
   <div id="litigation-my" class="page-wraper-sub">
-  	 <el-tabs v-model="activeName2" type="card" @tab-click="handleClick" class="tabs-wrap">
+  	 <el-tabs v-model="activeName2"  @tab-click="handleClick" class="tabs-wrap">
     <el-tab-pane label="我的诉讼案件" name="first"> 
       <el-form ref="form" :model="form" :inline="true" class="query-wrap">
         <el-form-item>

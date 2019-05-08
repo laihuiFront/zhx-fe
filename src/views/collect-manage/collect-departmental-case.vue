@@ -1,6 +1,6 @@
 <template>
   <div id="collect-departmental-case" class="page-wraper-sub">
-    <el-tabs v-model="activeName" type="card" class="tabs-wrap">
+    <el-tabs v-model="activeName"  class="tabs-wrap">
       <el-tab-pane label="部门案件" name="tab1"
                   style="height: 100%"
       >
