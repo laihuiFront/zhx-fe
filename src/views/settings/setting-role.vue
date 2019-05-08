@@ -6,7 +6,7 @@
        element-loading-background="rgba(0, 0, 0, 0.7)">
     <el-form ref="form" :model="queryForm" :inline="true" class="query-wrap">
       <el-form-item>
-        <el-input v-model="queryForm.roleName" clearable placeholder="请输入角色组名"></el-input>
+        <el-input v-model="queryForm.roleName" clearable placeholder="请输入角色名称"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button icon="el-icon-search" type="primary" @click="onClickQuery">查询</el-button>
@@ -24,7 +24,7 @@
         <template slot-scope="scope">
           <el-button type="text" @click="onClickQueryOne(scope.row)" v-has="'查看'">查看</el-button>
           <el-button type="text" v-if="scope.row.id !== 1" @click="onClickEdit(scope.row)" v-has="'修改'">修改</el-button>
-          <el-button type="text" v-if="scope.row.id !== 1 && scope.row.id !== 4 && scope.row.id !== 9 " @click="onClickDelete(scope.row, scope.$index)" v-has="'删除'">删除</el-button>
+          <el-button type="text" v-if="scope.row.id !== 1 && scope.row.id !== 4 && scope.row.id !== 9 && scope.row.id !== 10" @click="onClickDelete(scope.row, scope.$index)" v-has="'删除'">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
