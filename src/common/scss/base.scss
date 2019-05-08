@@ -16,6 +16,7 @@ body input{
 body textarea{
   color: #000 !important;
   &::placeholder{
+    font-family: Arial;
     color: #000 !important;
   }
 }

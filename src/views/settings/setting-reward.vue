@@ -347,7 +347,9 @@
       text-align: center;
       width: 100px !important;
     }
-
+    .el-table .el-table__body-wrapper {
+      overflow-x: hidden;
+    }
     .el-input .el-input__inner {
       text-align: center;
       width: 40px;

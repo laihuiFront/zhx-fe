@@ -36,7 +36,7 @@
           <el-button size="mini" type="text" @click="finishVisible=false">取消</el-button>
           <el-button type="primary" size="mini" @click="onClickBatchSaveFinish">确定</el-button>
         </div>
-        <el-button type="primary" slot="reference" @click="onclickBatchFinish" style="margin-right:10px;">完成协催1</el-button>
+        <el-button type="primary" slot="reference" @click="onclickBatchFinish" style="margin-right:10px;">完成协催</el-button>
       </el-popover>
 
       <el-button type="primary" @click="onClickBatchApprove(-1)" v-has="'撤销协催'">撤销协催</el-button>
@@ -108,7 +108,7 @@
                        min-width="140" label="申请时间" show-overflow-tooltip></el-table-column>
       <el-table-column sortable="custom" :sort-orders="['ascending','descending']" prop="applyUser.userName"
                        align="center" min-width="140" label="催收员" show-overflow-tooltip></el-table-column>
-      <el-table-column label="操作" show-overflow-tooltip width="150" align="center">
+      <el-table-column label="操作" show-overflow-tooltip width="200" align="center">
         <template slot-scope="scope">
           <el-button type="text" v-if="queryForm.applyStatus==='0'" @click="onClickApprove(scope.row, 1)"
                      v-has="'同意协催'">同意协催
