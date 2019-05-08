@@ -215,19 +215,59 @@
           </el-table-column>
         </el-table>
         <div style="margin-top:30px;text-align: center;">
-          <span style="    vertical-align: top;">提成说明: </span>
-          <el-input type="textarea" label="提成说明" v-model="tips" style="width: 600px;" placeholder="请输入提成说明"
-                    rows="4"></el-input>
+          <span style="height: 100%;display: inline-flex;align-items: center;">提成说明: </span>
+          <el-input type="textarea" label="提成说明" v-model="tips" style="width: 800px;" placeholder="请输入提成说明" rows="4"></el-input>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="总监" name="tab2"></el-tab-pane>
-    </el-tabs>
-  </div>
+      <el-tab-pane label="总监" name="tab2">
+        <div class="buttons">
+          <el-button type="primary" class="button" @click="onclickSave2">保存</el-button>
+          <el-button type="primary" class="button" @click="setTableData()">重置</el-button>
+        </div>
 
+				<el-table v-loading="tableLoad2" :data="tableData" border style="width: 100%;" height="1">
+					<el-table-column align="center" label="标准" prop="msg" >
+            <template slot-scope="scope">
+              <template v-if="scope.row.id===0">
+                团队业务员提成＜<el-input align="center" v-model="dataList2.standard1Msg"></el-input>
+              </template>
+              <template v-else-if="scope.row.id===1">
+                <el-input align="center" v-model="dataList2.standard1Msg"></el-input>≤团队业务员提成＜<el-input align="center" v-model="dataList2.standard2Msg"></el-input>
+              </template>
+              <template v-else-if="scope.row.id===2">
+                团队业务员提成≥<el-input align="center" v-model="dataList2.standard2Msg"></el-input>
+              </template>
+            </template>
+          </el-table-column>
+
+					<el-table-column align="center" label="奖励金额（元/人）" prop="reward">
+            <template slot-scope="scope">
+              <template v-if="scope.row.id===0">
+                <el-input align="center" v-model="dataList2.reward1Msg"></el-input>
+              </template>
+              <template v-else-if="scope.row.id===1">
+                <el-input align="center" v-model="dataList2.reward2Msg"></el-input>
+              </template>
+              <template v-else-if="scope.row.id===2">
+                <el-input align="center" v-model="dataList2.reward3Msg"></el-input>
+              </template>
+            </template>
+          </el-table-column>
+
+					<!-- <el-table-column  label="操作" align="center" width="80">
+						<template slot-scope="scope">
+							<el-button type="text" @click="onClickEdit2(scope.row)">修改</el-button>
+						</template>
+					</el-table-column> -->
+				</el-table>
+			</el-tab-pane>
+		</el-tabs>
+	</div>
 </template>
 
+
 <script>
-  import {clientList, updatePercent, updateRemark, findRemark} from '@/common/js/api-reward.js'
+  import {clientList, updatePercent, updateRemark, findRemark, clientList2, updateStandard} from '@/common/js/api-reward.js'
 
   export default {
     name: 'setting-reward',
@@ -241,7 +281,11 @@
         loading: false,
         methodList: [{"id": "按提成", "userName": "按提成"}, {"id": "按业绩", "userName": "按业绩"}],
         fullscreenLoading: false,
-        dataList: []
+        dataList: [],
+        dataList2: [],
+        dataList2_temp: [],
+        tableData: [],
+        tableLoad2: false,
       }
     },
     methods: {
@@ -319,15 +363,70 @@
         this.disableSave = false;
 
       },
+
+      onClickEdit2(row) {
+       row.editType = "edit";
+      },
+
+      onclickSave2() {
+        if(this.dataList2.standard1Msg >= this.dataList2.standard2Msg){
+          this.$message({
+            type: 'error',
+            message: '无效的标准设置'
+          })
+        }else{
+          updateStandard(this.dataList2).then(response => {
+            this.$message({
+              type: "success",
+              message: "保存成功!"
+            });
+            clientList2().then(response => {
+              this.dataList2 = response;
+            });
+          });
+        }
+      },
+
+     setTableData(data){
+       if(data){
+         this.dataList2 = Object.assign({}, data)
+         this.dataList2_temp = Object.assign({}, data)
+       }else{
+         this.dataList2 = Object.assign({}, this.dataList2_temp)
+       }
+       this.tableData = [
+					{
+            id: 0,
+						msg: `团队业务员提成<${this.dataList2.standard1Msg}`,
+            reward: this.dataList2.reward1Msg,
+            editType: null
+					},
+					{
+            id: 1,
+						msg: `${this.dataList2.standard1Msg}≤团队业务员提成<${this.dataList2.standard2Msg}`,
+            reward: this.dataList2.reward2Msg,
+            editType: null
+					},
+					{
+            id: 2,
+						msg: `团队业务员提成≥${this.dataList2.standard2Msg}`,
+            reward: this.dataList2.reward3Msg,
+            editType: null
+					}
+        ]
+     }
     },
-    created() {
+
+     created() {
       clientList().then((response) => {
         this.dataList = response
       })
       findRemark().then((response) => {
         this.tips = response.remark
       })
-
+      clientList2().then(response => {
+        this.setTableData(response)
+			});
     },
   }
 </script>
@@ -368,11 +467,14 @@
       z-index: 22;
     }
 
+    .buttons{
+      margin-bottom: 10px;
+      text-align: right;
+    }
+
   }
 
   #layout .page-wrap {
     overflow-y: hidden !important;
   }
 </style>
-
-

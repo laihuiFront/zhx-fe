@@ -1,5 +1,5 @@
 <template>
-	<div>	
+	<div>
   <section id="top-menu">
     <img src="./logo_1 .png" alt="" class="logo">
     <el-menu
@@ -124,7 +124,7 @@ export default {
       },
     ...mapActions([
       'logoutAction',
-     
+
     ])
   }
 }
@@ -147,6 +147,8 @@ export default {
     .el-dropdown-link{
       color:#fff;
       font-size: 14px;
+      cursor: pointer;
+      user-select: none;
     }
   }
   .el-menu-demo{
