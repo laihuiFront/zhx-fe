@@ -9,13 +9,13 @@
     <div class="item-wrap" v-if="userData.roleName.indexOf('synergy')>=0">
       <p class="header">协催申请数量</p>
       <div class="content" @click="toSynergy">
-        {{userData.distributeNum}}
+        {{userData.sysnergyNum}}
       </div>
     </div>
     <div class="item-wrap" v-if="userData.roleName.indexOf('mycase')>=0">
       <p class="header">新分配案件数</p>
       <div class="content" @click="toCase">
-        {{userData.sysnergyNum}}
+        {{userData.distributeNum}}
       </div>
     </div>
   </section>
@@ -51,7 +51,7 @@
     },
     toCase(){
       this.$router.push({
-        path:'data-case-manage'
+        path:'collect-my-case'
       })
     }
   }

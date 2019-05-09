@@ -993,7 +993,7 @@
 </template>
 
 <script>
-				import {dataList,remoweData,addData,PersonList,checkData,dataList2} from '@/common/js/litigation-my.js'	
+				import {getCaseTypeList,dataList,remoweData,addData,PersonList,checkData,dataList2} from '@/common/js/litigation-my.js'
 export default {
   name: 'litigationMy',
 	data(){
@@ -1004,9 +1004,9 @@ export default {
   			 activeName2: 'first',
   			isTrue:false,
   			dialogTitle:'新增',
-  			progressList:[{name:"判决",id:1},{name:"收案",id:2}], 
-        legalStatusMsgList:[{name:"已审核",id:1},{name:"审核中",id:2},{name:"未申请",id:0}],  
-        caseStatusList:[{name:"未退案",id:0},{name:"正常",id:1},{name:"暂停",id:2},{name:"关档",id:3},{name:"退档",id:4},{name:"全部",id:5}],
+  			progressList:[{name:"立案",id:"filing"},{name:"收案",id:"back"},{name:"保全",id:"presv"},{name:"开庭",id:"court"},{name:"判决",id:"decree"},{name:"执行",id:"enforce"}],
+        legalStatusMsgList:[{name:"办案",id:0},{name:"结案",id:1},{name:"待审核",id:-1}],
+        caseStatusList:[],
   			formInline:{},
   			dialogVisible:false,
   			dialogVisible1:false,
@@ -1157,6 +1157,9 @@ created() {
                 PersonList().then((response)=>{
           	this.PersonDataList=response
           })
+  getCaseTypeList().then((response) => {
+    this.caseStatusList = response
+  })
 },
 }
 </script>

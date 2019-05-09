@@ -5,7 +5,7 @@
        v-loading.fullscreen.lock="fullscreenLoading"
        element-loading-spinner="el-icon-loading"
        element-loading-background="rgba(0, 0, 0, 0.7)">
-    <el-tabs v-model="activeName" type="card" class="tabs-wrap">
+    <el-tabs v-model="activeName" class="tabs-wrap">
       <el-tab-pane label="业务员、经理" name="tab1"
                    style="height: 100%"
       >

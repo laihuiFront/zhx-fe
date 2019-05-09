@@ -97,3 +97,12 @@ return request({
     data:{role:"催收员"}
   })
 }
+
+
+export const getCaseTypeList = function() {
+  return request({
+    url: '/sys/dictionary/select/list/name',
+    method: 'post',
+    data:{name:"诉讼案件类型"}
+  })
+}

@@ -236,19 +236,6 @@
         >
         </el-date-picker>
       </el-form-item>
-      <el-form-item v-if="queryConf.warq || queryConfFlag">
-        <el-date-picker
-          v-model="formInline.time2"
-          type="daterange"
-          align="right"
-          value-format="yyyy-MM-dd"
-          unlink-panels
-          range-separator="至"
-          start-placeholder="委案日期开始"
-          end-placeholder="委案日期结束"
-        >
-        </el-date-picker>
-      </el-form-item>
       <el-form-item v-if="queryConf.yjtarq || queryConfFlag">
         <el-date-picker
           v-model="formInline.time3"

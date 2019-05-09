@@ -227,8 +227,8 @@ export default {
       form1: { val1: null },
       tableData1: [],
       tablecol_data1: [
-        { prop: "dateStart", label: "开始时间" },
-        { prop: "dateEnd", label: "结束时间" },
+        { prop: "timeArea", label: "时段" },
+        /*{ prop: "dateEnd", label: "结束时间" },*/
         { prop: "countConPhoneNum", label: "有效通电量" },
         { prop: "countPhoneNum", label: "总通电量" },
         { prop: "countCasePhoneNum", label: "通电案量" }
