@@ -53,6 +53,7 @@
               :show-file-list=false
               :on-success="uploadSuccess"
               :on-progress="onProgress"
+              accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             >
               <el-button type="primary" style="margin-left:10px;">导入员工信息</el-button>
             </el-upload>

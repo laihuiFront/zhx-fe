@@ -16,7 +16,7 @@
     >
       <case-detail></case-detail>
     </el-dialog>
-    <el-dialog title="同意协催" :visible.sync="dialogVisible" width="30%">
+    <el-dialog title="同意协催" :visible.sync="dialogVisible" width="30%" :close-on-click-modal="false">
       <el-input
         type="textarea"
         :autosize="{ minRows: 6, maxRows: 14 }"
@@ -92,7 +92,7 @@
             <el-form-item prop="val3">
               <el-input
                 v-model="form.val3"
-                placeholder="个案序列号"
+                placeholder="请输入个案序列号"
                 clearable
               ></el-input>
             </el-form-item>
@@ -100,7 +100,7 @@
               <el-cascader
                 :options="val4_data"
                 clearable
-                placeholder="催收区域"
+                placeholder="请选择催收区域"
                 v-model="form.val4"
               >
               </el-cascader>
@@ -108,21 +108,21 @@
             <el-form-item prop="val5">
               <el-input
                 v-model="form.val5"
-                placeholder="姓名"
+                placeholder="请输入姓名"
                 clearable
               ></el-input>
             </el-form-item>
             <el-form-item prop="val7">
               <el-input
                 v-model="form.val7"
-                placeholder="委案金额下限"
+                placeholder="请输入委案金额下限"
                 clearable
               ></el-input>
             </el-form-item>
             <el-form-item prop="val6">
               <el-input
                 v-model="form.val6"
-                placeholder="委案金额上限"
+                placeholder="请输入委案金额上限"
                 clearable
               ></el-input>
             </el-form-item>
@@ -130,12 +130,12 @@
             <el-form-item prop="val8">
               <el-input
                 v-model="form.val8"
-                placeholder="申请人"
+                placeholder="请输入申请人"
                 clearable
               ></el-input>
             </el-form-item>
             <el-form-item prop="val9">
-              <el-select v-model="form.val9" placeholder="信函模板" clearable>
+              <el-select v-model="form.val9" placeholder="请选择信函模板" clearable>
                 <el-option
                   v-for="item in val9_data"
                   :key="item.value"
@@ -146,7 +146,7 @@
               </el-select>
             </el-form-item>
             <el-form-item prop="val10">
-              <el-select v-model="form.val10" placeholder="案件状态" clearable>
+              <el-select v-model="form.val10" placeholder="请选择案件状态" clearable>
                 <el-option
                   v-for="item in val10_data"
                   :key="item.value"
@@ -210,6 +210,7 @@
       :visible.sync="dialogVisibleCase"
       width="30%"
       center
+      :close-on-click-modal="false"
     >
       <el-row :gutter="20">
         <el-col :span="10"><div class="grid-content bg-purple">
@@ -237,6 +238,7 @@
       @selection-change="handleSelectionChange"
       @row-dblclick="showCase"
       @sort-change="sortHandle"
+      :close-on-click-modal="false"
     >
       <el-table-column type="selection" width="55" align="center"> </el-table-column>
       <el-table-column
@@ -288,6 +290,7 @@
       :visible.sync="showExportConfVisible"
       width="60%"
       center
+      :close-on-click-modal="false"
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span></div>
       <el-row class="pad" ref="boxWrapper">

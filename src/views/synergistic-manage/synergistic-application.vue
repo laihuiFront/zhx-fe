@@ -47,6 +47,7 @@
         :show-file-list="false"
         :on-success="uploadSuccess"
         style="display:inline-block;margin-left:10px;"
+        accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
       >
         <el-button type="primary" v-has="'导入完成待办协催'">导入完成待办协催</el-button>
       </el-upload>
@@ -57,6 +58,7 @@
         :show-file-list="false"
         :on-success="uploadSuccess"
         style="display:inline-block;margin-left:10px;"
+        accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
       >
         <el-button type="primary" v-has="'导入协催记录'">导入协催记录</el-button>
       </el-upload>
@@ -155,6 +157,7 @@
       :visible.sync="dialogVisible1"
       width="30%"
       center
+      :close-on-click-modal="false"
     >
       <el-row :gutter="20">
         <el-col :span="10">
@@ -179,6 +182,7 @@
       :visible.sync="showExportConfVisible"
       width="60%"
       center
+      :close-on-click-modal="false"
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span></div>
       <el-row class="pad" ref="boxWrapper">

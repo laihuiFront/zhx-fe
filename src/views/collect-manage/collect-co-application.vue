@@ -4,7 +4,7 @@
       <el-tab-pane label="协催申请" name="first">
         <el-form :inline="true" ref="form1" :model="form1" label-width="80px">
           <el-form-item prop="val2">
-            <el-select v-model="form1.val2" placeholder="部门" clearable>
+            <el-select v-model="form1.val2" placeholder="请选择部门" clearable>
               <el-option
                 v-for="item in val2_data"
                 :key="item.value"
@@ -17,14 +17,14 @@
           <el-form-item prop="val3">
             <el-input
               v-model="form1.val3"
-              placeholder="催收员"
+              placeholder="请输入催收员"
               clearable
             ></el-input>
           </el-form-item>
           <el-form-item prop="val4">
             <el-input
               v-model="form1.val4"
-              placeholder="委托方"
+              placeholder="请输入委托方"
               clearable
             ></el-input>
           </el-form-item>
@@ -70,7 +70,7 @@
       <el-tab-pane label="待协催" name="second">
         <el-form :inline="true" ref="form1" :model="form1" label-width="80px">
           <el-form-item prop="val2">
-            <el-select v-model="form1.val2" placeholder="部门" clearable>
+            <el-select v-model="form1.val2" placeholder="请选择部门" clearable>
               <el-option
                 v-for="item in val2_data"
                 :key="item.value"
@@ -83,14 +83,14 @@
           <el-form-item prop="val3">
             <el-input
               v-model="form1.val3"
-              placeholder="催收员"
+              placeholder="请输入催收员"
               clearable
             ></el-input>
           </el-form-item>
           <el-form-item prop="val4">
             <el-input
               v-model="form1.val4"
-              placeholder="委托方"
+              placeholder="请输入委托方"
               clearable
             ></el-input>
           </el-form-item>
@@ -136,7 +136,7 @@
       <el-tab-pane label="已完成" name="third">
         <el-form :inline="true" ref="form1" :model="form1" label-width="80px">
           <el-form-item prop="val2">
-            <el-select v-model="form1.val2" placeholder="部门" clearable>
+            <el-select v-model="form1.val2" placeholder="请选择部门" clearable>
               <el-option
                 v-for="item in val2_data"
                 :key="item.value"
@@ -149,14 +149,14 @@
           <el-form-item prop="val3">
             <el-input
               v-model="form1.val3"
-              placeholder="催收员"
+              placeholder="请输入催收员"
               clearable
             ></el-input>
           </el-form-item>
           <el-form-item prop="val4">
             <el-input
               v-model="form1.val4"
-              placeholder="委托方"
+              placeholder="请输入委托方"
               clearable
             ></el-input>
           </el-form-item>

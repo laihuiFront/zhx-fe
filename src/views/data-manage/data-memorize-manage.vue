@@ -18,7 +18,7 @@
         </el-select>
       </el-form-item>
       <el-form-item v-if="queryConf.bm || queryConfFlag">
-        <el-select v-model="formInline.dept" placeholder="部门" clearable>
+        <el-select v-model="formInline.dept" placeholder="请选择部门" clearable>
           <el-option
             v-for="item in departmentList"
             :key="item.id"
@@ -38,7 +38,7 @@
         </el-select>
       </el-form-item>
       <el-form-item v-if="queryConf.cscs || queryConfFlag">
-        <el-select v-model="formInline.measure" placeholder="催收措施" clearable>
+        <el-select v-model="formInline.measure" placeholder="请选择催收措施" clearable>
           <el-option
             v-for="item in sectionList"
             :key="item.id"
@@ -124,8 +124,8 @@
           value-format="yyyy-MM-dd"
           unlink-panels
           range-separator="至"
-          start-placeholder="委案开始日期"
-          end-placeholder="委案结束日期"
+          start-placeholder="委案日期开始"
+          end-placeholder="委案日期结束"
         >
         </el-date-picker>
       </el-form-item>
@@ -369,7 +369,7 @@
     <div class="block">
     </div>
     <el-dialog
-      title="编辑催记记录"
+      title="编辑催记"
       class="dialog-wrap"
       :visible.sync="dialogVisible1"
       :close-on-click-modal="false"
@@ -386,14 +386,14 @@
             v-model="recordInfo.collectTime"
             value-format="yyyy-MM-dd HH:mm"
             type="datetime"
-            placeholder="选择日期时间">
+            placeholder="请选择通话时间">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="通话结果" prop="result">
           <el-input
             type="textarea"
             :rows="4"
-            placeholder="请输入内容"
+            placeholder="请输入通话结果"
             v-model="recordInfo.collectInfo">
           </el-input>
         </el-form-item>
@@ -410,6 +410,7 @@
       :visible.sync="dialogVisible2"
       width="30%"
       center
+      :close-on-click-modal="false"
     >
       <el-form :inline="true">
         <el-form-item>
@@ -431,6 +432,7 @@
       :visible.sync="showQueryConfVisible"
       width="60%"
       center
+      :close-on-click-modal="false"
     >
       <el-row class="pad">
 
@@ -466,6 +468,7 @@
       :visible.sync="showExportConfVisible"
       width="60%"
       center
+      :close-on-click-modal="false"
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span></div>
       <el-row class="pad" ref="boxWrapper">

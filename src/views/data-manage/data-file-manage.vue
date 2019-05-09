@@ -26,8 +26,8 @@
           unlink-panels
           value-format="yyyy-MM-dd"
           range-separator="至"
-          start-placeholder="档案更新开始日期"
-          end-placeholder="档案更新结束日期"
+          start-placeholder="档案变更日期开始"
+          end-placeholder="档案变更日期结束"
 
         >
         </el-date-picker>
@@ -37,6 +37,9 @@
           <el-button type="primary" icon="el-icon-search" @click=search>查询</el-button>
           <el-button type="primary" icon="el-icon-refresh" @click=clench>重置</el-button>
         </el-form-item>
+        <el-form-item style="margin-left: -6px;">
+          <el-button type="primary" @click="downModule" v-has="'模板下载'">模板下载</el-button>
+        </el-form-item>
         <el-form-item>
           <el-upload
             :action="action+'/dataArchive/import'"
@@ -45,12 +48,10 @@
             style="display:inline-block;margin-right:5px;"
             :on-success="uploadSuccess"
             :on-progress="onProgress"
+             accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           >
-            <el-button size="small" type="primary" style="padding: 7px 15px;" v-has="'导入'">导入</el-button>
+            <el-button size="small" type="primary" style="padding: 7px 15px;" v-has="'导入'">导入模板下载</el-button>
           </el-upload>
-        </el-form-item>
-        <el-form-item style="margin-left: -6px;">
-          <el-button type="primary" @click="downModule" v-has="'模板下载'">模板下载</el-button>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="dialogVisible2 = true" v-has="'新增'">新增</el-button>
@@ -166,9 +167,10 @@
     </el-dialog>
     <el-dialog
       class="dialog-wrap"
-      title="新增档案"
+      title="新增案人档案"
       :visible.sync="dialogVisible2"
       width="70%"
+      :close-on-click-modal="false"
     >
       <el-form :inline="true" :model="dynamicValidateForm" ref="dynamicValidateForm" label-width="100px"
                class="demo-dynamic">
@@ -177,12 +179,12 @@
             <div class="grid-content bg-purple">
               <el-form-item
                 label="姓名"
-                prop="name"
+                prop="name"                
                 :rules="{
       required: true, message: '姓名不能为空', trigger: 'blur'
     }"
               >
-                <el-input v-model="dynamicValidateForm.name" clearable></el-input>
+                <el-input v-model="dynamicValidateForm.name" clearable placeholder="请输入姓名"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -195,7 +197,7 @@
       required: true, message: '证件号不能为空', trigger: 'blur'
     }"
               >
-                <el-input v-model="dynamicValidateForm.identNo" clearable></el-input>
+                <el-input v-model="dynamicValidateForm.identNo" clearable placeholder="请输入证件号"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -222,7 +224,7 @@
                 label="电话类型"
 
               >
-                <el-input v-model="domain.teltype" clearable></el-input>
+                <el-input v-model="domain.teltype" clearable placeholder="请输入电话类型"></el-input>
 
               </el-form-item>
             </div>
@@ -232,7 +234,7 @@
               <el-form-item
                 label="电话号码"
               >
-                <el-input v-model="domain.tel" clearable></el-input>
+                <el-input v-model="domain.tel" clearable placeholder="请输入电话号码"></el-input>
               </el-form-item>
               <el-form-item>
                 <el-button type="text" @click.prevent="removeDomainPhone(domain)">删除</el-button>
@@ -263,7 +265,7 @@
                 label="地址信息"
                 :key="domain.key"
               >
-                <el-input v-model="domain.address" clearable></el-input>
+                <el-input v-model="domain.address" clearable placeholder="请输入地址信息"></el-input>
               </el-form-item>
               <el-form-item>
                 <el-button type="text" @click.prevent="removeDomainAddress(domain)">删除</el-button>
@@ -291,7 +293,7 @@
                 label="备注信息"
                 :key="domain.key"
               >
-                <el-input v-model="domain.remark" clearable></el-input>
+                <el-input v-model="domain.remark" clearable placeholder="请输入备注信息"></el-input>
               </el-form-item>
               <el-form-item>
                 <el-button type="text" @click.prevent="removeDomainremark(domain)">删除</el-button>
@@ -307,9 +309,10 @@
     </el-dialog>
     <el-dialog
       class="dialog-wrap"
-      title="查看档案"
+      title="查看案人档案"
       :visible.sync="dialogVisible3"
       width="70%"
+      :close-on-click-modal="false"
     >
       <el-form :inline="true" disabled :model="dynamicValidateForm2" ref="dynamicValidateForm2" label-width="100px"
                class="demo-dynamic">
@@ -452,6 +455,7 @@
       :visible.sync="ImportdialogVisible"
       width="30%"
       :before-close="handleClose"
+      :close-on-click-modal="false"
     >
       <span>{{ImportMsg}}</span>
       <span slot="footer" class="footer">

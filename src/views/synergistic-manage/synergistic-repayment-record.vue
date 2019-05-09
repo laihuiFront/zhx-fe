@@ -141,7 +141,7 @@
           ></el-date-picker>
         </el-form-item>
         <el-form-item label="确认还款金额" prop="dyga">
-          <el-input v-model="recordInfo.repayMoney" clearable placeholder="确认还款金额"></el-input>
+          <el-input v-model="recordInfo.repayMoney" clearable placeholder="请输入确认还款金额"></el-input>
         </el-form-item>
         <el-form-item label="还款人" prop="dyga">
            <el-input v-model="recordInfo.repayUser" clearable placeholder="请输入还款人"></el-input>

@@ -68,6 +68,7 @@
       :visible.sync="dialogExportVisible"
       width="30%"
       center
+      :close-on-click-modal="false"
     >
       <el-form :inline="true">
         <el-form-item>
@@ -90,6 +91,7 @@
       :visible.sync="showExportConfVisible"
       width="60%"
       center
+      :close-on-click-modal="false"
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span></div>
       <el-row class="pad" ref="boxWrapper">

@@ -39,8 +39,8 @@
         value-format="yyyy-MM-dd"
         type="daterange"
         range-separator="至"
-        start-placeholder="委案开始日期"
-        end-placeholder="委案结束日期">
+        start-placeholder="委案日期开始"
+        end-placeholder="委案日期结束">
       </el-date-picker>
     </el-form-item>
     <el-form-item  v-if="queryConf.ajzt || queryConfFlag">
@@ -74,13 +74,13 @@
             </el-select>
     </el-form-item>
     <el-form-item  v-if="queryConf.waje || queryConfFlag">
-            <el-input v-model="queryForm.dataCase.moneyStart" clearable placeholder="委案金额下限"></el-input>
+            <el-input v-model="queryForm.dataCase.moneyStart" clearable placeholder="请输入委案金额下限"></el-input>
     </el-form-item>
     <el-form-item  v-if="queryConf.waje || queryConfFlag">
     至
     </el-form-item>
     <el-form-item  v-if="queryConf.waje || queryConfFlag">
-            <el-input v-model="queryForm.dataCase.moneyEnd" clearable placeholder="委案金额上限"></el-input>
+            <el-input v-model="queryForm.dataCase.moneyEnd" clearable placeholder="请输入委案金额上限"></el-input>
     </el-form-item>
     <el-form-item v-if="queryConf.xm || queryConfFlag">
             <el-input v-model="names" @change="namesChange" type="textarea" :rows="3" clearable placeholder="请输入姓名"></el-input>
@@ -111,6 +111,7 @@
     :visible.sync="showQueryConfVisible"
     width="60%"
     center
+    :close-on-click-modal="false"
   >
     <el-row class="pad">
 

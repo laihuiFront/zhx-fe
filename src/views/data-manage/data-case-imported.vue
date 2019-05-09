@@ -55,8 +55,8 @@
           value-format="yyyy-MM-dd"
           unlink-panels
           range-separator="至"
-          start-placeholder="委案开始日期"
-          end-placeholder="委案结束日期"
+          start-placeholder="委案日期开始"
+          end-placeholder="委案日期结束"
         >
         </el-date-picker>
       </el-form-item>
@@ -74,6 +74,7 @@
             :show-file-list=false
             :on-success="uploadSuccess"
             :on-progress="onProgress"
+            accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           >
             <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入更新案件'">导入更新案件
             </el-button>
@@ -85,7 +86,7 @@
             :show-file-list=false
             :on-success="uploadSuccess"
             :on-progress="onProgress"
-
+             accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           >
             <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入案件评语'">导入案件评语
             </el-button>
@@ -97,7 +98,7 @@
             :show-file-list=false
             :on-success="uploadSuccess"
             :on-progress="onProgress"
-
+             accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           >
             <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入案件利息'">导入案件利息
             </el-button>
@@ -109,7 +110,7 @@
             :show-file-list=false
             :on-success="uploadSuccess"
             :on-progress="onProgress"
-
+             accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           >
             <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入案件电话'">导入案件电话
             </el-button>
@@ -121,7 +122,7 @@
             :show-file-list=false
             :on-success="uploadSuccess"
             :on-progress="onProgress"
-
+             accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           >
             <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入案件地址'">导入案件地址
             </el-button>
@@ -133,6 +134,7 @@
             :show-file-list=false
             :on-success="uploadSuccess"
             :on-progress="onProgress"
+             accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           >
             <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入案件记录'">导入催收记录
             </el-button>
@@ -240,6 +242,7 @@
             :on-success="uploadSuccess"
             :data="{batchNo:scope.row.batchNo}"
             :on-progress="onProgress"
+             accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           >
             <el-button type="text" size="small" v-has="'导入'">导入</el-button>
           </el-upload>
@@ -267,6 +270,7 @@
       title="新增批次"
       :visible.sync="dialogVisible"
       width="55%"
+      :close-on-click-modal="false"
     >
       <el-form :inline="true" :model="formInline" ref="formInline" label-width="100px" class="demo-dynamic">
         <el-row :gutter="24">
@@ -339,7 +343,7 @@
                     v-model="formInline.caseTime"
                     align="right"
                     type="date"
-                    placeholder="选择日期"
+                    placeholder="请选择日期"
                     value-format="yyyy-MM-dd"
                   >
                   </el-date-picker>
@@ -362,7 +366,7 @@
                     v-model="formInline.returnTime"
                     align="right"
                     type="date"
-                    placeholder="选择日期"
+                    placeholder="请选择日期"
                     value-format="yyyy-MM-dd"
                   >
                   </el-date-picker>
@@ -375,7 +379,7 @@
           <el-col :span="24">
             <el-form-item label="批次备注">
               <el-input type="textarea" v-model="formInline.remark" style="width: 200%;height: 180px;"
-                        maxlength="500"></el-input>
+                        maxlength="500" placeholder="请输入批次备注"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -391,6 +395,7 @@
       title="修改批次"
       :visible.sync="dialogVisible2"
       width="55%"
+      :close-on-click-modal="false"
     >
       <el-form :inline="true" :model="messageForm" ref="messageForm" label-width="100px" class="demo-dynamic">
         <el-row :gutter="24">
@@ -495,7 +500,7 @@
         <el-row :gutter="24">
           <el-col :span="24">
             <el-form-item label="批次备注">
-              <el-input type="textarea" v-model="messageForm.remark" style="width: 200%;" maxlength="500"></el-input>
+              <el-input type="textarea" v-model="messageForm.remark" style="width: 200%;" maxlength="500" placeholder="请输入批次备注"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -523,6 +528,7 @@
       :visible.sync="showExportConfVisible"
       width="60%"
       center
+      :close-on-click-modal="false"
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span></div>
       <el-row class="pad" ref="boxWrapper">
@@ -790,7 +796,7 @@
         for (var i = 0; i <= this.clientList.length; i++) {
           if (this.formInline.client === this.clientList[i].id) {
             this.clientValue = this.clientList[i].name
-            this.$set(this.formInline, 'batchNo', this.clientValue + '-' + this.formInline.caseTime)
+            this.$set(this.formInline, 'batchNo', this.clientValue + '-' + this.formInline.caseTime.split("-").join(""))
             return
           }
         }
@@ -799,7 +805,7 @@
         for (var i = 0; i <= this.clientList.length; i++) {
           if (this.messageForm.client === this.clientList[i].id) {
             this.clientValue = this.clientList[i].name
-            this.$set(this.messageForm, 'batchNo', this.clientValue + '-' + this.messageForm.caseTime)
+            this.$set(this.messageForm, 'batchNo', this.clientValue + '-' + this.formInline.caseTime.split("-").join(""))
             return
           }
         }
@@ -808,7 +814,7 @@
         for (var i = 0; i <= this.clientList.length; i++) {
           if (this.messageForm.client === this.clientList[i].id) {
             this.clientValue = this.clientList[i].name
-            this.$set(this.messageForm, 'batchNo', this.clientValue + '-' + this.messageForm.caseTime)
+            this.$set(this.messageForm, 'batchNo', this.clientValue + '-' +this.formInline.caseTime.split("-").join(""))
             return
           }
         }
@@ -817,7 +823,7 @@
         for (var i = 0; i <= this.clientList.length; i++) {
           if (this.formInline.client === this.clientList[i].id) {
             this.clientValue = this.clientList[i].name
-            this.$set(this.formInline, 'batchNo', this.clientValue + '-' + this.formInline.caseTime)
+            this.$set(this.formInline, 'batchNo', this.clientValue + '-' + this.formInline.caseTime.split("-").join(""))
             return
           }
         }

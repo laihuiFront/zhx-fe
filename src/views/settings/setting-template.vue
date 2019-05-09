@@ -37,6 +37,7 @@
       :visible.sync="dialogVisible"
       width="1000px"
       custom-class="dia-top"
+      :close-on-click-modal="false"
     >
       <div class="dia-top-inp">
         <span

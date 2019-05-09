@@ -11,7 +11,7 @@
         >
           <case-detail :id="detailId" ref="detail"></case-detail>
         </el-dialog>
-        <el-dialog title="申请协催" :visible.sync="dialogVisible" width="30%">
+        <el-dialog title="申请协催" :visible.sync="dialogVisible" width="30%" :close-on-click-modal="false">
           <el-input
             type="textarea"
             :autosize="{ minRows: 6, maxRows: 14 }"
@@ -77,7 +77,7 @@
                 <el-form-item prop="val3" v-if="queryConf.gaxlh || queryConfFlag">
                   <el-input
                     v-model="form.val3"
-                    placeholder="个案序列号"
+                    placeholder="请输入个案序列号"
                     clearable
                   ></el-input>
                 </el-form-item>
@@ -97,21 +97,21 @@
                   <el-cascader
                     :options="val4_data"
                     clearable
-                    placeholder="选择地区"
+                    placeholder="请选择地区"
                     v-model="form.val4"
                   ></el-cascader>
                 </el-form-item>
                 <el-form-item prop="val5" v-if="queryConf.xm || queryConfFlag">
                   <el-input
                     v-model="form.val5"
-                    placeholder="姓名"
+                    placeholder="请输入姓名"
                     clearable
                   ></el-input>
                 </el-form-item>
                 <el-form-item prop="val6" v-if="queryConf.zjh || queryConfFlag">
                   <el-input
                     v-model="form.val6"
-                    placeholder="证件号"
+                    placeholder="请输入证件号"
                     clearable
                   ></el-input>
                 </el-form-item>
@@ -175,14 +175,14 @@
                 <el-form-item prop="val29" v-if="queryConf.waje || queryConfFlag">
                   <el-input
                     v-model="form.val29"
-                    placeholder="委案金额下限"
+                    placeholder="请输入委案金额下限"
                     clearable
                   ></el-input>
                 </el-form-item>
                 <el-form-item prop="val13" v-if="queryConf.waje || queryConfFlag">
                   <el-input
                     v-model="form.val13"
-                    placeholder="委案金额上限"
+                    placeholder="请输入委案金额上限"
                     clearable
                   ></el-input>
                 </el-form-item>
@@ -204,28 +204,28 @@
                 <el-form-item prop="val15" v-if="queryConf.kh || queryConfFlag">
                   <el-input
                     v-model="form.val15"
-                    placeholder="卡号"
+                    placeholder="请输入卡号"
                     clearable
                   ></el-input>
                 </el-form-item>
                 <el-form-item prop="val16" v-if="queryConf.dah || queryConfFlag">
                   <el-input
                     v-model="form.val16"
-                    placeholder="档案号"
+                    placeholder="请输入档案号"
                     clearable
                   ></el-input>
                 </el-form-item>
                 <el-form-item prop="val30" v-if="queryConf.gjcs || queryConfFlag">
                   <el-input
                     v-model="form.val30"
-                    placeholder="跟进次数下限"
+                    placeholder="请输入跟进次数下限"
                     clearable
                   ></el-input>
                 </el-form-item>
                 <el-form-item prop="val18" v-if="queryConf.gjcs || queryConfFlag">
                   <el-input
                     v-model="form.val18"
-                    placeholder="跟进次数上限"
+                    placeholder="请输入跟进次数上限"
                     clearable
                   ></el-input>
                 </el-form-item>
@@ -233,7 +233,7 @@
                 <el-form-item prop="val19" v-if="queryConf.sfxfp || queryConfFlag">
                   <el-select
                     v-model="form.val19"
-                    placeholder="是否新分配"
+                    placeholder="请选择是否新分配"
                     clearable
                   >
                     <el-option
@@ -247,7 +247,7 @@
                 <el-form-item prop="val20" v-if="queryConf.hkqk || queryConfFlag">
                   <el-select
                     v-model="form.val20"
-                    placeholder="还款情况"
+                    placeholder="请选择还款情况"
                     clearable
                   >
                     <el-option
@@ -262,21 +262,21 @@
                 <el-form-item prop="val22" v-if="queryConf.zdyxx || queryConfFlag">
                   <el-input
                     v-model="form.val22"
-                    placeholder="自定义信息"
+                    placeholder="请输入自定义信息"
                     clearable
                   ></el-input>
                 </el-form-item>
                 <el-form-item prop="val23" v-if="queryConf.csfl || queryConfFlag">
                   <el-input
                     v-model="form.val23"
-                    placeholder="催收分类"
+                    placeholder="请输入催收分类"
                     clearable
                   ></el-input>
                 </el-form-item>
                 <el-form-item prop="val24" v-if="queryConf.jmzt || queryConfFlag">
                   <el-select
                     v-model="form.val24"
-                    placeholder="减免状态"
+                    placeholder="请选择减免状态"
                     clearable
                   >
                     <el-option
@@ -290,7 +290,7 @@
                 <el-form-item prop="val25" v-if="queryConf.bbzt || queryConfFlag">
                   <el-select
                     v-model="form.val25"
-                    placeholder="报备状态"
+                    placeholder="请选择报备状态"
                     clearable
                   >
                     <el-option
@@ -304,14 +304,14 @@
                 <el-form-item prop="val27" v-if="queryConf.dhhm || queryConfFlag">
                   <el-input
                     v-model="form.val27"
-                    placeholder="电话号码"
+                    placeholder="请输入电话号码"
                     clearable
                   ></el-input>
                 </el-form-item>
                 <el-form-item prop="val28" v-if="queryConf.csjl || queryConfFlag">
                   <el-input
                     v-model="form.val28"
-                    placeholder="催收记录"
+                    placeholder="请输入催收记录"
                     clearable
                   ></el-input>
                 </el-form-item>
@@ -371,11 +371,11 @@
                     align="right"
                     unlink-panels
                     range-separator="至"
-                    start-placeholder="委案起始日期"
-                    end-placeholder="委案结束日期"
+                    start-placeholder="委案日期起始"
+                    end-placeholder="委案日期结束"
                   ></el-date-picker>
                 </el-form-item>
-
+                <el-row>
                 <el-form-item>
                   <el-button
                     type="primary"
@@ -441,6 +441,7 @@
                     >申请协催</el-button
                   >
                 </el-form-item>
+                </el-row>
               </el-form>
             </div>
           </el-col>
@@ -462,7 +463,7 @@
                   >
                   <span
                     style="display: inline-block; color: #66b1ff;font-size: 16px;"
-                    >{{ fetchData.countCase }}，</span
+                    >{{ fetchData.countCase }}件，</span
                   >
                 </el-form-item>
                 <el-form-item style="margin-right:0px;">
@@ -484,14 +485,14 @@
                   >
                   <span
                     style="display: inline-block; color: #66b1ff;font-size: 16px;"
-                    >{{ fetchData.countCasePay }}，</span
+                    >{{ fetchData.countCasePay }}件，</span
                   >
                 </el-form-item>
                 <el-form-item style="margin-right:0px;">
                   <span
                     class="color_gray"
                     style="display: inline-block; color: #66b1ff;font-size: 16px;"
-                    >列表还款数额：</span
+                    >列表还款金额：</span
                   >
                   <span
                     style="display: inline-block; color: #66b1ff;font-size: 16px;"
@@ -502,7 +503,7 @@
                   <span
                     class="color_gray"
                     style="display: inline-block; color: #66b1ff;font-size: 16px;"
-                    >列表提成值：</span
+                    >列表提成金额：</span
                   >
                   <span
                     style="display: inline-block; color: #66b1ff;font-size: 16px;"
@@ -513,7 +514,7 @@
                   <span
                     class="color_gray"
                     style="display: inline-block; color: #66b1ff;font-size: 16px;"
-                    >列表待银行查账值：</span
+                    >列表待银行查账金额：</span
                   >
                   <span
                     style="display: inline-block; color: #66b1ff;font-size: 16px;"
@@ -596,6 +597,7 @@
       :visible.sync="showQueryConfVisible"
       width="60%"
       center
+      :close-on-click-modal="false"
     >
       <el-row class="pad">
 

@@ -37,42 +37,43 @@
       <el-form-item prop="val3">
         <el-input
           v-model="form1.val3"
-          placeholder="姓名"
+          placeholder="请输入姓名"
           clearable
         ></el-input>
       </el-form-item>
       <el-form-item prop="val4">
         <el-input
           v-model="form1.val4"
-          placeholder="电话"
+          placeholder="请输入电话"
           clearable
         ></el-input>
       </el-form-item>
       <el-form-item prop="val5">
         <el-input
           v-model="form1.val5"
-          placeholder="地址"
+          placeholder="请输入地址"
           clearable
         ></el-input>
       </el-form-item><el-form-item prop="val6">
         <el-input
           v-model="form1.val6"
-          placeholder="证件号"
+          placeholder="请输入证件号"
           clearable
         ></el-input>
       </el-form-item><el-form-item prop="val7">
         <el-input
           v-model="form1.val7"
-          placeholder="卡号"
+          placeholder="请输入卡号"
           clearable
         ></el-input>
       </el-form-item><el-form-item prop="val8">
         <el-input
           v-model="form1.val8"
-          placeholder="单位名称"
+          placeholder="请输入单位名称"
           clearable
         ></el-input>
       </el-form-item>
+      <el-row>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" @click="getMainData()">查询</el-button>
         <el-button
@@ -82,6 +83,7 @@
         >重置</el-button
         >
       </el-form-item>
+      </el-row>
     </el-form>
      <el-table highlight-current-row v-loading="tableLoad"
       class="table-wrap"
@@ -120,7 +122,7 @@
       ></el-table-column>
       <el-table-column label="操作" align="center"  min-width="5">
       <template slot-scope="scope">
-          <el-button @click="dialogVisible=true;currentRow = scope;" v-has="'评语'">
+          <el-button type="text" @click="dialogVisible=true;currentRow = scope;" v-has="'评语'">
             评语
           </el-button>
       </template>
@@ -130,7 +132,9 @@
     <el-dialog
       title="添加评语"
       :visible.sync="dialogVisible"
-      width="30%">
+      width="30%"
+      :close-on-click-modal="false"
+      >
       <el-input
         type="textarea"
         :autosize="{ minRows: 6, maxRows: 14}"
@@ -372,6 +376,10 @@ export default {
 <style lang="scss">
 #collect-call-inquiry{
   
+}
+
+.el-input{
+  width: 180px;
 }
 </style>
 

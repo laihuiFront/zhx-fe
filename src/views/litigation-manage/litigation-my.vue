@@ -184,6 +184,7 @@
   append-to-body
   :visible.sync="dialogVisible"
   width="90%"
+  :close-on-click-modal="false"
   >
  <el-form :inline="true" :model="formInline" class="demo-form-inline" label-width="140px" :disabled="isTrue">
  	<el-row :gutter="24">
@@ -308,7 +309,7 @@
       v-model="formInline.legalDate"
       type="date"
       value-format="yyyy-MM-dd"
-      placeholder="选择日期">
+      placeholder="请选择日期">
     </el-date-picker>
   </div>
   </el-form-item>
@@ -321,7 +322,7 @@
     	value-format="yyyy-MM-dd"
       v-model="formInline.filingDate"
       type="date"
-      placeholder="选择日期">
+      placeholder="请选择日期">
     </el-date-picker>
   </div>
   </el-form-item>
@@ -364,7 +365,7 @@
     	value-format="yyyy-MM-dd"
       v-model="formInline.firstDate"
       type="date"
-      placeholder="选择日期">
+      placeholder="请选择日期">
     </el-date-picker>
   </div>
   </el-form-item>
@@ -377,7 +378,7 @@
     	value-format="yyyy-MM-dd"
       v-model="formInline.judgeDate"
       type="date"
-      placeholder="选择日期">
+      placeholder="请选择日期">
     </el-date-picker>
   </div>
   </el-form-item>
@@ -399,7 +400,7 @@
     	value-format="yyyy-MM-dd"
       v-model="formInline.exeDate"
       type="date"
-      placeholder="选择日期">
+      placeholder="请选择日期">
     </el-date-picker>
   </div>
   </el-form-item>
@@ -412,7 +413,7 @@
     	value-format="yyyy-MM-dd"
       v-model="formInline.exeEndDate"
       type="date"
-      placeholder="选择日期">
+      placeholder="请选择日期">
     </el-date-picker>
   </div>
   </el-form-item>
@@ -425,7 +426,7 @@
     	value-format="yyyy-MM-dd"
       v-model="formInline.costDate"
       type="date"
-      placeholder="选择日期">
+      placeholder="请选择日期">
     </el-date-picker>
   </div>
   </el-form-item>
@@ -441,7 +442,7 @@
     	value-format="yyyy-MM-dd"
       v-model="formInline.preservationDate"
       type="date"
-      placeholder="选择日期">
+      placeholder="请选择日期">
     </el-date-picker>
   </div>
   </el-form-item>
@@ -677,6 +678,7 @@
   append-to-body
   :visible.sync="dialogVisible"
   width="90%"
+  :close-on-click-modal="false"
   >
  <el-form :inline="true" :model="formInline" class="demo-form-inline" label-width="140px" :disabled="isTrue">
  	<el-row :gutter="24">
@@ -801,7 +803,7 @@
       v-model="formInline.legalDate"
       type="date"
       value-format="yyyy-MM-dd"
-      placeholder="选择日期">
+      placeholder="请选择日期">
     </el-date-picker>
   </div>
   </el-form-item>
@@ -814,7 +816,7 @@
     	value-format="yyyy-MM-dd"
       v-model="formInline.filingDate"
       type="date"
-      placeholder="选择日期">
+      placeholder="请选择日期">
     </el-date-picker>
   </div>
   </el-form-item>
@@ -857,7 +859,7 @@
     	value-format="yyyy-MM-dd"
       v-model="formInline.firstDate"
       type="date"
-      placeholder="选择日期">
+      placeholder="请选择日期">
     </el-date-picker>
   </div>
   </el-form-item>
@@ -870,7 +872,7 @@
     	value-format="yyyy-MM-dd"
       v-model="formInline.judgeDate"
       type="date"
-      placeholder="选择日期">
+      placeholder="请选择日期">
     </el-date-picker>
   </div>
   </el-form-item>
@@ -892,7 +894,7 @@
     	value-format="yyyy-MM-dd"
       v-model="formInline.exeDate"
       type="date"
-      placeholder="选择日期">
+      placeholder="请选择日期">
     </el-date-picker>
   </div>
   </el-form-item>
@@ -905,7 +907,7 @@
     	value-format="yyyy-MM-dd"
       v-model="formInline.exeEndDate"
       type="date"
-      placeholder="选择日期">
+      placeholder="请选择日期">
     </el-date-picker>
   </div>
   </el-form-item>
@@ -918,7 +920,7 @@
     	value-format="yyyy-MM-dd"
       v-model="formInline.costDate"
       type="date"
-      placeholder="选择日期">
+      placeholder="请选择日期">
     </el-date-picker>
   </div>
   </el-form-item>
@@ -934,7 +936,7 @@
     	value-format="yyyy-MM-dd"
       v-model="formInline.preservationDate"
       type="date"
-      placeholder="选择日期">
+      placeholder="请选择日期">
     </el-date-picker>
   </div>
   </el-form-item>

@@ -23,6 +23,7 @@
         :show-file-list="false"
         :on-success="uploadSuccess"
         style="display:inline-block;"
+        accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
       >
         <el-button type="primary" v-if="queryForm.status==='0'" style="margin-left:10px;margin-right: 16px;"
                    v-has="'导入待银行对账'">导入待银行查账
@@ -135,7 +136,7 @@
           ></el-date-picker>
         </el-form-item>
         <el-form-item label="确认还款" prop="dyga">
-          <el-input v-model="recordInfo.mobile" clearable placeholder="确认还款金额"></el-input>
+          <el-input v-model="recordInfo.mobile" clearable placeholder="请输入确认还款金额"></el-input>
         </el-form-item>
         <el-form-item label="还款人" prop="dyga">
           <el-input v-model="recordInfo.mobile" clearable placeholder="请输入还款人"></el-input>
@@ -164,6 +165,7 @@
       :visible.sync="dialogExportVisible"
       width="30%"
       center
+      :close-on-click-modal="false"
     >
       <el-form :inline="true">
         <el-form-item>
@@ -185,6 +187,7 @@
       :visible.sync="showExportConfVisible"
       width="60%"
       center
+      :close-on-click-modal="false"
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span></div>
       <el-row class="pad" ref="boxWrapper">

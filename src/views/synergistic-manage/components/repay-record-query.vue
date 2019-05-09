@@ -42,8 +42,8 @@
         value-format="yyyy-MM-dd"
         type="daterange"
         range-separator="至"
-        start-placeholder="委案开始日期"
-        end-placeholder="委案结束日期">
+        start-placeholder="委案日期开始"
+        end-placeholder="委案日期结束">
       </el-date-picker>
     </el-form-item>
     <el-form-item  v-if="queryConf.hsbm || queryConfFlag">
@@ -180,6 +180,7 @@
     :visible.sync="showQueryConfVisible"
     width="60%"
     center
+    :close-on-click-modal="false"
   >
     <el-row class="pad">
       <el-checkbox v-model="queryConf.csqy" label="1" >姓名</el-checkbox>

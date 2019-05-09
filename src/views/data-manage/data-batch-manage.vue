@@ -19,7 +19,7 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="form.batchStatus" placeholder="批次状态" clearable>
+        <el-select v-model="form.batchStatus" placeholder="请选择批次状态" clearable>
           <el-option
             v-for="item in form.CasestatusList"
             :key="item.id"
@@ -67,8 +67,8 @@
           align="right"
           unlink-panels
           range-separator="至"
-          start-placeholder="委案开始日期"
-          end-placeholder="委案结束日期"
+          start-placeholder="委案日期开始"
+          end-placeholder="委案日期结束"
         >
         </el-date-picker>
       </el-form-item>
@@ -265,6 +265,7 @@
       :visible.sync="dialogVisible1"
       width="30%"
       center
+      :close-on-click-modal="false"
     >
       <el-row :gutter="20">
         <el-col :span="10">
@@ -287,6 +288,7 @@
       title="修改批次"
       :visible.sync="dialogVisible2"
       width="55%"
+      :close-on-click-modal="false"
     >
       <el-form :inline="true" :model="messageForm" ref="messageForm" label-width="100px" class="demo-dynamic">
         <el-row :gutter="24">
@@ -669,6 +671,7 @@
       :visible.sync="showExportBatchConfVisible"
       width="60%"
       center
+      :close-on-click-modal="false"
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span></div>
       <el-row class="pad" ref="boxWrapper">
@@ -698,6 +701,7 @@
       :visible.sync="showExportCollectConfVisible"
       width="60%"
       center
+      :close-on-click-modal="false"
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllCollectExport" style="cursor: pointer;">全选</span></div>
       <el-row class="pad" ref="boxWrapper">
@@ -754,6 +758,7 @@
       title="新增批次"
       :visible.sync="dialogVisible"
       width="55%"
+      :close-on-click-modal="false"
     >
       <el-form :inline="true" :model="formInline" ref="formInline" label-width="100px" class="demo-dynamic">
         <el-row :gutter="24">
@@ -878,6 +883,7 @@
       title="修改批次"
       :visible.sync="dialogVisible3"
       width="55%"
+      :close-on-click-modal="false"
     >
       <el-form :inline="true" :model="messageForm" ref="messageForm" label-width="100px" class="demo-dynamic">
         <el-row :gutter="24">
@@ -1089,7 +1095,7 @@
         for (var i = 0; i <= this.clientList.length; i++) {
           if (this.messageForm.client === this.clientList[i].id) {
             this.clientValue = this.clientList[i].name
-            this.$set(this.messageForm, 'batchNo', this.clientValue + '-' + this.messageForm.caseTime)
+            this.$set(this.messageForm, 'batchNo', this.clientValue + '-' +this.formInline.caseTime.split("-").join(""))
             return
           }
         }
@@ -1098,7 +1104,7 @@
         for (var i = 0; i <= this.clientList.length; i++) {
           if (this.formInline.client === this.clientList[i].id) {
             this.clientValue = this.clientList[i].name
-            this.$set(this.formInline, 'batchNo', this.clientValue + '-' + this.formInline.caseTime)
+            this.$set(this.formInline, 'batchNo', this.clientValue + '-' + this.formInline.caseTime.split("-").join(""))
             return
           }
         }
@@ -1107,7 +1113,7 @@
         for (var i = 0; i <= this.clientList.length; i++) {
           if (this.messageForm.client === this.clientList[i].id) {
             this.clientValue = this.clientList[i].name
-            this.$set(this.messageForm, 'batchNo', this.clientValue + '-' + this.messageForm.caseTime)
+            this.$set(this.messageForm, 'batchNo', this.clientValue + '-' + this.formInline.caseTime.split("-").join(""))
             return
           }
         }
@@ -1116,7 +1122,7 @@
         for (var i = 0; i <= this.clientList.length; i++) {
           if (this.formInline.client === this.clientList[i].id) {
             this.clientValue = this.clientList[i].name
-            this.$set(this.formInline, 'batchNo', this.clientValue + '-' + this.formInline.caseTime)
+            this.$set(this.formInline, 'batchNo', this.clientValue + '-' + this.formInline.caseTime.split("-").join(""))
             return
           }
         }

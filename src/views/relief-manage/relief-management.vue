@@ -624,6 +624,7 @@
       :title="dialogTitle"
       :visible.sync="dialogVisible"
       width="40%"
+      :close-on-click-modal="false"
     >
       <el-form :model="ruleForm" ref="ruleForm" :disabled="MessageTrue" :inline=true label-width="100px"
                class="demo-ruleForm">
@@ -650,7 +651,7 @@
               value-format="yyyy-MM-dd"
               v-model="ruleForm.reduceValidTime"
               type="date"
-              placeholder="选择日期">
+              placeholder="请选择日期">
             </el-date-picker>
           </div>
         </el-form-item>
@@ -666,6 +667,7 @@
       :visible.sync="dialogVisible1"
       width="30%"
       center
+      :close-on-click-modal="false"
     >
       <el-row :gutter="20">
         <el-col :span="10">
@@ -690,6 +692,7 @@
       :visible.sync="showQueryConfVisible"
       width="60%"
       center
+      :close-on-click-modal="false"
     >
       <el-row class="pad">
 
@@ -719,6 +722,7 @@
       :visible.sync="showExportConfVisible"
       width="60%"
       center
+      :close-on-click-modal="false"
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span></div>
       <el-row class="pad">

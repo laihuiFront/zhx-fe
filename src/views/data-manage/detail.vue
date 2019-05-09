@@ -2748,6 +2748,7 @@
       :visible.sync="dialogVisible"
       width="45%"
       append-to-body
+      :close-on-click-modal="false"
     >
       <el-form :inline="true" :model="formInline" class="demo-form-inline">
         <el-form-item label="姓名">
@@ -2817,6 +2818,7 @@
       width="45%"
       append-to-body
       class="addr-dialog-wrap"
+      :close-on-click-modal="false"
     >
       <el-form
         :inline="true"
@@ -2889,6 +2891,7 @@
       width="45%"
       append-to-body
       class="addr-dialog-wrap"
+      :close-on-click-modal="false"
     >
       <el-form
         :inline="true"
@@ -2957,6 +2960,7 @@
       width="45%"
       append-to-body
       class="addr-dialog-wrap"
+      :close-on-click-modal="false"
     >
       <el-form
         :inline="true"
@@ -3027,6 +3031,7 @@
       width="45%"
       append-to-body
       class="addr-dialog-wrap"
+      :close-on-click-modal="false"
     >
       <el-form
         :inline="true"
@@ -3078,6 +3083,7 @@
       width="45%"
       append-to-body
       class="addr-dialog-wrap"
+      :close-on-click-modal="false"
     >
       <el-form
         :inline="true"
@@ -3132,6 +3138,7 @@
       :visible.sync="adddialogVisible"
       width="60%"
       append-to-body
+      :close-on-click-modal="false"
     >
       <el-form
         :inline="true"
@@ -3344,6 +3351,7 @@
       :visible.sync="ligigationVisible"
       width="60%"
       append-to-body
+      :close-on-click-modal="false"
     >
       <el-form
         :inline="true"
@@ -3596,6 +3604,7 @@
       width="30%"
       append-to-body
       class="addr-dialog-wrap"
+      :close-on-click-modal="false"
     >
       <el-form
         :inline="true"
@@ -3648,6 +3657,7 @@
       width="35%"
       append-to-body
       class="addr-dialog-wrap"
+      :close-on-click-modal="false"
     >
       <el-form
         :inline="true"
@@ -3728,6 +3738,7 @@
       width="30%"
       append-to-body
       class="addr-dialog-wrap"
+      :close-on-click-modal="false"
     >
       <el-form
         :inline="true"
@@ -3756,6 +3767,7 @@
       width="30%"
       append-to-body
       class="addr-dialog-wrap"
+      :close-on-click-modal="false"
     >
       <div style="    padding-top: 10px;">
         <el-input
@@ -3805,6 +3817,7 @@
       width="30%"
       append-to-body
       class="addr-dialog-wrap warninghead"
+      :close-on-click-modal="false"
     >
       <div style="    padding-top: 10px ;">
         <el-input

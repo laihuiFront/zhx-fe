@@ -54,8 +54,8 @@
           align="right"
           unlink-panels
           range-separator="至"
-          start-placeholder="委案开始日期"
-          end-placeholder="委案结束日期"
+          start-placeholder="委案日期开始"
+          end-placeholder="委案日期结束"
         >
         </el-date-picker>
       </el-form-item>
@@ -88,10 +88,10 @@
                   rows="3"></el-input>
       </el-form-item>
       <el-form-item v-if="queryConf.waje || queryConfFlag">
-        <el-input v-model="formInline.moneyStart" placeholder="请输入委案下限金额"></el-input>
+        <el-input v-model="formInline.moneyStart" placeholder="请输入委案金额下限"></el-input>
       </el-form-item>
       <el-form-item v-if="queryConf.waje || queryConfFlag">
-        <el-input v-model="formInline.moneyEnd" placeholder="请输入委案上限金额"></el-input>
+        <el-input v-model="formInline.moneyEnd" placeholder="请输入委案金额上限"></el-input>
       </el-form-item>
       <el-form-item v-if="queryConf.yqts || queryConfFlag">
         <el-input v-model="formInline.overDays" placeholder="请输入逾期天数"></el-input>
@@ -244,8 +244,8 @@
           value-format="yyyy-MM-dd"
           unlink-panels
           range-separator="至"
-          start-placeholder="委案开始日期"
-          end-placeholder="委案结束日期"
+          start-placeholder="委案日期开始"
+          end-placeholder="委案日期结束"
         >
         </el-date-picker>
       </el-form-item>
@@ -300,11 +300,11 @@
           <el-button type="primary" @click="showQueryConf" style="margin-left:10px;">查询条件配置</el-button>
         </el-form-item>
         <el-form-item>
-          <el-dropdown v-dropdown-patch @command="fenancheck" style="margin-left:10px;" v-has="'分案'">
+          <el-dropdown v-dropdown-patch @command="fenancheck" style="margin-left:10px;" v-has="'分案'" placement="bottom">
             <el-button type="primary">
               分案<i class="el-icon-arrow-down el-icon--right"></i>
             </el-button>
-            <el-dropdown-menu slot="dropdown">
+            <el-dropdown-menu slot="dropdown" >
               <el-dropdown-item command="a">快速分案</el-dropdown-item>
               <el-dropdown-item command="b">查询结果快速分案</el-dropdown-item>
             </el-dropdown-menu>
@@ -316,18 +316,18 @@
               案件<i class="el-icon-arrow-down el-icon--right"></i>
             </el-button>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="2">暂停案件</el-dropdown-item>
-              <el-dropdown-item command="3">关闭案件</el-dropdown-item>
+              <el-dropdown-item command="2">暂停</el-dropdown-item>
+              <el-dropdown-item command="3">关闭</el-dropdown-item>
               <el-dropdown-item command="4">退案</el-dropdown-item>
-              <el-dropdown-item command="1">恢复案件</el-dropdown-item>
+              <el-dropdown-item command="1">恢复</el-dropdown-item>
               <!--    <el-dropdown-item>案件标色</el-dropdown-item>
               -->
-              <el-dropdown-item command="a">删除案件</el-dropdown-item>
+              <el-dropdown-item command="a">删除</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </el-form-item>
         <el-form-item style="margin-left: 10px;">
-          <el-dropdown v-dropdown-patch @command="handleCommand" v-has="'修改'">
+          <el-dropdown v-dropdown-patch @command="handleCommand" v-has="'修改'" placement="bottom">
             <el-button type="primary">
               修改<i class="el-icon-arrow-down el-icon--right"></i>
             </el-button>
@@ -335,7 +335,7 @@
               <el-dropdown-item command="important">修改重要等级</el-dropdown-item>
               <el-dropdown-item command="collectStatus">修改催收状态</el-dropdown-item>
               <el-dropdown-item command="collectArea">修改催收区域</el-dropdown-item>
-              <el-dropdown-item command="mVal">修改提成值系数</el-dropdown-item>
+              <el-dropdown-item command="mVal">修改提成系数</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </el-form-item>
@@ -346,7 +346,7 @@
           <el-button type="primary" @click="xiecui" v-has="'申请协催'">申请协催</el-button>
         </el-form-item>
         <el-form-item style="margin-left: 10px;">
-          <el-dropdown v-dropdown-patch @command="handleExport" v-has="'导出'">
+          <el-dropdown v-dropdown-patch @command="handleExport" v-has="'导出'" placement="bottom">
             <el-button type="primary">
               导出<i class="el-icon-arrow-down el-icon--right"></i>
             </el-button>
@@ -382,8 +382,8 @@
           <span>查询结果统计：</span>
           <span class="textColor">列表案量：{{totalCaseNum}}件，</span>
           <span class="textColor"> 列表金额：{{totalAmt}}，</span>
-          <span class="textColor"> 列表还款量：{{repayNum}}，</span>
-          <span class="textColor"> 列表还款额：{{repayTotalAmt}}，</span>
+          <span class="textColor"> 列表还款案量：{{repayNum}}件，</span>
+          <span class="textColor"> 列表还款金额：{{repayTotalAmt}}，</span>
           <span class="textColor"> 列表待银行查账金额：{{totalCp}}，</span>
           <span class="textColor"> 列表承诺还款金额：{{totalPtp}}</span>
         </div>
@@ -871,6 +871,7 @@
       :visible.sync="dialogVisibleCase"
       width="30%"
       center
+      :close-on-click-modal="false"
     >
       <el-row :gutter="20">
         <el-col :span="10">
@@ -895,6 +896,7 @@
       :visible.sync="showQueryConfVisible"
       width="60%"
       center
+      :close-on-click-modal="false"
     >
       <el-row class="pad">
 
@@ -951,6 +953,7 @@
       :visible.sync="showExportTelConfVisible"
       width="60%"
       center
+      :close-on-click-modal="false"
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllTelExport" style="cursor: pointer;">全选</span></div>
       <el-row class="pad" ref="boxWrapper">
@@ -981,6 +984,7 @@
       :visible.sync="showExportCollectConfVisible"
       width="60%"
       center
+      :close-on-click-modal="false"
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllCollectExport" style="cursor: pointer;">全选</span></div>
       <el-row class="pad" ref="boxWrapper">
@@ -1037,6 +1041,7 @@
       :visible.sync="showExportConfVisible"
       width="60%"
       center
+      :close-on-click-modal="false"
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span></div>
       <el-row class="pad" ref="boxWrapper">
