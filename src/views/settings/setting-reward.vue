@@ -219,7 +219,7 @@
           <el-input type="textarea" label="提成说明" v-model="tips" style="width: 800px;" placeholder="请输入提成说明" rows="4"></el-input>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="总监" name="tab2">
+      <el-tab-pane id="directorTab" label="总监" name="tab2">
         <div class="buttons">
           <el-button type="primary" class="button" @click="onclickSave2">保存</el-button>
           <el-button type="primary" class="button" @click="setTableData()">重置</el-button>
@@ -228,37 +228,31 @@
 				<el-table v-loading="tableLoad2" :data="tableData" border style="width: 100%;" height="1">
 					<el-table-column align="center" label="标准" prop="msg" >
             <template slot-scope="scope">
-              <template v-if="scope.row.id===0">
-                团队业务员提成＜<el-input align="center" v-model="dataList2.standard1Msg"></el-input>
-              </template>
-              <template v-else-if="scope.row.id===1">
-                <el-input align="center" v-model="dataList2.standard1Msg"></el-input>≤团队业务员提成＜<el-input align="center" v-model="dataList2.standard2Msg"></el-input>
-              </template>
-              <template v-else-if="scope.row.id===2">
-                团队业务员提成≥<el-input align="center" v-model="dataList2.standard2Msg"></el-input>
-              </template>
+              <span v-if="scope.row.id===0">
+                团队业务员提成＜<el-input class="inputAlign" v-model="dataList2.standard1Msg"></el-input>
+              </span>
+              <span v-else-if="scope.row.id===1">
+                <el-input class="inputAlign" v-model="dataList2.standard1Msg"></el-input>≤团队业务员提成＜<el-input class="inputAlign" v-model="dataList2.standard2Msg"></el-input>
+              </span>
+              <span v-else-if="scope.row.id===2">
+                团队业务员提成≥<el-input class="inputAlign" v-model="dataList2.standard2Msg"></el-input>
+              </span>
             </template>
           </el-table-column>
 
 					<el-table-column align="center" label="奖励金额（元/人）" prop="reward">
             <template slot-scope="scope">
-              <template v-if="scope.row.id===0">
-                <el-input align="center" v-model="dataList2.reward1Msg"></el-input>
-              </template>
-              <template v-else-if="scope.row.id===1">
-                <el-input align="center" v-model="dataList2.reward2Msg"></el-input>
-              </template>
-              <template v-else-if="scope.row.id===2">
-                <el-input align="center" v-model="dataList2.reward3Msg"></el-input>
-              </template>
+              <span v-if="scope.row.id===0">
+                <el-input class="inputAlign" v-model="dataList2.reward1Msg"></el-input>
+              </span>
+              <span v-else-if="scope.row.id===1">
+                <el-input class="inputAlign" v-model="dataList2.reward2Msg"></el-input>
+              </span>
+              <span v-else-if="scope.row.id===2">
+                <el-input class="inputAlign" v-model="dataList2.reward3Msg"></el-input>
+              </span>
             </template>
           </el-table-column>
-
-					<!-- <el-table-column  label="操作" align="center" width="80">
-						<template slot-scope="scope">
-							<el-button type="text" @click="onClickEdit2(scope.row)">修改</el-button>
-						</template>
-					</el-table-column> -->
 				</el-table>
 			</el-tab-pane>
 		</el-tabs>
@@ -369,10 +363,12 @@
       },
 
       onclickSave2() {
-        if(this.dataList2.standard1Msg >= this.dataList2.standard2Msg){
+        if(isNaN(this.dataList2.standard1Msg) || isNaN(this.dataList2.standard2Msg) ||
+            isNaN(this.dataList2.reward1Msg) || isNaN(this.dataList2.reward2Msg) || isNaN(this.dataList2.reward3Msg) ||
+            Number(this.dataList2.standard1Msg) >= Number(this.dataList2.standard2Msg)){
           this.$message({
             type: 'error',
-            message: '无效的标准设置'
+            message: '无效的数值'
           })
         }else{
           updateStandard(this.dataList2).then(response => {
@@ -431,8 +427,14 @@
   }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   #setting-reward {
+    overflow-y: hidden !important;
+
+    .tabs-wrap{
+      height: 100%;
+    }
+
     .el-input {
       width: 40px;
     }
@@ -446,7 +448,7 @@
       text-align: center;
       width: 100px !important;
     }
-    .el-table .el-table__body-wrapper {
+    .el-table__body-wrapper {
       overflow-x: hidden;
     }
     .el-input .el-input__inner {
@@ -467,14 +469,21 @@
       z-index: 22;
     }
 
+    #directorTab {
+      .inputAlign{
+        width: 60px;
+
+         /deep/ .el-input__inner{
+          width: 100%;
+          padding: 0;
+          text-align: center !important;
+        }
+      }
+    }
+
     .buttons{
       margin-bottom: 10px;
       text-align: right;
     }
-
-  }
-
-  #layout .page-wrap {
-    overflow-y: hidden !important;
   }
 </style>
