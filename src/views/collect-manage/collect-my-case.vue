@@ -323,8 +323,8 @@
                     align="right"
                     unlink-panels
                     range-separator="至"
-                    start-placeholder="案件分配起始日期"
-                    end-placeholder="案件分配结束日期"
+                    start-placeholder="案件分配日期开始"
+                    end-placeholder="案件分配日期结束"
                   ></el-date-picker>
                 </el-form-item>
                 <el-form-item prop="val21" v-if="queryConf.yjtarq || queryConfFlag">
@@ -335,8 +335,8 @@
                     align="right"
                     unlink-panels
                     range-separator="至"
-                    start-placeholder="预计退案起始日期"
-                    end-placeholder="预计退案结束日期"
+                    start-placeholder="预计退案日期开始"
+                    end-placeholder="预计退案日期结束"
                   ></el-date-picker>
                 </el-form-item>
                 <el-form-item prop="val17" v-if="queryConf.yjtarq || queryConfFlag">
@@ -347,8 +347,8 @@
                     align="right"
                     unlink-panels
                     range-separator="至"
-                    start-placeholder="最后跟进起始日期"
-                    end-placeholder="最后跟进结束日期"
+                    start-placeholder="最后跟进日期开始"
+                    end-placeholder="最后跟进日期结束"
                   ></el-date-picker>
                 </el-form-item>
                 <el-form-item prop="val12" v-if="queryConf.hkrq || queryConfFlag">
@@ -359,8 +359,8 @@
                     align="right"
                     unlink-panels
                     range-separator="至"
-                    start-placeholder="还款起始日期"
-                    end-placeholder="还款结束日期"
+                    start-placeholder="还款日期开始"
+                    end-placeholder="还款日期结束"
                   ></el-date-picker>
                 </el-form-item>
                 <el-form-item prop="val7" v-if="queryConf.warq || queryConfFlag">
@@ -371,7 +371,7 @@
                     align="right"
                     unlink-panels
                     range-separator="至"
-                    start-placeholder="委案日期起始"
+                    start-placeholder="委案日期开始"
                     end-placeholder="委案日期结束"
                   ></el-date-picker>
                 </el-form-item>
