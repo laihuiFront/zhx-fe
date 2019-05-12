@@ -428,12 +428,8 @@ export default {
           label: "次数"
         },
         {
-          prop: "address",
-          label: "申请内容"
-        },
-        {
           prop: "applyContext",
-          label: "地址"
+          label: "申请内容"
         },
         {
           prop: "module",
