@@ -308,13 +308,25 @@
       getSummaries(param) {
         const {columns, data} = param;
         const sums = [];
+        let step = 0;
+        let y = num => num % 3 === 0;
         columns.forEach((column, index) => {
           if (index === 0) {
             sums[index] = '合计';
             return;
           }
 
-          const values = data[0].list.map(item => Number(item[column.property]));
+          // const values = data[0].list.map(item => Number(item[column.property]));
+          // const values = data.map(item => item.list[step][column.property]);
+          const values = data.map(item => {
+            if(step < item.list.length) {
+              return item.list[step][column.property]
+            } else {
+              return item[column.property]
+            }
+          });
+
+          y(index) && step++;
 
           if (!values.every(value => isNaN(value))) {
             sums[index] = values.reduce((prev, curr) => {
