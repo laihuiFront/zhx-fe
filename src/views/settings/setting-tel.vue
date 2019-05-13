@@ -7,38 +7,51 @@
        element-loading-background="rgba(0, 0, 0, 0.7)">
 
     <div slot="header" style="text-align: right;margin-right: 20px;margin-bottom: 20px;">
-      <el-button type="primary" :disabled="disableSave" @click="onclickSave" >保存</el-button>
+      <el-button type="primary" @click="onclickSave" >保存</el-button>
     </div>
     <el-table v-loading ="tableLoad"
               border
-              stripe
               style="width: 100%;"
-              highlight-current-row
               :data="tableData"
               height="1"
               class="table-wrap">
       <el-table-column
         prop="address"
         align="center"
-        label="拨号服务器地址"
+        label="呼叫中心IP"
       >
         <template slot-scope="scope">
           <el-input
-            v-if="editType==='edit' "
             clearable
             align="center"
             v-model="scope.row.address"
           ></el-input>
-          <span v-else>{{scope.row.address}}</span>
         </template>
       </el-table-column>
-
-      <el-table-column  label="操作" align="center" width="100px">
+      <el-table-column
+        prop="customer"
+        align="center"
+        label="账号"
+      >
         <template slot-scope="scope">
-          <el-button
-            type="text"
-            @click="onClickEdit(scope.row)"
-          >修改</el-button>
+          <el-input
+            clearable
+            align="center"
+            v-model="scope.row.customer"
+          ></el-input>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="psw"
+        align="center"
+        label="密码"
+      >
+        <template slot-scope="scope">
+          <el-input
+            clearable
+            align="center"
+            v-model="scope.row.psw"
+          ></el-input>
         </template>
       </el-table-column>
     </el-table>
@@ -53,9 +66,7 @@
     data(){
       return {
         tableLoad:false,
-        disableSave:true,
         loading:false,
-        editType:"",
         fullscreenLoading:false,
         tableData:[],
       }
@@ -63,17 +74,11 @@
     methods: {
       onclickSave(){
         update(this.tableData).then((response)=>{
-          this.disableSave = true
-          this.editType="";
           this.$message({
             type: 'success',
             message: '保存成功!'
           });
         })
-      },
-      onClickEdit(row){
-        this.editType = "edit";
-        this.disableSave = false
       }
     },
     created() {
@@ -92,6 +97,7 @@
     }
     .el-input .el-input__inner{
       text-align: center;
+      padding: 0;
     }
 
     .has-gutter .gutter{
@@ -99,5 +105,3 @@
     }
   }
 </style>
-
-
