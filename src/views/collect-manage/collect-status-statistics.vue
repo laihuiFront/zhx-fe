@@ -252,17 +252,7 @@ export default {
       val3_data: [], //tab2 逾期账龄
       form3: { val1: null, val2: null, val3: null },
       val2_data_form3: [],
-      tableData3: [],
-      tablecol_data3: [
-        { prop: "lastPaidMoney", label: "上月还款金额" },
-        { prop: "lastBankAmt", label: "上月银行对账金额" },
-        { prop: "lastRepayAmt", label: "上月承诺还款金额" },
-        { prop: "lastRepaidAmt", label: "上月已还款金额的提成金额" },
-        { prop: "lastRepaidBankAmt", label: "上月银行查账金额的提成金额" },
-        { prop: "thisPaidMoney", label: "本月还款金额" },
-        { prop: "thisBankAmt", label: "本月银行对账金额" },
-        { prop: "thisRepayAmt", label: "本月承诺还款金额" }
-      ]
+      tableData3: []
     };
   },
   created() {
@@ -270,10 +260,10 @@ export default {
   },
   computed: {
     form2_data() {
-      let { val1: clients, val2: batchNos, val3: accountAge } = this.form2;
+      let { val1: clients, val2: collectStatus, val3: accountAge } = this.form2;
       return {
         clients,
-        batchNos,
+        collectStatus,
         accountAge
       };
     },
