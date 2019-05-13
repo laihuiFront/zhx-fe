@@ -97,13 +97,28 @@
               ></el-input>
             </el-form-item>
             <el-form-item prop="val4">
-              <el-cascader
+              <!--<el-cascader
                 :options="val4_data"
                 clearable
                 placeholder="请选择催收区域"
                 v-model="form.val4"
               >
-              </el-cascader>
+              </el-cascader>-->
+              <el-select
+                v-model="form.val4"
+                placeholder="请选择催收区域"
+                filterable
+                collapse-tags
+                clearable
+              >
+                <el-option
+                  v-for="item in val4_data"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                >
+                </el-option>
+              </el-select>
             </el-form-item>
             <el-form-item prop="val5">
               <el-input
@@ -271,6 +286,12 @@
         align="center"
       >
       </el-table-column>
+       <el-table-column label="操作" width="180"   align="center">
+         <template slot-scope="scope">
+           <el-button type="text" size="small">选择模板导出</el-button>
+           <el-button type="text" size="small">导出</el-button>
+         </template>
+       </el-table-column>
     </el-table>
     <el-pagination
       class="pagination-wrap"
@@ -570,7 +591,7 @@ export default {
     },
     active(n) {
       if (n == "tab2") {
-        this.getMainData();
+        this.getMainData(1);
       }
     }
   },
@@ -757,19 +778,23 @@ export default {
         });
       });
     },
-    getMainData() {
-      this.tableLoad = true;
-      pageDataLetter(this.realFetchFormData).then(data => {
-        if (!data) {
-          data = { total: 0, list: [] };
-        }
-        this.fetchData = data;
-        this.paginationData.total = data.total;
-        this.tableData = data.list.map(item => {
-          return Object.assign(item, { "class-name": `color_${item.color}` });
+    getMainData(flag) {
+      if (this.tableData.length>0 && flag==1){
+
+      }else {
+        this.tableLoad = true;
+        pageDataLetter(this.realFetchFormData).then(data => {
+          if (!data) {
+            data = {total: 0, list: []};
+          }
+          this.fetchData = data;
+          this.paginationData.total = data.total;
+          this.tableData = data.list.map(item => {
+            return Object.assign(item, {"class-name": `color_${item.color}`});
+          });
+          this.tableLoad = false;
         });
-        this.tableLoad = false;
-      });
+      }
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
@@ -793,7 +818,7 @@ export default {
       });
     },
     init() {
-      this.getMainData();
+      this.getMainData(1);
       moduleList().then(data => {
         this.val9_data = this.transform(data, [
           ["id", "value"],
@@ -813,7 +838,7 @@ export default {
       //   val9: null, //信函模板
       //   val10: null, //案件状态
       this.getEnumHandle("委托方", "val0_data");
-      this.getEnumHandle("地区", "val4_data");
+      this.getEnumHandle("催收区域", "val4_data");
     }
   }
 };

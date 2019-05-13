@@ -5,7 +5,7 @@
       <el-input style="width: 130px;" v-model="queryForm.dataCase.name" clearable placeholder="请输入姓名"></el-input>
     </el-form-item>
     <el-form-item  v-if="queryConf.csqy || queryConfFlag">
-      <el-select style="width: 150px;" clearable v-model="queryForm.dataCase.collectionArea.id" filterable placeholder="请选择催收区域">
+      <el-select style="width: 200px;" clearable v-model="queryForm.dataCase.collectionArea.id" filterable placeholder="请选择催收区域">
         <el-option
           v-for="item in collectionAreaList"
           :key="item.id"
@@ -15,7 +15,7 @@
       </el-select>
     </el-form-item>
     <el-form-item  v-if="queryConf.pc || queryConfFlag">
-      <el-select style="width: 150px;" v-model="queryForm.dataCase.batchNo" filterable placeholder="请选择批次" clearable>
+      <el-select style="width: 200px;" v-model="queryForm.dataCase.batchNo" filterable placeholder="请选择批次" clearable>
         <el-option
           v-for="item in batchList"
           :key="item.id"
@@ -25,7 +25,7 @@
       </el-select>
     </el-form-item>
     <el-form-item  v-if="queryConf.wtf || queryConfFlag">
-      <el-select style="width: 150px;" clearable v-model="queryForm.dataCase.client" filterable placeholder="请选择委托方">
+      <el-select style="width: 200px;" clearable v-model="queryForm.dataCase.client" filterable placeholder="请选择委托方">
         <el-option
           v-for="item in clientList"
           :key="item.id"
@@ -47,7 +47,7 @@
       </el-date-picker>
     </el-form-item>
     <el-form-item  v-if="queryConf.hsbm || queryConfFlag">
-            <e-l-TreeSelect
+            <e-l-TreeSelect style="width:200px;"
                 ref="treeSelectDept"
                 v-model="queryForm.dataCase.dept"
                 :selectParams="{'multiple': false,'clearable': true,'placeholder': '请选择回收部门'}"
@@ -55,7 +55,7 @@
             </e-l-TreeSelect>
     </el-form-item>
     <el-form-item  v-if="queryConf.hscsy || queryConfFlag">
-            <el-select clearable v-model="queryForm.dataCase.collectionUser.id" filterable placeholder="请选择回收催收员">
+            <el-select style="width:200px;" clearable v-model="queryForm.dataCase.collectionUser.id" filterable placeholder="请选择回收催收员">
               <el-option
                 v-for="item in collectionUserList"
                 :key="item.id"
@@ -73,7 +73,7 @@
             </e-l-TreeSelect>
     </el-form-item>
     <el-form-item  v-if="queryConf.ajzt || queryConfFlag">
-            <el-select clearable v-model="queryForm.dataCase.status" filterable placeholder="请选择案件状态">
+            <el-select style="width:200px;" clearable v-model="queryForm.dataCase.status" filterable placeholder="请选择案件状态">
               <el-option
                 v-for="item in statusList"
                 :key="item.id"
@@ -83,7 +83,7 @@
             </el-select>
     </el-form-item>
     <el-form-item  v-if="queryConf.yqzl || queryConfFlag">
-            <el-select clearable v-model="queryForm.dataCase.overdueBillTime" filterable placeholder="请选择逾期账龄">
+            <el-select clearable style="width:200px;" v-model="queryForm.dataCase.overdueBillTime" filterable placeholder="请选择逾期账龄">
               <el-option
                 v-for="item in overdueBillTimeList"
                 :key="item.id"
@@ -93,7 +93,7 @@
             </el-select>
     </el-form-item>
     <el-form-item  v-if="queryConf.cszt || queryConfFlag">
-            <el-select v-model="queryForm.dataCase.collectStatus" filterable clearable placeholder="请选择催收状态">
+            <el-select style="width:200px;" v-model="queryForm.dataCase.collectStatus" filterable clearable placeholder="请选择催收状态">
               <el-option
                 v-for="item in collectStatusList"
                 :key="item.id"
@@ -115,7 +115,7 @@
             </el-date-picker>
     </el-form-item>
     <el-form-item  v-if="queryConf.ajlx || queryConfFlag">
-            <el-select v-model="queryForm.dataCase.caseType" placeholder="请选择案件类型">
+            <el-select style="width:200px;" v-model="queryForm.dataCase.caseType" placeholder="请选择案件类型">
               <el-option
                 clearable
                 v-for="item in caseTypeList"
