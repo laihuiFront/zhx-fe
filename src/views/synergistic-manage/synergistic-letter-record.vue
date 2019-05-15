@@ -98,13 +98,28 @@
               ></el-input>
             </el-form-item>
             <el-form-item prop="val4">
-              <el-cascader
+             <!-- <el-cascader
                 :options="val4_data"
                 clearable
                 placeholder="请选择催收区域"
                 v-model="form.val4"
               >
-              </el-cascader>
+              </el-cascader>-->
+              <el-select
+                v-model="form.val4"
+                placeholder="请选择催收区域"
+                filterable
+                collapse-tags
+                clearable
+              >
+                <el-option
+                  v-for="item in val4_data"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                >
+                </el-option>
+              </el-select>
             </el-form-item>
             <el-form-item prop="val5">
               <el-input
@@ -842,7 +857,7 @@ export default {
       //   val9: null, //信函模板
       //   val10: null, //案件状态
       this.getEnumHandle("委托方", "val0_data");
-      this.getEnumHandle("地区", "val4_data");
+      this.getEnumHandle("催收区域", "val4_data");
     }
   }
 };

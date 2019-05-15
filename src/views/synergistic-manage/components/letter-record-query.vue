@@ -5,7 +5,7 @@
     </el-form-item>
     <el-form-item>
       <e-l-TreeSelect
-          style="width: 130px;"
+          style="width: 200px;"
           ref="treeSelect"
           v-model="queryForm.qy"
           :selectParams="{'multiple': false,'clearable': true,'placeholder': '请选择区域'}"
@@ -13,7 +13,7 @@
       </e-l-TreeSelect>
     </el-form-item>
     <el-form-item>
-      <el-select style="width: 150px;" clearable v-model="queryForm.wtf" placeholder="请选择批次号">
+      <el-select style="width: 200px;" clearable v-model="queryForm.wtf" placeholder="请选择批次号">
         <el-option
           v-for="item in logTypeList"
           :key="item.key"
@@ -23,7 +23,7 @@
       </el-select>
     </el-form-item>
     <el-form-item>
-      <el-select style="width: 150px;" clearable v-model="queryForm.wtf" placeholder="请选择委托方">
+      <el-select style="width: 200px;" clearable v-model="queryForm.wtf" placeholder="请选择委托方">
         <el-option
           v-for="item in logTypeList"
           :key="item.key"
@@ -43,7 +43,7 @@
             <el-input v-model="queryForm.gaxlh" clearable placeholder="请输入个案序列号"></el-input>
           </li>
           <li class="condition-item">
-            <el-select clearable v-model="queryForm.hscsy" placeholder="请选择信函模板">
+            <el-select style ="width:200px;" clearable v-model="queryForm.hscsy" placeholder="请选择信函模板">
               <el-option
                 v-for="item in logTypeList"
                 :key="item.key"
@@ -71,7 +71,7 @@
             <el-input v-model="queryForm.gaxlh" clearable placeholder="请输入申请人"></el-input>
           </li>
           <li class="condition-item">
-            <el-select clearable v-model="queryForm.ajzt" placeholder="请选择案件状态">
+            <el-select style="width:200px;" clearable v-model="queryForm.ajzt" placeholder="请选择案件状态">
               <el-option
                 v-for="item in logTypeList"
                 :key="item.key"

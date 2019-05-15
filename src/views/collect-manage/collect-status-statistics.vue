@@ -3,7 +3,7 @@
     id="collect-status-statistics"
     style="display:flex;flex-direction:column;height:100%;"
   >
-    <el-tabs v-model="activeName" @tab-click="handleClick" class="tabs-wrap">
+    <el-tabs v-model="activeName" @tab-click="handleClick" class="tabs-wrap statistics">
       <el-tab-pane label="当日电催跟进量" name="first">
         <el-form :inline="true" ref="form1" :model="form1" label-width="80px">
           <el-form-item prop="val1">
@@ -37,7 +37,7 @@
           height="1"
           v-loading="tableLoad"
           :data="tableData1"
-          style="width: 100%"
+          style="width: 100%;min-height: 400px;"
         >
           <el-table-column
             v-for="(item, index) in tablecol_data1"
@@ -365,5 +365,9 @@ export default {
 
 <style lang="scss">
 #collect-status-statistics {
+}
+#collect-my-case .el-tabs__content {
+  margin-bottom: 0px;
+  overflow-y: auto;
 }
 </style>
