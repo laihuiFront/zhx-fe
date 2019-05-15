@@ -283,12 +283,6 @@
               align="center"
             >
             </el-table-column>
-            <el-table-column label="操作" width="180"   align="center">
-              <template slot-scope="scope">
-              <el-button type="text" size="small">选择模板导出</el-button>
-              <el-button type="text" size="small">导出</el-button>
-              </template>
-            </el-table-column>
           </el-table>
           <el-pagination
             class="pagination-wrap"
@@ -306,6 +300,7 @@
           <tab2 :active="activeName"></tab2>
         </el-tab-pane>
       </el-tabs>
+
     </div>
     <el-dialog
       class="dialog-wrap"

@@ -366,8 +366,5 @@ export default {
 <style lang="scss">
 #collect-status-statistics {
 }
-#collect-my-case .el-tabs__content {
-  margin-bottom: 0px;
-  overflow-y: auto;
-}
+
 </style>
