@@ -22,21 +22,21 @@
       </el-row>
       <el-row :gutter="10" style="margin-top: 15px;">
         <el-col :span="3"
-        ><span class="topSpan">当月还款金额：</span>{{ topData.thisPaidMoney }}</el-col
+        ><span class="topSpan">本月还款金额：</span>{{ topData.thisPaidMoney }}</el-col
         >
         <el-col :span="4"
-        ><span class="topSpan">当月承诺还款金额：</span>{{ topData.thisRepayAmt }}</el-col
+        ><span class="topSpan">本月承诺还款金额：</span>{{ topData.thisRepayAmt }}</el-col
         >
         <el-col :span="4"
-        ><span class="topSpan">当月待银行查账金额：</span>{{ topData.thisBankAmt }}</el-col
+        ><span class="topSpan">本月待银行查账金额：</span>{{ topData.thisBankAmt }}</el-col
         >
         <el-col :span="4"
-        ><span class="topSpan">当月提成(已还款)：</span>{{
+        ><span class="topSpan">本月提成(已还款)：</span>{{
           topData.thisRepaidAmt
           }}</el-col
         >
         <el-col :span="8"
-        ><span class="topSpan">当月提成(待银行查账金额)：</span>{{ topData.thisRepaidBankAmt }}</el-col
+        ><span class="topSpan">本月提成(待银行查账金额)：</span>{{ topData.thisRepaidBankAmt }}</el-col
         >
       </el-row>
     </section>
@@ -129,8 +129,8 @@
             align="right"
             unlink-panels
             range-separator="至"
-            start-placeholder="承诺还款金额起始日期"
-            end-placeholder="承诺还款金额结束日期"
+            start-placeholder="承诺还款日期开始"
+            end-placeholder="承诺还款日期结束"
           >
           </el-date-picker>
         </el-form-item>
@@ -142,8 +142,8 @@
             align="right"
             unlink-panels
             range-separator="至"
-            start-placeholder="待银行查账金额起始日期"
-            end-placeholder="待银行查账金额结束日期"
+            start-placeholder="待银行查账日期开始"
+            end-placeholder="待银行查账日期结束"
           >
           </el-date-picker>
         </el-form-item>
@@ -155,8 +155,8 @@
             align="right"
             unlink-panels
             range-separator="至"
-            start-placeholder="还款起始日期"
-            end-placeholder="还款结束日期"
+            start-placeholder="还款日期开始"
+            end-placeholder="还款日期结束"
           >
           </el-date-picker>
         </el-form-item>
@@ -197,6 +197,25 @@
         style="width: 100%"
         @selection-change="handleSelectionChange"
       >
+
+       <el-table-column
+            label="个案序列号"
+            prop="seqno"
+            show-overflow-tooltip                 
+            header-align="center"
+            align="center"
+          >
+            <template slot-scope="scope">
+              <el-button
+                style="text-decoration: underline"
+                type="text"
+                size="small"
+                @click="showCase3(scope.row)"
+                >{{ scope.row.seqno }}</el-button
+              >
+            </template>
+          </el-table-column>
+
         <el-table-column
           v-for="(item, index) in tablecol_data"
           v-bind="item"
@@ -243,8 +262,11 @@
 import { batchNo, pay, getEnum,listOrganization } from "@/common/js/collect-my-case";
 
 import {role} from '@/common/js/collect-departmental-case'
-
+ const CaseDetail2 = () => import('@/views/data-manage/detail');
 export default {
+     components: {
+      CaseDetail2
+    },
   name: "collectRepaymentStatistics",
   data() {
 
@@ -257,11 +279,11 @@ export default {
         label: "姓名",
         prop: "targetName"
       },
-      {
-        label: "个案序列号",
-        width:"160",
-        prop: "seqno"
-      },
+      // {
+      //   label: "个案序列号",
+      //   width:"160",
+      //   prop: "seqno"
+      // },
       {
         label: "委托方",
         prop: "client"
@@ -561,6 +583,21 @@ export default {
       role({role:'催收员'}).then((data)=>{
         this.val9_data = this.transform(data,[['userName','label'],['id','value']]);
       })
+    },
+
+     showCase3(row) {
+        let id= row.id 
+        let name = row.targetName
+        let seqNo = row.seqno
+      this.$router.push({
+        path: "case-detail",
+        query: {
+          id,     
+          name,
+          mycase:true,
+          seqNo
+        }
+      });
     }
   }
 };

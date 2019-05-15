@@ -178,6 +178,26 @@
         style="width: 100%"
         @selection-change="handleSelectionChange"
       >
+      
+          <el-table-column
+            label="个案序列号"
+            prop="seqno"
+            show-overflow-tooltip                 
+            header-align="center"
+            align="center"
+          >
+            <template slot-scope="scope">
+              <el-button
+                style="text-decoration: underline"
+                type="text"
+                size="small"
+                @click="showCase2(scope.row)"
+                >{{ scope.row.seqno }}</el-button
+              >
+            </template>
+          </el-table-column>
+
+      
         <el-table-column
           v-for="(item, index) in tablecol_data"
           align="center"
@@ -204,11 +224,11 @@ export default {
         label: "姓名",
         prop: "targetName"
       },
-      {
-        label: "个案序列号",
-        width:140,
-        prop: "seqno"
-      },
+      // {
+      //   label: "个案序列号",
+      //   width:140,
+      //   prop: "seqno"
+      // },
       {
         label: "委托方",
         prop: "client"
@@ -469,6 +489,21 @@ export default {
       this.getMainData();
       this.getEnumHandle("委托方", "val2_data");
       this.getEnumHandle("逾期账龄", "val4_data");
+    },
+    showCase2(row) {
+      console.log(row)
+        let id= row.id 
+        let name = row.targetName
+        let seqNo = row.seqno
+      this.$router.push({
+        path: "case-detail",
+        query: {
+          id,
+          name,
+          mycase:true,
+          seqNo
+        }
+      });
     }
   }
 };

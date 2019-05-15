@@ -97,7 +97,8 @@
                     v-model="form.val3"
                     placeholder="请输入个案序列号"
                     clearable
-                  ></el-input>
+                  >
+                  </el-input>
                 </el-form-item>
                 <el-form-item prop="val2" v-if="queryConf.xcgjrq || queryConfFlag">
                   <el-date-picker

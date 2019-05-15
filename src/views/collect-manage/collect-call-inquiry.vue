@@ -11,10 +11,9 @@
     </el-dialog>
     <el-form :inline="true" ref="form1" :model="form1" label-width="80px">
       <el-form-item prop="val1">
-        <el-radio-group v-model="form1.val1">
-          <el-radio label="1" >精确</el-radio>
-          <el-radio label="2" >模糊</el-radio>
-        </el-radio-group>
+        <el-checkbox-group v-model="form1.val1">
+          <el-checkbox true-label="1" false-label="2">精准匹配</el-checkbox>       
+        </el-checkbox-group>
       </el-form-item>
       <el-form-item prop="val2">
         <el-select
@@ -100,16 +99,108 @@
       <el-table-column
         label="个案序列号"
         min-width="5"
-        prop="seqno"
+        prop="seqNo"
         sortable="custom"
         :sort-orders="['ascending','descending']"
-        header-align="center" align="center">
+        header-align="center" align="center"
+        show-overflow-tooltip
+        >
         <template slot-scope="scope">
           <el-button style="text-decoration: underline" type="text" size="small"
                      @click="showCase(scope.row)">{{scope
             .row.seqNo}}</el-button>
         </template>
       </el-table-column>
+
+      <el-table-column
+        label="姓名"
+        align="center" 
+        min-width="5"
+        prop="name" 
+        sortable="custom"
+        :sort-orders="['ascending','descending']"  
+        show-overflow-tooltip
+      >
+      <template slot-scope="scope">     
+           {{scope.row.name}}        
+      </template>
+      </el-table-column>
+
+      <el-table-column
+        label="卡号"
+        align="center"
+        min-width="5"
+        prop="cardNo" 
+        sortable="custom"
+        :sort-orders="['ascending','descending']"  
+        show-overflow-tooltip
+      >
+      <template slot-scope="scope">
+           {{scope.row.cardNo}}
+      </template>
+      </el-table-column>
+
+      <el-table-column
+        label="委案金额"
+        align="center"
+        min-width="5"
+        prop="moneyMsg" 
+        sortable="custom"
+        :sort-orders="['ascending','descending']"  
+        show-overflow-tooltip
+      >
+      <template slot-scope="scope">
+           {{scope.row.moneyMsg}}
+      </template>
+      </el-table-column>
+
+      <el-table-column
+        label="委案日期"
+        align="center"
+        min-width="5"
+        prop="caseDate" 
+        sortable="custom"
+        :sort-orders="['ascending','descending']"  
+        show-overflow-tooltip
+      >
+      <template slot-scope="scope">
+           {{scope.row.caseDate}} 
+      </template>
+      </el-table-column>
+
+      <el-table-column
+        label="催收状态"
+        align="center"
+        min-width="5"
+        prop="collectStatusMsg" 
+        sortable="custom"
+        :sort-orders="['ascending','descending']"  
+        show-overflow-tooltip
+      >
+      <template slot-scope="scope">
+           {{scope.row.collectStatusMsg}}    
+      </template>
+      </el-table-column>
+
+      <el-table-column
+        label="上次通电"
+        align="center"
+        min-width="5"
+        prop="collectDate" 
+        sortable="custom"
+        :sort-orders="['ascending','descending']"  
+        show-overflow-tooltip
+      >
+      <template slot-scope="scope">
+        <span class="block">
+           {{scope.row.result1}}
+        </span>
+        <span class="block">
+           {{scope.row.result2}}
+        </span>
+      </template>
+      </el-table-column>
+
       <el-table-column
         v-for="(item, index) in tablecol_data"
         v-bind="item"
@@ -119,10 +210,11 @@
         :sort-orders="['ascending','descending']"
         align="center"
         header-align="center"
+        show-overflow-tooltip
       ></el-table-column>
       <el-table-column label="操作" align="center"  min-width="5">
       <template slot-scope="scope">
-          <el-button type="text" @click="dialogVisible=true;currentRow = scope;" v-has="'评语'">
+          <el-button type="text" align="center" @click="dialogVisible=true;currentRow = scope;" v-has="'评语'">
             评语
           </el-button>
       </template>
@@ -138,7 +230,7 @@
       <el-input
         type="textarea"
         :autosize="{ minRows: 6, maxRows: 14}"
-        placeholder="请输入内容"
+        placeholder="请输入评语"
         v-model="textarea3">
       </el-input>
       <span slot="footer" class="dialog-footer">
@@ -180,7 +272,7 @@ export default {
       dialogVisible:false,
       textarea3: '',
       form1:{
-        val1:'1',  //查询方式
+        val1:'',  //查询方式
         val2:'',  //委托方
         val3:'',//姓名
         val4:'',//电话
@@ -206,26 +298,6 @@ export default {
       // }]
       tablecol_data:[
         {
-          prop:'name',
-          label:'姓名'
-        },{
-          prop:'cardNo',
-          width:160,
-          label:'卡号'
-        },{
-          prop:'moneyMsg',
-          label:'委案金额'
-        },{
-          prop:'caseDate',
-          width:120,
-          label:'委案日期'
-        },{
-          prop:'collectStatusMsg',
-          label:'催收状态'
-        },{
-          prop:'collectDate',
-          label:'上次通电'
-        },{
           prop:'proRepayAmtMsg',
           width:130,
           label:'承诺还款金额'
@@ -247,9 +319,10 @@ export default {
       sort:{
         orderBy: 'id',
         sort:'desc'
-      }
+      },
     }
-  },
+  },  
+
   computed:{
     realFetchFormData(){
       // {
@@ -281,6 +354,7 @@ export default {
       }
     },
   },
+
   created(){
     this.init();
   },
@@ -301,7 +375,7 @@ export default {
       this.realFetchFormData.orderBy = this.sort.orderBy
       this.realFetchFormData.sort = this.sort.sort
       pageCaseTel(this.realFetchFormData).then((data)=>{
-        console.log(data)
+        //  console.log(data)
         // "totalPageNum":""//总页数
         //   [{
         //   "seqNo"//个案序列号
@@ -317,6 +391,10 @@ export default {
         //   "odvv"//催收员
         // }]
         this.paginationData.total = data.total;
+       for (let index = 0; index < data.total; index++) {
+           data.list[index].result1= data.list[index].collectDate.split(' ')[0]
+          data.list[index].result2 = data.list[index].collectDate.split(' ')[1]    
+       }    
         this.tableData = data.list;
         this.tableLoad = false
       })
@@ -378,9 +456,18 @@ export default {
   
 }
 
-.el-input{
+.el-input,.el-select{
   width: 180px;
 }
+
+ .data-case-condition-wrap {
+   overflow-x: hidden;
+ }
+
+ .block{
+   display: block;
+   text-align: center;
+ }
 </style>
 
 

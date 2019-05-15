@@ -2385,7 +2385,6 @@
 
   .data-case-condition-wrap {
     height: 350px;
-    overflow-x: hidden;
     overflow-y: scroll;
   }
 
