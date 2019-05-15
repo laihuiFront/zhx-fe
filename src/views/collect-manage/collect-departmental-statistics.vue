@@ -2,7 +2,7 @@
   <div id="collect-repayment-statistics" style="display:flex;flex-direction:column;height:100%;">
     <section class="topDataWp">
       <el-row :gutter="10">
-        <el-col :span="3"
+        <el-col :span="4"
         ><span class="topSpan">上月还款金额：</span>{{ topData.lastPaidMoney }}</el-col
         >
         <el-col :span="4"
@@ -12,16 +12,16 @@
         ><span class="topSpan">上月待银行查账金额：</span>{{ topData.lastBankAmt }}</el-col
         >
         <el-col :span="4"
-        ><span class="topSpan">上月提成(已还款)：</span>{{
+        ><span class="topSpan">上月提成（已还款金额）：</span>{{
           topData.lastRepaidAmt
           }}</el-col
         >
         <el-col :span="8"
-        ><span class="topSpan">上月提成(待银行查账金额)：</span>{{ topData.lastRepaidBankAmt }}</el-col
+        ><span class="topSpan">上月提成（待银行查账金额）：</span>{{ topData.lastRepaidBankAmt }}</el-col
         >
       </el-row>
       <el-row :gutter="10" style="margin-top: 15px;">
-        <el-col :span="3"
+        <el-col :span="4"
         ><span class="topSpan">本月还款金额：</span>{{ topData.thisPaidMoney }}</el-col
         >
         <el-col :span="4"
@@ -31,12 +31,12 @@
         ><span class="topSpan">本月待银行查账金额：</span>{{ topData.thisBankAmt }}</el-col
         >
         <el-col :span="4"
-        ><span class="topSpan">本月提成(已还款)：</span>{{
+        ><span class="topSpan">本月提成（已还款金额）：</span>{{
           topData.thisRepaidAmt
           }}</el-col
         >
         <el-col :span="8"
-        ><span class="topSpan">本月提成(待银行查账金额)：</span>{{ topData.thisRepaidBankAmt }}</el-col
+        ><span class="topSpan">本月提成（待银行查账金额）：</span>{{ topData.thisRepaidBankAmt }}</el-col
         >
       </el-row>
     </section>
