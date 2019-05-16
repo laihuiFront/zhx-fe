@@ -1,6 +1,6 @@
 <template>
   <div id="collect-departmental-case" class="page-wraper-sub">
-    <el-tabs v-model="activeName"  class="tabs-wrap">
+    <el-tabs v-model="activeName"  :class="{tab2:tabnum}" class="tabs-wrap">
       <el-tab-pane label="部门案件" name="tab1"
                   style="height: 100%"
       >
@@ -682,6 +682,7 @@
         dialogVisible:false,
         textarea3: '',
         showQueryConfVisible:false,
+        tabnum:null,
         queryConf:{},
         queryConfFlag:true,
         activeName: "tab1",
@@ -977,6 +978,13 @@
           console.log(Object.values(newObj));
         },
         deep: true
+      },
+      activeName(v){
+        if (v=="tab2"){
+          this.tabnum=true;
+        }else{
+          this.tabnum = null;
+        }
       }
     },
     created(){
@@ -1208,8 +1216,19 @@
       display: inline-block;
     }
   }
-
+  body #collect-departmental-case .tab2{
+    .el-tabs__content{
+      margin-bottom: 0px;
+      overflow-y: hidden;
+    }
+  }
+  body #collect-departmental-case .tab2{
+    .el-table .el-table__body-wrapper{
+      overflow-x: auto;
+    }
+  }
   #collect-departmental-case {
+
     .el-table th.gutter{
       display: table-cell!important;
     }

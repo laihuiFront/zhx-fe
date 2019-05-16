@@ -195,7 +195,7 @@
                   >撤销信函</el-button
                 >
               </el-form-item>
-              <el-form-item>
+             <!-- <el-form-item>
                 <el-dropdown
                   v-has="'导出信函'"
                   trigger="click"
@@ -211,7 +211,7 @@
                     </el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
-              </el-form-item>
+              </el-form-item>-->
               <el-form-item>
                 <el-button type="primary" @click="changeRadio">导出查询结果</el-button>
               </el-form-item>
@@ -288,8 +288,8 @@
       </el-table-column>
        <el-table-column label="操作" width="180"   align="center">
          <template slot-scope="scope">
-           <el-button type="text" size="small">选择模板导出</el-button>
-           <el-button type="text" size="small">导出</el-button>
+           <el-button type="text" size="small" @click="showXh">选择模板导出</el-button>
+           <el-button type="text" size="small" @click="exportCurrent(scope.row)">导出</el-button>
          </template>
        </el-table-column>
     </el-table>
@@ -357,6 +357,33 @@
       </span>
     </el-dialog>
 
+    <el-dialog
+      title="导出信函"
+      class="dialog-wrap"
+      :visible.sync="moduleVisible"
+      :close-on-click-modal="false"
+      width="30%"
+    >
+      <el-form :inline="true" ref="moduleForm" :model="moduleForm" class="demo-form-inline" label-width="120px">
+        <div class="grid-content bg-purple">
+          <el-form-item label="信函模板"
+                        prop="importLeave" :rules="{required: true, message: '请选择信函模板', trigger: 'blur'}">
+            <el-select v-model="moduleForm.moduleId" filterable placeholder="请选择信函模板" clearable>
+              <el-option
+                v-for="item in moduleList"
+                :key="item.id"
+                :label="item.title"
+                :value="item.id">
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </div>
+      </el-form>
+      <span slot="footer" class="footer">
+    <el-button @click="moduleVisible = false">取 消</el-button>
+    <el-button type="primary" @click="exportXh()">确 定</el-button>
+  </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -397,6 +424,8 @@ export default {
       exportConf:{},
       exportType:0,
       loading2: false,
+      moduleVisible:false,
+      moduleForm:{moduleId:null},
       fullscreenLoading: false,
       tableLoad: false,
       paginationData: {
@@ -653,17 +682,24 @@ export default {
       //this.dialogVisibleCase = false;
       this.showExportConfVisible = true;
   	},
-    exportXh(command) {
-      if (this.multipleSelection.length == 0) {
-        this.$message.warning("至少选择一条数据");
+    exportCurrent(row){
+      if (row.moduleId==null || row.moduleId==""){
+        this.$message.warning("请先选择模板");
         return;
       }
-      if (this.multipleSelection.length > 1) {
-        this.$message.warning("只能选择一条数据");
+      dcxh({ module: row.moduleId, id:row.id ,caseId:row.caseId});
+    },
+    showXh(row){
+      this.moduleForm.id = row.id;
+      this.moduleForm.caseId = row.caseId;
+      this.moduleVisible = true;
+    },
+    exportXh() {
+      if (this.moduleForm.moduleId==null || this.moduleForm.moduleId=="") {
+        this.$message.warning("请先选择模板");
         return;
       }
-      let {id,caseId} = this.multipleSelection[0];
-      dcxh({ module: command, id ,caseId});
+      dcxh({ module: this.moduleForm.moduleId, id:this.moduleForm.id ,caseId:this.moduleForm.caseId});
     },
     exportCx(command) {
       this.fullscreenLoading = true;

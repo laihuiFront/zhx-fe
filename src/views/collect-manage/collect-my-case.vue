@@ -1,6 +1,6 @@
 <template>
   <div id="collect-my-case" class="page-wraper-sub">
-    <el-tabs v-model="activeName"  class="tabs-wrap">
+    <el-tabs v-model="activeName" :class="{tab2:tabnum}" class="tabs-wrap">
       <el-tab-pane label="我的案件" style="height: 100%" name="tab1">
         <el-dialog
           :title="detailTitle"
@@ -669,6 +669,7 @@ export default {
   name: "collectMyCase",
   data() {
     return {
+      tabnum:null,
       tableLoad: false,
       paginationData: {
         pageSize: 100,
@@ -965,6 +966,15 @@ export default {
         console.log(Object.values(newObj));
       },
       deep: true
+    },
+    activeName(v){
+      if (v=="tab2"){
+        this.tabnum=true;
+      }else if (v=="tab3"){
+        this.tabnum=true;
+      }else{
+        this.tabnum = null;
+      }
     }
   },
   created() {
@@ -1169,7 +1179,9 @@ export default {
       this.getEnumHandle("案件类型", "val11_data");
       this.getEnumHandle("减免状态", "val24_data");
       this.getEnumHandle("报备状态", "val25_data");
-    }
+    },
+
+
   }
 };
 </script>
@@ -1195,6 +1207,17 @@ export default {
 }
 .color_ZONG {
   color: #d2b48c;
+}
+body #collect-my-case .tab2{
+  .el-tabs__content{
+    margin-bottom: 0px;
+    overflow-y: hidden;
+  }
+}
+body #collect-my-case .tab2{
+  .el-table .el-table__body-wrapper{
+    overflow-x: auto;
+  }
 }
 .myCase-pop {
   .el-form-item--mini {
