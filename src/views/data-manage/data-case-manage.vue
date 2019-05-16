@@ -231,8 +231,8 @@
           value-format="yyyy-MM-dd"
           unlink-panels
           range-separator="至"
-          start-placeholder="还款开始日期"
-          end-placeholder="还款结束日期"
+          start-placeholder="还款日期开始"
+          end-placeholder="还款日期结束"
         >
         </el-date-picker>
       </el-form-item>
@@ -244,8 +244,8 @@
           value-format="yyyy-MM-dd"
           unlink-panels
           range-separator="至"
-          start-placeholder="预计退案开始日期"
-          end-placeholder="预计退案结束日期"
+          start-placeholder="预计退案日期开始"
+          end-placeholder="预计退案日期结束"
         >
         </el-date-picker>
       </el-form-item>
@@ -257,8 +257,8 @@
           value-format="yyyy-MM-dd"
           unlink-panels
           range-separator="至"
-          start-placeholder="实际退案开始日期"
-          end-placeholder="实际退案结束日期"
+          start-placeholder="实际退案日期开始"
+          end-placeholder="实际退案日期结束"
         >
         </el-date-picker>
       </el-form-item>
@@ -270,8 +270,8 @@
           value-format="yyyy-MM-dd"
           unlink-panels
           range-separator="至"
-          start-placeholder="最后跟进开始日期"
-          end-placeholder="最后跟进结束日期"
+          start-placeholder="最后跟进日期开始"
+          end-placeholder="最后跟进日期结束"
         >
         </el-date-picker>
       </el-form-item>

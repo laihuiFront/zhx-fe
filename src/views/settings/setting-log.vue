@@ -23,8 +23,8 @@
           value-format="yyyy-MM-dd HH:mm:ss"
           type="daterange"
           range-separator="至"
-          start-placeholder="日志开始日期"
-          end-placeholder="日志结束日期">
+          start-placeholder="日志日期开始"
+          end-placeholder="日志日期结束">
         </el-date-picker>
       </el-form-item>
       <el-form-item>
