@@ -14,7 +14,7 @@
       @query="onClickQuery"
       :queryForm="queryForm">
       <el-button type="primary" v-if="queryForm.status==='0'" @click="onClickBatchCancelBankRecon" v-has="'作废'">
-        作废待银行查账金额
+        作废待银行对账记录
       </el-button>
       <el-upload
         class="upload-demo upload-btn"
@@ -26,7 +26,7 @@
         accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
       >
         <el-button type="primary" v-if="queryForm.status==='0'" style="margin-left:10px;margin-right: 16px;"
-                   v-has="'导入待银行对账'">导入待银行查账
+                   v-has="'导入待银行对账'">导入待银行对账记录
         </el-button>
       </el-upload>
       <el-button type="primary" @click="onClickExportSelectedRecord" style="margin-left:-6px;" v-has="'导出选中数据'">导出选中数据
@@ -68,9 +68,9 @@
       <el-table-column sortable="custom" width="120" align="center" :sort-orders="['ascending','descending']"
                        prop="dataCase.enRepayAmtMsg" label="案件已还款" show-overflow-tooltip></el-table-column>
       <el-table-column sortable="custom" width="130" align="center" :sort-orders="['ascending','descending']"
-                       prop="cpMoneyMsg" label="待银行查账金额" show-overflow-tooltip></el-table-column>
+                       prop="cpMoneyMsg" label="待银行对账金额" show-overflow-tooltip></el-table-column>
       <el-table-column sortable="custom" width="130" align="center" :sort-orders="['ascending','descending']"
-                       prop="cpDate" label="待银行查账日期" show-overflow-tooltip></el-table-column>
+                       prop="cpDate" label="待银行对账日期" show-overflow-tooltip></el-table-column>
       <el-table-column sortable="custom" width="100" align="center" :sort-orders="['ascending','descending']"
                        prop="repayUser" label="还款人" show-overflow-tooltip></el-table-column>
       <el-table-column sortable="custom" width="120" align="center" :sort-orders="['ascending','descending']"
@@ -87,7 +87,7 @@
             v-has="'作废'"
             type="text"
             @click="onClicCancelBankRecon(scope.row.id)"
-          >作废待银行查账
+          >作废待银行对账
           </el-button>
         </template>
       </el-table-column>
@@ -178,7 +178,7 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
           <el-button @click="dialogExportVisible = false">取 消</el-button>
-              <el-button type="primary" @click="changeRadio">确 定</el-button>  
+              <el-button type="primary" @click="changeRadio">确 定</el-button>
         </span>
     </el-dialog>
 
@@ -203,8 +203,8 @@
         <el-checkbox v-model="exportConf.account" label="4">账号</el-checkbox>
         <el-checkbox v-model="exportConf.archiveNo" label="5">档案号</el-checkbox>
         <el-checkbox v-model="exportConf.applyOrderNo" label="5">申请单号</el-checkbox>
-        <el-checkbox v-model="exportConf.cpMoney" label="5">CP金额</el-checkbox>
-        <el-checkbox v-model="exportConf.cpDate" label="5">CP日期</el-checkbox>
+        <el-checkbox v-model="exportConf.cpMoney" label="5">待银行对账金额</el-checkbox>
+        <el-checkbox v-model="exportConf.cpDate" label="5">待银行对账日期</el-checkbox>
         <el-checkbox v-model="exportConf.caseOdv" label="5">案件催收员</el-checkbox>
         <el-checkbox v-model="exportConf.backOdv" label="5">回收催收员</el-checkbox>
         <el-checkbox v-model="exportConf.backDept" label="5">回收部门</el-checkbox>
@@ -213,8 +213,8 @@
         <el-checkbox v-model="exportConf.enRepayAmt" label="5">还款金额</el-checkbox>
         <el-checkbox v-model="exportConf.repayDate" label="5">还款日期</el-checkbox>
         <el-checkbox v-model="exportConf.repayBalance" label="5">还款余额</el-checkbox>
-        <el-checkbox v-model="exportConf.mMoney" label="5">M值金额</el-checkbox>
-        <el-checkbox v-model="exportConf.mVal" label="5">M值系数</el-checkbox>
+        <el-checkbox v-model="exportConf.mMoney" label="5">提成金额</el-checkbox>
+        <el-checkbox v-model="exportConf.mVal" label="5">提成系数</el-checkbox>
         <el-checkbox v-model="exportConf.repayUser" label="5">还款人</el-checkbox>
         <el-checkbox v-model="exportConf.repayType" label="5">还款方式</el-checkbox>
         <el-checkbox v-model="exportConf.confirmUser" label="5">确认人</el-checkbox>
@@ -388,7 +388,7 @@
         }).then(() => {
           const ids = this.selectList.map(item => item.id)
           cancelBankRecon(ids).then(() => {
-            this.$message('作废待银行查账成功')
+            this.$message('作废待银行对账记录成功')
             this.onClickQuery()
           })
         }).catch(() => {
@@ -401,7 +401,7 @@
           type: 'warning'
         }).then(() => {
           cancelBankRecon([id]).then(() => {
-            this.$message('作废待银行查账成功')
+            this.$message('作废待银行对账记录成功')
             this.onClickQuery()
           })
         }).catch(() => {
@@ -436,7 +436,7 @@
         if (successNum==0){
           this.$message({
             type: 'error',
-            message: '请先选择导出项!'
+            message: '请先选择导出项'
           });
           this.fullscreenLoading = false
           this.loading2 = false
@@ -553,5 +553,3 @@
     }
   }
 </style>
-
-
