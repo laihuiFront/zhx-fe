@@ -13,8 +13,8 @@
               align="right"
               unlink-panels
               range-separator="至"
-              start-placeholder="催收开始日期"
-              end-placeholder="催收结束日期"
+              start-placeholder="催收日期开始"
+              end-placeholder="催收日期结束"
             >
             </el-date-picker>
           </el-form-item>

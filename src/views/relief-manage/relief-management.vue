@@ -74,8 +74,8 @@
           value-format="yyyy-MM-dd"
           unlink-panels
           range-separator="至"
-          start-placeholder="提交开始日期"
-          end-placeholder="提交结束日期"
+          start-placeholder="提交日期开始"
+          end-placeholder="提交日期结束"
           clearable
         >
         </el-date-picker>
@@ -88,8 +88,8 @@
           value-format="yyyy-MM-dd"
           unlink-panels
           range-separator="至"
-          start-placeholder="有效开始日期"
-          end-placeholder="有效结束日期"
+          start-placeholder="有效日期开始"
+          end-placeholder="有效日期结束"
           clearable
         >
         </el-date-picker>
@@ -102,8 +102,8 @@
           value-format="yyyy-MM-dd"
           unlink-panels
           range-separator="至"
-          start-placeholder="完成开始日期"
-          end-placeholder="完成结束日期"
+          start-placeholder="完成日期开始"
+          end-placeholder="完成日期结束"
           clearable
         >
         </el-date-picker>

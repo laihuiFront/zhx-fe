@@ -53,14 +53,14 @@
           v-model="formInline.time"
           type="month"
           value-format="yyyy-MM"
-          placeholder="选择开始月份"
+          placeholder="催收月份开始"
         >
         </el-date-picker>至
         <el-date-picker
           v-model="formInline.time2"
           type="month"
           value-format="yyyy-MM"
-          placeholder="选择结束月份"
+          placeholder="催收月份结束"
         >
         </el-date-picker>
       </el-form-item>

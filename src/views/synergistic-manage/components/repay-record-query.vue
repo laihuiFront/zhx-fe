@@ -110,8 +110,8 @@
               value-format="yyyy-MM-dd"
               type="daterange"
               range-separator="至"
-              start-placeholder="预计退案开始日期"
-              end-placeholder="预计退案结束日期">
+              start-placeholder="预计退案日期开始"
+              end-placeholder="预计退案日期结束">
             </el-date-picker>
     </el-form-item>
     <el-form-item  v-if="queryConf.ajlx || queryConfFlag">
@@ -148,8 +148,8 @@
               value-format="yyyy-MM-dd HH:mm:ss"
               type="datetimerange"
               range-separator="至"
-              start-placeholder="确认开始日期"
-              end-placeholder="确认结束日期">
+              start-placeholder="确认日期开始"
+              end-placeholder="确认日期结束">
             </el-date-picker>
     </el-form-item>
     <el-form-item  v-if="queryConf.hkrq || queryConfFlag">
@@ -160,8 +160,8 @@
               value-format="yyyy-MM-dd"
               type="daterange"
               range-separator="至"
-              start-placeholder="还款开始日期"
-              end-placeholder="还款结束日期">
+              start-placeholder="还款日期开始"
+              end-placeholder="还款日期结束">
             </el-date-picker>
     </el-form-item>
     <el-row>

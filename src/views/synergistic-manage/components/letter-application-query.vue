@@ -63,8 +63,8 @@
               value-format="yyyy-MM-dd"
               type="daterange"
               range-separator="至"
-              start-placeholder="申请开始日期"
-              end-placeholder="申请结束日期">
+              start-placeholder="申请日期开始"
+              end-placeholder="申请日期结束">
             </el-date-picker>
           </li>
           <li class="condition-item">

@@ -89,8 +89,8 @@
                     align="right"
                     unlink-panels
                     range-separator="至"
-                    start-placeholder="下次跟进开始日期"
-                    end-placeholder="下次跟进结束日期"
+                    start-placeholder="下次跟进日期开始"
+                    end-placeholder="下次跟进日期结束"
                   ></el-date-picker>
                 </el-form-item>
                 <el-form-item prop="val4" v-if="queryConf.dq || queryConfFlag">
