@@ -278,12 +278,12 @@ export default {
         ...tablecol_common,
         {
           label: "提成系数",
-          prop: "mVal"
+          prop: "mValMsg"
         },
         {
           label: "待银行查账金额",
           width:160,
-          prop: "bankAmt"
+          prop: "bankAmtMsg"
         },
         {
           label: "待银行查账日期",
@@ -297,12 +297,12 @@ export default {
         },
         {
           label: "还款金额",
-          prop: "repayAmt"
+          prop: "repayAmtMsg"
         },
         {
           label: "还款日期",
           width:160,
-          prop: "picih"
+          prop: "repayTime"
         },
         {
           label: "还款提成",

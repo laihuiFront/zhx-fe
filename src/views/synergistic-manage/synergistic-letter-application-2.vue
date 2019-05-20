@@ -288,7 +288,7 @@
       </el-table-column>
        <el-table-column label="操作" width="180"   align="center">
          <template slot-scope="scope">
-           <el-button type="text" size="small" @click="showXh">选择模板导出</el-button>
+           <el-button type="text" size="small" @click="showXh(scope.row)">选择模板</el-button>
            <el-button type="text" size="small" @click="exportCurrent(scope.row)">导出</el-button>
          </template>
        </el-table-column>
@@ -405,6 +405,7 @@ import {
   selectByModule,
   saveSelectFilter,
   dcxh,
+  updateModule,
   dccxjg,
   dccxjgThis
 } from "@/common/js/synergistic-letter-application.js";
@@ -484,10 +485,6 @@ export default {
       // synergyResult  协催结果
       tableCol_data: [
         {
-          prop: "id",
-          label: "ID"
-        },
-        {
           prop: "name",
           label: "姓名"
         },
@@ -511,7 +508,7 @@ export default {
         },
         {
           prop: "times",
-          label: "次数"
+          label: "信函次数"
         },
         {
           prop: "address",
@@ -699,7 +696,10 @@ export default {
         this.$message.warning("请先选择模板");
         return;
       }
-      dcxh({ module: this.moduleForm.moduleId, id:this.moduleForm.id ,caseId:this.moduleForm.caseId});
+      updateModule({module: this.moduleForm.moduleId, id:this.moduleForm.id}).then(()=>{
+        this.moduleVisible = false;
+        this.getMainData();
+      });
     },
     exportCx(command) {
       this.fullscreenLoading = true;

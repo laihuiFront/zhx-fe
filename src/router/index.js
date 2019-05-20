@@ -123,7 +123,24 @@ export default new Router({
           },
           name: 'collect-call-inquiry'
         },
-
+        //催收员提成
+        {
+          path: 'collect-director-odv',
+          component: resolve => {
+            spinRoute.show();
+            require(['@/views/collect-manage/collect-director-odv'], spinRoute.resolve(resolve))
+          },
+          name: 'collect-director-odv'
+        },
+        //经理提成
+        {
+          path: 'collect-director-manage',
+          component: resolve => {
+            spinRoute.show();
+            require(['@/views/collect-manage/collect-director-manage'], spinRoute.resolve(resolve))
+          },
+          name: 'collect-director-manage'
+        },
         // 总监提成
         {
           path: 'collect-director-commission',

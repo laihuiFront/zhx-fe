@@ -407,10 +407,6 @@ export default {
       // synergyResult  协催结果
       tableCol_data: [
         {
-          prop: "id",
-          label: "ID"
-        },
-        {
           prop: "name",
           label: "姓名"
         },
@@ -434,7 +430,7 @@ export default {
         },
         {
           prop: "times",
-          label: "次数"
+          label: "信函次数"
         },
         {
           prop: "applyContext",
