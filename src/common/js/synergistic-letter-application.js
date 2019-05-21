@@ -86,6 +86,15 @@ export function cancelLetter(data=[]) {
     data,
   })
 }
+
+//修改模板
+export function updateModule(data={}) {
+  return request({
+    url: '/letter/updateModule',
+    method: 'post',
+    data,
+  })
+}
 //批量确认信函
 export function confirmLetter(data=[]) {
   return request({
