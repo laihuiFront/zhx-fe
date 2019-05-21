@@ -293,7 +293,7 @@ export default {
         {
           label: "待银行查账金额提成",
           width:160,
-          prop: "repaidAmtM"
+          prop: "repaidAmtMMsg"
         },
         {
           label: "还款金额",
@@ -306,7 +306,7 @@ export default {
         },
         {
           label: "还款提成",
-          prop: "repaidBankAmtM"
+          prop: "repaidBankAmtMMsg"
         },
         {
           label: "还款人",
