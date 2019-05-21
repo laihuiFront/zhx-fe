@@ -10,14 +10,14 @@
                    style="height: 100%"
       >
 
-          <el-button type="primary" class="baocun" @click="onclickSave">保存</el-button>
+        <div class="buttons">
+          <el-button type="primary" @click="onclickSave">保存</el-button>
+        </div>
 
         <el-table v-loading="tableLoad" ref="tab1"
                   :data="dataList"
                   border
                   :header-cell-style="discountHeaderStyle1"
-                  style="width: 100%;margin-top:50px;"
-                  highlight-current-row
                   height="1"
                   class="table-wrap">
           <el-table-column
@@ -216,7 +216,7 @@
         </el-table>
         <div style="margin-top:30px;text-align: center;">
           <span style="height: 100%;display: inline-flex;align-items: center;">提成说明: </span>
-          <el-input type="textarea" label="提成说明" v-model="tips" style="width: 800px;" placeholder="请输入提成说明" rows="4"></el-input>
+          <el-input type="textarea" label="提成说明" v-model="tips" style="width: 800px;" resize="none" placeholder="请输入提成说明" rows="6" maxlength="500"></el-input>
         </div>
       </el-tab-pane>
       <el-tab-pane id="directorTab" label="总监" name="tab2">
@@ -229,27 +229,27 @@
 					<el-table-column align="center" label="标准" prop="msg" >
             <template slot-scope="scope">
               <span v-if="scope.row.id===0">
-                团队业务员提成＜<el-input class="inputAlign" v-model="dataList2.standard1Msg"></el-input>
+                团队业务员提成＜<el-input class="inputAlign" v-model="dataList2.standard1Msg"></el-input>元
               </span>
               <span v-else-if="scope.row.id===1">
-                <el-input class="inputAlign" v-model="dataList2.standard1Msg"></el-input>≤团队业务员提成＜<el-input class="inputAlign" v-model="dataList2.standard2Msg"></el-input>
+                <el-input class="inputAlign" v-model="dataList2.standard1Msg"></el-input>元≤团队业务员提成＜<el-input class="inputAlign" v-model="dataList2.standard2Msg"></el-input>元
               </span>
               <span v-else-if="scope.row.id===2">
-                团队业务员提成≥<el-input class="inputAlign" v-model="dataList2.standard2Msg"></el-input>
+                团队业务员提成≥<el-input class="inputAlign" v-model="dataList2.standard2Msg"></el-input>元
               </span>
             </template>
           </el-table-column>
 
-					<el-table-column align="center" label="奖励金额（元/人）" prop="reward">
+					<el-table-column align="center" label="奖励金额" prop="reward">
             <template slot-scope="scope">
               <span v-if="scope.row.id===0">
-                <el-input class="inputAlign" v-model="dataList2.reward1Msg"></el-input>
+                <el-input class="inputAlign" v-model="dataList2.reward1Msg"></el-input>（元/人）
               </span>
               <span v-else-if="scope.row.id===1">
-                <el-input class="inputAlign" v-model="dataList2.reward2Msg"></el-input>
+                <el-input class="inputAlign" v-model="dataList2.reward2Msg"></el-input>（元/人）
               </span>
               <span v-else-if="scope.row.id===2">
-                <el-input class="inputAlign" v-model="dataList2.reward3Msg"></el-input>
+                <el-input class="inputAlign" v-model="dataList2.reward3Msg"></el-input>（元/人）
               </span>
             </template>
           </el-table-column>
@@ -401,20 +401,20 @@
        this.tableData = [
 					{
             id: 0,
-						msg: `团队业务员提成<${this.dataList2.standard1Msg}`,
-            reward: this.dataList2.reward1Msg,
+						msg: `团队业务员提成<${this.dataList2.standard1Msg}元`,
+            reward: `${this.dataList2.reward1Msg}（元/人）`,
             editType: null
 					},
 					{
             id: 1,
-						msg: `${this.dataList2.standard1Msg}≤团队业务员提成<${this.dataList2.standard2Msg}`,
-            reward: this.dataList2.reward2Msg,
+						msg: `${this.dataList2.standard1Msg}元≤团队业务员提成<${this.dataList2.standard2Msg}元`,
+            reward: `${this.dataList2.reward2Msg}（元/人）`,
             editType: null
 					},
 					{
             id: 2,
-						msg: `团队业务员提成≥${this.dataList2.standard2Msg}`,
-            reward: this.dataList2.reward3Msg,
+						msg: `团队业务员提成≥${this.dataList2.standard2Msg}元`,
+            reward: `${this.dataList2.reward3Msg}（元/人）`,
             editType: null
 					}
         ]
@@ -456,9 +456,7 @@
       text-align: center;
       width: 100px !important;
     }
-    .el-table__body-wrapper {
-      overflow-x: hidden;
-    }
+
     .el-input .el-input__inner {
       text-align: center;
       width: 40px;
@@ -468,13 +466,6 @@
 
     .has-gutter .gutter {
       display: block !important;
-    }
-    .baocun {
-      position: absolute;
-      right: 33px;
-      width:60px;
-      top: 5px;
-      z-index: 22;
     }
 
     #directorTab {
