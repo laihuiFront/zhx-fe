@@ -239,7 +239,7 @@ export default {
       },
       {
         label: "委案金额",
-        prop: "money"
+        prop: "moneyMsg"
       }
     ];
     return {
@@ -338,7 +338,7 @@ export default {
         },
         {
           label: "待银行查账金额",
-          prop: "bankAmt"
+          prop: "bankAmtMsg"
         },
         {
           label: "待银行查账日期",
@@ -346,7 +346,7 @@ export default {
         },
         {
           label: "待银行查账金额提成",
-          prop: "repaidAmtM"
+          prop: "repaidAmtMMsg"
         },
         {
           label: "还款人",
@@ -365,11 +365,11 @@ export default {
         ...tablecol_common,
         {
           label: "提成值系数",
-          prop: "mVal"
+          prop: "mValMsg"
         },
         {
           label: "承诺还款金额",
-          prop: "repayAmt"
+          prop: "repayAmtMsg"
         },
         {
           label: "承诺还款日期",
