@@ -32,7 +32,7 @@
                     rows="3"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-input v-model="queryForm.number" clearable placeholder="请输入账号"></el-input>
+          <el-input v-model="queryForm.loginName" clearable placeholder="请输入账号"></el-input>
         </el-form-item>
         <el-form-item>
           <el-input v-model="queryForm.userName" clearable placeholder="请输入员工姓名"></el-input>
@@ -65,7 +65,7 @@
         <el-table-column type="selection" align="center" width="55"></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']"  align="center" prop="id" min-width="100" label="员工ID" show-overflow-tooltip></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center" prop="userName" min-width="120" label="员工姓名" show-overflow-tooltip></el-table-column>
-        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center"  prop="number" min-width="120" show-overflow-tooltip label="账号"></el-table-column>
+        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center"  prop="loginName" min-width="120" show-overflow-tooltip label="账号"></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center"  prop="enableMsg" min-width="120" show-overflow-tooltip label="状态"></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center" prop="sex" min-width="60" label="性别" show-overflow-tooltip width="70"></el-table-column>
         <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center" prop="officePhone" min-width="120" label="坐席号" show-overflow-tooltip></el-table-column>
@@ -133,8 +133,8 @@
         <el-form-item label="用户名" prop="userName">
           <el-input v-model="memberInfo.userName" placeholder="请输入用户名" @blur="adduserName"></el-input>
         </el-form-item>
-        <el-form-item label="账号" prop="number">
-          <el-input  v-model="memberInfo.number" placeholder="请输入账号"></el-input>
+        <el-form-item label="账号" prop="loginName">
+          <el-input  v-model="memberInfo.loginName" placeholder="请输入账号"></el-input>
         </el-form-item>
         <el-form-item label="部门" prop="department">
           <el-input
@@ -285,12 +285,12 @@ export default {
       },
       total: 0,
       memberList: [],
-      memberInfo: {number:''},
+      memberInfo: {loginName:''},
       rules: {
         userName: [
           { required: true, message: '请输入用户名', trigger: 'blur' }
         ],
-        number: [
+        loginName: [
           { required: true, message: '请输入账号', trigger: 'blur' }
         ],
         department: [
@@ -360,7 +360,7 @@ export default {
   			getLoginName(this.memberInfo.userName).then(response => {
   				if(response.loginNameCount==1){
   					console.log(response)
-  					 this.$set(this.memberInfo, 'number', response.loginName)
+  					 this.$set(this.memberInfo, 'loginName', response.loginName)
              this.$set(this.memberInfo, 'loginNameCount', response.loginNameCount)
              this.returnName = response.userName
   				}else{
@@ -379,7 +379,7 @@ export default {
           type: 'warning'
         }).then(() => {
           this.isTrue=true
-          this.$set(this.memberInfo, 'number', name)
+          this.$set(this.memberInfo, 'loginName', name)
         }).catch(() => {
           this.$message({
             type: 'info',
@@ -398,9 +398,9 @@ export default {
       this.memberList = []
       const data = {
         status: 1,
-        ids: this.queryForm.id.trim()==""?null:this.queryForm.id.split('\n'),
+        ids: this.queryForm.id?(this.queryForm.id.trim()==""?null:this.queryForm.id.split('\n')):null,
         department: this.queryForm.department,
-        number: this.queryForm.number,
+        loginName: this.queryForm.loginName,
         userName: this.queryForm.userName,
         pageNum: this.queryForm.pageNum,
         pageSize: this.queryForm.pageSize
@@ -659,7 +659,7 @@ export default {
       const data = {
         status: 1,
         department: this.queryForm.department,
-        number: this.queryForm.number,
+        loginName: this.queryForm.loginName,
         userName: this.queryForm.userName
       }
       exportList(data).then(() => {
