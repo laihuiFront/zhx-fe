@@ -63,7 +63,7 @@
           </span>
         </span>
       </el-tree>
-       <el-table highlight-current-row v-if="currentEnum.name && currentEnum.name !== '地区'"
+       <el-table v-if="currentEnum.name && currentEnum.name !== '地区'"
         border stripe
         :data="configData"
         style="width: 100%;"
@@ -71,12 +71,12 @@
         class="table-wrap"
         height="1"
       >
-        <el-table-column v-if="currentEnum.name==='催收区域' || currentEnum.name==='催收结果'" prop="id" label="催收区域ID">
+        <el-table-column v-if="currentEnum.name==='催收区域' || currentEnum.name==='催收结果'" prop="id" label="催收区域ID" align="center">
           <template slot-scope="scope">
             <span>{{scope.row.id}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="date" :label="currentEnum.name">
+        <el-table-column prop="date" :label="currentEnum.name" align="center">
           <template slot-scope="scope">
             <el-input
               v-if="scope.row.editType==='edit' || scope.row.editType==='add'"
@@ -87,18 +87,18 @@
             <span v-else>{{scope.row.name}}</span>
           </template>
         </el-table-column>
-        <el-table-column v-if="currentEnum.name==='催收模板'" prop="date" label="对应通话记录">
+        <el-table-column v-if="currentEnum.name==='催收模板'" prop="date" label="对应通话记录" align="center">
           <template slot-scope="scope">
             <el-input
               v-if="scope.row.editType==='edit' || scope.row.editType==='add'"
               clearable
               v-model="scope.row.tempDescription"
-              :placeholder="'请输入'"
+              :placeholder="'请输入对应通话记录'"
             ></el-input>
             <span v-else>{{scope.row.description}}</span>
           </template>
         </el-table-column>
-        <el-table-column v-if="currentEnum.name==='催收结果'" prop="sysFlag" label="是否有效">
+        <el-table-column v-if="currentEnum.name==='催收结果'" prop="sysFlag" label="是否有效" align="center">
           <template slot-scope="scope">
             <el-switch
               v-if="scope.row.editType==='edit' || scope.row.editType==='add'"
@@ -115,7 +115,7 @@
             ></el-switch>
           </template>
         </el-table-column>
-        <el-table-column prop="status" label="启用">
+        <el-table-column prop="status" label="启用" align="center">
           <template slot-scope="scope">
             <el-switch
               v-if="scope.row.editType==='edit' || scope.row.editType==='add'"
@@ -132,7 +132,7 @@
             ></el-switch>
           </template>
         </el-table-column>
-        <el-table-column prop="address" label="操作">
+        <el-table-column prop="address" label="操作" align="center">
           <template slot-scope="scope">
             <el-button
               v-if="scope.row.editType !== 'edit' && scope.row.editType !== 'add'"
@@ -248,7 +248,7 @@ export default {
           }
         })
         if (hasEmpty) {
-          this.$message('修改或删除的配置项含有空值,请修改后重新提交')
+          this.$message('修改或删除的配置项含有空值，请修改后重新提交')
           return
         }
         const data = toSaveList.map((item) => {
@@ -456,7 +456,9 @@ export default {
       }
     }
   }
+
+  .el-table .el-input /deep/ input{
+    text-align: center;
+  }
 }
 </style>
-
-
