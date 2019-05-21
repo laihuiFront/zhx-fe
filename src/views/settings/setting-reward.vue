@@ -12,7 +12,7 @@
 
           <el-button type="primary" class="baocun" @click="onclickSave">保存</el-button>
 
-        <el-table v-loading="tableLoad"
+        <el-table v-loading="tableLoad" ref="tab1"
                   :data="dataList"
                   border
                   :header-cell-style="discountHeaderStyle1"
@@ -281,6 +281,14 @@
         tableData: [],
         tableLoad2: false,
       }
+    },
+    watch:{
+      activeName(){
+       this.$nextTick(()=>{
+         this.$refs.tab1.doLayout()
+       })
+      }
+
     },
     methods: {
       discountHeaderStyle1({row, column, rowIndex, columnIndex}) {
