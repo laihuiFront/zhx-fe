@@ -36,6 +36,16 @@
         <el-form-item>
           <el-input v-model="queryForm.userName" clearable placeholder="请输入员工姓名"></el-input>
         </el-form-item>
+        <el-form-item>
+          <el-select v-model="queryForm.accountStatus" filterable placeholder="账号状态" clearable>
+            <el-option
+              v-for="item in accountStatus"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-row>
           <el-form-item>
             <el-button icon="el-icon-search" type="primary" @click="onClickQuery">查询</el-button>
@@ -265,12 +275,14 @@ export default {
       fullscreenLoading:false,
       loading2:false,
       action:baseURL,
+      accountStatus: [{name: "锁定", id: 2}, {name: "正常", id: 1}],
     	isTrue:true,
       departmentTree: [],
       queryForm: {
         pageNum: 1,
         pageSize: 50,
         id:'',
+        accountStatus:null,
         department: null,
         orderBy:null,
         sort:null
@@ -401,6 +413,7 @@ export default {
         department: this.queryForm.department,
         loginName: this.queryForm.loginName,
         userName: this.queryForm.userName,
+        accountStatus:this.queryForm.accountStatus,
         pageNum: this.queryForm.pageNum,
         pageSize: this.queryForm.pageSize
       }

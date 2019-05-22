@@ -33,7 +33,7 @@
       </el-table-column>
     </el-table>
     <el-dialog
-      title="编辑"
+      :title="title"
       :visible.sync="dialogVisible"
       width="1000px"
       custom-class="dia-top"
@@ -80,6 +80,7 @@ export default {
       tableData:[],
       dialogVisible:false,
       msg:'',
+      title:'添加模板',
       myConfig:{
         initialFrameHeight: 240,
         // 初始容器宽度
@@ -111,6 +112,7 @@ export default {
     },
     saveContent(){
       let data = {title:this.input,context:this.editor.getAllHtml()};
+
       if (!this.addmodule) {
         data.id = this.currentRow.id
       }
@@ -132,6 +134,7 @@ export default {
     handleClick(currentRow){
       this.dialogVisible = true;
       this.currentRow = currentRow;
+      this.title = "修改模板";
       this.input = currentRow.title;
     },
     deleteOne({id}){
