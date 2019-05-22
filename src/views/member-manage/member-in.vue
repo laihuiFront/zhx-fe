@@ -16,7 +16,6 @@
         :default-expanded-keys="[departmentTree[0].id]"
         @node-click="onClickDepartment"
         class="tree-wrap"
-        width="400px"
       >
         <span
           :class="{active:queryForm.department === data.id}"
@@ -545,7 +544,7 @@ export default {
         changeStatus(data).then(() => {
           this.$message({
             type: 'success',
-            message: '员工账号锁定成功!'
+            message: '员工账号锁定成功'
           });
           this.onClickQuery()
         })
@@ -696,7 +695,7 @@ export default {
                   this.onClickCancel()
                 })
               }
-            }).catch(() => { 
+            }).catch(() => {
 
             })
           }else{
@@ -720,7 +719,7 @@ export default {
           return
         }
       })
-      
+
     },
     formatRole (row, column, cellValue) {
       if (cellValue && cellValue.length > 0) {
@@ -742,8 +741,8 @@ export default {
     margin-right: 48px;
     height: 100%;
     overflow-y: auto;
-    flex: 0 0 200px;
-    width: 200px;
+    flex: 0 0 1;
+    width: 18%;
     border-right: 1px solid #e8e8e8;
     .tree-wrap {
       height: 100%;
@@ -825,4 +824,3 @@ export default {
   }
 }
 </style>
-

@@ -109,3 +109,8 @@ input{
     color: #d1d1d1 !important;
   }
 }
+
+.el-tree>.el-tree-node{
+  min-width:100%;
+  display: inline-block !important;
+}
