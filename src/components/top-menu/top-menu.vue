@@ -111,6 +111,7 @@ export default {
         })
       }else if(command === 'editPassword'){
       	this.dialogVisible=true
+        this.$refs["ruleForm2"].resetFields();
       }
     },
     submitForm(formName) {

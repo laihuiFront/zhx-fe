@@ -23,7 +23,7 @@
       <el-table-column label="操作"   align="center" width="180">
         <template slot-scope="scope">
           <el-button type="text" @click="onClickQueryOne(scope.row)" v-has="'查看'">查看</el-button>
-          <el-button type="text" v-if="scope.row.id !== 15 && scope.row.id !== 14 && scope.row.id !== 16 && scope.row.id !== 17" @click="onClickEdit(scope.row)" v-has="'修改'">修改</el-button>
+          <el-button type="text" v-if="scope.row.id !== 14" @click="onClickEdit(scope.row)" v-has="'修改'">修改</el-button>
           <el-button type="text" v-if="scope.row.id !== 15 && scope.row.id !== 14 && scope.row.id !== 16 && scope.row.id !== 17" @click="onClickDelete(scope.row, scope.$index)" v-has="'删除'">删除</el-button>
         </template>
       </el-table-column>
