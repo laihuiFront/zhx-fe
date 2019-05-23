@@ -391,9 +391,9 @@ export default {
         //   "odvv"//催收员
         // }]
         this.paginationData.total = data.total;
-       for (let index = 0; index < data.total; index++) {
-           data.list[index].result1= data.list[index].collectDate.split(' ')[0]
-          data.list[index].result2 = data.list[index].collectDate.split(' ')[1]    
+       for (let index = 0; index < data.pageSize; index++) {
+          data.list[index].result1= data.list[index].collectDate.split(' ')[0]
+          data.list[index].result2 = data.list[index].collectDate.split(' ')[1]   
        }    
         this.tableData = data.list;
         this.tableLoad = false
