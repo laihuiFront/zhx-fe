@@ -37,7 +37,7 @@
           <el-input v-model="queryForm.userName" clearable placeholder="请输入员工姓名"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-select v-model="queryForm.accountStatus" filterable placeholder="账号状态" clearable>
+          <el-select v-model="queryForm.accountStatus" filterable placeholder="请选择账号状态" clearable>
             <el-option
               v-for="item in accountStatus"
               :key="item.id"
