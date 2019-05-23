@@ -390,6 +390,7 @@
               @selection-change="handleSelectionChange"
               @row-dblclick="showDetail"
               @sort-change="handleSort"
+              :fit="true"
     >
       <el-table-column
         min-width="5"

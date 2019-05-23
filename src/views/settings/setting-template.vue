@@ -2,7 +2,7 @@
   <div id="setting-template" class="page-wraper-sub">
     <el-row style="margin-bottom: 15px;">
       <el-button type="primary" style="float: right"
-                 @click="dialogVisible=true;addmodule=true;" v-has="'添加信函模板'">添加信函模板
+                 @click="handleClick()" v-has="'添加信函模板'">添加信函模板
       </el-button>
     </el-row>
      <el-table highlight-current-row class="table-wrap"
@@ -58,7 +58,7 @@
       </div>
       <span slot="footer" class="dialog-footer" style="display: flex;justify-content: center">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false;addmodule=false;saveContent()">保
+        <el-button type="primary" @click="dialogVisible = false;saveContent()">保
           存</el-button>
       </span>
     </el-dialog>
@@ -90,7 +90,7 @@ export default {
       modulePlaceHolder:[],
       currentRow:{},
       input:'',
-      addmodule:false
+      addmodule:true
     }
   },
   watch:{
@@ -107,14 +107,14 @@ export default {
   methods:{
     ready(editorInstance){
       this.editor = editorInstance;
-      console.log(editorInstance)
       document.querySelector(`#${this.editor.key}`).style.height = '100%'
     },
     saveContent(){
       let data = {title:this.input,context:this.editor.getAllHtml()};
-
       if (!this.addmodule) {
-        data.id = this.currentRow.id
+        data.id = this.currentRow.id;
+      }else{
+      	data.id = 0;
       }
       save(data).then((data)=>{
         this.getMainData();
@@ -132,10 +132,16 @@ export default {
       });
     },
     handleClick(currentRow){
-      this.dialogVisible = true;
-      this.currentRow = currentRow;
-      this.title = "修改模板";
-      this.input = currentRow.title;
+      if(currentRow){
+      	this.currentRow = currentRow;
+      	this.title = "修改模板";
+      	this.input = currentRow.title;
+      	this.addmodule=false;
+      }else{
+      	this.title = "添加模板";
+      	this.addmodule=true;
+      }
+       this.dialogVisible = true;
     },
     deleteOne({id}){
       this.$confirm('此操作将永久删除该条内容, 是否继续?', '提示', {

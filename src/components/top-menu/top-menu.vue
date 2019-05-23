@@ -27,7 +27,7 @@
   width="30%"
 >
 <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
-  <el-form-item label="旧密码" prop="pass">
+  <el-form-item label="旧密码" prop="oldPassword">
     <el-input type="password" v-model="ruleForm2.oldPassword" autocomplete="off"></el-input>
   </el-form-item>
   <el-form-item label="密码" prop="pass">
@@ -54,6 +54,7 @@ export default {
   name: 'topMenu',
   data(){
      var validatePass = (rule, value, callback) => {
+     	console.log(value)
         if (value === '') {
           callback(new Error('请输入密码'));
         } else {
@@ -64,6 +65,7 @@ export default {
         }
       };
       var validatePass2 = (rule, value, callback) => {
+      	console.log(value)
         if (value === '') {
           callback(new Error('请再次输入密码'));
         } else if (value !== this.ruleForm2.pass) {
@@ -74,10 +76,16 @@ export default {
       };
   	return{
   		dialogVisible:false,
-  		ruleForm2:{},
+  		ruleForm2:{
+  			oldPassword:'',
+  			pass:'',
+  			checkPass:''
+  		},
   		rules2: {
-          pass: [
-            { validator: validatePass, trigger: 'blur' }
+  			oldPassword:[
+  				 {validator: validatePass,trigger: 'blur' 
+  			}],
+          pass: [{validator: validatePass, trigger: 'blur' }
           ],
           checkPass: [
             { validator: validatePass2, trigger: 'blur' }
@@ -114,8 +122,9 @@ export default {
                 message: '修改密码成功!'
               });
               this.dialogVisible = false;
+              this.$refs["ruleForm2"].resetFields();
             })
-            resetPassword(this.ruleForm2);
+//          resetPassword(this.ruleForm2);
           } else {
             console.log('error submit!!');
             return false;
