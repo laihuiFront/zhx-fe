@@ -415,6 +415,7 @@ export default {
           collectionArea:{id: null},
           collectionUser:{id: null},
           caseArea:{id: null},
+          dept:null
         },
         confirmUser:{name: null}
       }

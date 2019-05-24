@@ -247,6 +247,7 @@
           synergisticType: {name: null},
           dataCase: {
             collectionArea: {id: null},
+            batchNos:[]
           },
           applyUser: {name: null}
         }

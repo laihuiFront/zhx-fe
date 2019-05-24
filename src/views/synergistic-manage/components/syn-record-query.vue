@@ -2,7 +2,7 @@
   <div  id="syn-record-query" >
   <el-form  :model="queryForm" :inline="true" class="query-wrap">
     <el-form-item  v-if="queryConf.csqy || queryConfFlag">
-      <el-select style="min-width: 200px;" clearable v-model="queryForm.dataCase.collectionArea.id" filterable placeholder="请选择催收区域">
+      <el-select style="width: 200px;" clearable v-model="queryForm.dataCase.collectionArea.id" filterable placeholder="请选择催收区域">
         <el-option
           v-for="item in collectionAreaList"
           :key="item.id"
@@ -12,9 +12,10 @@
       </el-select>
     </el-form-item>
     <el-form-item  v-if="queryConf.pc || queryConfFlag">
-      <el-select style="min-width: 200px;" v-model="queryForm.dataCase.batchNos" filterable multiple collapse-tags placeholder="请选择批次" clearable>
+      <el-select style="width: 200px;" v-model="queryForm.dataCase.batchNos" filterable multiple collapse-tags placeholder="请选择批次" clearable>
         <el-option
           v-for="item in batchList"
+          width="200"
           :key="item.id"
           :label="item.batchNo"
           :value="item.batchNo">
@@ -44,7 +45,7 @@
       </el-date-picker>
     </el-form-item>
     <el-form-item  v-if="queryConf.ajzt || queryConfFlag">
-            <el-select clearable v-model="queryForm.dataCase.status" filterable placeholder="请选择案件状态">
+            <el-select clearable v-model="queryForm.dataCase.status" filterable placeholder="请选择案件状态" style="width: 200px;">
               <el-option
                 v-for="item in statusList"
                 :key="item.id"
@@ -54,7 +55,7 @@
             </el-select>
     </el-form-item>
     <el-form-item  v-if="queryConf.cszt || queryConfFlag">
-            <el-select v-model="queryForm.dataCase.collectStatus" filterable clearable placeholder="请选择催收状态">
+            <el-select v-model="queryForm.dataCase.collectStatus" filterable clearable placeholder="请选择催收状态" style="width: 200px;">
               <el-option
                 v-for="item in collectStatusList"
                 :key="item.id"
@@ -64,7 +65,7 @@
             </el-select>
     </el-form-item>
     <el-form-item  v-if="queryConf.xclx || queryConfFlag">
-            <el-select v-model="queryForm.synergisticType.name" filterable clearable placeholder="请选择协催类型">
+            <el-select v-model="queryForm.synergisticType.name" filterable clearable placeholder="请选择协催类型" style="width: 200px;">
               <el-option
                 v-for="item in synergisticTypeList"
                 :key="item.id"
@@ -74,30 +75,30 @@
             </el-select>
     </el-form-item>
     <el-form-item  v-if="queryConf.waje || queryConfFlag">
-            <el-input v-model="queryForm.dataCase.moneyStart" clearable placeholder="请输入委案金额下限"></el-input>
+            <el-input v-model="queryForm.dataCase.moneyStart" clearable placeholder="请输入委案金额下限" style="width: 200px;"></el-input>
     </el-form-item>
     <el-form-item  v-if="queryConf.waje || queryConfFlag">
     至
     </el-form-item>
     <el-form-item  v-if="queryConf.waje || queryConfFlag">
-            <el-input v-model="queryForm.dataCase.moneyEnd" clearable placeholder="请输入委案金额上限"></el-input>
+            <el-input v-model="queryForm.dataCase.moneyEnd" clearable placeholder="请输入委案金额上限" style="width: 200px;"></el-input>
     </el-form-item>
     <el-form-item v-if="queryConf.xm || queryConfFlag">
-            <el-input v-model="names" @change="namesChange" type="textarea" :rows="3" clearable placeholder="请输入姓名"></el-input>
+            <el-input v-model="names" @change="namesChange" type="textarea" :rows="3" clearable placeholder="请输入姓名" style="width: 200px;"></el-input>
     </el-form-item>
     <el-form-item v-if="queryConf.gaxlh || queryConfFlag">
-            <el-input v-model="seqNos" @change="seqNosChange" type="textarea" :rows="3" clearable placeholder="请输入个案序列号"></el-input>
+            <el-input v-model="seqNos" @change="seqNosChange" type="textarea" :rows="3" clearable placeholder="请输入个案序列号" style="width: 200px;"></el-input>
     </el-form-item>
     <el-form-item v-if="queryConf.zjh || queryConfFlag">
-            <el-input v-model="identNos" @change="identNosChange" type="textarea" :rows="3" clearable placeholder="请输入证件号"></el-input>
+            <el-input v-model="identNos" @change="identNosChange" type="textarea" :rows="3" clearable placeholder="请输入证件号" style="width: 200px;"></el-input>
     </el-form-item>
     <el-form-item v-if="queryConf.sqr || queryConfFlag">
-            <el-input v-model="queryForm.applyUser.name" clearable placeholder="请输入申请人"></el-input>
+            <el-input v-model="queryForm.applyUser.name" clearable placeholder="请输入申请人" style="width: 200px;"></el-input>
     </el-form-item>
     <el-row>
     <el-form-item>
       <el-button icon="el-icon-search" type="primary" @click="$emit('query')">查询</el-button>
-      <el-button icon="el-icon-refresh" type="primary" @click="$emit('reset')">重置</el-button>
+      <el-button icon="el-icon-refresh" type="primary" @click="$emit('reset');thisReset();">重置</el-button>
       <el-button  type="primary" @click="showQueryConf">查询条件配置</el-button>
     </el-form-item>
     <el-form-item>
@@ -174,6 +175,12 @@ export default {
     this.queryConfList();
   },
   methods:{
+    thisReset(){
+      this.names=null,
+        this.seqNos=null,
+        this.identNos=null
+      this.caseDate=[]
+    },
     saveConf(){
       this.showQueryConfVisible = false;
       let queryObj = {module:"synergistic-application",menu:this.queryConf}
@@ -260,6 +267,9 @@ export default {
       width:24%;
       margin-right: 0px;
     }
+  }
+  .el-select-dropdown{
+    width:200px !important;
   }
 }
 </style>

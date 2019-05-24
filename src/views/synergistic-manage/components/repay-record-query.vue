@@ -167,7 +167,7 @@
     <el-row>
       <el-form-item>
         <el-button icon="el-icon-search" type="primary" @click="$emit('query')">查询</el-button>
-        <el-button icon="el-icon-refresh" type="primary" @click="$emit('reset')">重置</el-button>
+        <el-button icon="el-icon-refresh" type="primary" @click="$emit('reset');thisReset();">重置</el-button>
         <el-button  type="primary" @click="showQueryConf">查询条件配置</el-button>
       </el-form-item>
       <el-form-item>
@@ -282,6 +282,16 @@ export default {
     this.queryConfList();
   },
   methods:{
+    thisReset(){
+      this.seqNos=null
+      this.identNos=null
+      this.accounts=null
+      this.cardNos=null
+      this.caseDate=[]
+      this.expectDate= []
+      this.repayDate = []
+      this.confirmTime = []
+    },
     saveConf(){
       this.showQueryConfVisible = false;
       let queryObj = {module:"synergistic-repayment-record",menu:this.queryConf}
