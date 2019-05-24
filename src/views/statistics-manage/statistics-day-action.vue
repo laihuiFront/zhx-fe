@@ -355,6 +355,7 @@ this.pageNum=val;
  	},
  	clench(){
  		this.formInline={}
+    this.odvName = null
  	},
  	query(){
  		 this.tableLoad = true

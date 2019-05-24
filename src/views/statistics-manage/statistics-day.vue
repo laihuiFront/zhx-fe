@@ -383,6 +383,7 @@
       },
       clench() {
         this.formInline = {}
+        this.odvName = null
       },
       query() {
         if (this.formInline.time == null || this.formInline.time.length == 0) {
