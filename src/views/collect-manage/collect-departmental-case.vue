@@ -1150,6 +1150,7 @@
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();
+        this.deptName = ""
         this.getMainData();
       },
       handleSelectionChange(val) {
