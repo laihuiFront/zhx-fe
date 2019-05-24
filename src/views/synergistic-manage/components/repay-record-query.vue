@@ -145,8 +145,8 @@
               @change="confirmTimeChange"
               clearable
               v-model="confirmTime"
-              value-format="yyyy-MM-dd HH:mm:ss"
-              type="datetimerange"
+              value-format="yyyy-MM-dd"
+              type="daterange"
               range-separator="至"
               start-placeholder="确认日期开始"
               end-placeholder="确认日期结束">
