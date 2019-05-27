@@ -415,7 +415,9 @@ export default {
         userName: this.queryForm.userName,
         accountStatus:this.queryForm.accountStatus,
         pageNum: this.queryForm.pageNum,
-        pageSize: this.queryForm.pageSize
+        pageSize: this.queryForm.pageSize,
+        orderBy:this.queryForm.orderBy,
+        sort:this.queryForm.sort
       }
       this.tableLoad = true
       listMember(data).then(response => {

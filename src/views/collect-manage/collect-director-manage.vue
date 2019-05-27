@@ -8,42 +8,32 @@
     <el-table v-loading="tableLoad"
               :data="dataList"
               border
-              :header-cell-style="discountHeaderStyle1"
               style="width: 100%;margin-top:50px;"
               highlight-current-row
               height="1"
               class="table-wrap">
-      <el-table-column type="expand">
-        <template slot-scope="props">
-          <el-form label-position="left" inline class="demo-table-expand">
-            <el-form-item label="条线">
-              <span>{{ props.row.name }}</span>
-            </el-form-item>
-            <el-form-item label="累计还款金额">
-              <span>{{ props.row.shop }}</span>
-            </el-form-item>
-            <el-form-item label="提成">
-              <span>{{ props.row.id }}</span>
-            </el-form-item>
-          </el-form>
-        </template>
-      </el-table-column>
+
       <el-table-column
-        prop="name"
+        prop="odvName"
         align="center"
         label="业务员"
       >
+        <template slot-scope="scope">
+          <el-button type="text" size="small" @click="showOdv(scope.row.odv)">
+            {{scope.row.odvName}}
+          </el-button>
+        </template>
       </el-table-column>
 
       <el-table-column
-        prop="amount"
+        prop="repayAmt"
         label="回款总额"
         align="center"
       >
       </el-table-column>
 
       <el-table-column
-        prop="commission"
+        prop="percentage"
         label="提成总额"
         align="center"
       >
@@ -52,12 +42,50 @@
 
     </el-table>
 
+    <el-dialog
+      title="催收员提成"
+      class="dialog-wrap"
+      :visible.sync="detailVisible"
+      :close-on-click-modal="false"
+      width="800px"
+    >
+      <el-table highlight-current-row
+                :data="odvList"
+                border
+                stripe
+      >
+
+        <el-table-column
+          prop="line"
+          align="center"
+          label="条线"
+        >
+        </el-table-column>
+
+        <el-table-column
+          prop="repayAmt"
+          label="累计还款金额"
+          align="center"
+        >
+        </el-table-column>
+
+        <el-table-column
+          prop="percentage"
+          label="提成"
+          align="center"
+        >
+        </el-table-column>
+      </el-table>
+      <span slot="footer" class="footer">
+        <el-button @click="detailVisible = false">取 消</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 
 <script>
-  import {loadDataManage} from '@/common/js/collect-director.js'
+  import {manageList,showOdv} from '@/common/js/collect-director.js'
 
   export default {
     name: 'collect-director-odv',
@@ -69,15 +97,22 @@
         activeName: "tab1",
         loading: false,
         fullscreenLoading: false,
-        tableData: [],
+        dataList: [],
+        odvList:[]
       }
     },
     methods: {
+      showOdv(odv){
+        showOdv({"odv":odv}).then((response) => {
+          this.odvList = response
+          this.detailVisible = true
+        })
 
+      }
     },
 
     created() {
-      clientList().then((response) => {
+      manageList().then((response) => {
         this.dataList = response
       })
     },
@@ -87,11 +122,6 @@
 <style lang="scss" scoped>
   #collect-director-manage {
     overflow-y: hidden !important;
-
-    .el-input {
-      width: 40px;
-    }
-
 
     .el-table__body-wrapper {
       overflow-x: hidden;

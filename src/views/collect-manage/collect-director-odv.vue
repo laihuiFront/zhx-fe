@@ -8,27 +8,26 @@
         <el-table v-loading="tableLoad"
                   :data="dataList"
                   border
-                  :header-cell-style="discountHeaderStyle1"
                   style="width: 100%;margin-top:50px;"
                   highlight-current-row
                   height="1"
                   class="table-wrap">
           <el-table-column
-            prop="name"
+            prop="line"
             align="center"
             label="条线"
           >
           </el-table-column>
 
             <el-table-column
-              prop="amount"
+              prop="repayAmt"
               label="累计还款金额"
               align="center"
             >
             </el-table-column>
 
             <el-table-column
-              prop="commission"
+              prop="percentage"
               label="提成"
               align="center"
             >
@@ -50,7 +49,7 @@
         detailVisible: false,
         loading: false,
         fullscreenLoading: false,
-        tableData: [],
+        dataList: [],
       }
     },
     methods: {
@@ -58,7 +57,7 @@
     },
 
     created() {
-      clientList().then((response) => {
+      loadDataOdv().then((response) => {
         this.dataList = response
       })
     },

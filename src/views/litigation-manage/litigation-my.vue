@@ -515,7 +515,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" icon="el-icon-search" @click="search2">查询</el-button>
-          <el-button type="primary" icon="el-icon-refresh" @click="clench">重置</el-button>
+          <el-button type="primary" icon="el-icon-refresh" @click="clench2">重置</el-button>
         </el-form-item>
         <el-form-item class="operation-item">
           <el-button type="primary" @click="addDataform">添加诉讼案件</el-button>  
@@ -1116,6 +1116,9 @@ export default {
    	clench(){
   		this.form={}
   	},
+     clench2(){
+   	  this.form2={}
+     },
   	search(){
       this.tableLoad = true
   		dataList(this.form,this.orderBy,this.sort).then((response)=>{

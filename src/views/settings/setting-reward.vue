@@ -66,7 +66,7 @@
              <el-input align="center" v-model="scope.row.odvBasicMsg"></el-input>
            </span>
                 <span v-if="scope.row.id ===108&& scope.row.editType!='edit'">
-              {{scope.row.odvRewardMsg}}
+              {{scope.row.odvBasicMsg}}
            </span>
                 <el-input
                   v-if="scope.row.editType==='edit' && scope.row.id !=108"
@@ -463,6 +463,8 @@
       padding-left: 0px;
       padding-right: 0px;
     }
+
+
 
     .has-gutter .gutter {
       display: block !important;

@@ -12,7 +12,7 @@
         ><span class="topSpan">上月待银行查账金额：</span>{{ topData.lastBankAmt }}</el-col
         >
         <el-col :span="4"
-        ><span class="topSpan">上月提成（已还款金额）：</span>{{
+        ><span class="topSpan">上月提成（已还款）：</span>{{
           topData.lastRepaidAmt
           }}</el-col
         >
@@ -31,7 +31,7 @@
         ><span class="topSpan">本月待银行查账金额：</span>{{ topData.thisBankAmt }}</el-col
         >
         <el-col :span="4"
-        ><span class="topSpan">本月提成（已还款金额）：</span>{{
+        ><span class="topSpan">本月提成（已还款）：</span>{{
           topData.thisRepaidAmt
           }}</el-col
         >

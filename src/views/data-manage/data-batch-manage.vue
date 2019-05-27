@@ -994,7 +994,7 @@
         </el-row>
       </el-form>
       <span slot="footer" class="footer">
-    <el-button @click="backForm2">取 消</el-button>
+    <el-button @click="backForm">取 消</el-button>
     <el-button type="primary" @click="submitmsgForm('messageForm')">确 定</el-button>
   </span>
     </el-dialog>
