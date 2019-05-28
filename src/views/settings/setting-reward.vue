@@ -119,7 +119,7 @@
             <el-table-column
               prop="odvHighBasicMsg"
               label="高标"
-              width="80"
+              width="90"
               align="center">
               <template slot-scope="scope">
                 <el-input
@@ -135,7 +135,7 @@
             <el-table-column
               prop="odvHighRewardMsg"
               label="高标提成"
-              width="80"
+              width="90"
               align="center">
               <template slot-scope="scope">
                 <el-input
@@ -204,7 +204,7 @@
             </el-table-column>
           </el-table-column>
 
-          <el-table-column prop="address" label="操作" align="center" width="80">
+          <el-table-column prop="address" label="操作" align="center" width="60">
             <template slot-scope="scope">
               <el-button
                 type="text"
@@ -361,7 +361,8 @@
         })
       },
       onClickEdit(row) {
-        row.editType = "edit";
+        //row.editType = "edit";
+        this.$set(row, 'editType',"edit" )
         this.disableSave = false;
 
       },
@@ -444,26 +445,19 @@
     }
 
     .el-input {
-      width: 40px;
+      text-align: center;
+      width: 80px;
     }
 
     .selectClass .el-input {
-      width: 100px !important;
+      width: 90px !important;
       text-align: center;
     }
 
     .el-select .el-input__inner {
       text-align: center;
-      width: 100px !important;
+      width: 90px !important;
     }
-
-    .el-input .el-input__inner {
-      text-align: center;
-      width: 40px;
-      padding-left: 0px;
-      padding-right: 0px;
-    }
-
 
 
     .has-gutter .gutter {
