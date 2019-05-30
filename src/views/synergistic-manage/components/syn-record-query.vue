@@ -23,7 +23,7 @@
       </el-select>
     </el-form-item>
     <el-form-item  v-if="queryConf.wtf || queryConfFlag">
-      <el-select style="width: 200px;" clearable v-model="queryForm.dataCase.clients" filterable placeholder="请选择委托方">
+      <el-select style="width: 200px;" clearable v-model="queryForm.dataCase.clients" filterable collapse-tags multiple placeholder="请选择委托方" clearable>
         <el-option
           v-for="item in clientList"
           :key="item.id"

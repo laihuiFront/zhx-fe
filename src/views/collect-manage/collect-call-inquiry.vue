@@ -74,7 +74,7 @@
       </el-form-item>
       <el-row>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="getMainData()">查询</el-button>
+        <el-button type="primary" icon="el-icon-search" @click="query()">查询</el-button>
         <el-button
           type="primary"
           icon="el-icon-refresh"
@@ -193,10 +193,7 @@
       >
       <template slot-scope="scope">
         <span class="block">
-           {{scope.row.result1}}
-        </span>
-        <span class="block">
-           {{scope.row.result2}}
+           {{scope.row.collectDate}}
         </span>
       </template>
       </el-table-column>
@@ -214,7 +211,7 @@
       ></el-table-column>
       <el-table-column label="操作" align="center"  min-width="5">
       <template slot-scope="scope">
-          <el-button type="text" align="center" @click="dialogVisible=true;currentRow = scope;" v-has="'评语'">
+          <el-button type="text" align="center" @click="dialogVisible=true;currentRow = scope;textarea3 = currentRow.comment" v-has="'评语'">
             评语
           </el-button>
       </template>
@@ -272,7 +269,7 @@ export default {
       dialogVisible:false,
       textarea3: '',
       form1:{
-        val1:'',  //查询方式
+        val1:'2',  //查询方式
         val2:'',  //委托方
         val3:'',//姓名
         val4:'',//电话
@@ -370,31 +367,25 @@ export default {
     querySearch(queryString, cb) {
       cb([]);
     },
+    query(){
+      if ((this.realFetchFormData.clients==null||this.realFetchFormData.clients=="") && (this.realFetchFormData.name==null||this.realFetchFormData.name=="") && (this.realFetchFormData.tel==null||this.realFetchFormData.tel=="")&& (this.realFetchFormData.address==null||this.realFetchFormData.address=="") && (this.realFetchFormData.identNo==null||this.realFetchFormData.identNo=="") && (this.realFetchFormData.cardNo==null||this.realFetchFormData.cardNo=="") && (this.realFetchFormData.unitName==null||this.realFetchFormData.unitName=="")){
+        this.$message({
+          message: '请先选择查询条件',
+          error: 'success'
+        });
+        return;
+      }
+      this.getMainData();
+    },
     getMainData(){
       this.tableLoad = true
       this.realFetchFormData.orderBy = this.sort.orderBy
       this.realFetchFormData.sort = this.sort.sort
+
       pageCaseTel(this.realFetchFormData).then((data)=>{
-        //  console.log(data)
-        // "totalPageNum":""//总页数
-        //   [{
-        //   "seqNo"//个案序列号
-        //     "name"//姓名
-        //   "card_no"//卡号
-        //     "money"//委案金额
-        //   "caseDate"//委案日期
-        //     "collectStatus"//催收状态
-        //   "collectDate"//上次通电
-        //     "proRepayAmt"//承诺还款金额
-        //   "en_repay_amt"//已还款金额
-        //     "account_age"//账龄
-        //   "odvv"//催收员
-        // }]
+
         this.paginationData.total = data.total;
-       for (let index = 0; index < data.pageSize; index++) {
-          data.list[index].result1= data.list[index].collectDate.split(' ')[0]
-          data.list[index].result2 = data.list[index].collectDate.split(' ')[1]   
-       }    
+
         this.tableData = data.list;
         this.tableLoad = false
       })
@@ -427,6 +418,7 @@ export default {
           message: '提交成功',
           type: 'success'
         });
+        this.getMainData();
       })
     },
     transform(data,obj=[['name','label'],['id','value']]){
