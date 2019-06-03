@@ -12,12 +12,12 @@
           ><span class="topSpan">上月待银行查账金额：</span>{{ topData.lastBankAmt }}</el-col
         >
         <el-col :span="4"
-          ><span class="topSpan">上月提成（已还款）：</span>{{
+          ><span class="topSpan">上月佣金（已还款）：</span>{{
             topData.lastRepaidAmt
           }}</el-col
         >
         <el-col :span="8"
-          ><span class="topSpan">上月提成（待银行查账金额）：</span>{{ topData.lastRepaidBankAmt }}</el-col
+          ><span class="topSpan">上月佣金（待银行查账金额）：</span>{{ topData.lastRepaidBankAmt }}</el-col
         >
       </el-row>
       <el-row :gutter="10" style="margin-top: 15px;">
@@ -31,12 +31,12 @@
           ><span class="topSpan">本月待银行查账金额：</span>{{ topData.thisBankAmt }}</el-col
         >
         <el-col :span="4"
-          ><span class="topSpan">本月提成（已还款）：</span>{{
+          ><span class="topSpan">本月佣金（已还款）：</span>{{
             topData.thisRepaidAmt
           }}</el-col
         >
         <el-col :span="8"
-          ><span class="topSpan">本月提成（待银行查账金额）：</span>{{ topData.thisRepaidBankAmt }}</el-col
+          ><span class="topSpan">本月佣金（待银行查账金额）：</span>{{ topData.thisRepaidBankAmt }}</el-col
         >
       </el-row>
     </section>
@@ -408,10 +408,10 @@ export default {
         accountAge,
         repayTimeStart: (!!val5 && val5[0]) || "",
         repayTimeEnd: (!!val5 && val5[1]) || "",
-        expectTimeStart:(!!val6 && val6[0]) || "",
-        expectTimeEnd:(!!val6 && val6[1]) || "",
-        bankTimeStart:(!!val7 && val7[0]) || "",
-        bankTimeEnd:(!!val7 && val7[1]) || "",
+        bankTimeStart:(!!val6 && val6[0]) || "",
+        bankTimeEnd:(!!val6 && val6[1]) || "",
+        expectTimeStart:(!!val7 && val7[0]) || "",
+        expectTimeEnd:(!!val7 && val7[1]) || "",
         sType:0
       };
     }
