@@ -22,6 +22,7 @@
         :headers="header"
         :show-file-list="false"
         :on-success="uploadSuccess"
+        :on-progress="onProgress"
         style="display:inline-block;"
         accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
       >
@@ -320,6 +321,10 @@
           this.handleCommand('current')
         }*/
         this.handleCommand('all')
+      },
+      onProgress() {
+        this.loading2 = true
+        this.fullscreenLoading = true
       },
       uploadSuccess(res, file, fileList) {
         this.loading2 = true
