@@ -36,20 +36,20 @@
               align="center"
             >
               <template slot-scope="scope">
-          <span v-if="scope.row.id ===108 && scope.row.editType==='edit'">
+          <span v-if="(scope.row.id ===108 || scope.row.id ===172) && scope.row.editType==='edit'">
              委案金额 <el-input align="center" v-model="scope.row.odvLowMsg"></el-input>%<br>
              超过委案金额 <el-input align="center" v-model="scope.row.odvReward2Msg"></el-input>%
            </span>
-                <span v-if="scope.row.id ===108&& scope.row.editType!='edit'">
+                <span v-if="(scope.row.id ===108 || scope.row.id ===172)&& scope.row.editType!='edit'">
               委案金额 {{scope.row.odvLowMsg}}%<br>
               超过委案金额 {{scope.row.odvReward2Msg}}%
            </span>
                 <el-input
-                  v-if="scope.row.editType==='edit' && scope.row.id !=108"
+                  v-if="scope.row.editType==='edit' && scope.row.id !=108 && scope.row.id !=172"
                   align="center"
                   v-model="scope.row.odvLowMsg"
                 ></el-input>
-                <span v-if="scope.row.id !=108 && scope.row.editType!='edit'">{{scope.row.odvLowMsg}}</span>
+                <span v-if="scope.row.id !=108 && scope.row.id !=172 && scope.row.editType!='edit'">{{scope.row.odvLowMsg}}</span>
                 <span v-if="scope.row.enable ==='阶梯累加'">%</span>
                 <span v-if="scope.row.enable ==='特殊2'">元/户</span>
               </template>
@@ -62,18 +62,18 @@
               align="center"
             >
               <template slot-scope="scope">
-           <span v-if="scope.row.id ===108 && scope.row.editType==='edit'">
+           <span v-if="(scope.row.id ===108 || scope.row.id ===172) && scope.row.editType==='edit'">
              <el-input align="center" v-model="scope.row.odvBasicMsg"></el-input>
            </span>
-                <span v-if="scope.row.id ===108&& scope.row.editType!='edit'">
+                <span v-if="(scope.row.id ===108 ||  scope.row.id ===172)&& scope.row.editType!='edit'">
               {{scope.row.odvBasicMsg}}
            </span>
                 <el-input
-                  v-if="scope.row.editType==='edit' && scope.row.id !=108"
+                  v-if="scope.row.editType==='edit' && scope.row.id !=108 && scope.row.id !=172"
                   align="center"
                   v-model="scope.row.odvBasicMsg"
                 ></el-input>
-                <span v-if="scope.row.editType!='edit' && scope.row.id !=108">{{scope.row.odvBasicMsg}}</span>
+                <span v-if="scope.row.editType!='edit' && scope.row.id !=108 && scope.row.id !=172">{{scope.row.odvBasicMsg}}</span>
                 <span v-if="scope.row.enable ==='特殊2'">户</span>
                 <span v-else>万</span>
               </template>
@@ -85,21 +85,21 @@
               align="center"
             >
               <template slot-scope="scope">
-           <span v-if="scope.row.id ===108 && scope.row.editType==='edit'">
+           <span v-if="(scope.row.id ===108 || scope.row.id ===172) && scope.row.editType==='edit'">
              委案金额 <el-input align="center" v-model="scope.row.odvRewardMsg"></el-input>%<br>
              超过委案金额 <el-input align="center" v-model="scope.row.odvReward3Msg"></el-input>%
            </span>
-                <span v-if="scope.row.id ===108 && scope.row.editType!='edit'">
+                <span v-if="(scope.row.id ===108 || scope.row.id ===172) && scope.row.editType!='edit'">
               委案金额 {{scope.row.odvRewardMsg}}%<br>
               超过委案金额 {{scope.row.odvReward3Msg}}%
            </span>
-                <span v-if="scope.row.id !=108 && scope.row.id !=110 && scope.row.editType==='edit'">
+                <span v-if="scope.row.id !=108 && scope.row.id !=172 && scope.row.id !=110 && scope.row.id !=173 && scope.row.editType==='edit'">
               <el-input align="center" v-model="scope.row.odvRewardMsg"></el-input>%<br>
            </span>
-                <span v-if="scope.row.id !=108 && scope.row.id !=110 && scope.row.editType !='edit'">
+                <span v-if="scope.row.id !=108 && scope.row.id !=172 && scope.row.id !=110  && scope.row.id !=173 && scope.row.editType !='edit'">
               {{scope.row.odvRewardMsg}}%
            </span>
-                <span v-if="(scope.row.id===110 || scope.row.id===170) && scope.row.editType==='edit'">
+                <span v-if="(scope.row.id===110 || scope.row.id===173) && scope.row.editType==='edit'">
              <el-input align="center" v-model="scope.row.odvRewardRange1Msg"></el-input>%≤综合户达率<<el-input align="center"
                                                                                                           v-model="scope.row.odvRewardRange2Msg"></el-input>%  <el-input
                   align="center" v-model="scope.row.odvRewardMsg"></el-input>元/户<br>
@@ -109,7 +109,7 @@
              综合户达率≥<el-input align="center" v-model="scope.row.odvRewardRange4Msg"></el-input>%  <el-input
                   align="center" v-model="scope.row.odvReward3Msg"></el-input>元/户
            </span>
-                <span v-if="(scope.row.id===110 || scope.row.id===170) && scope.row.editType!='edit'">
+                <span v-if="(scope.row.id===110 || scope.row.id===173) && scope.row.editType!='edit'">
              {{scope.row.odvRewardRange1Msg}}%≤综合户达率<{{scope.row.odvRewardRange2Msg}}%  {{scope.row.odvRewardMsg}}元/户<br>
              {{scope.row.odvRewardRange2Msg}}%≤综合户达率<{{scope.row.odvRewardRange4Msg}}%  {{scope.row.odvReward2Msg}}元/户<br>
              综合户达率≥{{scope.row.odvRewardRange4Msg}}%  {{scope.row.odvReward3Msg}}元/户
@@ -123,13 +123,13 @@
               align="center">
               <template slot-scope="scope">
                 <el-input
-                  v-if="scope.row.editType==='edit' && scope.row.id!=110 && scope.row.id!=170 &&　scope.row.enable != '特殊1'"
+                  v-if="scope.row.editType==='edit' && scope.row.id!=110 && scope.row.id!=173 &&　scope.row.enable != '特殊1'"
                   align="center"
                   v-model="scope.row.odvHighBasicMsg"
                 ></el-input>
                 <span
-                  v-if="scope.row.editType!='edit' && scope.row.id!=110 && scope.row.id!=170  &&　scope.row.enable != '特殊1'">{{scope.row.odvHighBasicMsg}}</span>
-                <span v-if="scope.row.id!=110 && scope.row.id!=170  &&　scope.row.enable != '特殊1'">万</span>
+                  v-if="scope.row.editType!='edit' && scope.row.id!=110 && scope.row.id!=173  &&　scope.row.enable != '特殊1'">{{scope.row.odvHighBasicMsg}}</span>
+                <span v-if="scope.row.id!=110 && scope.row.id!=173  &&　scope.row.enable != '特殊1'">万</span>
               </template>
             </el-table-column>
             <el-table-column
@@ -139,13 +139,13 @@
               align="center">
               <template slot-scope="scope">
                 <el-input
-                  v-if="scope.row.editType==='edit'  &&  scope.row.id!=110 && scope.row.id!=170 &&　scope.row.enable != '特殊1'"
+                  v-if="scope.row.editType==='edit'  &&  scope.row.id!=110 && scope.row.id!=173 &&　scope.row.enable != '特殊1'"
                   align="center"
                   v-model="scope.row.odvHighRewardMsg"
                 ></el-input>
                 <span
-                  v-if="scope.row.editType!='edit' &&  scope.row.id!=110 && scope.row.id!=170 &&　scope.row.enable != '特殊1'">{{scope.row.odvHighRewardMsg}}</span>
-                <span v-if="scope.row.id!=110 && scope.row.id!=170 &&　scope.row.enable != '特殊1'">%</span>
+                  v-if="scope.row.editType!='edit' &&  scope.row.id!=110 && scope.row.id!=173 &&　scope.row.enable != '特殊1'">{{scope.row.odvHighRewardMsg}}</span>
+                <span v-if="scope.row.id!=110 && scope.row.id!=173 &&　scope.row.enable != '特殊1'">%</span>
               </template>
             </el-table-column>
           </el-table-column>
@@ -161,7 +161,7 @@
               align="center"
             >
               <template slot-scope="scope">
-                <el-select class="selectClass" v-if="scope.row.editType==='edit' && scope.row.id!=110"
+                <el-select class="selectClass" v-if="scope.row.editType==='edit' && scope.row.id!=110 && scope.row.id!=173"
                            v-model="scope.row.manageMethod" placeholder="请选择提成方式">
                   <el-option
                     v-for="item in methodList"
@@ -170,24 +170,24 @@
                     :value="item.id">
                   </el-option>
                 </el-select>
-                <span v-if="scope.row.editType!='edit' && scope.row.id!=110">{{scope.row.manageMethod}}</span>
+                <span v-if="scope.row.editType!='edit' && scope.row.id!=110  && scope.row.id!=173">{{scope.row.manageMethod}}</span>
               </template>
             </el-table-column>
             <el-table-column
               prop="odvBasicMsg"
               label="提成"
-              min-width="230"
+              width="350"
               align="center"
             >
               <template slot-scope="scope">
-          <span v-if="scope.row.editType==='edit' &&  scope.row.id!=110 && scope.row.id!=170">
+          <span v-if="scope.row.editType==='edit' &&  scope.row.id!=110 && scope.row.id!=173">
             <el-input align="center" v-model="scope.row.manageRewardMsg"></el-input>
-            低标
+            低标<br>
             过低标人数*
             <el-input align="center" v-model="scope.row.manageRewardRange1Msg"></el-input>元/人+过低标员工提成*
             <el-input align="center" v-model="scope.row.manageRewardRange2Msg"></el-input>%
           </span>
-                <span v-if="scope.row.editType==='edit' &&  (scope.row.id===110 || scope.row.id===170)">
+                <span v-if="scope.row.editType==='edit' &&  (scope.row.id===110 || scope.row.id===173)">
             上汽短期 综合户达率≥
             <el-input align="center" v-model="scope.row.manageRewardRange1Msg"></el-input>% 提成
             <el-input align="center" v-model="scope.row.manageRewardMsg"></el-input>元<br>
@@ -196,9 +196,9 @@
             上汽短期 总回款完成率≥<el-input align="center" v-model="scope.row.manageRewardRange4Msg"></el-input>%
             提成<el-input align="center" v-model="scope.row.manageRewardRange5Msg"></el-input>元<br>
             以上3个指标全部达成  奖励<el-input align="center" v-model="scope.row.manageRewardRange6Msg"></el-input>元</span>
-                <span v-if="scope.row.editType!='edit' &&  (scope.row.id===110 || scope.row.id===170)">上汽短期 综合户达率≥{{scope.row.manageRewardRange1Msg}}% 提成{{scope.row.manageRewardMsg}}元<br>
+                <span v-if="scope.row.editType!='edit' &&  (scope.row.id===110 || scope.row.id===173)">上汽短期 综合户达率≥{{scope.row.manageRewardRange1Msg}}% 提成{{scope.row.manageRewardMsg}}元<br>
 安吉蓝海 综合户达率≥{{scope.row.manageRewardRange2Msg}}% 提成{{scope.row.manageRewardRange3Msg}}元<br>上汽短期 总回款完成率≥{{scope.row.manageRewardRange4Msg}}% 提成{{scope.row.manageRewardRange5Msg}}元<br>以上3个指标全部达成  奖励{{scope.row.manageRewardRange6Msg}}元</span>
-                <span v-if="scope.row.editType!='edit' &&  scope.row.id!=110 && scope.row.id!=170">{{scope.row.manageRewardMsg}}低标
+                <span v-if="scope.row.editType!='edit' &&  scope.row.id!=110 && scope.row.id!=173">{{scope.row.manageRewardMsg}}低标<br>
 过低标人数*{{scope.row.manageRewardRange1Msg}}元/人+过低标员工提成*{{scope.row.manageRewardRange2Msg}}%</span>
               </template>
             </el-table-column>
@@ -446,17 +446,17 @@
 
     .el-input {
       text-align: center;
-      width: 80px;
+      width: 60px;
     }
 
     .selectClass .el-input {
-      width: 90px !important;
+      width: 60px !important;
       text-align: center;
     }
 
     .el-select .el-input__inner {
       text-align: center;
-      width: 90px !important;
+      width: 60px !important;
     }
 
 

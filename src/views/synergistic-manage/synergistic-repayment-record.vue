@@ -586,7 +586,7 @@ export default {
       getSeqNoList({
         seqNo: query,
         pageNum: 1,
-        pageSize:10000
+        pageSize:50
       }).then(data => {
         this.seqNoList = data.list
         this.loadingSeqNo = false
