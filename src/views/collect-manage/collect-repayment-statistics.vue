@@ -11,7 +11,7 @@
         <el-col :span="5"
           ><span class="topSpan">上月待银行查账金额：</span>{{ topData.lastBankAmt }}</el-col
         >
-        <el-col :span="4"
+        <el-col :span="5"
           ><span class="topSpan">上月佣金（已还款）：</span>{{
             topData.lastRepaidAmt
           }}</el-col
@@ -30,7 +30,7 @@
         <el-col :span="5"
           ><span class="topSpan">本月待银行查账金额：</span>{{ topData.thisBankAmt }}</el-col
         >
-        <el-col :span="4"
+        <el-col :span="5"
           ><span class="topSpan">本月佣金（已还款）：</span>{{
             topData.thisRepaidAmt
           }}</el-col

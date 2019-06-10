@@ -409,7 +409,7 @@ export default {
       this.memberList = []
       const data = {
         status: 1,
-        ids: this.queryForm.id?(this.queryForm.id.trim()==""?null:this.queryForm.id.split('\n')):null,
+        idStrs: this.queryForm.id?(this.queryForm.id.trim()==""?null:this.queryForm.id.split('\n')):null,
         department: this.queryForm.department,
         loginName: this.queryForm.loginName,
         userName: this.queryForm.userName,

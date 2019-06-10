@@ -87,7 +87,7 @@
             <el-form-item label="已还款">
               <div class="inputDiv" style="font-size: 12px;">
                 <span
-                >{{ caseDetail.enRepayAmt }}(委案余额:{{
+                >{{ caseDetail.enRepayAmtMsg }}(委案余额:{{
                     caseDetail.balanceMsg
                   }})</span
                 >
