@@ -8,7 +8,7 @@
         <el-col :span="4"
           ><span class="topSpan">上月承诺还款金额：</span>{{ topData.lastRepayAmt }}</el-col
         >
-        <el-col :span="4"
+        <el-col :span="5"
           ><span class="topSpan">上月待银行查账金额：</span>{{ topData.lastBankAmt }}</el-col
         >
         <el-col :span="4"
@@ -16,7 +16,7 @@
             topData.lastRepaidAmt
           }}</el-col
         >
-        <el-col :span="8"
+        <el-col :span="6"
           ><span class="topSpan">上月佣金（待银行查账金额）：</span>{{ topData.lastRepaidBankAmt }}</el-col
         >
       </el-row>
@@ -27,7 +27,7 @@
         <el-col :span="4"
           ><span class="topSpan">本月承诺还款金额：</span>{{ topData.thisRepayAmt }}</el-col
         >
-        <el-col :span="4"
+        <el-col :span="5"
           ><span class="topSpan">本月待银行查账金额：</span>{{ topData.thisBankAmt }}</el-col
         >
         <el-col :span="4"
@@ -35,7 +35,7 @@
             topData.thisRepaidAmt
           }}</el-col
         >
-        <el-col :span="8"
+        <el-col :span="6"
           ><span class="topSpan">本月佣金（待银行查账金额）：</span>{{ topData.thisRepaidBankAmt }}</el-col
         >
       </el-row>
@@ -175,7 +175,7 @@
         border
         stripe
         tooltip-effect="dark"
-        style="width: 100%"
+        style="height:390px;margin-bottom: 40px;margin-top:10px;"
         @selection-change="handleSelectionChange"
       >
       
@@ -206,6 +206,16 @@
         ></el-table-column>
       </el-table>
     <!-- </section> -->
+    <el-pagination
+      class="pagination-wrap"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="paginationData.currentPage"
+      :page-sizes="[100, 500, 2000, 10000, 1000000]"
+      :page-size="paginationData.pageSize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="paginationData.total"
+    ></el-pagination>
   </div>
 </template>
 
@@ -243,6 +253,11 @@ export default {
       }
     ];
     return {
+      paginationData: {
+        pageSize: 100,
+        total: 0,
+        currentPage: 1
+      },
       tableLoad:false,
       topData: {},
       form1: {
@@ -412,6 +427,8 @@ export default {
         bankTimeEnd:(!!val6 && val6[1]) || "",
         expectTimeStart:(!!val7 && val7[0]) || "",
         expectTimeEnd:(!!val7 && val7[1]) || "",
+        pageNum: this.paginationData.currentPage,
+        pageSize: this.paginationData.pageSize,
         sType:0
       };
     }
@@ -462,6 +479,14 @@ export default {
         this[target] = this.transform(data, transData);
       });
     },
+    handleCurrentChange(currentPage) {
+      this.paginationData.currentPage = currentPage;
+      this.getMainData();
+    },
+    handleSizeChange(pageSize) {
+      this.paginationData.pageSize = pageSize;
+      this.getMainData();
+    },
     getMainData() {
       this.tableLoad = true
       pay(this.fetchData).then(data => {
@@ -482,6 +507,7 @@ export default {
         this.topData.lastRepayAmt = this.formatMoney(data.lastRepayAmt,0, "￥")
         this.topData.lastBankAmt = this.formatMoney(data.lastBankAmt,0, "￥")
         this.topData.lastRepaidAmt = this.formatMoney(data.lastRepaidAmt,0, "￥")
+        this.paginationData.total = data.totalNum
         this.tableLoad = false
       });
     },
@@ -522,5 +548,21 @@ export default {
     margin-right: 10px;
     color: #b2adb2;
   }
+  .el-tabs__content{
+    margin-bottom: 40px;
+    overflow-y: auto;
+  }
+  .pagination-wrap{
+    position: fixed;
+    bottom: 0;
+    z-index: 100;
+    min-height: 40px;
+    background-color: white;
+    width: 100%;
+  }
+  .el-table__body-wrapper {
+    height: calc(100% - 74px);
+  }
+
 }
 </style>
