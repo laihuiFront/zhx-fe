@@ -3,7 +3,8 @@ const state = {
   menu:[],
   tabMenus: [],
   currentMenu: {},
-  cacheflushFlag:false
+  cacheflushFlag:false,
+  caseType: {}
 }
 
 export default state

@@ -97,6 +97,7 @@ router.beforeEach((to, from, next) => {
     if (to.path === "/login") {
       next({ path: "/" });
     } else {
+      store.dispatch('loadByTypeAction')
       if (!store.getters.menu.length) {
         store
           .dispatch("getUserInfoAction")

@@ -1,6 +1,6 @@
 import * as types from './mutation-types'
 import {localCache,removeCache} from '@/common/js/auth'
-import {login, getUserInfo, logout, getTreeAllMenusByToken} from '@/common/js/api-base'
+import {login, getUserInfo, logout, getTreeAllMenusByToken, loadByType} from '@/common/js/api-base'
 import request from '@/common/js/request';
 
 export const loginAction = function ({commit}, userInfo) {
@@ -93,6 +93,12 @@ export function resetPassword(form) {
     	oldPassword:form.oldPassword,
     	password:form.pass
     }
+  })
+}
+
+export function loadByTypeAction({commit}) {
+  loadByType().then((data) => {
+    commit(types.SET_CASE_TYPE, data)
   })
 }
 

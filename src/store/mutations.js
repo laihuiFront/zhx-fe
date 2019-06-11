@@ -10,6 +10,9 @@ const mutations = {
   [types.SET_TAB_MENUS](state, menus){
     state.tabMenus = menus
   },
+  [types.SET_CASE_TYPE](state, caseTypes){
+    state.caseType = caseTypes
+  },
   [types.PUSH_TAB_MENUS](state, menu){
     const menuIndex = _.findIndex(state.tabMenus, item => item.id === menu.id)
     if(menuIndex === -1){

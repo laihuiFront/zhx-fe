@@ -32,3 +32,10 @@ export function getTreeAllMenusByToken(){
     method: 'post'
   })
 }
+
+export function loadByType() {
+  return request({
+    url: '/sys/dictionary/loadByType',
+    method: 'post'
+  })
+}
