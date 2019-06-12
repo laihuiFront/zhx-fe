@@ -17,6 +17,11 @@
             align="center"
             label="条线"
           >
+            <template slot-scope="scope">
+              <el-button type="text" size="small" @click="showRepay(scope.row.line)">
+                {{scope.row.line}}
+              </el-button>
+            </template>
           </el-table-column>
 
             <el-table-column
@@ -34,12 +39,53 @@
             </el-table-column>
         </el-table>
 
+    <el-dialog
+      title="还款详情"
+      class="dialog-wrap"
+      :visible.sync="detailVisible"
+      :close-on-click-modal="false"
+      width="800px"
+    >
+      <el-table highlight-current-row
+                :data="repayList"
+                class="table-wrap"
+                height="1"
+                border
+                style="margin-top:10px;min-height:390px;margin-bottom: 40px;"
+                stripe
+      >
+
+        <el-table-column
+          prop="dataCase.seqNo"
+          align="center"
+          label="个案序列号"
+        >
+        </el-table-column>
+
+        <el-table-column
+          prop="repayDate"
+          label="还款日期"
+          align="center"
+        >
+        </el-table-column>
+
+        <el-table-column
+          prop="repayMoneyMsg"
+          label="还款金额"
+          align="center"
+        >
+        </el-table-column>
+      </el-table>
+      <span slot="footer" class="footer">
+        <el-button @click="detailVisible = false">取 消</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 
 <script>
-  import {loadDataOdv} from '@/common/js/collect-director.js'
+  import {loadDataOdv,showRepay} from '@/common/js/collect-director.js'
 
   export default {
     name: 'collect-director-odv',
@@ -50,16 +96,23 @@
         loading: false,
         fullscreenLoading: false,
         dataList: [],
+        repayList:[]
       }
     },
     methods: {
-
+      showRepay(line){
+        showRepay({"line":line}).then((response) => {
+          this.repayList = response
+          this.detailVisible = true
+        })
+      }
     },
 
     created() {
       loadDataOdv().then((response) => {
         this.dataList = response
       })
+
     },
   }
 </script>
