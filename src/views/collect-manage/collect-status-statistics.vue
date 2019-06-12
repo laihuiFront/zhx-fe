@@ -306,9 +306,10 @@ export default {
       });
     },
     getEnum() {
-      this.getEnumHandle("委托方", "val1_data");
+      /*this.getEnumHandle("委托方", "val1_data");
       this.getEnumHandle("逾期账龄", "val3_data");
-      this.getEnumHandle("催收状态", "val2_data_form2");
+      this.getEnumHandle("催收状态", "val2_data_form2");*/
+
     },
     handleClick(tab, event) {
       if (this.activeName == "first") {
@@ -359,6 +360,11 @@ export default {
         }, []);
       });
     }
+  },
+  mounted(){
+    this['val1_data'] = this.transform(this.$store.getters.caseType.委托方);
+    this['val3_data'] = this.transform(this.$store.getters.caseType.逾期账龄);
+    this['val2_data_form2'] = this.transform(this.$store.getters.caseType.催收状态);
   }
 };
 </script>

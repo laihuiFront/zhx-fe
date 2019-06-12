@@ -8,15 +8,15 @@
         <el-col :span="4"
         ><span class="topSpan">上月承诺还款金额：</span>{{ topData.lastRepayAmt }}</el-col
         >
-        <el-col :span="4"
+        <el-col :span="5"
         ><span class="topSpan">上月待银行查账金额：</span>{{ topData.lastBankAmt }}</el-col
         >
-        <el-col :span="4"
+        <el-col :span="5"
         ><span class="topSpan">上月提成（已还款）：</span>{{
           topData.lastRepaidAmt
           }}</el-col
         >
-        <el-col :span="8"
+        <el-col :span="6"
         ><span class="topSpan">上月提成（待银行查账金额）：</span>{{ topData.lastRepaidBankAmt }}</el-col
         >
       </el-row>
@@ -27,15 +27,15 @@
         <el-col :span="4"
         ><span class="topSpan">本月承诺还款金额：</span>{{ topData.thisRepayAmt }}</el-col
         >
-        <el-col :span="4"
+        <el-col :span="5"
         ><span class="topSpan">本月待银行查账金额：</span>{{ topData.thisBankAmt }}</el-col
         >
-        <el-col :span="4"
+        <el-col :span="5"
         ><span class="topSpan">本月提成（已还款）：</span>{{
           topData.thisRepaidAmt
           }}</el-col
         >
-        <el-col :span="8"
+        <el-col :span="6"
         ><span class="topSpan">本月提成（待银行查账金额）：</span>{{ topData.thisRepaidBankAmt }}</el-col
         >
       </el-row>
@@ -223,6 +223,17 @@
           :key="index"
         ></el-table-column>
       </el-table>
+
+    <el-pagination
+      class="pagination-wrap"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="paginationData.currentPage"
+      :page-sizes="[100, 500, 2000, 10000, 1000000]"
+      :page-size="paginationData.pageSize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="paginationData.total"
+    ></el-pagination>
     <!-- </section> -->
 
     <el-dialog
@@ -298,6 +309,11 @@ export default {
       }
     ];
     return {
+      paginationData: {
+        pageSize: 100,
+        total: 0,
+        currentPage: 1
+      },
       deptName:"",
       departmentVisible:false,
       departmentTree: [],
@@ -478,6 +494,8 @@ export default {
         expectTimeEnd:(!!val6 && val6[1]) || "",
         bankTimeStart:(!!val7 && val7[0]) || "",
         bankTimeEnd:(!!val7 && val7[1]) || "",
+        pageNum: this.paginationData.currentPage,
+        pageSize: this.paginationData.pageSize,
         sType:1,
         dept,
         odvs
@@ -490,6 +508,14 @@ export default {
     },
     onSelectDepartment (data, node) {
       this.currentDept = data
+    },
+    handleCurrentChange(currentPage) {
+      this.paginationData.currentPage = currentPage;
+      this.getMainData();
+    },
+    handleSizeChange(pageSize) {
+      this.paginationData.pageSize = pageSize;
+      this.getMainData();
     },
     onClickSaveDept () {
       this.$set(this.form1, 'val8', this.currentDept.id)
@@ -571,13 +597,15 @@ export default {
         this.topData.lastRepayAmt = this.formatMoney(data.lastRepayAmt,0, "￥")
         this.topData.lastBankAmt = this.formatMoney(data.lastBankAmt,0, "￥")
         this.topData.lastRepaidAmt = this.formatMoney(data.lastRepaidAmt,0, "￥")
+        this.paginationData.total = data.totalNum
         this.tableLoad = false
       });
     },
     init() {
       this.getMainData();
-      this.getEnumHandle("委托方", "val2_data");
-      this.getEnumHandle("逾期账龄", "val4_data");
+     /* this.getEnumHandle("委托方", "val2_data");
+      this.getEnumHandle("逾期账龄", "val4_data");*/
+
       listOrganization().then((data)=>{
         this.val8_data = this.transform(data,[['orgName','label'],['id','value']]);
       });
@@ -600,6 +628,10 @@ export default {
         }
       });
     }
+  },
+  mounted(){
+    this["val2_data"] = this.transform(this.$store.getters.caseType.委托方);
+    this["val4_data"] = this.transform(this.$store.getters.caseType.逾期账龄);
   }
 };
 </script>

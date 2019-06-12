@@ -13,6 +13,7 @@ body input{
     color: #000 !important;
   }
 }
+
 body textarea{
   color: #000 !important;
   &::placeholder{
@@ -51,6 +52,10 @@ body .el-dropdown-menu{
   text-align: center;
   overflow: initial;
 }
+body .el-popper  .popper__arrow{
+  display: none;
+}
+
 body .el-dropdown-menu__item{
   color: white;
 }

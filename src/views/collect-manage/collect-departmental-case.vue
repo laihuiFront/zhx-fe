@@ -1172,13 +1172,14 @@
       },
       init(){
         this.getMainData();
-        this.getEnumHandle('委托方', 'val0_data');
+       /* this.getEnumHandle('委托方', 'val0_data');
         this.getEnumHandle('地区', 'val4_data');
         this.getEnumHandle('逾期账龄', 'val8_data');
         this.getEnumHandle('催收状态', 'val10_data');
         this.getEnumHandle('案件类型', 'val11_data');
         this.getEnumHandle('减免状态', 'val24_data');
-        this.getEnumHandle('报备状态', 'val25_data');
+        this.getEnumHandle('报备状态', 'val25_data');*/
+
         listOrganization().then((data)=>{
           this.val31_data = this.transform(data,[['orgName','label'],['id','value']]);
         });
@@ -1186,6 +1187,15 @@
           this.val32_data = this.transform(data,[['userName','label'],['id','value']]);
         })
       },
+    },
+    mounted(){
+      this["val0_data"] = this.transform(this.$store.getters.caseType.委托方);
+      //this["val4_data"] = this.transform(this.$store.getters.caseType.地区);
+      this["val8_data"] = this.transform(this.$store.getters.caseType.逾期账龄);
+      this["val10_data"] = this.transform(this.$store.getters.caseType.催收状态);
+      this["val11_data"] = this.transform(this.$store.getters.caseType.案件类型);
+      this["val24_data"] = this.transform(this.$store.getters.caseType.减免状态);
+      this["val25_data"] = this.transform(this.$store.getters.caseType.报备状态);
     }
   };
 </script>

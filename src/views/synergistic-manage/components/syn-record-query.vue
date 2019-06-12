@@ -207,12 +207,16 @@ export default {
       this.showQueryConfVisible = true;
     },
     initPage(){
-      getEnum('催收区域').then(data => this.collectionAreaList = data)
+     // getEnum('催收区域').then(data => this.collectionAreaList = data)
+      this.collectionAreaList = this.$store.getters.caseType.催收区域;
       getBatchList().then(data=> this.batchList = data)
-      getEnum('委托方').then(data => this.clientList = data)
+     // getEnum('委托方').then(data => this.clientList = data)
+      this.clientList = this.$store.getters.caseType.委托方;
       this.statusList = getStatusList()
-      getEnum('催收状态').then(data => this.collectStatusList = data)
+      //getEnum('催收状态').then(data => this.collectStatusList = data)
+      this.collectStatusList = this.$store.getters.caseType.催收状态;
       getEnum('协催类型').then(data => this.synergisticTypeList = data)
+      this.synergisticTypeList = this.$store.getters.caseType.协催类型;
     },
     namesChange(val){
       if(val){

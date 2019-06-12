@@ -339,14 +339,14 @@
     //        	   this.tableLoad = false
     //          console.log(this.dataList)
     //        })
-    areaList().then(response => {
+  /*  areaList().then(response => {
       this.areaList = response;
-    });
-
-    clientList().then(response => {
+    });*/
+    this.areaList = this.$store.getters.caseType.催收区域;
+/*    clientList().then(response => {
       this.clientList = response;
-    });
-
+    });*/
+    this.clientList = this.$store.getters.caseType.委托方;
     PersonList().then(response => {
       this.PersonList = response;
     });

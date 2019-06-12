@@ -1100,21 +1100,27 @@
         this.total = response.pageInfo.total
         this.tableLoad = false
       })
-      clientList().then((response) => {
+     /* clientList().then((response) => {
         this.form.clientList = response;
         this.clientList = response;
-      })
+      })*/
+      this.form.clientList = this.$store.getters.caseType.委托方;
+      this.clientList = this.$store.getters.caseType.委托方;
       batchList().then((response) => {
         this.batchList = response;
       })
-      caseTypeList().then((response) => {
+     /* caseTypeList().then((response) => {
         this.form.caseTypeList = response
         this.caseTypeList = response;
-      })
-      areaList().then((response) => {
+      })*/
+      this.form.caseTypeList = this.$store.getters.caseType.案件类型;
+      this.caseTypeList = this.$store.getters.caseType.案件类型;
+      /*areaList().then((response) => {
         this.form.areaList = response
         this.areaList = response
-      })
+      })*/
+      this.form.areaList = this.$store.getters.caseType.催收区域;
+      this.areaList = this.$store.getters.caseType.催收区域;
     },
   }
 </script>

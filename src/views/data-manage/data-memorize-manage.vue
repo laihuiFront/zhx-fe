@@ -924,18 +924,22 @@
         this.total = response.total
         this.tableLoad = false
       })
-      areaList().then((response) => {
+   /*   areaList().then((response) => {
         this.areaList = response
-      })
-      caseTypeList().then((response) => {
+      })*/
+      this.areaList = this.$store.getters.caseType.催收区域;
+      /*caseTypeList().then((response) => {
         this.caseTypeList = response
-      })
-      clientList().then((response) => {
+      })*/
+      this.caseTypeList = this.$store.getters.caseType.案件类型;
+    /*  clientList().then((response) => {
         this.clientList = response
-      })
-      EndList().then((response) => {
+      })*/
+      this.clientList = this.$store.getters.caseType.委托方;
+      /*EndList().then((response) => {
         this.EndList = response
-      })
+      })*/
+      this.EndList = this.$store.getters.caseType.催收结果;
       PersonList().then((response) => {
         this.PersonList = response
         this.form.PersonList = response

@@ -513,8 +513,9 @@ export default {
     },
     init() {
       this.getMainData();
-      this.getEnumHandle("委托方", "val2_data");
-      this.getEnumHandle("逾期账龄", "val4_data");
+      /*this.getEnumHandle("委托方", "val2_data");
+      this.getEnumHandle("逾期账龄", "val4_data");*/
+
     },
     showCase2(row) {
       console.log(row)
@@ -531,6 +532,10 @@ export default {
         }
       });
     }
+  },
+  mounted(){
+    this['val2_data'] = this.transform(this.$store.getters.caseType.委托方);
+    this['val4_data'] = this.transform(this.$store.getters.caseType.逾期账龄);
   }
 };
 </script>

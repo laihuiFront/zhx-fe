@@ -1160,9 +1160,10 @@ created() {
                 PersonList().then((response)=>{
           	this.PersonDataList=response
           })
-  getCaseTypeList().then((response) => {
+  /*getCaseTypeList().then((response) => {
     this.caseStatusList = response
-  })
+  })*/
+  this.caseStatusList = this.$store.getters.caseType.诉讼案件类型;
 },
 }
 </script>

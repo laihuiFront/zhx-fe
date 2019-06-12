@@ -318,9 +318,11 @@ export default {
       this.showQueryConfVisible = true;
     },
     initPage(){
-      getEnum('催收区域').then(data => this.collectionAreaList = data)
+      //getEnum('催收区域').then(data => this.collectionAreaList = data)
+      this.collectionAreaList = this.$store.getters.caseType.催收区域;
       getBatchList().then(data=> this.batchList = data)
-      getEnum('委托方').then(data => this.clientList = data)
+      //getEnum('委托方').then(data => this.clientList = data)
+      this.clientList = this.$store.getters.caseType.委托方;
       getDepartmentTree().then(data => {
         this.$set(this.elTreeParamsDept, 'data', data)
         this.$refs.treeSelectDept.treeDataUpdateFun(data)
@@ -330,9 +332,12 @@ export default {
         this.$refs.treeSelectArea.treeDataUpdateFun(data)
       })
       getCollectionUserList().then(data => this.collectionUserList = data)
-      getEnum('逾期账龄').then(data => this.overdueBillTimeList = data)
-      getEnum('催收状态').then(data => this.collectStatusList = data)
-      getEnum('案件类型').then(data => this.caseTypeList = data)
+      //getEnum('逾期账龄').then(data => this.overdueBillTimeList = data)
+      this.overdueBillTimeList = this.$store.getters.caseType.逾期账龄;
+      //getEnum('催收状态').then(data => this.collectStatusList = data)
+      this.collectStatusList = this.$store.getters.caseType.催收状态;
+      //getEnum('案件类型').then(data => this.caseTypeList = data)
+      this.caseTypeList = this.$store.getters.caseType.案件类型;
       this.statusList = getStatusList()
     },
     seqNosChange(val){

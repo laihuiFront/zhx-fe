@@ -2258,21 +2258,25 @@
         })
         this.tableLoad = false
       })
-      areaList().then((response) => {
+    /*  areaList().then((response) => {
         this.areaList = response
-      })
-      caseTypeList().then((response) => {
+      })*/
+      this.areaList = this.$store.getters.caseType.催收区域;
+    /*  caseTypeList().then((response) => {
         this.caseTypeList = response
-      })
-      clientList().then((response) => {
+      })*/
+      this.caseTypeList = this.$store.getters.caseType.案件类型;
+     /* clientList().then((response) => {
         this.clientList = response
-      })
+      })*/
+      this.clientList = this.$store.getters.caseType.委托方;
       batchList().then((response) => {
         this.batchList = response;
       })
-      EndList().then((response) => {
+      /*EndList().then((response) => {
         this.EndList = response
-      })
+      })*/
+      this.EndList = this.$store.getters.caseType.催收结果;
       PersonList().then((response) => {
         this.PersonList = response
         this.form.PersonList = response
@@ -2280,27 +2284,32 @@
       departmentList().then((response) => {
         this.departmentList = response
       })
-      accountAgeList().then((response) => {
+      /*accountAgeList().then((response) => {
         this.accountAgeList = response
-      })
-      collectStatusList().then((response) => {
+      })*/
+      this.accountAgeList = this.$store.getters.caseType.逾期账龄;
+      /*collectStatusList().then((response) => {
         this.collectStatusList = response
-      })
+      })*/
+      this.collectStatusList = this.$store.getters.caseType.催收状态;
       deleteStatusList().then((response) => {
         this.deleteStatusList = response
       })
-      TellList().then((response) => {
+    /*  TellList().then((response) => {
         this.TellList = response
-      })
+      })*/
+      this.TellList = this.$store.getters.caseType.报备状态;
       addressList().then((response) => {
         this.addressList = response
       })
-      LeaveList().then((response) => {
+   /*   LeaveList().then((response) => {
         this.LeaveList = response
-      })
-      getSynergyTypeList().then((response) => {
+      })*/
+      this.LeaveList = this.$store.getters.caseType.案件重要等级;
+     /* getSynergyTypeList().then((response) => {
         this.addSynergyFormList = response
-      })
+      })*/
+      this.addSynergyFormList = this.$store.getters.caseType.协催类型;
 
     },
   }
@@ -2388,5 +2397,7 @@
     height: 350px;
     overflow-y: scroll;
   }
+
+
 
 </style>

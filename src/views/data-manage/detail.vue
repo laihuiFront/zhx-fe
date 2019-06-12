@@ -4130,12 +4130,14 @@
         this.fileNames.id = id;
       },
       showSynergyApply() {
-        getSynergyTypeList().then(data => {
+       /* getSynergyTypeList().then(data => {
           this.synergyTypeList = data;
         });
         getSynergyContextList().then(data => {
           this.synergyContextList = data;
-        });
+        });*/
+        this.synergyTypeList = this.$store.getters.caseType.协催类型;
+        this.synergyContextList = this.$store.getters.caseType.申请协催内容;
         this.dialogSyergyAplVisible = true;
       },
       showSynergyResult() {
@@ -4891,33 +4893,41 @@
         getCommentDetail(this.id).then(data => {
           this.commentList = data;
         });
-        getEnum("谈判方式").then(data => {
-          this.tpfsList = data;
-        });
-        getEnum("催收模板").then(data => {
+       /*  getEnum("谈判方式").then(data => {
+           this.tpfsList = data;
+         });*/
+        this.tpfsList = this.$store.getters.caseType.谈判方式;
+        /*getEnum("催收模板").then(data => {
           this.csmbList = data;
-        });
-        getEnum("催收结果").then(data => {
+        });*/
+        this.csmbList = this.$store.getters.caseType.催收模板;
+       /* getEnum("催收结果").then(data => {
           this.csjgList = data;
-        });
-        getEnum("催收状态").then(data => {
+        });*/
+        this.csjgList = this.$store.getters.caseType.催收结果;
+      /*  getEnum("催收状态").then(data => {
           this.csztList = data;
-        });
-        getEnum("减免状态").then(data => {
+        });*/
+        this.csztList = this.$store.getters.caseType.催收状态;
+       /* getEnum("减免状态").then(data => {
           this.jmztList = data;
-        });
-        getEnum("电话类型").then(data => {
+        });*/
+        this.jmztList = this.$store.getters.caseType.减免状态;
+      /*  getEnum("电话类型").then(data => {
           this.PhonetypeList = data;
-        });
+        });*/
+        this.PhonetypeList = this.$store.getters.caseType.电话类型;
         pageDataFile(this.id).then(response => {
           this.uploadFileList = response;
         });
-        getRepayType().then(data => {
+      /*  getRepayType().then(data => {
           this.repayTypeList = data;
-        });
-        getRepayRemark().then(data => {
+        });*/
+        this.repayTypeList = this.$store.getters.caseType.还款方式;
+        /*getRepayRemark().then(data => {
           this.repayRemarkList = data;
-        });
+        });*/
+        this.repayRemarkList = this.$store.getters.caseType.还款备注;
       },
       showPanel(tab, e) {
         var ind = tab.label;

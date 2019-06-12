@@ -1312,17 +1312,18 @@
     },
     created() {
 
-      accountAgeList().then((response) => {
+      /*accountAgeList().then((response) => {
         this.accountAgeList = response
-      })
-      areaList().then((response) => {
+      })*/
+      this.accountAgeList = this.$store.getters.caseType.逾期账龄;
+      /*areaList().then((response) => {
         this.areaList = response
-      })
-
-      clientList().then((response) => {
+      })*/
+      this.areaList = this.$store.getters.caseType.催收区域;
+ /*     clientList().then((response) => {
         this.clientList = response
-      })
-
+      })*/
+      this.clientList = this.$store.getters.caseType.委托方;
       PersonList().then((response) => {
         this.PersonLists = response
       })
@@ -1332,13 +1333,14 @@
         this.total = response.total
         this.tableLoad = false
       })
-      collectStatusList().then((response) => {
+     /* collectStatusList().then((response) => {
         this.collectStatusList = response
-      })
-      deleteStatusList().then((response) => {
+      })*/
+      this.collectStatusList = this.$store.getters.caseType.催收状态;
+     /* deleteStatusList().then((response) => {
         this.deleteStatusList = response
-      })
-
+      })*/
+      this.deleteStatusList = this.$store.getters.caseType.减免状态;
 
     },
   }
