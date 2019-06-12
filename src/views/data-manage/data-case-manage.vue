@@ -193,13 +193,21 @@
         </el-select>
       </el-form-item>
       <el-form-item v-if="queryConf.dq || queryConfFlag">
-        <el-cascader
+        <!--<el-cascader
           :options="addressList"
           v-model="formInline.area"
           :props="props"
           placeholder="请选择地区"
         >
-        </el-cascader>
+        </el-cascader>-->
+        <el-select v-model="formInline.area" filterable placeholder="请选择地区" clearable>
+          <el-option
+            v-for="item in addressList"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id">
+          </el-option>
+        </el-select>
       </el-form-item>
 
       <el-form-item v-if="queryConf.fpzt || queryConfFlag">
@@ -2292,16 +2300,18 @@
         this.collectStatusList = response
       })*/
       this.collectStatusList = this.$store.getters.caseType.催收状态;
-      deleteStatusList().then((response) => {
+/*      deleteStatusList().then((response) => {
         this.deleteStatusList = response
-      })
+      })*/
+      this.deleteStatusList = this.$store.getters.caseType.减免状态;
     /*  TellList().then((response) => {
         this.TellList = response
       })*/
       this.TellList = this.$store.getters.caseType.报备状态;
-      addressList().then((response) => {
+      /*addressList().then((response) => {
         this.addressList = response
-      })
+      })*/
+      this.addressList = this.$store.getters.caseType.地区;
    /*   LeaveList().then((response) => {
         this.LeaveList = response
       })*/

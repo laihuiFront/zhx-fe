@@ -94,12 +94,24 @@
                   ></el-date-picker>
                 </el-form-item>
                 <el-form-item prop="val4" v-if="queryConf.dq || queryConfFlag">
-                  <el-cascader
+                 <!-- <el-cascader
                     :options="val4_data"
                     clearable
                     placeholder="请选择地区"
                     v-model="form.val4"
-                  ></el-cascader>
+                  ></el-cascader>-->
+                  <el-select
+                    v-model="form.val4"
+                    placeholder="请选择地区"
+                    clearable
+                  >
+                    <el-option
+                      v-for="item in val4_data"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                    ></el-option>
+                  </el-select>
                 </el-form-item>
                 <el-form-item prop="val5" v-if="queryConf.xm || queryConfFlag">
                   <el-input
@@ -1178,7 +1190,7 @@ export default {
 
   mounted(){
     this["val0_data"] = this.transform(this.$store.getters.caseType.委托方);
-    //this["val4_data"] = this.transform(this.$store.getters.caseType.地区);
+    this["val4_data"] = this.transform(this.$store.getters.caseType.地区);
     this["val8_data"] = this.transform(this.$store.getters.caseType.逾期账龄);
     this["val10_data"] = this.transform(this.$store.getters.caseType.催收状态);
     this["val11_data"] = this.transform(this.$store.getters.caseType.案件类型);

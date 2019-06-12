@@ -437,7 +437,8 @@ export default {
     },
     init(){
       this.getMainData();
-      this.getEnumHandle('委托方', 'val2_data');
+      //this.getEnumHandle('委托方', 'val2_data');
+      this["val2_data"] = this.transform(this.$store.getters.caseType.委托方);
     },
   }
 }
