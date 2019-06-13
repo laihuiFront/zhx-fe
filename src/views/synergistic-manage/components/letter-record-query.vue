@@ -53,8 +53,8 @@
             </el-select>
           </li>
           <li class="condition-item half">
-            <el-input v-model="queryForm.gaxlh" clearable placeholder="请输入委案金额下限"></el-input> 至
-            <el-input v-model="queryForm.gaxlh" clearable placeholder="请输入委案金额上限"></el-input>
+            <el-input v-model="queryForm.gaxlh" type="number" clearable placeholder="请输入委案金额下限"></el-input> 至
+            <el-input v-model="queryForm.gaxlh" type="number" clearable placeholder="请输入委案金额上限"></el-input>
           </li>
           <li class="condition-item half">
             <el-date-picker

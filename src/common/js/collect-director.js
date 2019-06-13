@@ -28,3 +28,12 @@ export function showOdv(data={}) {
     data
   })
 }
+
+export function showRepay(data={}) {
+  // 催收员提成
+  return request({
+    method:'post',
+    url:'/repayRecord/showRepay',
+    data
+  })
+}

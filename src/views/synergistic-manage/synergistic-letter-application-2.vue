@@ -130,6 +130,7 @@
             <el-form-item prop="val7">
               <el-input
                 v-model="form.val7"
+                type="number"
                 placeholder="请输入委案金额下限"
                 clearable
               ></el-input>
@@ -137,6 +138,7 @@
             <el-form-item prop="val6">
               <el-input
                 v-model="form.val6"
+                type="number"
                 placeholder="请输入委案金额上限"
                 clearable
               ></el-input>

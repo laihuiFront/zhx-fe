@@ -75,13 +75,13 @@
             </el-select>
     </el-form-item>
     <el-form-item  v-if="queryConf.waje || queryConfFlag">
-            <el-input v-model="queryForm.dataCase.moneyStart" clearable placeholder="请输入委案金额下限" style="width: 200px;"></el-input>
+            <el-input v-model="queryForm.dataCase.moneyStart" type="number" clearable placeholder="请输入委案金额下限" style="width: 200px;"></el-input>
     </el-form-item>
     <el-form-item  v-if="queryConf.waje || queryConfFlag">
     至
     </el-form-item>
     <el-form-item  v-if="queryConf.waje || queryConfFlag">
-            <el-input v-model="queryForm.dataCase.moneyEnd" clearable placeholder="请输入委案金额上限" style="width: 200px;"></el-input>
+            <el-input v-model="queryForm.dataCase.moneyEnd" type="number" clearable placeholder="请输入委案金额上限" style="width: 200px;"></el-input>
     </el-form-item>
     <el-form-item v-if="queryConf.xm || queryConfFlag">
             <el-input v-model="names" @change="namesChange" type="textarea" :rows="3" clearable placeholder="请输入姓名" style="width: 200px;"></el-input>

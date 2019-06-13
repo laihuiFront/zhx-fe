@@ -88,13 +88,13 @@
                   rows="3"></el-input>
       </el-form-item>
       <el-form-item v-if="queryConf.waje || queryConfFlag">
-        <el-input v-model="formInline.moneyStart" placeholder="请输入委案金额下限"></el-input>
+        <el-input v-model="formInline.moneyStart" type="number" placeholder="请输入委案金额下限"></el-input>
       </el-form-item>
       <el-form-item v-if="queryConf.waje || queryConfFlag">
-        <el-input v-model="formInline.moneyEnd" placeholder="请输入委案金额上限"></el-input>
+        <el-input v-model="formInline.moneyEnd" type="number" placeholder="请输入委案金额上限"></el-input>
       </el-form-item>
       <el-form-item v-if="queryConf.yqts || queryConfFlag">
-        <el-input v-model="formInline.overDays" placeholder="请输入逾期天数"></el-input>
+        <el-input v-model="formInline.overDays" type="number" placeholder="请输入逾期天数"></el-input>
       </el-form-item>
       <el-form-item v-if="queryConf.kh || queryConfFlag">
         <el-input type="textarea" v-model="formInline.cardNo" placeholder="请输入卡号" style="width: 100%;"

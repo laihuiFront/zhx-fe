@@ -187,6 +187,7 @@
                 <el-form-item prop="val29" v-if="queryConf.waje || queryConfFlag">
                   <el-input
                     v-model="form.val29"
+                    type="number"
                     placeholder="请输入委案金额下限"
                     clearable
                   ></el-input>
@@ -194,6 +195,7 @@
                 <el-form-item prop="val13" v-if="queryConf.waje || queryConfFlag">
                   <el-input
                     v-model="form.val13"
+                    type="number"
                     placeholder="请输入委案金额上限"
                     clearable
                   ></el-input>
@@ -230,6 +232,7 @@
                 <el-form-item prop="val30" v-if="queryConf.gjcs || queryConfFlag">
                   <el-input
                     v-model="form.val30"
+                    type="number"
                     placeholder="请输入跟进次数下限"
                     clearable
                   ></el-input>
@@ -237,6 +240,7 @@
                 <el-form-item prop="val18" v-if="queryConf.gjcs || queryConfFlag">
                   <el-input
                     v-model="form.val18"
+                    type="number"
                     placeholder="请输入跟进次数上限"
                     clearable
                   ></el-input>
