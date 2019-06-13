@@ -685,13 +685,13 @@
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   		  <el-form-item label="姓名">
-    <el-input v-model="formInline.cstName" placeholder="请输入姓名"></el-input>
+    <el-input v-model="formInline.cstName" style="width:200px;" placeholder="请输入姓名"></el-input>
   </el-form-item>
   	</div></el-col>
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   		<el-form-item label="案件状态">
-     <el-select v-model="formInline.legalStatusMsg " filterable  placeholder="请选择案件状态" clearable>
+     <el-select v-model="formInline.legalStatusMsg " style="width:200px;" filterable  placeholder="请选择案件状态" clearable>
     <el-option
       v-for="item in legalStatusMsgList"
       :key="item.id"
@@ -704,7 +704,7 @@
   	<el-col :span="8">
   	<div class="grid-content bg-purple">
    <el-form-item label="证件号">
-    <el-input v-model="formInline.identNo" placeholder="请输入证件号"></el-input>
+    <el-input v-model="formInline.identNo" style="width:200px;" placeholder="请输入证件号"></el-input>
   </el-form-item>
   	</div></el-col>
 </el-row>
@@ -713,7 +713,7 @@
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   		<el-form-item label="办案进度">
-    <el-select v-model="formInline.progress" filterable  placeholder="请选择案件进度" clearable>
+    <el-select v-model="formInline.progress" filterable  style="width:200px;"  placeholder="请选择案件进度" clearable>
     <el-option
       v-for="item in progressList"
       :key="item.id"
@@ -726,7 +726,7 @@
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   	  <el-form-item label="案件类型">
-     <el-select v-model="formInline.legalType" filterable  placeholder="请选择案件类型" clearable>
+     <el-select v-model="formInline.legalType" filterable  style="width:200px;"  placeholder="请选择案件类型" clearable>
     <el-option
       v-for="item in caseStatusList"
       :key="item.id"
@@ -739,7 +739,7 @@
   	<el-col :span="8">
   	<div class="grid-content bg-purple">
     <el-form-item label="标的">
-    <el-input v-model="formInline.tital" placeholder="请输入标的"></el-input>
+    <el-input v-model="formInline.tital" placeholder="请输入标的" style="width:200px;" ></el-input>
   </el-form-item>
   	</div></el-col>
 </el-row>
@@ -749,13 +749,13 @@
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   	<el-form-item label="委托人">
-    <el-input v-model="formInline.clientele" placeholder="请输入委托人"></el-input>
+    <el-input v-model="formInline.clientele" placeholder="请输入委托人" style="width:200px;" ></el-input>
   </el-form-item>
   	</div></el-col>
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   	   <el-form-item label="所属人">
-     <el-select v-model="formInline.owner" filterable  placeholder="请选择所属人" clearable>
+     <el-select v-model="formInline.owner" filterable  style="width:200px;"  placeholder="请选择所属人" clearable>
     <el-option
       v-for="item in PersonDataList"
       :key="item.id"
@@ -768,7 +768,7 @@
   	<el-col :span="8">
   	<div class="grid-content bg-purple">
     <el-form-item label="被告人">
-    <el-input v-model="formInline.accused" placeholder="请输入被告人"></el-input>
+    <el-input v-model="formInline.accused"  style="width:200px;" placeholder="请输入被告人"></el-input>
   </el-form-item>
   	</div></el-col>
 </el-row>
@@ -777,19 +777,19 @@
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   	  <el-form-item label="代理律师">
-    <el-input v-model="formInline.agent" placeholder="请输入代理律师"></el-input>
+    <el-input v-model="formInline.agent"  style="width:200px;" placeholder="请输入代理律师"></el-input>
   </el-form-item>
   	</div></el-col>
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   	    <el-form-item label="律师联系方式">
-    <el-input v-model="formInline.agentTel" placeholder="请输入联系方式"></el-input>
+    <el-input v-model="formInline.agentTel"  style="width:200px;" placeholder="请输入联系方式"></el-input>
   </el-form-item>
   	</div></el-col>
   	<el-col :span="8">
   	<div class="grid-content bg-purple">
     <el-form-item label="费用">
-    <el-input v-model="formInline.cost" placeholder="请输入费用"></el-input>
+    <el-input v-model="formInline.cost"  style="width:200px;" placeholder="请输入费用"></el-input>
   </el-form-item>
   	</div></el-col>
 </el-row>
@@ -802,6 +802,7 @@
     <el-date-picker
       v-model="formInline.legalDate"
       type="date"
+      style="width:200px;"
       value-format="yyyy-MM-dd"
       placeholder="请选择日期">
     </el-date-picker>
@@ -816,6 +817,7 @@
     	value-format="yyyy-MM-dd"
       v-model="formInline.filingDate"
       type="date"
+      style="width:200px;"
       placeholder="请选择日期">
     </el-date-picker>
   </div>
@@ -824,7 +826,7 @@
   	<el-col :span="8">
   	<div class="grid-content bg-purple">
     <el-form-item label="受案法院">
-    <el-input v-model="formInline.court" placeholder="请输入法院"></el-input>
+    <el-input v-model="formInline.court"  style="width:200px;" placeholder="请输入法院"></el-input>
   </el-form-item>
   	</div></el-col>
 </el-row>
@@ -833,19 +835,19 @@
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   	  <el-form-item label="办案法官">
-    <el-input v-model="formInline.judge" placeholder="请输入办案法官"></el-input>
+    <el-input v-model="formInline.judge"  style="width:200px;" placeholder="请输入办案法官"></el-input>
   </el-form-item>
   	</div></el-col>
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   	    <el-form-item label="法官联系方式">
-    <el-input v-model="formInline.judgeTel" placeholder="请输入联系方式"></el-input>
+    <el-input v-model="formInline.judgeTel"  style="width:200px;" placeholder="请输入联系方式"></el-input>
   </el-form-item>
   	</div></el-col>
   	<el-col :span="8">
   	<div class="grid-content bg-purple">
     <el-form-item label="案号">
-    <el-input v-model="formInline.legalNo" placeholder="请输入案号"></el-input>
+    <el-input v-model="formInline.legalNo"  style="width:200px;" placeholder="请输入案号"></el-input>
   </el-form-item>
   	</div></el-col>
 </el-row>
@@ -857,6 +859,7 @@
      <div class="block">
     <el-date-picker
     	value-format="yyyy-MM-dd"
+      style="width:200px;"
       v-model="formInline.firstDate"
       type="date"
       placeholder="请选择日期">
@@ -870,6 +873,7 @@
      <div class="block">
     <el-date-picker
     	value-format="yyyy-MM-dd"
+      style="width:200px;"
       v-model="formInline.judgeDate"
       type="date"
       placeholder="请选择日期">
@@ -880,7 +884,7 @@
   	<el-col :span="8">
   	<div class="grid-content bg-purple">
     <el-form-item label="申请执行案号">
-    <el-input v-model="formInline.exeNo" placeholder="请输入案号"></el-input>
+    <el-input v-model="formInline.exeNo"  style="width:200px;" placeholder="请输入案号"></el-input>
   </el-form-item>
   	</div></el-col>
 </el-row>
@@ -893,6 +897,7 @@
     <el-date-picker
     	value-format="yyyy-MM-dd"
       v-model="formInline.exeDate"
+      style="width:200px;"
       type="date"
       placeholder="请选择日期">
     </el-date-picker>
@@ -906,6 +911,7 @@
     <el-date-picker
     	value-format="yyyy-MM-dd"
       v-model="formInline.exeEndDate"
+      style="width:200px;"
       type="date"
       placeholder="请选择日期">
     </el-date-picker>
@@ -919,6 +925,7 @@
     <el-date-picker
     	value-format="yyyy-MM-dd"
       v-model="formInline.costDate"
+      style="width:200px;"
       type="date"
       placeholder="请选择日期">
     </el-date-picker>
@@ -934,6 +941,7 @@
      <div class="block">
     <el-date-picker
     	value-format="yyyy-MM-dd"
+      style="width:200px;"
       v-model="formInline.preservationDate"
       type="date"
       placeholder="请选择日期">
@@ -944,7 +952,7 @@
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   	 <el-form-item label="送达情况">
-    <el-input v-model="formInline.arriveInfo" placeholder="请输入送达"></el-input>
+    <el-input v-model="formInline.arriveInfo"  style="width:200px;" placeholder="请输入送达"></el-input>
   </el-form-item>
   	</div></el-col>
   	<el-col :span="8">
@@ -1087,7 +1095,10 @@ export default {
    		this.dialogVisible=true;
    		this.dialogTitle="修改";
    		this.formInline=JSON.parse(JSON.stringify(row))
-   		this.formInline.progress=parseInt(row.progress)
+   		this.formInline.progress=row.progress
+      if(!this.formInline.progress){
+        this.formInline.progress=""
+      }
    		this.formInline.owner=parseInt(row.owner)
    		this.isTrue=false
    	},
