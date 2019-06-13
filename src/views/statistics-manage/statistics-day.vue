@@ -85,7 +85,7 @@
         </el-table-column>
         <el-table-column
           prop="countCasePhoneNum"
-          label="个按量"
+          label="个案量"
           align="center"
         >
           <template slot-scope="scope">
@@ -114,7 +114,7 @@
         </el-table-column>
         <el-table-column
           prop="countCasePhoneNum"
-          label="个按量"
+          label="个案量"
           align="center"
         >
           <template slot-scope="scope">
@@ -143,7 +143,7 @@
         </el-table-column>
         <el-table-column
           prop="countCasePhoneNum"
-          label="个按量"
+          label="个案量"
           align="center"
         >
           <template slot-scope="scope">
@@ -172,7 +172,7 @@
         </el-table-column>
         <el-table-column
           prop="countCasePhoneNum"
-          label="个按量"
+          label="个案量"
           align="center"
         >
           <template slot-scope="scope">

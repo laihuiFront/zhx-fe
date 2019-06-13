@@ -111,7 +111,7 @@
             {{ scope.row.list[index].countPhoneNum }}
           </template>
         </el-table-column>
-        <el-table-column label="个按量" align="center" prop="countCasePhoneNum">
+        <el-table-column label="个案量" align="center" prop="countCasePhoneNum">
           <template slot-scope="scope">
             {{ scope.row.list[index].countCasePhoneNum }}
           </template>
