@@ -398,9 +398,9 @@
           this.tableData3 = response.list
           this.tableLoad = false
         })
-        setTimeout(() => {
+       /* setTimeout(() => {
           this.tableLoad = false;
-        }, 2000);
+        }, 2000);*/
       }
     },
     created() {
