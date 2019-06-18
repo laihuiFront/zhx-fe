@@ -683,15 +683,16 @@
         <div class="grid-content bg-purple">
           <el-form-item label="催收员"
                         prop="odv"
-                        :rules="{required: true, message: '催收员不能为空', trigger: 'blur'}">
-            <el-select v-model="fenan.odv" filterable placeholder="请选择催收员" clearable>
+                        :rules="{required: true, message: '催收员不能为空', trigger: 'change'}">
+           <!-- <el-select v-model="fenan.odv" filterable placeholder="请选择催收员" clearable>
               <el-option
                 v-for="item in PersonList"
                 :key="item.id"
                 :label="item.userName"
                 :value="item.id">
               </el-option>
-            </el-select>
+            </el-select>-->
+            <el-input v-model="odvName" width="200" @focus="onClickSelectUser" clearable placeholder="请选择催收员"></el-input>
           </el-form-item>
         </div>
       </el-form>
@@ -711,15 +712,16 @@
         <div class="grid-content bg-purple">
           <el-form-item label="催收员"
                         prop="odv"
-                        :rules="{required: true, message: '催收员不能为空', trigger: 'blur'}">
-            <el-select v-model="fenan.odv" filterable placeholder="请选择催收员" clearable>
+                        :rules="{required: true, message: '催收员不能为空', trigger: 'change'}">
+           <!-- <el-select v-model="fenan.odv" filterable placeholder="请选择催收员" clearable>
               <el-option
                 v-for="item in PersonList"
                 :key="item.id"
                 :label="item.userName"
                 :value="item.id">
               </el-option>
-            </el-select>
+            </el-select>-->
+            <el-input v-model="odvName" width="200" @focus="onClickSelectUser" clearable placeholder="请选择催收员"></el-input>
           </el-form-item>
         </div>
       </el-form>
@@ -727,6 +729,26 @@
     <el-button @click="detailVisible8 = false">取 消</el-button>
     <el-button type="primary" @click="submitmsgForm2('fenan')">确 定</el-button>
   </span>
+    </el-dialog>
+    <el-dialog
+      title="选择催收员"
+      class="dialog-wrap"
+      :visible.sync="selectUserVisible"
+      :close-on-click-modal="false"
+      width="600px"
+    >
+      <el-tree
+        :data="selectUserTree"
+        default-expand-all
+        node-key="id"
+        ref="tree"
+        highlight-current
+        :props="defaultProps">
+      </el-tree>
+      <span slot="footer" class="footer">
+        <el-button @click="selectUserVisible = false">取 消</el-button>
+        <el-button type="primary" @click="onClickSaveUser">保 存</el-button>
+      </span>
     </el-dialog>
     <el-dialog
       title="修改等级"
@@ -1244,6 +1266,7 @@
     LeaveList,
     saveSelectFilter,
     selectByModule,
+    getUserTree,
     areaList,
     batchList,
     caseTypeList,
@@ -1332,6 +1355,12 @@
         addressList: [],
         accountAgeList: [],
         collectStatusList: [],
+        selectUserTree: [],
+        selectUserVisible: false,
+        defaultProps: {
+          children: 'children',
+          label: 'name'
+        },
         deleteStatusList: [],
         pageSize: 100,
         pageNum: 1,
@@ -1409,6 +1438,7 @@
         detailVisible9: false,
         detailTitle: '案件详情',
         fenan: {odv: ''},
+        odvName:'',
         loading2: false,
         fullscreenLoading: false
       }
@@ -1510,6 +1540,30 @@
             return false;
           }
         });
+      },
+      onClickSelectUser() {
+        this.selectUserVisible = true
+        if (!this.odvName) {
+          this.$set(this.fenan, 'odv', '')
+        }
+
+        this.$nextTick(() => {
+          this.$refs.tree.setCheckedKeys(this.fenan.odv);
+        })
+      },
+      onClickSaveUser() {
+        let selectDataArr =this.$refs.tree.getCurrentNode();
+        if (selectDataArr.type!= 'user'){
+          this.$message({
+            message: "只能选择人员",
+            type: "info"
+          });
+          return;
+        }
+        this.odvName = selectDataArr.name
+        this.$set(this.fenan, 'odv', selectDataArr.id)
+        debugger;
+        this.selectUserVisible = false
       },
       submitmsgForm4(formName) {
         this.$refs[formName].validate((valid) => {
@@ -1955,6 +2009,13 @@
         this.showExportCollectConfVisible = false
       },
       fenancheckone() {
+        if (this.fenan.odv==null || this.fenan.odv=="" || this.odvName==null || this.odvName==""){
+          this.$message({
+            type: 'error',
+            message: '催收员不能为空!'
+          });
+          return;
+        }
         let datasList = []
         for (var i = 0; i < this.deleteList.length; i++) {
           let dataObject = {id: '', odv: this.fenan.odv}
@@ -1972,7 +2033,14 @@
         })
       },
       fenanchecktwo() {
-        console.log('12', this.fenan.odv)
+        if (this.fenan.odv==null || this.fenan.odv==""  || this.odvName==null || this.odvName==""){
+          this.$message({
+            type: 'error',
+            message: '催收员不能为空!'
+          });
+          return;
+        }
+
         fenan2(this.formInline, this.fenan.odv).then((response) => {
           this.$message({
             type: 'success',
@@ -2288,6 +2356,9 @@
       PersonList().then((response) => {
         this.PersonList = response
         this.form.PersonList = response
+      })
+      getUserTree().then(data => {
+        this.selectUserTree = [data]
       })
       departmentList().then((response) => {
         this.departmentList = response

@@ -119,18 +119,18 @@
       </el-table-column>
     </el-table>
     <p v-else style="text-align:center">暂无数据</p>
-    <el-pagination
+    <!--<el-pagination
       v-if="total > 0"
       class="pagination-wrap"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage4"
-      :page-sizes="[100, 500, 2000, 10000, 1000000]"
+      :page-sizes="[50, 100, 200, 500, 1000]"
       :page-size="pages"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total"
     >
-    </el-pagination>
+    </el-pagination>-->
 
     <el-dialog
       title="选择催收员"
@@ -297,7 +297,8 @@
         });
         return;
       }
-      this.tableLoad = true;
+      this.loading = true;
+      this.fullscreenLoading = true;
       dataList(this.formInline)
         .then(response => {
           this.tableData3 = response.list;
@@ -312,11 +313,10 @@
               }
             }
           }
-          this.tableLoad = false;
+          this.loading = false;
+          this.fullscreenLoading = false;
         })
-        .catch(() => {
-          this.tableLoad = false;
-        });
+
     }
   },
   created() {

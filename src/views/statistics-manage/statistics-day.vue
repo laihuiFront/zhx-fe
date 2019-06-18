@@ -202,16 +202,16 @@
         </el-table-column>
       </el-table-column>
     </el-table>
-    <el-pagination
+    <!--<el-pagination
       class="pagination-wrap"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage4"
-      :page-sizes="[100, 500, 2000, 10000, 1000000]"
+      :page-sizes="[10, 100, 200, 500, 1000]"
       :page-size="pages"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
-    </el-pagination>
+    </el-pagination>-->
     <el-dialog
       title="选择催收员"
       class="dialog-wrap"
@@ -393,10 +393,12 @@
           });
           return;
         }
-        this.tableLoad = true
+        this.loading = true;
+        this.fullscreenLoading = true;
         dataList(this.formInline).then((response) => {
           this.tableData3 = response.list
-          this.tableLoad = false
+          this.loading = false;
+          this.fullscreenLoading = false;
         })
        /* setTimeout(() => {
           this.tableLoad = false;

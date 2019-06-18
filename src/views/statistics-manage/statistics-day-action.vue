@@ -184,16 +184,16 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
+   <!-- <el-pagination
       class="pagination-wrap"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage4"
-      :page-sizes="[100, 500, 2000, 10000, 1000000]"
+      :page-sizes="[50, 100, 200, 500, 1000]"
       :page-size="pages"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
-    </el-pagination>
+    </el-pagination>-->
     <el-dialog :title="dialogTitle" :visible.sync="dialogTableVisible" class="dialog-wrap" width="80%">
       <el-table :data="gridData" border
                 stripe>
@@ -373,14 +373,14 @@
         this.odvName = null
       },
       query() {
-        this.tableLoad = true
+        this.loading = true
+        this.fullscreenLoading = true
         dataList(this.formInline, this.pageSize, this.pageNum).then((response) => {
           this.tableData3 = response.list
-          this.tableLoad = false
+          this.loading = false
+          this.fullscreenLoading = false
         })
-     /*   setTimeout(() => {
-          this.tableLoad = false;
-        }, 2000);*/
+
       }
     },
     created() {
