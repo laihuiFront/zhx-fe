@@ -682,8 +682,7 @@
       <el-form :inline="true" ref="fenan" :model="fenan" class="demo-form-inline" label-width="120px">
         <div class="grid-content bg-purple">
           <el-form-item label="催收员"
-                        prop="odv"
-                        :rules="{required: true, message: '催收员不能为空', trigger: 'change'}">
+                        prop="odv">
            <!-- <el-select v-model="fenan.odv" filterable placeholder="请选择催收员" clearable>
               <el-option
                 v-for="item in PersonList"
@@ -711,8 +710,7 @@
       <el-form :inline="true" ref="fenan" :model="fenan" class="demo-form-inline" label-width="120px">
         <div class="grid-content bg-purple">
           <el-form-item label="催收员"
-                        prop="odv"
-                        :rules="{required: true, message: '催收员不能为空', trigger: 'change'}">
+                        prop="odv">
            <!-- <el-select v-model="fenan.odv" filterable placeholder="请选择催收员" clearable>
               <el-option
                 v-for="item in PersonList"
@@ -1543,6 +1541,7 @@
       },
       onClickSelectUser() {
         this.selectUserVisible = true
+
         if (!this.odvName) {
           this.$set(this.fenan, 'odv', '')
         }
@@ -1562,7 +1561,6 @@
         }
         this.odvName = selectDataArr.name
         this.$set(this.fenan, 'odv', selectDataArr.id)
-        debugger;
         this.selectUserVisible = false
       },
       submitmsgForm4(formName) {
@@ -1815,6 +1813,8 @@
         }
       },
       fenancheck(command) {
+        this.odvName = '';
+        this.$set(this.fenan, 'odv', '');
         if (command === "a") {
           if (this.deleteList.length >= 1) {
             this.detailVisible3 = true
