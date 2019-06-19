@@ -18,7 +18,7 @@
       </el-form-item>
       <el-form-item v-if="queryConf.pc || queryConfFlag">
         <el-select v-model="formInline.batchNos" style="min-width: 160px;" filterable collapse-tags multiple
-                   placeholder="请输入批次" clearable>
+                   placeholder="请输入批次" clearable @change="clientCurrent">
           <el-option
             v-for="item in batchList"
             :key="item.id"
@@ -1261,6 +1261,7 @@
   import {
     dataList,
     getSynergyTypeList,
+    clientCurrent,
     LeaveList,
     saveSelectFilter,
     selectByModule,
@@ -1442,6 +1443,15 @@
       }
     },
     methods: {
+      clientCurrent(){
+        if (this.formInline.batchNos==null || this.formInline.batchNos.length==0){
+          this.$set(this.formInline, 'clients', [])
+        }else{
+          clientCurrent(this.formInline.batchNos).then((response) => {
+            this.$set(this.formInline, 'clients', response)
+          })
+        }
+      },
       saveConf() {
         this.showQueryConfVisible = false;
         let queryObj = {module: "data-case-manage", menu: this.queryConf}

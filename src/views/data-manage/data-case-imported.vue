@@ -18,7 +18,7 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="form.batchNos" filterable collapse-tags multiple placeholder="请输入批次号" clearable>
+        <el-select v-model="form.batchNos" filterable collapse-tags multiple placeholder="请输入批次号" clearable @change="clientCurrent">
           <el-option
             v-for="item in batchList"
             :key="item.id"
@@ -732,6 +732,7 @@
     dataList,
     batchList,
     remoweData,
+    clientCurrent,
     addData,
     clientList,
     selectByModule,
@@ -787,6 +788,15 @@
       }
     },
     methods: {
+      clientCurrent(){
+        if (this.form.batchNos==null || this.form.batchNos.length==0){
+          this.$set(this.form, 'clients', [])
+        }else {
+          clientCurrent(this.form.batchNos).then((response) => {
+            this.$set(this.form, 'clients', response)
+          })
+        }
+      },
       handleClose() {
         this.loading2 = false
         this.fullscreenLoading = false

@@ -112,6 +112,17 @@ return request({
     data:{name:"催收区域"}
   })
 }
+
+export const clientCurrent = function(data) {
+  return request({
+    url: '/dataBatch/listClients',
+    method: 'post',
+    data:{
+      batchNos:data
+    }
+  })
+}
+
 //保存查询配置
 export function saveSelectFilter(data={}) {
   return request({

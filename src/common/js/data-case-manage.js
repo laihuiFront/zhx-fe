@@ -509,3 +509,13 @@ export const getUserTree = function(){
     method: 'post'
   })
 }
+
+export const clientCurrent = function(data) {
+  return request({
+    url: '/dataBatch/listClients',
+    method: 'post',
+    data:{
+      batchNos:data
+    }
+  })
+}
