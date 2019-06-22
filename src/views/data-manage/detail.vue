@@ -8,9 +8,9 @@
         <div style="text-align: right; margin-right:20px;" >
           <el-button type="primary" align="right" size="mini" @click="lastCase"  v-if="mycaseFlag">上条</el-button>
           <el-button type="primary" align="right" size="mini" @click="nextCase" v-if="mycaseFlag">下条</el-button>
-          <el-button type="primary" align="right" size="mini" v-if="caseDetail.currentuser" @click="showCommentVisible=true">评语</el-button>
-          <el-button type="primary" align="right" size="mini" v-if="caseDetail.currentuser" @click="showWarningVisible=true">警告</el-button>
-          <el-button type="primary" align="right" size="mini" v-if="caseDetail.currentuser" @click="showCollectInfo">催收小结</el-button>
+          <el-button type="primary" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showCommentVisible=true">评语</el-button>
+          <el-button type="primary" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showWarningVisible=true">警告</el-button>
+          <el-button type="primary" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showCollectInfo">催收小结</el-button>
         </div>
         <div class="items-wrap">
           <el-form
@@ -1151,19 +1151,19 @@
                   <div class="left-oper">
                     <el-button
                       @click="changePhoneStatus('有效')"
-                      v-if="caseDetail.currentuser"
+                      v-if=" caseDetail.currentuser || mycaseFlag"
                     >标记为有效
                     </el-button
                     >
                     <el-button
                       @click="changePhoneStatus('未知')"
-                      v-if="caseDetail.currentuser"
+                      v-if=" caseDetail.currentuser || mycaseFlag"
                     >标记为未知
                     </el-button
                     >
                     <el-button
                       @click="changePhoneStatus('无效')"
-                      v-if="caseDetail.currentuser"
+                      v-if=" caseDetail.currentuser || mycaseFlag"
                     >标记为无效
                     </el-button
                     >
@@ -1173,7 +1173,7 @@
                     <el-button
                       type="primary"
                       @click="addPhone"
-                      v-if="caseDetail.currentuser"
+                      v-if=" caseDetail.currentuser || mycaseFlag"
                     >新增电话
                     </el-button
                     >
@@ -1183,7 +1183,7 @@
                       width="500"
                       trigger="click"
                       v-model="batchAddTelVisible"
-                      v-if="caseDetail.currentuser"
+                      v-if=" caseDetail.currentuser || mycaseFlag"
                     >
                       <div>
                         <el-input
@@ -1219,7 +1219,7 @@
                     <el-button
                       type="primary"
                       @click="_synchroSameTel"
-                      v-if="caseDetail.currentuser"
+                      v-if=" caseDetail.currentuser || mycaseFlag"
                     >同步共债
                     </el-button
                     >
@@ -1338,7 +1338,7 @@
                         type="text"
                         @click="editPhone(scope.row)"
                         v-if="
-                          caseDetail.currentuser &&
+                           (caseDetail.currentuser || mycaseFlag) &&
                             scope.row.telStatusMsg !== '停止跟进'
                         "
                       >编辑
@@ -1348,7 +1348,7 @@
                         type="text"
                         @click="deleteTel(scope.row.id)"
                         v-if="
-                          caseDetail.currentuser &&
+                           (caseDetail.currentuser || mycaseFlag) &&
                             scope.row.telStatusMsg !== '停止跟进'
                         "
                       >删除
@@ -1357,7 +1357,7 @@
                       <el-button
                         type="text"
                         v-if="
-                          caseDetail.currentuser &&
+                           (caseDetail.currentuser || mycaseFlag) &&
                             scope.row.telStatusMsg !== '停止跟进'
                         "
                         @click="stopTel(scope.row.id)"
@@ -1373,19 +1373,19 @@
                   <div class="left-oper">
                     <el-button
                       @click="changeAddrStatus('有效')"
-                      v-if="caseDetail.currentuser"
+                      v-if=" caseDetail.currentuser || mycaseFlag"
                     >标记为有效
                     </el-button
                     >
                     <el-button
                       @click="changeAddrStatus('未知')"
-                      v-if="caseDetail.currentuser"
+                      v-if=" caseDetail.currentuser || mycaseFlag"
                     >标记为未知
                     </el-button
                     >
                     <el-button
                       @click="changeAddrStatus('无效')"
-                      v-if="caseDetail.currentuser"
+                      v-if=" caseDetail.currentuser || mycaseFlag"
                     >标记为无效
                     </el-button
                     >
@@ -1396,7 +1396,7 @@
                     <el-button
                       type="primary"
                       @click="addAddr"
-                      v-if="caseDetail.currentuser"
+                      v-if=" caseDetail.currentuser || mycaseFlag"
                     >新增地址
                     </el-button
                     >
@@ -1510,21 +1510,21 @@
                       <el-button
                         type="text"
                         @click="applyLetter(scope.row)"
-                        v-if="caseDetail.currentuser && letterVisible2"
+                        v-if=" (caseDetail.currentuser || mycaseFlag) && letterVisible2"
                       >申请信函
                       </el-button
                       >
                       <el-button
                         type="text"
                         @click="editAddr(scope.row)"
-                        v-if="caseDetail.currentuser && letterVisible2"
+                        v-if="(caseDetail.currentuser || mycaseFlag) && letterVisible2"
                       >编辑
                       </el-button
                       >
                       <el-button
                         type="text"
                         @click="deleteAddr(scope.row.id)"
-                        v-if="caseDetail.currentuser && letterVisible2"
+                        v-if="(caseDetail.currentuser || mycaseFlag) && letterVisible2"
                       >删除
                       </el-button
                       >
@@ -1611,7 +1611,7 @@
                     <el-button
                       type="primary"
                       @click="onClickAddArchive"
-                      v-if="caseDetail.currentuser"
+                      v-if=" caseDetail.currentuser || mycaseFlag"
                     >新增案人数据
                     </el-button
                     >
@@ -1675,14 +1675,14 @@
                     <el-button
                       type="primary"
                       @click="addDataCollect"
-                      v-if="caseDetail.currentuser"
+                      v-if=" caseDetail.currentuser || mycaseFlag"
                     >添加辅助催记
                     </el-button
                     >
                     <el-button
                       type="primary"
                       @click="_expDataCollect"
-                      v-if="caseDetail.currentuser"
+                      v-if=" caseDetail.currentuser || mycaseFlag"
                     >导出本案催记
                     </el-button
                     >
@@ -1798,11 +1798,11 @@
                       <el-button
                         type="text"
                         @click="editDataCollect(scope.row)"
-                        v-if="caseDetail.currentuser"
+                        v-if=" caseDetail.currentuser || mycaseFlag"
                       >编辑
                       </el-button
                       >
-                      <el-button type="text" v-if="caseDetail.currentuser"
+                      <el-button type="text" v-if=" caseDetail.currentuser || mycaseFlag"
                       >删除
                       </el-button
                       >
@@ -1884,14 +1884,14 @@
                           type="text"
                           @click="editComment(scope.row)"
                           slot="reference"
-                          v-if="caseDetail.currentuser"
+                          v-if=" caseDetail.currentuser || mycaseFlag"
                         >修改
                         </el-button
                         >
                       </el-popover>
                       <el-button
                         type="text"
-                        v-if="caseDetail.currentuser"
+                        v-if=" caseDetail.currentuser || mycaseFlag"
                         @click="_deleteComment(scope.row.id)"
                       >删除
                       </el-button
@@ -2090,14 +2090,14 @@
                     <el-button
                       type="primary"
                       @click="showSynergyApply"
-                      v-if="caseDetail.currentuser"
+                      v-if=" caseDetail.currentuser || mycaseFlag"
                     >添加协催申请
                     </el-button
                     >
                     <el-button
                       type="primary"
                       @click="showSynergyResult"
-                      v-if="caseDetail.currentuser"
+                      v-if=" caseDetail.currentuser || mycaseFlag"
                     >添加协催记录
                     </el-button
                     >
@@ -2291,7 +2291,7 @@
                     <el-button
                       type="primary"
                       @click="litigationApply"
-                      v-if="caseDetail.currentuser"
+                      v-if=" caseDetail.currentuser || mycaseFlag"
                     >申请诉讼
                     </el-button
                     >
@@ -2391,7 +2391,7 @@
                   <div class="right-oper">
                     <el-button
                       type="primary"
-                      v-if="caseDetail.currentuser"
+                      v-if=" caseDetail.currentuser || mycaseFlag"
                       @click="showadddialogVisible"
                     >添加减免申请
                     </el-button
@@ -2591,7 +2591,7 @@
                   ></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="催收模板" prop="module">
+             <!-- <el-form-item label="催收模板" prop="module">
                 <el-select
                   v-model="batchForm.module"
                   placeholder="请选择催收模板"
@@ -2604,7 +2604,7 @@
                     :value="item.id"
                   ></el-option>
                 </el-select>
-              </el-form-item>
+              </el-form-item>-->
               <el-form-item label="催收结果" prop="result">
                 <el-select
                   v-model="batchForm.result"
@@ -2663,7 +2663,7 @@
                 </el-checkbox
                 >
               </el-form-item>
-              <el-form-item label="减免金额" prop="reduceAmt">
+             <!-- <el-form-item label="减免金额" prop="reduceAmt">
                 <el-input
                   v-model="batchForm.reduceAmt"
                   placeholder="请输入减免金额"
@@ -2681,7 +2681,7 @@
                     :value="item.id"
                   ></el-option>
                 </el-select>
-              </el-form-item>
+              </el-form-item>-->
               <el-form-item label="下次跟进日期" prop="nextFollDate">
                 <el-date-picker
                   v-model="batchForm.nextFollDate"
@@ -4346,6 +4346,13 @@
 
       onClickSaveCollection() {
         this.batchForm.caseId = this.id;
+        if ((this.batchForm.collectStatus==28 || this.batchForm.collectStatus) && (this.batchForm.repayAmt==null || this.batchForm.repayAmt=="")){
+          this.$message({
+            type: "info",
+            message: "承诺还款金额不能为空"
+          });
+          return;
+        }
         dataCollectionSave(this.batchForm).then(data => {
           this.$message({
             type: "success",

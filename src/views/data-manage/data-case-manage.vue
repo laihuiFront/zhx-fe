@@ -363,9 +363,9 @@
               <el-dropdown-item command="黑">黑色</el-dropdown-item>
               <el-dropdown-item command="红">红色</el-dropdown-item>
               <el-dropdown-item command="蓝">蓝色</el-dropdown-item>
-              <el-dropdown-item command="橙">橙色</el-dropdown-item>
+              <!--<el-dropdown-item command="橙">橙色</el-dropdown-item>
               <el-dropdown-item command="紫">紫色</el-dropdown-item>
-              <el-dropdown-item command="棕">棕色</el-dropdown-item>
+              <el-dropdown-item command="棕">棕色</el-dropdown-item>-->
             </el-dropdown-menu>
           </el-dropdown>
         </el-form-item>
@@ -1411,7 +1411,7 @@
           {
             label: '蓝色',
             value: '蓝'
-          },
+          }/*,
           {
             label: '橙色',
             value: '橙'
@@ -1423,7 +1423,7 @@
           {
             label: '棕色',
             value: '棕'
-          },
+          },*/
         ],
         addSynergyFormList: [],
         detailVisible4: false,
@@ -1448,7 +1448,12 @@
           this.$set(this.formInline, 'clients', [])
         }else{
           clientCurrent(this.formInline.batchNos).then((response) => {
-            this.$set(this.formInline, 'clients', response)
+
+            if (response==null){
+              this.$set(this.formInline, 'clients', [])
+            }else{
+              this.$set(this.formInline, 'clients', response)
+            }
           })
         }
       },

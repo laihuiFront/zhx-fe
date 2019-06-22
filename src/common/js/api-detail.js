@@ -323,11 +323,11 @@ export function addLetter(data){
   })
 }
 
-export function getReduceApplyList(id){
+export function getReduceApplyList(caseId){
   return request({
     url: '/reduce/apply/page',
     method: 'post',
-    data:{id}
+    data:{caseId}
   })
 }
 

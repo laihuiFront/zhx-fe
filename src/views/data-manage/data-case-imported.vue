@@ -793,7 +793,11 @@
           this.$set(this.form, 'clients', [])
         }else {
           clientCurrent(this.form.batchNos).then((response) => {
-            this.$set(this.form, 'clients', response)
+            if (response==null){
+              this.$set(this.form, 'clients', [])
+            }else{
+              this.$set(this.form, 'clients', response)
+            }
           })
         }
       },
