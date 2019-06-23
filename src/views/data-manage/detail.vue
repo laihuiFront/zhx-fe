@@ -1,16 +1,17 @@
 <template>
   <div id="case-detail">
-    <el-collapse v-model="activeNames">
-      <el-collapse-item
-        :title="caseDetail.name + '-[ ' + caseDetail.seqNo + ']-案件详情'"
-        name="1"
-      >
-        <div style="text-align: right; margin-right:20px;" >
-          <el-button type="primary" align="right" size="mini" @click="lastCase"  v-if="mycaseFlag">上条</el-button>
-          <el-button type="primary" align="right" size="mini" @click="nextCase" v-if="mycaseFlag">下条</el-button>
-          <el-button type="primary" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showCommentVisible=true">评语</el-button>
-          <el-button type="primary" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showWarningVisible=true">警告</el-button>
-          <el-button type="primary" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showCollectInfo">催收小结</el-button>
+    <div class="basic-info">
+        <div class="title-info">
+          <div class="txt">
+            {{caseDetail.name + '-[ ' + caseDetail.seqNo + ']-案件详情'}}
+          </div>
+          <div style="text-align: right; margin-right:20px;" >
+            <el-button type="primary" align="right" size="mini" @click="lastCase"  v-if="mycaseFlag">上条</el-button>
+            <el-button type="primary" align="right" size="mini" @click="nextCase" v-if="mycaseFlag">下条</el-button>
+            <el-button type="primary" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showCommentVisible=true">评语</el-button>
+            <el-button type="primary" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showWarningVisible=true">警告</el-button>
+            <el-button type="primary" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showCollectInfo">催收小结</el-button>
+          </div>
         </div>
         <div class="items-wrap">
           <el-form
@@ -477,8 +478,9 @@
             </el-form-item>
           </el-form>
         </div>
-      </el-collapse-item>
-      <el-collapse-item title="同批次共债案件" name="2">
+    </div>
+    <el-collapse v-model="activeNames">
+      <el-collapse-item title="同批次共债案件" name="1">
         <el-table
           highlight-current-row
           :data="dependCase"
@@ -506,7 +508,7 @@
           </el-table-column>
         </el-table>
       </el-collapse-item>
-      <el-collapse-item title="其他信息" name="3">
+      <el-collapse-item title="其他信息" name="2">
         <div class="items-wrap">
           <el-form
             :model="caseDetail"
@@ -1138,7 +1140,7 @@
           </el-form>
         </div>
       </el-collapse-item>
-      <el-collapse-item title="" name="4">
+      <el-collapse-item title="" name="3">
         <div class="other-wrap">
           <div class="left-wrap">
             <el-tabs
@@ -2546,7 +2548,7 @@
           </div>
         </div>
       </el-collapse-item>
-      <el-collapse-item title="催记信息" name="5">
+      <el-collapse-item title="催记信息" name="4">
         <div class="memorize-wrap">
           <div class="left-panel">
             <el-form
@@ -5107,6 +5109,14 @@
 
 <style lang="scss">
   #case-detail {
+    .basic-info{
+      .title-info{
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
     .inputUnSelect {
       user-select: none;
     }
