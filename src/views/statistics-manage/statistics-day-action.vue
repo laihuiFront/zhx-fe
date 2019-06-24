@@ -11,7 +11,7 @@
         <el-input v-model="odvName" width="200" @focus="onClickSelectUser" clearable placeholder="请选择催收员"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="formInline.area" placeholder="请选择催收区域" clearable>
+        <el-select v-model="formInline.areas" placeholder="请选择催收区域" filterable multiple collapse-tags clearable>
           <el-option
             v-for="item in areaList"
             :key="item.id"
@@ -21,7 +21,7 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="formInline.client" placeholder="请选择委托方" clearable>
+        <el-select v-model="formInline.clients" placeholder="请选择委托方" filterable multiple collapse-tags clearable>
           <el-option
             v-for="item in clientList"
             :key="item.value"

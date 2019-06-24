@@ -2,7 +2,7 @@
   <div  id="syn-record-query" >
   <el-form  :model="queryForm" :inline="true" class="query-wrap">
     <el-form-item  v-if="queryConf.csqy || queryConfFlag">
-      <el-select style="width: 200px;" clearable v-model="queryForm.dataCase.collectionArea.id" filterable placeholder="请选择催收区域">
+      <el-select style="width: 200px;" clearable v-model="queryForm.dataCase.collectionArea.ids" filterable multiple collapse-tags placeholder="请选择催收区域">
         <el-option
           v-for="item in collectionAreaList"
           :key="item.id"
@@ -45,7 +45,7 @@
       </el-date-picker>
     </el-form-item>
     <el-form-item  v-if="queryConf.ajzt || queryConfFlag">
-            <el-select clearable v-model="queryForm.dataCase.status" filterable placeholder="请选择案件状态" style="width: 200px;">
+            <el-select clearable v-model="queryForm.dataCase.statuss" filterable collapse-tags multiple placeholder="请选择案件状态" style="width: 200px;">
               <el-option
                 v-for="item in statusList"
                 :key="item.id"
@@ -55,7 +55,7 @@
             </el-select>
     </el-form-item>
     <el-form-item  v-if="queryConf.cszt || queryConfFlag">
-            <el-select v-model="queryForm.dataCase.collectStatus" filterable clearable placeholder="请选择催收状态" style="width: 200px;">
+            <el-select v-model="queryForm.dataCase.collectStatuss" filterable collapse-tags multiple clearable placeholder="请选择催收状态" style="width: 200px;">
               <el-option
                 v-for="item in collectStatusList"
                 :key="item.id"
@@ -65,7 +65,7 @@
             </el-select>
     </el-form-item>
     <el-form-item  v-if="queryConf.xclx || queryConfFlag">
-            <el-select v-model="queryForm.synergisticType.name" filterable clearable placeholder="请选择协催类型" style="width: 200px;">
+            <el-select v-model="queryForm.synergisticType.names" filterable collapse-tags multiple clearable placeholder="请选择协催类型" style="width: 200px;">
               <el-option
                 v-for="item in synergisticTypeList"
                 :key="item.id"

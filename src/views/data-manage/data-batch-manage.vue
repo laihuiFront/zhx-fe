@@ -9,7 +9,7 @@
        class="page-wraper-sub">
     <el-form ref="form" :model="form" :inline="true" class="query-wrap">
       <el-form-item>
-        <el-select v-model="form.area" placeholder="请选择催收区域" clearable>
+        <el-select v-model="form.areas" placeholder="请选择催收区域"  filterable multiple collapse-tags clearable>
           <el-option
             v-for="item in areaList"
             :key="item.value"
@@ -19,7 +19,7 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="form.batchStatus" placeholder="请选择批次状态" clearable>
+        <el-select v-model="form.batchStatuss" placeholder="请选择批次状态" filterable multiple collapse-tags clearable>
           <el-option
             v-for="item in form.CasestatusList"
             :key="item.id"
@@ -50,7 +50,7 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="form.caseType" placeholder="请选择案件类型" clearable>
+        <el-select v-model="form.caseTypes" placeholder="请选择案件类型" collapse-tags multiple filterable clearable>
           <el-option
             v-for="item in caseTypeList"
             :key="item.value"
@@ -1446,7 +1446,7 @@
 
         let startTime = this.form.time[0]
         let endTime = this.form.time[1]
-        totalDataBatchExport(this.exporttBatchConf, this.form.area, this.form.batchNos, this.form.clients, this.form.batchStatus, this.form.caseType, startTime, endTime, this.pageSize, this.pageNum).then((response) => {
+        totalDataBatchExport(this.exporttBatchConf, this.form.areas, this.form.batchNos, this.form.clients, this.form.batchStatuss, this.form.caseTypes, startTime, endTime, this.pageSize, this.pageNum).then((response) => {
           this.loading = false;
           this.fullscreenLoading = false
           this.$message({
@@ -1460,7 +1460,7 @@
         this.fullscreenLoading = true
         let startTime = this.form.time[0]
         let endTime = this.form.time[1]
-        pageDataBatchExport(this.exporttBatchConf, this.form.area, this.form.batchNos, this.form.clients, this.form.batchStatus, this.form.caseType, startTime, endTime, this.orderBy, this.sort, this.pageSize, this.pageNum).then((response) => {
+        pageDataBatchExport(this.exporttBatchConf, this.form.areas, this.form.batchNos, this.form.clients, this.form.batchStatuss, this.form.caseTypes, startTime, endTime, this.orderBy, this.sort, this.pageSize, this.pageNum).then((response) => {
           this.loading = false;
           this.fullscreenLoading = false
           this.$message({
@@ -1512,7 +1512,7 @@
         this.sort = order == null ? "desc" : order.replace("ending", "")
         this.orderBy = prop == null ? "id" : prop
         this.tableLoad = true
-        dataList(this.form.area, this.form.batchNos, this.form.clients, this.form.batchStatus, this.form.caseType, startTime, endTime, this.orderBy, this.sort, this.pageSize, this.pageNum).then((response) => {
+        dataList(this.form.areas, this.form.batchNos, this.form.clients, this.form.batchStatuss, this.form.caseTypes, startTime, endTime, this.orderBy, this.sort, this.pageSize, this.pageNum).then((response) => {
 
           this.DataList = response.pageInfo.list
           //this.pages = response.pageInfo.pages
@@ -1535,7 +1535,7 @@
         let endTime = this.form.time[1]
 
         this.tableLoad = true
-        dataList(this.form.area, this.form.batchNos, this.form.clients, this.form.batchStatus, this.form.caseType, startTime, endTime, this.orderBy, this.sort, this.pageSize, this.pageNum).then((response) => {
+        dataList(this.form.areas, this.form.batchNos, this.form.clients, this.form.batchStatuss, this.form.caseTypes, startTime, endTime, this.orderBy, this.sort, this.pageSize, this.pageNum).then((response) => {
 
           this.DataList = response.pageInfo.list
           this.total = response.pageInfo.total

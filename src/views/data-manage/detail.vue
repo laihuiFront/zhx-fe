@@ -2445,7 +2445,7 @@
                   <el-table-column
                     prop="applyUser"
                     show-overflow-tooltip
-                    label="申请人"
+                    label="减免申请人"
                   >
                   </el-table-column>
                   <el-table-column
@@ -3977,7 +3977,7 @@
         rateUpdateList: [], //利息
         syncList: [], //协催
         dependCase: [], //同批次公债案件
-        activeNames: ["1", "2", "3", "4", "5"],
+        activeNames: ["3", "4", "5"],
         otherActiveName: "1",
         caseDetail: resetObj,
         ligigationVisible: false,

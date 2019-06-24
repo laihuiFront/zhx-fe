@@ -55,6 +55,7 @@
               v-model="form2.val1"
               placeholder="请选择委托方"
               filterable
+              collapse-tags
               multiple
               clearable
             >
@@ -68,7 +69,9 @@
             </el-select>
           </el-form-item>
           <el-form-item prop="val2">
-            <el-select v-model="form2.val2" placeholder="请选择催收状态" clearable>
+            <el-select v-model="form2.val2" placeholder="请选择催收状态" filterable
+                       collapse-tags
+                       multiple clearable>
               <el-option
                 v-for="item in val2_data_form2"
                 :key="item.value"
@@ -81,6 +84,9 @@
             <el-select
               v-model="form2.val3"
               placeholder="请选择逾期账龄"
+              filterable
+              collapse-tags
+              multiple
               clearable
             >
               <el-option
@@ -130,6 +136,7 @@
               v-model="form3.val1"
               placeholder="请选择委托方"
               filterable
+              collapse-tags
               multiple
               clearable
             >
@@ -164,6 +171,9 @@
             <el-select
               v-model="form3.val3"
               placeholder="请选择逾期账龄"
+              filterable
+              collapse-tags
+              multiple
               clearable
             >
               <el-option
@@ -260,19 +270,19 @@ export default {
   },
   computed: {
     form2_data() {
-      let { val1: clients, val2: collectStatus, val3: accountAge } = this.form2;
+      let { val1: clients, val2: collectStatuss, val3: accountAges } = this.form2;
       return {
         clients,
-        collectStatus,
-        accountAge
+        collectStatuss,
+        accountAges
       };
     },
     form3_data() {
-      let { val1: clients, val2: batchNos, val3: accountAge } = this.form3;
+      let { val1: clients, val2: batchNos, val3: accountAges } = this.form3;
       return {
         clients,
         batchNos,
-        accountAge,
+        accountAges,
         sType: 0
       };
     }

@@ -4,7 +4,7 @@
     <el-tab-pane label="我的诉讼案件" name="first"> 
       <el-form ref="form" :model="form" :inline="true" class="query-wrap">
         <el-form-item>
-          <el-select v-model="form.legalStatusMsg " filterable  placeholder="请选择案件状态" clearable>
+          <el-select v-model="form.legalStatusMsg" filterable collapse-tags multiple  placeholder="请选择案件状态" clearable>
             <el-option
               v-for="item in legalStatusMsgList"
               :key="item.id"

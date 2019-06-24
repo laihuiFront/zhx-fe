@@ -66,6 +66,7 @@
               v-model="form1.val9"
               placeholder="请选择催收员"
               filterable
+              collapse-tags
               multiple
               clearable
             >
@@ -79,7 +80,7 @@
             </el-select>
           </el-form-item>
           <el-form-item prop="val2">
-            <el-select v-model="form1.val2" placeholder="请选择委托方" filterable multiple clearable>
+            <el-select v-model="form1.val2" placeholder="请选择委托方" filterable collapse-tags multiple clearable>
               <el-option
                 v-for="item in val2_data"
                 :key="item.value"
@@ -109,6 +110,9 @@
             <el-select
               v-model="form1.val4"
               placeholder="请选择逾期账龄"
+              filterable
+              collapse-tags
+              multiple
               clearable
             >
               <el-option
@@ -476,7 +480,7 @@ export default {
         val1: opeType,
         val2: clients,
         val3: batchNos,
-        val4: accountAge,
+        val4: accountAges,
         val5,
         val6,
         val7,
@@ -487,7 +491,7 @@ export default {
         opeType,
         clients,
         batchNos,
-        accountAge,
+        accountAges,
         repayTimeStart: (!!val5 && val5[0]) || "",
         repayTimeEnd: (!!val5 && val5[1]) || "",
         expectTimeStart:(!!val6 && val6[0]) || "",

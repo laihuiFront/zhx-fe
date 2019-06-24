@@ -45,6 +45,9 @@
                     <el-select
                       v-model="form.val32"
                       placeholder="请选择催收员"
+                      filterable
+                      multiple
+                      collapse-tags
                       clearable
                     >
                       <el-option
@@ -136,6 +139,9 @@
                     <el-select
                       v-model="form.val4"
                       placeholder="请选择地区"
+                      filterable
+                      multiple
+                      collapse-tags
                       clearable
                     >
                       <el-option
@@ -164,6 +170,9 @@
                   <el-form-item prop="val8" v-if="queryConf.yqzl || queryConfFlag">
                     <el-select
                       v-model="form.val8"
+                      filterable
+                      multiple
+                      collapse-tags
                       placeholder="请选择逾期账龄"
                       clearable
                     >
@@ -179,6 +188,9 @@
                   <el-form-item prop="val9" v-if="queryConf.ajzt || queryConfFlag">
                     <el-select
                       v-model="form.val9"
+                      filterable
+                      multiple
+                      collapse-tags
                       placeholder="请选择案件状态"
                       clearable
                     >
@@ -194,6 +206,9 @@
                   <el-form-item prop="val10" v-if="queryConf.cszt || queryConfFlag">
                     <el-select
                       v-model="form.val10"
+                      filterable
+                      multiple
+                      collapse-tags
                       placeholder="请选择催收状态"
                       clearable
                     >
@@ -209,6 +224,9 @@
                   <el-form-item prop="val11" v-if="queryConf.ajlx || queryConfFlag">
                     <el-select
                       v-model="form.val11"
+                      filterable
+                      multiple
+                      collapse-tags
                       placeholder="请选择案件类型"
                       clearable
                     >
@@ -241,6 +259,9 @@
                   <el-form-item prop="val14" v-if="queryConf.bszt || queryConfFlag">
                     <el-select
                       v-model="form.val14"
+                      filterable
+                      multiple
+                      collapse-tags
                       placeholder="请选择标色状态"
                       clearable
                     >
@@ -332,6 +353,9 @@
                   <el-form-item prop="val24" v-if="queryConf.jmzt || queryConfFlag">
                     <el-select
                       v-model="form.val24"
+                      filterable
+                      multiple
+                      collapse-tags
                       placeholder="请选择减免状态"
                       clearable
                     >
@@ -347,6 +371,9 @@
                   <el-form-item prop="val25" v-if="queryConf.bbzt || queryConfFlag">
                     <el-select
                       v-model="form.val25"
+                      filterable
+                      multiple
+                      collapse-tags
                       placeholder="请选择报备状态"
                       clearable
                     >
@@ -544,7 +571,7 @@
             label="个案序列号"
             prop="seqno"
             sortable="custom"
-            min-width="5"
+            width="180"
             :sort-orders="['ascending', 'descending']"
             header-align="center"
             show-overflow-tooltip
@@ -770,7 +797,7 @@
           {
             label:'蓝色',
             value:'蓝'
-          },
+          }/*,
           {
             label:'橙色',
             value:'橙'
@@ -782,7 +809,7 @@
           {
             label:'棕色',
             value:'棕'
-          },
+          },*/
         ],   //标色状态
         val19_data: [{ label: "是", value: 1 }, { label: "否", value: 0 }],
         val20_data: [
@@ -801,99 +828,72 @@
         val32_data: [],  //催收员
         tableCol_data: [
           {
-            prop: "odv",
-            label: "催收员"
-          },
-          {
-            prop: "countFollow",
-            label: "跟进次数"
-          },
-          {
-            prop: "remind",
-            label: "提醒"
-          },
-          {
-            prop: "nextFollDate",
-            label: "下次跟进日期"
-          },
-          {
-            prop: "caseAllotTime",
-            label: "案件分配时间"
-          },
-          {
+            width:120,
             prop: "collectStatusMsg",
             label: "催收状态"
           },
           {
-            prop: "collectionType",
-            label: "催收分类"
-          },
-          {
-            prop: "accountAge",
-            label: "逾期账龄"
-          },
-         /* {
-            prop: "seqno",
             width:140,
-            label: "个案序列号"
-          },*/
-          {
             prop: "caseDate",
             label: "委案日期"
           },
           {
-            prop: "expectTime",
-            label: "预计退案日期"
-          },
-          {
+            width:120,
             prop: "name",
             label: "姓名"
           },
           {
+            width:180,
             prop: "cardNo",
             label: "卡号"
           },
           {
+            width:180,
             prop: "identNo",
             label: "证件号"
           },
           {
             prop: "moneyMsg",
+            width: 140,
             label: "委案金额"
           },
           {
-            prop: "balanceMsg",
-            label: "委案余额"
+            width: 140,
+            prop: "principle",
+            label: "本金"
           },
           {
+            width: 140,
             prop: "moneyStartMsg",
             label: "最新欠款"
           },
           {
-            prop: "overDays",
-            label: "逾期天数"
-          },
-          {
+            width: 140,
             prop: "enRepayAmtMsg",
             label: "已还款金额"
           },
           {
+            width: 140,
             prop: "repayAmtMsg",
             label: "承诺还款金额"
           },
           {
-            prop: "bankAmtMsg",
-            label: "待银行查账金额"
+            width: 120,
+            prop: "overDays",
+            label: "逾期天数"
           },
           {
-            prop: "lastPhoneTime",
-            label: "上次通电时间"
-          },
-          {
+            width: 120,
             prop: "leaveDays",
             label: "闲置天数"
           },
           {
+            width: 140,
+            prop: "expectTime",
+            label: "预计退案日期"
+          },
+          {
+            width: 180,
             prop: "collectInfo",
             label: "催收小结"
           }
@@ -912,18 +912,18 @@
           val1: batchNos,
           val2,
           val3: seqno,
-          val4: area,
+          val4: areas,
           val5: name,
           val6: identNo,
           val7,
-          val8: accountAge,
-          val9: status,
-          val10: collectStatus,
-          val11: caseType,
+          val8: accountAges,
+          val9: statuss,
+          val10: collectStatuss,
+          val11: caseTypes,
           val12,
           val13: moneyStart,
           val29: moneyEnd,
-          val14: color,
+          val14: colors,
           val15: cardNo,
           val16: archiveNo,
           val17,
@@ -934,12 +934,12 @@
           val21,
           val22: remark,
           val23: collectionType,
-          val24: reliefStatus,
-          val25: reportStatus,
+          val24: reliefStatuss,
+          val25: reportStatuss,
           val27: telPhone,
           val28: collectMeasure,
           val31:dept,
-          val32:odv,
+          val32:odvs,
           val33
         } = this.form;
         return {
@@ -948,19 +948,19 @@
           seqno,
           nextFollDateStart: (!!val2 && val2[0])||'' ,
           nextFollDateEnd: (!!val2 && val2[1])||'',
-          area,
+          areas,
           name,
           identNo,
-          accountAge,
-          status,
-          collectStatus,
-          caseType,
+          accountAges,
+          statuss,
+          collectStatuss,
+          caseTypes,
           repayStatus,
           repayTimeStart: (!!val12 && val12[0])||'',
           repayTimeEnd: (!!val12 && val12[1])||'',
           moneyStart,
           moneyEnd,
-          color,
+          colors,
           cardNo,
           archiveNo,
           lastFollDateStart: (!!val17&&val17[0])||'',
@@ -974,14 +974,14 @@
           caseAllotTimeEnd: (!!val33 && val33[1]) || "",
           remark,
           collectionType,
-          reliefStatus,
-          reportStatus,
+          reliefStatuss,
+          reportStatuss,
           telPhone,
           collectMeasure,
           pageNum: this.paginationData.currentPage,
           pageSize: this.paginationData.pageSize,
           dept,
-          odv,
+          odvs,
           sType:1,
           orderBy: this.sort.orderBy,
           sort: this.sort.sort,
@@ -1263,9 +1263,9 @@
     // .el-table .el-table__body-wrapper{
     //   height: calc(100% - 50px);
     // }
-    .el-table .el-table__body-wrapper {
+    /*.el-table .el-table__body-wrapper {
       overflow-x: hidden;
-    }
+    }*/
     .el-table th>.cell{
       white-space: nowrap;
     }

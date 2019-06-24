@@ -8,7 +8,7 @@
        class="page-wraper-sub">
     <el-form ref="form" :model="form" :inline="true" class="query-wrap">
       <el-form-item>
-        <el-select class="Newinput" v-model="form.area" placeholder="请选择催收区域" clearable>
+        <el-select  v-model="form.areas" placeholder="请选择催收区域" collapse-tags multiple clearable>
           <el-option
             v-for="item in areaList"
             :key="item.id"
@@ -38,7 +38,7 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="form.caseType" placeholder="请选择案件类型" clearable>
+        <el-select v-model="form.caseTypes" placeholder="请选择案件类型" collapse-tags multiple clearable>
           <el-option
             v-for="item in caseTypeList"
             :key="item.id"
@@ -780,6 +780,8 @@
         DataList: [],
         currentPage4: 1,
         form: {
+          caseTypes:[],
+          areas:[],
           time: [],
           clients: [],
           batchNos: [],
@@ -1035,7 +1037,7 @@
         this.orderBy = prop == null ? "id" : prop
         /* this.$refs.multipleTable.clearSort()*/
         this.tableLoad = true
-        dataList(this.form.area, this.form.batchNos, this.form.clients, this.form.caseType, startTime, endTime, this.orderBy, this.sort, this.pageSize, this.pageNum).then((response) => {
+        dataList(this.form.areas, this.form.batchNos, this.form.clients, this.form.caseTypes, startTime, endTime, this.orderBy, this.sort, this.pageSize, this.pageNum).then((response) => {
           this.DataList = response.pageInfo.list
           this.pages = response.pageInfo.pages
           this.total = response.pageInfo.total
@@ -1046,7 +1048,7 @@
         let startTime = this.form.time[0]
         let endTime = this.form.time[1]
         this.tableLoad = true
-        dataList(this.form.area, this.form.batchNos, this.form.clients, this.form.caseType, startTime, endTime, this.orderBy, this.sort, this.pageSize, this.pageNum).then((response) => {
+        dataList(this.form.areas, this.form.batchNos, this.form.clients, this.form.caseTypes, startTime, endTime, this.orderBy, this.sort, this.pageSize, this.pageNum).then((response) => {
           this.DataList = response.pageInfo.list
           console.info(response.pageInfo.pages);
           // this.pages = response.pageInfo.pages

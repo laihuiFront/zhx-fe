@@ -20,8 +20,9 @@
       </el-form-item>
       <el-form-item>
         <el-select
-          v-model="formInline.area"
+          v-model="formInline.areas"
           placeholder="请选择催收区域"
+          filterable multiple collapse-tags
           clearable
         >
           <el-option
@@ -35,8 +36,9 @@
       </el-form-item>
       <el-form-item>
         <el-select
-          v-model="formInline.client"
+          v-model="formInline.clients"
           placeholder="请选择委托方"
+          filterable multiple collapse-tags
           clearable
         >
           <el-option

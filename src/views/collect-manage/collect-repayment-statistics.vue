@@ -60,7 +60,7 @@
           </el-form-item>
           <el-form-item prop="val2">
             <el-select v-model="form1.val2" placeholder="请选择委托方" filterable
-                      multiple clearable>
+                      multiple collapse-tags clearable>
               <el-option
                 v-for="item in val2_data"
                 :key="item.value"
@@ -75,6 +75,7 @@
               v-model="form1.val3"
               multiple
               filterable
+              collapse-tags
               remote
               placeholder="请输入批次号"
               :remote-method="querySearch">
@@ -90,6 +91,9 @@
             <el-select
               v-model="form1.val4"
               placeholder="请选择逾期账龄"
+              multiple
+              collapse-tags
+              filterable
               clearable
             >
               <el-option
@@ -411,7 +415,7 @@ export default {
         val1: opeType,
         val2: clients,
         val3: batchNos,
-        val4: accountAge,
+        val4: accountAges,
         val5,
         val6,
         val7
@@ -420,7 +424,7 @@ export default {
         opeType,
         clients,
         batchNos,
-        accountAge,
+        accountAges,
         repayTimeStart: (!!val5 && val5[0]) || "",
         repayTimeEnd: (!!val5 && val5[1]) || "",
         bankTimeStart:(!!val6 && val6[0]) || "",

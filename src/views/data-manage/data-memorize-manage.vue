@@ -8,7 +8,7 @@
        class="page-wraper-sub">
     <el-form id="repay-record-query" :model="formInline" :inline="true" class="query-wrap">
       <el-form-item v-if="queryConf.csqy || queryConfFlag">
-        <el-select v-model="formInline.area" placeholder="请选择催收区域" clearable>
+        <el-select v-model="formInline.areas" filterable collapse-tags multiple placeholder="请选择催收区域" clearable>
           <el-option
             v-for="item in areaList"
             :key="item.id"
@@ -18,7 +18,7 @@
         </el-select>
       </el-form-item>
       <el-form-item v-if="queryConf.bm || queryConfFlag">
-        <el-select v-model="formInline.dept" placeholder="请选择部门" clearable>
+        <el-select v-model="formInline.depts" filterable collapse-tags multiple placeholder="请选择部门" clearable>
           <el-option
             v-for="item in departmentList"
             :key="item.id"
@@ -38,7 +38,7 @@
         </el-select>
       </el-form-item>
       <el-form-item v-if="queryConf.cscs || queryConfFlag">
-        <el-select v-model="formInline.measure" placeholder="请选择催收措施" clearable>
+        <el-select v-model="formInline.measures" filterable collapse-tags multiple placeholder="请选择催收措施" clearable>
           <el-option
             v-for="item in sectionList"
             :key="item.id"
@@ -63,7 +63,7 @@
         <el-input v-model="formInline.seqno" placeholder="请输入个案序列号"></el-input>
       </el-form-item>
       <el-form-item v-if="queryConf.csjg || queryConfFlag">
-        <el-select v-model="formInline.result" placeholder="请选择催收结果" clearable>
+        <el-select v-model="formInline.results" placeholder="请选择催收结果" filterable collapse-tags multiple clearable>
           <el-option
             v-for="item in EndList"
             :key="item.id"
@@ -84,7 +84,7 @@
       </el-form-item>
 
       <el-form-item v-if="queryConf.ajzt || queryConfFlag">
-        <el-select v-model="formInline.caseStatus" filterable placeholder="请选择案件状态" clearable>
+        <el-select v-model="formInline.caseStatuss" filterable collapse-tags multiple placeholder="请选择案件状态" clearable>
           <el-option
             v-for="item in caseStatusList"
             :key="item.id"
@@ -94,7 +94,7 @@
         </el-select>
       </el-form-item>
       <el-form-item v-if="queryConf.bszt || queryConfFlag">
-        <el-select v-model="formInline.color" filterable placeholder="请选择标色状态" clearable>
+        <el-select v-model="formInline.colors" filterable collapse-tags multiple placeholder="请选择标色状态" clearable>
           <el-option
             v-for="item in val14_data"
             :key="item.label"
@@ -570,7 +570,7 @@
           {
             label: '蓝色',
             value: '蓝'
-          },
+          }/*,
           {
             label: '橙色',
             value: '橙'
@@ -582,7 +582,7 @@
           {
             label: '棕色',
             value: '棕'
-          },
+          },*/
         ],
         fullscreenLoading: false,
         EndList: [],
@@ -770,7 +770,7 @@
             let expectEndTime = this.formInline.expectTime[1]
             let collectStartTime = this.formInline.collectTime[0]
             let collectEndTime = this.formInline.collectTime[1]
-            totalDataExport(this.exportConf,this.formInline.area, this.formInline.dept, this.formInline.batchNo, this.formInline.clients, this.formInline.odvs, this.formInline.caseStatus, this.formInline.measure, this.formInline.result, this.formInline.identNo, this.formInline.cardNo, this.formInline.collectInfo, this.formInline.color, this.formInline.seqno, this.formInline.bailStartDate, this.formInline.bailEndDate, this.formInline.expectStartTime, this.formInline.expectEndTime, this.formInline.collectStartTime, this.formInline.collectEndTime, this.orderBy, this.sort, this.pageSize, this.pageNum).then((response) => {
+            totalDataExport(this.exportConf,this.formInline.areas, this.formInline.depts, this.formInline.batchNo, this.formInline.clients, this.formInline.odvs, this.formInline.caseStatuss, this.formInline.measures, this.formInline.results, this.formInline.identNo, this.formInline.cardNo, this.formInline.collectInfo, this.formInline.colors, this.formInline.seqno, this.formInline.bailStartDate, this.formInline.bailEndDate, this.formInline.expectStartTime, this.formInline.expectEndTime, this.formInline.collectStartTime, this.formInline.collectEndTime, this.orderBy, this.sort, this.pageSize, this.pageNum).then((response) => {
               this.loading = false;
               this.fullscreenLoading = false
 
@@ -788,7 +788,7 @@
             let expectEndTime = this.formInline.expectTime[1]
             let collectStartTime = this.formInline.collectTime[0]
             let collectEndTime = this.formInline.collectTime[1]
-            pageDataExport(this.exportConf,this.formInline.area, this.formInline.dept, this.formInline.batchNo, this.formInline.clients, this.formInline.odvs, this.formInline.caseStatus, this.formInline.measure, this.formInline.result, this.formInline.identNo, this.formInline.cardNo, this.formInline.collectInfo, this.formInline.color, this.formInline.seqno, this.formInline.bailStartDate, this.formInline.bailEndDate, this.formInline.expectStartTime, this.formInline.expectEndTime, this.formInline.collectStartTime, this.formInline.collectEndTime, this.orderBy, this.sort, this.pageSize, this.pageNum).then((response) => {
+            pageDataExport(this.exportConf,this.formInline.areas, this.formInline.depts, this.formInline.batchNo, this.formInline.clients, this.formInline.odvs, this.formInline.caseStatuss, this.formInline.measures, this.formInline.results, this.formInline.identNo, this.formInline.cardNo, this.formInline.collectInfo, this.formInline.colors, this.formInline.seqno, this.formInline.bailStartDate, this.formInline.bailEndDate, this.formInline.expectStartTime, this.formInline.expectEndTime, this.formInline.collectStartTime, this.formInline.collectEndTime, this.orderBy, this.sort, this.pageSize, this.pageNum).then((response) => {
               this.loading = false;
               this.fullscreenLoading = false
 

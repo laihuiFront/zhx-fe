@@ -5,10 +5,10 @@ return request({
     url: '/dataBatch/pageDataCase',
     method: 'post',
     data: {
-       area:area ? area : "",
+       areas:area ? area : "",
        batchNos:batchNos,
        clients:clients,
-       caseType:caseType ? caseType : "",
+       caseTypes:caseType ? caseType : "",
        startTime:startTime ? startTime : "",
        endTime:endTime ? endTime : "",
        orderBy:orderBy?orderBy:"id",

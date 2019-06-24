@@ -10,24 +10,24 @@ export const dataList = function(form,orderBy,sort,pageSize,pageNum) {
       clients :form.clients,//委托方
       batchNos:form.batchNos,  //批次编号
       odvs :form.odv, //催收员
-      dept:form.dept,
-      accountAge :form.accountAge, //逾期賬齡
+      depts:form.depts,
+      accountAges :form.accountAges, //逾期賬齡
       seqNo:form.seqNo==null?"":form.seqNo.replace(/[\n\r\v\s↵]/g,","),//個案序列號
-      collectArea: form.collectArea, //催收地區
+      collectAreas: form.collectAreas, //催收地區
       overDays:  form.overDays,//逾期天數
-      area: form.area,//地区
+      areas: form.areas,//地区
       license: form.license, //牌照号
       collectHand: form.collectHand, //催收手别
-      distributeStatus: form.distributeStatus, //分配状态 已分配1/未分配0
+      distributeStatuss: form.distributeStatuss, //分配状态 已分配1/未分配0
       identNo : form.identNo==null?"":form.identNo.replace(/[\n\r\v\s↵]/g,","),//证件号
       vin: form.vin,//车架号
       name:form.name==null?"":form.name.replace(/[\n\r\v\s↵]/g,","),//名称
-      status: form.status ,//案件状态 在枚举设置的“案件类型”中配置
+      statuss: form.statuss ,//案件状态 在枚举设置的“案件类型”中配置
       bank:  form.bank,//开户行
       collectInfo : form.collectInfo,//催收记录
-      collectStatus: form.collectStatus ,//催收状态    枚举设置的“催收状态”中配置
-      caseType:  form.caseType,//案件状态   未退案0/正常1/暂停2/关档3/退档4/全部5
-      color: form.color, //标色状态
+      collectStatuss: form.collectStatuss ,//催收状态    枚举设置的“催收状态”中配置
+      caseTypes:  form.caseTypes,//案件状态   未退案0/正常1/暂停2/关档3/退档4/全部5
+      colors: form.colors, //标色状态
       account: form.account==null?"":form.account.replace(/[\n\r\v\s↵]/g,",") ,// 账号
       archiveNo: form.archiveNo==null?"":form.archiveNo.replace(/[\n\r\v\s↵]/g,","), //档案号
       caseDateStart:form.time2==null?"":form.time2[0]  , //委案日期 开始时间
@@ -60,24 +60,24 @@ export const searchList =  function(form,orderBy,sort,pageSize,pageNum) {
       clients :form.clients,//委托方
       batchNos:form.batchNos,  //批次编号
       odvs :form.odvs, //催收员
-      dept:form.dept,
-      accountAge :form.accountAge, //逾期賬齡
+      depts:form.depts,
+      accountAges :form.accountAges, //逾期賬齡
       seqNo:form.seqNo==null?"":form.seqNo.replace(/[\n\r\v\s↵]/g,","),//個案序列號
-      collectArea: form.collectArea, //催收地區
+      collectAreas: form.collectAreas, //催收地區
       overDays:  form.overDays,//逾期天數
-      area: form.area,//地区
+      areas: form.areas,//地区
       license: form.license, //牌照号
       collectHand: form.collectHand, //催收手别
-      distributeStatus: form.distributeStatus, //分配状态 已分配1/未分配0
+      distributeStatuss: form.distributeStatuss, //分配状态 已分配1/未分配0
       identNo : form.identNo==null?"":form.identNo.replace(/[\n\r\v\s↵]/g,","),//证件号
       vin: form.vin,//车架号
       name:form.name==null?"":form.name.replace(/[\n\r\v\s↵]/g,","),//名称
-      status: form.status ,//案件状态 在枚举设置的“案件类型”中配置
+      statuss: form.statuss ,//案件状态 在枚举设置的“案件类型”中配置
       bank:  form.bank,//开户行
       collectInfo : form.collectInfo,//催收记录
-      collectStatus: form.collectStatus ,//催收状态    枚举设置的“催收状态”中配置
-      caseType:  form.caseType,//案件状态   未退案0/正常1/暂停2/关档3/退档4/全部5
-      color: form.color, //标色状态
+      collectStatuss: form.collectStatuss ,//催收状态    枚举设置的“催收状态”中配置
+      caseTypes:  form.caseTypes,//案件状态   未退案0/正常1/暂停2/关档3/退档4/全部5
+      colors: form.colors, //标色状态
       account: form.account==null?"":form.account.replace(/[\n\r\v\s↵]/g,",") ,// 账号
       archiveNo: form.archiveNo==null?"":form.archiveNo.replace(/[\n\r\v\s↵]/g,","), //档案号
       caseDateStart:form.time2==null?"":form.time2[0]  , //委案日期 开始时间
@@ -191,7 +191,7 @@ export const PersonList = function() {
   return request({
     url: '/user/select/roleList',
     method: 'post',
-    data:{role:"催收员 "}
+    data:{role:"催收员"}
   })
 }
 
@@ -304,25 +304,25 @@ export const fenan2 = function(form,fenan) {
       cardNo : form.cardNo==null?"":form.cardNo.replace(/\n/,","),//卡号
       clients :form.clients,//委托方
       batchNos:form.batchNos,  //批次编号
-      odvs :form.odv, //催收员
-      dept:form.dept,
-      accountAge :form.accountAge, //逾期賬齡
+      odvs :form.odvs, //催收员
+      depts:form.depts,
+      accountAges :form.accountAges, //逾期賬齡
       seqNo:form.seqNo==null?"":form.seqNo.replace(/\n/,","),//個案序列號
-      collectArea: form.collectArea, //催收地區
+      collectAreas: form.collectAreas, //催收地區
       overDays:  form.overDays,//逾期天數
-      area: form.area,//地区
+      areas: form.areas,//地区
       license: form.license, //牌照号
       collectHand: form.collectHand, //催收手别
-      distributeStatus: form.distributeStatus, //分配状态 已分配1/未分配0
+      distributeStatuss: form.distributeStatuss, //分配状态 已分配1/未分配0
       identNo : form.identNo==null?"":form.identNo.replace(/\n/,","),//证件号
       vin: form.vin,//车架号
       name:form.name==null?"":form.name.replace(/\n/,","),//名称
-      status: form.status ,//案件状态 在枚举设置的“案件类型”中配置
+      statuss: form.statuss ,//案件状态 在枚举设置的“案件类型”中配置
       bank:  form.bank,//开户行
       collectInfo : form.collectInfo,//催收记录
-      collectStatus: form.collectStatus ,//催收状态    枚举设置的“催收状态”中配置
-      caseType:  form.caseType,//案件状态   未退案0/正常1/暂停2/关档3/退档4/全部5
-      color: form.color, //标色状态
+      collectStatuss: form.collectStatuss ,//催收状态    枚举设置的“催收状态”中配置
+      caseTypes:  form.caseTypes,//案件状态   未退案0/正常1/暂停2/关档3/退档4/全部5
+      colors: form.colors, //标色状态
       account: form.account==null?"":form.account.replace(/\n/,",") ,// 账号
       archiveNo: form.archiveNo==null?"":form.archiveNo.replace(/\n/,","), //档案号
       caseDateStart:form.time2==null?"":form.time2[0]  , //委案日期 开始时间
@@ -386,25 +386,25 @@ export const totalDataBatchExport = function(form) {
       cardNo : form.cardNo==null?"":form.cardNo.replace(/\n/,","),//卡号
       clients :form.clients,//委托方
       batchNos:form.batchNos,  //批次编号
-      odvs :form.odv, //催收员
-      dept:form.dept,
-      accountAge :form.accountAge, //逾期賬齡
+      odvs :form.odvs, //催收员
+      depts:form.depts,
+      accountAges :form.accountAges, //逾期賬齡
       seqNo:form.seqNo==null?"":form.seqNo.replace(/\n/,","),//個案序列號
-      collectArea: form.collectArea, //催收地區
+      collectAreas: form.collectAreas, //催收地區
       overDays:  form.overDays,//逾期天數
-      area: form.area,//地区
+      areas: form.areas,//地区
       license: form.license, //牌照号
       collectHand: form.collectHand, //催收手别
-      distributeStatus: form.distributeStatus, //分配状态 已分配1/未分配0
+      distributeStatuss: form.distributeStatuss, //分配状态 已分配1/未分配0
       identNo : form.identNo==null?"":form.identNo.replace(/\n/,","),//证件号
       vin: form.vin,//车架号
       name:form.name==null?"":form.name.replace(/\n/,","),//名称
-      status: form.status ,//案件状态 在枚举设置的“案件类型”中配置
+      statuss: form.statuss ,//案件状态 在枚举设置的“案件类型”中配置
       bank:  form.bank,//开户行
       collectInfo : form.collectInfo,//催收记录
-      collectStatus: form.collectStatus ,//催收状态    枚举设置的“催收状态”中配置
-      caseType:  form.caseType,//案件状态   未退案0/正常1/暂停2/关档3/退档4/全部5
-      color: form.color, //标色状态
+      collectStatuss: form.collectStatuss ,//催收状态    枚举设置的“催收状态”中配置
+      caseTypes:  form.caseTypes,//案件状态   未退案0/正常1/暂停2/关档3/退档4/全部5
+      colors: form.colors, //标色状态
       account: form.account==null?"":form.account.replace(/\n/,",") ,// 账号
       archiveNo: form.archiveNo==null?"":form.archiveNo.replace(/\n/,","), //档案号
       caseDateStart:form.time2==null?"":form.time2[0]  , //委案日期 开始时间
@@ -437,25 +437,25 @@ export const pageDataExport = function(form) {
       cardNo : form.cardNo==null?"":form.cardNo.replace(/\n/,","),//卡号
       clients :form.clients,//委托方
       batchNos:form.batchNos,  //批次编号
-      odvs :form.odv, //催收员
-      dept:form.dept,
-      accountAge :form.accountAge, //逾期賬齡
+      odvs :form.odvs, //催收员
+      depts:form.depts,
+      accountAges :form.accountAges, //逾期賬齡
       seqNo:form.seqNo==null?"":form.seqNo.replace(/\n/,","),//個案序列號
-      collectArea: form.collectArea, //催收地區
+      collectAreas: form.collectAreas, //催收地區
       overDays:  form.overDays,//逾期天數
-      area: form.area,//地区
+      areas: form.areas,//地区
       license: form.license, //牌照号
       collectHand: form.collectHand, //催收手别
-      distributeStatus: form.distributeStatus, //分配状态 已分配1/未分配0
+      distributeStatuss: form.distributeStatuss, //分配状态 已分配1/未分配0
       identNo : form.identNo==null?"":form.identNo.replace(/\n/,","),//证件号
       vin: form.vin,//车架号
       name:form.name==null?"":form.name.replace(/\n/,","),//名称
-      status: form.status ,//案件状态 在枚举设置的“案件类型”中配置
+      statuss: form.statuss ,//案件状态 在枚举设置的“案件类型”中配置
       bank:  form.bank,//开户行
       collectInfo : form.collectInfo,//催收记录
-      collectStatus: form.collectStatus ,//催收状态    枚举设置的“催收状态”中配置
-      caseType:  form.caseType,//案件状态   未退案0/正常1/暂停2/关档3/退档4/全部5
-      color: form.color, //标色状态
+      collectStatuss: form.collectStatuss ,//催收状态    枚举设置的“催收状态”中配置
+      caseTypes:  form.caseTypes,//案件状态   未退案0/正常1/暂停2/关档3/退档4/全部5
+      colors: form.colors, //标色状态
       account: form.account==null?"":form.account.replace(/\n/,",") ,// 账号
       archiveNo: form.archiveNo==null?"":form.archiveNo.replace(/\n/,","), //档案号
       caseDateStart:form.time2==null?"":form.time2[0]  , //委案日期 开始时间

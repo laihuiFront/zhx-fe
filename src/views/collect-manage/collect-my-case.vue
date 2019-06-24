@@ -131,6 +131,9 @@
                   <el-select
                     v-model="form.val8"
                     placeholder="请选择逾期账龄"
+                    collapse-tags
+                    filterable
+                    multiple
                     clearable
                   >
                     <el-option
@@ -145,6 +148,9 @@
                   <el-select
                     v-model="form.val9"
                     placeholder="请选择案件状态"
+                    collapse-tags
+                    filterable
+                    multiple
                     clearable
                   >
                     <el-option
@@ -159,6 +165,9 @@
                   <el-select
                     v-model="form.val10"
                     placeholder="请选择催收状态"
+                    collapse-tags
+                    filterable
+                    multiple
                     clearable
                   >
                     <el-option
@@ -173,6 +182,9 @@
                   <el-select
                     v-model="form.val11"
                     placeholder="请选择案件类型"
+                    collapse-tags
+                    filterable
+                    multiple
                     clearable
                   >
                     <el-option
@@ -205,6 +217,9 @@
                   <el-select
                     v-model="form.val14"
                     placeholder="请选择标色状态"
+                    collapse-tags
+                    filterable
+                    multiple
                     clearable
                   >
                     <el-option
@@ -293,6 +308,9 @@
                   <el-select
                     v-model="form.val24"
                     placeholder="请选择减免状态"
+                    collapse-tags
+                    filterable
+                    multiple
                     clearable
                   >
                     <el-option
@@ -307,6 +325,9 @@
                   <el-select
                     v-model="form.val25"
                     placeholder="请选择报备状态"
+                    collapse-tags
+                    filterable
+                    multiple
                     clearable
                   >
                     <el-option
@@ -561,7 +582,7 @@
             prop="seqno"
             show-overflow-tooltip
             sortable="custom"
-            min-width="5"
+            width="180"
             :sort-orders="['ascending', 'descending']"
             header-align="center"
             align="center"
@@ -761,7 +782,7 @@ export default {
         {
           label: "蓝色",
           value: "蓝"
-        },
+        }/*,
         {
           label: "橙色",
           value: "橙"
@@ -773,7 +794,7 @@ export default {
         {
           label: "棕色",
           value: "棕"
-        }
+        }*/
       ], //标色状态
       val19_data: [{ label: "是", value: 1 }, { label: "否", value: 0 }],
       val20_data: [
@@ -790,99 +811,76 @@ export default {
       val25_data: [], //报备状态
       tableCol_data: [
         {
-          prop: "countFollow",
-          label: "跟进次数"
-        },
-        {
-          prop: "remind",
-          label: "提醒"
-        },
-        {
-          prop: "nextFollDate",
-          label: "下次跟进日期"
-        },
-        {
-          prop: "caseAllotTime",
-          label: "案件分配时间"
-        },
-        {
+          width:120,
           prop: "collectStatusMsg",
           label: "催收状态"
         },
         {
-          prop: "collectionType",
-          label: "催收分类"
-        },
-        {
-          prop: "accountAge",
-          label: "逾期账龄"
-        },
-
-        {
+          width:140,
           prop: "caseDate",
           label: "委案日期"
         },
         {
-          prop: "distributeStatusMsg",
-          label: "案件分配状态"
-        },
-        {
-          prop: "expectTime",
-          label: "预计退案日期"
-        },
-        {
+          width:120,
           prop: "name",
           label: "姓名"
         },
         {
+          width:180,
           prop: "cardNo",
           label: "卡号"
         },
         {
+          width:180,
           prop: "identNo",
           label: "证件号"
         },
         {
           prop: "moneyMsg",
-          width: 120,
+          width: 140,
           label: "委案金额"
         },
         {
-          prop: "balanceMsg",
-          label: "委案余额"
+          width: 140,
+          prop: "principle",
+          label: "本金"
         },
         {
+          width: 140,
           prop: "moneyStartMsg",
           label: "最新欠款"
         },
         {
-          prop: "overDays",
-          label: "逾期天数"
-        },
-        {
+          width: 140,
           prop: "enRepayAmtMsg",
           label: "已还款金额"
         },
         {
+          width: 140,
           prop: "repayAmtMsg",
           label: "承诺还款金额"
         },
         {
-          prop: "bankAmtMsg",
-          label: "待银行查账金额"
+          width: 120,
+          prop: "overDays",
+          label: "逾期天数"
         },
         {
-          prop: "lastPhoneTime",
-          label: "上次通电时间"
-        },
-        {
+          width: 120,
           prop: "leaveDays",
           label: "闲置天数"
         },
         {
+          width: 140,
+          prop: "expectTime",
+          label: "预计退案日期"
+        },
+        {
+          width: 180,
           prop: "collectInfo",
           label: "催收小结"
         }
+
       ],
       multipleSelection: [],
       detailVisible: false,
@@ -906,14 +904,14 @@ export default {
         val5: name,
         val6: identNo,
         val7,
-        val8: accountAge,
-        val9: status,
-        val10: collectStatus,
-        val11: caseType,
+        val8: accountAges,
+        val9: statuss,
+        val10: collectStatuss,
+        val11: caseTypes,
         val12,
         val13: moneyStart,
         val29: moneyEnd,
-        val14: color,
+        val14: colors,
         val15: cardNo,
         val16: archiveNo,
         val17,
@@ -924,8 +922,8 @@ export default {
         val21,
         val22: remark,
         val23: collectionType,
-        val24: reliefStatus,
-        val25: reportStatus,
+        val24: reliefStatuss,
+        val25: reportStatuss,
         val27: telPhone,
         val28: collectMeasure,
         val31
@@ -941,16 +939,16 @@ export default {
         area: area + "" ? area : null,
         name,
         identNo,
-        accountAge,
-        status,
-        collectStatus,
-        caseType,
+        accountAges,
+        statuss,
+        collectStatuss,
+        caseTypes,
         repayStatus,
         repayTimeStart: (!!val12 && val12[0]) || "",
         repayTimeEnd: (!!val12 && val12[1]) || "",
         moneyStart,
         moneyEnd,
-        color,
+        colors,
         cardNo,
         archiveNo,
         lastFollDateStart: (!!val17 && val17[0]) || "",
@@ -964,8 +962,8 @@ export default {
         caseAllotTimeEnd: (!!val31 && val31[1]) || "",
         remark,
         collectionType,
-        reliefStatus,
-        reportStatus,
+        reliefStatuss,
+        reportStatuss,
         telPhone,
         collectMeasure,
         pageNum: this.paginationData.currentPage,
@@ -1251,9 +1249,9 @@ body #collect-my-case .tab2{
   .el-table th>.cell{
     white-space: nowrap;
   }
-  .el-table .el-table__body-wrapper {
+/*  .el-table .el-table__body-wrapper {
     overflow-x: hidden;
-  }
+  }*/
   .el-tabs__content{
     margin-bottom: 40px;
     overflow-y: auto;

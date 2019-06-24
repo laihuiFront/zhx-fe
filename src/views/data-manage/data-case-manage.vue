@@ -7,7 +7,7 @@
        element-loading-background="rgba(0, 0, 0, 0.7)">
     <el-form ref="form" :model="formInline" :inline="true" class="query-wrap">
       <el-form-item v-if="queryConf.csqy || queryConfFlag">
-        <el-select v-model="formInline.collectArea" :visible-arrow="false" placeholder="请选择催收区域" clearable>
+        <el-select v-model="formInline.collectAreas" :visible-arrow="false" filterable collapse-tags multiple placeholder="请选择催收区域" clearable>
           <el-option
             v-for="item in areaList"
             :key="item.id"
@@ -38,7 +38,7 @@
         </el-select>
       </el-form-item>
       <el-form-item v-if="queryConf.ajlx || queryConfFlag">
-        <el-select v-model="formInline.caseType" placeholder="请选择案件类型" clearable>
+        <el-select v-model="formInline.caseTypes" placeholder="请选择案件类型" filterable collapse-tags multiple clearable>
           <el-option
             v-for="item in caseTypeList"
             :key="item.id"
@@ -112,7 +112,7 @@
         <el-input v-model="formInline.collectInfo" placeholder="请输入催收记录"></el-input>
       </el-form-item>
       <el-form-item v-if="queryConf.bm || queryConfFlag">
-        <el-select v-model="formInline.dept" placeholder="请选择部门" clearable>
+        <el-select v-model="formInline.depts" filterable collapse-tags multiple placeholder="请选择部门" clearable>
           <el-option
             v-for="item in departmentList"
             :key="item.id"
@@ -132,7 +132,7 @@
         </el-select>
       </el-form-item>
       <el-form-item v-if="queryConf.bbzt || queryConfFlag">
-        <el-select v-model="formInline.distributeStatus" filterable placeholder="请选择报备状态" clearable>
+        <el-select v-model="formInline.reportStatuss" filterable collapse-tags multiple placeholder="请选择报备状态" clearable>
           <el-option
             v-for="item in TellList"
             :key="item.id"
@@ -143,7 +143,7 @@
       </el-form-item>
 
       <el-form-item v-if="queryConf.jmzt || queryConfFlag">
-        <el-select v-model="formInline.collectStatus" filterable placeholder="请选择减免状态" clearable>
+        <el-select v-model="formInline.reduceStatuss" filterable collapse-tags multiple placeholder="请选择减免状态" clearable>
           <el-option
             v-for="item in deleteStatusList"
             :key="item.id"
@@ -153,7 +153,7 @@
         </el-select>
       </el-form-item>
       <el-form-item v-if="queryConf.ajzt || queryConfFlag">
-        <el-select v-model="formInline.status" filterable placeholder="请选择案件状态" clearable>
+        <el-select v-model="formInline.statuss" filterable collapse-tags multiple placeholder="请选择案件状态" clearable>
           <el-option
             v-for="item in caseStatusList"
             :key="item.id"
@@ -163,7 +163,7 @@
         </el-select>
       </el-form-item>
       <el-form-item v-if="queryConf.yqzl || queryConfFlag">
-        <el-select v-model="formInline.accountAge" filterable placeholder="请选择逾期账龄" clearable>
+        <el-select v-model="formInline.accountAges" filterable collapse-tags multiple placeholder="请选择逾期账龄" clearable>
           <el-option
             v-for="item in accountAgeList"
             :key="item.id"
@@ -173,7 +173,7 @@
         </el-select>
       </el-form-item>
       <el-form-item v-if="queryConf.cszt || queryConfFlag">
-        <el-select v-model="formInline.collectStatus" filterable placeholder="请选择催收状态" clearable>
+        <el-select v-model="formInline.collectStatuss" filterable collapse-tags multiple placeholder="请选择催收状态" clearable>
           <el-option
             v-for="item in collectStatusList"
             :key="item.id"
@@ -183,7 +183,7 @@
         </el-select>
       </el-form-item>
       <el-form-item v-if="queryConf.bszt || queryConfFlag">
-        <el-select v-model="formInline.color" filterable placeholder="请选择标色状态" clearable>
+        <el-select v-model="formInline.colors" filterable collapse-tags multiple placeholder="请选择标色状态" clearable>
           <el-option
             v-for="item in val14_data"
             :key="item.label"
@@ -200,7 +200,7 @@
           placeholder="请选择地区"
         >
         </el-cascader>-->
-        <el-select v-model="formInline.area" filterable placeholder="请选择地区" clearable>
+        <el-select v-model="formInline.areas" filterable collapse-tags multiple placeholder="请选择地区" clearable>
           <el-option
             v-for="item in addressList"
             :key="item.id"
@@ -211,7 +211,7 @@
       </el-form-item>
 
       <el-form-item v-if="queryConf.fpzt || queryConfFlag">
-        <el-select v-model="formInline.distributeStatus" filterable placeholder="请选择分配状态" clearable>
+        <el-select v-model="formInline.distributeStatuss" filterable placeholder="请选择分配状态" clearable>
           <el-option
             v-for="item in distributeStatusList"
             :key="item.id"
@@ -405,47 +405,9 @@
         type="selection"
         align="center">
       </el-table-column>
-      <el-table-column
-        min-width="5"
-        sortable="custom"
-        :sort-orders="['ascending','descending']"
-        label="ID"
-        align="center"
-        prop="id"
-      >
 
-      </el-table-column>
       <el-table-column
-        min-width="5"
-        prop="collectArea"
-        align="center"
-        sortable="custom"
-        :sort-orders="['ascending','descending']"
-        label="催收区域"
-        show-overflow-tooltip
-      >
-      </el-table-column>
-      <el-table-column
-        min-width="5"
-        prop="collectStatusMsg"
-        align="center"
-        sortable="custom"
-        :sort-orders="['ascending','descending']"
-        label="催收状态"
-        show-overflow-tooltip>
-      </el-table-column>
-      <el-table-column
-        min-width="5"
-        prop="batchNo"
-        sortable="custom"
-        :sort-orders="['ascending','descending']"
-        label="批次号"
-        align="center"
-        show-overflow-tooltip>
-
-      </el-table-column>
-      <el-table-column
-        min-width="5"
+        width="180"
         prop="seqNo"
         sortable="custom"
         :sort-orders="['ascending','descending']"
@@ -459,7 +421,16 @@
         </template>
       </el-table-column>
       <el-table-column
-        min-width="5"
+        width="140"
+        prop="collectStatusMsg"
+        align="center"
+        sortable="custom"
+        :sort-orders="['ascending','descending']"
+        label="催收状态"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        width="140"
         prop="caseDate"
         align="center"
         label="委案日期"
@@ -468,16 +439,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        min-width="5"
-        prop="expectTime"
-        sortable="custom"
-        :sort-orders="['ascending','descending']"
-        align="center"
-        label="预计退案日期"
-        show-overflow-tooltip>
-      </el-table-column>
-      <el-table-column
-        min-width="5"
+        width="120"
         prop="name"
         sortable="custom"
         :sort-orders="['ascending','descending']"
@@ -486,25 +448,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        min-width="5"
-        prop="identNo"
-        sortable="custom"
-        :sort-orders="['ascending','descending']"
-        align="center"
-        label="证件号"
-        show-overflow-tooltip>
-      </el-table-column>
-      <el-table-column
-        min-width="5"
-        prop="area"
-        sortable="custom"
-        :sort-orders="['ascending','descending']"
-        align="center"
-        label="地区"
-        show-overflow-tooltip>
-      </el-table-column>
-      <el-table-column
-        min-width="5"
+        width="180"
         prop="cardNo"
         sortable="custom"
         :sort-orders="['ascending','descending']"
@@ -513,7 +457,16 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        min-width="5"
+        width="180"
+        prop="identNo"
+        sortable="custom"
+        :sort-orders="['ascending','descending']"
+        align="center"
+        label="证件号"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        width="180"
         prop="moneyMsg"
         sortable="custom"
         :sort-orders="['ascending','descending']"
@@ -522,79 +475,25 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        min-width="5"
-        prop="balanceMsg"
+        width="180"
+        prop="principle"
         sortable="custom"
         :sort-orders="['ascending','descending']"
-        align="center"
-        label="委案余额"
-        show-overflow-tooltip>
-      </el-table-column>
-      <el-table-column
-        min-width="5"
-        prop="collectDate"
-        sortable="custom"
-        :sort-orders="['ascending','descending']"
-        align="center"
-        label="上次通电时间"
-        show-overflow-tooltip>
-      </el-table-column>
-      <el-table-column
-        min-width="5"
-        prop="newCase"
-        sortable="custom"
-        :sort-orders="['ascending','descending']"
-        label="最新催记"
+        label="本金"
         align="center"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        min-width="5"
-        prop="odv"
+        width="180"
+        prop="latestOverdueMoney"
         sortable="custom"
         :sort-orders="['ascending','descending']"
-        label="催收员"
+        label="最新欠款"
         align="center"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        min-width="5"
-        prop="collectTimes"
-        label="跟进次数"
-        align="center"
-        sortable="custom"
-        :sort-orders="['ascending','descending']"
-        show-overflow-tooltip>
-      </el-table-column>
-      <el-table-column
-        min-width="5"
-        prop="distributeTime"
-        align="center"
-        sortable="custom"
-        :sort-orders="['ascending','descending']"
-        label="案件分配时间"
-        show-overflow-tooltip>
-      </el-table-column>
-      <el-table-column
-        min-width="5"
-        prop="proRepayAmtMsg"
-        label="承诺还款金额"
-        sortable="custom"
-        :sort-orders="['ascending','descending']"
-        align="center"
-        show-overflow-tooltip>
-      </el-table-column>
-      <el-table-column
-        min-width="5"
-        prop="bankAmtMsg"
-        sortable="custom"
-        :sort-orders="['ascending','descending']"
-        align="center"
-        label="待银行查账金额"
-        show-overflow-tooltip>
-      </el-table-column>
-      <el-table-column
-        min-width="5"
+        width="180"
         prop="enRepayAmtMsg"
         align="center"
         sortable="custom"
@@ -603,25 +502,52 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        min-width="5"
-        prop="accountAge"
-        label="逾期账龄"
+        width="180"
+        prop="proRepayAmtMsg"
+        label="承诺还款金额"
         sortable="custom"
         :sort-orders="['ascending','descending']"
         align="center"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        min-width="5"
-        prop="distributeHistory"
+        width="140"
+        prop="overdueDate"
         sortable="custom"
-        align="center"
         :sort-orders="['ascending','descending']"
-        label="分配历史"
+        label="逾期日期"
+        align="center"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        min-width="5"
+        width="120"
+        prop="leaveDays"
+        sortable="custom"
+        :sort-orders="['ascending','descending']"
+        label="闲置天数"
+        align="center"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        width="120"
+        prop="odv"
+        sortable="custom"
+        :sort-orders="['ascending','descending']"
+        label="催收员"
+        align="center"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        width="140"
+        prop="expectTime"
+        sortable="custom"
+        :sort-orders="['ascending','descending']"
+        align="center"
+        label="预计退案日期"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        width="180"
         prop="collectInfo"
         sortable="custom"
         align="center"
@@ -629,7 +555,6 @@
         label="催收小结"
         show-overflow-tooltip>
       </el-table-column>
-
     </el-table>
     <el-pagination
       class="pagination-wrap"
@@ -2416,9 +2341,9 @@
     .el-table th>.cell{
       white-space: nowrap;
     }
-    .el-table .el-table__body-wrapper {
+  /*  .el-table .el-table__body-wrapper {
       overflow-x: hidden;
-    }
+    }*/
     .pagination-wrap {
       position: fixed;
       bottom: 0;

@@ -17,7 +17,7 @@
         <el-input v-model="formInline.targetName" clearable placeholder="请输入对象姓名"></el-input>
       </el-form-item>
       <el-form-item v-if="queryConf.csqy || queryConfFlag">
-        <el-select v-model="formInline.area" clearable placeholder="请选择催收区域">
+        <el-select v-model="formInline.areas" clearable filterable collapse-tags multiple placeholder="请选择催收区域">
           <el-option
             v-for="item in areaList"
             :key="item.id"
@@ -27,7 +27,7 @@
         </el-select>
       </el-form-item>
       <el-form-item v-if="queryConf.wtf || queryConfFlag">
-        <el-select v-model="formInline.client" filterable placeholder="请选择委托方" clearable>
+        <el-select v-model="formInline.clients" filterable collapse-tags multiple placeholder="请选择委托方" clearable>
           <el-option
             v-for="item in clientList"
             :key="item.id"
@@ -37,7 +37,7 @@
         </el-select>
       </el-form-item>
       <el-form-item v-if="queryConf.yqzl || queryConfFlag">
-        <el-select v-model="formInline.accountAge" filterable placeholder="请选择逾期账龄" clearable>
+        <el-select v-model="formInline.accountAges" filterable collapse-tags multiple placeholder="请选择逾期账龄" clearable>
           <el-option
             v-for="item in accountAgeList"
             :key="item.id"
@@ -47,7 +47,7 @@
         </el-select>
       </el-form-item>
       <el-form-item v-if="queryConf.jmzt || queryConfFlag">
-        <el-select v-model="formInline.reduceStatus" filterable placeholder="请选择减免状态" clearable>
+        <el-select v-model="formInline.reduceStatus" filterable collapse-tags multiple placeholder="请选择减免状态" clearable>
           <el-option
             v-for="item in deleteStatusList"
             :key="item.id"
@@ -57,7 +57,7 @@
         </el-select>
       </el-form-item>
       <el-form-item v-if="queryConf.cszt || queryConfFlag">
-        <el-select v-model="formInline.collectStatus" filterable placeholder="请选择催收状态" clearable>
+        <el-select v-model="formInline.collectStatuss" filterable collapse-tags multiple placeholder="请选择催收状态" clearable>
           <el-option
             v-for="item in collectStatusList"
             :key="item.id"

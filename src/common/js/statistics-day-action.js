@@ -14,8 +14,8 @@ export const selectDataCaseExport = function(form,pageSize,pageNum) {
     method: 'post',
       data: {
        odvAttr:form.odv,
-       area:form.area,
-       client:form.client,
+       areas:form.areas,
+       clients:form.clients,
        dateSearchStart:form.time[0],
        dateSearchEnd:form.time[1],
        pageNum:pageNum ? pageNum : 1,
