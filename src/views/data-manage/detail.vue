@@ -48,9 +48,7 @@
                 <span>{{ caseDetail.identNo }}</span>
               </div>
             </el-form-item>
-            <el-form-item label="证件类型">
-              <el-input v-model="caseDetail.identType" :disabled="true"></el-input>
-            </el-form-item>
+
             <el-form-item label="卡号">
               <el-input v-model="caseDetail.cardNo" :disabled="true"></el-input>
             </el-form-item>
@@ -206,6 +204,9 @@
             label-width="130px"
             class="rule-form"
           >
+            <el-form-item label="证件类型">
+              <el-input v-model="caseDetail.identType" :disabled="true"></el-input>
+            </el-form-item>
             <el-form-item label="合同编号">
               <el-input v-model="caseDetail.contractNo" :disabled="true"></el-input>
             </el-form-item>
