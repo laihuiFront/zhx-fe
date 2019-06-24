@@ -54,9 +54,6 @@
             <el-form-item label="卡号">
               <el-input v-model="caseDetail.cardNo" :disabled="true"></el-input>
             </el-form-item>
-            <el-form-item label="合同编号">
-              <el-input v-model="caseDetail.contractNo" :disabled="true"></el-input>
-            </el-form-item>
             <el-form-item label="催收状态">
               <el-input
                 v-model="caseDetail.collectStatusMsg"
@@ -73,17 +70,14 @@
             <el-form-item label="委案金额">
               <el-input v-model="caseDetail.money" :disabled="true"></el-input>
             </el-form-item>
-            <el-form-item label="人民币">
-              <el-input v-model="caseDetail.rmb" :disabled="true"></el-input>
-            </el-form-item>
-            <el-form-item label="港币">
-              <el-input v-model="caseDetail.hkd" :disabled="true"></el-input>
-            </el-form-item>
-            <el-form-item label="外币">
+            <el-form-item label="逾期日期">
               <el-input
-                v-model="caseDetail.foreignCurrency"
+                v-model="caseDetail.overdueDate"
                 :disabled="true"
               ></el-input>
+            </el-form-item>
+            <el-form-item label="地区" >
+              <el-input v-model="caseDetail.area" :disabled="true"></el-input>
             </el-form-item>
             <el-form-item label="已还款">
               <div class="inputDiv" style="font-size: 12px;">
@@ -105,12 +99,130 @@
                 :disabled="true"
               ></el-input>
             </el-form-item>
+            <el-form-item label="逾期期数" >
+              <el-input
+                v-model="caseDetail.overduePeriods"
+                :disabled="true"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="最新欠款" >
+              <el-input
+                v-model="caseDetail.interestDate"
+                :disabled="true"
+              ></el-input>
+            </el-form-item>
             <el-form-item label="逾期天数">
               <el-input
                 v-model="caseDetail.overdueDays"
                 :disabled="true"
               ></el-input>
             </el-form-item>
+            <el-form-item label="已还期数" >
+              <el-input
+                v-model="caseDetail.repaidPeriods"
+                :disabled="true"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="合同本金">
+              <el-input
+                v-model="caseDetail.principle"
+                :disabled="true"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="贷款日期">
+              <el-date-picker
+                v-model="caseDetail.loanDate"
+                type="date"
+                :disabled="true"
+              ></el-date-picker>
+            </el-form-item>
+            <el-form-item label="剩余本金">
+              <el-input
+                v-model="caseDetail.residualPrinciple"
+                :disabled="true"
+              ></el-input>
+            </el-form-item>
+
+            <el-form-item label="单位名称" class="whole">
+              <el-input
+                v-model="caseDetail.unitName"
+                :disabled="true"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="单位地址" class="whole">
+              <div class="inputDiv" style="font-size: 12px;">
+                <span>{{ caseDetail.unitAddress}}</span>
+              </div>
+            </el-form-item>
+            <el-form-item label="户籍地址" class="whole">
+              <div class="inputDiv" style="font-size: 12px;">
+                <span>{{ caseDetail.censusRegisterAddress}}</span>
+              </div>
+            </el-form-item>
+            <el-form-item label="家庭地址" class="whole">
+              <div class="inputDiv" style="font-size: 12px;">
+                <span>{{ caseDetail.homeAddress}}</span>
+              </div>
+            </el-form-item>
+
+
+          </el-form>
+        </div>
+    </div>
+    <el-collapse v-model="activeNames">
+      <el-collapse-item title="同批次共债案件" name="1">
+        <el-table
+          highlight-current-row
+          :data="dependCase"
+          border
+          stripe
+          style="width: 100%"
+          class="table-wrap"
+        >
+          <el-table-column prop="seqNo" label="个案序列号"></el-table-column>
+          <el-table-column prop="cardNo" label="卡号"></el-table-column>
+          <el-table-column prop="account" label="账号"></el-table-column>
+          <el-table-column prop="moneyMsg" label="委案金额"></el-table-column>
+          <el-table-column prop="currencyType" label="币种"></el-table-column>
+          <el-table-column prop="proRepayAmtMsg" label="承诺还款金额">
+          </el-table-column>
+          <el-table-column prop="bankAmtMsg" label="待银行查账金额">
+          </el-table-column>
+          <el-table-column prop="enRepayAmtMsg" label="已还款">
+          </el-table-column>
+          <el-table-column prop="accountAge" label="逾期账龄">
+          </el-table-column>
+          <el-table-column prop="collectDate" label="上次通电">
+          </el-table-column>
+          <el-table-column prop="collectTimes" label="通电次数">
+          </el-table-column>
+        </el-table>
+      </el-collapse-item>
+      <el-collapse-item title="其他信息" name="2">
+        <div class="items-wrap">
+          <el-form
+            :model="caseDetail"
+            ref="otherForm"
+            label-width="130px"
+            class="rule-form"
+          >
+            <el-form-item label="合同编号">
+              <el-input v-model="caseDetail.contractNo" :disabled="true"></el-input>
+            </el-form-item>
+            <el-form-item label="人民币">
+              <el-input v-model="caseDetail.rmb" :disabled="true"></el-input>
+            </el-form-item>
+            <el-form-item label="港币">
+              <el-input v-model="caseDetail.hkd" :disabled="true"></el-input>
+            </el-form-item>
+            <el-form-item label="外币">
+              <el-input
+                v-model="caseDetail.foreignCurrency"
+                :disabled="true"
+              ></el-input>
+            </el-form-item>
+
+
             <el-form-item label="币种">
               <div class="inputDiv" style="font-size: 12px;">
                 <span>{{ caseDetail.currencyType}}</span>
@@ -131,15 +243,8 @@
                 <span>{{ caseDetail.commissionMoney}}</span>
               </div>
             </el-form-item>
-            <el-form-item label="最新欠款" class="half">
-              <el-input
-                v-model="caseDetail.interestDate"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="地区">
-              <el-input v-model="caseDetail.area" :disabled="true"></el-input>
-            </el-form-item>
+
+
             <el-form-item label="催收手别">
               <el-input
                 v-model="caseDetail.collectHand"
@@ -152,31 +257,10 @@
                 :disabled="true"
               ></el-input>
             </el-form-item>
-            <el-form-item label="本金">
-              <el-input
-                v-model="caseDetail.principle"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="剩余本金">
-              <el-input
-                v-model="caseDetail.residualPrinciple"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="贷款日期">
-              <el-date-picker
-                v-model="caseDetail.loanDate"
-                type="date"
-                :disabled="true"
-              ></el-date-picker>
-            </el-form-item>
-            <el-form-item label="逾期期数">
-              <el-input
-                v-model="caseDetail.overduePeriods"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
+
+
+
+
             <el-form-item label="贷款利率">
               <el-input
                 v-model="caseDetail.loanRate"
@@ -306,27 +390,8 @@
                 :disabled="true"
               ></el-input>
             </el-form-item>
-            <el-form-item label="家庭地址" class="whole">
-              <div class="inputDiv" style="font-size: 12px;">
-                <span>{{ caseDetail.homeAddress}}</span>
-              </div>
-            </el-form-item>
-            <el-form-item label="单位名称" class="whole">
-              <el-input
-                v-model="caseDetail.unitName"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="单位地址" class="whole">
-              <div class="inputDiv" style="font-size: 12px;">
-                <span>{{ caseDetail.unitAddress}}</span>
-              </div>
-            </el-form-item>
-            <el-form-item label="户籍地址" class="whole">
-              <div class="inputDiv" style="font-size: 12px;">
-                <span>{{ caseDetail.censusRegisterAddress}}</span>
-              </div>
-            </el-form-item>
+
+
             <el-form-item label="对账单地址" class="whole">
               <div class="inputDiv" style="font-size: 12px;">
                 <span>{{ caseDetail.statementAddress}}</span>
@@ -408,114 +473,6 @@
                 <span>{{ caseDetail.collectInfo }}</span>
               </div>
             </el-form-item>
-            <el-form-item label="最新评语" class="whole">
-              <div class="content-wrap">
-                <el-popover
-                  placement="bottom-start"
-                  title="添加评语"
-                  width="400"
-                  :visible-arrow="false"
-                  trigger="click"
-                  v-model="addCommentVisible"
-                >
-                  <div>
-                    <el-input
-                      type="textarea"
-                      :rows="4"
-                      placeholder="请输入评语"
-                      v-model="commentAddContent"
-                    >
-                    </el-input>
-                    <el-radio-group
-                      v-model="commentAddColor"
-                      style="margin-top:10px;"
-                    >
-                      <el-radio label="黑">正常</el-radio>
-                      <el-radio label="蓝">标蓝</el-radio>
-                      <el-radio label="红">标红</el-radio>
-                      <el-radio label="">不更改</el-radio>
-                    </el-radio-group>
-                  </div>
-                  <div style="text-align: right; margin-top: 12px">
-                    <el-button
-                      size="mini"
-                      type="text"
-                      @click="addCommentVisible = false"
-                    >取消
-                    </el-button
-                    >
-                    <el-button
-                      type="primary"
-                      size="mini"
-                      @click="onClickAddComment"
-                    >确定
-                    </el-button
-                    >
-                  </div>
-                  <el-button
-                    size="small"
-                    type="text"
-                    icon="el-icon-plus"
-                    title="添加"
-                    slot="reference"
-                  ></el-button>
-                </el-popover>
-                <ul class="comments-wrap">
-                  <li
-                    v-for="item in commentList"
-                    :key="item.id"
-                    class="item"
-                    :class="[
-                      { blue: item.commentColor === 'BLUE' },
-                      { red: item.commentColor === 'RED' }
-                    ]"
-                  >
-                    {{ item.createTime }} {{ item.creatUserName }} :
-                    {{ item.comment }}
-                  </li>
-                </ul>
-              </div>
-            </el-form-item>
-          </el-form>
-        </div>
-    </div>
-    <el-collapse v-model="activeNames">
-      <el-collapse-item title="同批次共债案件" name="1">
-        <el-table
-          highlight-current-row
-          :data="dependCase"
-          border
-          stripe
-          style="width: 100%"
-          class="table-wrap"
-        >
-          <el-table-column prop="seqNo" label="个案序列号"></el-table-column>
-          <el-table-column prop="cardNo" label="卡号"></el-table-column>
-          <el-table-column prop="account" label="账号"></el-table-column>
-          <el-table-column prop="moneyMsg" label="委案金额"></el-table-column>
-          <el-table-column prop="currencyType" label="币种"></el-table-column>
-          <el-table-column prop="proRepayAmtMsg" label="承诺还款金额">
-          </el-table-column>
-          <el-table-column prop="bankAmtMsg" label="待银行查账金额">
-          </el-table-column>
-          <el-table-column prop="enRepayAmtMsg" label="已还款">
-          </el-table-column>
-          <el-table-column prop="accountAge" label="逾期账龄">
-          </el-table-column>
-          <el-table-column prop="collectDate" label="上次通电">
-          </el-table-column>
-          <el-table-column prop="collectTimes" label="通电次数">
-          </el-table-column>
-        </el-table>
-      </el-collapse-item>
-      <el-collapse-item title="其他信息" name="2">
-        <div class="items-wrap">
-          <el-form
-            :model="caseDetail"
-            ref="otherForm"
-            label-width="130px"
-            class="rule-form"
-          >
             <el-form-item label="分配时间">
               <el-input
                 v-model="caseDetail.distributeTime"
@@ -632,12 +589,7 @@
                 :disabled="true"
               ></el-input>
             </el-form-item>
-            <el-form-item label="逾期日期">
-              <el-input
-                v-model="caseDetail.overdueDate"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
+
             <el-form-item label="曾逾期次数">
               <el-input
                 v-model="caseDetail.overdueTimes"
@@ -707,12 +659,7 @@
                 :disabled="true"
               ></el-input>
             </el-form-item>
-            <el-form-item label="已还期数">
-              <el-input
-                v-model="caseDetail.repaidPeriods"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
+
             <el-form-item label="催收分类">
               <el-input
                 v-model="caseDetail.collectionType"
@@ -1136,6 +1083,74 @@
                 </el-button
                 >
               </el-popover>
+            </el-form-item>
+            <el-form-item label="最新评语" class="whole">
+              <div class="content-wrap">
+                <el-popover
+                  placement="bottom-start"
+                  title="添加评语"
+                  width="400"
+                  :visible-arrow="false"
+                  trigger="click"
+                  v-model="addCommentVisible"
+                >
+                  <div>
+                    <el-input
+                      type="textarea"
+                      :rows="4"
+                      placeholder="请输入评语"
+                      v-model="commentAddContent"
+                    >
+                    </el-input>
+                    <el-radio-group
+                      v-model="commentAddColor"
+                      style="margin-top:10px;"
+                    >
+                      <el-radio label="黑">正常</el-radio>
+                      <el-radio label="蓝">标蓝</el-radio>
+                      <el-radio label="红">标红</el-radio>
+                      <el-radio label="">不更改</el-radio>
+                    </el-radio-group>
+                  </div>
+                  <div style="text-align: right; margin-top: 12px">
+                    <el-button
+                      size="mini"
+                      type="text"
+                      @click="addCommentVisible = false"
+                    >取消
+                    </el-button
+                    >
+                    <el-button
+                      type="primary"
+                      size="mini"
+                      @click="onClickAddComment"
+                    >确定
+                    </el-button
+                    >
+                  </div>
+                  <el-button
+                    size="small"
+                    type="text"
+                    icon="el-icon-plus"
+                    title="添加"
+                    slot="reference"
+                  ></el-button>
+                </el-popover>
+                <ul class="comments-wrap">
+                  <li
+                    v-for="item in commentList"
+                    :key="item.id"
+                    class="item"
+                    :class="[
+                      { blue: item.commentColor === 'BLUE' },
+                      { red: item.commentColor === 'RED' }
+                    ]"
+                  >
+                    {{ item.createTime }} {{ item.creatUserName }} :
+                    {{ item.comment }}
+                  </li>
+                </ul>
+              </div>
             </el-form-item>
           </el-form>
         </div>
