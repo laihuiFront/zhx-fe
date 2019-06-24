@@ -1202,6 +1202,7 @@
     clientList,
     EndList,
     PersonList,
+    areaStepList,
     departmentList,
     searchList,
     fenan1,

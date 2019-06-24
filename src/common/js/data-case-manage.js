@@ -519,3 +519,13 @@ export const clientCurrent = function(data) {
     }
   })
 }
+
+export const areaStepList = function(id) {
+  return request({
+    url: '/sys/dictionary/select/list/pid',
+    method: 'post',
+    data:{
+      id:id
+    }
+  })
+}
