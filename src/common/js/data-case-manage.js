@@ -15,7 +15,9 @@ export const dataList = function(form,orderBy,sort,pageSize,pageNum) {
       seqNo:form.seqNo==null?"":form.seqNo.replace(/[\n\r\v\s↵]/g,","),//個案序列號
       collectAreas: form.collectAreas, //催收地區
       overDays:  form.overDays,//逾期天數
-      areas: form.areas,//地区
+      province:{name: form.province},//地区
+      city:{name: form.city},//城市
+      county:{name: form.county},//县
       license: form.license, //牌照号
       collectHand: form.collectHand, //催收手别
       distributeStatuss: form.distributeStatuss, //分配状态 已分配1/未分配0
@@ -65,7 +67,9 @@ export const searchList =  function(form,orderBy,sort,pageSize,pageNum) {
       seqNo:form.seqNo==null?"":form.seqNo.replace(/[\n\r\v\s↵]/g,","),//個案序列號
       collectAreas: form.collectAreas, //催收地區
       overDays:  form.overDays,//逾期天數
-      areas: form.areas,//地区
+      province:{name: form.province},//地区
+      city:{name: form.city},//城市
+      county:{name: form.county},//县
       license: form.license, //牌照号
       collectHand: form.collectHand, //催收手别
       distributeStatuss: form.distributeStatuss, //分配状态 已分配1/未分配0
@@ -310,7 +314,9 @@ export const fenan2 = function(form,fenan) {
       seqNo:form.seqNo==null?"":form.seqNo.replace(/\n/,","),//個案序列號
       collectAreas: form.collectAreas, //催收地區
       overDays:  form.overDays,//逾期天數
-      areas: form.areas,//地区
+      province:{name: form.province},//地区
+      city:{name: form.city},//城市
+      county:{name: form.county},//县
       license: form.license, //牌照号
       collectHand: form.collectHand, //催收手别
       distributeStatuss: form.distributeStatuss, //分配状态 已分配1/未分配0
@@ -392,7 +398,9 @@ export const totalDataBatchExport = function(form) {
       seqNo:form.seqNo==null?"":form.seqNo.replace(/\n/,","),//個案序列號
       collectAreas: form.collectAreas, //催收地區
       overDays:  form.overDays,//逾期天數
-      areas: form.areas,//地区
+      province:{name: form.province},//地区
+      city:{name: form.city},//城市
+      county:{name: form.county},//县
       license: form.license, //牌照号
       collectHand: form.collectHand, //催收手别
       distributeStatuss: form.distributeStatuss, //分配状态 已分配1/未分配0
@@ -443,7 +451,9 @@ export const pageDataExport = function(form) {
       seqNo:form.seqNo==null?"":form.seqNo.replace(/\n/,","),//個案序列號
       collectAreas: form.collectAreas, //催收地區
       overDays:  form.overDays,//逾期天數
-      areas: form.areas,//地区
+      province:{name: form.province},//地区
+      city:{name: form.city},//城市
+      county:{name: form.county},//县
       license: form.license, //牌照号
       collectHand: form.collectHand, //催收手别
       distributeStatuss: form.distributeStatuss, //分配状态 已分配1/未分配0
@@ -520,12 +530,12 @@ export const clientCurrent = function(data) {
   })
 }
 
-export const areaStepList = function(id) {
+export const areaStepList = function(name) {
   return request({
-    url: '/sys/dictionary/select/list/pid',
+    url: '/sys/dictionary/select/list/name',
     method: 'post',
     data:{
-      id:id
+      name:name
     }
   })
 }

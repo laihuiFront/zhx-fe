@@ -193,19 +193,34 @@
         </el-select>
       </el-form-item>
       <el-form-item v-if="queryConf.dq || queryConfFlag">
-        <!--<el-cascader
-          :options="addressList"
-          v-model="formInline.area"
-          :props="props"
-          placeholder="请选择地区"
-        >
-        </el-cascader>-->
-        <el-select v-model="formInline.areas" filterable collapse-tags multiple placeholder="请选择地区" clearable>
+        <el-select v-model="formInline.province"  placeholder="请选择地区" @change="showCity()" clearable>
           <el-option
             v-for="item in addressList"
-            :key="item.id"
+            :key="item.name"
             :label="item.name"
-            :value="item.id">
+            :value="item.name">
+          </el-option>
+        </el-select>
+      </el-form-item>
+
+      <el-form-item v-if="queryConf.dq || queryConfFlag">
+        <el-select v-model="formInline.city"  placeholder="请选择市" @change="showcounty()" clearable>
+          <el-option
+            v-for="item in cityList"
+            :key="item.name"
+            :label="item.name"
+            :value="item.name">
+          </el-option>
+        </el-select>
+      </el-form-item>
+
+      <el-form-item v-if="queryConf.dq || queryConfFlag">
+        <el-select v-model="formInline.county"  placeholder="请选择县" clearable>
+          <el-option
+            v-for="item in countyList"
+            :key="item.name"
+            :label="item.name"
+            :value="item.name">
           </el-option>
         </el-select>
       </el-form-item>
@@ -1278,6 +1293,8 @@
         shareList: [{name: "是", value: "true"}, {name: "否", value: 'false'}],
         departmentList: [],
         addressList: [],
+        cityList:[],
+        countyList:[],
         accountAgeList: [],
         collectStatusList: [],
         selectUserTree: [],
@@ -2247,6 +2264,16 @@
           }
         })
       },
+      showCity(){
+        areaStepList(this.formInline.province).then((response) => {
+          this.cityList = response
+        })
+      },
+      showcounty(){
+        areaStepList(this.formInline.city).then((response) => {
+          this.countyList = response
+        })
+      },
       editCase(id, name, seqNo) {
         this.$router.push({
           path: 'case-detail',
@@ -2320,10 +2347,10 @@
         this.TellList = response
       })*/
       this.TellList = this.$store.getters.caseType.报备状态;
-      /*addressList().then((response) => {
+      areaStepList("地区").then((response) => {
         this.addressList = response
-      })*/
-      this.addressList = this.$store.getters.caseType.地区;
+      })
+
    /*   LeaveList().then((response) => {
         this.LeaveList = response
       })*/
