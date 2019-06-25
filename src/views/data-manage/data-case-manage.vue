@@ -648,20 +648,56 @@
       width="30%"
     >
       <el-form :inline="true" ref="fenan" :model="fenan" class="demo-form-inline" label-width="120px">
-        <div class="grid-content bg-purple">
+      	<div class="top">
+      		<div>
+      			<p><span class="title">总案量：</span>4554564564564</p>
+      			<p><span class="title">总金额：</span>¥14564564564</p>
+      		</div>
+      		<div >
+      			<p><span class="title">已分配：</span>4554564564564</p>
+      			<p><span class="title">未分配：</span>¥14564564564</p>
+      		</div>
+      	</div>
+      <div class="filter"> 
+      	<h1>分配选项</h1>
+      	 <el-checkbox-group v-model="radio2">
+      		<el-checkbox v-for="item in Aoptions" :label="item.id" :key="item.name">{{item.name}}</el-checkbox>
+      	 </el-checkbox-group>
+      </div>
+       <div class="filter">
+      	<h1>分配方式</h1>
+      	<el-radio-group v-model="radio1">
+			    <el-radio v-for="item in Boptions":label="item.id">{{item.name}}</el-radio>
+			  </el-radio-group>
+      </div>
+       <div class="filter">
+      	<h1>催收员<p @click="onClickSelectUser">[<span>点击选择</span>]</p></h1>
+      	<!--<el-input v-model="odvName" width="200"  clearable placeholder="请选择催收员1111"></el-input>-->
+      	<p>填写分配比例（全部留空则平均分配）</p>
+      	<ul class="salesman-ul">
+      		<li>
+      			<p>成精（业务员）<el-input v-model="odvName"></el-input>%</p>
+      		</li>
+      		<li>
+      			<p>成精（业务员）<el-input v-model="odvName"></el-input>%</p>
+      		</li>
+      	</ul>
+       </div>
+        <!--<div class="grid-content bg-purple">
           <el-form-item label="催收员"
                         prop="odv">
-           <!-- <el-select v-model="fenan.odv" filterable placeholder="请选择催收员" clearable>
+            <el-select v-model="fenan.odv" filterable placeholder="请选择催收员" clearable>
               <el-option
                 v-for="item in PersonList"
                 :key="item.id"
                 :label="item.userName"
                 :value="item.id">
               </el-option>
-            </el-select>-->
-            <el-input v-model="odvName" width="200" @focus="onClickSelectUser" clearable placeholder="请选择催收员"></el-input>
+            </el-select>
+            
+            
           </el-form-item>
-        </div>
+        </div>-->
       </el-form>
       <span slot="footer" class="footer">
     <el-button @click="detailVisible8 = false">取 消</el-button>
@@ -1333,6 +1369,8 @@
           time5: [],
           time6: []
         },
+        radio1:"",
+        radio2:"",
         dialogVisible: false,
         tableData3: [],
         currentPage4: 1,
@@ -1382,8 +1420,34 @@
         fenan: {odv: ''},
         odvName:'',
         loading2: false,
-        fullscreenLoading: false
+        fullscreenLoading: false,
+        Aoptions:[{
+        	name:"包括已分配案件",
+        	id:0
+        },
+        {
+        	name:"案件随机排序",
+        	id:1
+        },{
+        	name:"不重复分案",
+        	id:2
+        }],
+        Boptions:[{
+        	name:"按数量分配",
+        	id:0
+        },{
+        	name:"按金额分配",
+        	id:1
+        },{
+        	name:"综合分配",
+        	id:2
+        },]
       }
+    },
+    watch:{
+    	radio1(val){
+    		console.log(val)
+    	}
     },
     methods: {
       clientCurrent(){
@@ -2457,7 +2521,40 @@
     height: 350px;
     overflow-y: scroll;
   }
-
-
-
+	.top>div{
+		display: flex;
+		
+	}
+.top>div p{
+	flex: 1;
+	margin-bottom: 10px;
+}
+.top>div p .title{
+	font-weight: 800;
+}
+.filter{
+	margin-bottom: 10px;
+}
+.filter h1{
+	background: gray;
+	margin-bottom: 10px;
+	padding:10px 0;
+	color: #fff;
+	font-size: 14px;
+	font-weight: 700;
+}
+.filter h1 p{
+	display: inline-block;
+	margin-left: 20px;
+	cursor:pointer;
+	color: deepskyblue;
+}
+.salesman-ul li{
+	text-align: center;
+	padding:10px 0;
+	border-bottom:1px solid #000 ;
+}
+.salesman-ul .el-input--mini{
+	width: 25%;
+}
 </style>
