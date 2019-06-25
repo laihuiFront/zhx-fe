@@ -244,10 +244,13 @@
           pageSize: this.queryForm.pageSize,
           applyStatus: 1,
           finishStatus: 1,
-          synergisticType: {name: null},
+          synergisticType: {name: null,names:[]},
           dataCase: {
-            collectionArea: {id: null},
-            batchNos:[]
+            collectionArea: {id: null,ids:[]},
+            batchNos:[],
+            clients:[],
+            collectStatuss:[],
+            statuss:[]
           },
           applyUser: {name: null}
         }

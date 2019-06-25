@@ -1721,8 +1721,11 @@
       resetForm() {
         this.form = {
           time: [],
+          areas:[],
           batchNos: [],
+          batchStatuss:[],
           clients: [],
+          caseTypes:[],
           CasestatusList: [{id: 0, name: "未导入"}, {id: 1, name: "未退案"}, {id: 2, name: "已退案"}]
         }
       },

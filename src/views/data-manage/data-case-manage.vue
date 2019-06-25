@@ -2225,6 +2225,17 @@
       resetFormInline() {
         this.formInline = {
           odvs: [],
+          collectAreas:[],
+          caseTypes:[],
+          depts:[],
+          reportStatuss:[],
+          reduceStatuss:[],
+          statuss:[],
+          accountAges:[],
+          collectStatuss:[],
+          colors:[],
+          areas:[],
+          distributeStatuss:[],
           batchNos: [],
           clients: [],
           time1: [],

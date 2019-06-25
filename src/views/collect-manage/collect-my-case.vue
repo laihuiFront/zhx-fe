@@ -217,14 +217,14 @@
                   <el-select
                     v-model="form.val14"
                     placeholder="请选择标色状态"
-                    collapse-tags
                     filterable
+                    collapse-tags
                     multiple
                     clearable
                   >
                     <el-option
                       v-for="item in val14_data"
-                      :key="item.value"
+                      :key="item.label"
                       :label="item.label"
                       :value="item.value"
                     ></el-option>
@@ -1198,6 +1198,19 @@ export default {
     this["val11_data"] = this.transform(this.$store.getters.caseType.案件类型);
     this["val24_data"] = this.transform(this.$store.getters.caseType.减免状态);
     this["val25_data"] = this.transform(this.$store.getters.caseType.报备状态);
+    this["val14_data"] =[
+      {
+        label: "黑色",
+        value: "黑"
+      },
+      {
+        label: "红色",
+        value: "红"
+      },
+      {
+        label: "蓝色",
+        value: "蓝"
+      }]
   }
 
 };

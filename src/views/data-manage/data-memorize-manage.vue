@@ -881,6 +881,12 @@
       resetForm() {
         this.formInline = {
           odvs: [],
+          areas:[],
+          depts:[],
+          measures:[],
+          results:[],
+          caseStatuss:[],
+          colors:[],
           clients: [],
           collectTime: [],
           expectTime: [],

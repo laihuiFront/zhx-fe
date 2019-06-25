@@ -259,9 +259,7 @@
                   <el-form-item prop="val14" v-if="queryConf.bszt || queryConfFlag">
                     <el-select
                       v-model="form.val14"
-                      filterable
-                      multiple
-                      collapse-tags
+                      filterable collapse-tags multiple
                       placeholder="请选择标色状态"
                       clearable
                     >
@@ -1212,6 +1210,7 @@
       this["val11_data"] = this.transform(this.$store.getters.caseType.案件类型);
       this["val24_data"] = this.transform(this.$store.getters.caseType.减免状态);
       this["val25_data"] = this.transform(this.$store.getters.caseType.报备状态);
+
     }
   };
 </script>

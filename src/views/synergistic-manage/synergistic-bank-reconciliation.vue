@@ -360,9 +360,15 @@
           pageNum: this.queryForm.pageNum,
           pageSize: this.queryForm.pageSize,
           dataCase: {
-            collectionArea: {id: null},
-            collectionUser: {id: null},
+            collectionArea: {id: null,ids:[]},
+            collectionUser: {id: null,ids:[]},
             caseArea: {id: null},
+            batchNos:[],
+            clients:[],
+            statuss:[],
+            accountAges:[],
+            collectStatuss:[],
+            caseTypes:[],
             dept:null
           }
         }

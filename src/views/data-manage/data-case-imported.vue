@@ -38,7 +38,7 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="form.caseTypes" placeholder="请选择案件类型" collapse-tags multiple clearable>
+        <el-select v-model="form.caseTypes" placeholder="请选择案件类型" filterable collapse-tags multiple clearable>
           <el-option
             v-for="item in caseTypeList"
             :key="item.id"
@@ -1079,7 +1079,9 @@
         this.form = {
           time: [],
           clients: [],
-          batchNos: []
+          batchNos: [],
+          areas:[],
+          caseTypes:[]
         }
       },
       open7() {
