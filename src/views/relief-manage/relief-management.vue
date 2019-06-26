@@ -47,7 +47,7 @@
         </el-select>
       </el-form-item>
       <el-form-item v-if="queryConf.jmzt || queryConfFlag">
-        <el-select v-model="formInline.reduceStatus" filterable collapse-tags multiple placeholder="请选择减免状态" clearable>
+        <el-select v-model="formInline.reduceStatuss" filterable collapse-tags multiple placeholder="请选择减免状态" clearable>
           <el-option
             v-for="item in deleteStatusList"
             :key="item.id"
@@ -1286,6 +1286,11 @@
       },
       clear() {
         this.formInline = {
+          areas:[],
+          clients:[],
+          accountAges:[],
+          reduceStatuss:[],
+          collectStatuss:[],
           time1: [],
           time2: [],
           time3: []

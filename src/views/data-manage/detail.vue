@@ -6,8 +6,8 @@
             {{caseDetail.name + '-[ ' + caseDetail.seqNo + ']-案件详情'}}
           </div>
           <div style="text-align: right; margin-right:20px;" >
-            <el-button type="primary" align="right" size="mini" @click="lastCase"  v-if="mycaseFlag">上条</el-button>
-            <el-button type="primary" align="right" size="mini" @click="nextCase" v-if="mycaseFlag">下条</el-button>
+            <el-button type="primary" align="right" size="mini" @click="lastCase" >上条</el-button>
+            <el-button type="primary" align="right" size="mini" @click="nextCase" >下条</el-button>
             <el-button type="primary" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showCommentVisible=true">评语</el-button>
             <el-button type="primary" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showWarningVisible=true">警告</el-button>
             <el-button type="primary" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showCollectInfo">催收小结</el-button>
@@ -4906,6 +4906,9 @@
       },
       queryDetail() {
         this.otherActiveName = "1";
+        if (this.$route.query.mycase){
+          this.mycaseFlag = true;
+        }
         getCaseDetail(this.id).then(data => {
           this.caseDetail = data;
         });
@@ -5068,6 +5071,7 @@
         this.caseDetail = resetObj;
       },
       showMyCaseFlag(){
+
         if (this.$route.query.mycase){
           this.mycaseFlag = true;
         }
@@ -5114,7 +5118,6 @@
         sessionStorage.clear();
       });
       this.queryDetail();
-      this.showMyCaseFlag();
       this.batchForm = {sType: 0};
       PersonList().then(response => {
         this.PersonDataList = response;

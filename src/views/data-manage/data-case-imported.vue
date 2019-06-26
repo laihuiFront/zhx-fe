@@ -891,8 +891,8 @@
           this.ImportMsg = res.msg
         }
       },
-      deleteMessage(id) {
-        let arry = [{id: id}]
+      deleteMessage(id,batchNo) {
+        let arry = [{id: id,batchNo:batchNo}]
         let _self = this
         _self.$confirm('是否删除?', '提示', {
           confirmButtonText: '确定',

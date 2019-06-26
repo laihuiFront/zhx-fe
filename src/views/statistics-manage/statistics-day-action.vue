@@ -369,7 +369,10 @@
         })
       },
       clench() {
-        this.formInline = {}
+        this.formInline = {
+          areas:[],
+          clients:[]
+        }
         this.odvName = null
       },
       query() {

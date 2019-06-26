@@ -317,6 +317,7 @@
             <el-dropdown-menu slot="dropdown" >
               <el-dropdown-item command="a">快速分案</el-dropdown-item>
               <el-dropdown-item command="b">查询结果快速分案</el-dropdown-item>
+              <el-dropdown-item command="c">查询结果自动分案</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </el-form-item>
@@ -623,14 +624,7 @@
         <div class="grid-content bg-purple">
           <el-form-item label="催收员"
                         prop="odv">
-           <!-- <el-select v-model="fenan.odv" filterable placeholder="请选择催收员" clearable>
-              <el-option
-                v-for="item in PersonList"
-                :key="item.id"
-                :label="item.userName"
-                :value="item.id">
-              </el-option>
-            </el-select>-->
+
             <el-input v-model="odvName" width="200" @focus="onClickSelectUser" clearable placeholder="请选择催收员"></el-input>
           </el-form-item>
         </div>
@@ -641,6 +635,75 @@
   </span>
     </el-dialog>
     <el-dialog
+      title="查询结果自动分案"
+      class="dialog-wrap"
+      :visible.sync="detailVisible11"
+      :close-on-click-modal="false"
+      width="30%"
+    >
+      <el-form :inline="true" ref="fenan" :model="fenan" class="demo-form-inline" label-width="120px">
+      	<div class="top">
+      		<div>
+      			<p><span class="title">总案量：</span>{{totalCount}}</p>
+      			<p><span class="title">总金额：</span>{{totalAmt}}</p>
+      		</div>
+      		<div >
+      			<p><span class="title">已分配：</span>{{enAmt}}</p>
+      			<p><span class="title">未分配：</span>{{unAmt}}</p>
+      		</div>
+      	</div>
+      <div class="filter"> 
+      	<h1>分配选项</h1>
+      	 <el-checkbox-group v-model="fenan.sendType">
+      		<el-checkbox v-for="item in Aoptions" :label="item.id" >{{item.name}}</el-checkbox>
+      	 </el-checkbox-group>
+      </div>
+       <div class="filter">
+      	<h1>分配方式</h1>
+      	<el-radio-group v-model="fenan.mathType">
+			    <el-radio v-for="item in Boptions":label="item.id" :key="item.id">{{item.name}}</el-radio>
+			  </el-radio-group>
+      </div>
+       <div class="filter">
+      	<h1>催收员<p @click="onClickSelectUser2">[<span>点击选择</span>]</p></h1>
+
+      	<ul class="salesman-ul">
+      		<li v-for="item in fenan.odvNames">
+      			<p>{{item}}（业务员）</p>
+      		</li>
+      	</ul>
+       </div>
+
+      </el-form>
+      <span slot="footer" class="footer">
+    <el-button @click="detailVisible11 = false">取 消</el-button>
+    <el-button type="primary" @click="autoSendByProperty('fenan')">确 定</el-button>
+  </span>
+    </el-dialog>
+
+    <el-dialog
+      title="选择催收员"
+      class="dialog-wrap"
+      :visible.sync="selectUserVisible2"
+      :close-on-click-modal="false"
+      width="600px"
+    >
+      <el-tree
+        :data="selectUserTree"
+        show-checkbox
+        default-expand-all
+        node-key="id"
+        ref="tree"
+        highlight-current
+        :props="defaultProps">
+      </el-tree>
+      <span slot="footer" class="footer">
+        <el-button @click="selectUserVisible2 = false">取 消</el-button>
+        <el-button type="primary" @click="onClickSaveUser2">保 存</el-button>
+      </span>
+    </el-dialog>
+
+    <el-dialog
       title="查询结果快速分案"
       class="dialog-wrap"
       :visible.sync="detailVisible8"
@@ -648,62 +711,19 @@
       width="30%"
     >
       <el-form :inline="true" ref="fenan" :model="fenan" class="demo-form-inline" label-width="120px">
-      	<div class="top">
-      		<div>
-      			<p><span class="title">总案量：</span>4554564564564</p>
-      			<p><span class="title">总金额：</span>¥14564564564</p>
-      		</div>
-      		<div >
-      			<p><span class="title">已分配：</span>4554564564564</p>
-      			<p><span class="title">未分配：</span>¥14564564564</p>
-      		</div>
-      	</div>
-      <div class="filter"> 
-      	<h1>分配选项</h1>
-      	 <el-checkbox-group v-model="radio2">
-      		<el-checkbox v-for="item in Aoptions" :label="item.id" :key="item.name">{{item.name}}</el-checkbox>
-      	 </el-checkbox-group>
-      </div>
-       <div class="filter">
-      	<h1>分配方式</h1>
-      	<el-radio-group v-model="radio1">
-			    <el-radio v-for="item in Boptions":label="item.id">{{item.name}}</el-radio>
-			  </el-radio-group>
-      </div>
-       <div class="filter">
-      	<h1>催收员<p @click="onClickSelectUser">[<span>点击选择</span>]</p></h1>
-      	<!--<el-input v-model="odvName" width="200"  clearable placeholder="请选择催收员1111"></el-input>-->
-      	<p>填写分配比例（全部留空则平均分配）</p>
-      	<ul class="salesman-ul">
-      		<li>
-      			<p>成精（业务员）<el-input v-model="odvName"></el-input>%</p>
-      		</li>
-      		<li>
-      			<p>成精（业务员）<el-input v-model="odvName"></el-input>%</p>
-      		</li>
-      	</ul>
-       </div>
-        <!--<div class="grid-content bg-purple">
+        <div class="grid-content bg-purple">
           <el-form-item label="催收员"
                         prop="odv">
-            <el-select v-model="fenan.odv" filterable placeholder="请选择催收员" clearable>
-              <el-option
-                v-for="item in PersonList"
-                :key="item.id"
-                :label="item.userName"
-                :value="item.id">
-              </el-option>
-            </el-select>
-            
-            
+            <el-input v-model="odvName" width="200" @focus="onClickSelectUser" clearable placeholder="请选择催收员"></el-input>
           </el-form-item>
-        </div>-->
+        </div>
       </el-form>
       <span slot="footer" class="footer">
     <el-button @click="detailVisible8 = false">取 消</el-button>
     <el-button type="primary" @click="submitmsgForm2('fenan')">确 定</el-button>
   </span>
     </el-dialog>
+
     <el-dialog
       title="选择催收员"
       class="dialog-wrap"
@@ -1241,8 +1261,10 @@
     LeaveList,
     saveSelectFilter,
     selectByModule,
+    autoSendByProperty,
     getUserTree,
     areaList,
+    authSend,
     batchList,
     caseTypeList,
     addressList,
@@ -1335,6 +1357,7 @@
         collectStatusList: [],
         selectUserTree: [],
         selectUserVisible: false,
+        selectUserVisible2: false,
         defaultProps: {
           children: 'children',
           label: 'name'
@@ -1416,31 +1439,36 @@
         detailVisible: false,
         detailVisible8: false,
         detailVisible9: false,
+        detailVisible11:false,
+        totalCount:0,
+        totalAmt:'￥0',
+        enAmt:'￥0',
+        unAmt:'￥0',
         detailTitle: '案件详情',
-        fenan: {odv: ''},
+        fenan: {odv: '',odvs:[],odvNames:[],sendType:[]},
         odvName:'',
         loading2: false,
         fullscreenLoading: false,
         Aoptions:[{
         	name:"包括已分配案件",
-        	id:0
+        	id:1
         },
         {
         	name:"案件随机排序",
-        	id:1
+        	id:2
         },{
         	name:"不重复分案",
-        	id:2
+        	id:3
         }],
         Boptions:[{
         	name:"按数量分配",
-        	id:0
-        },{
-        	name:"按金额分配",
         	id:1
         },{
-        	name:"综合分配",
+        	name:"按金额分配",
         	id:2
+        },{
+        	name:"综合分配",
+        	id:3
         },]
       }
     },
@@ -1551,6 +1579,25 @@
           }
         });
       },
+
+      submitmsgForm2(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.fenanchecktwo()
+          } else {
+            return false;
+          }
+        });
+      },
+    autoSendByProperty() {
+      autoSendByProperty(this.formInline,this.fenan).then((response) => {
+        this.$message({
+          message: "分配成功",
+          type: "success"
+        });
+          this.detailVisible11 = false;
+      })
+      },
       submitmsgForm2(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
@@ -1572,6 +1619,10 @@
           this.$refs.tree.setCheckedKeys(this.fenan.odv);
         })
       },
+      onClickSelectUser2() {
+        this.selectUserVisible2 = true
+
+      },
       onClickSaveUser() {
         let selectDataArr =this.$refs.tree.getCurrentNode();
         if (selectDataArr.type!= 'user'){
@@ -1584,6 +1635,26 @@
         this.odvName = selectDataArr.name
         this.$set(this.fenan, 'odv', selectDataArr.id)
         this.selectUserVisible = false
+      },
+      onClickSaveUser2() {
+        let selectDataArr = this.$refs.tree.getCheckedNodes()
+        let selectUserNames = []
+        let selectUserIds = []
+        if (selectDataArr.length > 0) {
+          selectUserNames = selectDataArr.filter((item) => {
+            return item.type === 'user'
+          }).map((item) => {
+            return item.name
+          })
+          selectUserIds = selectDataArr.filter((item) => {
+            return item.type === 'user'
+          }).map((item) => {
+            return item.id
+          })
+        }
+        this.$set(this.fenan, 'odvNames', selectUserNames)
+        this.$set(this.fenan, 'odvs', selectUserIds)
+        this.selectUserVisible2 = false
       },
       submitmsgForm4(formName) {
         this.$refs[formName].validate((valid) => {
@@ -1847,8 +1918,21 @@
             });
           }
 
-        } else {
+        }else if (command === "b") {
           this.detailVisible8 = true
+
+        } else {
+          authSend(this.formInline).then((response) => {
+            this.totalCount = response.totalCount;
+            this.totalAmt = response.totalAmt;
+            this.enAmt = response.enAmt;
+            this.unAmt = response.unAmt;
+            this.fenan.sendType=[];
+            this.fenan.odvNames=[];
+            this.fenan.odvs=[];
+            this.detailVisible11 = true
+          })
+
         }
       },
       totalDataExport() {

@@ -267,6 +267,8 @@
         total: 0,
         formInline: {
           odv: [],
+          areas:[],
+          clients:[],
           time: []
         },
         odvName: "",
@@ -384,7 +386,10 @@
         })
       },
       clench() {
-        this.formInline = {}
+        this.formInline = {
+          areas:[],
+          clients:[]
+        }
         this.odvName = null
       },
       query() {
