@@ -245,7 +245,7 @@
                      @click="backCaseList(scope.row.id)" v-has="'退案'">恢复
           </el-button>
           <el-button type="text" size="small" @click="editMessage(scope.row)" v-has="'编辑'">编辑</el-button>
-          <el-button type="text" size="small" @click="open8(scope.row.id,scope.row.batchNo)" v-has="'删除'">删除</el-button>
+          <el-button type="text" size="small" @click="deleteMessage(scope.row.id,scope.row.batchNo)" v-has="'删除'">删除</el-button>
           <el-button type="text" size="small" v-has="'批量导出批次催记'" @click="showSelectCollect2(scope.row)">导出催记</el-button>
         </template>
       </el-table-column>
@@ -1220,8 +1220,8 @@
         }
 
       },
-      deleteMessage(id) {
-        let arry = [{id: id}]
+      deleteMessage(id,batchNo) {
+        let arry = [{id: id,batchNo:batchNo}]
         let _self = this
         _self.$confirm('是否删除?', '提示', {
           confirmButtonText: '确定',
@@ -1571,7 +1571,7 @@
         }
 
       },
-      deleteMessage(id) {
+      /*deleteMessage(id) {
         let arry = [{id: id}]
         remoweData(arry).then((response) => {
           this.$message({
@@ -1580,7 +1580,7 @@
           });
           this.search()
         })
-      },
+      },*/
       returnMessage(id) {
         let arry = [{id: id}]
         returnCase(arry).then((response) => {
@@ -1755,13 +1755,14 @@
           });
         }
       },
-      open8(id) {
+      open8(id,batchNo) {
+        debugger;
         this.$confirm(' 是否删除?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.deleteMessage(id)
+          this.deleteMessage(id,batchNo)
         }).catch(() => {
 
         });

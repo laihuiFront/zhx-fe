@@ -381,6 +381,15 @@ export default new Router({
           },
           name: 'setting-template'
         },
+        // 提醒管理
+        {
+          path: 'setting-remind',
+          component: resolve => {
+            spinRoute.show();
+            require(['@/views/settings/setting-remind'], spinRoute.resolve(resolve))
+          },
+          name: 'setting-remind'
+        },
         // ****************** 系统设置 ******************
 
         {
