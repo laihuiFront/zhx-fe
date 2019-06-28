@@ -576,13 +576,15 @@
             align="center"
           >
             <template slot-scope="scope">
-              <el-button
-                style="text-decoration: underline"
-                type="text"
-                size="small"
-                @click="showCase(scope.row)"
-              >{{ scope.row.seqno }}</el-button
-              >
+              <el-button v-if="scope.row.caseStatus==3" type="text" style ="color:#999999;" size="small"  @click="showCase(scope.row)">
+                {{scope.row.seqno}}
+              </el-button>
+              <el-button v-if="scope.row.caseStatus==4" type="text" style ="color:#999999;text-decoration:line-through;" size="small"  @click="showCase(scope.row)">
+                {{scope.row.seqno}}
+              </el-button>
+              <el-button v-if="scope.row.caseStatus!=3 && scope.row.caseStatus!=4" type="text" size="small" @click="showCase(scope.row)">
+                {{scope.row.seqno}}
+              </el-button>
             </template>
           </el-table-column>
           <el-table-column
@@ -848,7 +850,7 @@
           {
             width:180,
             prop: "identNo",
-            label: "证件号"
+            label: "身份证"
           },
           {
             prop: "moneyMsg",
@@ -1047,6 +1049,7 @@
         this.showQueryConfVisible = true;
       },
       showCase(row) {
+        debugger;
         let id = row.id
         let name = row.name
         let seqNo = row.seqno
@@ -1100,7 +1103,13 @@
         this.getMainData();
       },
       rowColor({row}){
-        return `color_${row.color}`;
+        if (row.caseStatus==3){
+          return `color_3`;
+        }else if(row.caseStatus==4){
+          return `color_4`;
+        }else{
+          return `color_${row.color}`;
+        }
       },
       modStatusHandle(id){
         console.log(id);
@@ -1241,6 +1250,13 @@
     .el-form-item--mini{
       display: inline-block;
     }
+  }
+  .color_3 {
+    color: #999999;
+  }
+  .color_4 {
+    text-decoration:line-through;
+    color: #999999;
   }
   body #collect-departmental-case .tab2{
     .el-tabs__content{

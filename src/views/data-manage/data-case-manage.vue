@@ -431,7 +431,13 @@
         label="个案序列号"
         show-overflow-tooltip>
         <template slot-scope="scope">
-          <el-button type="text" size="small" @click="editCase(scope.row.id, scope.row.name,scope.row.seqNo)">
+          <el-button v-if="scope.row.status==3" type="text" style ="color:#999999;" size="small" @click="editCase(scope.row.id, scope.row.name,scope.row.seqNo)">
+            {{scope.row.seqNo}}
+          </el-button>
+          <el-button v-if="scope.row.status==4" type="text" style ="color:#999999;text-decoration:line-through;" size="small" @click="editCase(scope.row.id, scope.row.name,scope.row.seqNo)">
+            {{scope.row.seqNo}}
+          </el-button>
+          <el-button v-if="scope.row.status!=3 && scope.row.status!=4" type="text" size="small" @click="editCase(scope.row.id, scope.row.name,scope.row.seqNo)">
             {{scope.row.seqNo}}
           </el-button>
         </template>
@@ -478,7 +484,7 @@
         sortable="custom"
         :sort-orders="['ascending','descending']"
         align="center"
-        label="证件号"
+        label="身份证"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
@@ -531,7 +537,7 @@
         prop="overdueDate"
         sortable="custom"
         :sort-orders="['ascending','descending']"
-        label="逾期日期"
+        label="逾期时间"
         align="center"
         show-overflow-tooltip>
       </el-table-column>
@@ -544,15 +550,7 @@
         align="center"
         show-overflow-tooltip>
       </el-table-column>
-      <el-table-column
-        width="120"
-        prop="odv"
-        sortable="custom"
-        :sort-orders="['ascending','descending']"
-        label="催收员"
-        align="center"
-        show-overflow-tooltip>
-      </el-table-column>
+
       <el-table-column
         width="140"
         prop="expectTime"
@@ -1695,7 +1693,13 @@
         });
       },
       rowColor({row}) {
-        return `color_${row.color}`;
+        if (row.status==3){
+          return `color_3`;
+        }else if(row.status==4){
+          return `color_4`;
+        }else{
+          return `color_${row.color}`;
+        }
       },
       guanlianjian(command) {
         if (this.deleteList.length >= 1) {
@@ -2571,7 +2575,13 @@
       color: #66b1ff;
 
     }
-
+    .color_3 {
+      color: #999999;
+    }
+    .color_4 {
+      text-decoration:line-through;
+      color: #999999;
+    }
     .color_gray {
       color: #b2adb2;
     }

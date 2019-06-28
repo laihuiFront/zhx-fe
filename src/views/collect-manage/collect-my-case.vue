@@ -588,13 +588,16 @@
             align="center"
           >
             <template slot-scope="scope">
-              <el-button
-                style="text-decoration: underline"
-                type="text"
-                size="small"
-                @click="showCase(scope.row.id, scope.row.name, scope.row.seqno)"
-                >{{ scope.row.seqno }}</el-button
-              >
+
+              <el-button v-if="scope.row.caseStatus==3" type="text" style ="color:#999999;" size="small"  @click="showCase(scope.row.id, scope.row.name, scope.row.seqno)">
+                {{scope.row.seqno}}
+              </el-button>
+              <el-button v-if="scope.row.caseStatus==4" type="text" style ="color:#999999;text-decoration:line-through;" size="small"  @click="showCase(scope.row.id, scope.row.name, scope.row.seqno)">
+                {{scope.row.seqno}}
+              </el-button>
+              <el-button v-if="scope.row.caseStatus!=3 && scope.row.caseStatus!=4" type="text" size="small" @click="showCase(scope.row.id, scope.row.name, scope.row.seqno)">
+                {{scope.row.seqno}}
+              </el-button>
             </template>
           </el-table-column>
           <el-table-column
@@ -833,7 +836,7 @@ export default {
         {
           width:180,
           prop: "identNo",
-          label: "证件号"
+          label: "身份证"
         },
         {
           prop: "moneyMsg",
@@ -1054,7 +1057,13 @@ export default {
       this.getMainData();
     },
     rowColor({ row }) {
-      return `color_${row.color}`;
+      if (row.caseStatus==3){
+        return `color_3`;
+      }else if(row.caseStatus==4){
+        return `color_4`;
+      }else{
+        return `color_${row.color}`;
+      }
     },
     modStatusHandle(id) {
       console.log(id);
@@ -1237,6 +1246,13 @@ export default {
 }
 .color_ZONG {
   color: #d2b48c;
+}
+.color_3 {
+  color: #999999;
+}
+.color_4 {
+  text-decoration:line-through;
+  color: #999999;
 }
 body #collect-my-case .tab2{
   .el-tabs__content{

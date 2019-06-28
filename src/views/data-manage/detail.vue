@@ -77,6 +77,8 @@
             <el-form-item label="地区" >
               <el-input v-model="caseDetail.area" :disabled="true"></el-input>
             </el-form-item>
+            <el-form-item >
+            </el-form-item>
             <el-form-item label="已还款">
               <div class="inputDiv" style="font-size: 12px;">
                 <span
@@ -86,8 +88,8 @@
                 >
                 <span
                   style="color: red;"
-                  v-if="caseDetail.collectStatusMsg == '已结清'"
-                >[{{ caseDetail.collectStatusMsg }}]</span
+                  v-if="caseDetail.settleFlag == '已结清'"
+                >[{{ caseDetail.settleFlag }}]</span
                 >
               </div>
             </el-form-item>
@@ -102,6 +104,8 @@
                 v-model="caseDetail.overduePeriods"
                 :disabled="true"
               ></el-input>
+            </el-form-item>
+            <el-form-item >
             </el-form-item>
             <el-form-item label="最新欠款" >
               <el-input
@@ -121,11 +125,10 @@
                 :disabled="true"
               ></el-input>
             </el-form-item>
-            <el-form-item label="合同本金">
-              <el-input
-                v-model="caseDetail.principle"
-                :disabled="true"
-              ></el-input>
+            <el-form-item  >
+            </el-form-item>
+            <el-form-item >
+
             </el-form-item>
             <el-form-item label="贷款日期">
               <el-date-picker
@@ -134,30 +137,43 @@
                 :disabled="true"
               ></el-date-picker>
             </el-form-item>
+            <el-form-item >
+            </el-form-item>
             <el-form-item label="剩余本金">
               <el-input
                 v-model="caseDetail.residualPrinciple"
                 :disabled="true"
               ></el-input>
             </el-form-item>
-
-            <el-form-item label="单位名称" class="whole">
+            <el-form-item label="合同本金">
+              <el-input
+                v-model="caseDetail.principle"
+                :disabled="true"
+              ></el-input>
+            </el-form-item>
+            <el-form-item >
+            </el-form-item>
+            <el-form-item >
+            </el-form-item>
+            <el-form-item >
+            </el-form-item>
+            <el-form-item label="单位名称" >
               <el-input
                 v-model="caseDetail.unitName"
                 :disabled="true"
               ></el-input>
             </el-form-item>
-            <el-form-item label="单位地址" class="whole">
+            <el-form-item label="单位地址" >
               <div class="inputDiv" style="font-size: 12px;">
                 <span>{{ caseDetail.unitAddress}}</span>
               </div>
             </el-form-item>
-            <el-form-item label="户籍地址" class="whole">
+            <el-form-item label="户籍地址" >
               <div class="inputDiv" style="font-size: 12px;">
                 <span>{{ caseDetail.censusRegisterAddress}}</span>
               </div>
             </el-form-item>
-            <el-form-item label="家庭地址" class="whole">
+            <el-form-item label="家庭地址" >
               <div class="inputDiv" style="font-size: 12px;">
                 <span>{{ caseDetail.homeAddress}}</span>
               </div>
