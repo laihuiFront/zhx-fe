@@ -390,6 +390,15 @@ export default new Router({
           },
           name: 'setting-remind'
         },
+        // 退案管理
+        {
+          path: 'setting-return',
+          component: resolve => {
+            spinRoute.show();
+            require(['@/views/settings/setting-return'], spinRoute.resolve(resolve))
+          },
+          name: 'setting-return'
+        },
         // ****************** 系统设置 ******************
 
         {
