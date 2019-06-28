@@ -66,6 +66,17 @@
             >
               <el-button type="primary" style="margin-left:10px;">导入员工信息</el-button>
             </el-upload>
+            <el-upload
+              class="upload-demo"
+              :action="action+'/user/simpleImport'"
+              :headers="header"
+              :show-file-list=false
+              :on-success="uploadSuccess"
+              :on-progress="onProgress"
+              accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            >
+              <el-button type="primary" style="margin-left:10px;">导入企业员工信息</el-button>
+            </el-upload>
             <el-button type="primary" @click="onClickImport" style="margin-left:10px;">导出员工信息</el-button>
           </el-form-item>
         </el-row>
@@ -352,7 +363,11 @@ export default {
           type: 'success',
           message: "导入成功"
         });
-        this.onClickQuery()
+        getDepartmentTree().then(data => {
+          this.departmentTree = data
+          this.queryDepartment = data[0]
+          this.onClickQuery()
+        })
         this.loading2=false
         this.fullscreenLoading=false
       }else{
