@@ -66,7 +66,7 @@
               ></el-date-picker>
             </el-form-item>
             <el-form-item label="委案金额">
-              <el-input v-model="caseDetail.money" :disabled="true"></el-input>
+              <el-input v-model="caseDetail.moneyMsg" :disabled="true"></el-input>
             </el-form-item>
             <el-form-item label="逾期日期">
               <el-input

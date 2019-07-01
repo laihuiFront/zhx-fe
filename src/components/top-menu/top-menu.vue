@@ -12,7 +12,7 @@
         <component v-for="(item) in menu" :data="item" :is="item.children?'two-level':'one-level'" :key="item.id"></component>
     </el-menu>
     <el-dropdown trigger="click" @command="handleCommand">
-    <p class="message"><span>99</span></p>
+    <p class="message"><span style="cursor:pointer;" @click="showRemindList">{{remindNum}}</span></p>
       <span class="el-dropdown-link">
         {{userInfo.userName}}<i class="el-icon-arrow-down el-icon--right"></i>
       </span>
@@ -43,6 +43,64 @@
   </el-form-item>
 </el-form>
 </el-dialog>
+
+    <el-dialog
+      title="提醒消息列表"
+      class="dialog-wrap"
+      :visible.sync="detailVisible"
+      :close-on-click-modal="false"
+      width="800px"
+    >
+      <el-table highlight-current-row
+                :data="remindList"
+                style="min-height:250px;"
+                border
+                stripe
+      >
+
+        <el-table-column
+          prop="createTime"
+          align="center"
+          width="140"
+          label="发送时间"
+        >
+        </el-table-column>
+
+        <el-table-column
+          prop="sendUserName"
+          label="发送人"
+          width="140"
+          align="center"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="context"
+          label="内容"
+          align="center"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="viewMsg"
+          label="是否阅览"
+          width="80"
+          align="center"
+        >
+        </el-table-column>
+      </el-table>
+      <el-pagination
+        @size-change="onClickQuery"
+        @current-change="onClickQuery"
+        :current-page.sync="pageNum"
+        :page-size.sync="pageSize"
+        :page-sizes="[10, 20, 50, 100]"
+        layout="prev, pager, next, jumper,total, sizes"
+        :total="total"
+        class="pagination-wrap"
+      ></el-pagination>
+      <span slot="footer" class="footer">
+        <el-button @click="detailVisible = false">取 消</el-button>
+      </span>
+    </el-dialog>
 </div>
 </template>
 
@@ -50,12 +108,11 @@
 import {mapGetters, mapActions} from 'vuex'
 import oneLevel from './one-level'
 import twoLevel from './two-level'
- import {resetPassword} from '@/store/actions.js';
+ import {resetPassword,initMind,remindList} from '@/store/actions.js';
 export default {
   name: 'topMenu',
   data(){
      var validatePass = (rule, value, callback) => {
-     	console.log(value)
         if (value === '') {
           callback(new Error('请输入密码'));
         } else {
@@ -66,7 +123,6 @@ export default {
         }
       };
       var validatePass2 = (rule, value, callback) => {
-      	console.log(value)
         if (value === '') {
           callback(new Error('请再次输入密码'));
         } else if (value !== this.ruleForm2.pass) {
@@ -76,6 +132,12 @@ export default {
         }
       };
   	return{
+      pageNum:0,
+      pageSize:2,
+      total:0,
+  	  remindNum:null,
+      detailVisible:false,
+      remindList:[],
   		dialogVisible:false,
   		ruleForm2:{
   			oldPassword:'',
@@ -104,7 +166,19 @@ export default {
       'menu'
     ])
   },
+  created () {
+    initMind().then(data => {
+      this.remindNum = data
+    })
+  },
   methods: {
+    showRemindList(){
+      this.detailVisible = true;
+      remindList().then(data => {
+        this.remindList = data.list;
+        this.total = data.total;
+      })
+    },
     handleCommand(command) {
       if (command === 'logOut') {
         this.logoutAction().then(()=>{
@@ -208,6 +282,7 @@ export default {
         height: 80px;
       }
     }
+
     .first-wrap{
       height: 80px;
       padding: 16px 0;

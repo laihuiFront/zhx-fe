@@ -1,10 +1,23 @@
 <template>
   <div id="setting-remind" class="page-wraper-sub">
-    <el-row style="margin-bottom: 15px;">
-      <el-button type="primary" style="float: right"
-                 @click="handleClick()">添加提醒
-      </el-button>
-    </el-row>
+    <el-form ref="form" :model="saveForm" :inline="true" class="query-wrap">
+      <el-form-item>
+        <el-date-picker
+          v-model="saveForm.creattime"
+          type="daterange"
+          value-format="yyyy-MM-dd"
+          range-separator="至"
+          start-placeholder="发送日期开始"
+          end-placeholder="发送日期结束">
+        </el-date-picker>
+      </el-form-item>
+      <el-form-item style="margin-left:10px;">
+        <el-button type="primary" @click="getMainData()">查询
+        </el-button>
+        <el-button type="primary" @click="handleClick()">添加提醒
+        </el-button>
+      </el-form-item>
+    </el-form>
      <el-table highlight-current-row class="table-wrap"
       height="1"
       :data="tableData"
@@ -31,6 +44,11 @@
          prop="sendUserName"
          align="center"
          label="发送人">
+       </el-table-column>
+       <el-table-column
+         prop="createTime"
+         align="center"
+         label="发送时间">
        </el-table-column>
       <el-table-column
         align="center"
@@ -131,7 +149,7 @@ export default {
       roleList:[],
       total:0,
       dialogVisible:false,
-      saveForm:{role:null,context:'',receiveUserName:null,roleId:null,pageNum:1,pageSize:50,receiveUsers:[]}
+      saveForm:{creattime:null,starttime:null,endTime:null,role:null,context:'',receiveUserName:null,roleId:null,pageNum:1,pageSize:50,receiveUsers:[]}
     }
   },
   created(){
@@ -184,6 +202,8 @@ export default {
     },
     getMainData(){
       this.tableLoad = true
+      this.saveForm.starttime = this.saveForm.creattime==null?null:this.saveForm.creattime[0];
+      this.saveForm.endTime = this.saveForm.creattime==null?null:this.saveForm.creattime[1],
       list(this.saveForm).then((data)=>{
         this.tableData = data.list
         this.total = data.total

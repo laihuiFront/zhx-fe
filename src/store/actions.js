@@ -96,6 +96,20 @@ export function resetPassword(form) {
   })
 }
 
+export function initMind() {
+  return request({
+    method:'post',
+    url:'/point/count'
+  })
+}
+
+export function remindList() {
+  return request({
+    method:'post',
+    url:'/point/personPageList'
+  })
+}
+
 export function loadByTypeAction({commit}) {
   loadByType().then((data) => {
     commit(types.SET_CASE_TYPE, data)
