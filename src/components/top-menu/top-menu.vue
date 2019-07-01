@@ -12,6 +12,7 @@
         <component v-for="(item) in menu" :data="item" :is="item.children?'two-level':'one-level'" :key="item.id"></component>
     </el-menu>
     <el-dropdown trigger="click" @command="handleCommand">
+    <p class="message"><span>99</span></p>
       <span class="el-dropdown-link">
         {{userInfo.userName}}<i class="el-icon-arrow-down el-icon--right"></i>
       </span>
@@ -148,6 +149,28 @@ export default {
   padding: 0 20px;
   height: 80px;
   background: #132c51;
+  .message{
+  	position: absolute;
+  	top: -6px;
+  	left: -40px;
+  	width: 25px;
+  	height: 25px;
+  	background:url(./collect-manage.png) ;
+  	span{
+  		position: absolute;
+  		top: -5px;
+    	right: -5px;
+  		width: 18px;
+	    height: 18px;
+	    line-height: 18px;
+	    text-align: center;
+  		display: block;
+  		font-size: 12px;
+  		background: red;
+  		color: #fff;
+  		border-radius: 50%;
+  	}
+  }
   .logo{
     width: 247px;
     height: 33px;
