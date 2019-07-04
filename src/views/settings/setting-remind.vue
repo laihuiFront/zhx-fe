@@ -209,6 +209,7 @@ export default {
       roleList().then((data)=>{
         this.roleList = data
       });
+      this.saveForm={role:null,context:'',receiveUserName:null,roleId:null,receiveUsers:[]}
        this.dialogVisible = true;
     },
     deleteOne({id}){
