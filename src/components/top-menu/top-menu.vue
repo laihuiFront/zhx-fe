@@ -12,10 +12,10 @@
         <component v-for="(item) in menu" :data="item" :is="item.children?'two-level':'one-level'"
                    :key="item.id"></component>
       </el-menu>
-      <el-dropdown trigger="click" @command="handleCommand">
-        <p class="message">
+      <p class="message">
           <span style="cursor:pointer;" @click="showRemindList">{{remindNum}}</span>
         </p>
+      <el-dropdown trigger="click" @command="handleCommand">
         <span class="el-dropdown-link">
         {{userInfo.userName}}<i class="el-icon-arrow-down el-icon--right"></i>
       </span>
@@ -232,8 +232,8 @@
 
     .message {
       position: absolute;
-      top: -6px;
-      left: -40px;
+      top: 28px;
+    	right: 128px;
       width: 25px;
       height: 25px;
       background: url(./collect-manage.png);
