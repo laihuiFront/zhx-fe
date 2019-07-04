@@ -40,6 +40,6 @@ export const getUserTree = function(data){
   return request({
     url: 'user/select/userTreeByRoleId',
     method: 'post',
-    data:{"role":data}
+    data:{"roles":data}
   })
 }

@@ -24,11 +24,7 @@
       border stripe
       v-loading="tableLoad"
       style="width: 100%">
-       <el-table-column
-         min-width="5"
-         type="selection"
-         align="center">
-       </el-table-column>
+
       <el-table-column
         prop="receiveUserName"
         align="center"
@@ -83,7 +79,7 @@
       >
         <el-form-item label="角色" prop="roleId">
           <el-select v-model="saveForm.role" placeholder="请选择角色" @change="onClickSelectRole"
-                     clearable>
+                     filterable collapse-tags multiple     clearable>
             <el-option
               v-for="item in roleList"
               :key="item.id"

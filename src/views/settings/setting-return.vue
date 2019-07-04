@@ -7,12 +7,7 @@
       border stripe
       v-loading="tableLoad"
       style="width: 100%">
-      <el-table-column
-        prop="id"
-        align="center"
-        width="100"
-        label="ID">
-      </el-table-column>
+
       <el-table-column
         prop="seeFlagMsg"
         align="center"
@@ -58,8 +53,8 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="间隔天数" prop="receiveUserName">
-          <el-input el-input v-model="saveForm.timeArea" type="number"  style="width:140px;" placeholder="请输入间隔天数"></el-input>
+        <el-form-item label="间隔天数" prop="receiveUserName" v-if="daysVisble">
+          <el-input  v-model="saveForm.timeArea" type="number"  style="width:140px;" placeholder="请输入间隔天数"></el-input>
         </el-form-item>
 
       </el-form>
@@ -94,7 +89,7 @@ export default {
   },
   methods:{
     showDays(){
-      if (saveForm.seeFlag==0){
+      if (this.saveForm.seeFlag==null || this.saveForm.seeFlag==0){
         this.daysVisble = true;
       }else{
         this.daysVisble = false;
@@ -121,6 +116,11 @@ export default {
       this.$set(this.saveForm, 'id', row.id);
       this.$set(this.saveForm, 'seeFlag', row.seeFlag);
       this.$set(this.saveForm, 'timeArea', row.timeArea);
+      if (row.seeFlag==null || row.seeFlag==0){
+        this.daysVisble = true;
+      }else{
+        this.daysVisble = false;
+      }
        this.dialogVisible = true;
     },
 
