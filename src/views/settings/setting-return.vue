@@ -48,7 +48,7 @@
         class="demo-ruleForm"
       >
         <el-form-item label="是否可见" prop="roleId">
-          <el-select v-model="saveForm.seeFlag" placeholder="请选择是否可见"
+          <el-select v-model="saveForm.seeFlag" placeholder="请选择是否可见" @change="showDays()"
                      clearable>
             <el-option
               v-for="item in roleList"
@@ -59,7 +59,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="间隔天数" prop="receiveUserName">
-          <el-input  v-model="saveForm.timeArea" type="number"   placeholder="请输入间隔天数"></el-input>
+          <el-input el-input v-model="saveForm.timeArea" type="number"  style="width:140px;" placeholder="请输入间隔天数"></el-input>
         </el-form-item>
 
       </el-form>
@@ -80,6 +80,7 @@ export default {
   name: 'settingRemind',
   data(){
     return{
+      daysVisble:true,
       tableLoad:false,
       tableData:[],
       roleList:[{id:0,label:"可见"},{id:1,label:"不可见"}],
@@ -92,6 +93,13 @@ export default {
     this.init();
   },
   methods:{
+    showDays(){
+      if (saveForm.seeFlag==0){
+        this.daysVisble = true;
+      }else{
+        this.daysVisble = false;
+      }
+    },
     saveContent(){
       this.tableLoad = true
       update(this.saveForm).then((data)=>{

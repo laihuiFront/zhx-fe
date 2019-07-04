@@ -24,12 +24,11 @@
       border stripe
       v-loading="tableLoad"
       style="width: 100%">
-      <el-table-column
-        prop="id"
-        align="center"
-        width="100"
-        label="ID">
-      </el-table-column>
+       <el-table-column
+         min-width="5"
+         type="selection"
+         align="center">
+       </el-table-column>
       <el-table-column
         prop="receiveUserName"
         align="center"
@@ -102,7 +101,7 @@
       </el-form>
       <span slot="footer" class="dialog-footer" style="display: flex;justify-content: center">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false;saveContent()">发送</el-button>
+        <el-button type="primary" @click="dialogVisible = false;saveContent()">保存</el-button>
       </span>
     </el-dialog>
 

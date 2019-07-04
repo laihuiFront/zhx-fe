@@ -103,10 +103,11 @@ export function initMind() {
   })
 }
 
-export function remindList() {
+export function remindList(data) {
   return request({
     method:'post',
-    url:'/point/personPageList'
+    url:'/point/personPageList',
+    data
   })
 }
 

@@ -3965,6 +3965,7 @@
     },
     data() {
       return {
+        seq:'',
         action: baseURL,
         messageForm: {},
         mycaseFlag:false,
@@ -4020,7 +4021,7 @@
           {name: "未知", id: 3}
         ],
         phoneSelectList: [],
-        batchForm: {sType: 0, mobile: ''},
+        batchForm: {sType: 0, mobile: '',seq:'',},
         tpfsList: [],
         csmbList: [],
         csjgList: [],
@@ -4071,6 +4072,7 @@
         const url = "http://"+this.caseDetail.telIpManage.address+"/openapi/V2.0.6/CallNumber"
         const time = new Date().getTime()
         const seq = this.caseDetail.id
+        this.batchForm.seq = time
         const auth = `${customer}@${time}@${seq}@${psw}`
         const digest = md5(auth)
         const data = {
@@ -4086,7 +4088,7 @@
           },
           request : {
             seq,
-            userData:"",
+            userData:time,
             agent,
             callee
           }
@@ -4392,7 +4394,8 @@
             type: "success",
             message: "新增催收记录成功"
           });
-          this.batchForm = {sType: 0}
+
+          this.batchForm = {sType: 0,seq:null}
           let batchNo = this.caseDetail.batchNo;
           let identNo = this.caseDetail.identNo;
           let cardNo = this.caseDetail.cardNo;
