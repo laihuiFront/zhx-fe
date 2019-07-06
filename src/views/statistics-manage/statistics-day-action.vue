@@ -58,7 +58,7 @@
               style="width: 100%"
               class="table-wrap">
       <el-table-column
-        prop="odv"
+        prop="odvName"
         align="center"
         label="催收员"
       >
@@ -376,6 +376,14 @@
         this.odvName = null
       },
       query() {
+        if (this.formInline.time==null || this.formInline.time.length==0){
+          this.$message({
+            type: 'info',
+            message: '请输入查询的时间段!'
+          });
+          return;
+        }
+
         this.loading = true
         this.fullscreenLoading = true
         dataList(this.formInline, this.pageSize, this.pageNum).then((response) => {

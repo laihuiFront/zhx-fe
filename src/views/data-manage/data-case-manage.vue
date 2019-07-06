@@ -637,7 +637,7 @@
       class="dialog-wrap"
       :visible.sync="detailVisible11"
       :close-on-click-modal="false"
-      width="30%"
+      width="35%"
     >
       <el-form :inline="true" ref="fenan" :model="fenan" class="demo-form-inline" label-width="120px">
       	<div class="top">
@@ -650,32 +650,69 @@
       			<p><span class="title">未分配：</span>{{unAmt}}</p>
       		</div>
       	</div>
-      <div class="filter"> 
+      <div class="filter" v-if="showSendVisible1">
       	<h1>分配选项</h1>
       	 <el-checkbox-group v-model="fenan.sendType">
       		<el-checkbox v-for="item in Aoptions" :label="item.id" >{{item.name}}</el-checkbox>
       	 </el-checkbox-group>
       </div>
-       <div class="filter">
+       <div class="filter" v-if="showSendVisible1">
       	<h1>分配方式</h1>
       	<el-radio-group v-model="fenan.mathType">
 			    <el-radio v-for="item in Boptions":label="item.id" :key="item.id">{{item.name}}</el-radio>
 			  </el-radio-group>
       </div>
-       <div class="filter">
+       <div class="filter" v-if="showSendVisible1">
       	<h1>催收员<p @click="onClickSelectUser2">[<span>点击选择</span>]</p></h1>
 
       	<ul class="salesman-ul">
       		<li v-for="item in fenan.odvNames">
-      			<p>{{item}}（业务员）</p>
+      			<p>{{item}}（业务员）<el-input v-model="odvPercent"></el-input>%</p>
       		</li>
       	</ul>
        </div>
-
+        <div class="filter" v-if="showSendVisible2">
+          <el-checkbox v-model="fenan.cleanCollect"> 清空催收小结</el-checkbox>
+          <el-checkbox v-model="fenan.cleanTimes"> 跟进次数清零</el-checkbox>
+        </div>
+        <div class="filter" v-if="showSendVisible2">
+          <el-table highlight-current-row
+                    :data="remindList"
+                    style="min-height:150px;"
+                    border
+                    stripe
+          >
+            <el-table-column
+              prop="odv"
+              align="center"
+              label="催收员"
+            >
+            </el-table-column>
+            <el-table-column
+              prop=""
+              label="案件数量"
+              align="center"
+            >
+            </el-table-column>
+            <el-table-column
+              prop=""
+              label="案件金额"
+              align="center"
+            >
+            </el-table-column>
+            <el-table-column
+              prop=""
+              label="比例"
+              align="center"
+            >
+            </el-table-column>
+          </el-table>
+        </div>
       </el-form>
       <span slot="footer" class="footer">
-    <el-button @click="detailVisible11 = false">取 消</el-button>
-    <el-button type="primary" @click="autoSendByProperty('fenan')">确 定</el-button>
+    <el-button type="primary" @click="showAutoSendByProperty('fenan')" v-if="showSendVisible1">下一步</el-button>
+        <el-button type="primary" @click="autoSendByProperty('fenan')" v-if="showSendVisible2">确认分配</el-button>
+        <el-button type="primary" @click="last('fenan')" v-if="showSendVisible2">上一步</el-button>
   </span>
     </el-dialog>
 
@@ -1438,12 +1475,14 @@
         detailVisible8: false,
         detailVisible9: false,
         detailVisible11:false,
+        showSendVisible1:false,
+        showSendVisible2:false,
         totalCount:0,
         totalAmt:'￥0',
         enAmt:'￥0',
         unAmt:'￥0',
         detailTitle: '案件详情',
-        fenan: {odv: '',odvs:[],odvNames:[],sendType:[]},
+        fenan: {cleanCollect:false,cleanTimes:false,odv: '',odvs:[],odvNames:[],sendType:[]},
         odvName:'',
         loading2: false,
         fullscreenLoading: false,
@@ -1587,6 +1626,36 @@
           }
         });
       },
+      showAutoSendByProperty(){
+        if (this.fenan.sendType==null || this.fenan.sendType.length==0){
+          this.$message({
+            message: "请选择分配选项",
+            type: "info"
+          });
+          return;
+        }
+        if (this.fenan.mathType==null || this.fenan.mathType==""){
+          this.$message({
+            message: "请选择分配方式",
+            type: "info"
+          });
+          return;
+        }
+        if (this.fenan.odvNames==null || this.fenan.odvNames.length==0){
+          this.$message({
+            message: "请选择催收员",
+            type: "info"
+          });
+          return ;
+        }
+
+        this.showSendVisible1 = false;
+        this.showSendVisible2 = true
+      },
+      last(){
+        this.showSendVisible1 = true;
+        this.showSendVisible2 = false
+      },
     autoSendByProperty() {
       autoSendByProperty(this.formInline,this.fenan).then((response) => {
         this.$message({
@@ -1595,7 +1664,7 @@
         });
           this.detailVisible11 = false;
       })
-      },
+    },
       submitmsgForm2(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
@@ -1935,6 +2004,7 @@
             this.fenan.odvNames=[];
             this.fenan.odvs=[];
             this.detailVisible11 = true
+            this.showSendVisible1 = true
           })
 
         }
