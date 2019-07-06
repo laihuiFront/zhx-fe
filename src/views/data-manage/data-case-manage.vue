@@ -646,8 +646,8 @@
       			<p><span class="title">总金额：</span>{{totalAmt}}</p>
       		</div>
       		<div >
-      			<p><span class="title">已分配：</span>{{enAmt}}</p>
-      			<p><span class="title">未分配：</span>{{unAmt}}</p>
+      			<p><span class="title">已分配：</span>{{enCount}}({{enAmt}})</p>
+      			<p><span class="title">未分配：</span>{{unCount}}({{unAmt}})</p>
       		</div>
       	</div>
       <div class="filter" v-if="showSendVisible1">
@@ -677,7 +677,7 @@
         </div>
         <div class="filter" v-if="showSendVisible2">
           <el-table highlight-current-row
-                    :data="remindList"
+                    :data="sendList"
                     style="min-height:150px;"
                     border
                     stripe
@@ -1478,10 +1478,13 @@
         showSendVisible1:false,
         showSendVisible2:false,
         totalCount:0,
+        enCount:0,
+        unCount:0,
         totalAmt:'￥0',
         enAmt:'￥0',
         unAmt:'￥0',
         detailTitle: '案件详情',
+        sendList:[],
         fenan: {cleanCollect:false,cleanTimes:false,odv: '',odvs:[],odvNames:[],sendType:[]},
         odvName:'',
         loading2: false,
@@ -1657,6 +1660,7 @@
         this.showSendVisible2 = false
       },
     autoSendByProperty() {
+        debugger;
       autoSendByProperty(this.formInline,this.fenan).then((response) => {
         this.$message({
           message: "分配成功",
@@ -1998,6 +2002,8 @@
           authSend(this.formInline).then((response) => {
             this.totalCount = response.totalCount;
             this.totalAmt = response.totalAmt;
+            this.enCount = response.enCount;
+            this.unCount = response.unCount;
             this.enAmt = response.enAmt;
             this.unAmt = response.unAmt;
             this.fenan.sendType=[];

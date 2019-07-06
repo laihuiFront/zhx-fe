@@ -604,6 +604,8 @@ export const autoSendByProperty = function(form,fenan) {
       clients :form.clients,//委托方
       batchNos:form.batchNos,  //批次编号
       odvs :form.odvs, //催收员
+      cleanTimes:form.cleanTimes,
+      cleanCollect:form.cleanCollect,
       depts:form.depts,
       accountAges :form.accountAges, //逾期賬齡
       seqNo:form.seqNo==null?"":form.seqNo.replace(/[\n\r\v\s↵]/g,","),//個案序列號
