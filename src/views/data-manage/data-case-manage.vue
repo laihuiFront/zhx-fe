@@ -672,8 +672,8 @@
       	</ul>
        </div>
         <div class="filter" v-if="showSendVisible2">
-          <el-checkbox v-model="fenan.cleanCollect"> 清空催收小结</el-checkbox>
-          <el-checkbox v-model="fenan.cleanTimes"> 跟进次数清零</el-checkbox>
+          <el-checkbox v-model="cleanTimes"> 清空催收小结</el-checkbox>
+          <el-checkbox v-model="bCleanTimes"> 跟进次数清零</el-checkbox>
         </div>
         <div class="filter" v-if="showSendVisible2">
           <el-table highlight-current-row
@@ -1485,7 +1485,9 @@
         unAmt:'￥0',
         detailTitle: '案件详情',
         sendList:[],
-        fenan: {cleanCollect:false,cleanTimes:false,odv: '',odvs:[],odvNames:[],sendType:[]},
+        bCleanCollect:false,
+        bCleanTimes:false,
+        fenan: {cleanCollect:0,cleanTimes:0,odv: '',odvs:[],odvNames:[],sendType:[]},
         odvName:'',
         loading2: false,
         fullscreenLoading: false,
@@ -1660,7 +1662,12 @@
         this.showSendVisible2 = false
       },
     autoSendByProperty() {
-        debugger;
+      if (this.bCleanTimes){
+        this.fenan.cleanTimes=1;
+      }
+      if (this.bCleanCollect){
+        this.fenan.cleanCollect=1
+      }
       autoSendByProperty(this.formInline,this.fenan).then((response) => {
         this.$message({
           message: "分配成功",
