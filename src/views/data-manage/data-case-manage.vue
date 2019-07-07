@@ -637,8 +637,7 @@
       class="dialog-wrap"
       :visible.sync="detailVisible11"
       :close-on-click-modal="false"
-      width="35%"
-    >
+      >
       <el-form :inline="true" ref="fenan" :model="fenan" class="demo-form-inline" label-width="120px">
       	<div class="top">
       		<div>
