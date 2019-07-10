@@ -665,8 +665,8 @@
       	<h1>催收员<p @click="onClickSelectUser2">[<span>点击选择</span>]</p></h1>
 
       	<ul class="salesman-ul">
-      		<li v-for="item in fenan.odvNames">
-      			<p>{{item}}（业务员）<el-input v-model="odvPercent"></el-input>%</p>
+      		<li v-for="(item,index) in fenan.odvNames">
+      			<p>{{item}}（业务员）<el-input v-model="fenan.odvPercent[index]" type="number"></el-input>%</p>
       		</li>
       	</ul>
        </div>
@@ -688,19 +688,19 @@
             >
             </el-table-column>
             <el-table-column
-              prop=""
+              prop="caseNum"
               label="案件数量"
               align="center"
             >
             </el-table-column>
             <el-table-column
-              prop=""
+              prop="caseAmt"
               label="案件金额"
               align="center"
             >
             </el-table-column>
             <el-table-column
-              prop=""
+              prop="percent"
               label="比例"
               align="center"
             >
@@ -1296,6 +1296,7 @@
     saveSelectFilter,
     selectByModule,
     autoSendByProperty,
+    autoSendByPropertyResult,
     getUserTree,
     areaList,
     authSend,
@@ -1486,7 +1487,7 @@
         sendList:[],
         bCleanCollect:false,
         bCleanTimes:false,
-        fenan: {cleanCollect:0,cleanTimes:0,odv: '',odvs:[],odvNames:[],sendType:[]},
+        fenan: {cleanCollect:0,cleanTimes:0,odv: '',odvs:[],odvNames:[],sendType:[],odvPercent:[]},
         odvName:'',
         loading2: false,
         fullscreenLoading: false,
@@ -1653,8 +1654,12 @@
           return ;
         }
 
-        this.showSendVisible1 = false;
-        this.showSendVisible2 = true
+        autoSendByPropertyResult(this.formInline,this.fenan).then((response) => {
+          this.sendList = response;
+          this.showSendVisible1 = false;
+          this.showSendVisible2 = true
+        })
+
       },
       last(){
         this.showSendVisible1 = true;
@@ -2014,9 +2019,12 @@
             this.unAmt = response.unAmt;
             this.fenan.sendType=[];
             this.fenan.odvNames=[];
+            this.sendList=[];
             this.fenan.odvs=[];
             this.detailVisible11 = true
             this.showSendVisible1 = true
+            this.showSendVisible2 = false
+
           })
 
         }

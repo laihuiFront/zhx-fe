@@ -3206,7 +3206,7 @@
           </el-col>
         </el-row>
         <el-row :gutter="24">
-          <el-col :span="12">
+          <el-col :span="20">
             <div class="grid-content bg-purple">
               <el-form-item label="联系方式">
                 <el-input
@@ -3214,63 +3214,28 @@
                   placeholder="请输入联系方式"
                   clearable
                 ></el-input>
-              </el-form-item>
-            </div>
-          </el-col>
-          <el-col :span="12">
-            <div class="grid-content bg-purple">
-              <el-form-item>
                 <el-select
-                  v-model="messageForm.batchStatus"
+                  v-model="messageForm.contactWay"
                   placeholder="请选择"
                   clearable
                 >
                   <el-option
                     v-for="item in caseDetail.dataCaseTelEntityList"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.id"
+                    :key="item.tel"
+                    :label="item.tel"
+                    :value="item.tel"
                   >
                   </el-option>
                 </el-select>
               </el-form-item>
+
             </div>
           </el-col>
+
         </el-row>
+
         <el-row :gutter="24">
-          <el-col :span="12">
-            <div class="grid-content bg-purple">
-              <el-form-item label="性 别">
-                <el-radio-group v-model="messageForm.sex">
-                  <el-radio label="男"></el-radio>
-                  <el-radio label="女"></el-radio>
-                </el-radio-group>
-              </el-form-item>
-            </div>
-          </el-col>
-          <el-col :span="12">
-            <div class="grid-content bg-purple">
-              <el-form-item label="年 龄">
-                <el-input
-                  v-model="messageForm.age"
-                  placeholder="请输入年龄"
-                  clearable
-                ></el-input>
-              </el-form-item>
-            </div>
-          </el-col>
-        </el-row>
-        <el-row :gutter="24">
-          <el-col :span="12">
-            <div class="grid-content bg-purple">
-              <el-form-item label="是否外访">
-                <el-radio-group v-model="messageForm.visitFlag">
-                  <el-radio label="0">是</el-radio>
-                  <el-radio label="1">否</el-radio>
-                </el-radio-group>
-              </el-form-item>
-            </div>
-          </el-col>
+
           <el-col :span="12">
             <div class="grid-content bg-purple">
               <el-form-item label="是否共债">
@@ -3281,14 +3246,26 @@
               </el-form-item>
             </div>
           </el-col>
-        </el-row>
-        <el-row :gutter="24">
           <el-col :span="12">
             <div class="grid-content bg-purple">
               <el-form-item label="是否可联">
                 <el-input
                   v-model="messageForm.connectFlag"
-                  placeholder="请输入联系方式"
+                  placeholder="请输入是否可联"
+                  clearable
+                ></el-input>
+              </el-form-item>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row :gutter="24">
+
+          <el-col :span="12">
+            <div class="grid-content bg-purple">
+              <el-form-item label="已还款">
+                <el-input
+                  v-model="messageForm.enRepayAmt"
+                  placeholder="请输入已还款金额" type="number"
                   clearable
                 ></el-input>
               </el-form-item>
@@ -3296,10 +3273,10 @@
           </el-col>
           <el-col :span="12">
             <div class="grid-content bg-purple">
-              <el-form-item label="已还款">
+              <el-form-item label="承诺还款金额">
                 <el-input
-                  v-model="messageForm.enRepayAmt"
-                  placeholder="请输入联系方式"
+                  v-model="messageForm.repayAmt"
+                  placeholder="请输入还款金额"  type="number"
                   clearable
                 ></el-input>
               </el-form-item>
@@ -3308,17 +3285,7 @@
         </el-row>
 
         <el-row :gutter="24">
-          <el-col :span="12">
-            <div class="grid-content bg-purple">
-              <el-form-item label="承诺还款金额">
-                <el-input
-                  v-model="messageForm.repayAmt"
-                  placeholder="请输入还款金额"
-                  clearable
-                ></el-input>
-              </el-form-item>
-            </div>
-          </el-col>
+
           <el-col :span="12">
             <div class="grid-content bg-purple">
               <el-form-item label="承诺还款日期">
@@ -3333,9 +3300,6 @@
               </el-form-item>
             </div>
           </el-col>
-        </el-row>
-
-        <el-row :gutter="24">
           <el-col :span="12">
             <div class="grid-content bg-purple">
               <el-form-item label="减免原因">
@@ -3347,6 +3311,9 @@
               </el-form-item>
             </div>
           </el-col>
+        </el-row>
+
+        <el-row :gutter="24">
           <el-col :span="12">
             <div class="grid-content bg-purple">
               <el-form-item label="减免材料">
