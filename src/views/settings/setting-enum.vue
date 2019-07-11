@@ -98,7 +98,7 @@
             <span v-else>{{scope.row.description}}</span>
           </template>
         </el-table-column>
-        <el-table-column v-if="currentEnum.name==='催收结果'" prop="sysFlag" label="是否有效" align="center">
+        <!--<el-table-column v-if="currentEnum.name==='催收结果'" prop="sysFlag" label="是否有效" align="center">
           <template slot-scope="scope">
             <el-switch
               v-if="scope.row.editType==='edit' || scope.row.editType==='add'"
@@ -114,7 +114,7 @@
               :inactive-value="0"
             ></el-switch>
           </template>
-        </el-table-column>
+        </el-table-column>-->
         <el-table-column prop="status" label="启用" align="center">
           <template slot-scope="scope">
             <el-switch

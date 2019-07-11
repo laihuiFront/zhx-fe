@@ -2590,11 +2590,14 @@
               class="demo-ruleForm"
             >
               <el-form-item label="电话" prop="mobile">
-                <el-col :span="20">
+                <el-col :span="16">
                   <el-input
                     v-model="batchForm.mobile"
                     placeholder="请输入电话号码"
                   ></el-input>
+                </el-col>
+                <el-col :span="4">
+                  <img src="./tel.png" style="padding-left:7px;margin-top: 8px;cursor: pointer;" @click="sendTel"/>
                 </el-col>
                 <el-col :span="4">
                   <img src="./tel.png" style="padding-left:7px;margin-top: 8px;cursor: pointer;" @click="sendTel"/>
@@ -3206,17 +3209,26 @@
           </el-col>
         </el-row>
         <el-row :gutter="24">
-          <el-col :span="20">
+          <el-col :span="12">
             <div class="grid-content bg-purple">
               <el-form-item label="联系方式">
                 <el-input
                   v-model="messageForm.contactWay"
+                  style="width: 180%;"
                   placeholder="请输入联系方式"
                   clearable
                 ></el-input>
+              </el-form-item>
+
+            </div>
+          </el-col>
+          <el-col :span="12">
+            <div class="grid-content bg-purple">
+              <el-form-item label=" ">
+
                 <el-select
-                  v-model="messageForm.contactWay"
-                  placeholder="请选择"
+                  v-model="messageForm.contactWay2"
+                  placeholder="请选择" @change="changeWay"
                   clearable
                 >
                   <el-option
@@ -3231,7 +3243,6 @@
 
             </div>
           </el-col>
-
         </el-row>
 
         <el-row :gutter="24">
@@ -3289,14 +3300,12 @@
           <el-col :span="12">
             <div class="grid-content bg-purple">
               <el-form-item label="承诺还款日期">
-                <div class="block">
                   <el-date-picker
                     v-model="messageForm.repayTime"
                     type="date"
                     placeholder="选择日期"
                   >
                   </el-date-picker>
-                </div>
               </el-form-item>
             </div>
           </el-col>
@@ -4236,15 +4245,25 @@
         });
       },
       deteleData(id) {
-        DeteleData(id).then(response => {
-          this.$message({
-            type: "success",
-            message: "删除成功"
+        this.$confirm("此操作将删除该操作记录且无法恢复,是否继续？", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            DeteleData(id).then(response => {
+              this.$message({
+                type: "success",
+                message: "删除成功"
+              });
+              getReduceApplyList(this.id).then(data => {
+                this.reduceApplyList = data.list;
+              });
+            });
+          })
+          .catch(() => {
           });
-          getReduceApplyList(this.id).then(data => {
-            this.reduceApplyList = data.list;
-          });
-        });
+
       },
       saveData() {
         AddtableList(this.id, this.messageForm).then(response => {
@@ -4534,6 +4553,9 @@
       addCpInfo() {
         this.cpInfo = {};
         this.dialogCpVisible = true;
+      },
+      changeWay(){
+        this.$set(this.messageForm, 'contactWay', this.messageForm.contactWay2);
       },
       saveCpInfo() {
         this.cpInfo.dataCase = {id: this.id};
@@ -5262,8 +5284,8 @@
 
       .left-panel {
         padding: 12px;
-        flex: 0 0 35%;
-        width: 35%;
+        flex: 0 0 40%;
+        width: 40%;
         margin-right: 24px;
         border: 1px solid #d1d1d1;
         box-sizing: border-box;
@@ -5303,8 +5325,8 @@
       }
 
       .right-panel {
-        flex: 0 0 65%;
-        width: 65%;
+        flex: 0 0 60%;
+        width: 60%;
       }
     }
   }
