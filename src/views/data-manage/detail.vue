@@ -3207,14 +3207,16 @@
         </el-row>
         <el-row :gutter="24">
           <el-col :span="20">
-            <div class="grid-content bg-purple">
+            <div class="grid-content bg-purple flex-box">
               <el-form-item label="联系方式">
                 <el-input
+                	class="flex"
                   v-model="messageForm.contactWay"
                   placeholder="请输入联系方式"
                   clearable
                 ></el-input>
                 <el-select
+                	class="flex"
                   v-model="messageForm.contactWay"
                   placeholder="请选择"
                   clearable
@@ -5376,4 +5378,16 @@
   .warninghead .el-dialog__body{
     padding-top: 10px;
   }
+  .flex-box{
+  	.el-form-item{
+  		display: flex;
+  	}  	
+  	.el-form-item__content{
+	  	width: 755px;
+	  	display: flex;
+	  	.flex{
+	  		flex: 1;
+	  	}
+	  }
+  } 
 </style>
