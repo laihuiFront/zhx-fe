@@ -317,7 +317,7 @@
             <el-dropdown-menu slot="dropdown" >
               <el-dropdown-item command="a">快速分案</el-dropdown-item>
               <el-dropdown-item command="b">查询结果快速分案</el-dropdown-item>
-              <!--<el-dropdown-item command="c">查询结果自动分案</el-dropdown-item>-->
+              <el-dropdown-item command="c">查询结果自动分案</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </el-form-item>
@@ -1417,6 +1417,7 @@
         caseTypeList: [],
         areaList: [],
         formInline: {
+          statuss:[1],
           odvs: [],
           batchNos: [],
           clients: [],

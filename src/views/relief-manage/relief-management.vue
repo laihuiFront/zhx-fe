@@ -115,6 +115,7 @@
           <el-button type="primary" @click="showQueryConf" style="margin-left:10px;">查询条件配置</el-button>
           <el-button type="primary" 　v-show="istrue1" v-has="'新增减免'" @click=addData>新增减免</el-button>
           <el-button type="primary" 　v-show="istrue2" v-has="'批量撤销'" @click=open8>批量撤销</el-button>
+          <el-button type="primary" 　v-show="istrue3" v-has="'导出减免结果'" @click="changeRadio">导出待审核减免申请</el-button>
           <el-button type="primary" 　v-show="istrue3" v-has="'批量审核'" @click=open9>批量审核</el-button>
           <el-button type="primary" 　v-show="istrue6" v-has="'批量确认'" @click=open10>批量确认</el-button>
           <el-button type="primary" 　v-show="istrue4" v-has="'批量下载附件'" @click=moredownDataList>批量下载附件</el-button>
@@ -255,22 +256,16 @@
             :sort-orders="['ascending','descending']"
             show-overflow-tooltip>
           </el-table-column>
-          <el-table-column
-            prop="fileName"
-            label="附件"
-            sortable="custom"
-            :sort-orders="['ascending','descending']"
-            align="center"
-            show-overflow-tooltip>
-          </el-table-column>
+
           <el-table-column
             label="操作"
-            width="170"
+            width="250"
             align="center"
             show-overflow-tooltip>
             <template slot-scope="scope">
               <el-button type="text" size="small" @click="open7(scope.row)" v-has="'批量审核'">审核</el-button>
               <el-button type="text" size="small" @click="showMessage(scope.row)">查看</el-button>
+              <el-button type="text" size="small" @click="downloadList(scope.row)"  >下载附件</el-button>
               <el-button type="text" size="small" @click="editMessage(scope.row)" v-has="'修改'">修改</el-button>
               <el-button type="text" size="small" @click="deteleList(scope.row.id)" v-has="'删除'">删除</el-button>
             </template>
@@ -419,15 +414,7 @@
             :sort-orders="['ascending','descending']"
             show-overflow-tooltip>
           </el-table-column>
-          <el-table-column
-            prop="fileName"
-            label="附件"
-            sortable="custom"
-            :sort-orders="['ascending','descending']"
-            align="center"
-            width="120"
-            show-overflow-tooltip>
-          </el-table-column>
+
 
           <el-table-column
             label="操作"
@@ -584,15 +571,7 @@
             width="150"
             show-overflow-tooltip>
           </el-table-column>
-          <el-table-column
-            prop="fileName"
-            label="附件"
-            sortable="custom"
-            :sort-orders="['ascending','descending']"
-            width="120"
-            align="center"
-            show-overflow-tooltip>
-          </el-table-column>
+
 
           <el-table-column
             label="操作"
@@ -601,7 +580,7 @@
             show-overflow-tooltip>
             <template slot-scope="scope">
               <el-button type="text" size="small" @click="showMessage(scope.row)">查看</el-button>
-              <el-button type="text" size="small" @click="downloadList(scope.row)" v-has="'下载附件'">下载附件</el-button>
+              <el-button type="text" size="small" @click="downloadList(scope.row)"  >下载附件</el-button>
             </template>
           </el-table-column>
 
@@ -747,6 +726,36 @@
         <el-button type="primary" @click="exportData">确 定</el-button>
       </span>
     </el-dialog>
+
+
+    <el-dialog
+      title="附件列表"
+      class="dialog-wrap"
+      :visible.sync="reduceFileVisible"
+      :close-on-click-modal="false"
+      width="500px"
+    >
+
+      <el-table highlight-current-row
+                :data="reduceFileList"
+                border
+                stripe
+      >
+        <el-table-column
+          prop="fileName"
+          align="center"
+          label="附件名称"
+        >
+          <template slot-scope="scope">
+            <el-button type="text" size="small"
+                       @click="downLoadFile(scope.row)">{{scope.row.fileName}}
+            </el-button>
+          </template>
+        </el-table-column>
+
+      </el-table>
+
+    </el-dialog>
   </div>
 </template>
 
@@ -756,9 +765,12 @@
     areaList,
     sureData,
     clientList,
+    listReduceFile,
     saveSelectFilter,
     selectByModule,
     downDataList,
+    zipDown,
+    downSingleDataList,
     PersonList,
     pageDataBatchExport,
     dataList,
@@ -778,6 +790,8 @@
     },
     data() {
       return {
+        reduceFileVisible:false,
+        reduceFileList:[],
         radio: "1",
         MessageTrue: false,
         fullscreenLoading: false,
@@ -954,33 +968,24 @@
 
       },
       downloadList(row) {
-        if (!row.fileName) {
-          this.$message({
-            type: 'error',
-            message: '无下载数据!'
-          });
-          return
-        }
-        let downloadData = []
-        downloadData.push(row.id);
-        this.fullscreenLoading = true
-        this.loading = true
-        downDataList(downloadData).then((response) => {
+        this.reduceFileList = []
+        this.reduceFileVisible = true;
+        listReduceFile({"reduceId":row.id}).then((data) => {
+          this.reduceFileList = data
+        })
+
+      },
+      downLoadFile(row){
+        let downloadData = {"fileId":row.fileId,"fileName":row.fileName}
+        downSingleDataList(downloadData).then((response) => {
           this.$message({
             type: 'success',
             message: '下载成功!'
           });
-          this.tableLoad = true
-          this.fullscreenLoading = false
-          this.loading = false
-          dataList(this.formInline, this.applyStatus, this.sort, this.orderBy, this.currentPage4, this.pageSize).then((response) => {
-            this.tableData3 = response.list
-            this.formInline = {time1: [], time2: [], time3: []}
-            this.total = response.total
-            this.tableLoad = false
-          })
+
         })
       },
+
       selectAllExport(){
         for(var p in this.exportConf){//遍历json对象的每个key/value对,p为key
           this.exportConf[p] = true;
@@ -1187,38 +1192,13 @@
         }
       },
       moredownDataList() {
-        /*		for (var i=0;i<this.downList.length;i++){
-                      if(!this.downList[i]){
-                 this.$message({
-                   type: 'error',
-                   message: '无下载数据!'
-                 });
-               return
-                      }
-
-                  }*/
 
         if (this.deleteList.length >= 1) {
           this.fullscreenLoading = true
           this.loading = true
-          let fileNum =0;
-          for (var i = 0; i < this.deleteList.length; i++) {
-            if (this.downList[i]) {
-              fileNum = fileNum+1;
-              let realDeleteList = [];
-              realDeleteList[0] = this.deleteList[i]
-              downDataList(realDeleteList).then((response) => {
+          downDataList(this.deleteList).then((response) => {
 
-              })
-            }
-
-          }
-          if (fileNum==0){
-            this.$message({
-              type: 'error',
-              message: '无附件下载!'
-            });
-          }
+          })
           this.fullscreenLoading = false
           this.loading = false
 

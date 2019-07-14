@@ -54,7 +54,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="间隔天数" prop="receiveUserName" v-if="daysVisble">
-          <el-input  v-model="saveForm.timeArea" type="number"  style="width:140px;" placeholder="请输入间隔天数"></el-input>
+          <el-input  v-model="saveForm.timeArea" type="number" oninput="if(value<0)value=''" style="width:140px;" placeholder="请输入间隔天数"></el-input>
         </el-form-item>
 
       </el-form>

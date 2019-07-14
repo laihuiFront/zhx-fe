@@ -33,11 +33,12 @@
               ></el-input>
             </el-form-item>
             <el-form-item label="委案日期">
-              <el-date-picker
-                v-model="caseDetail.caseDate"
-                type="date"
-                :disabled="true"
-              ></el-date-picker>
+              <div
+                class="inputDiv"
+                style="font-size: 11px;"
+              >
+                <span>{{ caseDetail.caseDate }}</span>
+              </div>
             </el-form-item>
             <el-form-item label="证件号">
               <div
@@ -59,11 +60,16 @@
               ></el-input>
             </el-form-item>
             <el-form-item label="预计退案日">
-              <el-date-picker
-                v-model="caseDetail.expectTime"
-                type="date"
-                :disabled="true"
-              ></el-date-picker>
+              <div
+                class="inputDiv"
+                style="font-size: 11px;"
+              >
+
+                <span v-if="caseDetail.realReturnTime==null || caseDetail.realReturnTime==''">{{ caseDetail.expectTime }}</span>
+                <span v-else>{{ caseDetail.expectTime }}(已于{{
+                    caseDetail.realReturnTime
+                  }}退案)</span>
+              </div>
             </el-form-item>
             <el-form-item label="委案金额">
               <el-input v-model="caseDetail.moneyMsg" :disabled="true"></el-input>
@@ -1171,8 +1177,8 @@
             </el-form-item>
           </el-form>
         </div>
-      </el-collapse-item>
-      <el-collapse-item title="" name="3">
+     <!-- </el-collapse-item>
+      <el-collapse-item title="" name="3">-->
         <div class="other-wrap">
           <div class="left-wrap">
             <el-tabs
@@ -2522,7 +2528,7 @@
                     label="操作"
                   >
                     <template slot-scope="scope">
-                      <el-upload
+                      <!--<el-upload
                         class="upload-demo"
                         :action="action + '/reduce/save/import'"
                         :headers="header"
@@ -2538,7 +2544,14 @@
                         >上传
                         </el-button
                         >
-                      </el-upload>
+                      </el-upload>-->
+                      <el-button
+                        type="text"
+                        size="small"
+                        @click="moreId(scope.row)"
+                      >上传
+                      </el-button
+                      >
                       <el-button
                         type="text"
                         size="small"
@@ -2597,10 +2610,10 @@
                   ></el-input>
                 </el-col>
                 <el-col :span="4">
-                  <img src="./tel.png" style="padding-left:7px;margin-top: 8px;cursor: pointer;" @click="sendTel"/>
+                  <img src="./bohao1.png" style="padding-left:7px;margin-top: 8px;cursor: pointer;" @click="sendTel2"/>
                 </el-col>
                 <el-col :span="4">
-                  <img src="./tel.png" style="padding-left:7px;margin-top: 8px;cursor: pointer;" @click="sendTel"/>
+                  <img src="./bohao2.png" style="padding-left:4px;margin-top: 8px;cursor: pointer;" @click="sendTel"/>
                 </el-col>
               </el-form-item>
               <el-form-item label="姓名" prop="targetName">
@@ -3209,30 +3222,40 @@
           </el-col>
         </el-row>
         <el-row :gutter="24">
-          <el-col :span="20">
+          <el-col :span="12">
             <div class="grid-content bg-purple">
               <el-form-item label="联系方式">
                 <el-input
                   v-model="messageForm.contactWay"
+                  style="width: 180%;"
                   placeholder="请输入联系方式"
                   clearable
                 ></el-input>
-                <el-select
-                  v-model="messageForm.contactWay"
-                  placeholder="请选择"
-                  clearable
-                >
-                  <el-option
-                    v-for="item in caseDetail.dataCaseTelEntityList"
-                    :key="item.tel"
-                    :label="item.tel"
-                    :value="item.tel"
-                  >
-                  </el-option>
-                </el-select>
+
               </el-form-item>
 
             </div>
+          </el-col>
+          <el-col :span="12">
+              <div class="grid-content bg-purple">
+              <el-form-item label=" ">
+
+                  <el-select
+                    v-model="messageForm.contactWay2"
+                  placeholder="请选择" @change="changeWay"
+                    clearable
+                  >
+                    <el-option
+                      v-for="item in caseDetail.dataCaseTelEntityList"
+                      :key="item.tel"
+                      :label="item.tel"
+                      :value="item.tel"
+                    >
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+
+              </div>
           </el-col>
 
         </el-row>
@@ -3849,6 +3872,57 @@
         >
       </div>
     </el-dialog>
+
+
+    <el-dialog
+      title="附件列表"
+      class="dialog-wrap"
+      :visible.sync="reduceFileVisible"
+      :close-on-click-modal="false"
+      width="500px"
+    >
+      <el-upload
+        class="upload-demo"
+        :action="action + '/reduce/save/import'"
+        :headers="header"
+        :show-file-list="false"
+        :data="fileNames"
+        :on-change="handleChange"
+        :on-success="uploadSuccess2"
+      >
+        <el-button
+          size="small"
+          type="primary"
+          style="text-align: right;"
+        >上传
+        </el-button
+        >
+      </el-upload>
+      <el-table highlight-current-row
+                :data="reduceFileList"
+                border
+                stripe
+      >
+
+        <el-table-column
+          prop="fileName"
+          align="center"
+
+          label="附件名称"
+        >
+        </el-table-column>
+        <el-table-column
+          label="操作"
+          width="140"
+          align="center">
+          <template slot-scope="scope">
+            <el-button type="text" size="small" @click="deleteReduceFile(scope.row.id)">删除</el-button>
+          </template>
+        </el-table-column>
+
+      </el-table>
+
+    </el-dialog>
   </div>
 </template>
 
@@ -3869,6 +3943,8 @@
     getCommentDetail,
     getInterestDetail,
     getSynergyDetail,
+    deleteReduceFile,
+    listReduceFile,
     getSameBatchCase,
     updateRemark,
     saveCaseTel,
@@ -3938,6 +4014,9 @@
         seq:'',
         action: baseURL,
         messageForm: {},
+        reduceFileVisible:false,
+        currentReduceId:null,
+        reduceFileList:[],
         mycaseFlag:false,
         showCommentVisible:false,
         showWarningVisible:false,
@@ -4031,13 +4110,52 @@
     },
 
     methods: {
+      sendTel2(){
+        const customer = this.caseDetail.telIpManage.customer
+        const psw = this.caseDetail.telIpManage.psw
+        // 呼出的分机号(坐席号)
+        const agent = this.caseDetail.officePhone==null?"":this.caseDetail.officePhone;
+        // 被叫号码
+        const callee = "7"+this.batchForm.mobile
+
+        const url = "http://"+this.caseDetail.telIpManage.address+"/openapi/V2.0.6/CallNumber"
+        const time = new Date().getTime()
+        const seq = this.caseDetail.id
+        this.batchForm.seq = time
+        const auth = `${customer}@${time}@${seq}@${psw}`
+        const digest = md5(auth)
+        const data = {
+          authentication : {
+            customer,
+            timestamp: time,
+            seq:seq,
+            digest
+          },
+          param: {
+            debug: "true",
+            lang: "zh_CN"
+          },
+          request : {
+            seq,
+            userData:time,
+            agent,
+            callee
+          }
+        }
+        sendTel(data,this.caseDetail.telIpManage.address).then(data => {
+          this.$message({
+            type: "success",
+            message: "拨号成功"
+          });
+        });
+      },
       sendTel(){
         const customer = this.caseDetail.telIpManage.customer
         const psw = this.caseDetail.telIpManage.psw
         // 呼出的分机号(坐席号)
         const agent = this.caseDetail.officePhone==null?"":this.caseDetail.officePhone;
         // 被叫号码
-        const callee = this.batchForm.mobile
+        const callee = "9"+this.batchForm.mobile
 
         const url = "http://"+this.caseDetail.telIpManage.address+"/openapi/V2.0.6/CallNumber"
         const time = new Date().getTime()
@@ -4132,8 +4250,13 @@
         this.fileNames.file = file.name;
         this.fileNames.caseId = this.id;
       },
-      moreId(id) {
-        this.fileNames.id = id;
+      moreId(row) {
+        this.reduceFileVisible = true;
+        this.currentReduceId=row.id
+        this.fileNames.id = row.id;
+        listReduceFile({"reduceId":this.currentReduceId}).then(data => {
+          this.reduceFileList = data
+        });
       },
       showSynergyApply() {
        /* getSynergyTypeList().then(data => {
@@ -4300,11 +4423,36 @@
           });
         }
       },
+      deleteReduceFile(id){
+        this.$confirm("此操作将删除该操作记录且无法恢复,是否继续？", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            deleteReduceFile({"id":id}).then(data => {
+              listReduceFile({"reduceId":this.currentReduceId}).then(data => {
+                this.reduceFileList = data
+              });
+              this.$message({
+                type: "success",
+                message: "删除成功"
+              });
+            });
+
+          })
+          .catch(() => {
+          });
+
+      },
       uploadSuccess2(res, file, fileList) {
         if (res.code == 100) {
           this.$message({
             type: "success",
             message: res.msg
+          });
+          listReduceFile({"reduceId":this.currentReduceId}).then(data => {
+            this.reduceFileList = data
           });
         } else {
           this.$message({
@@ -4537,6 +4685,9 @@
       addCpInfo() {
         this.cpInfo = {};
         this.dialogCpVisible = true;
+      },
+      changeWay(){
+        this.$set(this.messageForm, 'contactWay', this.messageForm.contactWay2);
       },
       saveCpInfo() {
         this.cpInfo.dataCase = {id: this.id};
@@ -5265,8 +5416,8 @@
 
       .left-panel {
         padding: 12px;
-        flex: 0 0 35%;
-        width: 35%;
+        flex: 0 0 40%;
+        width: 40%;
         margin-right: 24px;
         border: 1px solid #d1d1d1;
         box-sizing: border-box;
@@ -5306,8 +5457,8 @@
       }
 
       .right-panel {
-        flex: 0 0 65%;
-        width: 65%;
+        flex: 0 0 60%;
+        width: 60%;
       }
     }
   }

@@ -520,3 +520,19 @@ export function lastCase(data) {
     data
   })
 }
+
+export function deleteReduceFile(data) {
+  return request({
+    url: 'reduce/file/delete',
+    method: 'post',
+    data
+  })
+}
+
+export function listReduceFile(data) {
+  return request({
+    url: 'reduce/file/list',
+    method: 'post',
+    data
+  })
+}

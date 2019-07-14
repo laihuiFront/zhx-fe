@@ -142,6 +142,13 @@ return request({
   })
 }
 
+export const zipDown = function() {
+  return download({
+    url: '/reduce/download',
+    method: 'post'
+  })
+}
+
 export const downDataList = function(id) {
 return download({
     url: '/reduce/download',
@@ -149,6 +156,14 @@ return download({
     data:{
     	ids:id
     }
+  })
+}
+
+export const downSingleDataList = function(data) {
+  return download({
+    url: '/reduce/sigle/download',
+    method: 'post',
+    data
   })
 }
 
@@ -202,6 +217,14 @@ export function selectByModule(data={}) {
   return request({
     method:'post',
     url:'/selectByModule',
+    data
+  })
+}
+
+export function listReduceFile(data) {
+  return request({
+    url: 'reduce/file/list',
+    method: 'post',
     data
   })
 }
