@@ -1723,6 +1723,7 @@
         let selectDataArr = this.$refs.tree.getCheckedNodes()
         let selectUserNames = []
         let selectUserIds = []
+        let selectPercent = []
         if (selectDataArr.length > 0) {
           selectUserNames = selectDataArr.filter((item) => {
             return item.type === 'user'
@@ -1734,9 +1735,16 @@
           }).map((item) => {
             return item.id
           })
+          selectPercent = selectDataArr.filter((item) => {
+            return item.type === 'user'
+          }).map((item) => {
+            return ''
+          })
         }
+
         this.$set(this.fenan, 'odvNames', selectUserNames)
         this.$set(this.fenan, 'odvs', selectUserIds)
+        this.$set(this.fenan, 'odvPercent', selectPercent)
         this.selectUserVisible2 = false
       },
       submitmsgForm4(formName) {
