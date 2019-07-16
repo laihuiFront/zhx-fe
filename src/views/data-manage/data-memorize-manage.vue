@@ -28,14 +28,15 @@
         </el-select>
       </el-form-item>
       <el-form-item v-if="queryConf.csy || queryConfFlag">
-        <el-select v-model="formInline.odvs" filterable collapse-tags multiple placeholder="请选择催收员" clearable>
+        <!--<el-select v-model="formInline.odvs" filterable collapse-tags multiple placeholder="请选择催收员" clearable>
           <el-option
             v-for="item in PersonList"
             :key="item.id"
             :label="item.userName"
             :value="item.id">
           </el-option>
-        </el-select>
+        </el-select>-->
+        <el-input v-model="formInline.odvNameFiter" width="200" @focus="onClickSelectUser3" clearable placeholder="请选择催收员"></el-input>
       </el-form-item>
       <el-form-item v-if="queryConf.cscs || queryConfFlag">
         <el-select v-model="formInline.measures" filterable collapse-tags multiple placeholder="请选择催收措施" clearable>
@@ -519,6 +520,28 @@
         <el-button type="primary" @click="exportExcel">确 定</el-button>
       </span>
     </el-dialog>
+
+    <el-dialog
+      title="选择催收员"
+      class="dialog-wrap"
+      :visible.sync="selectUserVisible3"
+      :close-on-click-modal="false"
+      width="600px"
+    >
+      <el-tree
+        :data="selectUserTree"
+        show-checkbox
+        default-expand-all
+        node-key="id"
+        ref="tree"
+        highlight-current
+        :props="defaultProps">
+      </el-tree>
+      <span slot="footer" class="footer">
+        <el-button @click="selectUserVisible3 = false">取 消</el-button>
+        <el-button type="primary" @click="onClickSaveUser3">保 存</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -527,6 +550,7 @@
     search,
     dataList,
     areaList,
+    getUserTree,
     saveSelectFilter,
     selectByModule,
     pageDataExport,
@@ -549,6 +573,8 @@
         radio: "1",
         tableHeight: 50,
         tableLoad: false,
+        selectUserVisible3:false,
+        selectUserTree:[],
         showExportConfVisible: false,
         exportConf: {},
         exportType: 0,
@@ -608,10 +634,15 @@
         recordInfo: {},
         tableData3: [],
         currentPage4: 1,
+        defaultProps: {
+          children: 'children',
+          label: 'name'
+        },
         pages: 1,
         total: 0,
         form: {PersonList: []},
         formInline: {
+          odvNameFiter:null,
           odvs: [],
           clients: [],
           collectTime: [],
@@ -621,6 +652,30 @@
       }
     },
     methods: {
+      onClickSelectUser3(){
+        this.selectUserVisible3 = true
+      },
+      onClickSaveUser3() {
+        let selectDataArr = this.$refs.tree.getCheckedNodes()
+        let selectUserNames = []
+        let selectUserIds = []
+        if (selectDataArr.length > 0) {
+          selectUserNames = selectDataArr.filter((item) => {
+            return item.type === 'user'
+          }).map((item) => {
+            return item.name
+          })
+          selectUserIds = selectDataArr.filter((item) => {
+            return item.type === 'user'
+          }).map((item) => {
+            return item.id
+          })
+
+        }
+        this.$set(this.formInline, 'odvNameFiter', selectUserNames.join(','))
+        this.$set(this.formInline, 'odvs', selectUserIds)
+        this.selectUserVisible3 = false
+      },
       saveExportCollectConf() {
         let queryObj = {module: "data-memorize-manage-exportCollect", menu: this.exportCollectConf}
         saveSelectFilter(queryObj).then(data => {
@@ -881,6 +936,7 @@
       resetForm() {
         this.formInline = {
           odvs: [],
+          odvNameFiter:"",
           areas:[],
           depts:[],
           measures:[],
@@ -953,7 +1009,9 @@
       departmentList().then((response) => {
         this.departmentList = response
       })
-
+      getUserTree().then(data => {
+        this.selectUserTree = [data]
+      })
     },
   }
 </script>

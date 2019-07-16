@@ -36,6 +36,12 @@ export function pageMyCase(data={}) {
     data
   })
 }
+export const getUserTree = function(){
+  return request({
+    url: 'user/select/userTree',
+    method: 'post'
+  })
+}
 
 //查询枚举类型
 export function getEnum(data={}) {

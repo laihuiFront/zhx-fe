@@ -408,6 +408,7 @@ export default {
     },
     onClickReset(){
       this.queryForm = {
+        odvNameFiter:'',
         recordStatus: this.queryForm.recordStatus,
         pageNum: this.queryForm.pageNum,
         pageSize: this.queryForm.pageSize,

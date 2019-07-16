@@ -525,7 +525,7 @@ export const clientCurrent = function(data) {
     url: '/dataBatch/listClients',
     method: 'post',
     data:{
-      batchNos:data
+      clients:data
     }
   })
 }

@@ -18,7 +18,7 @@
       </el-form-item>
       <el-form-item v-if="queryConf.pc || queryConfFlag">
         <el-select v-model="formInline.batchNos" style="min-width: 160px;" filterable collapse-tags multiple
-                   placeholder="请输入批次" clearable @change="clientCurrent">
+                   placeholder="请输入批次" clearable >
           <el-option
             v-for="item in batchList"
             :key="item.id"
@@ -28,7 +28,7 @@
         </el-select>
       </el-form-item>
       <el-form-item v-if="queryConf.wtf || queryConfFlag">
-        <el-select v-model="formInline.clients" filterable collapse-tags multiple placeholder="请选择委托方" clearable>
+        <el-select v-model="formInline.clients" filterable collapse-tags multiple @change="clientCurrent" placeholder="请选择委托方" clearable>
           <el-option
             v-for="item in clientList"
             :key="item.id"
@@ -122,14 +122,15 @@
         </el-select>
       </el-form-item>
       <el-form-item v-if="queryConf.csy || queryConfFlag">
-        <el-select v-model="formInline.odvs" filterable collapse-tags multiple placeholder="请选择催收员" clearable>
+        <!--<el-select v-model="formInline.odvs" filterable collapse-tags multiple placeholder="请选择催收员" clearable>
           <el-option
             v-for="item in PersonList"
             :key="item.id"
             :label="item.userName"
             :value="item.id">
           </el-option>
-        </el-select>
+        </el-select>-->
+        <el-input v-model="formInline.odvNameFiter" width="160" @focus="onClickSelectUser3" clearable placeholder="请选择催收员"></el-input>
       </el-form-item>
       <el-form-item v-if="queryConf.bbzt || queryConfFlag">
         <el-select v-model="formInline.reportStatuss" filterable collapse-tags multiple placeholder="请选择报备状态" clearable>
@@ -443,6 +444,15 @@
         </template>
       </el-table-column>
       <el-table-column
+        width="160"
+        prop="odv"
+        align="center"
+        sortable="custom"
+        :sort-orders="['ascending','descending']"
+        label="催收员"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
         width="140"
         prop="collectStatusMsg"
         align="center"
@@ -734,6 +744,28 @@
       <span slot="footer" class="footer">
         <el-button @click="selectUserVisible2 = false">取 消</el-button>
         <el-button type="primary" @click="onClickSaveUser2">保 存</el-button>
+      </span>
+    </el-dialog>
+
+    <el-dialog
+      title="选择催收员"
+      class="dialog-wrap"
+      :visible.sync="selectUserVisible3"
+      :close-on-click-modal="false"
+      width="600px"
+    >
+      <el-tree
+        :data="selectUserTree"
+        show-checkbox
+        default-expand-all
+        node-key="id"
+        ref="tree"
+        highlight-current
+        :props="defaultProps">
+      </el-tree>
+      <span slot="footer" class="footer">
+        <el-button @click="selectUserVisible3 = false">取 消</el-button>
+        <el-button type="primary" @click="onClickSaveUser3">保 存</el-button>
       </span>
     </el-dialog>
 
@@ -1393,6 +1425,7 @@
         selectUserTree: [],
         selectUserVisible: false,
         selectUserVisible2: false,
+        selectUserVisible3:false,
         defaultProps: {
           children: 'children',
           label: 'name'
@@ -1417,6 +1450,7 @@
         caseTypeList: [],
         areaList: [],
         formInline: {
+          odvNameFiter:null,
           statuss:[1],
           odvs: [],
           batchNos: [],
@@ -1522,15 +1556,16 @@
     },
     methods: {
       clientCurrent(){
-        if (this.formInline.batchNos==null || this.formInline.batchNos.length==0){
-          this.$set(this.formInline, 'clients', [])
+        if (this.formInline.clients==null || this.formInline.clients.length==0){
+          this.$set(this.formInline, 'batchNos', [])
         }else{
-          clientCurrent(this.formInline.batchNos).then((response) => {
-
+          clientCurrent(this.formInline.clients).then((response) => {
+            //clients
+            debugger
             if (response==null){
-              this.$set(this.formInline, 'clients', [])
+              this.$set(this.formInline, 'batchNos', [])
             }else{
-              this.$set(this.formInline, 'clients', response)
+              this.$set(this.formInline, 'batchNos', response)
             }
           })
         }
@@ -1704,7 +1739,9 @@
       },
       onClickSelectUser2() {
         this.selectUserVisible2 = true
-
+      },
+      onClickSelectUser3(){
+        this.selectUserVisible3 = true
       },
       onClickSaveUser() {
         let selectDataArr =this.$refs.tree.getCurrentNode();
@@ -1746,6 +1783,27 @@
         this.$set(this.fenan, 'odvs', selectUserIds)
         this.$set(this.fenan, 'odvPercent', selectPercent)
         this.selectUserVisible2 = false
+      },
+      onClickSaveUser3() {
+        let selectDataArr = this.$refs.tree.getCheckedNodes()
+        let selectUserNames = []
+        let selectUserIds = []
+        if (selectDataArr.length > 0) {
+          selectUserNames = selectDataArr.filter((item) => {
+            return item.type === 'user'
+          }).map((item) => {
+            return item.name
+          })
+          selectUserIds = selectDataArr.filter((item) => {
+            return item.type === 'user'
+          }).map((item) => {
+            return item.id
+          })
+        }
+
+        this.$set(this.formInline, 'odvNameFiter', selectUserNames.join(','))
+        this.$set(this.formInline, 'odvs', selectUserIds)
+        this.selectUserVisible3 = false
       },
       submitmsgForm4(formName) {
         this.$refs[formName].validate((valid) => {
@@ -2475,6 +2533,7 @@
       },
       resetFormInline() {
         this.formInline = {
+          odvNameFiter:"",
           odvs: [],
           collectAreas:[],
           caseTypes:[],

@@ -83,7 +83,8 @@
             <el-form-item label="地区" >
               <el-input v-model="caseDetail.area" :disabled="true"></el-input>
             </el-form-item>
-            <el-form-item >
+            <el-form-item label="催收员">
+              <el-input v-model="caseDetail.odv" :disabled="true"></el-input>
             </el-form-item>
             <el-form-item label="已还款">
               <div class="inputDiv" style="font-size: 12px;">
@@ -469,9 +470,7 @@
                 :disabled="true"
               ></el-input>
             </el-form-item>
-            <el-form-item label="催收员">
-              <el-input v-model="caseDetail.odv" :disabled="true"></el-input>
-            </el-form-item>
+
             <el-form-item label="最近催记时间">
               <el-date-picker
                 v-model="caseDetail.latestCollectMomorize"
@@ -1177,8 +1176,8 @@
             </el-form-item>
           </el-form>
         </div>
-     <!-- </el-collapse-item>
-      <el-collapse-item title="" name="3">-->
+     </el-collapse-item>
+      <el-collapse-item title="" name="3">
         <div class="other-wrap">
           <div class="left-wrap">
             <el-tabs
@@ -2083,7 +2082,7 @@
                     >
                     </el-table-column>
                     <el-table-column
-                      prop="repayType"
+                      prop="repayTypeMsg"
                       show-overflow-tooltip
                       label="还款方式"
                     >
@@ -2628,10 +2627,10 @@
                   placeholder="请输入关系"
                 ></el-input>
               </el-form-item>
-              <el-form-item label="谈判方式" prop="method">
+              <el-form-item label="还款方式" prop="method">
                 <el-select
                   v-model="batchForm.method"
-                  placeholder="请选择谈判方式"
+                  placeholder="请选择还款方式"
                 >
                   <el-option
                     v-for="item in tpfsList"
@@ -2952,6 +2951,7 @@
         <el-form-item label="待银行查账金额">
           <el-input
             v-model="cpInfo.cpMoney"
+            type="number"
             placeholder="请输入待银行查账金额"
           ></el-input>
         </el-form-item>

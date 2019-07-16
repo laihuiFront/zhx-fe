@@ -62,7 +62,7 @@
               <el-input v-model="deptName" width="200" @focus="onClickSelectUser" clearable placeholder="请选择部门"></el-input>
             </el-form-item>
           <el-form-item prop="val9">
-            <el-select
+            <!--<el-select
               v-model="form1.val9"
               placeholder="请选择催收员"
               filterable
@@ -77,7 +77,8 @@
                 :value="item.value"
               >
               </el-option>
-            </el-select>
+            </el-select>-->
+            <el-input v-model="form1.odvNameFiter" width="200" @focus="onClickSelectUser3" clearable placeholder="请选择催收员"></el-input>
           </el-form-item>
           <el-form-item prop="val2">
             <el-select v-model="form1.val2" placeholder="请选择委托方" filterable collapse-tags multiple clearable>
@@ -270,11 +271,32 @@
           <el-button type="primary" @click="onClickSaveDept">确 定</el-button>
         </span>
     </el-dialog>
+    <el-dialog
+      title="选择催收员"
+      class="dialog-wrap"
+      :visible.sync="selectUserVisible3"
+      :close-on-click-modal="false"
+      width="600px"
+    >
+      <el-tree
+        :data="selectUserTree"
+        show-checkbox
+        default-expand-all
+        node-key="id"
+        ref="tree"
+        highlight-current
+        :props="defaultProps">
+      </el-tree>
+      <span slot="footer" class="footer">
+        <el-button @click="selectUserVisible3 = false">取 消</el-button>
+        <el-button type="primary" @click="onClickSaveUser3">保 存</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { batchNo, pay, getEnum,listOrganization } from "@/common/js/collect-my-case";
+import { batchNo, pay, getEnum,listOrganization,getUserTree } from "@/common/js/collect-my-case";
 
 import {role} from '@/common/js/collect-departmental-case'
  const CaseDetail2 = () => import('@/views/data-manage/detail');
@@ -319,11 +341,18 @@ export default {
         currentPage: 1
       },
       deptName:"",
+      selectUserVisible3:false,
+      selectUserTree:[],
+      defaultProps: {
+        children: 'children',
+        label: 'name'
+      },
       departmentVisible:false,
       departmentTree: [],
       tableLoad:false,
       topData: {},
       form1: {
+        odvNameFiter:null,
         val1: "0",
         val2: "",
         val3: "",
@@ -332,7 +361,7 @@ export default {
         val6: "",
         val7: "",
         val8: "",
-        val9: "",
+        val9: [],
       },
       val3_data: [],
       val1_data: [
@@ -507,6 +536,31 @@ export default {
     }
   },
   methods: {
+    onClickSelectUser3(){
+      this.selectUserVisible3 = true
+    },
+    onClickSaveUser3() {
+      let selectDataArr = this.$refs.tree.getCheckedNodes()
+      let selectUserNames = []
+      let selectUserIds = []
+      if (selectDataArr.length > 0) {
+        selectUserNames = selectDataArr.filter((item) => {
+          return item.type === 'user'
+        }).map((item) => {
+          return item.name
+        })
+        selectUserIds = selectDataArr.filter((item) => {
+          return item.type === 'user'
+        }).map((item) => {
+          return item.id
+        })
+
+      }
+
+      this.$set(this.form1, 'odvNameFiter', selectUserNames.join(','))
+      this.$set(this.form1, 'val9', selectUserIds)
+      this.selectUserVisible3 = false
+    },
     onClickSelectUser() {
       this.departmentVisible = true
     },
@@ -615,6 +669,9 @@ export default {
       });
       role({role:'催收员'}).then((data)=>{
         this.val9_data = this.transform(data,[['userName','label'],['id','value']]);
+      })
+      getUserTree().then(data => {
+        this.selectUserTree = [data]
       })
     },
 

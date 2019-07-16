@@ -42,7 +42,7 @@
                     <el-input v-model="deptName" width="200" @focus="onClickSelectUser" clearable placeholder="请选择部门"></el-input>
                   </el-form-item>
                   <el-form-item prop="val32" v-if="queryConf.csy || queryConfFlag">
-                    <el-select
+                   <!-- <el-select
                       v-model="form.val32"
                       placeholder="请选择催收员"
                       filterable
@@ -57,7 +57,8 @@
                         :value="item.value"
                       >
                       </el-option>
-                    </el-select>
+                    </el-select>-->
+                    <el-input v-model="form.odvNameFiter" width="200" @focus="onClickSelectUser3" clearable placeholder="请选择催收员"></el-input>
                   </el-form-item>
 
                 <el-form-item prop="val0" v-if="queryConf.wtf || queryConfFlag">
@@ -696,6 +697,28 @@
           <el-button type="primary" @click="onClickSaveDept">确 定</el-button>
         </span>
     </el-dialog>
+
+    <el-dialog
+      title="选择催收员"
+      class="dialog-wrap"
+      :visible.sync="selectUserVisible3"
+      :close-on-click-modal="false"
+      width="600px"
+    >
+      <el-tree
+        :data="selectUserTree"
+        show-checkbox
+        default-expand-all
+        node-key="id"
+        ref="tree"
+        highlight-current
+        :props="defaultProps">
+      </el-tree>
+      <span slot="footer" class="footer">
+        <el-button @click="selectUserVisible3 = false">取 消</el-button>
+        <el-button type="primary" @click="onClickSaveUser3">保 存</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -703,7 +726,7 @@
   import tab2 from "./collect-departmental-statistics";
   import { pageMyCase,getEnum,markColor ,saveSelectFilter,selectByModule,addSynergy,batchNo,addCollectStatus,listOrganization} from
       "@/common/js/collect-my-case";
-  import {role} from '@/common/js/collect-departmental-case'
+  import {role,getUserTree} from '@/common/js/collect-departmental-case'
   const CaseDetail = () => import('@/views/data-manage/detail');
   export default {
     components: {
@@ -714,6 +737,12 @@
     data() {
       return {
         deptName:"",
+        selectUserVisible3:false,
+        selectUserTree:[],
+        defaultProps: {
+          children: 'children',
+          label: 'name'
+        },
         departmentVisible:false,
         departmentTree: [],
         tableLoad:false,
@@ -736,6 +765,7 @@
         tableData: [],
         fetchData: {},
         form: {
+          odvNameFiter:null,
           val0: null, //委托方
           val1: null, //批次号
           val2: [], //下次跟进日期
@@ -767,7 +797,7 @@
           val29: "", //委案金额下限
           val30: "", //跟进次数下限
           val31: "", //部门
-          val32: "", //催收员
+          val32: [], //催收员
           val33: "", //案件分配
         },
         val0_data: [],  //委托方
@@ -1011,6 +1041,31 @@
       });
     },
     methods: {
+      onClickSelectUser3(){
+        this.selectUserVisible3 = true
+      },
+      onClickSaveUser3() {
+        let selectDataArr = this.$refs.tree.getCheckedNodes()
+        let selectUserNames = []
+        let selectUserIds = []
+        if (selectDataArr.length > 0) {
+          selectUserNames = selectDataArr.filter((item) => {
+            return item.type === 'user'
+          }).map((item) => {
+            return item.name
+          })
+          selectUserIds = selectDataArr.filter((item) => {
+            return item.type === 'user'
+          }).map((item) => {
+            return item.id
+          })
+
+        }
+
+        this.$set(this.form, 'odvNameFiter', selectUserNames.join(','))
+        this.$set(this.form, 'val32', selectUserIds)
+        this.selectUserVisible3 = false
+      },
       onClickSelectUser() {
         this.departmentVisible = true
       },
@@ -1208,6 +1263,9 @@
         });
         role({role:'催收员'}).then((data)=>{
           this.val32_data = this.transform(data,[['userName','label'],['id','value']]);
+        })
+        getUserTree().then(data => {
+          this.selectUserTree = [data]
         })
       },
     },

@@ -57,14 +57,15 @@
             </e-l-TreeSelect>
     </el-form-item>
     <el-form-item  v-if="queryConf.hscsy || queryConfFlag">
-            <el-select clearable v-model="queryForm.dataCase.collectionUser.ids" filterable collapse-tags multiple placeholder="请选择回收催收员">
+            <!--<el-select clearable v-model="queryForm.dataCase.collectionUser.ids" filterable collapse-tags multiple placeholder="请选择回收催收员">
               <el-option
                 v-for="item in collectionUserList"
                 :key="item.id"
                 :label="item.userName"
                 :value="item.id">
               </el-option>
-            </el-select>
+            </el-select>-->
+      <el-input v-model="queryForm.odvNameFiter" width="200" @focus="onClickSelectUser3" clearable placeholder="请选择回收催收员"></el-input>
     </el-form-item>
     <el-form-item  v-if="queryConf.dq || queryConfFlag">
             <e-l-TreeSelect
@@ -198,20 +199,43 @@
         <el-button type="primary" @click="saveConf">确 定</el-button>
       </span>
     </el-dialog>
+
+    <el-dialog
+      title="选择回收催收员"
+      class="dialog-wrap"
+      :visible.sync="selectUserVisible3"
+      :close-on-click-modal="false"
+      width="600px"
+    >
+      <el-tree
+        :data="selectUserTree"
+        show-checkbox
+        default-expand-all
+        node-key="id"
+        ref="tree"
+        highlight-current
+        :props="defaultProps">
+      </el-tree>
+      <span slot="footer" class="footer">
+        <el-button @click="selectUserVisible3 = false">取 消</el-button>
+        <el-button type="primary" @click="onClickSaveUser3">保 存</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import ELTreeSelect from '@/components/el-tree-select/elTreeSelect'
-import {getEnum, getBatchList, getCollectionUserList, getStatusList,saveSelectFilter,selectByModule} from '@/common/js/api-sync'
+import {getEnum, getBatchList,getUserTree, getCollectionUserList, getStatusList,saveSelectFilter,selectByModule} from '@/common/js/api-sync'
 import { getDepartmentTree } from '@/common/js/api-setting'
 export default {
-  name:'repayRecordQuery',
+  name:'bankRecordQuery',
   components:{
     ELTreeSelect,
   },
   props:{
     queryForm:{
+
       type:Object,
       default(){
         return {}
@@ -224,6 +248,12 @@ export default {
       identNos:null,
       accounts:null,
       cardNos: null,
+      selectUserVisible3:false,
+      selectUserTree:[],
+      defaultProps: {
+        children: 'children',
+        label: 'name'
+      },
       caseDate:[],
       showQueryConfVisible:false,
       queryConf:{},
@@ -268,6 +298,31 @@ export default {
     this.queryConfList();
   },
   methods: {
+    onClickSelectUser3(){
+      this.selectUserVisible3 = true
+    },
+    onClickSaveUser3() {
+      let selectDataArr = this.$refs.tree.getCheckedNodes()
+      let selectUserNames = []
+      let selectUserIds = []
+      if (selectDataArr.length > 0) {
+        selectUserNames = selectDataArr.filter((item) => {
+          return item.type === 'user'
+        }).map((item) => {
+          return item.name
+        })
+        selectUserIds = selectDataArr.filter((item) => {
+          return item.type === 'user'
+        }).map((item) => {
+          return item.id
+        })
+
+      }
+      this.$set(this.queryForm, 'odvNameFiter', selectUserNames.join(','))
+      this.queryForm.dataCase.collectionUser.ids = selectUserIds;
+      //this.$set(this.queryForm, 'dataCase.collectionUser.ids', selectUserIds)
+      this.selectUserVisible3 = false
+    },
     thisReset(){
       this.seqNos=null
         this.identNos=null
@@ -303,6 +358,9 @@ export default {
       this.showQueryConfVisible = true;
     },
     initPage(){
+      getUserTree().then(data => {
+        this.selectUserTree = [data]
+      })
       //getEnum('催收区域').then(data => this.collectionAreaList = data)
       this.collectionAreaList = this.$store.getters.caseType.催收区域;
       getBatchList().then(data=> this.batchList = data)

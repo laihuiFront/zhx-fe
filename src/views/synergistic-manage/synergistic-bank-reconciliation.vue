@@ -77,7 +77,7 @@
       <el-table-column sortable="custom" width="120" align="center" :sort-orders="['ascending','descending']"
                        prop="repayType" label="还款方式" show-overflow-tooltip></el-table-column>
       <el-table-column sortable="custom" width="100" align="center" :sort-orders="['ascending','descending']"
-                       prop="submitUser.name" label="提交人" show-overflow-tooltip></el-table-column>
+                       prop="submitUser.userName" label="提交人" show-overflow-tooltip></el-table-column>
       <el-table-column sortable="custom" width="140" align="center" :sort-orders="['ascending','descending']"
                        prop="submitTime" label="提交时间" show-overflow-tooltip></el-table-column>
       <el-table-column sortable="custom" width="100" align="center" :sort-orders="['ascending','descending']"
@@ -293,6 +293,7 @@
         rules: {},
         recordInfo: {},
         queryForm: {
+          odvNameFiter:'',
           status: '0',
           pageNum: 1,
           pageSize: 100,
@@ -356,6 +357,7 @@
       },
       onClickReset() {
         this.queryForm = {
+          odvNameFiter:'',
           status: this.queryForm.status,
           pageNum: this.queryForm.pageNum,
           pageSize: this.queryForm.pageSize,
