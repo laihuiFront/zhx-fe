@@ -83,17 +83,17 @@
       </el-form>
       <el-table v-loading="tableLoad" highlight-current-row sortable="custom" border stripe  @sort-change="handleSort"  @selection-change="handleSelectionChange" :row-class-name="rowColor"  height="1" :data="memberList" style="width: 100%" class="table-wrap">
         <el-table-column type="selection" align="center" width="55"></el-table-column>
-        <el-table-column :sortable='true' :sort-orders="['ascending','descending']"  align="center" prop="id" min-width="100" label="员工ID" show-overflow-tooltip></el-table-column>
-        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center" prop="userName" min-width="120" label="员工姓名" show-overflow-tooltip></el-table-column>
-        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center"  prop="loginName" min-width="120" show-overflow-tooltip label="账号"></el-table-column>
-        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center"  prop="enableMsg" min-width="120" show-overflow-tooltip label="状态"></el-table-column>
-        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center" prop="sex" min-width="60" label="性别" show-overflow-tooltip width="70"></el-table-column>
-        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center" prop="officePhone" min-width="120" label="坐席号" show-overflow-tooltip></el-table-column>
-        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center" prop="mobile" min-width="120" label="手机" show-overflow-tooltip></el-table-column>
-        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center" prop="joinTime" min-width="120" label="入职日期" show-overflow-tooltip></el-table-column>
-        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center" prop="actualTime" min-width="120" label="下组日期" show-overflow-tooltip></el-table-column>
-        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center" prop="roleList" :formatter="formatRole" min-width="140" label="员工角色" show-overflow-tooltip></el-table-column>
-        <el-table-column :sortable='true' :sort-orders="['ascending','descending']" align="center" prop="department" min-width="160" label="部门" show-overflow-tooltip></el-table-column>
+        <el-table-column sortable="custom" :sort-orders="['ascending','descending']"  align="center" prop="id" min-width="100" label="员工ID" show-overflow-tooltip></el-table-column>
+        <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="userName" min-width="120" label="员工姓名" show-overflow-tooltip></el-table-column>
+        <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center"  prop="loginName" min-width="120" show-overflow-tooltip label="账号"></el-table-column>
+        <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center"  prop="enableMsg" min-width="120" show-overflow-tooltip label="状态"></el-table-column>
+        <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="sex" min-width="60" label="性别" show-overflow-tooltip width="70"></el-table-column>
+        <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="officePhone" min-width="120" label="坐席号" show-overflow-tooltip></el-table-column>
+        <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="mobile" min-width="120" label="手机" show-overflow-tooltip></el-table-column>
+        <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="joinTime" min-width="120" label="入职日期" show-overflow-tooltip></el-table-column>
+        <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="actualTime" min-width="120" label="下组日期" show-overflow-tooltip></el-table-column>
+        <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="roleList" :formatter="formatRole" min-width="140" label="员工角色" show-overflow-tooltip></el-table-column>
+        <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="department" min-width="160" label="部门" show-overflow-tooltip></el-table-column>
         <el-table-column label="操作" width="250"  align="center">
           <template slot-scope="scope">
             <el-button type="text" @click="onClickEdit(scope.row)"  v-has="'修改'">修改</el-button>
@@ -307,7 +307,7 @@ export default {
       },
       total: 0,
       memberList: [],
-      memberInfo: {loginName:''},
+      memberInfo: {loginName:'',userName2:''},
       rules: {
         userName: [
           { required: true, message: '请输入用户名', trigger: 'blur' }
@@ -385,12 +385,13 @@ export default {
   		if(this.memberInfo.userName){
   			getLoginName(this.memberInfo.userName).then(response => {
   				if(response.loginNameCount==1){
-  					console.log(response)
   					 this.$set(this.memberInfo, 'loginName', response.loginName)
              this.$set(this.memberInfo, 'loginNameCount', response.loginNameCount)
              this.returnName = response.userName
   				}else{
-            this.makeSure(response.loginName)
+  				  if(this.memberInfo.userName!=this.memberInfo.userName2){
+              this.makeSure(response.loginName)
+            }
             this.returnName = response.userName
   				}
     })
@@ -533,13 +534,16 @@ export default {
       this.$set(this.dialogData, 'editVisible', true)
     },
     onClickEdit (row) {
+      this.memberInfo.loginName2
       this.$nextTick(()=>{
         this.$refs['ruleForm'].resetFields()
       });
       this.$set(this.dialogData, 'title', '修改员工')
       this.$set(this.dialogData, 'type', 'edit')
+      this.$set(this.memberInfo, 'userName2', '')
       getUserById(row.id).then(response => {
         this.memberInfo = response
+        this.memberInfo.userName2 = response.userName
         const roleList = this.memberInfo.roleList.map(item => item.id)
         this.$set(this.memberInfo, 'roleList', roleList)
         this.$set(this.dialogData, 'editVisible', true)
@@ -704,7 +708,7 @@ export default {
     onClickSave () {
       this.$refs.ruleForm.validate((valid)=>{
         if(valid){
-          if(this.returnName && this.returnName !== this.memberInfo.userName){
+          if(this.returnName && this.returnName !== this.memberInfo.userName && this.memberInfo.userName!=this.memberInfo.userName2){
             this.$confirm(`已有用户名相同的员工,是否用${this.returnName}替换${this.memberInfo.userName}`, '提示', {
               confirmButtonText: '确定',
               cancelButtonText: '取消',

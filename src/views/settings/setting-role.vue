@@ -20,7 +20,7 @@
       <el-table-column prop="roleName"  align="center" label="角色名称" width="300"></el-table-column>
       <el-table-column prop="roleDesc"  align="center" label="角色描述" show-overflow-tooltip></el-table-column>
       <el-table-column prop="updateUser.userName"  align="center" label="修改人" width="200"></el-table-column>
-      <el-table-column label="操作"   align="center" width="180">
+      <el-table-column label="操作"   align="center" width="200">
         <template slot-scope="scope">
           <el-button type="text" @click="onClickQueryOne(scope.row)" v-has="'查看'">查看</el-button>
           <el-button type="text" v-if="scope.row.id !== 14" @click="onClickEdit(scope.row)" v-has="'修改'">修改</el-button>
@@ -261,6 +261,9 @@ export default {
     .auth-wrap {
       border-radius: 5px;
     }
+  }
+  .el-table--scrollable-y .el-table__body-wrapper{
+    overflow-x: hidden;
   }
 }
 </style>

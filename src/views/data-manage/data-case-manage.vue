@@ -1386,6 +1386,7 @@
         queryConf: {},
         exportType: 0,
         queryConfFlag: true,
+        batchList2:[],
         addSynergyForm: {
           Synergytype: '',
           value: '',
@@ -1558,14 +1559,30 @@
       clientCurrent(){
         if (this.formInline.clients==null || this.formInline.clients.length==0){
           this.$set(this.formInline, 'batchNos', [])
+          this.batchList = this.batchList2
         }else{
           clientCurrent(this.formInline.clients).then((response) => {
-            //clients
-            debugger
             if (response==null){
               this.$set(this.formInline, 'batchNos', [])
+              this.batchList = [];
             }else{
-              this.$set(this.formInline, 'batchNos', response)
+              //this.$set(this.formInline, 'batchNos', response)
+              this.batchList = response;
+
+              for (var i=0;i<this.formInline.batchNos.length;i++){
+                var batNo = this.formInline.batchNos[i];
+                var removeFlag = true;
+                for (var j=0;j<this.batchList.length;j++){
+                  if (batNo!=null && batNo!="" && batNo==this.batchList[j]){
+                    removeFlag = false;
+                     break;
+                  }
+                }
+                if(removeFlag){
+                  this.formInline.batchNos.splice(i,1);
+                }
+              }
+
             }
           })
         }
@@ -2636,6 +2653,7 @@
       })*/
       this.clientList = this.$store.getters.caseType.委托方;
       batchList().then((response) => {
+        this.batchList2 = response;
         this.batchList = response;
       })
       /*EndList().then((response) => {

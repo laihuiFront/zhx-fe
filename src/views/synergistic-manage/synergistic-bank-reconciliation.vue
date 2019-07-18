@@ -456,6 +456,7 @@
           this.loading2 = false
           return ;
         }
+
         if (this.exportType == 1) {
           if (!this.selectList.length) {
             this.$message('请选择需要导出的记录')
@@ -480,6 +481,8 @@
             this.fullscreenLoading = false
           })
         } else if (this.exportType == 3) {
+          this.loading2 = true
+          this.fullscreenLoading = true
           this.queryForm.exportConf = this.exportConf
           expAllBankReconRecord(this.queryForm).then(res => {
             this.$message('导出成功')

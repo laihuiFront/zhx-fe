@@ -821,7 +821,7 @@
         for (var i = 0; i <= this.clientList.length; i++) {
           if (this.messageForm.client === this.clientList[i].id) {
             this.clientValue = this.clientList[i].name
-            this.$set(this.messageForm, 'batchNo', this.clientValue + '-' + this.formInline.caseTime.split("-").join(""))
+            this.$set(this.messageForm, 'batchNo', this.clientValue + '-' + this.messageForm.caseTime.split("-").join(""))
             return
           }
         }
@@ -830,7 +830,7 @@
         for (var i = 0; i <= this.clientList.length; i++) {
           if (this.messageForm.client === this.clientList[i].id) {
             this.clientValue = this.clientList[i].name
-            this.$set(this.messageForm, 'batchNo', this.clientValue + '-' +this.formInline.caseTime.split("-").join(""))
+            this.$set(this.messageForm, 'batchNo', this.clientValue + '-' +this.messageForm.caseTime.split("-").join(""))
             return
           }
         }

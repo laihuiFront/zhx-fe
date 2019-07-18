@@ -111,10 +111,12 @@ export function remindList(data) {
   })
 }
 
-export function loadByTypeAction({commit}) {
-  loadByType().then((data) => {
-    commit(types.SET_CASE_TYPE, data)
-  })
+export function loadByTypeAction({commit, state}) {
+  if (Object.keys(state.caseType).length == 0){
+    loadByType().then((data) => {
+      commit(types.SET_CASE_TYPE, data)
+    })
+  }
 }
 
 // 根据路由查找对应的菜单对象
