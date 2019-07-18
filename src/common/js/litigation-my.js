@@ -4,7 +4,7 @@ return request({
     url: '/legal/pageMyDataCase',
     method: 'post',
     data: {
-       legalStatusMsg:form.legalStatusMsg,
+      legalStatuss:form.legalStatus,
        legalNo:form.legalNo,// 案号
 	   cstName:form.cstName,// 姓名
        orderBy:orderBy?orderBy:"id",
@@ -20,7 +20,7 @@ return request({
     url: '/legal/pageDataCase',
     method: 'post',
     data: {
-       legalStatusMsg:form.legalStatusMsg,
+      legalStatuss:form.legalStatus,
        legalNo:form.legalNo,// 案号
 	   cstName:form.cstName,// 姓名
        orderBy:orderBy?orderBy:"id",
@@ -57,7 +57,7 @@ return request({
     method: 'post',
     data:{
     	id:form.id,
-    legalStatusMsg:form.legalStatusMsg,// 案件状态   1 已经审核 2审核中 0未申请
+      legalStatus:form.legalStatus,// 案件状态   1 已经审核 2审核中 0未申请
 	identNo:form.identNo, //证件号码
 	legalType:form.legalType,// 案件類型
 	progress:form.progress,// 办案进度

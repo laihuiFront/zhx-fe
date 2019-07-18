@@ -4,7 +4,7 @@
     <el-tab-pane label="我的诉讼案件" name="first"> 
       <el-form ref="form" :model="form" :inline="true" class="query-wrap">
         <el-form-item>
-          <el-select v-model="form.legalStatusMsg" filterable collapse-tags multiple  placeholder="请选择案件状态" clearable>
+          <el-select v-model="form.legalStatus" filterable collapse-tags multiple  placeholder="请选择案件状态" clearable>
             <el-option
               v-for="item in legalStatusMsgList"
               :key="item.id"
@@ -219,7 +219,7 @@
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   		<el-form-item label="办案进度">
-    <el-select v-model="formInline.progress" filterable  placeholder="请选择案件进度" clearable>
+    <el-select v-model="formInline.progress" filterable  placeholder="请选择办案进度" clearable>
     <el-option
       v-for="item in progressList"
       :key="item.id"
@@ -289,7 +289,7 @@
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   	    <el-form-item label="律师联系方式">
-    <el-input v-model="formInline.agentTel" placeholder="请输入联系方式"></el-input>
+    <el-input v-model="formInline.agentTel" placeholder="请输入律师联系方式"></el-input>
   </el-form-item>
   	</div></el-col>
   	<el-col :span="8">
@@ -309,7 +309,7 @@
       v-model="formInline.legalDate"
       type="date"
       value-format="yyyy-MM-dd"
-      placeholder="请选择日期">
+      placeholder="请选择委案日期">
     </el-date-picker>
   </div>
   </el-form-item>
@@ -322,7 +322,7 @@
     	value-format="yyyy-MM-dd"
       v-model="formInline.filingDate"
       type="date"
-      placeholder="请选择日期">
+      placeholder="请选择受案日期">
     </el-date-picker>
   </div>
   </el-form-item>
@@ -330,7 +330,7 @@
   	<el-col :span="8">
   	<div class="grid-content bg-purple">
     <el-form-item label="受案法院">
-    <el-input v-model="formInline.court" placeholder="请输入法院"></el-input>
+    <el-input v-model="formInline.court" placeholder="请输入受案法院"></el-input>
   </el-form-item>
   	</div></el-col>
 </el-row>
@@ -345,7 +345,7 @@
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   	    <el-form-item label="法官联系方式">
-    <el-input v-model="formInline.judgeTel" placeholder="请输入联系方式"></el-input>
+    <el-input v-model="formInline.judgeTel" placeholder="请输入法官联系方式"></el-input>
   </el-form-item>
   	</div></el-col>
   	<el-col :span="8">
@@ -365,7 +365,7 @@
     	value-format="yyyy-MM-dd"
       v-model="formInline.firstDate"
       type="date"
-      placeholder="请选择日期">
+      placeholder="请选择首次开庭日期">
     </el-date-picker>
   </div>
   </el-form-item>
@@ -378,7 +378,7 @@
     	value-format="yyyy-MM-dd"
       v-model="formInline.judgeDate"
       type="date"
-      placeholder="请选择日期">
+      placeholder="请选择判决日期">
     </el-date-picker>
   </div>
   </el-form-item>
@@ -386,7 +386,7 @@
   	<el-col :span="8">
   	<div class="grid-content bg-purple">
     <el-form-item label="申请执行案号">
-    <el-input v-model="formInline.exeNo" placeholder="请输入案号"></el-input>
+    <el-input v-model="formInline.exeNo" placeholder="请输入申请执行案号"></el-input>
   </el-form-item>
   	</div></el-col>
 </el-row>
@@ -400,7 +400,7 @@
     	value-format="yyyy-MM-dd"
       v-model="formInline.exeDate"
       type="date"
-      placeholder="请选择日期">
+      placeholder="请选择申请执行日期">
     </el-date-picker>
   </div>
   </el-form-item>
@@ -413,7 +413,7 @@
     	value-format="yyyy-MM-dd"
       v-model="formInline.exeEndDate"
       type="date"
-      placeholder="请选择日期">
+      placeholder="请选择执行终结日期">
     </el-date-picker>
   </div>
   </el-form-item>
@@ -426,7 +426,7 @@
     	value-format="yyyy-MM-dd"
       v-model="formInline.costDate"
       type="date"
-      placeholder="请选择日期">
+      placeholder="请选择诉讼缴费日期">
     </el-date-picker>
   </div>
   </el-form-item>
@@ -442,7 +442,7 @@
     	value-format="yyyy-MM-dd"
       v-model="formInline.preservationDate"
       type="date"
-      placeholder="请选择日期">
+      placeholder="请选择保全缴费日期">
     </el-date-picker>
   </div>
   </el-form-item>
@@ -450,7 +450,7 @@
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   	 <el-form-item label="送达情况">
-    <el-input v-model="formInline.arriveInfo" placeholder="请输入送达"></el-input>
+    <el-input v-model="formInline.arriveInfo" placeholder="请输入送达情况"></el-input>
   </el-form-item>
   	</div></el-col>
   	<el-col :span="8">
@@ -463,7 +463,7 @@
   <el-col :span="16">
   	<div class="grid-content bg-purple">
   	  <el-form-item label="保全资产清单">
-    <el-input type="textarea" style="width: 280%;" v-model="formInline.preservationList"></el-input>
+    <el-input type="textarea" style="width: 280%;" placeholder="请输入保全资产清单" v-model="formInline.preservationList"></el-input>
   </el-form-item>
   	</div></el-col>
 </el-row>
@@ -472,7 +472,7 @@
   <el-col :span="16">
   	<div class="grid-content bg-purple">
   	  <el-form-item label="判决书">
-    <el-input type="textarea" style="width: 280%;"  v-model="formInline.judgment"></el-input>
+    <el-input type="textarea" style="width: 280%;" placeholder="请输入判决书" v-model="formInline.judgment"></el-input>
   </el-form-item>
   	</div></el-col>
   
@@ -482,7 +482,7 @@
   <el-col :span="16">
   	<div class="grid-content bg-purple">
   	  <el-form-item label="备注">
-     <el-input type="textarea" style="width: 280%;"  v-model="formInline.remark"></el-input>
+     <el-input type="textarea" style="width: 280%;" placeholder="请输入备注" v-model="formInline.remark"></el-input>
   </el-form-item>
   	</div></el-col>
   
@@ -498,7 +498,7 @@
     <el-tab-pane label="全部诉讼案件" name="second">
       <el-form ref="form" :model="form2" :inline="true" class="query-wrap">
         <el-form-item>
-          <el-select v-model="form2.legalStatusMsg " filterable  placeholder="请选择案件状态" clearable>
+          <el-select v-model="form2.legalStatus" filterable collapse-tags multiple  placeholder="请选择案件状态" clearable>
             <el-option
               v-for="item in legalStatusMsgList"
               :key="item.id"
@@ -691,7 +691,7 @@
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   		<el-form-item label="案件状态">
-     <el-select v-model="formInline.legalStatusMsg " style="width:200px;" filterable  placeholder="请选择案件状态" clearable>
+     <el-select v-model="formInline.legalStatus" style="width:200px;" filterable  placeholder="请选择案件状态" clearable>
     <el-option
       v-for="item in legalStatusMsgList"
       :key="item.id"
@@ -783,7 +783,7 @@
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   	    <el-form-item label="律师联系方式">
-    <el-input v-model="formInline.agentTel"  style="width:200px;" placeholder="请输入联系方式"></el-input>
+    <el-input v-model="formInline.agentTel"  style="width:200px;" placeholder="请输入律师联系方式"></el-input>
   </el-form-item>
   	</div></el-col>
   	<el-col :span="8">
@@ -804,7 +804,7 @@
       type="date"
       style="width:200px;"
       value-format="yyyy-MM-dd"
-      placeholder="请选择日期">
+      placeholder="请选择委案日期">
     </el-date-picker>
   </div>
   </el-form-item>
@@ -818,7 +818,7 @@
       v-model="formInline.filingDate"
       type="date"
       style="width:200px;"
-      placeholder="请选择日期">
+      placeholder="请选择受案日期">
     </el-date-picker>
   </div>
   </el-form-item>
@@ -826,7 +826,7 @@
   	<el-col :span="8">
   	<div class="grid-content bg-purple">
     <el-form-item label="受案法院">
-    <el-input v-model="formInline.court"  style="width:200px;" placeholder="请输入法院"></el-input>
+    <el-input v-model="formInline.court"  style="width:200px;" placeholder="请输入受案法院"></el-input>
   </el-form-item>
   	</div></el-col>
 </el-row>
@@ -841,7 +841,7 @@
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   	    <el-form-item label="法官联系方式">
-    <el-input v-model="formInline.judgeTel"  style="width:200px;" placeholder="请输入联系方式"></el-input>
+    <el-input v-model="formInline.judgeTel"  style="width:200px;" placeholder="请输入法官联系方式"></el-input>
   </el-form-item>
   	</div></el-col>
   	<el-col :span="8">
@@ -862,7 +862,7 @@
       style="width:200px;"
       v-model="formInline.firstDate"
       type="date"
-      placeholder="请选择日期">
+      placeholder="请选择首次开庭日期">
     </el-date-picker>
   </div>
   </el-form-item>
@@ -876,7 +876,7 @@
       style="width:200px;"
       v-model="formInline.judgeDate"
       type="date"
-      placeholder="请选择日期">
+      placeholder="请选择判决日期">
     </el-date-picker>
   </div>
   </el-form-item>
@@ -884,7 +884,7 @@
   	<el-col :span="8">
   	<div class="grid-content bg-purple">
     <el-form-item label="申请执行案号">
-    <el-input v-model="formInline.exeNo"  style="width:200px;" placeholder="请输入案号"></el-input>
+    <el-input v-model="formInline.exeNo"  style="width:200px;" placeholder="请输入申请执行案号"></el-input>
   </el-form-item>
   	</div></el-col>
 </el-row>
@@ -899,7 +899,7 @@
       v-model="formInline.exeDate"
       style="width:200px;"
       type="date"
-      placeholder="请选择日期">
+      placeholder="请选择申请执行日期">
     </el-date-picker>
   </div>
   </el-form-item>
@@ -913,7 +913,7 @@
       v-model="formInline.exeEndDate"
       style="width:200px;"
       type="date"
-      placeholder="请选择日期">
+      placeholder="请选择执行终结日期">
     </el-date-picker>
   </div>
   </el-form-item>
@@ -927,7 +927,7 @@
       v-model="formInline.costDate"
       style="width:200px;"
       type="date"
-      placeholder="请选择日期">
+      placeholder="请选择诉讼缴费日期">
     </el-date-picker>
   </div>
   </el-form-item>
@@ -944,7 +944,7 @@
       style="width:200px;"
       v-model="formInline.preservationDate"
       type="date"
-      placeholder="请选择日期">
+      placeholder="请选择保全缴费日期">
     </el-date-picker>
   </div>
   </el-form-item>
@@ -952,7 +952,7 @@
   <el-col :span="8">
   	<div class="grid-content bg-purple">
   	 <el-form-item label="送达情况">
-    <el-input v-model="formInline.arriveInfo"  style="width:200px;" placeholder="请输入送达"></el-input>
+    <el-input v-model="formInline.arriveInfo"  style="width:200px;" placeholder="请输入送达情况"></el-input>
   </el-form-item>
   	</div></el-col>
   	<el-col :span="8">
@@ -965,7 +965,7 @@
   <el-col :span="16">
   	<div class="grid-content bg-purple">
   	  <el-form-item label="保全资产清单">
-    <el-input type="textarea" style="width: 280%;" v-model="formInline.preservationList"></el-input>
+    <el-input type="textarea" style="width: 280%;" placeholder="请输入保全资产清单" v-model="formInline.preservationList"></el-input>
   </el-form-item>
   	</div></el-col>
 </el-row>
@@ -974,7 +974,7 @@
   <el-col :span="16">
   	<div class="grid-content bg-purple">
   	  <el-form-item label="判决书">
-    <el-input type="textarea" style="width: 280%;"  v-model="formInline.judgment"></el-input>
+    <el-input type="textarea" style="width: 280%;" placeholder="请输入判决书"  v-model="formInline.judgment"></el-input>
   </el-form-item>
   	</div></el-col>
   
@@ -984,7 +984,7 @@
   <el-col :span="16">
   	<div class="grid-content bg-purple">
   	  <el-form-item label="备注">
-     <el-input type="textarea" style="width: 280%;"  v-model="formInline.remark"></el-input>
+     <el-input type="textarea" style="width: 280%;" placeholder="请输入备注"  v-model="formInline.remark"></el-input>
   </el-form-item>
   	</div></el-col>
   
@@ -1099,7 +1099,12 @@ export default {
       if(!this.formInline.progress){
         this.formInline.progress=""
       }
-   		this.formInline.owner=parseInt(row.owner)
+
+      if (row.owner==null || row.owner==""){
+        this.$set(this.formInline, 'owner',this.PersonDataList )
+      }else{
+   		  this.formInline.owner=parseInt(row.owner)
+      }
    		this.isTrue=false
    	},
    	deleteData(id){

@@ -26,13 +26,13 @@
         style="display:inline-block;"
         accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
       >
-        <el-button type="primary" v-if="queryForm.status==='0'" style="margin-left:10px;margin-right: 16px;"
+        <el-button type="primary" v-if="queryForm.status==='0'" style="margin-left:0px;margin-right: 10px;"
                    v-has="'导入待银行对账'">导入待银行对账记录
         </el-button>
       </el-upload>
-      <el-button type="primary" @click="onClickExportSelectedRecord" style="margin-left:-6px;" v-has="'导出选中数据'">导出选中数据
+      <el-button type="primary" @click="onClickExportSelectedRecord" style="margin-left:0px;margin-right: 10px;" v-has="'导出选中数据'">导出选中数据
       </el-button>
-      <el-button type="primary" @click="changeRadio" style="margin-left:10px;" v-has="'导出查询结果'">导出查询结果
+      <el-button type="primary" @click="changeRadio" style="margin-left:0px;" v-has="'导出查询结果'">导出查询结果
       </el-button>
     </bank-record-query>
     <el-table highlight-current-row v-loading="tableLoad"
@@ -190,7 +190,7 @@
       center
       :close-on-click-modal="false"
     >
-      <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span></div>
+      <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span><span @click="selectUnAllExport" style="cursor: pointer;margin-left:10px;">反选</span></div>
       <el-row class="pad" ref="boxWrapper">
         <el-checkbox v-model="exportConf.id" label="2">ID</el-checkbox>
         <el-checkbox v-model="exportConf.batchNo" label="3">批次号</el-checkbox>
@@ -438,6 +438,12 @@
         this._selectAllInit('exportConf');
         for(var p in this.exportConf){//遍历json对象的每个key/value对,p为key
           this.exportConf[p] = true;
+        }
+      },
+      selectUnAllExport(){
+        this._selectAllInit('exportConf');
+        for(var p in this.exportConf){//遍历json对象的每个key/value对,p为key
+          this.exportConf[p] = false;
         }
       },
       exportExcel() {

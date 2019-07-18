@@ -673,7 +673,7 @@
       center
       :close-on-click-modal="false"
     >
-      <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span></div>
+      <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span><span @click="selectUnAllExport" style="cursor: pointer;margin-left:10px;">反选</span></div>
       <el-row class="pad" ref="boxWrapper">
 
         <el-checkbox v-model="exporttBatchConf.batchNo" label="2">批次号</el-checkbox>
@@ -703,7 +703,7 @@
       center
       :close-on-click-modal="false"
     >
-      <div style="margin-bottom: 10px;"><span @click="selectAllCollectExport" style="cursor: pointer;">全选</span></div>
+      <div style="margin-bottom: 10px;"><span @click="selectAllCollectExport" style="cursor: pointer;">全选</span><span @click="selectUnAllCollectExport" style="cursor: pointer;margin-left:10px;">反选</span></div>
       <el-row class="pad" ref="boxWrapper">
 
         <el-checkbox v-model="exportCollectConf.name" label="2">姓名</el-checkbox>
@@ -1280,6 +1280,12 @@
           this.exporttBatchConf[p] = true;
         }
       },
+      selectUnAllExport(){
+        this._selectAllInit('exporttBatchConf');
+        for (var p in this.exporttBatchConf) {//遍历json对象的每个key/value对,p为key
+          this.exporttBatchConf[p] = false;
+        }
+      },
       exportExcel() {
         let successNum = 0;
         for (var p in this.exporttBatchConf) {//遍历json对象的每个key/value对,p为key
@@ -1384,6 +1390,12 @@
         this._selectAllInit('exportCollectConf');
         for (var p in this.exportCollectConf) {//遍历json对象的每个key/value对,p为key
           this.exportCollectConf[p] = true;
+        }
+      },
+      selectUnAllCollectExport(){
+        this._selectAllInit('exportCollectConf');
+        for (var p in this.exportCollectConf) {//遍历json对象的每个key/value对,p为key
+          this.exportCollectConf[p] = false;
         }
       },
       exportCollectExcel() {

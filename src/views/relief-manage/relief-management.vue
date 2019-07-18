@@ -703,7 +703,7 @@
       center
       :close-on-click-modal="false"
     >
-      <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span></div>
+      <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span><span @click="selectUnAllExport" style="cursor: pointer;margin-left:10px;">反选</span></div>
       <el-row class="pad">
 
         <el-checkbox v-model="exportConf.seqno" label="2">个案序列号</el-checkbox>
@@ -989,6 +989,11 @@
       selectAllExport(){
         for(var p in this.exportConf){//遍历json对象的每个key/value对,p为key
           this.exportConf[p] = true;
+        }
+      },
+      selectUnAllExport(){
+        for(var p in this.exportConf){//遍历json对象的每个key/value对,p为key
+          this.exportConf[p] = false;
         }
       },
       totalDataExport() {

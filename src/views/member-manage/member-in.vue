@@ -126,8 +126,8 @@
         </el-table-column>
       </el-table>
       <el-pagination
-        @size-change="onClickQuery"
-        @current-change="onClickQuery"
+        @size-change="onClickQuery2"
+        @current-change="onClickQuery2"
         :current-page.sync="queryForm.pageNum"
         :page-size.sync="queryForm.pageSize"
         :page-sizes="[50, 100, 200, 500]"
@@ -422,6 +422,29 @@ export default {
       this.onClickQuery()
     },
     onClickQuery () {
+      this.memberList = []
+      this.$set(this.queryForm, 'pageNum', 1);
+      this.$set(this.queryForm, 'pageSize', 50);
+      const data = {
+        status: 1,
+        idStrs: this.queryForm.id?(this.queryForm.id.trim()==""?null:this.queryForm.id.split('\n')):null,
+        department: this.queryForm.department,
+        loginName: this.queryForm.loginName,
+        userName: this.queryForm.userName,
+        accountStatus:this.queryForm.accountStatus,
+        pageNum: this.queryForm.pageNum,
+        pageSize: this.queryForm.pageSize,
+        orderBy:this.queryForm.orderBy,
+        sort:this.queryForm.sort
+      }
+      this.tableLoad = true
+      listMember(data).then(response => {
+        this.memberList = response.list
+        this.total = response.total
+        this.tableLoad = false
+      })
+    },
+    onClickQuery2 () {
       this.memberList = []
       const data = {
         status: 1,
