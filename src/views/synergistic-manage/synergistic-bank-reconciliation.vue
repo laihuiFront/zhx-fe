@@ -427,11 +427,17 @@
         });
       },
       queryExportBankConfList() {
+        this.$set(this, 'loading2', true)
+        this.$set(this, 'fullscreenLoading', true)
         let queryObj = {module: "data-bank-record-exportBank", menu: this.exportConf}
         selectByModule(queryObj).then(data => {
           if (data) {
-            this.exportConf = JSON.parse(data.menu);
+            this.$set(this, 'exportConf', JSON.parse(data.menu))
+            //this.exportConf = JSON.parse(data.menu);
           }
+          this.$set(this, 'loading2', false)
+          this.$set(this, 'fullscreenLoading', false)
+          this.showExportConfVisible = true;
         });
       },
       selectAllExport(){
@@ -517,7 +523,7 @@
       },
       handleCommand(command) {
         this.queryExportBankConfList();
-        this.showExportConfVisible = true;
+
         if (command === 'current') {
           this.exportType = 2;
         } else {

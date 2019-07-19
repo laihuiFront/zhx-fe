@@ -3,7 +3,7 @@
     <div class="basic-info">
         <div class="title-info">
           <div class="txt">
-            {{caseDetail.name + '-[ ' + caseDetail.seqNo + ']-案件详情'}}
+            {{caseDetail.name + '-[' + caseDetail.seqNo + ']-案件详情'}}
           </div>
           <div style="text-align: right; margin-right:20px;" >
             <el-button type="primary" align="right" size="mini" @click="lastCase" >上条</el-button>
@@ -1177,7 +1177,9 @@
           </el-form>
         </div>
      </el-collapse-item>
-      <el-collapse-item title="" name="3">
+    </el-collapse>
+    <div class="basic-info">
+     <!-- <el-collapse-item title="" name="3">-->
         <div class="other-wrap">
           <div class="left-wrap">
             <el-tabs
@@ -2036,22 +2038,25 @@
               >
                 <div class="first">
                   <p style="line-height: 30px">承诺还款记录</p>
-                  <el-table highlight-current-row width="100%" :data="memorizeList">
+                  <el-table highlight-current-row width="100%" border stripe show-overflow-tooltip style="min-height:130px;" :data="memorizeList">
                     <el-table-column
                       prop="repayAmtMsg"
                       show-overflow-tooltip
+                      align="center"
                       label="承诺还款金额"
                     >
                     </el-table-column>
                     <el-table-column
                       prop="repayTime"
                       show-overflow-tooltip
+                      align="center"
                       label="承诺还款时间"
                     >
                     </el-table-column>
                     <el-table-column
                       prop="createUser.userName"
                       show-overflow-tooltip
+                      align="center"
                       label="录入人"
                     >
                     </el-table-column>
@@ -2062,33 +2067,40 @@
                     待银行查账记录
                     <el-button type="text" @click="addCpInfo">新增</el-button>
                   </p>
-                  <el-table highlight-current-row width="100%" :data="cpList">
+                  <el-table highlight-current-row width="100%;" border stripe show-overflow-tooltip style="min-height:130px;" :data="cpList">
                     <el-table-column
                       prop="cpMoneyMsg"
+                      align="center"
+                      width="140"
                       show-overflow-tooltip
                       label="待银行查账金额"
                     >
                     </el-table-column>
                     <el-table-column
                       prop="cpDate"
+                      align="center"
+                      width="140"
                       show-overflow-tooltip
                       label="待银行查账时间"
                     >
                     </el-table-column>
                     <el-table-column
                       prop="repayUser"
+                      align="center"
                       show-overflow-tooltip
                       label="还款人"
                     >
                     </el-table-column>
                     <el-table-column
                       prop="repayTypeMsg"
+                      align="center"
                       show-overflow-tooltip
                       label="还款方式"
                     >
                     </el-table-column>
                     <el-table-column
                       prop="confirmMoneyMsg"
+                      align="center"
                       show-overflow-tooltip
                       label="确认还款"
                     >
@@ -2096,18 +2108,21 @@
                     <el-table-column
                       prop="repayDate"
                       show-overflow-tooltip
+                      align="center"
                       label="还款日期"
                     >
                     </el-table-column>
                     <el-table-column
                       prop="confirmDate"
                       show-overflow-tooltip
+                      align="center"
                       label="确认时间"
                     >
                     </el-table-column>
                     <el-table-column
                       prop="remark"
                       show-overflow-tooltip
+                      align="center"
                       label="备注"
                     >
                     </el-table-column>
@@ -2323,7 +2338,7 @@
                   </el-table-column>
                 </el-table>
               </el-tab-pane>
-              <el-tab-pane label="诉讼案件" name="12" class="tabs-wrap telPanel">
+              <el-tab-pane label="诉讼案件" name="12" class="tabs-wrap telPanel susong">
                 <div class="operation">
                   <div class="left-oper"></div>
                   <div class="right-oper">
@@ -2425,7 +2440,7 @@
                   </el-table-column>
                 </el-table>
               </el-tab-pane>
-              <el-tab-pane label="减免管理" name="13" class="tabs-wrap">
+              <el-tab-pane label="减免管理" name="13" class="tabs-wrap susong">
                 <div class="operation">
                   <div class="right-oper">
                     <el-button
@@ -2591,8 +2606,11 @@
             </el-card>
           </div>
         </div>
-      </el-collapse-item>
-      <el-collapse-item title="催记信息" name="4">
+    <!--  </el-collapse-item>-->
+    </div>
+    <div class="basic-info">
+     <!-- <el-collapse-item title="催记信息" name="4">-->
+      <p class="title"  style=" margin-bottom: 10px;">催记信息</p>
         <div class="memorize-wrap">
           <div class="left-panel">
             <el-form
@@ -2749,7 +2767,7 @@
             </div>
           </div>
           <div class="right-panel">
-            <p class="title">同批次共债催记</p>
+            <p class="title" style=" margin-bottom: 10px;">同批次共债催记</p>
             <el-table
               highlight-current-row
               :data="syncMemorizeList"
@@ -2790,8 +2808,8 @@
             </el-table>
           </div>
         </div>
-      </el-collapse-item>
-    </el-collapse>
+     <!-- </el-collapse-item>-->
+    </div>
     <el-dialog
       title="新增/编辑电话"
       :visible.sync="dialogVisible"
@@ -5367,7 +5385,12 @@
           .el-tabs__item {
             padding: 0 8px;
           }
-
+          .susong{
+            .el-table__body-wrapper{
+              overflow-y: auto;
+              overflow-x:hidden;
+            }
+          }
           .tabs-wrap {
             .operation {
               margin-bottom: 12px;
@@ -5384,11 +5407,19 @@
               .first {
                 flex: 0 0 35%;
                 width: 35%;
+                .el-table__body-wrapper{
+                  overflow-y: auto;
+                  overflow-x:hidden;
+                }
               }
 
               .second {
                 margin-left: 12px;
                 flex: 1;
+                .el-table__body-wrapper{
+                  overflow-y: auto;
+                  overflow-x:hidden;
+                }
               }
             }
           }

@@ -287,11 +287,17 @@
         });
       },
       queryExportApplyConfList() {
+        this.$set(this, 'loading2', true)
+        this.$set(this, 'fullscreenLoading', true)
         let queryObj = {module: "data-application-manage-exportApply", menu: this.exportConf}
         selectByModule(queryObj).then(data => {
           if (data) {
-            this.exportConf = JSON.parse(data.menu);
+            this.$set(this, 'exportConf', JSON.parse(data.menu))
+            //this.exportConf = JSON.parse(data.menu);
           }
+          this.$set(this, 'loading2', false)
+          this.$set(this, 'fullscreenLoading', false)
+          this.showExportConfVisible = true;
         });
       },
       selectAllExport(){
@@ -349,7 +355,7 @@
         this.exportType=2;
         this.queryExportApplyConfList();
         //this.dialogVisible1 = false;
-        this.showExportConfVisible = true;
+
       },
       editCase(id, name, seqNo) {
         this.$router.push({

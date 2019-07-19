@@ -489,11 +489,17 @@ export default {
       });
     },
     queryExportRepayConfList() {
+      this.$set(this, 'loading2', true)
+      this.$set(this, 'fullscreenLoading', true)
       let queryObj = {module: "data-repay-record-exportRepay", menu: this.exportConf}
       selectByModule(queryObj).then(data => {
         if (data) {
-          this.exportConf = JSON.parse(data.menu);
+          this.$set(this, 'exportConf', JSON.parse(data.menu))
+          //this.exportConf = JSON.parse(data.menu);
         }
+        this.$set(this, 'loading2', false)
+        this.$set(this, 'fullscreenLoading', false)
+        this.showExportConfVisible = true;
       });
     },
     selectAllExport(){
@@ -571,7 +577,7 @@ export default {
     },
     handleCommand(command){
       this.queryExportRepayConfList();
-      this.showExportConfVisible = true;
+
       if(command === 'current'){
         this.exportType = 2;
 

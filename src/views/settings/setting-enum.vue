@@ -420,6 +420,7 @@ export default {
         color: #1e1f24;
         .title {
           flex: 1;
+
         }
       }
     }

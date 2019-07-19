@@ -170,15 +170,7 @@
         align="center"
         width="55">
       </el-table-column>
-      <el-table-column
-        sortable="custom"
-        align="center"
-        :sort-orders="['ascending','descending']"
-        prop="id"
-        label="ID"
-      >
-        <template slot-scope="scope">{{ scope.row.id }}</template>
-      </el-table-column>
+
       <el-table-column
         prop="seqno"
         sortable="custom"
@@ -280,7 +272,7 @@
       </el-table-column>
       <el-table-column
         prop="methodMsg"
-        label="谈判方式"
+        label="还款方式"
         min-width="120"
         align="center"
         sortable="custom"

@@ -535,7 +535,9 @@ export default {
     onClickAdd () {
       // this.memberInfo.roleList = null
       this.$nextTick(()=>{
-        this.$refs['ruleForm'].resetFields()
+        if(this.$refs['ruleForm']){
+          this.$refs['ruleForm'].resetFields()
+        }
       });
       if(!this.queryDepartment){
         this.memberInfo = {
@@ -559,7 +561,9 @@ export default {
     onClickEdit (row) {
       this.memberInfo.loginName2
       this.$nextTick(()=>{
-        this.$refs['ruleForm'].resetFields()
+        if(this.$refs['ruleForm']) {
+          this.$refs['ruleForm'].resetFields()
+        }
       });
       this.$set(this.dialogData, 'title', '修改员工')
       this.$set(this.dialogData, 'type', 'edit')

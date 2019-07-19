@@ -1604,11 +1604,17 @@
         });
       },
       queryExportCaseConfList() {
+        this.$set(this, 'loading2', true)
+        this.$set(this, 'fullscreenLoading', true)
         let queryObj = {module: "data-case-manage-exportCase", menu: this.exportConf}
         selectByModule(queryObj).then(data => {
           if (data) {
-            this.exportConf = JSON.parse(data.menu);
+            this.$set(this, 'exportConf', JSON.parse(data.menu))
+            //this.exportConf = JSON.parse(data.menu);
           }
+          this.$set(this, 'loading2', false)
+          this.$set(this, 'fullscreenLoading', false)
+          this.showExportConfVisible = true;
         });
       },
       saveExportTelConf() {
@@ -1617,11 +1623,17 @@
         });
       },
       queryExportTelConfList() {
+        this.$set(this, 'loading2', true)
+        this.$set(this, 'fullscreenLoading', true)
         let queryObj = {module: "data-case-manage-exportTel", menu: this.exportTelConf}
         selectByModule(queryObj).then(data => {
           if (data) {
-            this.exportTelConf = JSON.parse(data.menu);
+            this.$set(this, 'exportTelConf', JSON.parse(data.menu))
+            //this.exportTelConf = JSON.parse(data.menu);
           }
+          this.$set(this, 'loading2', false)
+          this.$set(this, 'fullscreenLoading', false)
+          this.showExportTelConfVisible = true;
         });
       },
       saveExportCollectConf() {
@@ -1630,24 +1642,35 @@
         });
       },
       queryExportCollectConfList() {
+        this.$set(this, 'loading2', true)
+        this.$set(this, 'fullscreenLoading', true)
         let queryObj = {module: "data-case-manage-exportCollect", menu: this.exportCollectConf}
         selectByModule(queryObj).then(data => {
           if (data) {
-            this.exportCollectConf = JSON.parse(data.menu);
+            this.$set(this, 'exportCollectConf', JSON.parse(data.menu))
+            //this.exportCollectConf = JSON.parse(data.menu);
           }
+          this.$set(this, 'loading2', false)
+          this.$set(this, 'fullscreenLoading', false)
+          this.showExportCollectConfVisible = true;
         });
       },
 
 
       queryConfList() {
+        this.$set(this, 'loading2', true)
+        this.$set(this, 'fullscreenLoading', true)
         let queryObj = {module: "data-case-manage", menu: this.queryConf}
         selectByModule(queryObj).then(data => {
           if (data) {
+            this.$set(this, 'queryConf', false)
             this.queryConf = JSON.parse(data.menu);
             this.queryConfFlag = false;
           } else {
             this.queryConfFlag = true;
           }
+          this.$set(this, 'loading2', false)
+          this.$set(this, 'fullscreenLoading', false)
         });
       },
       showQueryConf() {
@@ -1662,7 +1685,7 @@
         this.exportType = 2;
         //this.dialogVisibleCase = false;
         this.queryExportCaseConfList();
-        this.showExportConfVisible = true;
+        //this.showExportConfVisible = true;
       },
       submitmsgForm(formName) {
         this.$refs[formName].validate((valid) => {
@@ -1975,14 +1998,12 @@
 
       },
       handleExport(command) {
-
         if (command === "exportTotalCase") {
           //this.dialogVisibleCase = true
           this.changeRadio();
         } else if (command === "exportSelectCase") {
           if (this.deleteList.length >= 1) {
             this.queryExportCaseConfList();
-            this.showExportConfVisible = true;
             this.exportType = 1;
           } else {
             this.$message({
@@ -1993,7 +2014,7 @@
         } else if (command === "exportTel") {
           if (this.deleteList.length >= 1) {
             this.queryExportTelConfList();
-            this.showExportTelConfVisible = true;
+
           } else {
             this.$message({
               type: 'info',
@@ -2004,7 +2025,7 @@
         } else if (command === "exportCollect") {
           if (this.deleteList.length >= 1) {
             this.queryExportCollectConfList();
-            this.showExportCollectConfVisible = true;
+
           } else {
             this.$message({
               type: 'info',

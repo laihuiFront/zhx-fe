@@ -845,11 +845,17 @@
         });
       },
       queryExportReliefonfList() {
+        this.$set(this, 'loading2', true)
+        this.$set(this, 'fullscreenLoading', true)
         let queryObj = {module: "data-relief-record-exportRelief", menu: this.exportConf}
         selectByModule(queryObj).then(data => {
           if (data) {
-            this.exportConf = JSON.parse(data.menu);
+            this.$set(this, 'exportConf', JSON.parse(data.menu))
+            //this.exportConf = JSON.parse(data.menu);
           }
+          this.$set(this, 'loading2', false)
+          this.$set(this, 'fullscreenLoading', false)
+          this.showExportConfVisible = true;
         });
       },
       saveConf() {
@@ -896,7 +902,7 @@
         this.exportType = 1;
         this.queryExportReliefonfList();
         //this.dialogVisible1 = false;
-        this.showExportConfVisible = true;
+
 
       },
       editCase(id, name, seqNo) {

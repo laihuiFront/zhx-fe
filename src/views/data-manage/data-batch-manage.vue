@@ -1254,11 +1254,17 @@
         });
       },
       queryExportCollectConfList() {
+        this.$set(this, 'loading2', true)
+        this.$set(this, 'fullscreenLoading', true)
         let queryObj = {module: "data-batch-manage-exportCollect", menu: this.exportCollectConf}
         selectByModule(queryObj).then(data => {
           if (data) {
-            this.exportCollectConf = JSON.parse(data.menu);
+            this.$set(this, 'exportCollectConf', JSON.parse(data.menu))
+            //this.exportCollectConf = JSON.parse(data.menu);
           }
+          this.$set(this, 'loading2', false)
+          this.$set(this, 'fullscreenLoading', false)
+          this.showExportCollectConfVisible = true;
         });
       },
       saveExportBatchConf() {
@@ -1267,11 +1273,17 @@
         });
       },
       queryExportBatchConfList() {
+        this.$set(this, 'loading2', true)
+        this.$set(this, 'fullscreenLoading', true)
         let queryObj = {module: "data-batch-manage-exportBatch", menu: this.exporttBatchConf}
         selectByModule(queryObj).then(data => {
           if (data) {
-            this.exporttBatchConf = JSON.parse(data.menu);
+            this.$set(this, 'exporttBatchConf', JSON.parse(data.menu))
+            //this.exporttBatchConf = JSON.parse(data.menu);
           }
+          this.$set(this, 'loading2', false)
+          this.$set(this, 'fullscreenLoading', false)
+          this.showExportBatchConfVisible = true;
         });
       },
       selectAllExport() {
@@ -1321,7 +1333,7 @@
         // }
         this.exportType = 2;
         this.queryExportBatchConfList();
-        this.showExportBatchConfVisible = true;
+
         //this.dialogVisible1 = false;
       },
       exportCollect() {
@@ -1371,7 +1383,6 @@
         this.exportCollectType = 1;
         if (this.batchNos.length > 0) {
           this.queryExportCollectConfList();
-          this.showExportCollectConfVisible = true;
         } else {
           this.loading = false;
           this.fullscreenLoading = false
