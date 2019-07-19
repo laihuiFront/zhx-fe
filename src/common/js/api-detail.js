@@ -141,6 +141,14 @@ export function delDataComment(id){
   })
 }
 
+export function delDataCollect(id){
+  return request({
+    url: '/dataCollection/detailDel',
+    method: 'post',
+    data:{id}
+  })
+}
+
 //利息
 export function getInterestDetail(id) {
   return request({

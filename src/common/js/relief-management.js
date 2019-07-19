@@ -202,6 +202,13 @@ return request({
   })
 }
 
+export function getSeqNoList(data) {
+  return request({
+    url: '/dataCase/pageSeqNos',
+    method: 'post',
+    data
+  })
+}
 
 //保存查询配置
 export function saveSelectFilter(data={}) {

@@ -6,6 +6,18 @@
 
        element-loading-spinner="el-icon-loading"
        element-loading-background="rgba(0, 0, 0, 0.7)">
+    <el-upload
+            class="upload-demo"
+            :action="action+'/reduce/import'"
+            :headers="header"
+            align="right"
+            style="margin-bottom: 15px;margin-right:20px;"
+            :show-file-list="false"
+            :on-success="uploadSuccess"
+            :on-progress="onProgress"
+          >
+            <el-button type="primary"  >减免申请结果导入</el-button>
+          </el-upload>
     <el-form ref="form" :model="formInline" :inline="true" class="query-wrap">
       <el-form-item v-if="queryConf.pch || queryConfFlag">
         <el-input v-model="formInline.batchNo" clearable placeholder="请输入批次号"></el-input>
@@ -120,6 +132,7 @@
           <el-button type="primary" 　v-show="istrue6" v-has="'批量确认'" @click=open10>批量确认</el-button>
           <el-button type="primary" 　v-show="istrue4" v-has="'批量下载附件'" @click=moredownDataList>批量下载附件</el-button>
           <el-button type="primary" 　v-show="istrue5" v-has="'导出减免结果'" @click="changeRadio">导出减免结果</el-button>
+
         </el-form-item>
       </el-row>
     </el-form>
@@ -610,15 +623,30 @@
         <el-form-item label="个案序列号"
                       prop="seqno"
                       :rules="{
-      required: true, message: '请输入个案序列号', trigger: 'blur'  
+      required: true, message: '请选择个案序列号', trigger: 'blur'
     }">
-          <el-input v-model="ruleForm.seqno" placeholder="请输入个案序列号"></el-input>
+         <!-- <el-input v-model="ruleForm.seqno" placeholder="请输入个案序列号"></el-input>-->
+          <el-select
+            v-model="ruleForm.seqno"
+            filterable
+            remote
+            clearable
+            placeholder="请选择个案序列号"
+            :remote-method="seqNoQuery"
+            :loading="loadingSeqNo">
+            <el-option
+              v-for="item in seqNoList"
+              :key="item.id"
+              :label="item.seqNo"
+              :value="item.id">
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="批复还款金额">
-          <el-input v-model="ruleForm.approveRepayAmt" placeholder="请输入批复还款金额"></el-input>
+          <el-input v-model="ruleForm.approveRepayAmt" clearable type="number" placeholder="请输入批复还款金额"></el-input>
         </el-form-item>
         <el-form-item label="减免结果">
-          <el-input v-model="ruleForm.reduceResult" placeholder="请输入减免结果"></el-input>
+          <el-input v-model="ruleForm.reduceResult" clearable placeholder="请输入减免结果"></el-input>
         </el-form-item>
         <el-form-item label="有效期"
                       prop="reduceValidTime"
@@ -629,6 +657,7 @@
             <el-date-picker
               value-format="yyyy-MM-dd"
               v-model="ruleForm.reduceValidTime"
+              clearable
               type="date"
               placeholder="请选择日期">
             </el-date-picker>
@@ -764,6 +793,7 @@
   import {
     areaList,
     sureData,
+    getSeqNoList,
     clientList,
     listReduceFile,
     saveSelectFilter,
@@ -782,7 +812,7 @@
     addDataform,
     remoweDataList
   } from '@/common/js/relief-management.js'
-
+  import {baseURL} from '@/common/js/request.js';
   export default {
     name: 'reliefManagement',
     components: {
@@ -790,6 +820,8 @@
     },
     data() {
       return {
+        loadingSeqNo: false,
+        seqNoList: [],
         reduceFileVisible:false,
         reduceFileList:[],
         radio: "1",
@@ -798,6 +830,8 @@
         showExportConfVisible: false,
         exportType:0,
         loading: false,
+        action: baseURL,
+        header: {Authorization: localStorage.token},
         tableLoad: false,
         dialogVisible1: false,
         sType: 0,
@@ -839,6 +873,42 @@
       }
     },
     methods: {
+      onProgress() {
+        this.loading = true
+        this.fullscreenLoading = true
+      },
+      uploadSuccess(res, file, fileList) {
+        if (res.code == 100) {
+          this.$message({
+            type: 'success',
+            message: "导入成功"
+          });
+          this.tableLoad = true
+          dataList(this.formInline, this.applyStatus, this.sort, this.orderBy, this.currentPage4, this.pageSize).then((response) => {
+            this.tableData3 = response.list
+            this.total = response.total
+            this.loading = false
+            this.fullscreenLoading = false
+            this.tableLoad = false
+          })
+
+        } else {
+          this.ImportdialogVisible = true
+          this.ImportMsg = res.msg
+        }
+      },
+      seqNoQuery(query){
+        this.loadingSeqNo = true
+        getSeqNoList({
+          seqNo: query,
+          pageNum: 1,
+          pageSize:50
+        }).then(data => {
+          this.seqNoList = data.list
+          this.loadingSeqNo = false
+        })
+      },
+
       saveExportReliefConf() {
         let queryObj = {module: "data-relief-record-exportRelief", menu: this.exportConf}
         saveSelectFilter(queryObj).then(data => {
@@ -1337,7 +1407,7 @@
         this.deleteStatusList = response
       })*/
       this.deleteStatusList = this.$store.getters.caseType.减免状态;
-
+      this.seqNoQuery();
     },
   }
 </script>

@@ -9,7 +9,7 @@ export function role(data={}) {
 }
 export const getUserTree = function(){
   return request({
-    url: 'user/select/userTree',
+    url: 'user/select/userDeptTree',
     method: 'post'
   })
 }

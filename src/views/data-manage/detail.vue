@@ -1732,20 +1732,14 @@
                 <el-table
                   highlight-current-row
                   :data="memorizeList"
-                  style="width: 100%"
+                  style="width: 100%; min-height:120px;"
                   border
                   stripe
-                  height="120px"
                   class="table-wrap"
                 >
+
                   <el-table-column
-                    prop="measure"
-                    show-overflow-tooltip
-                    label="催收措施"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="repayTime"
+                    prop="collectTime"
                     show-overflow-tooltip
                     label="时间"
                   >
@@ -1844,6 +1838,7 @@
                       </el-button
                       >
                       <el-button type="text" v-if=" caseDetail.currentuser || mycaseFlag"
+                                 @click="delDataCollect(scope.row)"
                       >删除
                       </el-button
                       >
@@ -2442,6 +2437,7 @@
               </el-tab-pane>
               <el-tab-pane label="减免管理" name="13" class="tabs-wrap susong">
                 <div class="operation">
+                  <div class="left-oper"></div>
                   <div class="right-oper">
                     <el-button
                       type="primary"
@@ -2455,10 +2451,9 @@
                 <el-table
                   highlight-current-row
                   :data="reduceApplyList"
-                  style="width: 100%"
+                  style="width: 100%; min-height:120px;"
                   border
                   stripe
-                  height="120px"
                   class="table-wrap"
                 >
                   <el-table-column
@@ -3955,6 +3950,7 @@
     getSameBatchCollect,
     getAddressDetail,
     getLetterList,
+    delDataCollect,
     getArchiveDetail,
     getCollectDetail,
     PhonetypeList,
@@ -4695,6 +4691,25 @@
         this.dataCollectEditType = "edit";
         this.dialogDataCollectVisible = true;
       },
+      delDataCollect(row){
+        this.$confirm("此操作将删除该信息且无法恢复,是否继续？", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            delDataCollect(row.id).then(data => {
+              getCollectDetail(this.id, 1).then(data => {
+                this.memorizeList = data;
+              });
+              this.$message({
+                type: "success",
+                message: "删除成功"
+              });
+            });
+
+        });
+      },
       addDataCollect() {
         this.dataCollectInfo = {};
         this.dataCollectEditType = "add";
@@ -5389,6 +5404,11 @@
             .el-table__body-wrapper{
               overflow-y: auto;
               overflow-x:hidden;
+            }
+            .has-gutter{
+              .gutter{
+                display: inherit !important;
+              }
             }
           }
           .tabs-wrap {
