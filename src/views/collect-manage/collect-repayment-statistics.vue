@@ -59,7 +59,7 @@
             </el-select>
           </el-form-item>
           <el-form-item prop="val2">
-            <el-select v-model="form1.val2" placeholder="请选择委托方" filterable
+            <el-select v-model="form1.val2" placeholder="请选择委托方"
                       multiple collapse-tags clearable>
               <el-option
                 v-for="item in val2_data"
@@ -93,7 +93,6 @@
               placeholder="请选择逾期账龄"
               multiple
               collapse-tags
-              filterable
               clearable
             >
               <el-option

@@ -19,7 +19,6 @@
         <el-select
           v-model="form1.val2"
           placeholder="请选择委托方"
-          filterable
           multiple
           collapse-tags
           clearable

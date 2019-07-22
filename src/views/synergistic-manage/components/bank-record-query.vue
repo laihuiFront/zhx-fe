@@ -1,11 +1,11 @@
 <template>
   <div id="repay-record-query">
   <el-form  :model="queryForm" :inline="true" class="query-wrap">
-    <el-form-item>
-      <el-input style="width: 200px;" v-model="queryForm.dataCase.name"  v-if="queryConf.xm || queryConfFlag" clearable placeholder="请输入姓名"></el-input>
+    <el-form-item v-if="queryConf.xm || queryConfFlag">
+      <el-input style="width: 200px;" v-model="queryForm.dataCase.name"   clearable placeholder="请输入姓名"></el-input>
     </el-form-item>
-    <el-form-item>
-      <el-select style="width: 200px;" clearable  v-if="queryConf.csqy || queryConfFlag" v-model="queryForm.dataCase.collectionArea.ids" filterable collapse-tags multiple  placeholder="请选择催收区域">
+    <el-form-item v-if="queryConf.csqy || queryConfFlag">
+      <el-select style="width: 200px;" clearable   v-model="queryForm.dataCase.collectionArea.ids" filterable collapse-tags multiple  placeholder="请选择催收区域">
         <el-option
           v-for="item in collectionAreaList"
           :key="item.id"
@@ -14,8 +14,8 @@
         </el-option>
       </el-select>
     </el-form-item>
-    <el-form-item>
-      <el-select style="width: 200px;" v-model="queryForm.dataCase.batchNos"  v-if="queryConf.pc || queryConfFlag" filterable collapse-tags multiple placeholder="请选择批次" clearable>
+    <el-form-item v-if="queryConf.pc || queryConfFlag">
+      <el-select style="width: 200px;" v-model="queryForm.dataCase.batchNos"   filterable collapse-tags multiple placeholder="请选择批次" clearable>
         <el-option
           v-for="item in batchList"
           :key="item.id"
@@ -24,8 +24,8 @@
         </el-option>
       </el-select>
     </el-form-item>
-    <el-form-item>
-      <el-select style="width: 200px;" clearable v-model="queryForm.dataCase.clients"  v-if="queryConf.wtf || queryConfFlag" filterable collapse-tags multiple placeholder="请选择委托方">
+    <el-form-item v-if="queryConf.wtf || queryConfFlag">
+      <el-select style="width: 200px;" clearable v-model="queryForm.dataCase.clients"   filterable collapse-tags multiple placeholder="请选择委托方">
         <el-option
           v-for="item in clientList"
           :key="item.id"
@@ -46,8 +46,6 @@
         end-placeholder="委案日期结束">
       </el-date-picker>
     </el-form-item>
-    <el-form-item  v-if="queryConf.hsbm || queryConfFlag">
-    </el-form-item>
     <el-form-item  v-if="queryConf.hsbm || queryConfFlag" >
             <e-l-TreeSelect
                 ref="treeSelectDept"
@@ -57,14 +55,6 @@
             </e-l-TreeSelect>
     </el-form-item>
     <el-form-item  v-if="queryConf.hscsy || queryConfFlag">
-            <!--<el-select clearable v-model="queryForm.dataCase.collectionUser.ids" filterable collapse-tags multiple placeholder="请选择回收催收员">
-              <el-option
-                v-for="item in collectionUserList"
-                :key="item.id"
-                :label="item.userName"
-                :value="item.id">
-              </el-option>
-            </el-select>-->
       <el-input v-model="queryForm.odvNameFiter" width="200" @focus="onClickSelectUser3" clearable placeholder="请选择回收催收员"></el-input>
     </el-form-item>
     <el-form-item  v-if="queryConf.dq || queryConfFlag">

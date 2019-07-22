@@ -65,7 +65,6 @@
                   <el-select
                     v-model="form.val0"
                     placeholder="请选择委托方"
-                    filterable
                     multiple
                     collapse-tags
                     clearable
@@ -84,7 +83,6 @@
                     v-model="form.val1"
                     multiple
                     collapse-tags
-                    filterable
                     remote
                     placeholder="请输入批次号"
                     :remote-method="querySearch">
@@ -140,7 +138,6 @@
                     <el-select
                       v-model="form.val4"
                       placeholder="请选择地区"
-                      filterable
                       multiple
                       collapse-tags
                       clearable
@@ -171,7 +168,6 @@
                   <el-form-item prop="val8" v-if="queryConf.yqzl || queryConfFlag">
                     <el-select
                       v-model="form.val8"
-                      filterable
                       multiple
                       collapse-tags
                       placeholder="请选择逾期账龄"
@@ -189,7 +185,6 @@
                   <el-form-item prop="val9" v-if="queryConf.ajzt || queryConfFlag">
                     <el-select
                       v-model="form.val9"
-                      filterable
                       multiple
                       collapse-tags
                       placeholder="请选择案件状态"
@@ -207,7 +202,6 @@
                   <el-form-item prop="val10" v-if="queryConf.cszt || queryConfFlag">
                     <el-select
                       v-model="form.val10"
-                      filterable
                       multiple
                       collapse-tags
                       placeholder="请选择催收状态"
@@ -225,7 +219,6 @@
                   <el-form-item prop="val11" v-if="queryConf.ajlx || queryConfFlag">
                     <el-select
                       v-model="form.val11"
-                      filterable
                       multiple
                       collapse-tags
                       placeholder="请选择案件类型"
@@ -260,7 +253,7 @@
                   <el-form-item prop="val14" v-if="queryConf.bszt || queryConfFlag">
                     <el-select
                       v-model="form.val14"
-                      filterable collapse-tags multiple
+                      collapse-tags multiple
                       placeholder="请选择标色状态"
                       clearable
                     >
@@ -352,7 +345,6 @@
                   <el-form-item prop="val24" v-if="queryConf.jmzt || queryConfFlag">
                     <el-select
                       v-model="form.val24"
-                      filterable
                       multiple
                       collapse-tags
                       placeholder="请选择减免状态"
@@ -370,7 +362,6 @@
                   <el-form-item prop="val25" v-if="queryConf.bbzt || queryConfFlag">
                     <el-select
                       v-model="form.val25"
-                      filterable
                       multiple
                       collapse-tags
                       placeholder="请选择报备状态"
@@ -766,32 +757,32 @@
         fetchData: {},
         form: {
           odvNameFiter:null,
-          val0: null, //委托方
+          val0: [], //委托方
           val1: null, //批次号
           val2: [], //下次跟进日期
           val3: "", //个案序列号
-          val4: null, //地区
+          val4: [], //地区
           val5: "", //姓名
           val6: "", //证件号
           val7: [], //委案日期
-          val8: null, //逾期账龄
-          val9: null, //案件状态
-          val10: null, //催收状态
-          val11: null, //案件类型
+          val8: [], //逾期账龄
+          val9: [], //案件状态
+          val10: [], //催收状态
+          val11: [], //案件类型
           val12: [], //还款日期
           val13: "", //委案金额上限
-          val14: null, //标色状态
+          val14: [], //标色状态
           val15: "", //卡号
           val16: "", //档案号
           val17: [], //最后跟进日期
           val18: "", //跟进次数上限
-          val19: null, //是否新分配
-          val20: null, //还款情况
+          val19: [], //是否新分配
+          val20: [], //还款情况
           val21: [], //预计退案日期
           val22: "", //自定义信息
           val23: "", //催收分类
-          val24: null, //减免状态
-          val25: null, //报备状态
+          val24: [], //减免状态
+          val25: [], //报备状态
           val27: "", //电话号码
           val28: "", //催收记录
           val29: "", //委案金额下限

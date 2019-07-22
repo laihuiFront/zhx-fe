@@ -5290,11 +5290,11 @@
       window.addEventListener("beforeunload", () => {
         sessionStorage.clear();
       });
-      this.queryDetail();
+      //this.queryDetail();
       this.batchForm = {sType: 0};
-      PersonList().then(response => {
+      /*PersonList().then(response => {
         this.PersonDataList = response;
-      });
+      });*/
     }
   };
 </script>

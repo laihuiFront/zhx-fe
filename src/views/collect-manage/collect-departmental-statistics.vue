@@ -81,7 +81,7 @@
             <el-input v-model="form1.odvNameFiter" width="200" @focus="onClickSelectUser3" clearable placeholder="请选择催收员"></el-input>
           </el-form-item>
           <el-form-item prop="val2">
-            <el-select v-model="form1.val2" placeholder="请选择委托方" filterable collapse-tags multiple clearable>
+            <el-select v-model="form1.val2" placeholder="请选择委托方"  collapse-tags multiple clearable>
               <el-option
                 v-for="item in val2_data"
                 :key="item.value"
@@ -111,7 +111,6 @@
             <el-select
               v-model="form1.val4"
               placeholder="请选择逾期账龄"
-              filterable
               collapse-tags
               multiple
               clearable

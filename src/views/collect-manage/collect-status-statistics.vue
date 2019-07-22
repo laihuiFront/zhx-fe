@@ -54,7 +54,6 @@
             <el-select
               v-model="form2.val1"
               placeholder="请选择委托方"
-              filterable
               collapse-tags
               multiple
               clearable
@@ -69,7 +68,7 @@
             </el-select>
           </el-form-item>
           <el-form-item prop="val2">
-            <el-select v-model="form2.val2" placeholder="请选择催收状态" filterable
+            <el-select v-model="form2.val2" placeholder="请选择催收状态"
                        collapse-tags
                        multiple clearable>
               <el-option
@@ -84,7 +83,6 @@
             <el-select
               v-model="form2.val3"
               placeholder="请选择逾期账龄"
-              filterable
               collapse-tags
               multiple
               clearable
@@ -135,7 +133,6 @@
             <el-select
               v-model="form3.val1"
               placeholder="请选择委托方"
-              filterable
               collapse-tags
               multiple
               clearable
@@ -171,7 +168,6 @@
             <el-select
               v-model="form3.val3"
               placeholder="请选择逾期账龄"
-              filterable
               collapse-tags
               multiple
               clearable

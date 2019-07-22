@@ -49,19 +49,19 @@
         </el-select>
       </el-form-item>
       <el-form-item v-if="queryConf.pch || queryConfFlag">
-        <el-input v-model="formInline.batchNo" placeholder="请输入批次号"></el-input>
+        <el-input v-model="formInline.batchNo" placeholder="请输入批次号" clearable></el-input>
       </el-form-item>
       <el-form-item v-if="queryConf.zjh || queryConfFlag">
-        <el-input v-model="formInline.identNo" placeholder="请输入证件号"></el-input>
+        <el-input v-model="formInline.identNo" placeholder="请输入证件号" clearable></el-input>
       </el-form-item>
       <el-form-item v-if="queryConf.kh || queryConfFlag">
-        <el-input v-model="formInline.cardNo" placeholder="请输入卡号"></el-input>
+        <el-input v-model="formInline.cardNo" placeholder="请输入卡号" clearable></el-input>
       </el-form-item>
       <el-form-item v-if="queryConf.csjl || queryConfFlag">
-        <el-input v-model="formInline.collectInfo" placeholder="请输入催收记录"></el-input>
+        <el-input v-model="formInline.collectInfo" placeholder="请输入催收记录" clearable></el-input>
       </el-form-item>
       <el-form-item v-if="queryConf.gaxlh || queryConfFlag">
-        <el-input v-model="formInline.seqno" placeholder="请输入个案序列号"></el-input>
+        <el-input v-model="formInline.seqno" placeholder="请输入个案序列号" clearable></el-input>
       </el-form-item>
       <el-form-item v-if="queryConf.csjg || queryConfFlag">
         <el-select v-model="formInline.results" placeholder="请选择催收结果" filterable collapse-tags multiple clearable>
@@ -111,6 +111,7 @@
           align="right"
           value-format="yyyy-MM-dd"
           unlink-panels
+          clearable
           range-separator="至"
           start-placeholder="催收日期开始"
           end-placeholder="催收日期结束"
@@ -124,6 +125,7 @@
           align="right"
           value-format="yyyy-MM-dd"
           unlink-panels
+          clearable
           range-separator="至"
           start-placeholder="委案日期开始"
           end-placeholder="委案日期结束"
@@ -137,6 +139,7 @@
           align="right"
           value-format="yyyy-MM-dd"
           unlink-panels
+          clearable
           range-separator="至"
           start-placeholder="预计退案日期开始"
           end-placeholder="预计退案日期结束"

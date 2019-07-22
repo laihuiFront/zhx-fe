@@ -153,7 +153,10 @@ export default {
     },
     onClickAdd () {
       this.$nextTick(()=>{
-        this.$refs['ruleForm'].resetFields()
+        if (this.$refs['ruleForm']){
+          this.$refs['ruleForm'].resetFields()
+        }
+
       });
       this.roleInfo = {}
 
@@ -178,7 +181,9 @@ export default {
     },
     onClickEdit (row) {
       this.$nextTick(()=>{
-        this.$refs['ruleForm'].resetFields()
+        if (this.$refs['ruleForm']){
+          this.$refs['ruleForm'].resetFields()
+        }
       });
       this.$set(this.dialogData, 'title', '修改角色')
       this.$set(this.dialogData, 'type', 'edit')

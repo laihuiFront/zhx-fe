@@ -559,7 +559,6 @@ export default {
       this.$set(this.dialogData, 'editVisible', true)
     },
     onClickEdit (row) {
-      this.memberInfo.loginName2
       this.$nextTick(()=>{
         if(this.$refs['ruleForm']) {
           this.$refs['ruleForm'].resetFields()
