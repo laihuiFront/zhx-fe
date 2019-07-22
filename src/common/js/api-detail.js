@@ -103,6 +103,20 @@ export function getCollectDetail(caseId,batchNo,identNo,cardNo,detaiType) {
     }
   })
 }
+
+export function getCollectDetail2(caseId,batchNo,identNo,cardNo,detaiType) {
+  return request({
+    url: '/dataCollect/detailCollect2',
+    method: 'post',
+    data: {
+      caseId,
+      batchNo,
+      identNo,
+      cardNo,
+      detaiType
+    }
+  })
+}
 //案人信息
 export function getArchiveDetail(id) {
   return request({

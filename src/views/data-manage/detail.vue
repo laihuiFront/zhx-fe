@@ -205,7 +205,7 @@
           <el-table-column prop="account" label="账号"></el-table-column>
           <el-table-column prop="moneyMsg" label="委案金额"></el-table-column>
           <el-table-column prop="currencyType" label="币种"></el-table-column>
-          <el-table-column prop="proRepayAmtMsg" label="承诺还款金额">
+          <el-table-column prop="proRepayAmtMsg" label="承诺还款金额"
           </el-table-column>
           <el-table-column prop="bankAmtMsg" label="待银行查账金额">
           </el-table-column>
@@ -2033,7 +2033,7 @@
               >
                 <div class="first">
                   <p style="line-height: 30px">承诺还款记录</p>
-                  <el-table highlight-current-row width="100%" border stripe show-overflow-tooltip style="min-height:130px;" :data="memorizeList">
+                  <el-table highlight-current-row width="100%" border stripe show-overflow-tooltip style="min-height:130px;" :data="memorizeList2">
                     <el-table-column
                       prop="repayAmtMsg"
                       show-overflow-tooltip
@@ -3953,6 +3953,7 @@
     delDataCollect,
     getArchiveDetail,
     getCollectDetail,
+    getCollectDetail2,
     PhonetypeList,
     getCommentDetail,
     getInterestDetail,
@@ -4051,6 +4052,7 @@
         PhonetypeList: [],
         syncMemorizeList: [],
         memorizeList: [], //催記
+        memorizeList2:[],
         commentList: [], //评语
         addrList: [], //地址
         progressList: [{name: "判决", id: 1}, {name: "收案", id: 2}],
@@ -5162,8 +5164,8 @@
         } else if (ind == "案件登帐") {
           //案件登帐
           this.memorizeType = 1;
-          getCollectDetail(this.id, 1).then(data => {
-            this.memorizeList = data;
+          getCollectDetail2(this.id, 1).then(data => {
+            this.memorizeList2 = data;
           });
           getCPList(this.id).then(data => {
             this.cpList = data;
