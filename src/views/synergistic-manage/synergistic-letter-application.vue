@@ -24,7 +24,7 @@
       >
     </el-upload>
 
-    <div id="synergistic-letter-application" class="page-wraper-sub">
+
       <el-tabs v-model="activeName" class="tabs-wrap">
         <el-tab-pane label="信函申请" name="tab1">
           <el-dialog
@@ -258,6 +258,7 @@
             <el-table-column
               label="个案序列号"
               prop="seqno"
+              :key='Math.random()'
               sortable="custom"
               :sort-orders="['ascending', 'descending']"
               min-width="160"
@@ -279,7 +280,7 @@
               :key="index"
               v-bind="item"
               sortable="custom"
-              min-width="100"
+              min-width="140"
               :sort-orders="['ascending', 'descending']"
               header-align="center"
               align="center"
@@ -303,7 +304,6 @@
         </el-tab-pane>
       </el-tabs>
 
-    </div>
     <el-dialog
       class="dialog-wrap"
       title="提示"
@@ -748,6 +748,14 @@ export default {
     right: 33px;
     top: 5px;
     z-index: 22;
+  }
+  .pagination-wrap {
+    position: fixed;
+    bottom: 0;
+    z-index: 100;
+    min-height: 40px;
+    background-color: white;
+    width: 100%;
   }
 }
 </style>

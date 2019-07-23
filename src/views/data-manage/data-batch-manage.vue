@@ -89,11 +89,10 @@
     <el-table highlight-current-row v-loading="tableLoad"
               class="table-wrap"
               height="1"
-              ref="multipleTable"
               :data="DataList"
               border
               stripe
-              style="width: 100%;margin-top: 10px;"
+              style="width: 100%;"
               @selection-change="handleSelectionChange"
               @sort-change="handleSort"
     >
@@ -198,7 +197,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        prop="createTime"
+        prop="creatTime"
         width="140"
         sortable="custom"
         :sort-orders="['ascending','descending']"

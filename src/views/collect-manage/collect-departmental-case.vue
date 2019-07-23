@@ -758,7 +758,7 @@
         form: {
           odvNameFiter:null,
           val0: [], //委托方
-          val1: null, //批次号
+          val1: [], //批次号
           val2: [], //下次跟进日期
           val3: "", //个案序列号
           val4: [], //地区
@@ -776,8 +776,8 @@
           val16: "", //档案号
           val17: [], //最后跟进日期
           val18: "", //跟进次数上限
-          val19: [], //是否新分配
-          val20: [], //还款情况
+          val19: "", //是否新分配
+          val20: "", //还款情况
           val21: [], //预计退案日期
           val22: "", //自定义信息
           val23: "", //催收分类
@@ -848,6 +848,11 @@
         val31_data: [],  //部门
         val32_data: [],  //催收员
         tableCol_data: [
+          {
+            width:120,
+            prop: "odv",
+            label: "催收员"
+          },
           {
             width:120,
             prop: "collectStatusMsg",

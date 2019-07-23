@@ -388,9 +388,9 @@
         </el-form-item>
       </el-row>
     </el-form>
-    <el-row :gutter="24">
-      <el-col :span="18" style="    width: 100%;">
-        <div class="grid-content bg-purple">
+    <!--<el-row :gutter="24">
+      <el-col :span="18" style="width: 100%;">-->
+        <div class="grid-content bg-purple" style="line-height: 40px;">
           <span>查询结果统计：</span>
           <span class="textColor">列表案量：{{totalCaseNum}}件，</span>
           <span class="textColor"> 列表金额：{{totalAmt}}，</span>
@@ -399,8 +399,8 @@
           <span class="textColor"> 列表待银行查账金额：{{totalCp}}，</span>
           <span class="textColor"> 列表承诺还款金额：{{totalPtp}}</span>
         </div>
-      </el-col>
-    </el-row>
+  <!--    </el-col>
+    </el-row>-->
 
     <el-table highlight-current-row v-loading="tableLoad"
               class="table-wrap"
@@ -411,7 +411,7 @@
               stripe
               show-overflow-tooltip
               :row-class-name="rowColor"
-              style="margin-top:10px;min-height:390px;margin-bottom: 40px;"
+              style="min-height:390px;margin-bottom: 40px;"
               @selection-change="handleSelectionChange"
               @row-dblclick="showDetail"
               @sort-change="handleSort"
@@ -2824,46 +2824,47 @@
     .color_ZONG {
       color: #D2B48C;
     }
+    .data-case-condition-wrap {
+      height: 350px;
+      overflow-y: scroll;
+    }
+    .top>div{
+      display: flex;
+
+    }
+    .top>div p{
+      flex: 1;
+      margin-bottom: 10px;
+    }
+    .top>div p .title{
+      font-weight: 800;
+    }
+    .filter{
+      margin-bottom: 10px;
+    }
+    .filter h1{
+      background: gray;
+      margin-bottom: 10px;
+      padding:10px 0;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .filter h1 p{
+      display: inline-block;
+      margin-left: 20px;
+      cursor:pointer;
+      color: deepskyblue;
+    }
+    .salesman-ul li{
+      text-align: center;
+      padding:10px 0;
+      border-bottom:1px solid #000 ;
+    }
+    .salesman-ul .el-input--mini{
+      width: 25%;
+    }
   }
 
-  .data-case-condition-wrap {
-    height: 350px;
-    overflow-y: scroll;
-  }
-	.top>div{
-		display: flex;
-		
-	}
-.top>div p{
-	flex: 1;
-	margin-bottom: 10px;
-}
-.top>div p .title{
-	font-weight: 800;
-}
-.filter{
-	margin-bottom: 10px;
-}
-.filter h1{
-	background: gray;
-	margin-bottom: 10px;
-	padding:10px 0;
-	color: #fff;
-	font-size: 14px;
-	font-weight: 700;
-}
-.filter h1 p{
-	display: inline-block;
-	margin-left: 20px;
-	cursor:pointer;
-	color: deepskyblue;
-}
-.salesman-ul li{
-	text-align: center;
-	padding:10px 0;
-	border-bottom:1px solid #000 ;
-}
-.salesman-ul .el-input--mini{
-	width: 25%;
-}
+
 </style>
