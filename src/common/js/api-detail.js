@@ -21,6 +21,16 @@ export function sendTel(context,address) {
     }
   })
 }
+export function sendTelBatch(context,address) {
+  return request({
+    url: '/telIp/sendBatch',
+    method: 'post',
+    data: {
+      context:context,
+      address:address
+    }
+  })
+}
 export function getSameBatchCollect(id) {
   return request({
     url: '/case/batch/idno',

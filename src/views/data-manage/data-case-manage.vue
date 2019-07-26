@@ -227,7 +227,7 @@
       </el-form-item>
 
       <el-form-item v-if="queryConf.fpzt || queryConfFlag">
-        <el-select v-model="formInline.distributeStatuss" filterable placeholder="请选择分配状态" clearable>
+        <el-select v-model="formInline.distributeStatuss" filterable collapse-tags multiple placeholder="请选择分配状态" clearable>
           <el-option
             v-for="item in distributeStatusList"
             :key="item.id"
@@ -544,10 +544,10 @@
       </el-table-column>
       <el-table-column
         width="140"
-        prop="overdueDate"
+        prop="overdueDays"
         sortable="custom"
         :sort-orders="['ascending','descending']"
-        label="逾期时间"
+        label="逾期天数"
         align="center"
         show-overflow-tooltip>
       </el-table-column>
@@ -1178,12 +1178,12 @@
         <el-checkbox v-model="exportConf.statementZipCode" label="4">对账单邮编</el-checkbox>
         <el-checkbox v-model="exportConf.censusRegisterAddress" label="5">户籍地址</el-checkbox>
         <el-checkbox v-model="exportConf.censusRegisterZipCode" label="2">户籍地邮编</el-checkbox>
-        <el-checkbox v-model="exportConf.dept" label="4">部门</el-checkbox>
         <el-checkbox v-model="exportConf.province" label="5">省份</el-checkbox>
         <el-checkbox v-model="exportConf.city" label="5">城市</el-checkbox>
         <el-checkbox v-model="exportConf.county" label="5">区县</el-checkbox>
         <el-checkbox v-model="exportConf.birthday" label="5">生日</el-checkbox>
 
+        <el-checkbox v-model="exportConf.color" label="2">颜色</el-checkbox>
         <el-checkbox v-model="exportConf.age" label="2">年龄</el-checkbox>
         <el-checkbox v-model="exportConf.outstandingAmount" label="3">未出账金额</el-checkbox>
         <el-checkbox v-model="exportConf.currencyType" label="3">币种</el-checkbox>
@@ -1477,15 +1477,15 @@
         val14_data: [
           {
             label: '正常',
-            value: '黑'
+            value: 'BLACK'
           },
           {
             label: '红色',
-            value: '红'
+            value: 'RED'
           },
           {
             label: '蓝色',
-            value: '蓝'
+            value: 'BLUE'
           }/*,
           {
             label: '橙色',
@@ -1525,8 +1525,8 @@
         bCleanTimes:false,
         fenan: {cleanCollect:0,cleanTimes:0,odv: '',odvs:[],odvNames:[],sendType:[],odvPercent:[]},
         odvName:'',
-        loading2: false,
-        fullscreenLoading: false,
+        loading2: true,
+        fullscreenLoading: true,
         Aoptions:[{
         	name:"包括已分配案件",
         	id:1
@@ -1699,6 +1699,9 @@
       },
 
       submitmsgForm2(formName) {
+        if (this.formInline.odvNameFiter==null || this.formInline.odvNameFiter==""){
+          this.$set(this.formInline, 'odvs', [])
+        }
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.fenanchecktwo()
@@ -1748,12 +1751,16 @@
       if (this.bCleanCollect){
         this.fenan.cleanCollect=1
       }
+      this.loading2 = true
+      this.fullscreenLoading = true
       autoSendByProperty(this.formInline,this.fenan).then((response) => {
         this.$message({
           message: "分配成功",
           type: "success"
         });
           this.detailVisible11 = false;
+        this.loading2 = false
+        this.fullscreenLoading = false
       })
     },
       submitmsgForm2(formName) {
@@ -1998,6 +2005,9 @@
 
       },
       handleExport(command) {
+        if (this.formInline.odvNameFiter==null || this.formInline.odvNameFiter==""){
+          this.$set(this.formInline, 'odvs', [])
+        }
         if (command === "exportTotalCase") {
           //this.dialogVisibleCase = true
           this.changeRadio();
@@ -2339,12 +2349,15 @@
           });
           return;
         }
+        this.loading2 = true
+        this.fullscreenLoading = true
         let datasList = []
         for (var i = 0; i < this.deleteList.length; i++) {
           let dataObject = {id: '', odv: this.fenan.odv}
           dataObject.id = this.deleteList[i].id
           datasList.push(dataObject)
         }
+
         fenan1(datasList).then((response) => {
           this.$message({
             type: 'success',
@@ -2353,6 +2366,8 @@
           this.detailVisible3 = false
           this.fenan.odv = ''
           this.search()
+          this.loading2 = false
+          this.fullscreenLoading = false
         })
       },
       fenanchecktwo() {
@@ -2363,7 +2378,8 @@
           });
           return;
         }
-
+        this.loading2 = true
+        this.fullscreenLoading = true
         fenan2(this.formInline, this.fenan.odv).then((response) => {
           this.$message({
             type: 'success',
@@ -2372,6 +2388,8 @@
           this.detailVisible8 = false
           this.fenan.odv = ''
           this.search()
+          this.loading2 = false
+          this.fullscreenLoading = false
         })
       },
       sureAddShow7() {
@@ -2565,6 +2583,9 @@
       },
       search() {
         this.tableLoad = true
+        if (this.formInline.odvNameFiter==null || this.formInline.odvNameFiter==""){
+          this.$set(this.formInline, 'odvs', [])
+        }
         searchList(this.formInline, this.orderBy, this.sort, this.pageSize, this.pageNum).then((response) => {
           this.totalCaseNum = response.totalCaseNum
           this.totalAmt = this.formatMoney(response.totalAmt, 0, "￥")
@@ -2596,7 +2617,7 @@
           depts:[],
           reportStatuss:[],
           reduceStatuss:[],
-          statuss:[],
+          statuss:[1],
           accountAges:[],
           collectStatuss:[],
           colors:[],
@@ -2744,6 +2765,9 @@
 
 <style lang="scss">
   #data-case-manage {
+    .el-loading-mask{
+      z-index:3000 !important;
+    }
     .el-table th>.cell{
       white-space: nowrap;
     }

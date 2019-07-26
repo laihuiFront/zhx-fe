@@ -83,6 +83,8 @@
                     v-model="form.val1"
                     multiple
                     collapse-tags
+                    clearable
+                    filterable
                     remote
                     placeholder="请输入批次号"
                     :remote-method="querySearch">
@@ -488,9 +490,9 @@
                       <el-dropdown-item command="黑">黑色</el-dropdown-item>
                       <el-dropdown-item command="红">红色</el-dropdown-item>
                       <el-dropdown-item command="蓝">蓝色</el-dropdown-item>
-                      <el-dropdown-item command="橙">橙色</el-dropdown-item>
+                      <!--<el-dropdown-item command="橙">橙色</el-dropdown-item>
                       <el-dropdown-item command="紫">紫色</el-dropdown-item>
-                      <el-dropdown-item command="棕">棕色</el-dropdown-item>
+                      <el-dropdown-item command="棕">棕色</el-dropdown-item>-->
                     </el-dropdown-menu>
                   </el-dropdown>
                 </el-form-item>
@@ -766,7 +768,7 @@
           val6: "", //证件号
           val7: [], //委案日期
           val8: [], //逾期账龄
-          val9: [], //案件状态
+          val9: [1], //案件状态
           val10: [], //催收状态
           val11: [], //案件类型
           val12: [], //还款日期
@@ -809,15 +811,15 @@
         val14_data: [
           {
             label:'黑色',
-            value:'黑'
+            value:'BLACK'
           },
           {
             label:'红色',
-            value:'红'
+            value:'RED'
           },
           {
             label:'蓝色',
-            value:'蓝'
+            value:'BLUE'
           }/*,
           {
             label:'橙色',
@@ -905,7 +907,7 @@
           },
           {
             width: 120,
-            prop: "overDays",
+            prop: "overdueDays",
             label: "逾期天数"
           },
           {
@@ -1151,6 +1153,10 @@
       },
       //查询按钮
       searchHandle() {
+
+        if (this.form.odvNameFiter==null || this.form.odvNameFiter==""){
+          this.$set(this.form, 'val32', [])
+        }
         this.getMainData();
       },
       rowColor({row}){
@@ -1223,8 +1229,45 @@
         });
       },
       resetForm(formName) {
-        this.$refs[formName].resetFields();
+        //this.$refs[formName].resetFields();
+        this.form = {
+          odvNameFiter:null,
+            val0: [], //委托方
+            val1: [], //批次号
+            val2: [], //下次跟进日期
+            val3: "", //个案序列号
+            val4: [], //地区
+            val5: "", //姓名
+            val6: "", //证件号
+            val7: [], //委案日期
+            val8: [], //逾期账龄
+            val9: [1], //案件状态
+            val10: [], //催收状态
+            val11: [], //案件类型
+            val12: [], //还款日期
+            val13: "", //委案金额上限
+            val14: [], //标色状态
+            val15: "", //卡号
+            val16: "", //档案号
+            val17: [], //最后跟进日期
+            val18: "", //跟进次数上限
+            val19: "", //是否新分配
+            val20: "", //还款情况
+            val21: [], //预计退案日期
+            val22: "", //自定义信息
+            val23: "", //催收分类
+            val24: [], //减免状态
+            val25: [], //报备状态
+            val27: "", //电话号码
+            val28: "", //催收记录
+            val29: "", //委案金额下限
+            val30: "", //跟进次数下限
+            val31: "", //部门
+            val32: [], //催收员
+            val33: "", //案件分配
+        }
         this.deptName = ""
+        this.$set(this.form, 'val32', [])
         this.getMainData();
       },
       handleSelectionChange(val) {

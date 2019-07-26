@@ -1,10 +1,11 @@
 import request from '@/common/js/request'
-export function getConfigList(id = 0) {
+export function getConfigList(id = 0,type) {
   return request({
     url: '/sys/dictionary/select/list',
     method: 'post',
     data: {
-      parent:{id}
+      parent:{id},
+      type:type
     }
   })
 }

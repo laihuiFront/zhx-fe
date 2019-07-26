@@ -203,10 +203,17 @@ export default {
       if (newVal.id) {
         this.configData = []
         this.tableLoad = true
-        getConfigList(newVal.id).then(response => {
-          this.configData = response
-          this.tableLoad = false
-        })
+        if(newVal.name=="催收状态"){
+          getConfigList(newVal.id,1).then(response => {
+            this.configData = response
+            this.tableLoad = false
+          })
+        }else{
+          getConfigList(newVal.id,0).then(response => {
+            this.configData = response
+            this.tableLoad = false
+          })
+        }
       }
     }
   },

@@ -3,6 +3,7 @@
          v-loading="loading2"
          v-loading.fullscreen.lock="fullscreenLoading"
          element-loading-text="正在加载中"
+
          element-loading-spinner="el-icon-loading"
          element-loading-background="rgba(0, 0, 0, 0.7)"
          >
@@ -87,11 +88,11 @@
         <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="userName" min-width="120" label="员工姓名" show-overflow-tooltip></el-table-column>
         <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center"  prop="loginName" min-width="120" show-overflow-tooltip label="账号"></el-table-column>
         <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center"  prop="enableMsg" min-width="120" show-overflow-tooltip label="状态"></el-table-column>
-        <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="sex" min-width="60" label="性别" show-overflow-tooltip width="70"></el-table-column>
+       <!-- <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="sex" min-width="60" label="性别" show-overflow-tooltip width="70"></el-table-column>-->
         <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="officePhone" min-width="120" label="坐席号" show-overflow-tooltip></el-table-column>
-        <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="mobile" min-width="120" label="手机" show-overflow-tooltip></el-table-column>
+        <!--<el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="mobile" min-width="120" label="手机" show-overflow-tooltip></el-table-column>
         <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="joinTime" min-width="120" label="入职日期" show-overflow-tooltip></el-table-column>
-        <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="actualTime" min-width="120" label="下组日期" show-overflow-tooltip></el-table-column>
+        <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="actualTime" min-width="120" label="下组日期" show-overflow-tooltip></el-table-column>-->
         <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="roleList" :formatter="formatRole" min-width="140" label="员工角色" show-overflow-tooltip></el-table-column>
         <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="department" min-width="160" label="部门" show-overflow-tooltip></el-table-column>
         <el-table-column label="操作" width="250"  align="center">
@@ -479,7 +480,6 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        debugger;
         const data = {
           ids: this.multipleSelection,
           status: 0,
@@ -740,6 +740,8 @@ export default {
               cancelButtonText: '取消',
               type: 'warning'
             }).then(() => {
+              this.loading2 = true
+              this.fullscreenLoading = true
               this.memberInfo.userName = this.returnName
               this.returnName = null
               let { ...resultData } = this.memberInfo
@@ -748,17 +750,23 @@ export default {
                 addMember(resultData).then(response => {
                   this.onClickQuery()
                   this.onClickCancel()
+                  this.loading2 = false
+                  this.fullscreenLoading = false
                 })
               } else {
                 updateMember(resultData).then(response => {
                   this.onClickQuery()
                   this.onClickCancel()
+                  this.loading2 = false
+                  this.fullscreenLoading = false
                 })
               }
             }).catch(() => {
 
             })
           }else{
+            this.loading2 = true
+            this.fullscreenLoading = true
               this.returnName = null
               let { ...resultData } = this.memberInfo
               resultData.roleList = resultData.roleList.map(item => { return { id: item } })
@@ -766,11 +774,15 @@ export default {
                 addMember(resultData).then(response => {
                   this.onClickQuery()
                   this.onClickCancel()
+                  this.loading2 = false
+                  this.fullscreenLoading = false
                 })
               } else {
                 updateMember(resultData).then(response => {
                   this.onClickQuery()
                   this.onClickCancel()
+                  this.loading2 = false
+                  this.fullscreenLoading = false
                 })
               }
           }
@@ -794,6 +806,9 @@ export default {
 
 <style lang="scss">
 #member-in {
+  .el-loading-mask{
+    z-index:3000 !important;
+  }
   height: 100%;
   display: flex;
   overflow: hidden;

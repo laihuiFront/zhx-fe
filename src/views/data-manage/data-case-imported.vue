@@ -587,12 +587,12 @@
         <el-checkbox v-model="exportConf.statementZipCode" label="4">对账单邮编</el-checkbox>
         <el-checkbox v-model="exportConf.censusRegisterAddress" label="5">户籍地址</el-checkbox>
         <el-checkbox v-model="exportConf.censusRegisterZipCode" label="2">户籍地邮编</el-checkbox>
-        <el-checkbox v-model="exportConf.dept" label="4">部门</el-checkbox>
         <el-checkbox v-model="exportConf.province" label="5">省份</el-checkbox>
         <el-checkbox v-model="exportConf.city" label="5">城市</el-checkbox>
         <el-checkbox v-model="exportConf.county" label="5">区县</el-checkbox>
         <el-checkbox v-model="exportConf.birthday" label="5">生日</el-checkbox>
 
+        <el-checkbox v-model="exportConf.color" label="2">颜色</el-checkbox>
         <el-checkbox v-model="exportConf.age" label="2">年龄</el-checkbox>
         <el-checkbox v-model="exportConf.outstandingAmount" label="3">未出账金额</el-checkbox>
         <el-checkbox v-model="exportConf.currencyType" label="3">币种</el-checkbox>

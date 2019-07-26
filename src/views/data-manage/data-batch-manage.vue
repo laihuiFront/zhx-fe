@@ -197,7 +197,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        prop="creatTime"
+        prop="createTime"
         width="140"
         sortable="custom"
         :sort-orders="['ascending','descending']"
@@ -243,7 +243,7 @@
           <el-button type="text" size="small" v-if="scope.row.batchStatus!=1 && scope.row.batchStatus!=0"
                      @click="backCaseList(scope.row.id)" v-has="'退案'">恢复
           </el-button>
-          <el-button type="text" size="small" @click="editMessage(scope.row)" v-has="'编辑'">编辑</el-button>
+          <el-button type="text" size="small" @click="editMessage2(scope.row)" v-has="'编辑'">编辑</el-button>
           <el-button type="text" size="small" @click="deleteMessage(scope.row.id,scope.row.batchNo)" v-has="'删除'">删除</el-button>
           <el-button type="text" size="small" v-has="'批量导出批次催记'" @click="showSelectCollect2(scope.row)">导出催记</el-button>
         </template>
@@ -638,7 +638,7 @@
           label="催收小结"
           show-overflow-tooltip>
         </el-table-column>
-        <el-table-column
+        <!--<el-table-column
           label="操作"
           align="center"
           width="200"
@@ -648,7 +648,7 @@
             <el-button type="text" size="small" @click="deleteMessage(scope.row.id,scope.row.batchNo)" >删除
             </el-button>
           </template>
-        </el-table-column>
+        </el-table-column>-->
       </el-table>
       <el-pagination
         @size-change="handleSizeChange1"
@@ -1080,6 +1080,7 @@
         MoreBackCaseList: [],
         form: {
           time: [],
+          batchStatuss:[4],
           batchNos: [],
           clients: [],
           CasestatusList: [{id: 4, name: "正常"}, {id: 0, name: "未导入"}, {id: 1, name: "未退案"}, {id: 2, name: "已退案"}]
@@ -1206,8 +1207,15 @@
         });
       },
       editMessage(row) {
+
         this.dialogVisible2 = true
         this.messageForm = row
+
+        if (this.messageForm.returnTime!=null && this.messageForm.returnTime=="NULL"){
+
+          this.messageForm.returnTime = '';
+        }
+
         if (this.messageForm.client) {
           this.messageForm.client = parseInt(row.client)
         }
@@ -1509,9 +1517,13 @@
           }
         });
       },
-      editMessage(row) {
+      editMessage2(row) {
+
         this.dialogVisible2 = true
         this.messageForm = row
+        if (this.messageForm.returnTime!=null && this.messageForm.returnTime=="NULL"){
+          this.messageForm.returnTime = '';
+        }
         this.messageForm.client = parseInt(row.client)
         if (this.messageForm.caseType) {
 
@@ -1745,7 +1757,7 @@
           time: [],
           areas:[],
           batchNos: [],
-          batchStatuss:[],
+          batchStatuss:[4],
           clients: [],
           caseTypes:[],
           CasestatusList: [{id: 0, name: "未导入"}, {id: 1, name: "未退案"}, {id: 2, name: "已退案"}]
@@ -1862,7 +1874,7 @@
 
     created() {
       this.tableLoad = true
-      dataList().then((response) => {
+      dataList(null, null, null, this.form.batchStatuss, null, null, null, this.orderBy, this.sort, this.pageSize, this.pageNum).then((response) => {
         this.DataList = response.pageInfo.list
         //this.pages = response.pageInfo.pages
         this.total = response.pageInfo.total

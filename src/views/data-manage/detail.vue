@@ -2,7 +2,10 @@
   <div id="case-detail">
     <div class="basic-info">
         <div class="title-info">
-          <div class="txt">
+          <div class="txt" :class="[
+                      { blue:caseDetail.color  === 'BLUE' },
+                      { red: caseDetail.color === 'RED' }
+                    ]">
             {{caseDetail.name + '-[' + caseDetail.seqNo + ']-案件详情'}}
           </div>
           <div style="text-align: right; margin-right:20px;" >
@@ -20,8 +23,17 @@
             label-width="130px"
             class="rule-form"
           >
-            <el-form-item label="姓名">
-              <el-input v-model="caseDetail.name" :disabled="true"></el-input>
+            <el-form-item label="姓名" >
+             <!-- <el-input v-model="caseDetail.name" :disabled="true" ></el-input>-->
+              <div
+                class="inputDiv"
+                style="font-size: 11px;"
+              >
+                <span :class="[
+                      { blue: caseDetail.color === 'BLUE' },
+                      { red: caseDetail.color === 'RED' }
+                    ]">{{ caseDetail.name}}</span>
+              </div>
             </el-form-item>
             <el-form-item label="委托方">
               <el-input v-model="caseDetail.client" :disabled="true"></el-input>
@@ -40,13 +52,16 @@
                 <span>{{ caseDetail.caseDate }}</span>
               </div>
             </el-form-item>
-            <el-form-item label="证件号">
+            <el-form-item label="证件号" >
               <div
                 class="inputDiv"
                 style="font-size: 11px;"
                 :class="[userInfo.busiData ? 'inputUnSelect' : '']"
               >
-                <span>{{ caseDetail.identNo }}</span>
+                <span :class="[
+                      { blue: caseDetail.color === 'BLUE' },
+                      { red: caseDetail.color === 'RED' }
+                    ]">{{ caseDetail.identNo }}</span>
               </div>
             </el-form-item>
 
@@ -185,7 +200,74 @@
                 <span>{{ caseDetail.homeAddress}}</span>
               </div>
             </el-form-item>
-
+            <el-form-item label="最新评语" class="whole">
+              <div class="content-wrap">
+                <el-popover
+                  placement="bottom-start"
+                  title="添加评语"
+                  width="400"
+                  :visible-arrow="false"
+                  trigger="click"
+                  v-model="addCommentVisible"
+                >
+                  <div>
+                    <el-input
+                      type="textarea"
+                      :rows="4"
+                      placeholder="请输入评语"
+                      v-model="commentAddContent"
+                    >
+                    </el-input>
+                    <el-radio-group
+                      v-model="commentAddColor"
+                      style="margin-top:10px;"
+                    >
+                      <el-radio label="黑">正常</el-radio>
+                      <el-radio label="蓝">标蓝</el-radio>
+                      <el-radio label="红">标红</el-radio>
+                     <!-- <el-radio label="">不更改</el-radio>-->
+                    </el-radio-group>
+                  </div>
+                  <div style="text-align: right; margin-top: 12px">
+                    <el-button
+                      size="mini"
+                      type="text"
+                      @click="addCommentVisible = false"
+                    >取消
+                    </el-button
+                    >
+                    <el-button
+                      type="primary"
+                      size="mini"
+                      @click="onClickAddComment"
+                    >确定
+                    </el-button
+                    >
+                  </div>
+                  <el-button
+                    size="small"
+                    type="text"
+                    icon="el-icon-plus"
+                    title="添加"
+                    slot="reference"
+                  ></el-button>
+                </el-popover>
+                <ul class="comments-wrap">
+                  <li
+                    v-for="item in commentList"
+                    :key="item.id"
+                    class="item"
+                    :class="[
+                      { blue: item.commentColor === 'BLUE' },
+                      { red: item.commentColor === 'RED' }
+                    ]"
+                  >
+                    {{ item.createTime }} {{ item.creatUserName }} :
+                    {{ item.comment }}
+                  </li>
+                </ul>
+              </div>
+            </el-form-item>
 
           </el-form>
         </div>
@@ -744,19 +826,19 @@
             </el-form-item>
             <el-form-item label="省份">
               <el-input
-                v-model="caseDetail.province.name"
+                v-model="caseDetail.provinceName"
                 :disabled="true"
               ></el-input>
             </el-form-item>
             <el-form-item label="城市">
               <el-input
-                v-model="caseDetail.city.name"
+                v-model="caseDetail.cityName"
                 :disabled="true"
               ></el-input>
             </el-form-item>
             <el-form-item label="区县">
               <el-input
-                v-model="caseDetail.county.name"
+                v-model="caseDetail.countyName"
                 :disabled="true"
               ></el-input>
             </el-form-item>
@@ -1106,74 +1188,7 @@
                 >
               </el-popover>
             </el-form-item>
-            <el-form-item label="最新评语" class="whole">
-              <div class="content-wrap">
-                <el-popover
-                  placement="bottom-start"
-                  title="添加评语"
-                  width="400"
-                  :visible-arrow="false"
-                  trigger="click"
-                  v-model="addCommentVisible"
-                >
-                  <div>
-                    <el-input
-                      type="textarea"
-                      :rows="4"
-                      placeholder="请输入评语"
-                      v-model="commentAddContent"
-                    >
-                    </el-input>
-                    <el-radio-group
-                      v-model="commentAddColor"
-                      style="margin-top:10px;"
-                    >
-                      <el-radio label="黑">正常</el-radio>
-                      <el-radio label="蓝">标蓝</el-radio>
-                      <el-radio label="红">标红</el-radio>
-                      <el-radio label="">不更改</el-radio>
-                    </el-radio-group>
-                  </div>
-                  <div style="text-align: right; margin-top: 12px">
-                    <el-button
-                      size="mini"
-                      type="text"
-                      @click="addCommentVisible = false"
-                    >取消
-                    </el-button
-                    >
-                    <el-button
-                      type="primary"
-                      size="mini"
-                      @click="onClickAddComment"
-                    >确定
-                    </el-button
-                    >
-                  </div>
-                  <el-button
-                    size="small"
-                    type="text"
-                    icon="el-icon-plus"
-                    title="添加"
-                    slot="reference"
-                  ></el-button>
-                </el-popover>
-                <ul class="comments-wrap">
-                  <li
-                    v-for="item in commentList"
-                    :key="item.id"
-                    class="item"
-                    :class="[
-                      { blue: item.commentColor === 'BLUE' },
-                      { red: item.commentColor === 'RED' }
-                    ]"
-                  >
-                    {{ item.createTime }} {{ item.creatUserName }} :
-                    {{ item.comment }}
-                  </li>
-                </ul>
-              </div>
-            </el-form-item>
+
           </el-form>
         </div>
      </el-collapse-item>
@@ -1211,6 +1226,18 @@
                     <el-button @click="showAllTel">显示全部电话</el-button>
                   </div>
                   <div class="right-oper">
+                    <el-button
+                      type="primary"
+                      @click="sendTel3"
+                      v-if=" caseDetail.currentuser || mycaseFlag"
+                    >电话批量呼出
+                    </el-button>
+                    <el-button
+                      type="primary"
+                      @click="sendTel4"
+                      v-if=" caseDetail.currentuser || mycaseFlag"
+                    >座机批量呼出
+                    </el-button>
                     <el-button
                       type="primary"
                       @click="addPhone"
@@ -1273,7 +1300,7 @@
                   stripe
                   :data="caseDetail.dataCaseTelEntityList"
                   :row-class-name="telTableRowClassName"
-                  style="width: 100%;"
+                  style="width: 100%;min-height: 150px;"
                   class="table-wrap"
                 >
                   <el-table-column type="selection" width="55">
@@ -1450,7 +1477,7 @@
                   stripe
                   @selection-change="onSelectAddrRow"
                   :data="addrList"
-                  style="width: 100%"
+                  style="width: 100%;min-height: 150px;"
                   class="table-wrap"
                 >
                   <el-table-column type="selection" width="55">
@@ -1663,8 +1690,7 @@
                   :data="dataList"
                   border
                   stripe
-                  style="width: 100%"
-                  height="120px"
+                  style="width: 100%;min-height: 150px;"
                   class="table-wrap"
                 >
                   <el-table-column
@@ -1732,7 +1758,7 @@
                 <el-table
                   highlight-current-row
                   :data="memorizeList"
-                  style="width: 100%; min-height:120px;"
+                  style="width: 100%; min-height: 150px;"
                   border
                   stripe
                   class="table-wrap"
@@ -1852,8 +1878,7 @@
                   :data="commentList"
                   border
                   stripe
-                  style="width: 100%"
-                  height="120px"
+                  style="width: 100%;min-height: 150px;"
                   class="table-wrap"
                 >
                   <el-table-column
@@ -1942,8 +1967,7 @@
                   :data="rateUpdateList"
                   border
                   stripe
-                  style="width: 100%"
-                  height="120px"
+                  style="width: 100%;min-height: 150px;"
                   class="table-wrap"
                 >
                   <el-table-column
@@ -2033,7 +2057,7 @@
               >
                 <div class="first">
                   <p style="line-height: 30px">承诺还款记录</p>
-                  <el-table highlight-current-row width="100%" border stripe show-overflow-tooltip style="min-height:130px;" :data="memorizeList2">
+                  <el-table highlight-current-row width="100%" border stripe show-overflow-tooltip style="min-height:150px;" :data="memorizeList2">
                     <el-table-column
                       prop="repayAmtMsg"
                       show-overflow-tooltip
@@ -2062,7 +2086,7 @@
                     待银行查账记录
                     <el-button type="text" @click="addCpInfo">新增</el-button>
                   </p>
-                  <el-table highlight-current-row width="100%;" border stripe show-overflow-tooltip style="min-height:130px;" :data="cpList">
+                  <el-table highlight-current-row width="100%;" border stripe show-overflow-tooltip style="min-height:150px;" :data="cpList">
                     <el-table-column
                       prop="cpMoneyMsg"
                       align="center"
@@ -2155,10 +2179,9 @@
                 <el-table
                   highlight-current-row
                   :data="syncList"
-                  style="width: 100%"
+                  style="width: 100%;min-height: 150px;"
                   border
                   stripe
-                  height="120px"
                   class="table-wrap"
                 >
                   <el-table-column
@@ -2215,10 +2238,9 @@
                 <el-table
                   highlight-current-row
                   :data="caseSameList"
-                  style="width: 100%"
+                  style="width: 100%;min-height: 150px;"
                   border
                   stripe
-                  height="160px"
                   class="table-wrap"
                 >
                   <el-table-column
@@ -2294,14 +2316,15 @@
                       <el-radio label="待银行查账管理">待银行查账</el-radio>
                     </el-radio-group>
                   </div>
+                  <div class="right-oper">
+                  </div>
                 </div>
                 <el-table
                   highlight-current-row
                   :data="logList"
                   border
                   stripe
-                  style="width: 100%"
-                  height="130px"
+                  style="width: 100%;min-height: 150px;"
                   class="table-wrap"
                 >
                   <el-table-column
@@ -2351,7 +2374,7 @@
                   border
                   stripe
                   :data="legalList"
-                  style="width: 100%;margin-top:5px;"
+                  style="width: 100%;margin-top:5px;min-height: 150px;"
                   height="120px"
                   class="table-wrap"
                 >
@@ -2451,7 +2474,7 @@
                 <el-table
                   highlight-current-row
                   :data="reduceApplyList"
-                  style="width: 100%; min-height:120px;"
+                  style="width: 100%; min-height:150px;"
                   border
                   stripe
                   class="table-wrap"
@@ -2605,12 +2628,12 @@
     </div>
     <div class="basic-info">
      <!-- <el-collapse-item title="催记信息" name="4">-->
-      <p class="title"  style=" margin-bottom: 10px;">催记信息</p>
+      <p class="title"  style=" margin-bottom: 10px;margin-top:10px;">催记信息</p>
         <div class="memorize-wrap">
           <div class="left-panel">
             <el-form
               :model="batchForm"
-              ref="ruleForm"
+              ref="batchForm"
               label-width="100px"
               class="demo-ruleForm"
             >
@@ -2653,21 +2676,7 @@
                   ></el-option>
                 </el-select>
               </el-form-item>
-             <!-- <el-form-item label="催收模板" prop="module">
-                <el-select
-                  v-model="batchForm.module"
-                  placeholder="请选择催收模板"
-                  @change="selectCollectModule"
-                >
-                  <el-option
-                    v-for="item in csmbList"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.id"
-                  ></el-option>
-                </el-select>
-              </el-form-item>-->
-              <el-form-item label="催收结果" prop="result">
+              <el-form-item label="催收结果" prop="result" :rules="{required: true, message: '催收结果不能为空', trigger: 'blur'}">
                 <el-select
                   v-model="batchForm.result"
                   placeholder="请选择催收结果"
@@ -2694,7 +2703,7 @@
                   placeholder="请输入承诺还款日期"
                 ></el-date-picker>
               </el-form-item>
-              <el-form-item label="通话记录" prop="collectInfo" class="whole">
+              <el-form-item label="通话记录" prop="collectInfo" class="whole" :rules="{required: true, message: '通话记录不能为空', trigger: 'blur'}">
                 <el-input
                   type="textarea"
                   :rows="4"
@@ -2703,7 +2712,7 @@
                 >
                 </el-input>
               </el-form-item>
-              <el-form-item label="催收状态" prop="collectStatus">
+              <el-form-item label="催收状态" prop="collectStatus" :rules="{required: true, message: '催收状态不能为空', trigger: 'blur'}">
                 <el-select
                   v-model="batchForm.collectStatus"
                   placeholder="请选择催收状态"
@@ -2725,25 +2734,7 @@
                 </el-checkbox
                 >
               </el-form-item>
-             <!-- <el-form-item label="减免金额" prop="reduceAmt">
-                <el-input
-                  v-model="batchForm.reduceAmt"
-                  placeholder="请输入减免金额"
-                ></el-input>
-              </el-form-item>
-              <el-form-item label="减免状态" prop="reduceStatus">
-                <el-select
-                  v-model="batchForm.reduceStatus"
-                  placeholder="请选择减免状态"
-                >
-                  <el-option
-                    v-for="item in jmztList"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.id"
-                  ></el-option>
-                </el-select>
-              </el-form-item>-->
+
               <el-form-item label="下次跟进日期" prop="nextFollDate">
                 <el-date-picker
                   v-model="batchForm.nextFollDate"
@@ -2754,11 +2745,15 @@
               </el-form-item>
             </el-form>
             <div class="operation">
-              <el-button type="primary" @click="onClickSaveCollection"
+              <el-button type="primary" @click="onClickSaveCollection('batchForm')"
               >保存
               </el-button
               >
-              <el-button @click="batchForm = { sType: 0 }">清空</el-button>
+              <el-button @click="batchForm = { sType: 0,targetName:'',mobile:'',relation:'' };$nextTick(()=>{
+                if($refs['batchForm']) {
+                  $refs['batchForm'].resetFields()
+                }
+              });">清空</el-button>
             </div>
           </div>
           <div class="right-panel">
@@ -3824,7 +3819,7 @@
           <el-radio label="黑">正常</el-radio>
           <el-radio label="蓝">标蓝</el-radio>
           <el-radio label="红">标红</el-radio>
-          <el-radio label="">不更改</el-radio>
+       <!--   <el-radio label="">不更改</el-radio>-->
         </el-radio-group>
       </div>
       <div style="text-align: right; margin-top: 12px">
@@ -4002,6 +3997,7 @@
     getRepayList,
     getRepayRemark,
     sendTel,
+    sendTelBatch,
     getRepayType,
     saveBank
   } from "@/common/js/api-detail";
@@ -4126,6 +4122,125 @@
     },
 
     methods: {
+      //phoneSelectList
+      sendTel4(){
+
+        if (this.phoneSelectList ==null || this.phoneSelectList.length==0){
+          this.$message({
+            type: "info",
+            message: "请先选择号码 "
+          });
+          return;
+        }
+        if (this.phoneSelectList.length>10){
+          this.$message({
+            type: "info",
+            message: "拨打的号码数量超过10个 "
+          });
+          return;
+        }
+        const customer = this.caseDetail.telIpManage.customer
+        const psw = this.caseDetail.telIpManage.psw
+        // 呼出的分机号(坐席号)
+        const agent = this.caseDetail.officePhone==null?"":this.caseDetail.officePhone;
+        // 被叫号码
+        var tels =new Array()
+        for (var i=0;i<this.phoneSelectList.length;i++){
+          tels.push("7"+this.phoneSelectList[i].tel)
+        }
+        const callee = tels
+
+        const url = "http://"+this.caseDetail.telIpManage.address+"/openapi/V2.0.x/CallMultiNumbers"
+        const time = new Date().getTime()
+        const seq = this.caseDetail.id
+        this.batchForm.seq = time
+        const auth = `${customer}@${time}@${seq}@${psw}`
+        const digest = md5(auth)
+        const data = {
+          authentication : {
+            customer,
+            agent:agent,
+            timestamp: time,
+            seq:seq,
+            digest
+          },
+          param: {
+            debug: "true",
+            lang: "zh_CN"
+          },
+          request : {
+            seq,
+            userData:time,
+            agent,
+            callee
+          }
+        }
+        sendTelBatch(data,this.caseDetail.telIpManage.address).then(data => {
+          this.$message({
+            type: "success",
+            message: "拨号成功"
+          });
+        });
+      },
+      sendTel3(){
+        if (this.phoneSelectList ==null || this.phoneSelectList.length==0){
+          this.$message({
+            type: "info",
+            message: "请先选择号码 "
+          });
+          return;
+        }
+        if (this.phoneSelectList.length>10){
+          this.$message({
+            type: "info",
+            message: "拨打的号码数量超过10个 "
+          });
+          return;
+        }
+        const customer = this.caseDetail.telIpManage.customer
+        const psw = this.caseDetail.telIpManage.psw
+        // 呼出的分机号(坐席号)
+        const agent = this.caseDetail.officePhone==null?"":this.caseDetail.officePhone;
+        // 被叫号码
+        var tels =new Array()
+        for (var i=0;i<this.phoneSelectList.length;i++){
+          tels.push("9"+this.phoneSelectList[i].tel)
+        }
+        const callee = tels
+
+        const url = "http://"+this.caseDetail.telIpManage.address+"/openapi/V2.0.x/CallMultiNumbers"
+        const time = new Date().getTime()
+        const seq = this.caseDetail.id
+        this.batchForm.seq = time
+        const auth = `${customer}@${time}@${seq}@${psw}`
+        const digest = md5(auth)
+        const data = {
+          authentication : {
+            customer,
+            timestamp: time,
+            agent:agent,
+            seq:seq,
+            digest
+          },
+          param: {
+            debug: "true",
+            lang: "zh_CN"
+          },
+          request : {
+            seq,
+            userData:time,
+            agent,
+            callee
+          }
+        }
+        sendTelBatch(data,this.caseDetail.telIpManage.address).then(data => {
+          this.$message({
+            type: "success",
+            message: "拨号成功"
+          });
+        });
+
+      },
       sendTel2(){
         const customer = this.caseDetail.telIpManage.customer
         const psw = this.caseDetail.telIpManage.psw
@@ -4258,6 +4373,7 @@
         this.showCollectInfoVisible = true;
       },
       copyToCollect(tel, name, relation) {
+        debugger;
         this.$set(this.batchForm, 'mobile', tel);
         this.$set(this.batchForm, 'targetName', name);
         this.$set(this.batchForm, 'relation', relation);
@@ -4514,32 +4630,44 @@
         });
       },
 
-      onClickSaveCollection() {
-        this.batchForm.caseId = this.id;
-        if ((this.batchForm.collectStatus==28 || this.batchForm.collectStatus) && (this.batchForm.repayAmt==null || this.batchForm.repayAmt=="")){
-          this.$message({
-            type: "info",
-            message: "承诺还款金额不能为空"
-          });
-          return;
-        }
-        dataCollectionSave(this.batchForm).then(data => {
-          this.$message({
-            type: "success",
-            message: "新增催收记录成功"
-          });
+      onClickSaveCollection(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.batchForm.caseId = this.id;
+            /*if ((this.batchForm.collectStatus==28 || this.batchForm.collectStatus) && (this.batchForm.repayAmt==null || this.batchForm.repayAmt=="")){
+              this.$message({
+                type: "info",
+                message: "承诺还款金额不能为空"
+              });
+              return;
+            }*/
+            dataCollectionSave(this.batchForm).then(data => {
+              this.$message({
+                type: "success",
+                message: "新增催收记录成功"
+              });
 
-          this.batchForm = {sType: 0,seq:null}
-          let batchNo = this.caseDetail.batchNo;
-          let identNo = this.caseDetail.identNo;
-          let cardNo = this.caseDetail.cardNo;
-          getCollectDetail(this.id, batchNo, identNo, cardNo, 1).then(data => {
-            this.memorizeList = data;
-          });
-          getSameBatchCollect(this.id).then(data => {
-            this.syncMemorizeList = data;
-          });
+              this.batchForm = {sType: 0,seq:null,targetName:'',mobile:'',relation:''}
+              let batchNo = this.caseDetail.batchNo;
+              let identNo = this.caseDetail.identNo;
+              let cardNo = this.caseDetail.cardNo;
+              getCollectDetail(this.id, batchNo, identNo, cardNo, 1).then(data => {
+                this.memorizeList = data;
+              });
+              getSameBatchCollect(this.id).then(data => {
+                this.syncMemorizeList = data;
+              });
+              this.$nextTick(()=>{
+                if(this.$refs['batchForm']) {
+                  this.$refs['batchForm'].resetFields()
+                }
+              });
+            });
+          } else {
+            return false;
+          }
         });
+
       },
       _deleteLog(id) {
         this.$confirm("此操作将删除该操作记录且无法恢复,是否继续？", {
@@ -5033,6 +5161,7 @@
           this.$message("请输入评语内容");
           return;
         }
+
         addComment([
           {
             id: this.id,
@@ -5044,6 +5173,13 @@
             type: "success",
             message: "评语添加成功"
           });
+          if (this.commentAddColor =="红"){
+            this.$set(this.caseDetail, 'color', 'RED')
+          }else if (this.commentAddColor =="蓝"){
+            this.$set(this.caseDetail, 'color', 'BLUE')
+          }else{
+            this.$set(this.caseDetail, 'color', 'BLACK')
+          }
           getCommentDetail(this.id).then(data => {
             this.commentList = data;
             this.addCommentVisible = false;
@@ -5309,6 +5445,13 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+      }
+      .blue {
+        color: #409eff;
+      }
+
+      .red {
+        color: red;
       }
     }
     .inputUnSelect {
