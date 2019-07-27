@@ -131,10 +131,32 @@ body .el-popover .popper__arrow{
   background-color: #ecf6fd  !important;
 
 }
-.el-table__body tr.current-row > td{
-  border-top: 1px solid #0080ff  !important;
-  border-bottom: 1px solid #0080ff  !important;
-}
+
+/*.el-table__body tr.current-row > td{
+  position: relative;
+  &::before{
+    height: 1px;
+    background: #0080ff;
+    left: 0;
+    top: 1px;
+    content: '';
+    position: absolute;
+    width: 100%;
+    z-index: 100;
+    overflow: hidden;
+  }
+  &:after{
+    height: 1px;
+    background: #0080ff;
+    left: 0;
+    bottom: 1px;
+    content: '';
+    position: absolute;
+    width: 100%;
+    z-index: 100;
+    overflow: hidden;
+  }
+}*/
 .el-table__body tr.current-row > td:first-child{
   border-left: 1px solid #0080ff  !important;
 }

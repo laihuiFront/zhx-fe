@@ -20,7 +20,7 @@ export const dataList = function(form,orderBy,sort,pageSize,pageNum) {
       county:{name: form.county},//县
       license: form.license, //牌照号
       collectHand: form.collectHand, //催收手别
-      distributeStatuss: form.distributeStatuss, //分配状态 已分配1/未分配0
+      distributeStatus: form.distributeStatus, //分配状态 已分配1/未分配0
       identNo : form.identNo==null?"":form.identNo.replace(/[\n\r\v\s↵]/g,","),//证件号
       vin: form.vin,//车架号
       name:form.name==null?"":form.name.replace(/[\n\r\v\s↵]/g,","),//名称
@@ -72,7 +72,7 @@ export const searchList =  function(form,orderBy,sort,pageSize,pageNum) {
       county:{name: form.county},//县
       license: form.license, //牌照号
       collectHand: form.collectHand, //催收手别
-      distributeStatuss: form.distributeStatuss, //分配状态 已分配1/未分配0
+      distributeStatus: form.distributeStatus, //分配状态 已分配1/未分配0
       identNo : form.identNo==null?"":form.identNo.replace(/[\n\r\v\s↵]/g,","),//证件号
       vin: form.vin,//车架号
       name:form.name==null?"":form.name.replace(/[\n\r\v\s↵]/g,","),//名称
@@ -319,7 +319,7 @@ export const fenan2 = function(form,fenan) {
       county:{name: form.county},//县
       license: form.license, //牌照号
       collectHand: form.collectHand, //催收手别
-      distributeStatuss: form.distributeStatuss, //分配状态 已分配1/未分配0
+      distributeStatus: form.distributeStatus, //分配状态 已分配1/未分配0
       identNo : form.identNo==null?"":form.identNo.replace(/[\n\r\v\s↵]/g,","),//证件号
       vin: form.vin,//车架号
       name:form.name==null?"":form.name.replace(/[\n\r\v\s↵]/g,","),//名称
@@ -403,7 +403,7 @@ export const totalDataBatchExport = function(form) {
       county:{name: form.county},//县
       license: form.license, //牌照号
       collectHand: form.collectHand, //催收手别
-      distributeStatuss: form.distributeStatuss, //分配状态 已分配1/未分配0
+      distributeStatus: form.distributeStatus, //分配状态 已分配1/未分配0
       identNo : form.identNo==null?"":form.identNo.replace(/[\n\r\v\s↵]/g,","),//证件号
       vin: form.vin,//车架号
       name:form.name==null?"":form.name.replace(/[\n\r\v\s↵]/g,","),//名称
@@ -456,7 +456,7 @@ export const pageDataExport = function(form) {
       county:{name: form.county},//县
       license: form.license, //牌照号
       collectHand: form.collectHand, //催收手别
-      distributeStatuss: form.distributeStatuss, //分配状态 已分配1/未分配0
+      distributeStatus: form.distributeStatus, //分配状态 已分配1/未分配0
       identNo : form.identNo==null?"":form.identNo.replace(/[\n\r\v\s↵]/g,","),//证件号
       vin: form.vin,//车架号
       name:form.name==null?"":form.name.replace(/[\n\r\v\s↵]/g,","),//名称
@@ -560,7 +560,7 @@ export const authSend = function(form) {
       county:{name: form.county},//县
       license: form.license, //牌照号
       collectHand: form.collectHand, //催收手别
-      distributeStatuss: form.distributeStatuss, //分配状态 已分配1/未分配0
+      distributeStatus: form.distributeStatus, //分配状态 已分配1/未分配0
       identNo : form.identNo==null?"":form.identNo.replace(/[\n\r\v\s↵]/g,","),//证件号
       vin: form.vin,//车架号
       name:form.name==null?"":form.name.replace(/[\n\r\v\s↵]/g,","),//名称
@@ -616,7 +616,7 @@ export const autoSendByProperty = function(form,fenan) {
       county:{name: form.county},//县
       license: form.license, //牌照号
       collectHand: form.collectHand, //催收手别
-      distributeStatuss: form.distributeStatuss, //分配状态 已分配1/未分配0
+      distributeStatus: form.distributeStatus, //分配状态 已分配1/未分配0
       identNo : form.identNo==null?"":form.identNo.replace(/[\n\r\v\s↵]/g,","),//证件号
       vin: form.vin,//车架号
       name:form.name==null?"":form.name.replace(/[\n\r\v\s↵]/g,","),//名称
@@ -672,7 +672,7 @@ export const autoSendByPropertyResult = function(form,fenan) {
       county:{name: form.county},//县
       license: form.license, //牌照号
       collectHand: form.collectHand, //催收手别
-      distributeStatuss: form.distributeStatuss, //分配状态 已分配1/未分配0
+      distributeStatus: form.distributeStatus, //分配状态 已分配1/未分配0
       identNo : form.identNo==null?"":form.identNo.replace(/[\n\r\v\s↵]/g,","),//证件号
       vin: form.vin,//车架号
       name:form.name==null?"":form.name.replace(/[\n\r\v\s↵]/g,","),//名称
@@ -700,5 +700,15 @@ export const autoSendByPropertyResult = function(form,fenan) {
       sort:form.sort,
       odvPercent:fenan.odvPercent
     }
+  })
+
+}
+
+//获取部门
+export function listOrganization(data) {
+  return request({
+    method:'post',
+    url:'/organization/listChildOrganizationBy',
+    data
   })
 }
