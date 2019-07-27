@@ -17,6 +17,7 @@
         <el-table v-loading="tableLoad" ref="tab1"
                   :data="dataList"
                   border
+                  highlight-current-row
                   :header-cell-style="discountHeaderStyle1"
                   height="1"
                   class="table-wrap">
@@ -480,5 +481,6 @@
       margin-bottom: 10px;
       text-align: right;
     }
+
   }
 </style>

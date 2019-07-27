@@ -923,6 +923,10 @@ export default {
 
 <style lang="scss">
 #xhjl {
+  .el-table__body tr.current-row > td{
+    border-top: 1px solid #0080ff  !important;
+    border-bottom: 1px solid #0080ff  !important;
+  }
   .pad {
     .el-checkbox {
       width: 24%;
@@ -954,5 +958,6 @@ export default {
       margin-right: 0px;
     }
   }
+
 }
 </style>

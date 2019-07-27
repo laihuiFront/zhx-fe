@@ -1438,6 +1438,10 @@
     .el-dialog__header {
       background-color: #f8f8f8;
     }
+    .el-table__body tr.current-row > td{
+      border-top: 1px solid #0080ff  !important;
+      border-bottom: 1px solid #0080ff  !important;
+    }
   }
 </style>
 

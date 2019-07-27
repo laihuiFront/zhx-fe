@@ -68,6 +68,7 @@
         :data="configData"
         style="width: 100%;"
         v-loading="tableLoad"
+                 highlight-current-row
         class="table-wrap"
         height="1"
       >
@@ -467,6 +468,10 @@ export default {
 
   .el-table .el-input /deep/ input{
     text-align: center;
+  }
+  .el-table__body tr.current-row > td{
+    border-top: 1px solid #0080ff  !important;
+    border-bottom: 1px solid #0080ff  !important;
   }
 }
 </style>

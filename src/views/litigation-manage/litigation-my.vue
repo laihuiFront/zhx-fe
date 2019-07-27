@@ -31,7 +31,7 @@
    <el-table highlight-current-row v-loading="tableLoad"
     class="table-wrap"
     height="1"
-
+             highlight-current-row
     :data="DataList"
     border
     stripe
@@ -1185,7 +1185,34 @@ created() {
 </script>
 
 <style lang="scss">
-#litigation-my{}
+#litigation-my{
+  tr.current-row > td{
+    position: relative;
+    &::before{
+      height: 1px;
+      background: #0080ff;
+      left: 0;
+      top: 1px;
+      content: '';
+      position: absolute;
+      width: 100%;
+      z-index: 100;
+      overflow: hidden;
+    }
+    &:after{
+      height: 1px;
+      background: #0080ff;
+      left: 0;
+      bottom: 1px;
+      content: '';
+      position: absolute;
+      width: 100%;
+      z-index: 100;
+      overflow: hidden;
+    }
+  }
+
+}
 </style>
 
 

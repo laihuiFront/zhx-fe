@@ -96,7 +96,14 @@
               ></el-input>
             </el-form-item>
             <el-form-item label="地区" >
-              <el-input v-model="caseDetail.area" :disabled="true"></el-input>
+              <div
+                class="inputDiv"
+                style="font-size: 11px;"
+              >
+                <span
+                >{{ caseDetail.provinceName }} {{ caseDetail.cityName }}</span>
+              </div>
+              <!--<el-input v-model="caseDetail.area" :disabled="true"></el-input>-->
             </el-form-item>
             <el-form-item label="催收员">
               <el-input v-model="caseDetail.odv" :disabled="true"></el-input>
@@ -136,10 +143,15 @@
               ></el-input>
             </el-form-item>
             <el-form-item label="逾期天数">
-              <el-input
-                v-model="caseDetail.overdueDays"
-                :disabled="true"
-              ></el-input>
+
+              <div class="inputDiv" style="font-size: 12px;">
+                <span
+                >{{ caseDetail.overdueDays }}(最新逾期天数:{{
+                    caseDetail.overdueNewDays
+                  }})</span
+                >
+
+              </div>
             </el-form-item>
             <el-form-item label="已还期数" >
               <el-input
@@ -153,11 +165,10 @@
 
             </el-form-item>
             <el-form-item label="贷款日期">
-              <el-date-picker
+              <el-input
                 v-model="caseDetail.loanDate"
-                type="date"
                 :disabled="true"
-              ></el-date-picker>
+              ></el-input>
             </el-form-item>
             <el-form-item >
             </el-form-item>
@@ -1298,9 +1309,10 @@
                   @selection-change="onSelectPhoneRow"
                   border
                   stripe
+                  height="1"
                   :data="caseDetail.dataCaseTelEntityList"
                   :row-class-name="telTableRowClassName"
-                  style="width: 100%;min-height: 150px;"
+                  style="width: 100%;min-height: 200px;"
                   class="table-wrap"
                 >
                   <el-table-column type="selection" width="55">
@@ -1333,75 +1345,12 @@
                   </el-table-column>
                   <el-table-column label="操作" width="250">
                     <template slot-scope="scope">
-                      <el-popover
-                        v-model="scope.row.showHistory"
-                        placement="top"
-                        width="1000"
-                        trigger="manual"
-                      >
-                        <div>
-                          <el-radio-group
-                            v-model="scope.row.historyType"
-                            @change="getHistoryTel"
-                          >
-                            <el-radio :label="1">本案催记</el-radio>
-                            <el-radio :label="2">同号码所有催记</el-radio>
-                          </el-radio-group>
-                        </div>
-                        <el-table :data="scope.row.history" height="500">
-                          <el-table-column
-                            property="collectTime"
-                            label="通话时间"
-                          ></el-table-column>
-                          <el-table-column
-                            property="targetName"
-                            label="通话对象"
-                          ></el-table-column>
-                          <el-table-column
-                            property="mobile"
-                            label="电话号码"
-                          ></el-table-column>
-                          <el-table-column
-                            property="sType"
-                            label="电话类型"
-                          ></el-table-column>
-                          <el-table-column
-                            property="collectInfo"
-                            label="通话内容"
-                          ></el-table-column>
-                          <el-table-column
-                            property="result"
-                            label="通话结果"
-                          ></el-table-column>
-                          <el-table-column
-                            property="repayTime"
-                            label="承诺日期"
-                          ></el-table-column>
-                          <el-table-column
-                            property="repayAmt"
-                            label="承诺金额"
-                          ></el-table-column>
-                          <el-table-column
-                            property="odv"
-                            label="催收员"
-                          ></el-table-column>
-                        </el-table>
-                        <div style="text-align:center">
-                          <el-button
-                            type="primary"
-                            @click="$set(scope.row, 'showHistory', false)"
-                          >关闭
-                          </el-button
-                          >
-                        </div>
-                        <el-button
-                          slot="reference"
-                          type="text"
-                          @click="showHistoryTel(scope.row)"
-                        >历史记录
-                        </el-button
-                        >
-                      </el-popover>
+                      <el-button
+                        slot="reference"
+                        type="text"
+                        @click="showHistoryTel(scope.row)"
+                      >历史记录
+                      </el-button>
                       <el-button
                         type="text"
                         @click="editPhone(scope.row)"
@@ -1475,9 +1424,10 @@
                   v-if="letterVisible2"
                   border
                   stripe
+                  height="1"
                   @selection-change="onSelectAddrRow"
                   :data="addrList"
-                  style="width: 100%;min-height: 150px;"
+                  style="width: 100%;min-height: 200px;"
                   class="table-wrap"
                 >
                   <el-table-column type="selection" width="55">
@@ -1690,7 +1640,8 @@
                   :data="dataList"
                   border
                   stripe
-                  style="width: 100%;min-height: 150px;"
+                  height="1"
+                  style="width: 100%;min-height: 200px;"
                   class="table-wrap"
                 >
                   <el-table-column
@@ -1758,7 +1709,8 @@
                 <el-table
                   highlight-current-row
                   :data="memorizeList"
-                  style="width: 100%; min-height: 150px;"
+                  style="width: 100%; min-height: 200px;"
+                  height="1"
                   border
                   stripe
                   class="table-wrap"
@@ -1767,6 +1719,8 @@
                   <el-table-column
                     prop="collectTime"
                     show-overflow-tooltip
+                    sortable
+                    :sort-orders="['ascending','descending']"
                     label="时间"
                   >
                   </el-table-column>
@@ -1878,7 +1832,8 @@
                   :data="commentList"
                   border
                   stripe
-                  style="width: 100%;min-height: 150px;"
+                  height="1"
+                  style="width: 100%;min-height: 200px;"
                   class="table-wrap"
                 >
                   <el-table-column
@@ -1967,7 +1922,8 @@
                   :data="rateUpdateList"
                   border
                   stripe
-                  style="width: 100%;min-height: 150px;"
+                  height="1"
+                  style="width: 100%;min-height: 200px;"
                   class="table-wrap"
                 >
                   <el-table-column
@@ -2057,7 +2013,7 @@
               >
                 <div class="first">
                   <p style="line-height: 30px">承诺还款记录</p>
-                  <el-table highlight-current-row width="100%" border stripe show-overflow-tooltip style="min-height:150px;" :data="memorizeList2">
+                  <el-table highlight-current-row width="100%" border stripe  height="1" show-overflow-tooltip style="min-height:200px;" :data="memorizeList2">
                     <el-table-column
                       prop="repayAmtMsg"
                       show-overflow-tooltip
@@ -2086,7 +2042,7 @@
                     待银行查账记录
                     <el-button type="text" @click="addCpInfo">新增</el-button>
                   </p>
-                  <el-table highlight-current-row width="100%;" border stripe show-overflow-tooltip style="min-height:150px;" :data="cpList">
+                  <el-table highlight-current-row width="100%;" border stripe  height="1" show-overflow-tooltip style="min-height:200px;" :data="cpList">
                     <el-table-column
                       prop="cpMoneyMsg"
                       align="center"
@@ -2179,7 +2135,8 @@
                 <el-table
                   highlight-current-row
                   :data="syncList"
-                  style="width: 100%;min-height: 150px;"
+                  height="1"
+                  style="width: 100%;min-height: 200px;"
                   border
                   stripe
                   class="table-wrap"
@@ -2238,7 +2195,8 @@
                 <el-table
                   highlight-current-row
                   :data="caseSameList"
-                  style="width: 100%;min-height: 150px;"
+                  height="1"
+                  style="width: 100%;min-height: 200px;"
                   border
                   stripe
                   class="table-wrap"
@@ -2323,8 +2281,9 @@
                   highlight-current-row
                   :data="logList"
                   border
+                  height="1"
                   stripe
-                  style="width: 100%;min-height: 150px;"
+                  style="width: 100%;min-height: 200px;"
                   class="table-wrap"
                 >
                   <el-table-column
@@ -2374,8 +2333,8 @@
                   border
                   stripe
                   :data="legalList"
-                  style="width: 100%;margin-top:5px;min-height: 150px;"
-                  height="120px"
+                  height="1"
+                  style="width: 100%;margin-top:5px;min-height: 200px;"
                   class="table-wrap"
                 >
                   <el-table-column
@@ -2474,7 +2433,8 @@
                 <el-table
                   highlight-current-row
                   :data="reduceApplyList"
-                  style="width: 100%; min-height:150px;"
+                  height="1"
+                  style="width: 100%; min-height:200px;"
                   border
                   stripe
                   class="table-wrap"
@@ -2640,7 +2600,7 @@
               <el-form-item label="电话" prop="mobile">
                 <el-col :span="16">
                   <el-input
-                    v-model="batchForm.mobile"
+                    v-model="batchForm.mobile" clearable
                     placeholder="请输入电话号码"
                   ></el-input>
                 </el-col>
@@ -2653,19 +2613,19 @@
               </el-form-item>
               <el-form-item label="姓名" prop="targetName">
                 <el-input
-                  v-model="batchForm.targetName"
+                  v-model="batchForm.targetName" clearable
                   placeholder="请输入姓名"
                 ></el-input>
               </el-form-item>
               <el-form-item label="关系" prop="relation">
                 <el-input
-                  v-model="batchForm.relation"
+                  v-model="batchForm.relation" clearable
                   placeholder="请输入关系"
                 ></el-input>
               </el-form-item>
               <el-form-item label="还款方式" prop="method">
                 <el-select
-                  v-model="batchForm.method"
+                  v-model="batchForm.method" clearable
                   placeholder="请选择还款方式"
                 >
                   <el-option
@@ -2679,7 +2639,7 @@
               <el-form-item label="催收结果" prop="result" :rules="{required: true, message: '催收结果不能为空', trigger: 'blur'}">
                 <el-select
                   v-model="batchForm.result"
-                  placeholder="请选择催收结果"
+                  placeholder="请选择催收结果" clearable
                 >
                   <el-option
                     v-for="item in csjgList"
@@ -2691,13 +2651,13 @@
               </el-form-item>
               <el-form-item label="承诺还款金额" prop="repayAmt">
                 <el-input
-                  v-model="batchForm.repayAmt"
+                  v-model="batchForm.repayAmt" clearable
                   placeholder="请输入承诺还款金额"
                 ></el-input>
               </el-form-item>
               <el-form-item label="承诺还款日期" prop="repayTime">
                 <el-date-picker
-                  v-model="batchForm.repayTime"
+                  v-model="batchForm.repayTime" clearable
                   type="date"
                   value-format="yyyy-MM-dd"
                   placeholder="请输入承诺还款日期"
@@ -2705,16 +2665,16 @@
               </el-form-item>
               <el-form-item label="通话记录" prop="collectInfo" class="whole" :rules="{required: true, message: '通话记录不能为空', trigger: 'blur'}">
                 <el-input
-                  type="textarea"
+                  type="textarea" clearable
                   :rows="4"
                   placeholder="请输入通话记录"
                   v-model="batchForm.collectInfo"
                 >
                 </el-input>
               </el-form-item>
-              <el-form-item label="催收状态" prop="collectStatus" :rules="{required: true, message: '催收状态不能为空', trigger: 'blur'}">
+              <el-form-item label="催收状态" prop="collectStatus" >
                 <el-select
-                  v-model="batchForm.collectStatus"
+                  v-model="batchForm.collectStatus" clearable
                   placeholder="请选择催收状态"
                 >
                   <el-option
@@ -2739,6 +2699,7 @@
                 <el-date-picker
                   v-model="batchForm.nextFollDate"
                   type="date"
+                  clearable
                   value-format="yyyy-MM-dd"
                   placeholder="请选择下次跟进日期"
                 ></el-date-picker>
@@ -2749,7 +2710,7 @@
               >保存
               </el-button
               >
-              <el-button @click="batchForm = { sType: 0,targetName:'',mobile:'',relation:'' };$nextTick(()=>{
+              <el-button @click="batchForm = { sType: 0,targetName:'',mobile:'',relation:'',collectInfo:'' };$nextTick(()=>{
                 if($refs['batchForm']) {
                   $refs['batchForm'].resetFields()
                 }
@@ -2768,6 +2729,8 @@
             >
               <el-table-column
                 prop="createTime"
+                sortable
+                :sort-orders="['ascending','descending']"
                 width="120"
                 label="时间"
                 show-overflow-tooltip
@@ -3880,8 +3843,71 @@
         >
       </div>
     </el-dialog>
+    <el-dialog
+      title="历史记录"
+      class="dialog-wrap"
+      :visible.sync="showHistory"
+      :close-on-click-modal="false"
+      width="60%"
+    >
+      <div style="margin-bottom:5px;">
+        <el-radio-group
+          v-model="historyType"
+          @change="getHistoryTel"
+        >
+          <el-radio :label="1">本案催记</el-radio>
+          <el-radio :label="2">同号码所有催记</el-radio>
+        </el-radio-group>
+      </div>
+      <el-table :data="telhistory" height="1" style="min-height: 300px;">
+        <el-table-column
+          property="collectTime"
+          label="通话时间"
+        ></el-table-column>
+        <el-table-column
+          property="targetName"
+          label="通话对象"
+        ></el-table-column>
+        <el-table-column
+          property="mobile"
+          label="电话号码"
+        ></el-table-column>
+        <el-table-column
+          property="sType"
+          label="电话类型"
+        ></el-table-column>
+        <el-table-column
+          property="collectInfo"
+          label="通话内容"
+        ></el-table-column>
+        <el-table-column
+          property="result"
+          label="通话结果"
+        ></el-table-column>
+        <el-table-column
+          property="repayTime"
+          label="承诺还款日期"
+        ></el-table-column>
+        <el-table-column
+          property="repayAmt"
+          label="承诺还款金额"
+        ></el-table-column>
+        <el-table-column
+          property="odv"
+          label="催收员"
+        ></el-table-column>
+      </el-table>
+      <div style="text-align:center">
+        <el-button
+          type="primary"
+          @click="showHistory=false"
+        >关闭
+        </el-button
+        >
+      </div>
 
-
+      >
+     </el-dialog>
     <el-dialog
       title="附件列表"
       class="dialog-wrap"
@@ -4024,6 +4050,9 @@
       return {
         seq:'',
         action: baseURL,
+        historyType:"1",
+        telhistory:[],
+        showHistory:false,
         messageForm: {},
         reduceFileVisible:false,
         currentReduceId:null,
@@ -4524,8 +4553,8 @@
         });
       },
       showHistoryTel(row) {
-        this.$set(row, "historyType", 1);
-        this.$set(row, "showHistory", true);
+        this.$set(this, "historyType", 1);
+        this.$set(this, "showHistory", true);
         this.currentRow = row;
         this.getHistoryTel(1);
       },
@@ -4536,7 +4565,7 @@
           detailType: val,
           mobile: this.currentRow.tel
         }).then(data => {
-          this.$set(this.currentRow, "history", data);
+          this.$set(this, "telhistory", data);
         });
       },
       uploadSuccess(res, file, fileList) {
@@ -4647,7 +4676,7 @@
                 message: "新增催收记录成功"
               });
 
-              this.batchForm = {sType: 0,seq:null,targetName:'',mobile:'',relation:''}
+              this.batchForm = {sType: 0,seq:null,targetName:'',mobile:'',relation:'',collectInfo:''}
               let batchNo = this.caseDetail.batchNo;
               let identNo = this.caseDetail.identNo;
               let cardNo = this.caseDetail.cardNo;
@@ -4657,11 +4686,11 @@
               getSameBatchCollect(this.id).then(data => {
                 this.syncMemorizeList = data;
               });
-              this.$nextTick(()=>{
+              /*this.$nextTick(()=>{
                 if(this.$refs['batchForm']) {
                   this.$refs['batchForm'].resetFields()
                 }
-              });
+              });*/
             });
           } else {
             return false;
@@ -5217,8 +5246,11 @@
       },
       queryDetail() {
         this.otherActiveName = "1";
+
         if (this.$route.query.mycase){
-          this.mycaseFlag = true;
+          this.$set(this, 'mycaseFlag', true)
+        }else{
+          this.$set(this, 'mycaseFlag', false)
         }
         getCaseDetail(this.id).then(data => {
           this.caseDetail = data;
@@ -5352,8 +5384,12 @@
       initPageData(ida) {
         let id = ida || this.$route.query.id || "";
         let data = sessionStorage.getItem(id) || "";
+
         console.log(data == "");
         if (data) {
+          if (this.$route.query.mycase){
+            this.$set(this, 'mycaseFlag', true)
+          }
           let obj = JSON.parse(data);
           for (let [k, v] of Object.entries(obj)) {
             this.$set(this, k, v);
@@ -5380,6 +5416,7 @@
       },
       resetContent() {
         this.caseDetail = resetObj;
+        this.mycaseFlag = false;
       },
       showMyCaseFlag(){
 
@@ -5439,6 +5476,10 @@
 
 <style lang="scss">
   #case-detail {
+    .el-table__body tr.current-row > td{
+      border-top: 1px solid #0080ff  !important;
+      border-bottom: 1px solid #0080ff  !important;
+    }
     .basic-info{
       .title-info{
         margin-bottom: 20px;

@@ -580,5 +580,30 @@
         }
       }
     }
+    tr.current-row > td{
+      position: relative;
+      &::before{
+        height: 1px;
+        background: #0080ff;
+        left: 0;
+        top: 1px;
+        content: '';
+        position: absolute;
+        width: 100%;
+        z-index: 100;
+        overflow: hidden;
+      }
+      &:after{
+        height: 1px;
+        background: #0080ff;
+        left: 0;
+        bottom: 1px;
+        content: '';
+        position: absolute;
+        width: 100%;
+        z-index: 100;
+        overflow: hidden;
+      }
+    }
   }
 </style>

@@ -586,7 +586,7 @@ export default {
             type: 'success',
             message: '员工密码重置成功!'
           });
-          this.onClickQuery()
+          //this.onClickQuery()
         })
       }).catch(() => { })
     },
@@ -896,6 +896,10 @@ export default {
         }
       }
     }
+  }
+  .el-table__body tr.current-row > td{
+    border-top: 1px solid #0080ff  !important;
+    border-bottom: 1px solid #0080ff  !important;
   }
 }
 </style>

@@ -119,7 +119,7 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   #collect-director-manage {
     overflow-y: hidden !important;
 
@@ -130,6 +130,10 @@
 
     .has-gutter .gutter {
       display: block !important;
+    }
+    tr.current-row > td{
+      border-top: 1px solid #0080ff  !important;
+      border-bottom: 1px solid #0080ff  !important;
     }
 
   }

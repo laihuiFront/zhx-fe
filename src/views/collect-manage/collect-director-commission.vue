@@ -150,5 +150,9 @@ export default {
 		.staffsGrid /deep/ .el-table__body-wrapper{
 			overflow: hidden;
 		}
+    tr.current-row > td{
+      border-top: 1px solid #0080ff  !important;
+      border-bottom: 1px solid #0080ff  !important;
+    }
 	}
 </style>

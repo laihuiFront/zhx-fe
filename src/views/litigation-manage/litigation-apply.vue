@@ -18,6 +18,7 @@
    <el-table highlight-current-row v-loading="tableLoad"
     class="table-wrap"
     height="1"
+             highlight-current-row
     :data="DataList"
     border
     stripe
@@ -1103,6 +1104,11 @@ this.pageNum=val;
 		padding: 10px;
 		background-color: #e3e2e2;
 	}
+
+  .el-table__body tr.current-row > td{
+    border-top: 1px solid #0080ff  !important;
+    border-bottom: 1px solid #0080ff  !important;
+  }
 	 
 }
 </style>

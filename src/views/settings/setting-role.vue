@@ -16,7 +16,7 @@
         <el-button type="primary" @click="onClickAdd" v-has="'新增角色'">新增角色</el-button>
       </el-form-item>
     </el-form>
-    <el-table v-loading="tableLoad" :data="roleList"  height="1" border stripe  style="width: 100%" class="table-wrap">
+    <el-table v-loading="tableLoad" :data="roleList"  highlight-current-row height="1" border stripe  style="width: 100%" class="table-wrap">
       <el-table-column prop="roleName"  align="center" label="角色名称" width="300"></el-table-column>
       <el-table-column prop="roleDesc"  align="center" label="角色描述" show-overflow-tooltip></el-table-column>
       <el-table-column prop="updateUser.userName"  align="center" label="修改人" width="200"></el-table-column>
@@ -269,6 +269,10 @@ export default {
   }
   .el-table--scrollable-y .el-table__body-wrapper{
     overflow-x: hidden;
+  }
+  .el-table__body tr.current-row > td{
+    border-top: 1px solid #0080ff  !important;
+    border-bottom: 1px solid #0080ff  !important;
   }
 }
 </style>

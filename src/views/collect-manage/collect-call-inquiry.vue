@@ -443,9 +443,12 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 #collect-call-inquiry{
-  
+   tr.current-row > td{
+    border-top: 1px solid #0080ff  !important;
+    border-bottom: 1px solid #0080ff  !important;
+  }
 }
 
 .el-input,.el-select{

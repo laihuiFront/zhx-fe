@@ -112,14 +112,18 @@
         <el-input v-model="formInline.collectInfo" placeholder="请输入催收记录"></el-input>
       </el-form-item>
       <el-form-item v-if="queryConf.bm || queryConfFlag">
-        <el-select v-model="formInline.depts" filterable collapse-tags multiple placeholder="请选择部门" clearable>
+        <el-input v-model="formInline.deptFiter" placeholder="请输入部门过滤条件"></el-input>
+      </el-form-item>
+      <el-form-item v-if="queryConf.bm || queryConfFlag">
+        <!--<el-select v-model="formInline.depts" filterable collapse-tags multiple placeholder="请选择部门" clearable>
           <el-option
             v-for="item in departmentList"
             :key="item.id"
             :label="item.orgName"
             :value="item.id">
           </el-option>
-        </el-select>
+        </el-select>-->
+        <el-input v-model="deptName" width="200" @focus="onClickSelectDept" clearable placeholder="请选择部门"></el-input>
       </el-form-item>
       <el-form-item v-if="queryConf.csy || queryConfFlag">
         <!--<el-select v-model="formInline.odvs" filterable collapse-tags multiple placeholder="请选择催收员" clearable>
@@ -227,7 +231,7 @@
       </el-form-item>
 
       <el-form-item v-if="queryConf.fpzt || queryConfFlag">
-        <el-select v-model="formInline.distributeStatuss" filterable collapse-tags multiple placeholder="请选择分配状态" clearable>
+        <el-select v-model="formInline.distributeStatus" filterable  placeholder="请选择分配状态" clearable>
           <el-option
             v-for="item in distributeStatusList"
             :key="item.id"
@@ -1314,6 +1318,29 @@
         <el-button type="primary" @click="exportCase">确 定</el-button>
       </span>
     </el-dialog>
+
+    <el-dialog
+      width="400px"
+      title="选择部门"
+      class="dialog-wrap department-wrap"
+      :visible.sync="departmentVisible"
+      :close-on-click-modal="false"
+      append-to-body
+    >
+        <el-tree
+          :data="departmentTree"
+          show-checkbox
+          default-expand-all
+          node-key="id"
+          ref="tree"
+          highlight-current
+          :props="defaultDeptProps">
+      </el-tree>
+      <span slot="footer" class="footer">
+          <el-button @click="departmentVisible=false">取 消</el-button>
+          <el-button type="primary" @click="onClickSaveDept">确 定</el-button>
+        </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -1343,6 +1370,7 @@
     EndList,
     PersonList,
     areaStepList,
+    listOrganization,
     departmentList,
     searchList,
     fenan1,
@@ -1383,6 +1411,7 @@
         exportTelConf: {},
         exportCollectConf: {},
         exportConf:{},
+        deptName:"",
         queryConf: {},
         exportType: 0,
         queryConfFlag: true,
@@ -1431,6 +1460,10 @@
           children: 'children',
           label: 'name'
         },
+        defaultDeptProps: {
+          children: 'children',
+          label: 'orgName'
+        },
         deleteStatusList: [],
         pageSize: 100,
         pageNum: 1,
@@ -1450,6 +1483,8 @@
         deleteList: [],
         caseTypeList: [],
         areaList: [],
+        departmentVisible:false,
+        departmentTree: [],
         formInline: {
           odvNameFiter:null,
           statuss:[1],
@@ -1556,6 +1591,26 @@
     	}
     },
     methods: {
+      onClickSaveDept() {
+        let selectDataArr = this.$refs.tree.getCheckedNodes()
+        let selectUserNames = []
+        let selectUserIds = []
+
+        if (selectDataArr.length > 0) {
+          selectUserNames = selectDataArr.map((item) => {
+            return item.orgName
+          })
+          selectUserIds = selectDataArr.map((item) => {
+            return item.id
+          })
+        }
+        console.info(selectUserNames,"123");
+        this.$set(this, 'deptName', selectUserNames.join(','))
+        this.$set(this.formInline, 'depts', selectUserIds)
+
+        this.departmentVisible = false
+      },
+
       clientCurrent(){
         if (this.formInline.clients==null || this.formInline.clients.length==0){
           this.$set(this.formInline, 'batchNos', [])
@@ -1702,6 +1757,9 @@
         if (this.formInline.odvNameFiter==null || this.formInline.odvNameFiter==""){
           this.$set(this.formInline, 'odvs', [])
         }
+        if (this.formInline.deptFiter==null || this.formInline.deptFiter==""){
+          this.$set(this.formInline, 'depts', [])
+        }
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.fenanchecktwo()
@@ -1781,7 +1839,10 @@
         }
 
         this.$nextTick(() => {
-          this.$refs.tree.setCheckedKeys(this.fenan.odv);
+          if(this.fenan.odv!=null && this.fenan.odv!=""){
+            this.$refs.tree.setCheckedKeys(this.fenan.odv);
+          }
+
         })
       },
       onClickSelectUser2() {
@@ -2007,6 +2068,9 @@
       handleExport(command) {
         if (this.formInline.odvNameFiter==null || this.formInline.odvNameFiter==""){
           this.$set(this.formInline, 'odvs', [])
+        }
+        if (this.formInline.deptFiter==null || this.formInline.deptFiter==""){
+          this.$set(this.formInline, 'depts', [])
         }
         if (command === "exportTotalCase") {
           //this.dialogVisibleCase = true
@@ -2586,6 +2650,9 @@
         if (this.formInline.odvNameFiter==null || this.formInline.odvNameFiter==""){
           this.$set(this.formInline, 'odvs', [])
         }
+        if (this.formInline.deptFiter==null || this.formInline.deptFiter==""){
+          this.$set(this.formInline, 'depts', [])
+        }
         searchList(this.formInline, this.orderBy, this.sort, this.pageSize, this.pageNum).then((response) => {
           this.totalCaseNum = response.totalCaseNum
           this.totalAmt = this.formatMoney(response.totalAmt, 0, "￥")
@@ -2609,8 +2676,10 @@
         this.search()
       },
       resetFormInline() {
+        this.deptName = ''
         this.formInline = {
           odvNameFiter:"",
+          deptFiter:'',
           odvs: [],
           collectAreas:[],
           caseTypes:[],
@@ -2623,6 +2692,7 @@
           colors:[],
           areas:[],
           distributeStatuss:[],
+          distributeStatus:"",
           batchNos: [],
           clients: [],
           time1: [],
@@ -2681,7 +2751,18 @@
             seqNo
           }
         })
-      }
+      },
+      onClickSelectDept() {
+        if (this.departmentVisible){
+          return;
+        }
+        this.departmentTree = []
+        listOrganization({"orgName":this.formInline.deptFiter}).then((data)=>{
+          this.departmentTree = data;
+          this.departmentVisible = true
+        });
+      },
+
     },
     created() {
       this.queryConfList();
@@ -2887,6 +2968,10 @@
     }
     .salesman-ul .el-input--mini{
       width: 25%;
+    }
+    .el-table__body tr.current-row > td{
+      border-top: 1px solid #0080ff  !important;
+      border-bottom: 1px solid #0080ff  !important;
     }
   }
 

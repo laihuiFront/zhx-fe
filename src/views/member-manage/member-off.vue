@@ -114,11 +114,17 @@ export default {
       }
     }
   }
+
 }
 </script>
 
 <style lang="scss">
-#member-off{}
+#member-off{
+  .el-table__body tr.current-row > td{
+    border-top: 1px solid #0080ff  !important;
+    border-bottom: 1px solid #0080ff  !important;
+  }
+}
 </style>
 
 

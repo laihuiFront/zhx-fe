@@ -76,7 +76,7 @@
         <el-form-item>
           <el-button type="primary" icon="el-icon-search" @click="search">查询</el-button>
           <el-button type="primary" icon="el-icon-refresh" @click=resetForm>重置</el-button>
-          <el-button type="primary" @click="dialogVisible = true">新增批次</el-button>
+          <el-button type="primary" @click="addBatch">新增批次</el-button>
           <el-button type="primary" :disabled=returnTrue @click="returnCaseList" v-has="'批次退案'">批量退案</el-button>
           <el-button type="primary" @click="MorebackCase " :disabled=backTrue>批量恢复</el-button>
           <el-button type="primary" @click="open7" v-has="'批次删除'">批量删除</el-button>
@@ -1578,6 +1578,14 @@
           this.tableLoad = false
         })
       },
+      addBatch(){
+        this.dialogVisible = true;
+        this.$nextTick(()=>{
+          if(this.$refs['formInline']){
+            this.$refs['formInline'].resetFields()
+          }
+        });
+      },
       returnCaseList() {
         let _self = this
         if (_self.deleteList.length > 0) {
@@ -1587,12 +1595,16 @@
             type: 'warning',
             center: true
           }).then(() => {
+            this.loading = true;
+            this.fullscreenLoading = true;
             returnCase(this.deleteList).then((response) => {
               _self.$message({
                 type: 'success',
                 message: '退案成功!'
               });
               _self.search()
+              this.loading = false;
+              this.fullscreenLoading = false;
             })
           }).catch(() => {
 
@@ -1852,12 +1864,16 @@
             cancelButtonText: '取消',
             type: 'warning'
           }).then(() => {
+            this.loading = true;
+            this.fullscreenLoading = true;
             backCase(this.deleteList).then((response) => {
               this.$message({
                 type: 'success',
                 message: '恢复成功!'
               });
               this.search()
+              this.loading = false;
+              this.fullscreenLoading = false;
             })
           }).catch(() => {
 
@@ -1928,6 +1944,10 @@
 
     .el-loading-spinner .el-loading-text {
       font-size: 18px;
+    }
+    .el-table__body tr.current-row > td{
+      border-top: 1px solid #0080ff  !important;
+      border-bottom: 1px solid #0080ff  !important;
     }
   }
 </style>
