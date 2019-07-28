@@ -2588,10 +2588,14 @@
     </div>
     <div class="basic-info">
      <!-- <el-collapse-item title="催记信息" name="4">-->
-      <p class="title"  style=" margin-bottom: 10px;margin-top:10px;">催记信息</p>
+     	<div class="title-box">
+     		<p class="title">催记信息</p>
+     		<p class="title">同批次共债催记</p>
+     	</div>
+     
         <div class="memorize-wrap">
           <div class="left-panel">
-            <el-form
+          	<el-form
               :model="batchForm"
               ref="batchForm"
               label-width="100px"
@@ -2718,7 +2722,6 @@
             </div>
           </div>
           <div class="right-panel">
-            <p class="title" style=" margin-bottom: 10px;">同批次共债催记</p>
             <el-table
               highlight-current-row
               :data="syncMemorizeList"
@@ -5481,6 +5484,16 @@
       border-bottom: 1px solid #0080ff  !important;
     }
     .basic-info{
+    	.title-box{
+    		display: flex;
+    		.title{
+    			width: 40%;
+    			margin:12px 0;
+    			&:nth-child(1){
+    				margin-right: 24px;
+    			}
+    		}
+    	}
       .title-info{
         margin-bottom: 20px;
         display: flex;
@@ -5650,7 +5663,6 @@
 
     .memorize-wrap {
       display: flex;
-
       .left-panel {
         padding: 12px;
         flex: 0 0 40%;
