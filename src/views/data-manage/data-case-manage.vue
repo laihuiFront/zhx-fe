@@ -1604,6 +1604,7 @@
             return item.id
           })
         }
+
         console.info(selectUserNames,"123");
         this.$set(this, 'deptName', selectUserNames.join(','))
         this.$set(this.formInline, 'depts', selectUserIds)
@@ -1612,19 +1613,20 @@
       },
 
       clientCurrent(){
+
         if (this.formInline.clients==null || this.formInline.clients.length==0){
           this.$set(this.formInline, 'batchNos', [])
           this.batchList = this.batchList2
         }else{
           clientCurrent(this.formInline.clients).then((response) => {
             if (response==null){
-              this.$set(this.formInline, 'batchNos', [])
+              /*this.$set(this.formInline, 'batchNos', [])*/
               this.batchList = [];
             }else{
               //this.$set(this.formInline, 'batchNos', response)
               this.batchList = response;
 
-              for (var i=0;i<this.formInline.batchNos.length;i++){
+              /*for (var i=0;i<this.formInline.batchNos.length;i++){
                 var batNo = this.formInline.batchNos[i];
                 var removeFlag = true;
                 for (var j=0;j<this.batchList.length;j++){
@@ -1636,7 +1638,7 @@
                 if(removeFlag){
                   this.formInline.batchNos.splice(i,1);
                 }
-              }
+              }*/
 
             }
           })
@@ -1757,7 +1759,7 @@
         if (this.formInline.odvNameFiter==null || this.formInline.odvNameFiter==""){
           this.$set(this.formInline, 'odvs', [])
         }
-        if (this.formInline.deptFiter==null || this.formInline.deptFiter==""){
+        if (this.deptName==null || this.deptName==""){
           this.$set(this.formInline, 'depts', [])
         }
         this.$refs[formName].validate((valid) => {
@@ -2069,7 +2071,7 @@
         if (this.formInline.odvNameFiter==null || this.formInline.odvNameFiter==""){
           this.$set(this.formInline, 'odvs', [])
         }
-        if (this.formInline.deptFiter==null || this.formInline.deptFiter==""){
+        if (this.deptName==null || this.deptName==""){
           this.$set(this.formInline, 'depts', [])
         }
         if (command === "exportTotalCase") {
@@ -2650,7 +2652,7 @@
         if (this.formInline.odvNameFiter==null || this.formInline.odvNameFiter==""){
           this.$set(this.formInline, 'odvs', [])
         }
-        if (this.formInline.deptFiter==null || this.formInline.deptFiter==""){
+        if (this.deptName==null || this.deptName==""){
           this.$set(this.formInline, 'depts', [])
         }
         searchList(this.formInline, this.orderBy, this.sort, this.pageSize, this.pageNum).then((response) => {

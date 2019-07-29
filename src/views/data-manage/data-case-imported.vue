@@ -18,7 +18,7 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="form.batchNos" filterable collapse-tags multiple placeholder="请输入批次号" clearable @change="clientCurrent">
+        <el-select v-model="form.batchNos" filterable collapse-tags multiple placeholder="请输入批次号" clearable >
           <el-option
             v-for="item in batchList"
             :key="item.id"
@@ -28,7 +28,7 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="form.clients" filterable collapse-tags multiple placeholder="请选择委托方" clearable>
+        <el-select v-model="form.clients" filterable collapse-tags multiple placeholder="请选择委托方" @change="clientCurrent" clearable>
           <el-option
             v-for="item in clientList"
             :key="item.id"
@@ -768,6 +768,7 @@
         sort: "desc",
         clientList: [],
         batchList: [],
+        batchList2:[],
         deleteList: [],
         formInline: {
           batchNo: '',
@@ -791,14 +792,16 @@
     },
     methods: {
       clientCurrent(){
-        if (this.form.batchNos==null || this.form.batchNos.length==0){
-          this.$set(this.form, 'clients', [])
+        debugger
+        if (this.form.clients==null || this.form.clients.length==0){
+          this.$set(this.form, 'batchNos', [])
+          this.$set(this, 'batchList', this.batchList2)
         }else {
-          clientCurrent(this.form.batchNos).then((response) => {
+          clientCurrent(this.form.clients).then((response) => {
             if (response==null){
-              this.$set(this.form, 'clients', [])
+              this.$set(this, 'batchList', [])
             }else{
-              this.$set(this.form, 'clients', response)
+              this.batchList = response;
             }
           })
         }
@@ -1137,6 +1140,7 @@
       this.clientList = this.$store.getters.caseType.委托方;
       batchList().then((response) => {
         this.batchList = response;
+        this.batchList2 = response;
       })
      /* caseTypeList().then((response) => {
         this.form.caseTypeList = response

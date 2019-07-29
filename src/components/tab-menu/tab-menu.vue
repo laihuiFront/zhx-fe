@@ -125,6 +125,7 @@ export default {
         }
       }
       this.removeTab(menu.id)
+
       if(nextMenu){
         if(nextMenu.isDetail){
           this.$router.push({
@@ -132,7 +133,11 @@ export default {
             query: nextMenu.query
           })
         }else{
+
           this.$router.push('/zhx'+nextPath)
+          if(menu.isDetail){
+            sessionStorage.removeItem(menu.query.id);
+          }
         }
       }
     },

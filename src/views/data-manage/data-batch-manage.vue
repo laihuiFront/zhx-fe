@@ -39,7 +39,7 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="form.clients" placeholder="请选择委托方" filterable
+        <el-select v-model="form.clients" placeholder="请选择委托方" filterable  @change="clientCurrent"
                    multiple clearable collapse-tags>
           <el-option
             v-for="item in clientList"
@@ -1005,6 +1005,7 @@
 
   import {
     dataList,
+    clientCurrent,
     CasedataList,
     remoweData,
     addData,
@@ -1036,6 +1037,7 @@
         fullscreenLoading: false,
         tableLoad: false,
         batchList: [],
+        batchList2:[],
         dialogVisible: false,
         dialogVisible3: false,
         showExportBatchConfVisible: false,
@@ -1091,6 +1093,21 @@
       }
     },
     methods: {
+      clientCurrent(){
+        debugger
+        if (this.form.clients==null || this.form.clients.length==0){
+          this.$set(this.form, 'batchNos', [])
+          this.$set(this, 'batchList', this.batchList2)
+        }else {
+          clientCurrent(this.form.clients).then((response) => {
+            if (response==null){
+              this.$set(this, 'batchList', [])
+            }else{
+              this.batchList = response;
+            }
+          })
+        }
+      },
       changeBotno2() {
         for (var i = 0; i <= this.clientList.length; i++) {
           if (this.messageForm.client === this.clientList[i].id) {
@@ -1906,6 +1923,7 @@
       this.clientList = this.$store.getters.caseType.委托方;
       batchList().then((response) => {
         this.batchList = response;
+        this.batchList2 = response;
       })
       /*caseTypeList().then((response) => {
         this.form.caseTypeList = response

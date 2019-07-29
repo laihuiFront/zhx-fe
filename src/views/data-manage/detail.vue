@@ -2281,8 +2281,9 @@
                   highlight-current-row
                   :data="logList"
                   border
-                  height="1"
                   stripe
+                  height="1"
+                  max-height=350
                   style="width: 100%;min-height: 200px;"
                   class="table-wrap"
                 >
