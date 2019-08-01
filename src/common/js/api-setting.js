@@ -112,4 +112,41 @@ export function saveAuth(data){
   })
 }
 
+export function upDownMethod(id,sort,id1,sort1){
+  return request({
+    url: '/organization/moveUpDown',
+    method: 'post',
+    params:{
+      id,
+      sort,
+      id1,
+      sort1
+    }
+  })
+}
 
+export function deletMethod(data){
+  return request({
+    url: '/organization/delete',
+    method: 'post',
+    data
+  })
+}
+
+export function findTableData(id){
+  return request({
+    url: '/organization/findTableData',
+    method: 'post',
+    params:{
+      id
+    }
+  })
+}
+
+export function addDeptMethod(data) {
+  return request({
+    url: '/organization/addDept',
+    method: 'post',
+    data
+  })
+}
