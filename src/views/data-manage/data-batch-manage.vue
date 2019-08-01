@@ -29,7 +29,7 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="form.batchNos" placeholder="请选择批次编号" filterable multiple collapse-tags clearable>
+        <el-select v-model="form.batchNos" placeholder="请选择批次编号" remote filterable multiple collapse-tags clearable :remote-method="showBatchList">
           <el-option
             v-for="item in batchList"
             :key="item.id"
@@ -1005,6 +1005,7 @@
 
   import {
     dataList,
+    clientCurrent,
     CasedataList,
     remoweData,
     addData,
@@ -1016,6 +1017,7 @@
     totalDataBatchExport,
     clientList,
     batchList,
+    batchList2,
     caseTypeList,
     areaList,
     returnCase,
@@ -1106,6 +1108,12 @@
             }
           })
         }
+      },
+      showBatchList(query){
+
+        batchList2({"batchNo":query}).then((response) => {
+          this.batchList = response;
+        })
       },
       changeBotno2() {
         for (var i = 0; i <= this.clientList.length; i++) {
@@ -1914,10 +1922,10 @@
         this.userCount = response.userCount;
         this.tableLoad = false
       })
-    /*  clientList().then((response) => {
-        this.form.clientList = this.$store.getters.caseType.委托方;
-        this.clientList = this.$store.getters.caseType.委托方;
-      })*/
+      /*  clientList().then((response) => {
+          this.form.clientList = this.$store.getters.caseType.委托方;
+          this.clientList = this.$store.getters.caseType.委托方;
+        })*/
       this.form.clientList = this.$store.getters.caseType.委托方;
       this.clientList = this.$store.getters.caseType.委托方;
       batchList().then((response) => {
@@ -1930,10 +1938,10 @@
       })*/
       this.form.caseTypeList =  this.$store.getters.caseType.案件类型;
       this.caseTypeList =  this.$store.getters.caseType.案件类型;
-   /*   areaList().then((response) => {
-        this.form.areaList = response
-        this.areaList = response
-      })*/
+      /*   areaList().then((response) => {
+           this.form.areaList = response
+           this.areaList = response
+         })*/
       this.form.areaList = this.$store.getters.caseType.催收区域;
       this.areaList = this.$store.getters.caseType.催收区域;
     },
@@ -1968,3 +1976,4 @@
     }
   }
 </style>
+

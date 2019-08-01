@@ -18,7 +18,7 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="form.batchNos" filterable collapse-tags multiple placeholder="请输入批次号" clearable >
+        <el-select v-model="form.batchNos" filterable collapse-tags multiple placeholder="请输入批次号" clearable remote  :remote-method="showBatchList">
           <el-option
             v-for="item in batchList"
             :key="item.id"
@@ -86,7 +86,7 @@
             :show-file-list=false
             :on-success="uploadSuccess"
             :on-progress="onProgress"
-             accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           >
             <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入案件评语'">导入案件评语
             </el-button>
@@ -98,7 +98,7 @@
             :show-file-list=false
             :on-success="uploadSuccess"
             :on-progress="onProgress"
-             accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           >
             <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入案件利息'">导入案件利息
             </el-button>
@@ -110,7 +110,7 @@
             :show-file-list=false
             :on-success="uploadSuccess"
             :on-progress="onProgress"
-             accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           >
             <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入案件电话'">导入案件电话
             </el-button>
@@ -122,7 +122,7 @@
             :show-file-list=false
             :on-success="uploadSuccess"
             :on-progress="onProgress"
-             accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           >
             <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入案件地址'">导入案件地址
             </el-button>
@@ -134,7 +134,7 @@
             :show-file-list=false
             :on-success="uploadSuccess"
             :on-progress="onProgress"
-             accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           >
             <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入案件记录'">导入催收记录
             </el-button>
@@ -242,7 +242,7 @@
             :on-success="uploadSuccess"
             :data="{batchNo:scope.row.batchNo}"
             :on-progress="onProgress"
-             accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           >
             <el-button type="text" size="small" v-has="'导入'">导入</el-button>
           </el-upload>
@@ -737,6 +737,7 @@
     clientList,
     selectByModule,
     saveSelectFilter,
+    batchList2,
     caseTypeList,
     areaList,
     update,
@@ -791,6 +792,12 @@
       }
     },
     methods: {
+      showBatchList(query){
+
+        batchList2({"batchNo":query}).then((response) => {
+          this.batchList = response;
+        })
+      },
       clientCurrent(){
         debugger
         if (this.form.clients==null || this.form.clients.length==0){
@@ -1132,20 +1139,20 @@
         this.total = response.pageInfo.total
         this.tableLoad = false
       })
-     /* clientList().then((response) => {
-        this.form.clientList = response;
-        this.clientList = response;
-      })*/
+      /* clientList().then((response) => {
+         this.form.clientList = response;
+         this.clientList = response;
+       })*/
       this.form.clientList = this.$store.getters.caseType.委托方;
       this.clientList = this.$store.getters.caseType.委托方;
       batchList().then((response) => {
         this.batchList = response;
         this.batchList2 = response;
       })
-     /* caseTypeList().then((response) => {
-        this.form.caseTypeList = response
-        this.caseTypeList = response;
-      })*/
+      /* caseTypeList().then((response) => {
+         this.form.caseTypeList = response
+         this.caseTypeList = response;
+       })*/
       this.form.caseTypeList = this.$store.getters.caseType.案件类型;
       this.caseTypeList = this.$store.getters.caseType.案件类型;
       /*areaList().then((response) => {
