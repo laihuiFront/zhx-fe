@@ -1,293 +1,293 @@
 <template>
   <div id="case-detail">
     <div class="basic-info">
-        <div class="title-info">
-          <div class="txt" :class="[
+      <div class="title-info">
+        <div class="txt" :class="[
                       { blue:caseDetail.color  === 'BLUE' },
                       { red: caseDetail.color === 'RED' }
                     ]">
-            {{caseDetail.name + '-[' + caseDetail.seqNo + ']-案件详情'}}
-          </div>
-          <div style="text-align: right; margin-right:20px;" >
-            <el-button type="primary" align="right" size="mini" @click="lastCase" >上条</el-button>
-            <el-button type="primary" align="right" size="mini" @click="nextCase" >下条</el-button>
-            <el-button type="primary" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showCommentVisible=true">评语</el-button>
-            <el-button type="primary" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showWarningVisible=true">警告</el-button>
-            <el-button type="primary" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showCollectInfo">催收小结</el-button>
-          </div>
+          {{caseDetail.name + '-[' + caseDetail.seqNo + ']-案件详情'}}
         </div>
-        <div class="items-wrap">
-          <el-form
-            :model="caseDetail"
-            ref="ruleForm"
-            label-width="130px"
-            class="rule-form"
-          >
-            <el-form-item label="姓名" >
-             <!-- <el-input v-model="caseDetail.name" :disabled="true" ></el-input>-->
-              <div
-                class="inputDiv"
-                style="font-size: 11px;"
-              >
+        <div style="text-align: right; margin-right:20px;" >
+          <el-button type="primary" align="right" size="mini" @click="lastCase" >上条</el-button>
+          <el-button type="primary" align="right" size="mini" @click="nextCase" >下条</el-button>
+          <el-button type="primary" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showCommentVisible=true">评语</el-button>
+          <el-button type="primary" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showWarningVisible=true">警告</el-button>
+          <el-button type="primary" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showCollectInfo">催收小结</el-button>
+        </div>
+      </div>
+      <div class="items-wrap">
+        <el-form
+          :model="caseDetail"
+          ref="ruleForm"
+          label-width="130px"
+          class="rule-form"
+        >
+          <el-form-item label="姓名" >
+            <!-- <el-input v-model="caseDetail.name" :disabled="true" ></el-input>-->
+            <div
+              class="inputDiv"
+              style="font-size: 11px;"
+            >
                 <span :class="[
                       { blue: caseDetail.color === 'BLUE' },
                       { red: caseDetail.color === 'RED' }
                     ]">{{ caseDetail.name}}</span>
-              </div>
-            </el-form-item>
-            <el-form-item label="委托方">
-              <el-input v-model="caseDetail.client" :disabled="true"></el-input>
-            </el-form-item>
-            <el-form-item label="批次号">
-              <el-input
-                v-model="caseDetail.batchNo"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="委案日期">
-              <div
-                class="inputDiv"
-                style="font-size: 11px;"
-              >
-                <span>{{ caseDetail.caseDate }}</span>
-              </div>
-            </el-form-item>
-            <el-form-item label="证件号" >
-              <div
-                class="inputDiv"
-                style="font-size: 11px;"
-                :class="[userInfo.busiData ? 'inputUnSelect' : '']"
-              >
+            </div>
+          </el-form-item>
+          <el-form-item label="委托方">
+            <el-input v-model="caseDetail.client" :disabled="true"></el-input>
+          </el-form-item>
+          <el-form-item label="批次号">
+            <el-input
+              v-model="caseDetail.batchNo"
+              :disabled="true"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="委案日期">
+            <div
+              class="inputDiv"
+              style="font-size: 11px;"
+            >
+              <span>{{ caseDetail.caseDate }}</span>
+            </div>
+          </el-form-item>
+          <el-form-item label="证件号" >
+            <div
+              class="inputDiv"
+              style="font-size: 11px;"
+              :class="[userInfo.busiData ? 'inputUnSelect' : '']"
+            >
                 <span :class="[
                       { blue: caseDetail.color === 'BLUE' },
                       { red: caseDetail.color === 'RED' }
                     ]">{{ caseDetail.identNo }}</span>
-              </div>
-            </el-form-item>
+            </div>
+          </el-form-item>
 
-            <el-form-item label="卡号">
-              <el-input v-model="caseDetail.cardNo" :disabled="true"></el-input>
-            </el-form-item>
-            <el-form-item label="催收状态">
-              <el-input
-                v-model="caseDetail.collectStatusMsg"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="预计退案日">
-              <div
-                class="inputDiv"
-                style="font-size: 11px;"
-              >
+          <el-form-item label="卡号">
+            <el-input v-model="caseDetail.cardNo" :disabled="true"></el-input>
+          </el-form-item>
+          <el-form-item label="催收状态">
+            <el-input
+              v-model="caseDetail.collectStatusMsg"
+              :disabled="true"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="预计退案日">
+            <div
+              class="inputDiv"
+              style="font-size: 11px;"
+            >
 
-                <span v-if="caseDetail.realReturnTime==null || caseDetail.realReturnTime==''">{{ caseDetail.expectTime }}</span>
-                <span v-else>{{ caseDetail.expectTime }}(已于{{
+              <span v-if="caseDetail.realReturnTime==null || caseDetail.realReturnTime==''">{{ caseDetail.expectTime }}</span>
+              <span v-else>{{ caseDetail.expectTime }}(已于{{
                     caseDetail.realReturnTime
                   }}退案)</span>
-              </div>
-            </el-form-item>
-            <el-form-item label="委案金额">
-              <el-input v-model="caseDetail.moneyMsg" :disabled="true"></el-input>
-            </el-form-item>
-            <el-form-item label="逾期日期">
-              <el-input
-                v-model="caseDetail.overdueDate"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="地区" >
-              <div
-                class="inputDiv"
-                style="font-size: 11px;"
-              >
+            </div>
+          </el-form-item>
+          <el-form-item label="委案金额">
+            <el-input v-model="caseDetail.moneyMsg" :disabled="true"></el-input>
+          </el-form-item>
+          <el-form-item label="逾期日期">
+            <el-input
+              v-model="caseDetail.overdueDate"
+              :disabled="true"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="地区" >
+            <div
+              class="inputDiv"
+              style="font-size: 11px;"
+            >
                 <span
                 >{{ caseDetail.provinceName }} {{ caseDetail.cityName }}</span>
-              </div>
-              <!--<el-input v-model="caseDetail.area" :disabled="true"></el-input>-->
-            </el-form-item>
-            <el-form-item label="催收员">
-              <el-input v-model="caseDetail.odv" :disabled="true"></el-input>
-            </el-form-item>
-            <el-form-item label="已还款">
-              <div class="inputDiv" style="font-size: 12px;">
+            </div>
+            <!--<el-input v-model="caseDetail.area" :disabled="true"></el-input>-->
+          </el-form-item>
+          <el-form-item label="催收员">
+            <el-input v-model="caseDetail.odv" :disabled="true"></el-input>
+          </el-form-item>
+          <el-form-item label="已还款">
+            <div class="inputDiv" style="font-size: 12px;">
                 <span
                 >{{ caseDetail.enRepayAmtMsg }}(委案余额:{{
                     caseDetail.balanceMsg
                   }})</span
                 >
-                <span
-                  style="color: red;"
-                  v-if="caseDetail.settleFlag == '已结清'"
-                >[{{ caseDetail.settleFlag }}]</span
-                >
-              </div>
-            </el-form-item>
-            <el-form-item label="逾期账龄">
-              <el-input
-                v-model="caseDetail.accountAge"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="逾期期数" >
-              <el-input
-                v-model="caseDetail.overduePeriods"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item >
-            </el-form-item>
-            <el-form-item label="最新欠款" >
-              <el-input
-                v-model="caseDetail.interestDate"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="逾期天数">
+              <span
+                style="color: red;"
+                v-if="caseDetail.settleFlag == '已结清'"
+              >[{{ caseDetail.settleFlag }}]</span
+              >
+            </div>
+          </el-form-item>
+          <el-form-item label="逾期账龄">
+            <el-input
+              v-model="caseDetail.accountAge"
+              :disabled="true"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="逾期期数" >
+            <el-input
+              v-model="caseDetail.overduePeriods"
+              :disabled="true"
+            ></el-input>
+          </el-form-item>
+          <el-form-item >
+          </el-form-item>
+          <el-form-item label="最新欠款" >
+            <el-input
+              v-model="caseDetail.interestDate"
+              :disabled="true"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="逾期天数">
 
-              <div class="inputDiv" style="font-size: 12px;">
+            <div class="inputDiv" style="font-size: 12px;">
                 <span
                 >{{ caseDetail.overdueDays }}(最新逾期天数:{{
                     caseDetail.overdueNewDays
                   }})</span
                 >
 
-              </div>
-            </el-form-item>
-            <el-form-item label="已还期数" >
-              <el-input
-                v-model="caseDetail.repaidPeriods"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item  >
-            </el-form-item>
-            <el-form-item >
+            </div>
+          </el-form-item>
+          <el-form-item label="已还期数" >
+            <el-input
+              v-model="caseDetail.repaidPeriods"
+              :disabled="true"
+            ></el-input>
+          </el-form-item>
+          <el-form-item  >
+          </el-form-item>
+          <el-form-item >
 
-            </el-form-item>
-            <el-form-item label="贷款日期">
-              <el-input
-                v-model="caseDetail.loanDate"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item >
-            </el-form-item>
-            <el-form-item label="剩余本金">
-              <el-input
-                v-model="caseDetail.residualPrinciple"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="本金">
-              <el-input
-                v-model="caseDetail.principle"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="每月还款">
-              <el-input
-                v-model="caseDetail.monthlyRepayments"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item >
-            </el-form-item>
-            <el-form-item >
-            </el-form-item>
-            <el-form-item >
-            </el-form-item>
-            <el-form-item label="单位名称" >
-              <el-input
-                v-model="caseDetail.unitName"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="单位地址" >
-              <div class="inputDiv" style="font-size: 12px;">
-                <span>{{ caseDetail.unitAddress}}</span>
-              </div>
-            </el-form-item>
-            <el-form-item label="户籍地址" >
-              <div class="inputDiv" style="font-size: 12px;">
-                <span>{{ caseDetail.censusRegisterAddress}}</span>
-              </div>
-            </el-form-item>
-            <el-form-item label="家庭地址" >
-              <div class="inputDiv" style="font-size: 12px;">
-                <span>{{ caseDetail.homeAddress}}</span>
-              </div>
-            </el-form-item>
-            <el-form-item label="最新评语" class="whole">
-              <div class="content-wrap">
-                <el-popover
-                  placement="bottom-start"
-                  title="添加评语"
-                  width="400"
-                  :visible-arrow="false"
-                  trigger="click"
-                  v-model="addCommentVisible"
-                >
-                  <div>
-                    <el-input
-                      type="textarea"
-                      :rows="4"
-                      placeholder="请输入评语"
-                      v-model="commentAddContent"
-                    >
-                    </el-input>
-                    <el-radio-group
-                      v-model="commentAddColor"
-                      style="margin-top:10px;"
-                    >
-                      <el-radio label="黑">正常</el-radio>
-                      <el-radio label="蓝">标蓝</el-radio>
-                      <el-radio label="红">标红</el-radio>
-                     <!-- <el-radio label="">不更改</el-radio>-->
-                    </el-radio-group>
-                  </div>
-                  <div style="text-align: right; margin-top: 12px">
-                    <el-button
-                      size="mini"
-                      type="text"
-                      @click="addCommentVisible = false"
-                    >取消
-                    </el-button
-                    >
-                    <el-button
-                      type="primary"
-                      size="mini"
-                      @click="onClickAddComment"
-                    >确定
-                    </el-button
-                    >
-                  </div>
+          </el-form-item>
+          <el-form-item label="贷款日期">
+            <el-input
+              v-model="caseDetail.loanDate"
+              :disabled="true"
+            ></el-input>
+          </el-form-item>
+          <el-form-item >
+          </el-form-item>
+          <el-form-item label="剩余本金">
+            <el-input
+              v-model="caseDetail.residualPrinciple"
+              :disabled="true"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="本金">
+            <el-input
+              v-model="caseDetail.principle"
+              :disabled="true"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="每月还款">
+            <el-input
+              v-model="caseDetail.monthlyRepayments"
+              :disabled="true"
+            ></el-input>
+          </el-form-item>
+          <el-form-item >
+          </el-form-item>
+          <el-form-item >
+          </el-form-item>
+          <el-form-item >
+          </el-form-item>
+          <el-form-item label="单位名称" >
+            <el-input
+              v-model="caseDetail.unitName"
+              :disabled="true"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="单位地址" >
+            <div class="inputDiv" style="font-size: 12px;">
+              <span>{{ caseDetail.unitAddress}}</span>
+            </div>
+          </el-form-item>
+          <el-form-item label="户籍地址" >
+            <div class="inputDiv" style="font-size: 12px;">
+              <span>{{ caseDetail.censusRegisterAddress}}</span>
+            </div>
+          </el-form-item>
+          <el-form-item label="家庭地址" >
+            <div class="inputDiv" style="font-size: 12px;">
+              <span>{{ caseDetail.homeAddress}}</span>
+            </div>
+          </el-form-item>
+          <el-form-item label="最新评语" class="whole">
+            <div class="content-wrap">
+              <el-popover
+                placement="bottom-start"
+                title="添加评语"
+                width="400"
+                :visible-arrow="false"
+                trigger="click"
+                v-model="addCommentVisible"
+              >
+                <div>
+                  <el-input
+                    type="textarea"
+                    :rows="4"
+                    placeholder="请输入评语"
+                    v-model="commentAddContent"
+                  >
+                  </el-input>
+                  <el-radio-group
+                    v-model="commentAddColor"
+                    style="margin-top:10px;"
+                  >
+                    <el-radio label="黑">正常</el-radio>
+                    <el-radio label="蓝">标蓝</el-radio>
+                    <el-radio label="红">标红</el-radio>
+                    <!-- <el-radio label="">不更改</el-radio>-->
+                  </el-radio-group>
+                </div>
+                <div style="text-align: right; margin-top: 12px">
                   <el-button
-                    size="small"
+                    size="mini"
                     type="text"
-                    icon="el-icon-plus"
-                    title="添加"
-                    slot="reference"
-                  ></el-button>
-                </el-popover>
-                <ul class="comments-wrap">
-                  <li
-                    v-for="item in commentList"
-                    :key="item.id"
-                    class="item"
-                    :class="[
+                    @click="addCommentVisible = false"
+                  >取消
+                  </el-button
+                  >
+                  <el-button
+                    type="primary"
+                    size="mini"
+                    @click="onClickAddComment"
+                  >确定
+                  </el-button
+                  >
+                </div>
+                <el-button
+                  size="small"
+                  type="text"
+                  icon="el-icon-plus"
+                  title="添加"
+                  slot="reference"
+                ></el-button>
+              </el-popover>
+              <ul class="comments-wrap">
+                <li
+                  v-for="item in commentList"
+                  :key="item.id"
+                  class="item"
+                  :class="[
                       { blue: item.commentColor === 'BLUE' },
                       { red: item.commentColor === 'RED' }
                     ]"
-                  >
-                    {{ item.createTime }} {{ item.creatUserName }} :
-                    {{ item.comment }}
-                  </li>
-                </ul>
-              </div>
-            </el-form-item>
+                >
+                  {{ item.createTime }} {{ item.creatUserName }} :
+                  {{ item.comment }}
+                </li>
+              </ul>
+            </div>
+          </el-form-item>
 
-          </el-form>
-        </div>
+        </el-form>
+      </div>
     </div>
     <el-collapse v-model="activeNames">
       <el-collapse-item title="同批次共债案件" name="1">
@@ -304,7 +304,7 @@
           <el-table-column prop="account" label="账号"></el-table-column>
           <el-table-column prop="moneyMsg" label="委案金额"></el-table-column>
           <el-table-column prop="currencyType" label="币种"></el-table-column>
-          <el-table-column prop="proRepayAmtMsg" label="承诺还款金额"
+          <el-table-column prop="proRepayAmtMsg" label="承诺还款金额">
           </el-table-column>
           <el-table-column prop="bankAmtMsg" label="待银行查账金额">
           </el-table-column>
@@ -638,12 +638,6 @@
             <el-form-item label="户籍地邮编">
               <el-input
                 v-model="caseDetail.censusRegisterZipCode"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="账号">
-              <el-input
-                v-model="caseDetail.account"
                 :disabled="true"
               ></el-input>
             </el-form-item>
@@ -1208,74 +1202,679 @@
 
           </el-form>
         </div>
-     </el-collapse-item>
+      </el-collapse-item>
     </el-collapse>
     <div class="basic-info">
-     <!-- <el-collapse-item title="" name="3">-->
-        <div class="other-wrap">
-          <div class="left-wrap">
-            <el-tabs
-              v-model="otherActiveName"
-              type="card"
-              @tab-click="showPanel"
-            >
-              <el-tab-pane label="电话" name="1" class="tabs-wrap telPanel">
-                <div class="operation">
-                  <div class="left-oper">
-                    <el-button
-                      @click="changePhoneStatus('有效')"
-                      v-if=" caseDetail.currentuser || mycaseFlag"
-                    >标记为有效
+      <!-- <el-collapse-item title="" name="3">-->
+      <div class="other-wrap">
+        <div class="left-wrap">
+          <el-tabs
+            v-model="otherActiveName"
+            type="card"
+            @tab-click="showPanel"
+          >
+            <el-tab-pane label="电话" name="1" class="tabs-wrap telPanel">
+              <div class="operation">
+                <div class="left-oper">
+                  <el-button
+                    @click="changePhoneStatus('有效')"
+                    v-if=" caseDetail.currentuser || mycaseFlag"
+                  >标记为有效
+                  </el-button
+                  >
+                  <el-button
+                    @click="changePhoneStatus('未知')"
+                    v-if=" caseDetail.currentuser || mycaseFlag"
+                  >标记为未知
+                  </el-button
+                  >
+                  <el-button
+                    @click="changePhoneStatus('无效')"
+                    v-if=" caseDetail.currentuser || mycaseFlag"
+                  >标记为无效
+                  </el-button
+                  >
+                  <el-button @click="showAllTel">显示全部电话</el-button>
+                </div>
+                <div class="right-oper">
+                  <el-button
+                    type="primary"
+                    @click="sendTel3"
+                    v-if=" caseDetail.currentuser || mycaseFlag"
+                  >电话批量呼出
+                  </el-button>
+                  <el-button
+                    type="primary"
+                    @click="sendTel4"
+                    v-if=" caseDetail.currentuser || mycaseFlag"
+                  >座机批量呼出
+                  </el-button>
+                  <el-button
+                    type="primary"
+                    @click="addPhone"
+                    v-if=" caseDetail.currentuser || mycaseFlag"
+                  >新增电话
+                  </el-button
+                  >
+                  <el-popover
+                    placement="bottom-end"
+                    title="批量新增电话"
+                    width="500"
+                    trigger="click"
+                    v-model="batchAddTelVisible"
+                    v-if=" caseDetail.currentuser || mycaseFlag"
+                  >
+                    <div>
+                      <el-input
+                        type="textarea"
+                        :rows="4"
+                        placeholder="请按照'关系-姓名-电话'的格式输入,多个条目以/隔开"
+                        v-model="batchAddTelContent"
+                      >
+                      </el-input>
+                    </div>
+                    <div style="text-align: right; margin-top: 12px">
+                      <el-button
+                        size="mini"
+                        type="text"
+                        @click="batchAddTelVisible = false"
+                      >取消
+                      </el-button
+                      >
+                      <el-button
+                        type="primary"
+                        size="mini"
+                        @click="onClickBatchAddTel"
+                      >确定
+                      </el-button
+                      >
+                    </div>
+                    <el-button type="primary" slot="reference"
+                    >批量新增电话
                     </el-button
                     >
+                  </el-popover>
+                  <!-- <el-button type="primary">批量电催</el-button> -->
+                  <el-button
+                    type="primary"
+                    @click="_synchroSameTel"
+                    v-if=" caseDetail.currentuser || mycaseFlag"
+                  >同步共债
+                  </el-button
+                  >
+                </div>
+              </div>
+              <el-table
+                highlight-current-row
+                @selection-change="onSelectPhoneRow"
+                border
+                stripe
+                height="1"
+                :data="caseDetail.dataCaseTelEntityList"
+                :row-class-name="telTableRowClassName"
+                style="width: 100%;min-height: 200px;"
+                class="table-wrap"
+              >
+                <el-table-column type="selection" width="55">
+                </el-table-column>
+                <el-table-column prop="telStatusMsg" label="状态">
+                </el-table-column>
+                <el-table-column prop="tel" label="电话">
+                  <template slot-scope="scope">
                     <el-button
-                      @click="changePhoneStatus('未知')"
-                      v-if=" caseDetail.currentuser || mycaseFlag"
-                    >标记为未知
+                      type="text"
+                      size="small"
+                      @click="
+                          copyToCollect(
+                            scope.row.tel,
+                            scope.row.name,
+                            scope.row.relation
+                          )
+                        "
+                    >{{ scope.row.tel }}
                     </el-button
                     >
+                  </template>
+                </el-table-column>
+                <el-table-column prop="name" label="姓名"></el-table-column>
+                <el-table-column prop="relation" label="关系">
+                </el-table-column>
+                <el-table-column prop="typeMsg" label="类型">
+                </el-table-column>
+                <el-table-column prop="remark" label="备注">
+                </el-table-column>
+                <el-table-column label="操作" width="250">
+                  <template slot-scope="scope">
                     <el-button
-                      @click="changePhoneStatus('无效')"
-                      v-if=" caseDetail.currentuser || mycaseFlag"
-                    >标记为无效
-                    </el-button
-                    >
-                    <el-button @click="showAllTel">显示全部电话</el-button>
-                  </div>
-                  <div class="right-oper">
-                    <el-button
-                      type="primary"
-                      @click="sendTel3"
-                      v-if=" caseDetail.currentuser || mycaseFlag"
-                    >电话批量呼出
+                      slot="reference"
+                      type="text"
+                      @click="showHistoryTel(scope.row)"
+                    >历史记录
                     </el-button>
                     <el-button
-                      type="primary"
-                      @click="sendTel4"
-                      v-if=" caseDetail.currentuser || mycaseFlag"
-                    >座机批量呼出
-                    </el-button>
-                    <el-button
-                      type="primary"
-                      @click="addPhone"
-                      v-if=" caseDetail.currentuser || mycaseFlag"
-                    >新增电话
+                      type="text"
+                      @click="editPhone(scope.row)"
+                      v-if="
+                           (caseDetail.currentuser || mycaseFlag) &&
+                            scope.row.telStatusMsg !== '停止跟进'
+                        "
+                    >编辑
                     </el-button
                     >
+                    <el-button
+                      type="text"
+                      @click="deleteTel(scope.row.id)"
+                      v-if="
+                           (caseDetail.currentuser || mycaseFlag) &&
+                            scope.row.telStatusMsg !== '停止跟进'
+                        "
+                    >删除
+                    </el-button
+                    >
+                    <el-button
+                      type="text"
+                      v-if="
+                           (caseDetail.currentuser || mycaseFlag) &&
+                            scope.row.telStatusMsg !== '停止跟进'
+                        "
+                      @click="stopTel(scope.row.id)"
+                    >停止跟进
+                    </el-button
+                    >
+                  </template>
+                </el-table-column>
+              </el-table>
+            </el-tab-pane>
+            <el-tab-pane label="地址" name="2" class="tabs-wrap telPanel">
+              <div class="operation" v-if="letterVisible2">
+                <div class="left-oper">
+                  <el-button
+                    @click="changeAddrStatus('有效')"
+                    v-if=" caseDetail.currentuser || mycaseFlag"
+                  >标记为有效
+                  </el-button
+                  >
+                  <el-button
+                    @click="changeAddrStatus('未知')"
+                    v-if=" caseDetail.currentuser || mycaseFlag"
+                  >标记为未知
+                  </el-button
+                  >
+                  <el-button
+                    @click="changeAddrStatus('无效')"
+                    v-if=" caseDetail.currentuser || mycaseFlag"
+                  >标记为无效
+                  </el-button
+                  >
+                  <!-- <el-button @click="saveAddr">显示全部地址</el-button> -->
+                  <el-button @click="showLetterList">查看信函记录</el-button>
+                </div>
+                <div class="right-oper">
+                  <el-button
+                    type="primary"
+                    @click="addAddr"
+                    v-if=" caseDetail.currentuser || mycaseFlag"
+                  >新增地址
+                  </el-button
+                  >
+                </div>
+              </div>
+              <el-table
+                highlight-current-row
+                v-if="letterVisible2"
+                border
+                stripe
+                height="1"
+                @selection-change="onSelectAddrRow"
+                :data="addrList"
+                style="width: 100%;min-height: 200px;"
+                class="table-wrap"
+              >
+                <el-table-column type="selection" width="55">
+                </el-table-column>
+                <el-table-column
+                  prop="status"
+                  show-overflow-tooltip
+                  label="状态"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="name"
+                  show-overflow-tooltip
+                  label="姓名"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="relation"
+                  show-overflow-tooltip
+                  label="关系"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="address"
+                  show-overflow-tooltip
+                  label="地址"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="type"
+                  show-overflow-tooltip
+                  label="类型"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="remark"
+                  show-overflow-tooltip
+                  label="备注"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="letterCount"
+                  show-overflow-tooltip
+                  label="信函次数"
+                >
+                </el-table-column>
+                <el-table-column
+                  label="操作"
+                  v-if="letterVisible2"
+                  width="250"
+                >
+                  <template slot-scope="scope">
+                    <el-popover
+                      v-model="scope.row.showHistory"
+                      placement="top"
+                      width="600"
+                      trigger="manual"
+                    >
+                      <el-table :data="scope.row.history" height="300">
+                        <el-table-column
+                          show-overflow-tooltip
+                          property="opTime"
+                          label="操作时间"
+                        ></el-table-column>
+                        <el-table-column
+                          show-overflow-tooltip
+                          property="type"
+                          label="分类"
+                        ></el-table-column>
+                        <el-table-column
+                          show-overflow-tooltip
+                          property="context"
+                          label="操作内容"
+                        ></el-table-column>
+                        <el-table-column
+                          show-overflow-tooltip
+                          property="operName"
+                          label="操作人"
+                        ></el-table-column>
+                      </el-table>
+                      <div style="text-align:center">
+                        <el-button
+                          type="primary"
+                          @click="$set(scope.row, 'showHistory', false)"
+                        >关闭
+                        </el-button
+                        >
+                      </div>
+                      <el-button
+                        slot="reference"
+                        type="text"
+                        @click="showHistoryAddr(scope.row)"
+                        v-if="letterVisible2"
+                      >历史记录
+                      </el-button
+                      >
+                    </el-popover>
+                    <el-button
+                      type="text"
+                      @click="applyLetter(scope.row)"
+                      v-if=" (caseDetail.currentuser || mycaseFlag) && letterVisible2"
+                    >申请信函
+                    </el-button
+                    >
+                    <el-button
+                      type="text"
+                      @click="editAddr(scope.row)"
+                      v-if="(caseDetail.currentuser || mycaseFlag) && letterVisible2"
+                    >编辑
+                    </el-button
+                    >
+                    <el-button
+                      type="text"
+                      @click="deleteAddr(scope.row.id)"
+                      v-if="(caseDetail.currentuser || mycaseFlag) && letterVisible2"
+                    >删除
+                    </el-button
+                    >
+                  </template>
+                </el-table-column>
+              </el-table>
+              <el-table
+                highlight-current-row
+                :data="letterList"
+                border
+                stripe
+                v-if="letterVisible"
+                style="width: 100%"
+                class="table-wrap"
+              >
+                <el-table-column type="selection" width="55">
+                </el-table-column>
+                <el-table-column
+                  prop="status"
+                  show-overflow-tooltip
+                  label="状态"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="address"
+                  show-overflow-tooltip
+                  label="地址"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="applyContext"
+                  show-overflow-tooltip
+                  label="申请内容"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="addressType"
+                  show-overflow-tooltip
+                  label="地址类型"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="letterType"
+                  show-overflow-tooltip
+                  label="信函类别"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="applyDate"
+                  show-overflow-tooltip
+                  label="申请时间"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="applyer"
+                  show-overflow-tooltip
+                  label="申请人"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="synergyer"
+                  show-overflow-tooltip
+                  label="协催人"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="synergyDate"
+                  show-overflow-tooltip
+                  label="协催时间"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="synergyResult"
+                  show-overflow-tooltip
+                  label="协催结果"
+                >
+                </el-table-column>
+              </el-table>
+            </el-tab-pane>
+            <el-tab-pane label="案人数据" name="3" class="tabs-wrap telPanel">
+              <div class="operation" v-if="letterVisible2">
+                <div class="left-oper"></div>
+                <div class="right-oper">
+                  <el-button
+                    type="primary"
+                    @click="onClickAddArchive"
+                    v-if=" caseDetail.currentuser || mycaseFlag"
+                  >新增案人数据
+                  </el-button
+                  >
+                </div>
+              </div>
+              <el-table
+                highlight-current-row
+                :data="dataList"
+                border
+                stripe
+                height="1"
+                style="width: 100%;min-height: 200px;"
+                class="table-wrap"
+              >
+                <el-table-column
+                  prop="name"
+                  show-overflow-tooltip
+                  label="姓名"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="msgType"
+                  show-overflow-tooltip
+                  label="信息类型"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="msgContext"
+                  show-overflow-tooltip
+                  label="信息内容"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="remark"
+                  show-overflow-tooltip
+                  label="备注"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="createTime"
+                  show-overflow-tooltip
+                  label="导入时间"
+                >
+                </el-table-column>
+              </el-table>
+            </el-tab-pane>
+            <el-tab-pane label="催记" name="4" class="tabs-wrap">
+              <div class="operation">
+                <div class="left-oper">
+                  <el-radio-group
+                    v-model="memorizeType"
+                    @change="memorizeTypeChange"
+                  >
+                    <el-radio :label="1">本案催记</el-radio>
+                    <el-radio :label="2">同批次共债催记</el-radio>
+                    <el-radio :label="3">共债催记</el-radio>
+                    <el-radio :label="4">同卡催记</el-radio>
+                  </el-radio-group>
+                </div>
+                <div class="right-oper">
+                  <el-button
+                    type="primary"
+                    @click="addDataCollect"
+                    v-if=" caseDetail.currentuser || mycaseFlag"
+                  >添加辅助催记
+                  </el-button
+                  >
+                  <el-button
+                    type="primary"
+                    @click="_expDataCollect"
+                    v-if=" caseDetail.currentuser || mycaseFlag"
+                  >导出本案催记
+                  </el-button
+                  >
+                </div>
+              </div>
+              <el-table
+                highlight-current-row
+                :data="memorizeList"
+                style="width: 100%; min-height: 200px;"
+                height="1"
+                border
+                stripe
+                class="table-wrap"
+              >
+
+                <el-table-column
+                  prop="collectTime"
+                  show-overflow-tooltip
+                  sortable
+                  :sort-orders="['ascending','descending']"
+                  label="时间"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="targetName"
+                  show-overflow-tooltip
+                  label="对象姓名"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="relation"
+                  show-overflow-tooltip
+                  label="关系"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="mobile"
+                  show-overflow-tooltip
+                  label="电话/地址"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="telType"
+                  show-overflow-tooltip
+                  label="类型"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="collectInfo"
+                  show-overflow-tooltip
+                  label="催收信息"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="result"
+                  show-overflow-tooltip
+                  label="催收结果"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="targetName"
+                  show-overflow-tooltip
+                  label="催收对象"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="methodMsg"
+                  show-overflow-tooltip
+                  label="谈判方式"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="repayTime"
+                  show-overflow-tooltip
+                  label="承诺日期"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="repayAmtMsg"
+                  show-overflow-tooltip
+                  label="承诺金额"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="reduceAmtMsg"
+                  show-overflow-tooltip
+                  label="减免金额"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="reduceStatusMsg"
+                  show-overflow-tooltip
+                  label="减免状态"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="odv"
+                  show-overflow-tooltip
+                  label="催收人"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="collectStatusMsg"
+                  show-overflow-tooltip
+                  label="催收状态"
+                >
+                </el-table-column>
+                <el-table-column label="操作" width="100">
+                  <template slot-scope="scope">
+                    <el-button
+                      type="text"
+                      @click="editDataCollect(scope.row)"
+                      v-if=" caseDetail.currentuser || mycaseFlag"
+                    >编辑
+                    </el-button
+                    >
+                    <el-button type="text" v-if=" caseDetail.currentuser || mycaseFlag"
+                               @click="delDataCollect(scope.row)"
+                    >删除
+                    </el-button
+                    >
+                  </template>
+                </el-table-column>
+              </el-table>
+            </el-tab-pane>
+            <el-tab-pane label="评语" name="5" class="tabs-wrap telPanel">
+              <el-table
+                highlight-current-row
+                :data="commentList"
+                border
+                stripe
+                height="1"
+                style="width: 100%;min-height: 200px;"
+                class="table-wrap"
+              >
+                <el-table-column
+                  prop="comment"
+                  show-overflow-tooltip
+                  label="评语内容"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="creatUserName"
+                  show-overflow-tooltip
+                  width="150"
+                  label="提交人"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="createTime"
+                  show-overflow-tooltip
+                  width="150"
+                  label="提交时间"
+                >
+                </el-table-column>
+                <el-table-column
+                  label="操作"
+                  v-if="letterVisible2"
+                  width="150"
+                >
+                  <template slot-scope="scope">
                     <el-popover
                       placement="bottom-end"
-                      title="批量新增电话"
+                      trigger="manual"
+                      title="编辑操作记录"
                       width="500"
-                      trigger="click"
-                      v-model="batchAddTelVisible"
-                      v-if=" caseDetail.currentuser || mycaseFlag"
+                      v-model="scope.row.editCommentVisible"
                     >
                       <div>
                         <el-input
                           type="textarea"
                           :rows="4"
-                          placeholder="请按照'关系-姓名-电话'的格式输入,多个条目以/隔开"
-                          v-model="batchAddTelContent"
+                          placeholder="请输入评语"
+                          v-model="scope.row.editContext"
                         >
                         </el-input>
                       </div>
@@ -1283,1495 +1882,891 @@
                         <el-button
                           size="mini"
                           type="text"
-                          @click="batchAddTelVisible = false"
+                          @click="
+                              $set(scope.row, 'editCommentVisible', false)
+                            "
                         >取消
                         </el-button
                         >
                         <el-button
                           type="primary"
                           size="mini"
-                          @click="onClickBatchAddTel"
+                          @click="onClickSaveComment"
                         >确定
                         </el-button
                         >
                       </div>
-                      <el-button type="primary" slot="reference"
-                      >批量新增电话
+                      <el-button
+                        type="text"
+                        @click="editComment(scope.row)"
+                        slot="reference"
+                        v-if=" caseDetail.currentuser || mycaseFlag"
+                      >修改
                       </el-button
                       >
                     </el-popover>
-                    <!-- <el-button type="primary">批量电催</el-button> -->
                     <el-button
-                      type="primary"
-                      @click="_synchroSameTel"
+                      type="text"
                       v-if=" caseDetail.currentuser || mycaseFlag"
-                    >同步共债
+                      @click="_deleteComment(scope.row.id)"
+                    >删除
                     </el-button
                     >
-                  </div>
-                </div>
-                <el-table
-                  highlight-current-row
-                  @selection-change="onSelectPhoneRow"
-                  border
-                  stripe
-                  height="1"
-                  :data="caseDetail.dataCaseTelEntityList"
-                  :row-class-name="telTableRowClassName"
-                  style="width: 100%;min-height: 200px;"
-                  class="table-wrap"
+                  </template>
+                </el-table-column>
+              </el-table>
+            </el-tab-pane>
+            <el-tab-pane label="利息更新" name="7" class="tabs-wrap telPanel">
+              <el-table
+                highlight-current-row
+                :data="rateUpdateList"
+                border
+                stripe
+                height="1"
+                style="width: 100%;min-height: 200px;"
+                class="table-wrap"
+              >
+                <el-table-column
+                  prop="currency"
+                  show-overflow-tooltip
+                  label="币种"
                 >
-                  <el-table-column type="selection" width="55">
-                  </el-table-column>
-                  <el-table-column prop="telStatusMsg" label="状态">
-                  </el-table-column>
-                  <el-table-column prop="tel" label="电话">
-                    <template slot-scope="scope">
-                      <el-button
-                        type="text"
-                        size="small"
-                        @click="
-                          copyToCollect(
-                            scope.row.tel,
-                            scope.row.name,
-                            scope.row.relation
-                          )
-                        "
-                      >{{ scope.row.tel }}
-                      </el-button
-                      >
-                    </template>
-                  </el-table-column>
-                  <el-table-column prop="name" label="姓名"></el-table-column>
-                  <el-table-column prop="relation" label="关系">
-                  </el-table-column>
-                  <el-table-column prop="typeMsg" label="类型">
-                  </el-table-column>
-                  <el-table-column prop="remark" label="备注">
-                  </el-table-column>
-                  <el-table-column label="操作" width="250">
-                    <template slot-scope="scope">
-                      <el-button
-                        slot="reference"
-                        type="text"
-                        @click="showHistoryTel(scope.row)"
-                      >历史记录
-                      </el-button>
-                      <el-button
-                        type="text"
-                        @click="editPhone(scope.row)"
-                        v-if="
-                           (caseDetail.currentuser || mycaseFlag) &&
-                            scope.row.telStatusMsg !== '停止跟进'
-                        "
-                      >编辑
-                      </el-button
-                      >
-                      <el-button
-                        type="text"
-                        @click="deleteTel(scope.row.id)"
-                        v-if="
-                           (caseDetail.currentuser || mycaseFlag) &&
-                            scope.row.telStatusMsg !== '停止跟进'
-                        "
-                      >删除
-                      </el-button
-                      >
-                      <el-button
-                        type="text"
-                        v-if="
-                           (caseDetail.currentuser || mycaseFlag) &&
-                            scope.row.telStatusMsg !== '停止跟进'
-                        "
-                        @click="stopTel(scope.row.id)"
-                      >停止跟进
-                      </el-button
-                      >
-                    </template>
-                  </el-table-column>
-                </el-table>
-              </el-tab-pane>
-              <el-tab-pane label="地址" name="2" class="tabs-wrap telPanel">
-                <div class="operation" v-if="letterVisible2">
-                  <div class="left-oper">
-                    <el-button
-                      @click="changeAddrStatus('有效')"
-                      v-if=" caseDetail.currentuser || mycaseFlag"
-                    >标记为有效
-                    </el-button
-                    >
-                    <el-button
-                      @click="changeAddrStatus('未知')"
-                      v-if=" caseDetail.currentuser || mycaseFlag"
-                    >标记为未知
-                    </el-button
-                    >
-                    <el-button
-                      @click="changeAddrStatus('无效')"
-                      v-if=" caseDetail.currentuser || mycaseFlag"
-                    >标记为无效
-                    </el-button
-                    >
-                    <!-- <el-button @click="saveAddr">显示全部地址</el-button> -->
-                    <el-button @click="showLetterList">查看信函记录</el-button>
-                  </div>
-                  <div class="right-oper">
-                    <el-button
-                      type="primary"
-                      @click="addAddr"
-                      v-if=" caseDetail.currentuser || mycaseFlag"
-                    >新增地址
-                    </el-button
-                    >
-                  </div>
-                </div>
-                <el-table
-                  highlight-current-row
-                  v-if="letterVisible2"
-                  border
-                  stripe
-                  height="1"
-                  @selection-change="onSelectAddrRow"
-                  :data="addrList"
-                  style="width: 100%;min-height: 200px;"
-                  class="table-wrap"
+                </el-table-column>
+                <el-table-column
+                  prop="lastestDebt"
+                  show-overflow-tooltip
+                  label="总欠款金额"
                 >
-                  <el-table-column type="selection" width="55">
-                  </el-table-column>
-                  <el-table-column
-                    prop="status"
-                    show-overflow-tooltip
-                    label="状态"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="name"
-                    show-overflow-tooltip
-                    label="姓名"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="relation"
-                    show-overflow-tooltip
-                    label="关系"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="address"
-                    show-overflow-tooltip
-                    label="地址"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="type"
-                    show-overflow-tooltip
-                    label="类型"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="remark"
-                    show-overflow-tooltip
-                    label="备注"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="letterCount"
-                    show-overflow-tooltip
-                    label="信函次数"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    label="操作"
-                    v-if="letterVisible2"
-                    width="250"
-                  >
-                    <template slot-scope="scope">
-                      <el-popover
-                        v-model="scope.row.showHistory"
-                        placement="top"
-                        width="600"
-                        trigger="manual"
-                      >
-                        <el-table :data="scope.row.history" height="300">
-                          <el-table-column
-                            show-overflow-tooltip
-                            property="opTime"
-                            label="操作时间"
-                          ></el-table-column>
-                          <el-table-column
-                            show-overflow-tooltip
-                            property="type"
-                            label="分类"
-                          ></el-table-column>
-                          <el-table-column
-                            show-overflow-tooltip
-                            property="context"
-                            label="操作内容"
-                          ></el-table-column>
-                          <el-table-column
-                            show-overflow-tooltip
-                            property="operName"
-                            label="操作人"
-                          ></el-table-column>
-                        </el-table>
-                        <div style="text-align:center">
-                          <el-button
-                            type="primary"
-                            @click="$set(scope.row, 'showHistory', false)"
-                          >关闭
-                          </el-button
-                          >
-                        </div>
-                        <el-button
-                          slot="reference"
-                          type="text"
-                          @click="showHistoryAddr(scope.row)"
-                          v-if="letterVisible2"
-                        >历史记录
-                        </el-button
-                        >
-                      </el-popover>
-                      <el-button
-                        type="text"
-                        @click="applyLetter(scope.row)"
-                        v-if=" (caseDetail.currentuser || mycaseFlag) && letterVisible2"
-                      >申请信函
-                      </el-button
-                      >
-                      <el-button
-                        type="text"
-                        @click="editAddr(scope.row)"
-                        v-if="(caseDetail.currentuser || mycaseFlag) && letterVisible2"
-                      >编辑
-                      </el-button
-                      >
-                      <el-button
-                        type="text"
-                        @click="deleteAddr(scope.row.id)"
-                        v-if="(caseDetail.currentuser || mycaseFlag) && letterVisible2"
-                      >删除
-                      </el-button
-                      >
-                    </template>
-                  </el-table-column>
-                </el-table>
-                <el-table
-                  highlight-current-row
-                  :data="letterList"
-                  border
-                  stripe
-                  v-if="letterVisible"
-                  style="width: 100%"
-                  class="table-wrap"
+                </el-table-column>
+                <el-table-column
+                  prop="endDate"
+                  show-overflow-tooltip
+                  label="截止日期"
                 >
-                  <el-table-column type="selection" width="55">
-                  </el-table-column>
-                  <el-table-column
-                    prop="status"
-                    show-overflow-tooltip
-                    label="状态"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="address"
-                    show-overflow-tooltip
-                    label="地址"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="applyContext"
-                    show-overflow-tooltip
-                    label="申请内容"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="addressType"
-                    show-overflow-tooltip
-                    label="地址类型"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="letterType"
-                    show-overflow-tooltip
-                    label="信函类别"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="applyDate"
-                    show-overflow-tooltip
-                    label="申请时间"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="applyer"
-                    show-overflow-tooltip
-                    label="申请人"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="synergyer"
-                    show-overflow-tooltip
-                    label="协催人"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="synergyDate"
-                    show-overflow-tooltip
-                    label="协催时间"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="synergyResult"
-                    show-overflow-tooltip
-                    label="协催结果"
-                  >
-                  </el-table-column>
-                </el-table>
-              </el-tab-pane>
-              <el-tab-pane label="案人数据" name="3" class="tabs-wrap telPanel">
-                <div class="operation" v-if="letterVisible2">
-                  <div class="left-oper"></div>
-                  <div class="right-oper">
-                    <el-button
-                      type="primary"
-                      @click="onClickAddArchive"
-                      v-if=" caseDetail.currentuser || mycaseFlag"
-                    >新增案人数据
-                    </el-button
-                    >
-                  </div>
-                </div>
-                <el-table
-                  highlight-current-row
-                  :data="dataList"
-                  border
-                  stripe
-                  height="1"
-                  style="width: 100%;min-height: 200px;"
-                  class="table-wrap"
+                </el-table-column>
+                <el-table-column
+                  prop="principal"
+                  show-overflow-tooltip
+                  label="本金"
                 >
-                  <el-table-column
-                    prop="name"
-                    show-overflow-tooltip
-                    label="姓名"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="msgType"
-                    show-overflow-tooltip
-                    label="信息类型"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="msgContext"
-                    show-overflow-tooltip
-                    label="信息内容"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="remark"
-                    show-overflow-tooltip
-                    label="备注"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="createTime"
-                    show-overflow-tooltip
-                    label="导入时间"
-                  >
-                  </el-table-column>
-                </el-table>
-              </el-tab-pane>
-              <el-tab-pane label="催记" name="4" class="tabs-wrap">
-                <div class="operation">
-                  <div class="left-oper">
-                    <el-radio-group
-                      v-model="memorizeType"
-                      @change="memorizeTypeChange"
-                    >
-                      <el-radio :label="1">本案催记</el-radio>
-                      <el-radio :label="2">同批次共债催记</el-radio>
-                      <el-radio :label="3">共债催记</el-radio>
-                      <el-radio :label="4">同卡催记</el-radio>
-                    </el-radio-group>
-                  </div>
-                  <div class="right-oper">
-                    <el-button
-                      type="primary"
-                      @click="addDataCollect"
-                      v-if=" caseDetail.currentuser || mycaseFlag"
-                    >添加辅助催记
-                    </el-button
-                    >
-                    <el-button
-                      type="primary"
-                      @click="_expDataCollect"
-                      v-if=" caseDetail.currentuser || mycaseFlag"
-                    >导出本案催记
-                    </el-button
-                    >
-                  </div>
-                </div>
-                <el-table
-                  highlight-current-row
-                  :data="memorizeList"
-                  style="width: 100%; min-height: 200px;"
-                  height="1"
-                  border
-                  stripe
-                  class="table-wrap"
+                </el-table-column>
+                <el-table-column
+                  prop="interest"
+                  show-overflow-tooltip
+                  label="利息"
                 >
-
+                </el-table-column>
+                <el-table-column
+                  prop="penalty"
+                  show-overflow-tooltip
+                  label="违约金"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="lateFee"
+                  show-overflow-tooltip
+                  label="滞纳金"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="overrunFee"
+                  show-overflow-tooltip
+                  label="超限费"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="serivceFee"
+                  show-overflow-tooltip
+                  label="服务费"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="yearFee"
+                  show-overflow-tooltip
+                  label="年费"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="elseFee"
+                  show-overflow-tooltip
+                  label="其他费用"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="sheetFee"
+                  show-overflow-tooltip
+                  label="表外息"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="content"
+                  show-overflow-tooltip
+                  label="导入时间"
+                >
+                </el-table-column>
+              </el-table>
+            </el-tab-pane>
+            <el-tab-pane
+              label="案件登帐"
+              name="8"
+              class="tabs-wrap billing-wrap"
+            >
+              <div class="first">
+                <p style="line-height: 30px">承诺还款记录</p>
+                <el-table highlight-current-row width="100%" border stripe  height="1" show-overflow-tooltip style="min-height:200px;" :data="memorizeList2">
                   <el-table-column
-                    prop="collectTime"
+                    prop="repayAmtMsg"
                     show-overflow-tooltip
-                    sortable
-                    :sort-orders="['ascending','descending']"
-                    label="时间"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="targetName"
-                    show-overflow-tooltip
-                    label="对象姓名"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="relation"
-                    show-overflow-tooltip
-                    label="关系"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="mobile"
-                    show-overflow-tooltip
-                    label="电话/地址"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="telType"
-                    show-overflow-tooltip
-                    label="类型"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="collectInfo"
-                    show-overflow-tooltip
-                    label="催收信息"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="result"
-                    show-overflow-tooltip
-                    label="催收结果"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="targetName"
-                    show-overflow-tooltip
-                    label="催收对象"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="methodMsg"
-                    show-overflow-tooltip
-                    label="谈判方式"
+                    align="center"
+                    label="承诺还款金额"
                   >
                   </el-table-column>
                   <el-table-column
                     prop="repayTime"
                     show-overflow-tooltip
-                    label="承诺日期"
+                    align="center"
+                    label="承诺还款时间"
                   >
                   </el-table-column>
                   <el-table-column
-                    prop="repayAmtMsg"
+                    prop="createUser.userName"
                     show-overflow-tooltip
-                    label="承诺金额"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="reduceAmtMsg"
-                    show-overflow-tooltip
-                    label="减免金额"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="reduceStatusMsg"
-                    show-overflow-tooltip
-                    label="减免状态"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="odv"
-                    show-overflow-tooltip
-                    label="催收人"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="collectStatusMsg"
-                    show-overflow-tooltip
-                    label="催收状态"
-                  >
-                  </el-table-column>
-                  <el-table-column label="操作" width="100">
-                    <template slot-scope="scope">
-                      <el-button
-                        type="text"
-                        @click="editDataCollect(scope.row)"
-                        v-if=" caseDetail.currentuser || mycaseFlag"
-                      >编辑
-                      </el-button
-                      >
-                      <el-button type="text" v-if=" caseDetail.currentuser || mycaseFlag"
-                                 @click="delDataCollect(scope.row)"
-                      >删除
-                      </el-button
-                      >
-                    </template>
-                  </el-table-column>
-                </el-table>
-              </el-tab-pane>
-              <el-tab-pane label="评语" name="5" class="tabs-wrap telPanel">
-                <el-table
-                  highlight-current-row
-                  :data="commentList"
-                  border
-                  stripe
-                  height="1"
-                  style="width: 100%;min-height: 200px;"
-                  class="table-wrap"
-                >
-                  <el-table-column
-                    prop="comment"
-                    show-overflow-tooltip
-                    label="评语内容"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="creatUserName"
-                    show-overflow-tooltip
-                    width="150"
-                    label="提交人"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="createTime"
-                    show-overflow-tooltip
-                    width="150"
-                    label="提交时间"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    label="操作"
-                    v-if="letterVisible2"
-                    width="150"
-                  >
-                    <template slot-scope="scope">
-                      <el-popover
-                        placement="bottom-end"
-                        trigger="manual"
-                        title="编辑操作记录"
-                        width="500"
-                        v-model="scope.row.editCommentVisible"
-                      >
-                        <div>
-                          <el-input
-                            type="textarea"
-                            :rows="4"
-                            placeholder="请输入评语"
-                            v-model="scope.row.editContext"
-                          >
-                          </el-input>
-                        </div>
-                        <div style="text-align: right; margin-top: 12px">
-                          <el-button
-                            size="mini"
-                            type="text"
-                            @click="
-                              $set(scope.row, 'editCommentVisible', false)
-                            "
-                          >取消
-                          </el-button
-                          >
-                          <el-button
-                            type="primary"
-                            size="mini"
-                            @click="onClickSaveComment"
-                          >确定
-                          </el-button
-                          >
-                        </div>
-                        <el-button
-                          type="text"
-                          @click="editComment(scope.row)"
-                          slot="reference"
-                          v-if=" caseDetail.currentuser || mycaseFlag"
-                        >修改
-                        </el-button
-                        >
-                      </el-popover>
-                      <el-button
-                        type="text"
-                        v-if=" caseDetail.currentuser || mycaseFlag"
-                        @click="_deleteComment(scope.row.id)"
-                      >删除
-                      </el-button
-                      >
-                    </template>
-                  </el-table-column>
-                </el-table>
-              </el-tab-pane>
-              <el-tab-pane label="利息更新" name="7" class="tabs-wrap telPanel">
-                <el-table
-                  highlight-current-row
-                  :data="rateUpdateList"
-                  border
-                  stripe
-                  height="1"
-                  style="width: 100%;min-height: 200px;"
-                  class="table-wrap"
-                >
-                  <el-table-column
-                    prop="currency"
-                    show-overflow-tooltip
-                    label="币种"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="lastestDebt"
-                    show-overflow-tooltip
-                    label="总欠款金额"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="endDate"
-                    show-overflow-tooltip
-                    label="截止日期"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="principal"
-                    show-overflow-tooltip
-                    label="本金"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="interest"
-                    show-overflow-tooltip
-                    label="利息"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="penalty"
-                    show-overflow-tooltip
-                    label="违约金"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="lateFee"
-                    show-overflow-tooltip
-                    label="滞纳金"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="overrunFee"
-                    show-overflow-tooltip
-                    label="超限费"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="serivceFee"
-                    show-overflow-tooltip
-                    label="服务费"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="yearFee"
-                    show-overflow-tooltip
-                    label="年费"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="elseFee"
-                    show-overflow-tooltip
-                    label="其他费用"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="sheetFee"
-                    show-overflow-tooltip
-                    label="表外息"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="content"
-                    show-overflow-tooltip
-                    label="导入时间"
+                    align="center"
+                    label="录入人"
                   >
                   </el-table-column>
                 </el-table>
-              </el-tab-pane>
-              <el-tab-pane
-                label="案件登帐"
-                name="8"
-                class="tabs-wrap billing-wrap"
-              >
-                <div class="first">
-                  <p style="line-height: 30px">承诺还款记录</p>
-                  <el-table highlight-current-row width="100%" border stripe  height="1" show-overflow-tooltip style="min-height:200px;" :data="memorizeList2">
-                    <el-table-column
-                      prop="repayAmtMsg"
-                      show-overflow-tooltip
-                      align="center"
-                      label="承诺还款金额"
-                    >
-                    </el-table-column>
-                    <el-table-column
-                      prop="repayTime"
-                      show-overflow-tooltip
-                      align="center"
-                      label="承诺还款时间"
-                    >
-                    </el-table-column>
-                    <el-table-column
-                      prop="createUser.userName"
-                      show-overflow-tooltip
-                      align="center"
-                      label="录入人"
-                    >
-                    </el-table-column>
-                  </el-table>
-                </div>
-                <div class="second">
-                  <p style="line-height: 30px">
-                    待银行查账记录
-                    <el-button type="text" @click="addCpInfo">新增</el-button>
-                  </p>
-                  <el-table highlight-current-row width="100%;" border stripe  height="1" show-overflow-tooltip style="min-height:200px;" :data="cpList">
-                    <el-table-column
-                      prop="cpMoneyMsg"
-                      align="center"
-                      width="140"
-                      show-overflow-tooltip
-                      label="待银行查账金额"
-                    >
-                    </el-table-column>
-                    <el-table-column
-                      prop="cpDate"
-                      align="center"
-                      width="140"
-                      show-overflow-tooltip
-                      label="待银行查账时间"
-                    >
-                    </el-table-column>
-                    <el-table-column
-                      prop="repayUser"
-                      align="center"
-                      show-overflow-tooltip
-                      label="还款人"
-                    >
-                    </el-table-column>
-                    <el-table-column
-                      prop="repayTypeMsg"
-                      align="center"
-                      show-overflow-tooltip
-                      label="还款方式"
-                    >
-                    </el-table-column>
-                    <el-table-column
-                      prop="confirmMoneyMsg"
-                      align="center"
-                      show-overflow-tooltip
-                      label="确认还款"
-                    >
-                    </el-table-column>
-                    <el-table-column
-                      prop="repayDate"
-                      show-overflow-tooltip
-                      align="center"
-                      label="还款日期"
-                    >
-                    </el-table-column>
-                    <el-table-column
-                      prop="confirmDate"
-                      show-overflow-tooltip
-                      align="center"
-                      label="确认时间"
-                    >
-                    </el-table-column>
-                    <el-table-column
-                      prop="remark"
-                      show-overflow-tooltip
-                      align="center"
-                      label="备注"
-                    >
-                    </el-table-column>
-                  </el-table>
-                </div>
-              </el-tab-pane>
-              <el-tab-pane label="协催" name="9" class="tabs-wrap telPanel">
-                <div class="operation">
-                  <div class="left-oper">
-                    <el-radio-group v-model="syncType" @change="syncTypeChange">
-                      <el-radio :label="1">全部</el-radio>
-                      <el-radio :label="2">待审核</el-radio>
-                      <el-radio :label="3">待办</el-radio>
-                      <el-radio :label="4">已完成</el-radio>
-                      <el-radio :label="5">已撤销</el-radio>
-                    </el-radio-group>
-                  </div>
-                  <div class="right-oper">
-                    <el-button
-                      type="primary"
-                      @click="showSynergyApply"
-                      v-if=" caseDetail.currentuser || mycaseFlag"
-                    >添加协催申请
-                    </el-button
-                    >
-                    <el-button
-                      type="primary"
-                      @click="showSynergyResult"
-                      v-if=" caseDetail.currentuser || mycaseFlag"
-                    >添加协催记录
-                    </el-button
-                    >
-                  </div>
-                </div>
-                <el-table
-                  highlight-current-row
-                  :data="syncList"
-                  height="1"
-                  style="width: 100%;min-height: 200px;"
-                  border
-                  stripe
-                  class="table-wrap"
-                >
+              </div>
+              <div class="second">
+                <p style="line-height: 30px">
+                  待银行查账记录
+                  <el-button type="text" @click="addCpInfo">新增</el-button>
+                </p>
+                <el-table highlight-current-row width="100%;" border stripe  height="1" show-overflow-tooltip style="min-height:200px;" :data="cpList">
                   <el-table-column
-                    prop="statusMsg"
+                    prop="cpMoneyMsg"
+                    align="center"
+                    width="140"
                     show-overflow-tooltip
-                    label="状态"
+                    label="待银行查账金额"
                   >
                   </el-table-column>
                   <el-table-column
-                    prop="synergisticType.name"
+                    prop="cpDate"
+                    align="center"
+                    width="140"
                     show-overflow-tooltip
-                    label="协催类型"
+                    label="待银行查账时间"
                   >
                   </el-table-column>
                   <el-table-column
-                    prop="applyContent"
+                    prop="repayUser"
+                    align="center"
                     show-overflow-tooltip
-                    label="申请内容"
+                    label="还款人"
                   >
                   </el-table-column>
                   <el-table-column
-                    prop="applyTime"
+                    prop="repayTypeMsg"
+                    align="center"
                     show-overflow-tooltip
-                    label="申请时间"
+                    label="还款方式"
                   >
                   </el-table-column>
                   <el-table-column
-                    prop="applyUser.userName"
+                    prop="confirmMoneyMsg"
+                    align="center"
                     show-overflow-tooltip
-                    label="申请人"
+                    label="确认还款"
                   >
                   </el-table-column>
                   <el-table-column
-                    prop="synergisticTime"
+                    prop="repayDate"
                     show-overflow-tooltip
-                    label="协催时间"
+                    align="center"
+                    label="还款日期"
                   >
                   </el-table-column>
                   <el-table-column
-                    prop="synergisticUser.userName"
+                    prop="confirmDate"
                     show-overflow-tooltip
-                    label="协催人"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="synergisticResult"
-                    show-overflow-tooltip
-                    label="协催结果"
-                  >
-                  </el-table-column>
-                </el-table>
-              </el-tab-pane>
-              <el-tab-pane label="共债案件" name="10" class="tabs-wrap telPanel" v-if="userInfo.sameBatch">
-                <el-table
-                  highlight-current-row
-                  :data="caseSameList"
-                  height="1"
-                  style="width: 100%;min-height: 200px;"
-                  border
-                  stripe
-                  class="table-wrap"
-                >
-                  <el-table-column
-                    prop="batchNo"
-                    show-overflow-tooltip
-                    label="批次号"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="seqNo"
-                    show-overflow-tooltip
-                    label="个案序列号"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="caseDate"
-                    show-overflow-tooltip
-                    label="委托日期"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="name"
-                    show-overflow-tooltip
-                    label="姓名"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="cardNo"
-                    show-overflow-tooltip
-                    label="卡号"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="client"
-                    show-overflow-tooltip
-                    label="委托方"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="moneyMsg"
-                    show-overflow-tooltip
-                    label="委案金额"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="collectStatusMsg"
-                    show-overflow-tooltip
-                    label="催收状态"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="enRepayAmtMsg"
-                    show-overflow-tooltip
-                    label="已还款"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="odv"
-                    show-overflow-tooltip
-                    label="催收员"
-                  >
-                  </el-table-column>
-                </el-table>
-              </el-tab-pane>
-              <el-tab-pane label="操作记录" name="11" class="tabs-wrap telPanel">
-                <div class="operation">
-                  <div class="left-oper">
-                    <el-radio-group v-model="logType" @change="logTypeChange">
-                      <el-radio label="">全部</el-radio>
-                      <el-radio label="电话催收">电话催收</el-radio>
-                      <el-radio label="电话管理">电话管理</el-radio>
-                      <el-radio label="案件管理">案件管理</el-radio>
-                      <el-radio label="待银行查账管理">待银行查账</el-radio>
-                    </el-radio-group>
-                  </div>
-                  <div class="right-oper">
-                  </div>
-                </div>
-                <el-table
-                  highlight-current-row
-                  :data="logList"
-                  border
-                  stripe
-                  height="1"
-                  max-height=350
-                  style="width: 100%;min-height: 200px;"
-                  class="table-wrap"
-                >
-                  <el-table-column
-                    prop="opTime"
-                    width="150"
-                    show-overflow-tooltip
-                    label="时间"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="type"
-                    width="150"
-                    show-overflow-tooltip
-                    label="类别"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="context"
-                    show-overflow-tooltip
-                    label="操作内容"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="operName"
-                    width="100"
-                    show-overflow-tooltip
-                    label="操作人"
-                  >
-                  </el-table-column>
-                </el-table>
-              </el-tab-pane>
-              <el-tab-pane label="诉讼案件" name="12" class="tabs-wrap telPanel susong">
-                <div class="operation">
-                  <div class="left-oper"></div>
-                  <div class="right-oper">
-                    <el-button
-                      type="primary"
-                      @click="litigationApply"
-                      v-if=" caseDetail.currentuser || mycaseFlag"
-                    >申请诉讼
-                    </el-button
-                    >
-                  </div>
-                </div>
-                <el-table
-                  highlight-current-row
-                  border
-                  stripe
-                  :data="legalList"
-                  height="1"
-                  style="width: 100%;margin-top:5px;min-height: 200px;"
-                  class="table-wrap"
-                >
-                  <el-table-column
-                    prop="legalStatusMsg"
-                    show-overflow-tooltip
-                    label="案件状态"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="progressMsg"
-                    show-overflow-tooltip
-                    label="办案进度"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="legalType"
-                    show-overflow-tooltip
-                    label="案件类型"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="cstName"
-                    show-overflow-tooltip
-                    label="客户姓名"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="legalDate"
-                    show-overflow-tooltip
-                    label="委案日期"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="clientele"
-                    show-overflow-tooltip
-                    label="委托人"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="accused"
-                    show-overflow-tooltip
-                    label="被告人"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="tital"
-                    show-overflow-tooltip
-                    label="标的"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="cost"
-                    show-overflow-tooltip
-                    label="费用"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="owner"
-                    show-overflow-tooltip
-                    label="所属人"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="court"
-                    show-overflow-tooltip
-                    label="受案法院"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="legalNo"
-                    show-overflow-tooltip
-                    label="案号"
+                    align="center"
+                    label="确认时间"
                   >
                   </el-table-column>
                   <el-table-column
                     prop="remark"
                     show-overflow-tooltip
+                    align="center"
                     label="备注"
                   >
                   </el-table-column>
                 </el-table>
-              </el-tab-pane>
-              <el-tab-pane label="减免管理" name="13" class="tabs-wrap susong">
-                <div class="operation">
-                  <div class="left-oper"></div>
-                  <div class="right-oper">
-                    <el-button
-                      type="primary"
-                      v-if=" caseDetail.currentuser || mycaseFlag"
-                      @click="showadddialogVisible"
-                    >添加减免申请
-                    </el-button
-                    >
-                  </div>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="协催" name="9" class="tabs-wrap telPanel">
+              <div class="operation">
+                <div class="left-oper">
+                  <el-radio-group v-model="syncType" @change="syncTypeChange">
+                    <el-radio :label="1">全部</el-radio>
+                    <el-radio :label="2">待审核</el-radio>
+                    <el-radio :label="3">待办</el-radio>
+                    <el-radio :label="4">已完成</el-radio>
+                    <el-radio :label="5">已撤销</el-radio>
+                  </el-radio-group>
                 </div>
-                <el-table
-                  highlight-current-row
-                  :data="reduceApplyList"
-                  height="1"
-                  style="width: 100%; min-height:200px;"
-                  border
-                  stripe
-                  class="table-wrap"
+                <div class="right-oper">
+                  <el-button
+                    type="primary"
+                    @click="showSynergyApply"
+                    v-if=" caseDetail.currentuser || mycaseFlag"
+                  >添加协催申请
+                  </el-button
+                  >
+                  <el-button
+                    type="primary"
+                    @click="showSynergyResult"
+                    v-if=" caseDetail.currentuser || mycaseFlag"
+                  >添加协催记录
+                  </el-button
+                  >
+                </div>
+              </div>
+              <el-table
+                highlight-current-row
+                :data="syncList"
+                height="1"
+                style="width: 100%;min-height: 200px;"
+                border
+                stripe
+                class="table-wrap"
+              >
+                <el-table-column
+                  prop="statusMsg"
+                  show-overflow-tooltip
+                  label="状态"
                 >
-                  <el-table-column
-                    prop="reduceType"
-                    show-overflow-tooltip
-                    label="类型"
+                </el-table-column>
+                <el-table-column
+                  prop="synergisticType.name"
+                  show-overflow-tooltip
+                  label="协催类型"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="applyContent"
+                  show-overflow-tooltip
+                  label="申请内容"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="applyTime"
+                  show-overflow-tooltip
+                  label="申请时间"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="applyUser.userName"
+                  show-overflow-tooltip
+                  label="申请人"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="synergisticTime"
+                  show-overflow-tooltip
+                  label="协催时间"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="synergisticUser.userName"
+                  show-overflow-tooltip
+                  label="协催人"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="synergisticResult"
+                  show-overflow-tooltip
+                  label="协催结果"
+                >
+                </el-table-column>
+              </el-table>
+            </el-tab-pane>
+            <el-tab-pane label="共债案件" name="10" class="tabs-wrap telPanel" v-if="userInfo.sameBatch">
+              <el-table
+                highlight-current-row
+                :data="caseSameList"
+                height="1"
+                style="width: 100%;min-height: 200px;"
+                border
+                stripe
+                class="table-wrap"
+              >
+                <el-table-column
+                  prop="batchNo"
+                  show-overflow-tooltip
+                  label="批次号"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="seqNo"
+                  show-overflow-tooltip
+                  label="个案序列号"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="caseDate"
+                  show-overflow-tooltip
+                  label="委托日期"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="name"
+                  show-overflow-tooltip
+                  label="姓名"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="cardNo"
+                  show-overflow-tooltip
+                  label="卡号"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="client"
+                  show-overflow-tooltip
+                  label="委托方"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="moneyMsg"
+                  show-overflow-tooltip
+                  label="委案金额"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="collectStatusMsg"
+                  show-overflow-tooltip
+                  label="催收状态"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="enRepayAmtMsg"
+                  show-overflow-tooltip
+                  label="已还款"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="odv"
+                  show-overflow-tooltip
+                  label="催收员"
+                >
+                </el-table-column>
+              </el-table>
+            </el-tab-pane>
+            <el-tab-pane label="操作记录" name="11" class="tabs-wrap telPanel">
+              <div class="operation">
+                <div class="left-oper">
+                  <el-radio-group v-model="logType" @change="logTypeChange">
+                    <el-radio label="">全部</el-radio>
+                    <el-radio label="电话催收">电话催收</el-radio>
+                    <el-radio label="电话管理">电话管理</el-radio>
+                    <el-radio label="案件管理">案件管理</el-radio>
+                    <el-radio label="待银行查账管理">待银行查账</el-radio>
+                  </el-radio-group>
+                </div>
+                <div class="right-oper">
+                </div>
+              </div>
+              <el-table
+                highlight-current-row
+                :data="logList"
+                border
+                stripe
+                height="1"
+                max-height=350
+                style="width: 100%;min-height: 200px;"
+                class="table-wrap"
+              >
+                <el-table-column
+                  prop="opTime"
+                  width="150"
+                  show-overflow-tooltip
+                  label="时间"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="type"
+                  width="150"
+                  show-overflow-tooltip
+                  label="类别"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="context"
+                  show-overflow-tooltip
+                  label="操作内容"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="operName"
+                  width="100"
+                  show-overflow-tooltip
+                  label="操作人"
+                >
+                </el-table-column>
+              </el-table>
+            </el-tab-pane>
+            <el-tab-pane label="诉讼案件" name="12" class="tabs-wrap telPanel susong">
+              <div class="operation">
+                <div class="left-oper"></div>
+                <div class="right-oper">
+                  <el-button
+                    type="primary"
+                    @click="litigationApply"
+                    v-if=" caseDetail.currentuser || mycaseFlag"
+                  >申请诉讼
+                  </el-button
                   >
-                  </el-table-column>
-                  <el-table-column
-                    prop="applyStatusMsg"
-                    show-overflow-tooltip
-                    label="处理状态"
+                </div>
+              </div>
+              <el-table
+                highlight-current-row
+                border
+                stripe
+                :data="legalList"
+                height="1"
+                style="width: 100%;margin-top:5px;min-height: 200px;"
+                class="table-wrap"
+              >
+                <el-table-column
+                  prop="legalStatusMsg"
+                  show-overflow-tooltip
+                  label="案件状态"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="progressMsg"
+                  show-overflow-tooltip
+                  label="办案进度"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="legalType"
+                  show-overflow-tooltip
+                  label="案件类型"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="cstName"
+                  show-overflow-tooltip
+                  label="客户姓名"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="legalDate"
+                  show-overflow-tooltip
+                  label="委案日期"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="clientele"
+                  show-overflow-tooltip
+                  label="委托人"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="accused"
+                  show-overflow-tooltip
+                  label="被告人"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="tital"
+                  show-overflow-tooltip
+                  label="标的"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="cost"
+                  show-overflow-tooltip
+                  label="费用"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="owner"
+                  show-overflow-tooltip
+                  label="所属人"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="court"
+                  show-overflow-tooltip
+                  label="受案法院"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="legalNo"
+                  show-overflow-tooltip
+                  label="案号"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="remark"
+                  show-overflow-tooltip
+                  label="备注"
+                >
+                </el-table-column>
+              </el-table>
+            </el-tab-pane>
+            <el-tab-pane label="减免管理" name="13" class="tabs-wrap susong">
+              <div class="operation">
+                <div class="left-oper"></div>
+                <div class="right-oper">
+                  <el-button
+                    type="primary"
+                    v-if=" caseDetail.currentuser || mycaseFlag"
+                    @click="showadddialogVisible"
+                  >添加减免申请
+                  </el-button
                   >
-                    <template slot-scope="scope">
-                      {{
-                      scope.row.applyStatus == 0
-                      ? "待审核"
-                      : scope.row.applyStatus == 1
-                      ? "已审核"
-                      : "已完成"
-                      }}
-                    </template>
-                  </el-table-column>
-                  <el-table-column
-                    prop="applyStatusMsg"
-                    show-overflow-tooltip
-                    label="减免/报备状态"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="applyTime"
-                    show-overflow-tooltip
-                    label="申请日期"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="applyUser"
-                    show-overflow-tooltip
-                    label="减免申请人"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="auditTime"
-                    show-overflow-tooltip
-                    label="审核日期"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="createTime"
-                    show-overflow-tooltip
-                    label="提交日期"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="completeTime"
-                    show-overflow-tooltip
-                    label="完成日期"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="completeUser"
-                    show-overflow-tooltip
-                    label="完成人"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="reduceResult"
-                    show-overflow-tooltip
-                    label="减免/报备结果"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="user"
-                    show-overflow-tooltip
-                    label="是否报备"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    show-overflow-tooltip
-                    width="120"
-                    label="操作"
-                  >
-                    <template slot-scope="scope">
-                      <!--<el-upload
-                        class="upload-demo"
-                        :action="action + '/reduce/save/import'"
-                        :headers="header"
-                        :show-file-list="false"
-                        :data="fileNames"
-                        :on-change="handleChange"
-                        :on-success="uploadSuccess2"
-                      >
-                        <el-button
-                          size="small"
-                          @click="moreId(scope.row.id)"
-                          type="text"
-                        >上传
-                        </el-button
-                        >
-                      </el-upload>-->
+                </div>
+              </div>
+              <el-table
+                highlight-current-row
+                :data="reduceApplyList"
+                height="1"
+                style="width: 100%; min-height:200px;"
+                border
+                stripe
+                class="table-wrap"
+              >
+                <el-table-column
+                  prop="reduceType"
+                  show-overflow-tooltip
+                  label="类型"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="applyStatusMsg"
+                  show-overflow-tooltip
+                  label="处理状态"
+                >
+                  <template slot-scope="scope">
+                    {{
+                    scope.row.applyStatus == 0
+                    ? "待审核"
+                    : scope.row.applyStatus == 1
+                    ? "已审核"
+                    : "已完成"
+                    }}
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  prop="applyStatusMsg"
+                  show-overflow-tooltip
+                  label="减免/报备状态"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="applyTime"
+                  show-overflow-tooltip
+                  label="申请日期"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="applyUser"
+                  show-overflow-tooltip
+                  label="减免申请人"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="auditTime"
+                  show-overflow-tooltip
+                  label="审核日期"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="createTime"
+                  show-overflow-tooltip
+                  label="提交日期"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="completeTime"
+                  show-overflow-tooltip
+                  label="完成日期"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="completeUser"
+                  show-overflow-tooltip
+                  label="完成人"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="reduceResult"
+                  show-overflow-tooltip
+                  label="减免/报备结果"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="user"
+                  show-overflow-tooltip
+                  label="是否报备"
+                >
+                </el-table-column>
+                <el-table-column
+                  show-overflow-tooltip
+                  width="120"
+                  label="操作"
+                >
+                  <template slot-scope="scope">
+                    <!--<el-upload
+                      class="upload-demo"
+                      :action="action + '/reduce/save/import'"
+                      :headers="header"
+                      :show-file-list="false"
+                      :data="fileNames"
+                      :on-change="handleChange"
+                      :on-success="uploadSuccess2"
+                    >
                       <el-button
-                        type="text"
                         size="small"
-                        @click="moreId(scope.row)"
+                        @click="moreId(scope.row.id)"
+                        type="text"
                       >上传
                       </el-button
                       >
-                      <el-button
-                        type="text"
-                        size="small"
-                        @click="editData(scope.row)"
-                      >修改
-                      </el-button
-                      >
-                      <el-button
-                        type="text"
-                        size="small"
-                        @click="deteleData(scope.row.id)"
-                      >删除
-                      </el-button
-                      >
-                    </template>
-                  </el-table-column>
-                </el-table>
-              </el-tab-pane>
-            </el-tabs>
-          </div>
-          <div class="right-wrap">
-            <el-card class="box-card">
-              <div slot="header" class="clearfix">
-                <span>自定义信息</span>
-                <el-button
-                  style="float: right; padding: 3px 0"
-                  type="text"
-                  @click="saveSelfInfo"
-                >保存
-                </el-button
-                >
-              </div>
-              <el-input
-                type="textarea"
-                :rows="8"
-                v-model="caseDetail.selfInfo"
-              ></el-input>
-            </el-card>
-          </div>
+                    </el-upload>-->
+                    <el-button
+                      type="text"
+                      size="small"
+                      @click="moreId(scope.row)"
+                    >上传
+                    </el-button
+                    >
+                    <el-button
+                      type="text"
+                      size="small"
+                      @click="editData(scope.row)"
+                    >修改
+                    </el-button
+                    >
+                    <el-button
+                      type="text"
+                      size="small"
+                      @click="deteleData(scope.row.id)"
+                    >删除
+                    </el-button
+                    >
+                  </template>
+                </el-table-column>
+              </el-table>
+            </el-tab-pane>
+          </el-tabs>
         </div>
-    <!--  </el-collapse-item>-->
-    </div>
-    <div class="basic-info">
-     <!-- <el-collapse-item title="催记信息" name="4">-->
-     	<div class="title-box">
-     		<p class="title">催记信息</p>
-     		<p class="title">同批次共债催记</p>
-     	</div>
-     
-        <div class="memorize-wrap">
-          <div class="left-panel">
-          	<el-form
-              :model="batchForm"
-              ref="batchForm"
-              label-width="100px"
-              class="demo-ruleForm"
-            >
-              <el-form-item label="电话" prop="mobile">
-                <el-col :span="16">
-                  <el-input
-                    v-model="batchForm.mobile" clearable
-                    placeholder="请输入电话号码"
-                  ></el-input>
-                </el-col>
-                <el-col :span="4">
-                  <img src="./bohao1.png" style="padding-left:7px;margin-top: 8px;cursor: pointer;" @click="sendTel2"/>
-                </el-col>
-                <el-col :span="4">
-                  <img src="./bohao2.png" style="padding-left:4px;margin-top: 8px;cursor: pointer;" @click="sendTel"/>
-                </el-col>
-              </el-form-item>
-              <el-form-item label="姓名" prop="targetName">
-                <el-input
-                  v-model="batchForm.targetName" clearable
-                  placeholder="请输入姓名"
-                ></el-input>
-              </el-form-item>
-              <el-form-item label="关系" prop="relation">
-                <el-input
-                  v-model="batchForm.relation" clearable
-                  placeholder="请输入关系"
-                ></el-input>
-              </el-form-item>
-              <el-form-item label="还款方式" prop="method">
-                <el-select
-                  v-model="batchForm.method" clearable
-                  placeholder="请选择还款方式"
-                >
-                  <el-option
-                    v-for="item in tpfsList"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.id"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label="催收结果" prop="result" :rules="{required: true, message: '催收结果不能为空', trigger: 'blur'}">
-                <el-select
-                  v-model="batchForm.result"
-                  placeholder="请选择催收结果" clearable
-                >
-                  <el-option
-                    v-for="item in csjgList"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.id"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label="承诺还款金额" prop="repayAmt">
-                <el-input
-                  v-model="batchForm.repayAmt" clearable
-                  placeholder="请输入承诺还款金额"
-                ></el-input>
-              </el-form-item>
-              <el-form-item label="承诺还款日期" prop="repayTime">
-                <el-date-picker
-                  v-model="batchForm.repayTime" clearable
-                  type="date"
-                  value-format="yyyy-MM-dd"
-                  placeholder="请输入承诺还款日期"
-                ></el-date-picker>
-              </el-form-item>
-              <el-form-item label="通话记录" prop="collectInfo" class="whole" :rules="{required: true, message: '通话记录不能为空', trigger: 'blur'}">
-                <el-input
-                  type="textarea" clearable
-                  :rows="4"
-                  placeholder="请输入通话记录"
-                  v-model="batchForm.collectInfo"
-                >
-                </el-input>
-              </el-form-item>
-              <el-form-item label="催收状态" prop="collectStatus" >
-                <el-select
-                  v-model="batchForm.collectStatus" clearable
-                  placeholder="请选择催收状态"
-                >
-                  <el-option
-                    v-for="item in csztList"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.id"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label=" " prop="cszt">
-                <el-checkbox
-                  v-model="batchForm.sType"
-                  :true-label="1"
-                  :false-label="0"
-                >更新批次共债案件催收状态
-                </el-checkbox
-                >
-              </el-form-item>
-
-              <el-form-item label="下次跟进日期" prop="nextFollDate">
-                <el-date-picker
-                  v-model="batchForm.nextFollDate"
-                  type="date"
-                  clearable
-                  value-format="yyyy-MM-dd"
-                  placeholder="请选择下次跟进日期"
-                ></el-date-picker>
-              </el-form-item>
-            </el-form>
-            <div class="operation">
-              <el-button type="primary" @click="onClickSaveCollection('batchForm')"
+        <div class="right-wrap">
+          <el-card class="box-card">
+            <div slot="header" class="clearfix">
+              <span>自定义信息</span>
+              <el-button
+                style="float: right; padding: 3px 0"
+                type="text"
+                @click="saveSelfInfo"
               >保存
               </el-button
               >
-              <el-button @click="batchForm = { sType: 0,targetName:'',mobile:'',relation:'',collectInfo:'' };$nextTick(()=>{
+            </div>
+            <el-input
+              type="textarea"
+              :rows="8"
+              v-model="caseDetail.selfInfo"
+            ></el-input>
+          </el-card>
+        </div>
+      </div>
+      <!--  </el-collapse-item>-->
+    </div>
+    <div class="basic-info">
+      <!-- <el-collapse-item title="催记信息" name="4">-->
+      <div class="title-box">
+        <p class="title">催记信息</p>
+        <p class="title">同批次共债催记</p>
+      </div>
+
+      <div class="memorize-wrap">
+        <div class="left-panel">
+          <el-form
+            :model="batchForm"
+            ref="batchForm"
+            label-width="100px"
+            class="demo-ruleForm"
+          >
+            <el-form-item label="电话" prop="mobile">
+              <el-col :span="16">
+                <el-input
+                  v-model="batchForm.mobile" clearable
+                  placeholder="请输入电话号码"
+                ></el-input>
+              </el-col>
+              <el-col :span="4">
+                <img src="./bohao1.png" style="padding-left:7px;margin-top: 8px;cursor: pointer;" @click="sendTel2"/>
+              </el-col>
+              <el-col :span="4">
+                <img src="./bohao2.png" style="padding-left:4px;margin-top: 8px;cursor: pointer;" @click="sendTel"/>
+              </el-col>
+            </el-form-item>
+            <el-form-item label="姓名" prop="targetName">
+              <el-input
+                v-model="batchForm.targetName" clearable
+                placeholder="请输入姓名"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="关系" prop="relation">
+              <el-input
+                v-model="batchForm.relation" clearable
+                placeholder="请输入关系"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="还款方式" prop="method">
+              <el-select
+                v-model="batchForm.method" clearable
+                placeholder="请选择还款方式"
+              >
+                <el-option
+                  v-for="item in tpfsList"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="催收结果" prop="result" :rules="{required: true, message: '催收结果不能为空', trigger: 'blur'}">
+              <el-select
+                v-model="batchForm.result"
+                placeholder="请选择催收结果" clearable
+              >
+                <el-option
+                  v-for="item in csjgList"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="承诺还款金额" prop="repayAmt">
+              <el-input
+                v-model="batchForm.repayAmt" clearable
+                placeholder="请输入承诺还款金额"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="承诺还款日期" prop="repayTime">
+              <el-date-picker
+                v-model="batchForm.repayTime" clearable
+                type="date"
+                value-format="yyyy-MM-dd"
+                placeholder="请输入承诺还款日期"
+              ></el-date-picker>
+            </el-form-item>
+            <el-form-item label="通话记录" prop="collectInfo" class="whole" :rules="{required: true, message: '通话记录不能为空', trigger: 'blur'}">
+              <el-input
+                type="textarea" clearable
+                :rows="4"
+                placeholder="请输入通话记录"
+                v-model="batchForm.collectInfo"
+              >
+              </el-input>
+            </el-form-item>
+            <el-form-item label="催收状态" prop="collectStatus" >
+              <el-select
+                v-model="batchForm.collectStatus" clearable
+                placeholder="请选择催收状态"
+              >
+                <el-option
+                  v-for="item in csztList"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label=" " prop="cszt">
+              <el-checkbox
+                v-model="batchForm.sType"
+                :true-label="1"
+                :false-label="0"
+              >更新批次共债案件催收状态
+              </el-checkbox
+              >
+            </el-form-item>
+
+            <el-form-item label="下次跟进日期" prop="nextFollDate">
+              <el-date-picker
+                v-model="batchForm.nextFollDate"
+                type="date"
+                clearable
+                value-format="yyyy-MM-dd"
+                placeholder="请选择下次跟进日期"
+              ></el-date-picker>
+            </el-form-item>
+          </el-form>
+          <div class="operation">
+            <el-button type="primary" @click="onClickSaveCollection('batchForm')"
+            >保存
+            </el-button
+            >
+            <el-button @click="batchForm = { sType: 0,targetName:'',mobile:'',relation:'',collectInfo:'' };$nextTick(()=>{
                 if($refs['batchForm']) {
                   $refs['batchForm'].resetFields()
                 }
               });">清空</el-button>
-            </div>
-          </div>
-          <div class="right-panel">
-            <el-table
-              highlight-current-row
-              :data="syncMemorizeList"
-              style="width: 100%"
-              border
-              stripe
-              class="table-wrap"
-            >
-              <el-table-column
-                prop="createTime"
-                sortable
-                :sort-orders="['ascending','descending']"
-                width="120"
-                label="时间"
-                show-overflow-tooltip
-              ></el-table-column>
-              <el-table-column
-                prop="targetName"
-                width="120"
-                label="对象姓名"
-                show-overflow-tooltip
-              ></el-table-column>
-              <el-table-column
-                prop="relation"
-                width="120"
-                label="关系"
-                show-overflow-tooltip
-              ></el-table-column>
-              <el-table-column
-                prop="mobile"
-                width="120"
-                label="电话/地址"
-                show-overflow-tooltip
-              ></el-table-column>
-              <el-table-column
-                prop="collectInfo"
-                label="催收记录"
-                show-overflow-tooltip
-              ></el-table-column>
-            </el-table>
           </div>
         </div>
-     <!-- </el-collapse-item>-->
+        <div class="right-panel">
+          <el-table
+            highlight-current-row
+            :data="syncMemorizeList"
+            style="width: 97%"
+            border
+            height="550px"
+            stripe
+            class="table-wrap"
+          >
+            <el-table-column
+              prop="createTime"
+              sortable
+              :sort-orders="['ascending','descending']"
+              width="120"
+              label="时间"
+              show-overflow-tooltip
+            ></el-table-column>
+            <el-table-column
+              prop="targetName"
+              width="120"
+              label="对象姓名"
+              show-overflow-tooltip
+            ></el-table-column>
+            <el-table-column
+              prop="relation"
+              width="120"
+              label="关系"
+              show-overflow-tooltip
+            ></el-table-column>
+            <el-table-column
+              prop="mobile"
+              width="120"
+              label="电话/地址"
+              show-overflow-tooltip
+            ></el-table-column>
+            <el-table-column
+              prop="collectInfo"
+              label="催收记录"
+              show-overflow-tooltip
+            ></el-table-column>
+          </el-table>
+        </div>
+      </div>
+      <!-- </el-collapse-item>-->
     </div>
     <el-dialog
       title="新增/编辑电话"
@@ -3218,25 +3213,25 @@
             </div>
           </el-col>
           <el-col :span="12">
-              <div class="grid-content bg-purple">
+            <div class="grid-content bg-purple">
               <el-form-item label=" ">
 
-                  <el-select
-                    v-model="messageForm.contactWay2"
+                <el-select
+                  v-model="messageForm.contactWay2"
                   placeholder="请选择" @change="changeWay"
-                    clearable
+                  clearable
+                >
+                  <el-option
+                    v-for="item in caseDetail.dataCaseTelEntityList"
+                    :key="item.tel"
+                    :label="item.tel"
+                    :value="item.tel"
                   >
-                    <el-option
-                      v-for="item in caseDetail.dataCaseTelEntityList"
-                      :key="item.tel"
-                      :label="item.tel"
-                      :value="item.tel"
-                    >
-                    </el-option>
-                  </el-select>
-                </el-form-item>
+                  </el-option>
+                </el-select>
+              </el-form-item>
 
-              </div>
+            </div>
           </el-col>
 
         </el-row>
@@ -3792,7 +3787,7 @@
           <el-radio label="黑">正常</el-radio>
           <el-radio label="蓝">标蓝</el-radio>
           <el-radio label="红">标红</el-radio>
-       <!--   <el-radio label="">不更改</el-radio>-->
+          <!--   <el-radio label="">不更改</el-radio>-->
         </el-radio-group>
       </div>
       <div style="text-align: right; margin-top: 12px">
@@ -3917,7 +3912,7 @@
       </div>
 
       >
-     </el-dialog>
+    </el-dialog>
     <el-dialog
       title="附件列表"
       class="dialog-wrap"
@@ -4187,7 +4182,7 @@
         for (var i=0;i<this.phoneSelectList.length;i++){
           tels.push("7"+this.phoneSelectList[i].tel)
         }
-        const callee = tels
+        const callees = tels
 
         const url = "http://"+this.caseDetail.telIpManage.address+"/openapi/V2.0.x/CallMultiNumbers"
         const time = new Date().getTime()
@@ -4211,7 +4206,7 @@
             seq,
             userData:time,
             agent,
-            callee
+            callees
           }
         }
         sendTelBatch(data,this.caseDetail.telIpManage.address).then(data => {
@@ -4245,7 +4240,7 @@
         for (var i=0;i<this.phoneSelectList.length;i++){
           tels.push("9"+this.phoneSelectList[i].tel)
         }
-        const callee = tels
+        const callees = tels
 
         const url = "http://"+this.caseDetail.telIpManage.address+"/openapi/V2.0.x/CallMultiNumbers"
         const time = new Date().getTime()
@@ -4269,7 +4264,7 @@
             seq,
             userData:time,
             agent,
-            callee
+            callees
           }
         }
         sendTelBatch(data,this.caseDetail.telIpManage.address).then(data => {
@@ -4430,12 +4425,12 @@
         });
       },
       showSynergyApply() {
-       /* getSynergyTypeList().then(data => {
-          this.synergyTypeList = data;
-        });
-        getSynergyContextList().then(data => {
-          this.synergyContextList = data;
-        });*/
+        /* getSynergyTypeList().then(data => {
+           this.synergyTypeList = data;
+         });
+         getSynergyContextList().then(data => {
+           this.synergyContextList = data;
+         });*/
         this.synergyTypeList = this.$store.getters.caseType.协催类型;
         this.synergyContextList = this.$store.getters.caseType.申请协催内容;
         this.dialogSyergyAplVisible = true;
@@ -4877,7 +4872,7 @@
               });
             });
 
-        });
+          });
       },
       addDataCollect() {
         this.dataCollectInfo = {};
@@ -5274,36 +5269,36 @@
         getCommentDetail(this.id).then(data => {
           this.commentList = data;
         });
-       /*  getEnum("谈判方式").then(data => {
-           this.tpfsList = data;
-         });*/
+        /*  getEnum("谈判方式").then(data => {
+            this.tpfsList = data;
+          });*/
         this.tpfsList = this.$store.getters.caseType.谈判方式;
         /*getEnum("催收模板").then(data => {
           this.csmbList = data;
         });*/
         this.csmbList = this.$store.getters.caseType.催收模板;
-       /* getEnum("催收结果").then(data => {
-          this.csjgList = data;
-        });*/
+        /* getEnum("催收结果").then(data => {
+           this.csjgList = data;
+         });*/
         this.csjgList = this.$store.getters.caseType.催收结果;
-      /*  getEnum("催收状态").then(data => {
-          this.csztList = data;
-        });*/
+        /*  getEnum("催收状态").then(data => {
+            this.csztList = data;
+          });*/
         this.csztList = this.$store.getters.caseType.催收状态;
-       /* getEnum("减免状态").then(data => {
-          this.jmztList = data;
-        });*/
+        /* getEnum("减免状态").then(data => {
+           this.jmztList = data;
+         });*/
         this.jmztList = this.$store.getters.caseType.减免状态;
-      /*  getEnum("电话类型").then(data => {
-          this.PhonetypeList = data;
-        });*/
+        /*  getEnum("电话类型").then(data => {
+            this.PhonetypeList = data;
+          });*/
         this.PhonetypeList = this.$store.getters.caseType.电话类型;
         pageDataFile(this.id).then(response => {
           this.uploadFileList = response;
         });
-      /*  getRepayType().then(data => {
-          this.repayTypeList = data;
-        });*/
+        /*  getRepayType().then(data => {
+            this.repayTypeList = data;
+          });*/
         this.repayTypeList = this.$store.getters.caseType.还款方式;
         /*getRepayRemark().then(data => {
           this.repayRemarkList = data;
@@ -5491,16 +5486,16 @@
       border-bottom: 1px solid #0080ff  !important;
     }
     .basic-info{
-    	.title-box{
-    		display: flex;
-    		.title{
-    			width: 40%;
-    			margin:12px 0;
-    			&:nth-child(1){
-    				margin-right: 24px;
-    			}
-    		}
-    	}
+      .title-box{
+        display: flex;
+        .title{
+          width: 40%;
+          margin:12px 0;
+          &:nth-child(1){
+            margin-right: 24px;
+          }
+        }
+      }
       .title-info{
         margin-bottom: 20px;
         display: flex;
