@@ -455,7 +455,7 @@
                     <el-dropdown-menu slot="dropdown">
                       <el-dropdown-item
                         :command="item.id"
-                        v-for="(item, i) in val10_data"
+                        v-for="(item, i) in collectStatusList2"
                         :key="i"
                         >{{ item.name }}</el-dropdown-item
                       >
@@ -764,6 +764,7 @@ export default {
         { label: "退档", value: 4 }
       ],
       val10_data: [], //催收状态
+      collectStatusList2:[],
       val11_data: [], //案件类型
       val14_data: [
         {
@@ -1229,6 +1230,8 @@ export default {
     this["val4_data"] = this.transform(this.$store.getters.caseType.地区);
     this["val8_data"] = this.transform(this.$store.getters.caseType.逾期账龄);
     this["val10_data"] = this.transform(this.$store.getters.caseType.催收状态);
+    this.collectStatusList2 = this.$store.getters.caseType.催收状态.slice(0);
+    this.collectStatusList2.shift();
     this["val11_data"] = this.transform(this.$store.getters.caseType.案件类型);
     this["val24_data"] = this.transform(this.$store.getters.caseType.减免状态);
     this["val25_data"] = this.transform(this.$store.getters.caseType.报备状态);
