@@ -7,7 +7,7 @@
        element-loading-background="rgba(0, 0, 0, 0.7)">
     <el-form ref="form" :model="formInline" :inline="true" class="query-wrap">
       <el-form-item v-if="queryConf.csqy || queryConfFlag">
-        <el-select v-model="formInline.collectAreas" :visible-arrow="false" filterable collapse-tags multiple placeholder="请选择催收区域" clearable>
+        <el-select v-model="formInline.collectAreas" :visible-arrow="false" filterable collapse-tags multiple placeholder="请选择催收区域" clearable >
           <el-option
             v-for="item in areaList"
             :key="item.id"
@@ -18,7 +18,7 @@
       </el-form-item>
       <el-form-item v-if="queryConf.pc || queryConfFlag">
         <el-select v-model="formInline.batchNos" style="min-width: 160px;" filterable collapse-tags multiple
-                   placeholder="请输入批次" clearable >
+                   placeholder="请输入批次" clearable remote  :remote-method="showBatchList">
           <el-option
             v-for="item in batchList"
             :key="item.id"
@@ -93,8 +93,14 @@
       <el-form-item v-if="queryConf.waje || queryConfFlag">
         <el-input v-model="formInline.moneyEnd" type="number" placeholder="请输入委案金额上限"></el-input>
       </el-form-item>
-      <el-form-item v-if="queryConf.yqts || queryConfFlag">
+     <!-- <el-form-item v-if="queryConf.yqts || queryConfFlag">
         <el-input v-model="formInline.overDays" type="number" placeholder="请输入逾期天数"></el-input>
+      </el-form-item>-->
+      <el-form-item v-if="queryConf.yqts || queryConfFlag">
+        <el-input v-model="formInline.overdueDaysStart" type="number" placeholder="请输入逾期天数下限"></el-input>
+      </el-form-item>
+      <el-form-item v-if="queryConf.yqts || queryConfFlag">
+        <el-input v-model="formInline.overdueDaysEnd" type="number" placeholder="请输入逾期天数上限"></el-input>
       </el-form-item>
       <el-form-item v-if="queryConf.kh || queryConfFlag">
         <el-input type="textarea" v-model="formInline.cardNo" placeholder="请输入卡号" style="width: 100%;"
@@ -666,13 +672,13 @@
       <div class="filter" v-if="showSendVisible1">
       	<h1>分配选项</h1>
       	 <el-checkbox-group v-model="fenan.sendType">
-      		<el-checkbox v-for="item in Aoptions" :label="item.id" :key="item.id">{{item.name}}</el-checkbox>
+      		<el-checkbox v-for="item in Aoptions" :label="item.id" >{{item.name}}</el-checkbox>
       	 </el-checkbox-group>
       </div>
        <div class="filter" v-if="showSendVisible1">
       	<h1>分配方式</h1>
       	<el-radio-group v-model="fenan.mathType">
-			    <el-radio v-for="item in Boptions" :label="item.id" :key="item.id">{{item.name}}</el-radio>
+			    <el-radio v-for="item in Boptions":label="item.id" :key="item.id">{{item.name}}</el-radio>
 			  </el-radio-group>
       </div>
        <div class="filter" v-if="showSendVisible1">
@@ -855,7 +861,7 @@
                         :rules="{required: true, message: '请选择催收状态', trigger: 'blur'}">
             <el-select v-model="formInline1.collectStatus" filterable placeholder="请选择催收状态" clearable>
               <el-option
-                v-for="item in collectStatusList"
+                v-for="item in collectStatusList2"
                 :key="item.id"
                 :label="item.name"
                 :value="item.id">
@@ -1351,6 +1357,7 @@
     dataList,
     getSynergyTypeList,
     clientCurrent,
+    batchList2,
     LeaveList,
     saveSelectFilter,
     selectByModule,
@@ -1452,6 +1459,7 @@
         countyList:[],
         accountAgeList: [],
         collectStatusList: [],
+        collectStatusList2:[],
         selectUserTree: [],
         selectUserVisible: false,
         selectUserVisible2: false,
@@ -1610,6 +1618,13 @@
         this.$set(this.formInline, 'depts', selectUserIds)
 
         this.departmentVisible = false
+      },
+
+      showBatchList(query){
+
+        batchList2({"batchNo":query}).then((response) => {
+          this.batchList = response;
+        })
       },
 
       clientCurrent(){
@@ -1977,12 +1992,16 @@
               type: 'warning',
               center: true
             }).then(() => {
+              this.loading2 = true
+              this.fullscreenLoading = true
               caseStatus(datasList).then((response) => {
                 this.$message({
                   type: 'success',
                   message: '操作成功!'
                 });
                 this.search()
+                this.loading2 = false
+                this.fullscreenLoading = false
               })
             }).catch(() => {
 
@@ -1995,12 +2014,16 @@
               type: 'warning',
               center: true
             }).then(() => {
+              this.loading2 = true
+              this.fullscreenLoading = true
               caseStatus(datasList).then((response) => {
                 this.$message({
                   type: 'success',
                   message: '操作成功!'
                 });
                 this.search()
+                this.loading2 = false
+                this.fullscreenLoading = false
               })
             }).catch(() => {
 
@@ -2012,12 +2035,16 @@
               type: 'warning',
               center: true
             }).then(() => {
+              this.loading2 = true
+              this.fullscreenLoading = true
               caseStatus(datasList).then((response) => {
                 this.$message({
                   type: 'success',
                   message: '操作成功!'
                 });
                 this.search()
+                this.loading2 = false
+                this.fullscreenLoading = false
               })
             }).catch(() => {
 
@@ -2029,12 +2056,16 @@
               type: 'warning',
               center: true
             }).then(() => {
+              this.loading2 = true
+              this.fullscreenLoading = true
               caseStatus(datasList).then((response) => {
                 this.$message({
                   type: 'success',
                   message: '操作成功!'
                 });
                 this.search()
+                this.loading2 = false
+                this.fullscreenLoading = false
               })
             }).catch(() => {
 
@@ -2046,12 +2077,16 @@
               type: 'warning',
               center: true
             }).then(() => {
+              this.loading2 = true
+              this.fullscreenLoading = true
               deteleCase(this.deleteList).then((response) => {
                 this.$message({
                   type: 'success',
                   message: '删除成功!'
                 });
                 this.search()
+                this.loading2 = false
+                this.fullscreenLoading = false
               })
             }).catch(() => {
 
@@ -2821,9 +2856,11 @@
         this.collectStatusList = response
       })*/
       this.collectStatusList = this.$store.getters.caseType.催收状态;
-/*      deleteStatusList().then((response) => {
-        this.deleteStatusList = response
-      })*/
+      this.collectStatusList2 = this.$store.getters.caseType.催收状态.slice(0);
+      this.collectStatusList2.shift();
+      /*      deleteStatusList().then((response) => {
+              this.deleteStatusList = response
+            })*/
       this.deleteStatusList = this.$store.getters.caseType.减免状态;
     /*  TellList().then((response) => {
         this.TellList = response

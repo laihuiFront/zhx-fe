@@ -1,12 +1,12 @@
 <template>
-    <div id="member-in"
-         v-loading="loading2"
-         v-loading.fullscreen.lock="fullscreenLoading"
-         element-loading-text="正在加载中"
+  <div id="member-in"
+       v-loading="loading2"
+       v-loading.fullscreen.lock="fullscreenLoading"
+       element-loading-text="正在加载中"
 
-         element-loading-spinner="el-icon-loading"
-         element-loading-background="rgba(0, 0, 0, 0.7)"
-         >
+       element-loading-spinner="el-icon-loading"
+       element-loading-background="rgba(0, 0, 0, 0.7)"
+  >
     <div class="left-wrap">
       <el-tree
         v-if="departmentTree.length>0"
@@ -36,6 +36,9 @@
         </el-form-item>
         <el-form-item>
           <el-input v-model="queryForm.userName" clearable placeholder="请输入员工姓名"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-input v-model="queryForm.officePhone" clearable placeholder="请输入坐席号"></el-input>
         </el-form-item>
         <el-form-item>
           <el-select v-model="queryForm.accountStatus" filterable placeholder="请选择账号状态" clearable>
@@ -88,7 +91,7 @@
         <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="userName" min-width="120" label="员工姓名" show-overflow-tooltip></el-table-column>
         <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center"  prop="loginName" min-width="120" show-overflow-tooltip label="账号"></el-table-column>
         <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center"  prop="enableMsg" min-width="120" show-overflow-tooltip label="状态"></el-table-column>
-       <!-- <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="sex" min-width="60" label="性别" show-overflow-tooltip width="70"></el-table-column>-->
+        <!-- <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="sex" min-width="60" label="性别" show-overflow-tooltip width="70"></el-table-column>-->
         <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="officePhone" min-width="120" label="坐席号" show-overflow-tooltip></el-table-column>
         <!--<el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="mobile" min-width="120" label="手机" show-overflow-tooltip></el-table-column>
         <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="joinTime" min-width="120" label="入职日期" show-overflow-tooltip></el-table-column>
@@ -240,167 +243,167 @@
 
 
     </el-dialog>
-      <el-dialog
-        width="300px"
-        title="选择部门"
-        class="dialog-wrap department-wrap"
-        :visible.sync="dialogData.departmentVisible2"
-        :close-on-click-modal="false"
-        append-to-body
+    <el-dialog
+      width="300px"
+      title="选择部门"
+      class="dialog-wrap department-wrap"
+      :visible.sync="dialogData.departmentVisible2"
+      :close-on-click-modal="false"
+      append-to-body
+    >
+      <el-tree
+        v-if="departmentTree.length>0"
+        ref="tree"
+        :data="departmentTree"
+        node-key="id"
+        :expand-on-click-node="false"
+        :default-expanded-keys="[departmentTree[0].id]"
+        @node-click="onSelectDepartment"
+        class="tree-wrap"
+        width="200px"
       >
-        <el-tree
-          v-if="departmentTree.length>0"
-          ref="tree"
-          :data="departmentTree"
-          node-key="id"
-          :expand-on-click-node="false"
-          :default-expanded-keys="[departmentTree[0].id]"
-          @node-click="onSelectDepartment"
-          class="tree-wrap"
-          width="200px"
-        >
           <span
             :class="{active:queryForm.department === data.id}"
             class="custom-tree-node"
             slot-scope="{ node, data }"
           >{{data.orgName}}</span>
-        </el-tree>
-        <span slot="footer" class="footer">
+      </el-tree>
+      <span slot="footer" class="footer">
           <el-button @click="$set(dialogData, 'departmentVisible2' ,false)">取 消</el-button>
           <el-button type="primary" @click="updateDept">确 定</el-button>
         </span>
-      </el-dialog>
+    </el-dialog>
   </div>
 </template>
 
 <script>
   import {baseURL} from '@/common/js/request.js';
-import { getDepartmentTree, getRoleList } from '@/common/js/api-setting'
-import { listMember, deleteMember,changeBatchStatus,batchDelete,updateDept,exportList,exportModule, resetMember,changeStatus, addMember, updateMember, getUserById, getPositionList,getLoginName} from '@/common/js/api-member'
-export default {
-  name: 'memberIn',
-  data () {
-    return {
-      header:{Authorization:localStorage.token},
-      queryDepartment:null,
-      tableLoad:false,
-      fullscreenLoading:false,
-      loading2:false,
-      action:baseURL,
-      accountStatus: [{name: "锁定", id: 2}, {name: "正常", id: 1}],
-    	isTrue:true,
-      departmentTree: [],
-      queryForm: {
-        pageNum: 1,
-        pageSize: 50,
-        id:'',
-        accountStatus:null,
-        department: null,
-        orderBy:null,
-        sort:null
-      },
-      dialogData: {
-        editVisible: false,
-        title: '新增权限组',
-        type: 'add',
-        departmentVisible: false,
-        departmentVisible2:false,
-      },
-      total: 0,
-      memberList: [],
-      memberInfo: {loginName:'',userName2:''},
-      rules: {
-        userName: [
-          { required: true, message: '请输入用户名', trigger: 'blur' }
-        ],
-        loginName: [
-          { required: true, message: '请输入账号', trigger: 'blur' }
-        ],
-        department: [
-          { required: true, message: '请选择部门', trigger: 'change' }
-        ],
-        roleList: [
-          { required: true, message: '请选择角色', trigger: 'change' }
-        ],
-      },
-      roleList: [],
-      positionList: [],
-      multipleSelection:[],
-      returnName: null
-    }
-  },
-  created () {
-    getDepartmentTree().then(data => {
-      this.departmentTree = data
-      this.queryDepartment = data[0]
-      this.onClickQuery()
-    })
-    getRoleList().then(response => {
-      this.roleList = response
-    })
-    getPositionList().then(response => {
-      this.positionList = response
-    })
-  },
-  methods: {
-
-    rowColor({row}){
-      return `color_${row.color}`;
-    },
-    handleSelectionChange(row) {
-      let _self = this
-      _self.multipleSelection = []
-      row.forEach(function (currentValue, index, arr) {
-        _self.multipleSelection.push(currentValue.id)
-      })
-    },
-    onProgress(){
-      this.loading2=true
-      this.fullscreenLoading=true
-    },
-    uploadSuccess(res,file,fileList){
-      if (res.code ==100){
-        this.$message({
-          type: 'success',
-          message: "导入成功"
-        });
-        getDepartmentTree().then(data => {
-          this.departmentTree = data
-          this.queryDepartment = data[0]
-          this.onClickQuery()
-        })
-        this.loading2=false
-        this.fullscreenLoading=false
-      }else{
-        this.ImportdialogVisible=true
-        this.ImportMsg= res.msg
-        this.$message({
-          type: 'error',
-          message: this.ImportMsg
-        });
-        this.loading2=false
-        this.fullscreenLoading=false
+  import { getDepartmentTree, getRoleList } from '@/common/js/api-setting'
+  import { listMember, deleteMember,changeBatchStatus,batchDelete,updateDept,exportList,exportModule, resetMember,changeStatus, addMember, updateMember, getUserById, getPositionList,getLoginName} from '@/common/js/api-member'
+  export default {
+    name: 'memberIn',
+    data () {
+      return {
+        header:{Authorization:localStorage.token},
+        queryDepartment:null,
+        tableLoad:false,
+        fullscreenLoading:false,
+        loading2:false,
+        action:baseURL,
+        accountStatus: [{name: "锁定", id: 2}, {name: "正常", id: 1}],
+        isTrue:true,
+        departmentTree: [],
+        queryForm: {
+          pageNum: 1,
+          pageSize: 50,
+          id:'',
+          accountStatus:null,
+          department: null,
+          orderBy:null,
+          sort:null
+        },
+        dialogData: {
+          editVisible: false,
+          title: '新增权限组',
+          type: 'add',
+          departmentVisible: false,
+          departmentVisible2:false,
+        },
+        total: 0,
+        memberList: [],
+        memberInfo: {loginName:'',userName2:''},
+        rules: {
+          userName: [
+            { required: true, message: '请输入用户名', trigger: 'blur' }
+          ],
+          loginName: [
+            { required: true, message: '请输入账号', trigger: 'blur' }
+          ],
+          department: [
+            { required: true, message: '请选择部门', trigger: 'change' }
+          ],
+          roleList: [
+            { required: true, message: '请选择角色', trigger: 'change' }
+          ],
+        },
+        roleList: [],
+        positionList: [],
+        multipleSelection:[],
+        returnName: null
       }
     },
-  	adduserName(){
-  		if(this.memberInfo.userName){
-  			getLoginName(this.memberInfo.userName).then(response => {
-  				if(response.loginNameCount==1){
-  					 this.$set(this.memberInfo, 'loginName', response.loginName)
-             this.$set(this.memberInfo, 'loginNameCount', response.loginNameCount)
-             this.returnName = response.userName
-  				}else{
-  				  if(this.memberInfo.userName!=this.memberInfo.userName2){
-              this.makeSure(response.loginName)
+    created () {
+      getDepartmentTree().then(data => {
+        this.departmentTree = data
+        this.queryDepartment = data[0]
+        this.onClickQuery()
+      })
+      getRoleList().then(response => {
+        this.roleList = response
+      })
+      getPositionList().then(response => {
+        this.positionList = response
+      })
+    },
+    methods: {
+
+      rowColor({row}){
+        return `color_${row.color}`;
+      },
+      handleSelectionChange(row) {
+        let _self = this
+        _self.multipleSelection = []
+        row.forEach(function (currentValue, index, arr) {
+          _self.multipleSelection.push(currentValue.id)
+        })
+      },
+      onProgress(){
+        this.loading2=true
+        this.fullscreenLoading=true
+      },
+      uploadSuccess(res,file,fileList){
+        if (res.code ==100){
+          this.$message({
+            type: 'success',
+            message: "导入成功"
+          });
+          getDepartmentTree().then(data => {
+            this.departmentTree = data
+            this.queryDepartment = data[0]
+            this.onClickQuery()
+          })
+          this.loading2=false
+          this.fullscreenLoading=false
+        }else{
+          this.ImportdialogVisible=true
+          this.ImportMsg= res.msg
+          this.$message({
+            type: 'error',
+            message: this.ImportMsg
+          });
+          this.loading2=false
+          this.fullscreenLoading=false
+        }
+      },
+      adduserName(){
+        if(this.memberInfo.userName){
+          getLoginName(this.memberInfo.userName).then(response => {
+            if(response.loginNameCount==1){
+              this.$set(this.memberInfo, 'loginName', response.loginName)
+              this.$set(this.memberInfo, 'loginNameCount', response.loginNameCount)
+              this.returnName = response.userName
+            }else{
+              if(this.memberInfo.userName!=this.memberInfo.userName2){
+                this.makeSure(response.loginName)
+              }
+              this.returnName = response.userName
             }
-            this.returnName = response.userName
-  				}
-    })
-  		}else{
-  			return
-  		}
-  	},
-  	makeSure(name) {
+          })
+        }else{
+          return
+        }
+      },
+      makeSure(name) {
         this.$confirm('此用户名已重复,是否使用账号'+name+ '', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -416,490 +419,491 @@ export default {
           this.isTrue=false
         });
       },
-    handleSort({column,prop,order}){
-      // console.log(prop,'@',order)
-      this.queryForm.orderBy = prop
-      this.queryForm.sort = order === 'ascending' ? 'asc':'desc'
-      this.onClickQuery()
-    },
-    onClickQuery () {
-      this.memberList = []
-      this.$set(this.queryForm, 'pageNum', 1);
-      this.$set(this.queryForm, 'pageSize', 50);
-      const data = {
-        status: 1,
-        idStrs: this.queryForm.id?(this.queryForm.id.trim()==""?null:this.queryForm.id.split('\n')):null,
-        department: this.queryForm.department,
-        loginName: this.queryForm.loginName,
-        userName: this.queryForm.userName,
-        accountStatus:this.queryForm.accountStatus,
-        pageNum: this.queryForm.pageNum,
-        pageSize: this.queryForm.pageSize,
-        orderBy:this.queryForm.orderBy,
-        sort:this.queryForm.sort
-      }
-      this.tableLoad = true
-      listMember(data).then(response => {
-        this.memberList = response.list
-        this.total = response.total
-        this.tableLoad = false
-      })
-    },
-    onClickQuery2 () {
-      this.memberList = []
-      const data = {
-        status: 1,
-        idStrs: this.queryForm.id?(this.queryForm.id.trim()==""?null:this.queryForm.id.split('\n')):null,
-        department: this.queryForm.department,
-        loginName: this.queryForm.loginName,
-        userName: this.queryForm.userName,
-        accountStatus:this.queryForm.accountStatus,
-        pageNum: this.queryForm.pageNum,
-        pageSize: this.queryForm.pageSize,
-        orderBy:this.queryForm.orderBy,
-        sort:this.queryForm.sort
-      }
-      this.tableLoad = true
-      listMember(data).then(response => {
-        this.memberList = response.list
-        this.total = response.total
-        this.tableLoad = false
-      })
-    },
-    onClickBatchLeave () {
-      if (this.multipleSelection.length<=0){
-        this.$message({
-          message: "请先选择员工信息",
-          type: "error"
-        });
-        return;
-      }
-
-      this.$confirm('确定对该员工执行离职操作？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        const data = {
-          ids: this.multipleSelection,
-          status: 0,
-          enable: 0
-        }
-        changeBatchStatus(data).then(() => {
-          this.$message({
-            message: "员工离职操作成功",
-            type: "success"
-          });
-          this.onClickQuery()
-        })
-      }).catch(() => { })
-    },
-    onClickBatchDelete(){
-      if (this.multipleSelection.length<=0){
-        this.$message({
-          message: "请先选择员工信息",
-          type: "error"
-        });
-        return;
-      }
-      this.$confirm('此操作将永久删除该员工，是否继续？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.memberInfo = {
-          ids:this.multipleSelection
-        }
-        batchDelete(this.memberInfo).then(response => {
-          this.$message({
-            message: "刪除成功",
-            type: "success"
-          });
-          this.onClickQuery();
-        })
-      }).catch(() => { })
-
-
-    },
-    onClickUpdateDept(){
-      if (this.multipleSelection.length<=0){
-        this.$message({
-          message: "请先选择员工信息",
-          type: "error"
-        });
-        return;
-      }
-      this.$set(this.dialogData, 'departmentVisible2', true);
-      this.dialogData.departmentVisible2 = true;
-    },
-    onClickAdd () {
-      // this.memberInfo.roleList = null
-      this.$nextTick(()=>{
-        if(this.$refs['ruleForm']){
-          this.$refs['ruleForm'].resetFields()
-        }
-      });
-      if(!this.queryDepartment){
-        this.memberInfo = {
-          status: 1,
-          enable: 1,
-          roleList: [],
-        }
-      }else{
-        this.memberInfo = {
-          status: 1,
-          enable: 1,
-          roleList: [],
-          departId:this.queryDepartment.id,
-          department:this.queryDepartment.orgName
-        }
-      }
-      this.$set(this.dialogData, 'title', '新增员工')
-      this.$set(this.dialogData, 'type', 'add')
-      this.$set(this.dialogData, 'editVisible', true)
-    },
-    onClickEdit (row) {
-      this.$nextTick(()=>{
-        if(this.$refs['ruleForm']) {
-          this.$refs['ruleForm'].resetFields()
-        }
-      });
-      this.$set(this.dialogData, 'title', '修改员工')
-      this.$set(this.dialogData, 'type', 'edit')
-      this.$set(this.memberInfo, 'userName2', '')
-      getUserById(row.id).then(response => {
-        this.memberInfo = response
-        this.memberInfo.userName2 = response.userName
-        const roleList = this.memberInfo.roleList.map(item => item.id)
-        this.$set(this.memberInfo, 'roleList', roleList)
-        this.$set(this.dialogData, 'editVisible', true)
-      })
-    },
-    onClickPwdReset(row){
-      this.$confirm('确定重置该员工密码？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        resetMember(row.id).then(() => {
-          this.$message({
-            type: 'success',
-            message: '员工密码重置成功!'
-          });
-          //this.onClickQuery()
-        })
-      }).catch(() => { })
-    },
-    onClickLock (row) {
-      this.$confirm('确定锁定该员工账号？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        const data = {
-          id: row.id,
-          status: row.status,
-          enable: 0
-        }
-        changeStatus(data).then(() => {
-          this.$message({
-            type: 'success',
-            message: '员工账号锁定成功'
-          });
-          this.onClickQuery()
-        })
-      }).catch(() => { })
-    },
-    onClickUnLock (row) {
-      this.$confirm('确定解锁该员工账号？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        const data = {
-          id: row.id,
-          status: row.status,
-          enable: 1
-        }
-        changeStatus(data).then(() => {
-          this.$message('员工账号解锁成功')
-          this.onClickQuery()
-        })
-      }).catch(() => { })
-    },
-    onClickLeave (row) {
-      this.$confirm('确定对该员工执行离职操作？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        const data = {
-          id: row.id,
-          status: 0,
-          enable: 0
-        }
-        changeStatus(data).then(() => {
-          this.$message('员工离职操作成功')
-          this.onClickQuery()
-        })
-      }).catch(() => { })
-    },
-    onClickDelete (row) {
-      this.$confirm('此操作将永久删除该员工，是否继续？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        deleteMember(row.id).then(() => {
-          this.$message('员工删除成功')
-          this.onClickQuery()
-        })
-      }).catch(() => { })
-    },
-    onClickSelectDept () {
-      this.$set(dialogData, 'departmentVisible', true)
-      this.currentDept = null
-    },
-    onClickDepartment (data, node) {
-      this.queryDepartment = data
-      this.$set(this.queryForm, 'department', data.id)
-      this.onClickQuery()
-    },
-    onSelectDepartment (data, node) {
-      this.currentDept = data
-    },
-    onClickSaveDept () {
-      this.$set(this.memberInfo, 'departId', this.currentDept.id)
-      this.$set(this.memberInfo, 'department', this.currentDept.orgName)
-      this.$set(this.dialogData, 'departmentVisible', false)
-    },
-    updateDept () {
-      this.$set(this.memberInfo, 'departId', this.currentDept.id)
-      this.$set(this.memberInfo, 'department', this.currentDept.orgName)
-      this.$set(this.memberInfo, 'ids', this.multipleSelection)
-      this.$set(this.dialogData, 'departmentVisible2', false)
-      let { ...resultData } = this.memberInfo
-
-      updateDept(resultData).then(response => {
+      handleSort({column,prop,order}){
+        // console.log(prop,'@',order)
+        this.queryForm.orderBy = prop
+        this.queryForm.sort = order === 'ascending' ? 'asc':'desc'
         this.onClickQuery()
-        this.onClickCancel()
-        this.$message({
-          message: "修改部门成功",
-          type: "success"
-        });
-      })
+      },
+      onClickQuery () {
+        this.memberList = []
+        this.$set(this.queryForm, 'pageNum', 1);
+        this.$set(this.queryForm, 'pageSize', 50);
+        const data = {
+          status: 1,
+          idStrs: this.queryForm.id?(this.queryForm.id.trim()==""?null:this.queryForm.id.split('\n')):null,
+          department: this.queryForm.department,
+          loginName: this.queryForm.loginName,
+          userName: this.queryForm.userName,
+          officePhone:this.queryForm.officePhone,
+          accountStatus:this.queryForm.accountStatus,
+          pageNum: this.queryForm.pageNum,
+          pageSize: this.queryForm.pageSize,
+          orderBy:this.queryForm.orderBy,
+          sort:this.queryForm.sort
+        }
+        this.tableLoad = true
+        listMember(data).then(response => {
+          this.memberList = response.list
+          this.total = response.total
+          this.tableLoad = false
+        })
+      },
+      onClickQuery2 () {
+        this.memberList = []
+        const data = {
+          status: 1,
+          idStrs: this.queryForm.id?(this.queryForm.id.trim()==""?null:this.queryForm.id.split('\n')):null,
+          department: this.queryForm.department,
+          loginName: this.queryForm.loginName,
+          userName: this.queryForm.userName,
+          accountStatus:this.queryForm.accountStatus,
+          pageNum: this.queryForm.pageNum,
+          pageSize: this.queryForm.pageSize,
+          orderBy:this.queryForm.orderBy,
+          sort:this.queryForm.sort
+        }
+        this.tableLoad = true
+        listMember(data).then(response => {
+          this.memberList = response.list
+          this.total = response.total
+          this.tableLoad = false
+        })
+      },
+      onClickBatchLeave () {
+        if (this.multipleSelection.length<=0){
+          this.$message({
+            message: "请先选择员工信息",
+            type: "error"
+          });
+          return;
+        }
 
-    },
-    onClickReset () {
-      this.queryForm = {
-        pageNum: this.queryForm.pageNum,
-        pageSize: this.queryForm.pageSize
-      }
-    },
-    onClickCancel () {
-      this.$refs['ruleForm'].resetFields()
-      this.$set(this.dialogData, 'editVisible', false)
-    },
-    onClickModuleImport(){
-      this.loading2=true
-      this.fullscreenLoading=true
-      exportModule().then(() => {
-        this.loading2=false
-        this.fullscreenLoading=false
-        this.$message({
-          message: "下载成功",
-          type: "success"
-        });
-      });
-    },
-    onClickImport(){
-      this.loading2=true
-      this.fullscreenLoading=true
-      const data = {
-        status: 1,
-        department: this.queryForm.department,
-        loginName: this.queryForm.loginName,
-        userName: this.queryForm.userName
-      }
-      exportList(data).then(() => {
-        this.loading2=false
-        this.fullscreenLoading=false
-        this.$message({
-          message: "导出成功",
-          type: "success"
-        });
-      });
+        this.$confirm('确定对该员工执行离职操作？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          const data = {
+            ids: this.multipleSelection,
+            status: 0,
+            enable: 0
+          }
+          changeBatchStatus(data).then(() => {
+            this.$message({
+              message: "员工离职操作成功",
+              type: "success"
+            });
+            this.onClickQuery()
+          })
+        }).catch(() => { })
+      },
+      onClickBatchDelete(){
+        if (this.multipleSelection.length<=0){
+          this.$message({
+            message: "请先选择员工信息",
+            type: "error"
+          });
+          return;
+        }
+        this.$confirm('此操作将永久删除该员工，是否继续？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.memberInfo = {
+            ids:this.multipleSelection
+          }
+          batchDelete(this.memberInfo).then(response => {
+            this.$message({
+              message: "刪除成功",
+              type: "success"
+            });
+            this.onClickQuery();
+          })
+        }).catch(() => { })
 
-    },
-    onClickSave () {
-      this.$refs.ruleForm.validate((valid)=>{
-        if(valid){
-          if(this.returnName && this.returnName !== this.memberInfo.userName && this.memberInfo.userName!=this.memberInfo.userName2){
-            this.$confirm(`已有用户名相同的员工,是否用${this.returnName}替换${this.memberInfo.userName}`, '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
-              type: 'warning'
-            }).then(() => {
-              this.loading2 = true
-              this.fullscreenLoading = true
-              this.memberInfo.userName = this.returnName
-              this.returnName = null
-              let { ...resultData } = this.memberInfo
-              resultData.roleList = resultData.roleList.map(item => { return { id: item } })
-              if (this.dialogData.type === 'add') {
-                addMember(resultData).then(response => {
-                  this.onClickQuery()
-                  this.onClickCancel()
-                  this.loading2 = false
-                  this.fullscreenLoading = false
-                })
-              } else {
-                updateMember(resultData).then(response => {
-                  this.onClickQuery()
-                  this.onClickCancel()
-                  this.loading2 = false
-                  this.fullscreenLoading = false
-                })
-              }
-            }).catch(() => {
 
-            })
-          }else{
-            this.loading2 = true
-            this.fullscreenLoading = true
-              this.returnName = null
-              let { ...resultData } = this.memberInfo
-              resultData.roleList = resultData.roleList.map(item => { return { id: item } })
-              if (this.dialogData.type === 'add') {
-                addMember(resultData).then(response => {
-                  this.onClickQuery()
-                  this.onClickCancel()
-                  this.loading2 = false
-                  this.fullscreenLoading = false
-                })
-              } else {
-                updateMember(resultData).then(response => {
-                  this.onClickQuery()
-                  this.onClickCancel()
-                  this.loading2 = false
-                  this.fullscreenLoading = false
-                })
-              }
+      },
+      onClickUpdateDept(){
+        if (this.multipleSelection.length<=0){
+          this.$message({
+            message: "请先选择员工信息",
+            type: "error"
+          });
+          return;
+        }
+        this.$set(this.dialogData, 'departmentVisible2', true);
+        this.dialogData.departmentVisible2 = true;
+      },
+      onClickAdd () {
+        // this.memberInfo.roleList = null
+        this.$nextTick(()=>{
+          if(this.$refs['ruleForm']){
+            this.$refs['ruleForm'].resetFields()
+          }
+        });
+        if(!this.queryDepartment){
+          this.memberInfo = {
+            status: 1,
+            enable: 1,
+            roleList: [],
           }
         }else{
-          this.$message('校验失败，请根据提示修改后提交')
-          return
+          this.memberInfo = {
+            status: 1,
+            enable: 1,
+            roleList: [],
+            departId:this.queryDepartment.id,
+            department:this.queryDepartment.orgName
+          }
         }
-      })
+        this.$set(this.dialogData, 'title', '新增员工')
+        this.$set(this.dialogData, 'type', 'add')
+        this.$set(this.dialogData, 'editVisible', true)
+      },
+      onClickEdit (row) {
+        this.$nextTick(()=>{
+          if(this.$refs['ruleForm']) {
+            this.$refs['ruleForm'].resetFields()
+          }
+        });
+        this.$set(this.dialogData, 'title', '修改员工')
+        this.$set(this.dialogData, 'type', 'edit')
+        this.$set(this.memberInfo, 'userName2', '')
+        getUserById(row.id).then(response => {
+          this.memberInfo = response
+          this.memberInfo.userName2 = response.userName
+          const roleList = this.memberInfo.roleList.map(item => item.id)
+          this.$set(this.memberInfo, 'roleList', roleList)
+          this.$set(this.dialogData, 'editVisible', true)
+        })
+      },
+      onClickPwdReset(row){
+        this.$confirm('确定重置该员工密码？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          resetMember(row.id).then(() => {
+            this.$message({
+              type: 'success',
+              message: '员工密码重置成功!'
+            });
+            //this.onClickQuery()
+          })
+        }).catch(() => { })
+      },
+      onClickLock (row) {
+        this.$confirm('确定锁定该员工账号？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          const data = {
+            id: row.id,
+            status: row.status,
+            enable: 0
+          }
+          changeStatus(data).then(() => {
+            this.$message({
+              type: 'success',
+              message: '员工账号锁定成功'
+            });
+            this.onClickQuery()
+          })
+        }).catch(() => { })
+      },
+      onClickUnLock (row) {
+        this.$confirm('确定解锁该员工账号？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          const data = {
+            id: row.id,
+            status: row.status,
+            enable: 1
+          }
+          changeStatus(data).then(() => {
+            this.$message('员工账号解锁成功')
+            this.onClickQuery()
+          })
+        }).catch(() => { })
+      },
+      onClickLeave (row) {
+        this.$confirm('确定对该员工执行离职操作？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          const data = {
+            id: row.id,
+            status: 0,
+            enable: 0
+          }
+          changeStatus(data).then(() => {
+            this.$message('员工离职操作成功')
+            this.onClickQuery()
+          })
+        }).catch(() => { })
+      },
+      onClickDelete (row) {
+        this.$confirm('此操作将永久删除该员工，是否继续？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          deleteMember(row.id).then(() => {
+            this.$message('员工删除成功')
+            this.onClickQuery()
+          })
+        }).catch(() => { })
+      },
+      onClickSelectDept () {
+        this.$set(dialogData, 'departmentVisible', true)
+        this.currentDept = null
+      },
+      onClickDepartment (data, node) {
+        this.queryDepartment = data
+        this.$set(this.queryForm, 'department', data.id)
+        this.onClickQuery()
+      },
+      onSelectDepartment (data, node) {
+        this.currentDept = data
+      },
+      onClickSaveDept () {
+        this.$set(this.memberInfo, 'departId', this.currentDept.id)
+        this.$set(this.memberInfo, 'department', this.currentDept.orgName)
+        this.$set(this.dialogData, 'departmentVisible', false)
+      },
+      updateDept () {
+        this.$set(this.memberInfo, 'departId', this.currentDept.id)
+        this.$set(this.memberInfo, 'department', this.currentDept.orgName)
+        this.$set(this.memberInfo, 'ids', this.multipleSelection)
+        this.$set(this.dialogData, 'departmentVisible2', false)
+        let { ...resultData } = this.memberInfo
 
-    },
-    formatRole (row, column, cellValue) {
-      if (cellValue && cellValue.length > 0) {
-        return cellValue.map(item => item.roleName).join('/')
-      } else {
-        return null
+        updateDept(resultData).then(response => {
+          this.onClickQuery()
+          this.onClickCancel()
+          this.$message({
+            message: "修改部门成功",
+            type: "success"
+          });
+        })
+
+      },
+      onClickReset () {
+        this.queryForm = {
+          pageNum: this.queryForm.pageNum,
+          pageSize: this.queryForm.pageSize
+        }
+      },
+      onClickCancel () {
+        this.$refs['ruleForm'].resetFields()
+        this.$set(this.dialogData, 'editVisible', false)
+      },
+      onClickModuleImport(){
+        this.loading2=true
+        this.fullscreenLoading=true
+        exportModule().then(() => {
+          this.loading2=false
+          this.fullscreenLoading=false
+          this.$message({
+            message: "下载成功",
+            type: "success"
+          });
+        });
+      },
+      onClickImport(){
+        this.loading2=true
+        this.fullscreenLoading=true
+        const data = {
+          status: 1,
+          department: this.queryForm.department,
+          loginName: this.queryForm.loginName,
+          userName: this.queryForm.userName
+        }
+        exportList(data).then(() => {
+          this.loading2=false
+          this.fullscreenLoading=false
+          this.$message({
+            message: "导出成功",
+            type: "success"
+          });
+        });
+
+      },
+      onClickSave () {
+        this.$refs.ruleForm.validate((valid)=>{
+          if(valid){
+            if(this.returnName && this.returnName !== this.memberInfo.userName && this.memberInfo.userName!=this.memberInfo.userName2){
+              this.$confirm(`已有用户名相同的员工,是否用${this.returnName}替换${this.memberInfo.userName}`, '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+              }).then(() => {
+                this.loading2 = true
+                this.fullscreenLoading = true
+                this.memberInfo.userName = this.returnName
+                this.returnName = null
+                let { ...resultData } = this.memberInfo
+                resultData.roleList = resultData.roleList.map(item => { return { id: item } })
+                if (this.dialogData.type === 'add') {
+                  addMember(resultData).then(response => {
+                    this.onClickQuery()
+                    this.onClickCancel()
+                    this.loading2 = false
+                    this.fullscreenLoading = false
+                  })
+                } else {
+                  updateMember(resultData).then(response => {
+                    this.onClickQuery()
+                    this.onClickCancel()
+                    this.loading2 = false
+                    this.fullscreenLoading = false
+                  })
+                }
+              }).catch(() => {
+
+              })
+            }else{
+              this.loading2 = true
+              this.fullscreenLoading = true
+              this.returnName = null
+              let { ...resultData } = this.memberInfo
+              resultData.roleList = resultData.roleList.map(item => { return { id: item } })
+              if (this.dialogData.type === 'add') {
+                addMember(resultData).then(response => {
+                  this.onClickQuery()
+                  this.onClickCancel()
+                })
+                this.loading2 = false
+                this.fullscreenLoading = false
+              } else {
+                updateMember(resultData).then(response => {
+                  this.onClickQuery()
+                  this.onClickCancel()
+                })
+                this.loading2 = false
+                this.fullscreenLoading = false
+              }
+            }
+          }else{
+            this.$message('校验失败，请根据提示修改后提交')
+            return
+          }
+        })
+
+      },
+      formatRole (row, column, cellValue) {
+        if (cellValue && cellValue.length > 0) {
+          return cellValue.map(item => item.roleName).join('/')
+        } else {
+          return null
+        }
       }
     }
   }
-}
 </script>
 
 <style lang="scss">
-#member-in {
-  .el-loading-mask{
-    z-index:3000 !important;
-  }
-  height: 100%;
-  display: flex;
-  overflow: hidden;
-  .left-wrap {
-    margin-right: 48px;
+  #member-in {
+    .el-loading-mask{
+      z-index:3000 !important;
+    }
     height: 100%;
-    overflow-y: auto;
-    flex: 0 0 1;
-    width: 18%;
-    border-right: 1px solid #e8e8e8;
-    .tree-wrap {
-      height: 100%;
-      .el-tree-node__content {
-        height: 40px;
-      }
-      .custom-tree-node {
-        display: inline-block;
-        height: 100%;
-        line-height: 40px;
-        flex: 1;
-        font-size: 14px;
-        padding: 0 8px 0 12px;
-        color: #0080ff;
-        &.active {
-          color: #fff;
-          background: #0080ff;
-        }
-      }
-    }
-  }
-  .right-wrap {
-    flex: 1;
+    display: flex;
     overflow: hidden;
-  }
-  .upload-demo{
-    display: inline-block;
-  }
-  .color_BLACK {
-    color: #000000;
-  }
-  .color_RED {
-    color: #FF0000;
-  }
-  .dialog-wrap {
-    .el-dialog__body {
-      .el-form {
-        display: flex;
-        flex-wrap: wrap;
-        .el-form-item {
-          display: flex;
-          width: 50%;
-          .el-form-item__content {
-            flex: 1;
-            margin-left: 0 !important;
-            .el-select {
-              width: 100%;
-            }
-            .el-date-editor{
-              width: 100%;
-            }
-          }
+    .left-wrap {
+      margin-right: 48px;
+      height: 100%;
+      overflow-y: auto;
+      flex: 0 0 1;
+      width: 18%;
+      border-right: 1px solid #e8e8e8;
+      .tree-wrap {
+        height: 100%;
+        .el-tree-node__content {
+          height: 40px;
         }
-      }
-    }
-    .department-wrap {
-      width: 300px;
-      .el-dialog__body {
-        .tree-wrap {
+        .custom-tree-node {
+          display: inline-block;
           height: 100%;
-          .el-tree-node__content {
-            height: 40px;
+          line-height: 40px;
+          flex: 1;
+          font-size: 14px;
+          padding: 0 8px 0 12px;
+          color: #0080ff;
+          &.active {
+            color: #fff;
+            background: #0080ff;
           }
-          .custom-tree-node {
-            display: inline-block;
+        }
+      }
+    }
+    .right-wrap {
+      flex: 1;
+      overflow: hidden;
+    }
+    .upload-demo{
+      display: inline-block;
+    }
+    .color_BLACK {
+      color: #000000;
+    }
+    .color_RED {
+      color: #FF0000;
+    }
+    .dialog-wrap {
+      .el-dialog__body {
+        .el-form {
+          display: flex;
+          flex-wrap: wrap;
+          .el-form-item {
+            display: flex;
+            width: 50%;
+            .el-form-item__content {
+              flex: 1;
+              margin-left: 0 !important;
+              .el-select {
+                width: 100%;
+              }
+              .el-date-editor{
+                width: 100%;
+              }
+            }
+          }
+        }
+      }
+      .department-wrap {
+        width: 300px;
+        .el-dialog__body {
+          .tree-wrap {
             height: 100%;
-            flex: 1;
-            font-size: 14px;
-            padding: 0 8px 0 12px;
-            color: #0080ff;
-            &.active {
-              color: #fff;
-              background: #0080ff;
+            .el-tree-node__content {
+              height: 40px;
+            }
+            .custom-tree-node {
+              display: inline-block;
+              height: 100%;
+              flex: 1;
+              font-size: 14px;
+              padding: 0 8px 0 12px;
+              color: #0080ff;
+              &.active {
+                color: #fff;
+                background: #0080ff;
+              }
             }
           }
         }
       }
     }
+    .el-table__body tr.current-row > td{
+      border-top: 1px solid #0080ff  !important;
+      border-bottom: 1px solid #0080ff  !important;
+    }
   }
-  .el-table__body tr.current-row > td{
-    border-top: 1px solid #0080ff  !important;
-    border-bottom: 1px solid #0080ff  !important;
-  }
-}
 </style>

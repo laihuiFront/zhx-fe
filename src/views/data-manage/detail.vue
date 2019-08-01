@@ -178,9 +178,15 @@
                 :disabled="true"
               ></el-input>
             </el-form-item>
-            <el-form-item label="合同本金">
+            <el-form-item label="本金">
               <el-input
                 v-model="caseDetail.principle"
+                :disabled="true"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="每月还款">
+              <el-input
+                v-model="caseDetail.monthlyRepayments"
                 :disabled="true"
               ></el-input>
             </el-form-item>

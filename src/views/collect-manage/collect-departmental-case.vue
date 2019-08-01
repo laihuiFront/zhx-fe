@@ -251,7 +251,12 @@
                       clearable
                     ></el-input>
                   </el-form-item>
-
+                <el-form-item v-if="queryConf.yqts || queryConfFlag">
+                  <el-input v-model="form.overdueDaysStart" type="number" placeholder="请输入逾期天数下限"></el-input>
+                </el-form-item>
+                <el-form-item v-if="queryConf.yqts || queryConfFlag">
+                  <el-input v-model="form.overdueDaysEnd" type="number" placeholder="请输入逾期天数上限"></el-input>
+                </el-form-item>
                   <el-form-item prop="val14" v-if="queryConf.bszt || queryConfFlag">
                     <el-select
                       v-model="form.val14"
@@ -559,6 +564,19 @@
             min-width="5"
             align="center">
           </el-table-column>
+
+           <el-table-column
+             label="跟进次数"
+             prop="countFollow"
+             sortable="custom"
+             width="120"
+             :sort-orders="['ascending', 'descending']"
+             header-align="center"
+             show-overflow-tooltip
+             align="center"
+           >
+
+           </el-table-column>
           <el-table-column
             label="个案序列号"
             prop="seqno"
@@ -788,6 +806,8 @@
           val27: "", //电话号码
           val28: "", //催收记录
           val29: "", //委案金额下限
+          overdueDaysStart:"",
+          overdueDaysEnd:"",
           val30: "", //跟进次数下限
           val31: "", //部门
           val32: [], //催收员
@@ -850,6 +870,7 @@
         val31_data: [],  //部门
         val32_data: [],  //催收员
         tableCol_data: [
+
           {
             width:120,
             prop: "odv",
@@ -951,6 +972,8 @@
           val12,
           val13: moneyStart,
           val29: moneyEnd,
+          overdueDaysStart:overdueDaysStart,
+          overdueDaysEnd:overdueDaysEnd,
           val14: colors,
           val15: cardNo,
           val16: archiveNo,
@@ -988,6 +1011,8 @@
           repayTimeEnd: (!!val12 && val12[1])||'',
           moneyStart,
           moneyEnd,
+          overdueDaysStart,
+          overdueDaysEnd:,
           colors,
           cardNo,
           archiveNo,
