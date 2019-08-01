@@ -38,6 +38,8 @@ export const dataList = function(form,orderBy,sort,pageSize,pageNum) {
       repayDateEnd :form.time1==null?"":form.time1[1] ,//还款日期 结束时间
       moneyStart :  form.moneyStart,//委案金额 开始金额
       moneyEnd : form.moneyEnd,//委案金额 结束金额
+      overdueDaysStart:form.overdueDaysStart,
+      overdueDaysEnd:form.overdueDaysEnd,
       realReturnStartTime:form.time4==null?"":form.time4[0] ,//实际时间
       realReturnEndTime:form.time4==null?"":form.time4[1]  ,
       collectStartDate:form.time5==null?"":form.time5[0],//最后跟进
@@ -90,6 +92,8 @@ export const searchList =  function(form,orderBy,sort,pageSize,pageNum) {
       repayDateEnd :form.time1==null?"":form.time1[1] ,//还款日期 结束时间
       moneyStart :  form.moneyStart,//委案金额 开始金额
       moneyEnd : form.moneyEnd,//委案金额 结束金额
+      overdueDaysStart:form.overdueDaysStart,
+      overdueDaysEnd:form.overdueDaysEnd,
       realReturnStartTime:form.time4==null?"":form.time4[0] ,//实际时间
       realReturnEndTime:form.time4==null?"":form.time4[1]  ,
       collectStartDate:form.time5==null?"":form.time5[0],//最后跟进
@@ -98,7 +102,7 @@ export const searchList =  function(form,orderBy,sort,pageSize,pageNum) {
       expectEndTime:form.time3==null?"":form.time3[1],
       orderBy:orderBy,
       sort:sort,
-        batchBonds:form.batchBonds,
+      batchBonds:form.batchBonds,
       pageNum :pageNum,
       pageSize :pageSize,
     }
@@ -303,7 +307,7 @@ export const fenan2 = function(form,fenan) {
     url: '/dataCase/sendOdvByProperty',
     method: 'post',
     data: {
-    	odv:fenan,
+      odv:fenan,
       idStr :form.id==null?"":form.id.replace(/[\n\r\v\s↵]/g,","),
       cardNo : form.cardNo==null?"":form.cardNo.replace(/[\n\r\v\s↵]/g,","),//卡号
       clients :form.clients,//委托方
@@ -337,6 +341,8 @@ export const fenan2 = function(form,fenan) {
       repayDateEnd :form.time1==null?"":form.time1[1] ,//还款日期 结束时间
       moneyStart :  form.moneyStart,//委案金额 开始金额
       moneyEnd : form.moneyEnd,//委案金额 结束金额
+      overdueDaysStart:form.overdueDaysStart,
+      overdueDaysEnd:form.overdueDaysEnd,
       realReturnStartTime:form.time4==null?"":form.time4[0] ,//实际时间
       realReturnEndTime:form.time4==null?"":form.time4[1]  ,
       collectStartDate:form.time5==null?"":form.time5[0],//最后跟进
@@ -421,6 +427,8 @@ export const totalDataBatchExport = function(form) {
       repayDateEnd :form.time1==null?"":form.time1[1] ,//还款日期 结束时间
       moneyStart :  form.moneyStart,//委案金额 开始金额
       moneyEnd : form.moneyEnd,//委案金额 结束金额
+      overdueDaysStart:form.overdueDaysStart,
+      overdueDaysEnd:form.overdueDaysEnd,
       realReturnStartTime:form.time4==null?"":form.time4[0] ,//实际时间
       realReturnEndTime:form.time4==null?"":form.time4[1]  ,
       collectStartDate:form.time5==null?"":form.time5[0],//最后跟进
@@ -474,6 +482,8 @@ export const pageDataExport = function(form) {
       repayDateEnd :form.time1==null?"":form.time1[1] ,//还款日期 结束时间
       moneyStart :  form.moneyStart,//委案金额 开始金额
       moneyEnd : form.moneyEnd,//委案金额 结束金额
+      overdueDaysStart:form.overdueDaysStart,
+      overdueDaysEnd:form.overdueDaysEnd,
       realReturnStartTime:form.time4==null?"":form.time4[0] ,//实际时间
       realReturnEndTime:form.time4==null?"":form.time4[1]  ,
       collectStartDate:form.time5==null?"":form.time5[0],//最后跟进
@@ -578,6 +588,8 @@ export const authSend = function(form) {
       repayDateEnd :form.time1==null?"":form.time1[1] ,//还款日期 结束时间
       moneyStart :  form.moneyStart,//委案金额 开始金额
       moneyEnd : form.moneyEnd,//委案金额 结束金额
+      overdueDaysStart:form.overdueDaysStart,
+      overdueDaysEnd:form.overdueDaysEnd,
       realReturnStartTime:form.time4==null?"":form.time4[0] ,//实际时间
       realReturnEndTime:form.time4==null?"":form.time4[1]  ,
       collectStartDate:form.time5==null?"":form.time5[0],//最后跟进
@@ -634,6 +646,8 @@ export const autoSendByProperty = function(form,fenan) {
       repayDateEnd :form.time1==null?"":form.time1[1] ,//还款日期 结束时间
       moneyStart :  form.moneyStart,//委案金额 开始金额
       moneyEnd : form.moneyEnd,//委案金额 结束金额
+      overdueDaysStart:form.overdueDaysStart,
+      overdueDaysEnd:form.overdueDaysEnd,
       realReturnStartTime:form.time4==null?"":form.time4[0] ,//实际时间
       realReturnEndTime:form.time4==null?"":form.time4[1]  ,
       collectStartDate:form.time5==null?"":form.time5[0],//最后跟进
@@ -690,6 +704,8 @@ export const autoSendByPropertyResult = function(form,fenan) {
       repayDateEnd :form.time1==null?"":form.time1[1] ,//还款日期 结束时间
       moneyStart :  form.moneyStart,//委案金额 开始金额
       moneyEnd : form.moneyEnd,//委案金额 结束金额
+      overdueDaysStart:form.overdueDaysStart,
+      overdueDaysEnd:form.overdueDaysEnd,
       realReturnStartTime:form.time4==null?"":form.time4[0] ,//实际时间
       realReturnEndTime:form.time4==null?"":form.time4[1]  ,
       collectStartDate:form.time5==null?"":form.time5[0],//最后跟进
@@ -712,3 +728,13 @@ export function listOrganization(data) {
     data
   })
 }
+
+export  const batchList2= function(data){
+  return request({
+    url: '/dataBatch/selectBatchNo',
+    method: 'post',
+    data
+  })
+}
+
+
