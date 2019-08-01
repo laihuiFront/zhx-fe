@@ -4,12 +4,11 @@ import store from '../../store'
 import router from '../../router'
 import { localCache, removeCache } from '@/common/js/auth'
 
+export const baseURL = process.env.baseURL
+
 // 创建axios实例
 const service = axios.create({
-  // baseURL: 'http://zhx.zaijushou.xyz',
-  //baseURL: 'http://127.0.0.1:9119',
-  //baseURL: 'http://116.62.124.251:9119',
-  baseURL: 'http://192.168.25.208:9119',
+  baseURL,
   //timeout: 10000, // 请求超时时间,
   responseType :'blob',
   method:'POST'
@@ -18,7 +17,7 @@ const service = axios.create({
 // request拦截器
 service.interceptors.request.use(config => {
   if(!config.url.includes('login')){
-      config.headers['Authorization'] = localCache('token') 
+      config.headers['Authorization'] = localCache('token')
   }
   return config
 }, error => {

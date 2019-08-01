@@ -1005,7 +1005,6 @@
 
   import {
     dataList,
-    clientCurrent,
     CasedataList,
     remoweData,
     addData,
@@ -1860,7 +1859,7 @@
 //      }).then(() => {
 //        this.backCase()
 //      }).catch(() => {
-//              
+//
 //      });
 //    },
       MorebackCase() {
@@ -1969,4 +1968,3 @@
     }
   }
 </style>
-

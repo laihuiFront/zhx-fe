@@ -666,13 +666,13 @@
       <div class="filter" v-if="showSendVisible1">
       	<h1>分配选项</h1>
       	 <el-checkbox-group v-model="fenan.sendType">
-      		<el-checkbox v-for="item in Aoptions" :label="item.id" >{{item.name}}</el-checkbox>
+      		<el-checkbox v-for="item in Aoptions" :label="item.id" :key="item.id">{{item.name}}</el-checkbox>
       	 </el-checkbox-group>
       </div>
        <div class="filter" v-if="showSendVisible1">
       	<h1>分配方式</h1>
       	<el-radio-group v-model="fenan.mathType">
-			    <el-radio v-for="item in Boptions":label="item.id" :key="item.id">{{item.name}}</el-radio>
+			    <el-radio v-for="item in Boptions" :label="item.id" :key="item.id">{{item.name}}</el-radio>
 			  </el-radio-group>
       </div>
        <div class="filter" v-if="showSendVisible1">
