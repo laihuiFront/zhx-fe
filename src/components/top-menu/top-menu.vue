@@ -13,14 +13,15 @@
                    :key="item.id"></component>
       </el-menu>
       <p class="message">
-          <span style="cursor:pointer;" @click="showRemindList">{{remindNum}}</span>
-        </p>
+        <span style="cursor:pointer;" @click="showRemindList">{{remindNum}}</span>
+      </p>
       <el-dropdown trigger="click" @command="handleCommand">
         <span class="el-dropdown-link">
         {{userInfo.userName}}<i class="el-icon-arrow-down el-icon--right"></i>
       </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="editPassword">修改密码</el-dropdown-item>
+          <el-dropdown-item command="editHomePhone">修改坐席号</el-dropdown-item>
           <el-dropdown-item command="logOut">退出</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -43,6 +44,22 @@
         <el-form-item>
           <el-button @click="dialogVisible = false">取消</el-button>
           <el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
+
+    <el-dialog
+      title="修改坐席号"
+      :visible.sync="dialogHomePhoneVisible"
+      width="30%"
+    >
+      <el-form :model="ruleForm3" status-icon :rules="rules3" ref="ruleForm3" label-width="100px" class="demo-ruleForm">
+        <el-form-item label="坐席号" prop="oldPassword">
+          <el-input v-model="ruleForm3.officePhone" width="160" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button @click="dialogHomePhoneVisible = false">取消</el-button>
+          <el-button type="primary" @click="submitForm2('ruleForm3')">提交</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -111,7 +128,7 @@
   import {mapGetters, mapActions} from 'vuex'
   import oneLevel from './one-level'
   import twoLevel from './two-level'
-  import {resetPassword, initMind, remindList} from '@/store/actions.js';
+  import {resetPassword, initMind, remindList,updatePhone,findMine} from '@/store/actions.js';
 
   export default {
     name: 'topMenu',
@@ -122,6 +139,17 @@
         } else {
           if (this.ruleForm2.checkPass !== '') {
             this.$refs.ruleForm2.validateField('checkPass');
+          }
+          callback();
+        }
+      };
+      var  validateOfficePhone = (rule, value, callback) => {
+
+        if (value === '') {
+          callback(new Error('请输入坐席号'));
+        } else {
+          if (this.ruleForm3.officePhone !== '') {
+            this.$refs.ruleForm3.validateField('officePhone');
           }
           callback();
         }
@@ -142,7 +170,12 @@
         remindNum: null,
         detailVisible: false,
         remindList: [],
+        dialogHomePhoneVisible:false,
         dialogVisible: false,
+        ruleForm3:{
+          oldOfficePhone:'',
+          officePhone:''
+        },
         ruleForm2: {
           oldPassword: '',
           pass: '',
@@ -158,6 +191,12 @@
           checkPass: [
             {validator: validatePass2, trigger: 'blur'}
           ],
+        },
+        rules3:{
+          officePhone: [
+            {
+              validator: validateOfficePhone, trigger: 'blur'
+            }],
         }
       }
     },
@@ -193,7 +232,47 @@
         } else if (command === 'editPassword') {
           this.dialogVisible = true
           this.$refs["ruleForm2"].resetFields();
+        }else if(command === "editHomePhone"){
+          findMine().then((response) => {
+            this.$set(this.ruleForm3, 'officePhone', response.officePhone)
+            this.$set(this.ruleForm3, 'oldOfficePhone', response.officePhone)
+            this.dialogHomePhoneVisible = true
+
+          })
+
         }
+      },
+      submitForm2(formName) {
+        if (this.ruleForm3.officePhone==null || this.ruleForm3.officePhone==""){
+          this.$message({
+            type: 'info',
+            message: '坐席号不能为空!'
+          });
+          return;
+        }
+        if (this.ruleForm3.officePhone == this.ruleForm3.oldOfficePhone){
+          this.$message({
+            type: 'info',
+            message: '请修改坐席号!'
+          });
+          return;
+        }
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            updatePhone(this.ruleForm3).then((response) => {
+              this.$message({
+                type: 'success',
+                message: '修改坐席号成功!'
+              });
+              this.dialogHomePhoneVisible = false;
+              this.$refs["ruleForm3"].resetFields();
+            })
+
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
       },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
@@ -233,7 +312,7 @@
     .message {
       position: absolute;
       top: 28px;
-    	right: 128px;
+      right: 128px;
       width: 25px;
       height: 25px;
       background: url(./collect-manage.png);

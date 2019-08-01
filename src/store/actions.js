@@ -53,7 +53,7 @@ export const fedLogOut = function({commit}){
 export const getUserMenu = function({commit}){
   return new Promise((resolve, reject) => {
     getTreeAllMenusByToken().then(response => {
-      
+
       commit(types.SET_MENU, response)
       resolve()
     }).catch(error => {
@@ -90,8 +90,28 @@ export function resetPassword(form) {
     method:'post',
     url:'/user/passwordReset',
     data:{
-    	oldPassword:form.oldPassword,
-    	password:form.pass
+      oldPassword:form.oldPassword,
+      password:form.pass
+    }
+  })
+}
+
+export function updatePhone(form) {
+  return request({
+    method:'post',
+    url:'/user/updateOfficePhone',
+    data:{
+      officePhone:form.officePhone
+    }
+  })
+}
+
+export function findMine() {
+  return request({
+    method:'post',
+    url:'/user/selectMine',
+    data:{
+
     }
   })
 }
