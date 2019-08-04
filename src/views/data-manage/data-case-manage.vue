@@ -1621,9 +1621,9 @@
       },
 
       showBatchList(query){
-
+        this.$set(this, 'batchList', [])
         batchList2({"batchNo":query}).then((response) => {
-          this.batchList = response;
+          this.$set(this, 'batchList', response)
         })
       },
 

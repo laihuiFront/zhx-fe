@@ -399,6 +399,15 @@ export default new Router({
           },
           name: 'setting-return'
         },
+        // 身份证权限管理
+        {
+          path: 'setting-copy',
+          component: resolve => {
+            spinRoute.show();
+            require(['@/views/settings/setting-copy'], spinRoute.resolve(resolve))
+          },
+          name: 'setting-copy'
+        },
         // ****************** 系统设置 ******************
 
         {

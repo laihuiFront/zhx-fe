@@ -9,8 +9,8 @@
           {{caseDetail.name + '-[' + caseDetail.seqNo + ']-案件详情'}}
         </div>
         <div style="text-align: right; margin-right:20px;" >
-          <el-button type="primary" align="right" size="mini" @click="lastCase" >上条</el-button>
-          <el-button type="primary" align="right" size="mini" @click="nextCase" >下条</el-button>
+          <el-button type="primary" align="right" size="mini" @click="lastCase" v-if="showNext">上条</el-button>
+          <el-button type="primary" align="right" size="mini" @click="nextCase"  v-if="showNext">下条</el-button>
           <el-button type="primary" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showCommentVisible=true">评语</el-button>
           <el-button type="primary" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showWarningVisible=true">警告</el-button>
           <el-button type="primary" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showCollectInfo">催收小结</el-button>
@@ -56,7 +56,7 @@
             <div
               class="inputDiv"
               style="font-size: 11px;"
-              :class="[userInfo.busiData ? 'inputUnSelect' : '']"
+              :class="[caseDetail.copyAuth ? '' : 'inputUnSelect']"
             >
                 <span :class="[
                       { blue: caseDetail.color === 'BLUE' },
@@ -2746,6 +2746,7 @@
               label="对象姓名"
               show-overflow-tooltip
             ></el-table-column>
+
             <el-table-column
               prop="relation"
               width="120"
@@ -2761,6 +2762,12 @@
             <el-table-column
               prop="collectInfo"
               label="催收记录"
+              show-overflow-tooltip
+            ></el-table-column>
+            <el-table-column
+              prop="odv"
+              width="120"
+              label="催收员"
               show-overflow-tooltip
             ></el-table-column>
           </el-table>
@@ -4107,6 +4114,7 @@
         dependCase: [], //同批次公债案件
         activeNames: ["3", "4", "5"],
         otherActiveName: "1",
+        showNext:false,
         caseDetail: resetObj,
         ligigationVisible: false,
         memorizeType: 1,
@@ -4356,9 +4364,110 @@
       },
       lastCase(){
         let id = null;
+        let tempId = null;
         let name = null;
         let seqNo = null;
-        let thisData = {id:this.id};
+        let isIn = true;
+        var myArray=new Array()
+        let data = sessionStorage.getItem(
+          "mine"
+        );
+        if (data==null || data==""){
+          this.$message({
+            type: "info",
+            message: "当前查询结果无数据!"
+          });
+          return ;
+        }
+        myArray = JSON.parse(data);
+        if (myArray==null || myArray.length==0){
+          this.$message({
+            type: "info",
+            message: "当前查询结果无数据!"
+          });
+          return ;
+        }
+        debugger
+        for (var i=0;i<myArray.length;i++){
+            if (this.id==myArray[i].id){
+              isIn = false;
+               if (i==0){
+                  //当前列表没有下一条
+                 this.$message({
+                   type: "info",
+                   message: "当前列表没有上一条!"
+                 });
+                 return ;
+               }
+              tempId = myArray[i-1].id;
+            }
+        }
+        if (isIn){
+          this.$message({
+            type: "info",
+            message: "案件不在当前查询结果中!"
+          });
+          return ;
+        }
+        let thisData = {id:tempId};
+        lastCase(thisData).then(data => {
+          debugger;
+          id = data.id;
+          name = data.name;
+          seqNo = data.seqNo;
+          this.$router.push({
+            path: 'case-detail',
+            query: {
+              id,
+              name,
+              mycase:this.$route.query.mycase,
+              showNext:this.$route.query.showNext,
+              seqNo
+            }
+          })
+        });
+      },
+      nextCase(){
+        let id = null;
+        let tempId = null;
+        let name = null;
+        let seqNo = null;
+        let isIn = true;
+        var myArray=new Array()
+        let data = sessionStorage.getItem(
+          "mine"
+        );
+        if (data==null || data==""){
+          this.$message({
+            type: "info",
+            message: "当前查询结果无数据!"
+          });
+          return ;
+        }
+        myArray = JSON.parse(data);
+
+        for (var i=0;i<myArray.length;i++){
+          if (this.id==myArray[i].id){
+            isIn = false;
+            if (i>=(myArray.length-1)){
+              //当前列表没有下一条
+              this.$message({
+                type: "info",
+                message: "当前列表没有下一条!"
+              });
+              return ;
+            }
+            tempId = myArray[i+1].id;
+          }
+        }
+        if (isIn){
+          this.$message({
+            type: "info",
+            message: "案件不在当前查询结果中!"
+          });
+          return ;
+        }
+        let thisData = {id:tempId};
         lastCase(thisData).then(data => {
           id = data.id;
           name = data.name;
@@ -4369,26 +4478,7 @@
               id,
               name,
               mycase:this.$route.query.mycase,
-              seqNo
-            }
-          })
-        });
-      },
-      nextCase(){
-        let id = null;
-        let name = null;
-        let seqNo = null;
-        let thisData = {id:this.id};
-        nextCase(thisData).then(data => {
-          id = data.id;
-          name = data.name;
-          seqNo = data.seqNo;
-          this.$router.push({
-            path: 'case-detail',
-            query: {
-              id,
-              name,
-              mycase:this.$route.query.mycase,
+              showNext:this.$route.query.showNext,
               seqNo
             }
           })
@@ -5257,6 +5347,12 @@
         }else{
           this.$set(this, 'mycaseFlag', false)
         }
+
+        if (this.$route.query.showNext){
+          this.$set(this, 'showNext', true)
+        }else{
+          this.$set(this, 'showNext', false)
+        }
         getCaseDetail(this.id).then(data => {
           this.caseDetail = data;
         });
@@ -5395,6 +5491,10 @@
           if (this.$route.query.mycase){
             this.$set(this, 'mycaseFlag', true)
           }
+
+          if (this.$route.query.showNext){
+            this.$set(this, 'showNext', true)
+          }
           let obj = JSON.parse(data);
           for (let [k, v] of Object.entries(obj)) {
             this.$set(this, k, v);
@@ -5422,11 +5522,15 @@
       resetContent() {
         this.caseDetail = resetObj;
         this.mycaseFlag = false;
+        this.showNext = false;
       },
       showMyCaseFlag(){
 
         if (this.$route.query.mycase){
           this.mycaseFlag = true;
+        }
+        if (this.$route.query.showNext){
+          this.showNext = true;
         }
       }
     },

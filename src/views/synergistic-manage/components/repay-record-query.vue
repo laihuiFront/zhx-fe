@@ -41,6 +41,7 @@
         v-model="caseDate"
         value-format="yyyy-MM-dd"
         type="daterange"
+        unlink-panels
         range-separator="至"
         start-placeholder="委案日期开始"
         end-placeholder="委案日期结束">
@@ -110,6 +111,7 @@
               v-model="expectDate"
               value-format="yyyy-MM-dd"
               type="daterange"
+              unlink-panels
               range-separator="至"
               start-placeholder="预计退案日期开始"
               end-placeholder="预计退案日期结束">
@@ -148,6 +150,7 @@
               v-model="confirmTime"
               value-format="yyyy-MM-dd"
               type="daterange"
+              unlink-panels
               range-separator="至"
               start-placeholder="确认日期开始"
               end-placeholder="确认日期结束">
@@ -160,6 +163,7 @@
               v-model="repayDate"
               value-format="yyyy-MM-dd"
               type="daterange"
+              unlink-panels
               range-separator="至"
               start-placeholder="还款日期开始"
               end-placeholder="还款日期结束">

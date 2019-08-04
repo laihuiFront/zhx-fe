@@ -75,6 +75,9 @@
                 </el-form-item>
                 <el-form-item prop="val3" v-if="queryConf.gaxlh || queryConfFlag">
                   <el-input
+                    type="textarea"
+                    rows="3"
+                    style="width: 100%;"
                     v-model="form.val3"
                     placeholder="请输入个案序列号"
                     clearable
@@ -114,6 +117,9 @@
                 </el-form-item>
                 <el-form-item prop="val5" v-if="queryConf.xm || queryConfFlag">
                   <el-input
+                    type="textarea"
+                    rows="3"
+                    style="width: 100%;"
                     v-model="form.val5"
                     placeholder="请输入姓名"
                     clearable
@@ -121,6 +127,9 @@
                 </el-form-item>
                 <el-form-item prop="val6" v-if="queryConf.zjh || queryConfFlag">
                   <el-input
+                    type="textarea"
+                    rows="3"
+                    style="width: 100%;"
                     v-model="form.val6"
                     placeholder="请输入证件号"
                     clearable
@@ -226,6 +235,9 @@
                 </el-form-item>
                 <el-form-item prop="val15" v-if="queryConf.kh || queryConfFlag">
                   <el-input
+                    type="textarea"
+                    rows="3"
+                    style="width: 100%;"
                     v-model="form.val15"
                     placeholder="请输入卡号"
                     clearable
@@ -233,6 +245,9 @@
                 </el-form-item>
                 <el-form-item prop="val16" v-if="queryConf.dah || queryConfFlag">
                   <el-input
+                    type="textarea"
+                    rows="3"
+                    style="width: 100%;"
                     v-model="form.val16"
                     placeholder="请输入档案号"
                     clearable
@@ -895,10 +910,10 @@ export default {
         val0: clients,
         val1: batchNos,
         val2,
-        val3: seqno,
+        val3,
         val4: area,
-        val5: name,
-        val6: identNo,
+        val5,
+        val6,
         val7,
         val8: accountAges,
         val9: statuss,
@@ -908,8 +923,8 @@ export default {
         val13: moneyStart,
         val29: moneyEnd,
         val14: colors,
-        val15: cardNo,
-        val16: archiveNo,
+        val15,
+        val16,
         val17,
         val18: countFollowStart,
         val30: countFollowEnd,
@@ -927,14 +942,14 @@ export default {
       return {
         clients,
         batchNos,
-        seqno,
+        seqno:val3==null?"":val3.replace(/[\n\r\v\s↵]/g,","),
         caseDateStart: (!!val7 && val7[0]) || "",
         caseDateEnd: (!!val7 && val7[1]) || "",
         nextFollDateStart: (!!val2 && val2[0]) || "",
         nextFollDateEnd: (!!val2 && val2[1]) || "",
         area: area + "" ? area : null,
-        name,
-        identNo,
+        name:val5==null?"":val5.replace(/[\n\r\v\s↵]/g,","),
+        identNo:val6==null?"":val6.replace(/[\n\r\v\s↵]/g,","),
         accountAges,
         statuss,
         collectStatuss,
@@ -945,8 +960,8 @@ export default {
         moneyStart,
         moneyEnd,
         colors,
-        cardNo,
-        archiveNo,
+        cardNo:val15==null?"":val15.replace(/[\n\r\v\s↵]/g,","),
+        archiveNo:val16==null?"":val16.replace(/[\n\r\v\s↵]/g,","),
         lastFollDateStart: (!!val17 && val17[0]) || "",
         lastFollDateEnd: (!!val17 && val17[1]) || "",
         countFollowStart,
@@ -1047,7 +1062,25 @@ export default {
     },
     //查询按钮
     searchHandle() {
-      this.getMainData();
+      this.getMainDataForQuery();
+    },
+    getMainDataForQuery() {
+      this.tableLoad = true;
+      pageMyCase(this.realFetchFormData).then(data => {
+        sessionStorage.setItem(
+          "mine",
+          JSON.stringify(data.list)
+        );
+        if (!data) {
+          data = { total: 0, list: [] };
+        }
+        this.fetchData = data;
+        this.paginationData.total = data.countCase;
+        this.tableData = data.list.map(item => {
+          return Object.assign(item, { "class-name": `color_${item.color}` });
+        });
+        this.tableLoad = false;
+      });
     },
     rowColor({ row }) {
       if (row.caseStatus==3){
@@ -1147,6 +1180,7 @@ export default {
           id,
           name,
           mycase:true,
+          showNext:true,
           seqNo
         }
       });
@@ -1221,7 +1255,7 @@ export default {
       });
     },
     init() {
-      this.getMainData();
+      this.getMainDataForQuery();
     },
   },
 
