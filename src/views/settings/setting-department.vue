@@ -1,6 +1,9 @@
 <template>
 	<div id="setting-department" v-loading="pageLoading" element-loading-text="拼命加载中">
 		<div class="treeStyle">
+			<div class="header">
+				<el-button type="primary" @click="onClickMove" class="movebtn">移动</el-button>
+			</div>
 			<el-tree
 				v-if="departmentTree.length>0"
 				ref="tree"
@@ -98,6 +101,33 @@
 				<el-button type="primary" @click="addDept('form_add')">确 定</el-button>
 			</span>
 		</el-dialog>
+
+		<el-dialog
+			title="选择目标部门"
+			class="dialog-wrap"
+			:visible.sync="showDialog"
+			:close-on-click-modal="true"
+			:append-to-body="true"
+			width="400px"
+		>
+			<el-tree
+				v-if="moveSelectDepartTree.length>0"
+				ref="treeSelect"
+				:data="moveSelectDepartTree"
+				node-key="id"
+				:expand-on-click-node="false"
+				@node-click="onSelectDepartment"
+				class="tree-wrap-select"
+				width="200px"
+				:default-expand-all="true"
+			>
+				<span class="custom-tree-node" slot-scope="{ node, data }">{{data.orgName}}</span>
+			</el-tree>
+			<span slot="footer" class="footer">
+				<el-button @click="showDialog = false">取 消</el-button>
+				<el-button type="primary" @click="onClickConfirmDept">确 定</el-button>
+			</span>
+		</el-dialog>
 	</div>
 </template>
 <script>
@@ -107,7 +137,8 @@
 		upDownMethod,
 		deletMethod,
 		findTableData,
-		addDeptMethod
+		addDeptMethod,
+		moveToTargetDepartment
 	} from "@/common/js/api-setting";
 	import { forkJoin } from "rxjs";
 	export default {
@@ -132,12 +163,18 @@
 						{ required: true, message: "部门名称不能为空", trigger: "blur" }
 					]
 				},
-				nodeSort: ""
+				nodeSort: "",
+				moveSelectDepartTree: [],
+				showDialog: false
 			};
 		},
 		created() {
 			this.initTree();
+			getDepartmentTree().then(data => {
+				this.moveSelectDepartTree = data;
+			});
 		},
+
 		methods: {
 			initTree() {
 				this.pageLoading = true;
@@ -166,14 +203,14 @@
 			initTable() {
 				this.pageLoading = true;
 				findTableData(this.treeObjid).then(res => {
-          if(res.length>0){
-            this.tableData = res;
-            res[0].begin = 0;
-            res[res.length - 1].last = 0;
-          }else{
-            this.tableData=[]
-          }
-            this.pageLoading = false;
+					if (res.length > 0) {
+						this.tableData = res;
+						res[0].begin = 0;
+						res[res.length - 1].last = 0;
+					} else {
+						this.tableData = [];
+					}
+					this.pageLoading = false;
 				});
 			},
 			editDepartment(index, row) {
@@ -191,42 +228,50 @@
 					type: "warning"
 				}).then(() => {
 					this.pageLoading = true;
-					deletMethod(row).then(() => {
-					  this.tableData.splice(index, 1);
-            this.$message.success("部门更新成功");
-					forkJoin([getDepartmentTree(),findTableData(this.treeObjid)]).subscribe(results => {
-						if (results[0].length > 0 && results[1].length > 0) {
-							this.departmentTree = results[0];
-							this.tableData = results[1];
-							results[1][0].begin = 0;
-							results[1][results[1].length - 1].last = 0;
-              this.pageLoading = false;
-              }else{
-                this.departmentTree = results[0];
-                this.tableData = results[1];
-                this.pageLoading = false;
-              }             
-            })
-					}).catch(() => {
-            this.initTree();           
-					});
+					deletMethod(row)
+						.then(() => {
+							this.tableData.splice(index, 1);
+							this.$message.success("部门更新成功");
+							forkJoin([
+								getDepartmentTree(),
+								findTableData(this.treeObjid)
+							]).subscribe(results => {
+								if (results[0].length > 0 && results[1].length > 0) {
+									this.departmentTree = results[0];
+									this.tableData = results[1];
+									results[1][0].begin = 0;
+									results[1][results[1].length - 1].last = 0;
+									this.pageLoading = false;
+								} else {
+									this.departmentTree = results[0];
+									this.tableData = results[1];
+									this.pageLoading = false;
+								}
+							});
+						})
+						.catch(() => {
+							this.initTree();
+						});
 				});
 			},
 			saveDept() {
 				this.showDepartmentDialog = false;
 				this.pageLoading = true;
 				saveDepartment(this.form_update).then(() => {
-          this.expandedlist.push(this.form_update.parent.id);
-          this.$message.success("部门更新成功");
-          forkJoin([getDepartmentTree(),findTableData(this.treeObjid)]).subscribe(results => {
+					this.expandedlist.push(this.form_update.parent.id);
+					this.$message.success("部门更新成功");
+					forkJoin([
+						getDepartmentTree(),
+						findTableData(this.treeObjid)
+					]).subscribe(results => {
 						if (results[0].length > 0 && results[1].length > 0) {
 							this.departmentTree = results[0];
 							this.tableData = results[1];
 							results[1][0].begin = 0;
 							results[1][results[1].length - 1].last = 0;
-              this.pageLoading = false;
-            }
-          })
+							this.pageLoading = false;
+						}
+					});
 				});
 			},
 			moveUp(index, row) {
@@ -238,16 +283,19 @@
 					this.tableData[index - 1].id,
 					this.tableData[index - 1].sort
 				).then(() => {
-          this.$message.success("操作成功");
-					forkJoin([getDepartmentTree(),findTableData(this.treeObjid)]).subscribe(results => {
+					this.$message.success("操作成功");
+					forkJoin([
+						getDepartmentTree(),
+						findTableData(this.treeObjid)
+					]).subscribe(results => {
 						if (results[0].length > 0 && results[1].length > 0) {
 							this.departmentTree = results[0];
 							this.tableData = results[1];
 							results[1][0].begin = 0;
 							results[1][results[1].length - 1].last = 0;
-              this.pageLoading = false;
-            }
-				  });
+							this.pageLoading = false;
+						}
+					});
 				});
 			},
 			moveDown(index, row) {
@@ -260,7 +308,10 @@
 					this.tableData[index + 1].sort
 				).then(() => {
 					this.$message.success("操作成功");
-					forkJoin([getDepartmentTree(),findTableData(this.treeObjid)]).subscribe(results => {
+					forkJoin([
+						getDepartmentTree(),
+						findTableData(this.treeObjid)
+					]).subscribe(results => {
 						if (results[0].length > 0 && results[1].length > 0) {
 							this.departmentTree = results[0];
 							this.tableData = results[1];
@@ -285,14 +336,17 @@
 					if (valid) {
 						this.form_add.pid = this.treeObjid;
 						findTableData(this.treeObjid).then(res => {
-            if(res.length===0){
-              this.form_add.sort =this.nodeSort
-            }else{
-							this.form_add.sort = res[res.length - 1].sort;
-            }
+							if (res.length === 0) {
+								this.form_add.sort = this.nodeSort;
+							} else {
+								this.form_add.sort = res[res.length - 1].sort;
+							}
 							addDeptMethod(this.form_add).then(() => {
 								this.$message.success("操作成功");
-								forkJoin([getDepartmentTree(),findTableData(this.treeObjid)]).subscribe(results => {
+								forkJoin([
+									getDepartmentTree(),
+									findTableData(this.treeObjid)
+								]).subscribe(results => {
 									if (results[0].length > 0 && results[1].length > 0) {
 										this.departmentTree = results[0];
 										this.tableData = results[1];
@@ -305,6 +359,52 @@
 						});
 					}
 				});
+			},
+			onClickMove() {
+				if (!this.treeObjid) {
+					this.$message("请选择部门");
+					return;
+				}
+				this.showDialog = true;
+			},
+			onClickConfirmDept() {
+				if (!this.selectDeptId) {
+					this.$message("请选择目标部门");
+					return;
+				}
+				this.$confirm(
+					"该操作会将部门及其子部门移动到目标部门下，确认继续？",
+					"提示",
+					{
+						confirmButtonText: "确定",
+						cancelButtonText: "取消",
+						type: "warning"
+					}
+				)
+					.then(() => {
+						this.pageLoading = true;
+						moveToTargetDepartment(this.treeObjid, this.selectDeptId).then(() => {
+							this.$message.success("操作成功");
+							forkJoin([
+								getDepartmentTree(),
+								findTableData(this.treeObjid)
+							]).subscribe(results => {
+								if (results[0].length > 0 && results[1].length > 0) {
+									this.departmentTree = results[0];
+									this.moveSelectDepartTree = results[0];
+									this.tableData = results[1];
+									results[1][0].begin = 0;
+									results[1][results[1].length - 1].last = 0;
+									this.pageLoading = false;
+								}
+							});
+						});
+						this.showDialog = false;
+					})
+					.catch(() => {});
+			},
+			onSelectDepartment(data) {
+				this.selectDeptId = data.id;
 			}
 		}
 	};
@@ -325,6 +425,9 @@
 			height: 100%;
 			overflow-y: auto;
 		}
+		.tree-wrap {
+			margin-top: 5px;
+		}
 		.tablestyle {
 			display: inline-block;
 			width: 80%;
@@ -333,6 +436,7 @@
 		.tablebodystyle {
 			height: calc(100% - 30px);
 			width: calc(100%);
+			margin-top: 5px;
 		}
 		.el-table .el-table__body-wrapper {
 			height: calc(100% - 36px);

@@ -38,6 +38,7 @@
                 ref="form"
                 :model="form"
                 label-width="80px"
+                class="queryStyle"
               >
                 <el-form-item prop="val0" v-if="queryConf.wtf || queryConfFlag">
                   <el-select
@@ -478,9 +479,10 @@
                   </el-dropdown>
                 </el-form-item>
                 <el-form-item>
+                    <!-- @click="dialogVisible = true" -->
                   <el-button
+                    @click="applyUrge"
                     type="primary"
-                    @click="dialogVisible = true"
                     v-has="'申请协催'"
                     >申请协催</el-button
                   >
@@ -901,7 +903,8 @@ export default {
         orderBy: "id",
         sort: "desc"
       },
-      ops: { scrollParent: "window" }
+      ops: { scrollParent: "window" },
+      deleteList:[]
     };
   },
   computed: {
@@ -1116,6 +1119,13 @@ export default {
         this.getMainData();
       });
     },
+      applyUrge(){
+        if (this.multipleSelection.length >= 1) {
+          this.dialogVisible = true
+        } else {
+          this.$message.error('请选择数据!');
+        }
+      },
     //申请协催
     xcHandle() {
       if (this.multipleSelection.length == 0) {

@@ -36,6 +36,7 @@
                 ref="form"
                 :model="form"
                 label-width="20px"
+                class="query-wrap queryStyle"
               >
 
                 <el-form-item prop="val31" v-if="queryConf.bm || queryConfFlag">

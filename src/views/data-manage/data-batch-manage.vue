@@ -7,7 +7,7 @@
        element-loading-spinner="el-icon-loading"
        element-loading-background="rgba(0, 0, 0, 0.7)"
        class="page-wraper-sub">
-    <el-form ref="form" :model="form" :inline="true" class="query-wrap">
+    <el-form ref="form" :model="form" :inline="true" class="query-wrap queryStyle">
       <el-form-item>
         <el-select v-model="form.areas" placeholder="请选择催收区域"  filterable multiple collapse-tags clearable>
           <el-option

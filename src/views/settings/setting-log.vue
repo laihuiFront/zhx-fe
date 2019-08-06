@@ -1,6 +1,6 @@
 <template>
   <div id="setting-log" class="page-wraper-sub">
-    <el-form ref="form" :model="queryForm" :inline="true" class="query-wrap">
+    <el-form ref="form" :model="queryForm" :inline="true" class="query-wrap queryStyle">
       <el-form-item>
         <el-select v-model="queryForm.url" placeholder="请选择日志类型">
           <el-option

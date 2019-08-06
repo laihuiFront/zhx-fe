@@ -1,6 +1,6 @@
 <template>
   <div id="litigation-apply" class="page-wraper-sub">
-    <el-form ref="form" :model="form" :inline="true" class="query-wrap">
+    <el-form ref="form" :model="form" :inline="true" class="query-wrap queryStyle">
       <el-form-item>
         <el-input v-model="form.legalNo" placeholder="请输入案号" clearable></el-input>
       </el-form-item>

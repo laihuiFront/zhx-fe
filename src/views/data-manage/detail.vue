@@ -1241,15 +1241,17 @@
                     type="primary"
                     @click="sendTel3"
                     v-if=" caseDetail.currentuser || mycaseFlag"
-                  >电话批量呼出
+                  >手机批量呼出
                   </el-button>
                   <el-button
+                    class="sendTel4Style"
                     type="primary"
                     @click="sendTel4"
                     v-if=" caseDetail.currentuser || mycaseFlag"
                   >座机批量呼出
                   </el-button>
                   <el-button
+                    class="addPhoneStyle"
                     type="primary"
                     @click="addPhone"
                     v-if=" caseDetail.currentuser || mycaseFlag"
@@ -5721,6 +5723,14 @@
               margin-bottom: 12px;
               display: flex;
               justify-content: space-between;
+            }
+
+            .sendTel4Style{
+              margin-left: 0px;
+            }
+            
+            .addPhoneStyle{
+              margin-left: 0px
             }
 
             &.billing-wrap {

@@ -150,3 +150,14 @@ export function addDeptMethod(data) {
     data
   })
 }
+
+export function moveToTargetDepartment(id,pid){
+  return request({
+    url: '/organization/moveToTargetDepartment',
+    method: 'post',
+    params:{
+      id,
+      pid
+    }
+  })
+}
