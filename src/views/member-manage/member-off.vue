@@ -1,6 +1,6 @@
 <template>
   <div id="member-off" class="page-wraper-sub">
-    <el-form ref="form" :model="queryForm" :inline="true" class="query-wrap">
+    <el-form ref="form" :model="queryForm" :inline="true" class="query-wrap queryStyle">
       <el-form-item>
         <el-input v-model="queryForm.number" clearable placeholder="请输入员工号"></el-input>
       </el-form-item>

@@ -5,7 +5,7 @@
        element-loading-text="正在加载中"
        element-loading-spinner="el-icon-loading"
        element-loading-background="rgba(0, 0, 0, 0.7)">
-    <el-form ref="form" :model="formInline" :inline="true" class="query-wrap">
+    <el-form ref="form" :model="formInline" :inline="true" class="query-wrap queryStyle">
       <el-form-item v-if="queryConf.csqy || queryConfFlag">
         <el-select v-model="formInline.collectAreas" :visible-arrow="false" filterable collapse-tags multiple placeholder="请选择催收区域" clearable >
           <el-option

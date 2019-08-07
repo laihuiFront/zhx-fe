@@ -6,7 +6,7 @@
 
        element-loading-spinner="el-icon-loading"
        element-loading-background="rgba(0, 0, 0, 0.7)">
-    <el-upload
+    <!-- <el-upload
             class="upload-demo"
             :action="action+'/reduce/import'"
             :headers="header"
@@ -16,9 +16,9 @@
             :on-success="uploadSuccess"
             :on-progress="onProgress"
           >
-            <el-button type="primary"  >减免申请结果导入</el-button>
-          </el-upload>
-    <el-form ref="form" :model="formInline" :inline="true" class="query-wrap">
+            <el-button type="primary"  >导入减免申请结果</el-button>
+          </el-upload> -->
+    <el-form ref="form" :model="formInline" :inline="true" class="query-wrap queryStyle">
       <el-form-item v-if="queryConf.pch || queryConfFlag">
         <el-input v-model="formInline.batchNo" clearable placeholder="请输入批次号"></el-input>
       </el-form-item>
@@ -126,7 +126,17 @@
           <el-button icon="el-icon-refresh" type="primary" @click="clear">重置</el-button>
           <el-button type="primary" @click="showQueryConf" style="margin-left:10px;">查询条件配置</el-button>
           <el-button type="primary" 　v-show="istrue1" v-has="'新增减免'" @click=addData>新增减免</el-button>
-          <el-button type="primary" 　v-show="istrue2" v-has="'批量撤销'" @click=open8>批量撤销</el-button>
+          <el-button type="primary" 　v-show="istrue2" v-has="'批量撤销'" @click=open8>批量撤销</el-button>        
+           <el-upload
+            :headers="header"
+            class="upload-demo"
+            :action="action+'/reduce/import'"
+            :show-file-list="false"
+            :on-success="uploadSuccess"
+            :on-progress="onProgress"
+          >
+            <el-button type="primary"  >导入减免申请结果</el-button>
+          </el-upload>
           <el-button type="primary" 　v-show="istrue3" v-has="'导出减免结果'" @click="changeRadio">导出待审核减免申请</el-button>
           <el-button type="primary" 　v-show="istrue3" v-has="'批量审核'" @click=open9>批量审核</el-button>
           <el-button type="primary" 　v-show="istrue6" v-has="'批量确认'" @click=open10>批量确认</el-button>
@@ -457,7 +467,7 @@
                   height="1"
                   ref="multipleTable"
                   :data="tableData3"
-                  style="width: 100%;"
+                  style="width: 100%"
                   border
                   stripe
                   tooltip-effect="dark"
@@ -1441,6 +1451,11 @@
     .el-table__body tr.current-row > td{
       border-top: 1px solid #0080ff  !important;
       border-bottom: 1px solid #0080ff  !important;
+    }
+    .upload-demo{
+      display: inline-block;
+      margin-left: 10px;
+      margin-right: 10px;
     }
   }
 </style>

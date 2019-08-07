@@ -41,7 +41,7 @@
       </el-row>
     </section>
     <section class="form">
-      <el-form :inline="true" ref="form1" :model="form1" label-width="80px">
+      <el-form :inline="true" ref="form1" :model="form1" label-width="80px" class="query-wrap">
         <el-row>
           <el-form-item>
             <el-select
@@ -198,7 +198,7 @@
         border
         stripe
         tooltip-effect="dark"
-        style="width: 100%"
+        style="width: 100%;min-height: 400px;"
         @selection-change="handleSelectionChange"
       >
 
@@ -706,7 +706,7 @@ export default {
   }
   .topSpan {
     display: inline-block;
-    margin-right: 10px;
+    // margin-right: 10px;
     color: #b2adb2;
   }
 }

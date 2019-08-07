@@ -49,7 +49,7 @@
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="催收状态统计" name="second">
-        <el-form :inline="true" ref="form2" :model="form2" label-width="80px">
+        <el-form :inline="true" ref="form2" :model="form2" label-width="80px" class="queryStyle">
           <el-form-item prop="val1">
             <el-select
               v-model="form2.val1"
@@ -128,7 +128,7 @@
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="批次分类统计" name="third">
-        <el-form :inline="true" ref="form3" :model="form3" label-width="80px">
+        <el-form :inline="true" ref="form3" :model="form3" label-width="80px" class="queryStyle">
           <el-form-item prop="val1">
             <el-select
               v-model="form3.val1"

@@ -6,7 +6,7 @@
        element-loading-spinner="el-icon-loading"
        element-loading-background="rgba(0, 0, 0, 0.7)"
        class="page-wraper-sub">
-    <el-form ref="form" :model="form" :inline="true" class="query-wrap">
+    <el-form ref="form" :model="form" :inline="true" class="query-wrap queryStyle">
       <el-form-item>
         <el-select  v-model="form.areas" placeholder="请选择催收区域" collapse-tags multiple clearable>
           <el-option
@@ -30,6 +30,7 @@
       <el-form-item>
         <el-select v-model="form.clients" filterable collapse-tags multiple placeholder="请选择委托方" @change="clientCurrent" clearable>
           <el-option
+          class="oo"
             v-for="item in clientList"
             :key="item.id"
             :label="item.name"
@@ -1193,6 +1194,10 @@
       border-top: 1px solid #0080ff  !important;
       border-bottom: 1px solid #0080ff  !important;
     }
+  //  .el-select-dropdown__item{
+  //     width: 180px ;
+  //   }
+
   }
 </style>
 

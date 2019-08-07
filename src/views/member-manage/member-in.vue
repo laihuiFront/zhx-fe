@@ -26,7 +26,7 @@
       </el-tree>
     </div>
     <div class="right-wrap page-wraper-sub">
-      <el-form ref="form" :model="queryForm" :inline="true" class="query-wrap">
+      <el-form ref="form" :model="queryForm" :inline="true" class="query-wrap queryStyle">
         <el-form-item>
           <el-input type="textarea" v-model="queryForm.id" style="width: 100%;" placeholder="请输入员工ID"
                     rows="3"></el-input>

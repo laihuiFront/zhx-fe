@@ -5,7 +5,7 @@
        :element-loading-text="loadinText"
        element-loading-spinner="el-icon-loading"
        element-loading-background="rgba(0, 0, 0, 0.7)">
-    <el-form ref="form" :model="form" :inline="true" class="query-wrap">
+    <el-form ref="form" :model="form" :inline="true" class="query-wrap queryStyle">
       <el-form-item>
         <el-input v-model="form.identNo" placeholder="请输入证件号" clearable></el-input>
       </el-form-item>

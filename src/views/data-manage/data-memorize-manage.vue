@@ -6,7 +6,7 @@
        element-loading-spinner="el-icon-loading"
        element-loading-background="rgba(0, 0, 0, 0.8)"
        class="page-wraper-sub">
-    <el-form id="repay-record-query" :model="formInline" :inline="true" class="query-wrap">
+    <el-form id="repay-record-query" :model="formInline" :inline="true" class="query-wrap queryStyle">
       <el-form-item v-if="queryConf.csqy || queryConfFlag">
         <el-select v-model="formInline.areas" filterable collapse-tags multiple placeholder="请选择催收区域" clearable>
           <el-option

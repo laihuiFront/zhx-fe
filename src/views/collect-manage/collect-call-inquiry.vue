@@ -9,7 +9,7 @@
     >
       <case-detail :id="detailId" ref='detail'></case-detail>
     </el-dialog>
-    <el-form :inline="true" ref="form1" :model="form1" label-width="80px">
+    <el-form :inline="true" ref="form1" :model="form1" label-width="80px" class="queryStyle">
       <el-form-item prop="val1">
         <el-checkbox-group v-model="form1.val1">
           <el-checkbox true-label="1" false-label="2">精准匹配</el-checkbox>       

@@ -40,7 +40,7 @@
         >
       </el-row>
     </section>
-    <section class="form">
+    <section class="form queryStyle">
       <el-form :inline="true" ref="form1" :model="form1" label-width="80px">
         <el-row>
           <el-form-item>

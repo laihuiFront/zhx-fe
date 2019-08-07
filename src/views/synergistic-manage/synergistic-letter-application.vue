@@ -64,6 +64,7 @@
                   ref="form"
                   :model="form"
                   label-width="80px"
+                  class="queryStyle"
                 >
                   <el-form-item prop="val0">
                     <el-select

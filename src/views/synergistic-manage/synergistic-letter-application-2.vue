@@ -39,7 +39,7 @@
     <el-row :gutter="24">
       <el-col :span="24">
         <div class="grid-content bg-purple">
-          <el-form :inline="true" ref="form" :model="form" label-width="80px">
+          <el-form :inline="true" ref="form" :model="form" label-width="80px" class="queryStyle">
             <el-form-item prop="val0">
               <el-select
                 v-model="form.val0"

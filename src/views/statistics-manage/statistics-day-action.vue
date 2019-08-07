@@ -6,7 +6,7 @@
 
        element-loading-spinner="el-icon-loading"
        element-loading-background="rgba(0, 0, 0, 0.7)">
-    <el-form ref="form" :model="formInline" :inline="true" class="query-wrap">
+    <el-form ref="form" :model="formInline" :inline="true" class="query-wrap queryStyle">
       <el-form-item>
         <el-input v-model="odvName" width="200" @focus="onClickSelectUser" clearable placeholder="请选择催收员"></el-input>
       </el-form-item>
