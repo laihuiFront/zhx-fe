@@ -33,11 +33,12 @@
             >
           </el-form-item>
         </el-form>
-         <el-table highlight-current-row class="table-wrap"
+         <el-table highlight-current-row 
+          class="table-wrap"
           height="1"
           v-loading="tableLoad"
           :data="tableData1"
-          style="width: 100%;min-height: 400px;"
+          style="width: 100%;"
         >
           <el-table-column
             v-for="(item, index) in tablecol_data1"

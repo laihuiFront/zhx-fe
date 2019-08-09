@@ -1,5 +1,5 @@
 <template>
-  <div id="collect-my-case" class="page-wraper-sub">
+  <div id="collect-my-case" class="page-wraper-sub" v-loading="pageLoading" element-loading-text="拼命加载中">
     <el-tabs v-model="activeName" :class="{tab2:tabnum}" class="tabs-wrap">
       <el-tab-pane label="我的案件" style="height: 100%" name="tab1">
         <el-dialog
@@ -467,7 +467,7 @@
                     v-has="'修改催收状态'"
                     v-dropdown-patch
                   >
-                    <el-button type="primary" @click>修改催收状态<i class="el-icon-arrow-down el-icon--right"></i></el-button>
+                    <el-button type="primary">修改催收状态<i class="el-icon-arrow-down el-icon--right"></i></el-button>
                     <el-dropdown-menu slot="dropdown">
                       <el-dropdown-item
                         :command="item.id"
@@ -479,7 +479,6 @@
                   </el-dropdown>
                 </el-form-item>
                 <el-form-item>
-                    <!-- @click="dialogVisible = true" -->
                   <el-button
                     @click="applyUrge"
                     type="primary"
@@ -576,7 +575,7 @@
           :data="tableData"
           border
           stripe
-          style="width: 100%;min-height: 400px;"
+          style="width: 100%;"
           class="table-wrap"
           height="1"
           :row-class-name="rowColor"
@@ -904,7 +903,8 @@ export default {
         sort: "desc"
       },
       ops: { scrollParent: "window" },
-      deleteList:[]
+      deleteList:[],
+      pageLoading:false
     };
   },
   computed: {
@@ -1095,7 +1095,10 @@ export default {
       }
     },
     modStatusHandle(id) {
-      console.log(id);
+       if (this.multipleSelection.length ===0 ) {
+          this.$message.error('请选择数据!');
+        } else {
+          this.pageLoading=true
       let data = this.multipleSelection.reduce((acc, item) => {
         acc.push({
           id: item.id,
@@ -1104,10 +1107,17 @@ export default {
         return acc;
       }, []);
       addCollectStatus(data).then(() => {
+        this.$message.success('操作成功!')
         this.getMainData();
+        this.pageLoading=false
       });
+     }
     },
     colorHandle(color) {
+        if (this.multipleSelection.length ===0 ) {
+          this.$message.error('请选择数据!');
+        } else {
+          this.pageLoading=true
       let data = this.multipleSelection.reduce((acc, item) => {
         acc.push({
           id: item.id,
@@ -1116,8 +1126,11 @@ export default {
         return acc;
       }, []);
       markColor(data).then(data => {
+        this.$message.success('操作成功!')
         this.getMainData();
+        this.pageLoading=false
       });
+      }
     },
       applyUrge(){
         if (this.multipleSelection.length >= 1) {
@@ -1138,7 +1151,6 @@ export default {
         });
         return acc;
       }, []);
-
       addSynergy(data).then(() => {
         this.$message({
           message: "提交成功",
@@ -1342,6 +1354,10 @@ body #collect-my-case .tab2{
     display: inline-block;
   }
 }
+
+  .el-table--border {
+    flex:none
+  }
 
 #collect-my-case {
   .el-table th.gutter{

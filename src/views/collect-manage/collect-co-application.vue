@@ -251,6 +251,6 @@ export default {
 </script>
 
 <style lang="scss">
-#collect-co-application {
-}
+// #collect-co-application {
+// }
 </style>
