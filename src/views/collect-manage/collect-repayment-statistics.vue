@@ -553,7 +553,6 @@ export default {
   }
   .topSpan {
     display: inline-block;
-    margin-right: 10px;
     color: #b2adb2;
   }
   .el-tabs__content{

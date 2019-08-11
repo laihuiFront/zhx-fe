@@ -1,5 +1,5 @@
 <template>
-  <div id="collect-departmental-case" class="page-wraper-sub">
+  <div id="collect-departmental-case" class="page-wraper-sub"  v-loading="pageLoading" element-loading-text="拼命加载中">
     <el-tabs v-model="activeName"  :class="{tab2:tabnum}" class="tabs-wrap">
       <el-tab-pane label="部门案件" name="tab1"
                    style="height: 100%"
@@ -533,7 +533,7 @@
                 </el-form-item>
                 <el-form-item>
                   <el-dropdown v-dropdown-patch trigger="click" @command="modStatusHandle" v-has="'修改催收状态'">
-                    <el-button type="primary" @click="">修改催收状态<i class="el-icon-arrow-down el-icon--right"></i></el-button>
+                    <el-button type="primary">修改催收状态<i class="el-icon-arrow-down el-icon--right"></i></el-button>
                     <el-dropdown-menu slot="dropdown">
                       <el-dropdown-item :command="item.id"
                                         v-for="(item,i) in collectStatusList2" :key="i">{{item.name}}
@@ -542,7 +542,7 @@
                   </el-dropdown>
                 </el-form-item>
                 <el-form-item>
-                  <el-button type="primary" @click="dialogVisible=true;" v-has="'申请协催'">申请协催</el-button>
+                  <el-button type="primary" v-has="'申请协催'" @click="applyUrge">申请协催</el-button>
                 </el-form-item>
               </el-form>
             </div>
@@ -580,7 +580,7 @@
                   class="table-wrap"
                   height="1"
                   ref="multipleTable"
-                  style="width: 100%;min-height: 400px;"
+                  style="width: 100%;"
                   :data="tableData"
                   border
                   stripe
@@ -984,7 +984,8 @@
         sort:{
           orderBy: 'id',
           sort:'desc'
-        }
+        },
+        pageLoading:false
       };
     },
     computed: {
@@ -1253,33 +1254,55 @@
         }
       },
       modStatusHandle(id){
-        console.log(id);
-        let data = this.multipleSelection.reduce((acc,item)=>{
-          acc.push({
-            id:item.id,
-            collectStatus:id
-          })
-          return acc;
-        },[]);
-        addCollectStatus(data).then(()=>{
-          this.getMainData();
-        });
+        if(this.multipleSelection.length===0){
+          this.$message.error('请选择数据!')
+        }else{
+          this.pageLoading=true
+          let data = this.multipleSelection.reduce((acc,item)=>{
+            acc.push({
+              id:item.id,
+              collectStatus:id
+            })
+            return acc;
+          },[]);
+          addCollectStatus(data).then(()=>{
+            this.$message.success('操作成功!')
+            this.getMainData();
+            this.pageLoading=false
+          });
+        }
       },
       colorHandle(color){
-        let data = this.multipleSelection.reduce((acc,item)=>{
-          acc.push({
-            id:item.id,
-            color
-          })
-          return acc;
-        },[]);
-        markColor(data).then((data)=>{
-          this.getMainData();
-        });
+        if(this.multipleSelection.length===0){
+          this.$message.error('请选择数据!')
+        }else{
+          this.pageLoading=true
+          let data = this.multipleSelection.reduce((acc,item)=>{
+            acc.push({
+              id:item.id,
+              color
+            })
+            return acc;
+          },[]);
+          markColor(data).then((data)=>{
+            this.$message.success('操作成功!')
+            this.getMainData();
+            this.pageLoading=false
+          });
+        }
+      },
+      applyUrge(){
+        if (this.multipleSelection.length >= 1) {
+          this.dialogVisible = true
+        } else {
+          this.$message.error('请选择数据!');
+        }
       },
       //申请协催
       xcHandle(){
-        if(this.multipleSelection.length==0){return;}
+        if(this.multipleSelection.length==0){
+          return;
+        }
         let data = this.multipleSelection.reduce((acc,item)=>{
           acc.push({
             id:item.id,
@@ -1410,7 +1433,7 @@
   };
 </script>
 
-<style lang="scss">
+<style lang="scss" >
   .color_gray {
     color: #b2adb2;
   }
@@ -1455,6 +1478,9 @@
       overflow-x: auto;
     }
   }
+    .el-table--border {
+      flex:none;
+    }
   #collect-departmental-case {
     .el-tabs__content{
       margin-bottom: 40px;

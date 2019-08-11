@@ -50,7 +50,7 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-date-picker
+          <el-date-picker
           v-model="formInline.time"
           type="month"
           value-format="yyyy-MM"
@@ -157,7 +157,6 @@
     </el-dialog>
   </div>
 </template>
-
 <script>
 		import {areaList,clientList,PersonList,getUserTree,dataList,selectDataCaseExport} from '@/common/js/statistics-month.js'
 
@@ -179,7 +178,7 @@
       total: 0,
       odvName: "",
       dataList: [],
-      formInline: { time: "", time2: "" },
+     formInline: { time: "", time2: "" },
       PersonList: [],
       areaList: [],
       clientList: [],
@@ -260,7 +259,7 @@
       if (
         this.formInline.time == null ||
         this.formInline.time == "" ||
-        (this.formInline.time2 == null || this.formInline.time2 == "")
+        (this.formInline.time2 == null || this.formInline.time2 == "") 
       ) {
           this.$message({
           type: "error",
@@ -272,7 +271,6 @@
       this.fullscreenLoading = true;
       selectDataCaseExport(this.formInline, this.pageSize, this.pageNum).then(
         response => {
-          console.info(response);
           this.$message({
             type: "success",
             message: "导出成功!"
@@ -293,7 +291,7 @@
       if (
         this.formInline.time == null ||
         this.formInline.time == "" ||
-        (this.formInline.time2 == null || this.formInline.time2 == "")
+        (this.formInline.time2 == null || this.formInline.time2 == "") 
       ) {
         this.$message({
           type: "error",
@@ -309,7 +307,6 @@
           this.dataList = [];
           for (var i = 0; i <= response.list[0].list.length; i++) {
             for (var j in response.list[0].list[i]) {
-              // debugger
               if (j === "area") {
                 let item = { area: "" };
                 item.area = response.list[0].list[i].area;
@@ -370,6 +367,12 @@
   .el-table__body tr.current-row > td{
     border-top: 1px solid #0080ff  !important;
     border-bottom: 1px solid #0080ff  !important;
+  }
+  .selectMonthStyle{
+    width: 350px;
+  }
+  .el-date-editor.el-input, .el-date-editor.el-input__inner {
+    width: 185px;
   }
 }
 </style>

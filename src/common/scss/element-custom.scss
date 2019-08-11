@@ -39,9 +39,11 @@
   width: 50px;
 }
 .table-wrap{
-  flex: 1;
-  min-height: 400px
+  // flex: 1;
+  min-height: 400px !important
 }
+
+
 
 .tabs-wrap{
   flex:1;

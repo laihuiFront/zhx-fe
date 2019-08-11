@@ -41,7 +41,7 @@
       </el-row>
     </section>
     <section class="form">
-      <el-form :inline="true" ref="form1" :model="form1" label-width="80px" class="query-wrap">
+      <el-form :inline="true" ref="form1" :model="form1" label-width="80px" class="query-wrap queryStyle">
         <el-row>
           <el-form-item>
             <el-select
@@ -190,15 +190,16 @@
           <span style="color: #66b1ff;font-size: 16px;"> 列表承诺还款金额：{{ topData.repayAmtP }}</span>
         </span>
       </div>
+        <!-- class="tableStyle" -->
        <el-table highlight-current-row v-loading="tableLoad"
-        class="table-wrap"
+        class="table-wrap" 
         height="1"
         ref="multipleTable"
         :data="tableData"
         border
         stripe
         tooltip-effect="dark"
-        style="width: 100%;min-height: 400px;"
+        style="width: 100%;"
         @selection-change="handleSelectionChange"
       >
 
@@ -696,7 +697,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 #collect-repayment-statistics {
   .form {
     padding: 20px 0;
@@ -706,7 +707,6 @@ export default {
   }
   .topSpan {
     display: inline-block;
-    // margin-right: 10px;
     color: #b2adb2;
   }
 }
