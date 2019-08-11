@@ -11,13 +11,25 @@
         >
           <case-detail :id="detailId" ref="detail"></case-detail>
         </el-dialog>
-        <el-dialog title="申请协催" :visible.sync="dialogVisible" width="30%" :close-on-click-modal="false">
-          <el-input
-            type="textarea"
-            :autosize="{ minRows: 6, maxRows: 14 }"
-            placeholder="请输入内容"
-            v-model="textarea3"
-          ></el-input>
+        <el-dialog title="申请协催" class="dialog-wrap" :visible.sync="dialogVisible" width="50%" :close-on-click-modal="false">
+          <el-form  class="demo-form-inline" label-width="120px">
+            <div class="grid-content bg-purple">
+              <el-form-item label="协催类型">
+                <el-select v-model="synergytype" placeholder="请选择协催类型" clearable>
+                  <el-option
+                    v-for="item in addSynergyFormList"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="申请内容">
+                <el-input type="textarea" v-model="textarea3" style="width: 100%;" placeholder="请输入"
+                          rows="4"></el-input>
+              </el-form-item>
+            </div>
+          </el-form>
           <span slot="footer" class="dialog-footer">
             <el-button @click="dialogVisible = false">取 消</el-button>
             <el-button
@@ -782,6 +794,8 @@ export default {
       ],
       val10_data: [], //催收状态
       collectStatusList2:[],
+      addSynergyFormList:[],
+      synergytype:'',
       val11_data: [], //案件类型
       val14_data: [
         {
@@ -1134,6 +1148,7 @@ export default {
       let data = this.multipleSelection.reduce((acc, item) => {
         acc.push({
           id: item.id,
+          synergyType:this.synergytype,
           synergyContext: this.textarea3
         });
         return acc;
@@ -1191,6 +1206,7 @@ export default {
           name,
           mycase:true,
           showNext:true,
+          mineCase:true,
           seqNo
         }
       });
@@ -1279,6 +1295,7 @@ export default {
     this["val11_data"] = this.transform(this.$store.getters.caseType.案件类型);
     this["val24_data"] = this.transform(this.$store.getters.caseType.减免状态);
     this["val25_data"] = this.transform(this.$store.getters.caseType.报备状态);
+    this.addSynergyFormList = this.$store.getters.caseType.协催类型;
     this["val14_data"] =[
       {
         label: "黑色",

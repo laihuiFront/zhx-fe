@@ -15,14 +15,28 @@
         </el-dialog>
         <el-dialog
           title="申请协催"
+          class="dialog-wrap"
           :visible.sync="dialogVisible"
-          width="30%">
-          <el-input
-            type="textarea"
-            :autosize="{ minRows: 6, maxRows: 14}"
-            placeholder="请输入内容"
-            v-model="textarea3">
-          </el-input>
+          :close-on-click-modal="false"
+          width="50%">
+          <el-form  class="demo-form-inline" label-width="120px">
+            <div class="grid-content bg-purple">
+              <el-form-item label="协催类型">
+                <el-select v-model="synergytype" placeholder="请选择协催类型" clearable>
+                  <el-option
+                    v-for="item in addSynergyFormList"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="申请内容">
+                <el-input type="textarea" v-model="textarea3" style="width: 100%;" placeholder="请输入"
+                          rows="4"></el-input>
+              </el-form-item>
+            </div>
+          </el-form>
           <span slot="footer" class="dialog-footer">
           <el-button @click="dialogVisible = false">取 消</el-button>
           <el-button type="primary" @click="dialogVisible = false;xcHandle()">确 定</el-button>
@@ -262,10 +276,10 @@
                   ></el-input>
                 </el-form-item>
                 <el-form-item v-if="queryConf.yqts || queryConfFlag">
-                  <el-input v-model="form.overdueDaysStart" type="number" placeholder="请输入逾期天数下限"></el-input>
+                  <el-input v-model="form.overdueDaysStart" type="number" placeholder="请输入逾期天数下限" clearable></el-input>
                 </el-form-item>
                 <el-form-item v-if="queryConf.yqts || queryConfFlag">
-                  <el-input v-model="form.overdueDaysEnd" type="number" placeholder="请输入逾期天数上限"></el-input>
+                  <el-input v-model="form.overdueDaysEnd" type="number" placeholder="请输入逾期天数上限" clearable></el-input>
                 </el-form-item>
                 <el-form-item prop="val14" v-if="queryConf.bszt || queryConfFlag">
                   <el-select
@@ -780,6 +794,8 @@
         },
         dialogVisible:false,
         textarea3: '',
+        synergytype:'',
+        addSynergyFormList:[],
         showQueryConfVisible:false,
         tabnum:null,
         queryConf:{},
@@ -1016,6 +1032,8 @@
           seqno:val3==null?"":val3.replace(/[\n\r\v\s↵]/g,","),
           nextFollDateStart: (!!val2 && val2[0])||'' ,
           nextFollDateEnd: (!!val2 && val2[1])||'',
+          caseDateStart: (!!val7 && val7[0])||'' ,
+          caseDateEnd: (!!val7 && val7[1])||'',
           areas,
           name:val5==null?"":val5.replace(/[\n\r\v\s↵]/g,","),
           identNo:val6==null?"":val6.replace(/[\n\r\v\s↵]/g,","),
@@ -1154,6 +1172,8 @@
             id,
             name,
             mycase:true,
+            showNext:true,
+            deptCase:true,
             seqNo
           }
         })
@@ -1199,7 +1219,29 @@
         if (this.form.odvNameFiter==null || this.form.odvNameFiter==""){
           this.$set(this.form, 'val32', [])
         }
-        this.getMainData();
+        this.getMainDataForQuery();
+      },
+
+      getMainDataForQuery(){
+        this.tableLoad = true
+        if (this.deptName==null || this.deptName==""){
+          this.form.val31 = '';
+        }
+        pageMyCase(this.realFetchFormData).then((data)=>{
+          if(!data){
+            data = {total:0,list:[]}
+          }
+          sessionStorage.setItem(
+            "dept",
+            JSON.stringify(data.list)
+          );
+          this.fetchData = data;
+          this.paginationData.total = data.countCase;
+          this.tableData = data.list.map((item)=>{
+            return Object.assign(item, {'class-name': `color_${item.color}`});
+          })
+          this.tableLoad = false
+        });
       },
       rowColor({row}){
         if (row.caseStatus==3){
@@ -1241,6 +1283,7 @@
         let data = this.multipleSelection.reduce((acc,item)=>{
           acc.push({
             id:item.id,
+            synergyType:this.synergytype,
             synergyContext:this.textarea3
           })
           return acc;
@@ -1330,7 +1373,8 @@
         });
       },
       init(){
-        this.getMainData();
+        //this.getMainData();
+        this.getMainDataForQuery();
         /* this.getEnumHandle('委托方', 'val0_data');
          this.getEnumHandle('地区', 'val4_data');
          this.getEnumHandle('逾期账龄', 'val8_data');
@@ -1360,6 +1404,7 @@
       this["val11_data"] = this.transform(this.$store.getters.caseType.案件类型);
       this["val24_data"] = this.transform(this.$store.getters.caseType.减免状态);
       this["val25_data"] = this.transform(this.$store.getters.caseType.报备状态);
+      this.addSynergyFormList = this.$store.getters.caseType.协催类型;
 
     }
   };
@@ -1399,19 +1444,22 @@
     text-decoration:line-through;
     color: #999999;
   }
-  body #collect-departmental-case .tab2{
+/*  body #collect-departmental-case .tab2{
     .el-tabs__content{
-      margin-bottom: 0px;
-      overflow-y: hidden;
-    }
-  }
+        margin-bottom: 40px;
+        overflow-y: hidden;
+      }
+  }*/
   body #collect-departmental-case .tab2{
     .el-table .el-table__body-wrapper{
       overflow-x: auto;
     }
   }
   #collect-departmental-case {
-
+    .el-tabs__content{
+      margin-bottom: 40px;
+      overflow-y: auto;
+    }
     .el-table th.gutter{
       display: table-cell!important;
     }

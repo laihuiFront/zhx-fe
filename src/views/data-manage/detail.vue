@@ -1330,7 +1330,8 @@
                           copyToCollect(
                             scope.row.tel,
                             scope.row.name,
-                            scope.row.relation
+                            scope.row.relation,
+                            scope.row.telStatusMsg
                           )
                         "
                     >{{ scope.row.tel }}
@@ -4117,6 +4118,8 @@
         activeNames: ["3", "4", "5"],
         otherActiveName: "1",
         showNext:false,
+        mineCase:false,
+        deptCase:false,
         caseDetail: resetObj,
         ligigationVisible: false,
         memorizeType: 1,
@@ -4183,6 +4186,21 @@
           });
           return;
         }
+        let telStatus = false
+        for (var i=0;i<this.phoneSelectList.length;i++){
+          if (this.phoneSelectList[i]!=null &&this.phoneSelectList[i].telStatusMsg=="停止跟进"){
+            this.$message({
+              type: "info",
+              message: "有电话处于停止跟进状态，禁止拨打! "
+            });
+            telStatus = true;
+            break;
+
+          }
+        }
+        if (telStatus){
+          return;
+        }
         const customer = this.caseDetail.telIpManage.customer
         const psw = this.caseDetail.telIpManage.psw
         // 呼出的分机号(坐席号)
@@ -4239,6 +4257,21 @@
             type: "info",
             message: "拨打的号码数量超过10个 "
           });
+          return;
+        }
+        let telStatus = false
+        for (var i=0;i<this.phoneSelectList.length;i++){
+          if (this.phoneSelectList[i]!=null &&this.phoneSelectList[i].telStatusMsg=="停止跟进"){
+            this.$message({
+              type: "info",
+              message: "有电话处于停止跟进状态，禁止拨打! "
+            });
+            telStatus = true;
+            break;
+
+          }
+        }
+        if (telStatus){
           return;
         }
         const customer = this.caseDetail.telIpManage.customer
@@ -4371,9 +4404,17 @@
         let seqNo = null;
         let isIn = true;
         var myArray=new Array()
-        let data = sessionStorage.getItem(
-          "mine"
-        );
+        let data = null;
+        if (this.mineCase){
+          data = sessionStorage.getItem(
+            "mine"
+          );
+        }
+        if (this.deptCase){
+          data = sessionStorage.getItem(
+            "dept"
+          );
+        }
         if (data==null || data==""){
           this.$message({
             type: "info",
@@ -4389,7 +4430,6 @@
           });
           return ;
         }
-        debugger
         for (var i=0;i<myArray.length;i++){
             if (this.id==myArray[i].id){
               isIn = false;
@@ -4417,16 +4457,31 @@
           id = data.id;
           name = data.name;
           seqNo = data.seqNo;
-          this.$router.push({
-            path: 'case-detail',
-            query: {
-              id,
-              name,
-              mycase:this.$route.query.mycase,
-              showNext:this.$route.query.showNext,
-              seqNo
-            }
-          })
+          if(this.mineCase){
+            this.$router.push({
+              path: 'case-detail',
+              query: {
+                id,
+                name,
+                mycase:this.$route.query.mycase,
+                showNext:this.$route.query.showNext,
+                mineCase:true,
+                seqNo
+              }
+            })
+          }else if (this.deptCase){
+            this.$router.push({
+              path: 'case-detail',
+              query: {
+                id,
+                name,
+                mycase:this.$route.query.mycase,
+                showNext:this.$route.query.showNext,
+                deptCase:true,
+                seqNo
+              }
+            })
+          }
         });
       },
       nextCase(){
@@ -4436,9 +4491,17 @@
         let seqNo = null;
         let isIn = true;
         var myArray=new Array()
-        let data = sessionStorage.getItem(
-          "mine"
-        );
+        let data = null;
+        if (this.mineCase){
+          data = sessionStorage.getItem(
+            "mine"
+          );
+        }
+        if (this.deptCase){
+          data = sessionStorage.getItem(
+            "dept"
+          );
+        }
         if (data==null || data==""){
           this.$message({
             type: "info",
@@ -4474,16 +4537,31 @@
           id = data.id;
           name = data.name;
           seqNo = data.seqNo;
-          this.$router.push({
-            path: 'case-detail',
-            query: {
-              id,
-              name,
-              mycase:this.$route.query.mycase,
-              showNext:this.$route.query.showNext,
-              seqNo
-            }
-          })
+          if(this.mineCase){
+            this.$router.push({
+              path: 'case-detail',
+              query: {
+                id,
+                name,
+                mycase:this.$route.query.mycase,
+                showNext:this.$route.query.showNext,
+                mineCase:true,
+                seqNo
+              }
+            })
+          }else if (this.deptCase){
+            this.$router.push({
+              path: 'case-detail',
+              query: {
+                id,
+                name,
+                mycase:this.$route.query.mycase,
+                showNext:this.$route.query.showNext,
+                deptCase:true,
+                seqNo
+              }
+            })
+          }
         });
       },
       saveCollectInfo() {
@@ -4498,11 +4576,14 @@
       showCollectInfo() {
         this.showCollectInfoVisible = true;
       },
-      copyToCollect(tel, name, relation) {
-        debugger;
-        this.$set(this.batchForm, 'mobile', tel);
-        this.$set(this.batchForm, 'targetName', name);
-        this.$set(this.batchForm, 'relation', relation);
+      copyToCollect(tel, name, relation,telStatusMsg) {
+        if (telStatusMsg=="停止跟进"){
+
+        }else{
+          this.$set(this.batchForm, 'mobile', tel);
+          this.$set(this.batchForm, 'targetName', name);
+          this.$set(this.batchForm, 'relation', relation);
+        }
       },
       handleChange(file) {
         this.fileNames.file = file.name;
@@ -5349,7 +5430,16 @@
         }else{
           this.$set(this, 'mycaseFlag', false)
         }
-
+        if (this.$route.query.mineCase){
+          this.$set(this, 'mineCase', true)
+        }else{
+          this.$set(this, 'mineCase', false)
+        }
+        if (this.$route.query.deptCase){
+          this.$set(this, 'deptCase', true)
+        }else{
+          this.$set(this, 'deptCase', false)
+        }
         if (this.$route.query.showNext){
           this.$set(this, 'showNext', true)
         }else{
@@ -5493,7 +5583,16 @@
           if (this.$route.query.mycase){
             this.$set(this, 'mycaseFlag', true)
           }
-
+          if (this.$route.query.mineCase){
+            this.$set(this, 'mineCase', true)
+          }else{
+            this.$set(this, 'mineCase', false)
+          }
+          if (this.$route.query.deptCase){
+            this.$set(this, 'deptCase', true)
+          }else{
+            this.$set(this, 'deptCase', false)
+          }
           if (this.$route.query.showNext){
             this.$set(this, 'showNext', true)
           }
@@ -5525,11 +5624,19 @@
         this.caseDetail = resetObj;
         this.mycaseFlag = false;
         this.showNext = false;
+        this.mineCase = false;
+        this.deptCase = false;
       },
       showMyCaseFlag(){
 
         if (this.$route.query.mycase){
           this.mycaseFlag = true;
+        }
+        if (this.$route.query.mineCase){
+          this.$set(this, 'mineCase', true)
+        }
+        if (this.$route.query.deptCase){
+          this.$set(this, 'deptCase', true)
         }
         if (this.$route.query.showNext){
           this.showNext = true;
