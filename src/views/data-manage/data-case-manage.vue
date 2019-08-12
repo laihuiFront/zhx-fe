@@ -1641,19 +1641,6 @@
               //this.$set(this.formInline, 'batchNos', response)
               this.batchList = response;
 
-              /*for (var i=0;i<this.formInline.batchNos.length;i++){
-                var batNo = this.formInline.batchNos[i];
-                var removeFlag = true;
-                for (var j=0;j<this.batchList.length;j++){
-                  if (batNo!=null && batNo!="" && batNo==this.batchList[j]){
-                    removeFlag = false;
-                     break;
-                  }
-                }
-                if(removeFlag){
-                  this.formInline.batchNos.splice(i,1);
-                }
-              }*/
 
             }
           })

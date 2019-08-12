@@ -87,6 +87,15 @@ export function batchNo(data={}) {
   })
 }
 
+export const clientCurrent = function(data) {
+  return request({
+    url: '/dataBatch/listClients',
+    method: 'post',
+    data:{
+      clients:data
+    }
+  })
+}
 
 //当日电催跟进量
 export function day(data={}) {

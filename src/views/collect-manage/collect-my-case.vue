@@ -58,6 +58,7 @@
                     placeholder="请选择委托方"
                     collapse-tags
                     multiple
+                    @change="clientCurrent"
                     clearable
                   >
                     <el-option
@@ -80,7 +81,7 @@
                   >
                     <el-option
                       v-for="item in val1_data"
-                      :key="item.value"
+                      :key="item.id"
                       :label="item.label"
                       :value="item.value"
                     ></el-option>
@@ -716,6 +717,7 @@ import {
   markColor,
   addSynergy,
   batchNo,
+  clientCurrent,
   addCollectStatus
 } from "@/common/js/collect-my-case";
 //import CaseDetail from "@/views/data-manage/detail";
@@ -780,6 +782,7 @@ export default {
       },
       val0_data: [], //委托方
       val1_data: [], //批次号
+      batchList2:[],
       val4_data: [], //地区
       val8_data: [], //逾期账龄
       // 未退案0/正常1/暂停2/关档3/退档4/全部5
@@ -1022,8 +1025,46 @@ export default {
   created() {
     this.init();
     this.queryConfList();
+    batchNo().then((data)=>{
+      this.val1_data = data.reduce((acc,item)=>{
+        acc.push({
+          id:item.id,
+          label:item.batchNo,
+          value:item.batchNo
+        })
+        return acc;
+      },[]);
+      this.batchList2 =  data.reduce((acc,item)=>{
+        acc.push({
+          id:item.id,
+          label:item.batchNo,
+          value:item.batchNo
+        })
+        return acc;
+      },[]);
+    });
   },
   methods: {
+    clientCurrent(){
+      if (this.form.val0==null || this.form.val0.length==0){
+        this.$set(this.form, 'val1', [])
+        this.val1_data = this.batchList2
+      }else{
+        clientCurrent(this.form.val0).then((response) => {
+          if (response==null){
+            this.val1_data = [];
+          }else{
+            this.$set(this.form, 'val1', [])
+            this.val1_data = response.reduce((acc,item)=>{
+              acc.push({
+                value:item.batchNo
+              })
+              return acc;
+            },[]);
+          }
+        })
+      }
+    },
     saveConf(){
       this.showQueryConfVisible = false;
       let queryObj = {module:"collect-my-case",menu:this.queryConf}

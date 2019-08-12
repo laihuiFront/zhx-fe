@@ -57,22 +57,7 @@
                   <el-input v-model="deptName" width="200" @focus="onClickSelectUser" clearable placeholder="请选择部门"></el-input>
                 </el-form-item>
                 <el-form-item prop="val32" v-if="queryConf.csy || queryConfFlag">
-                  <!-- <el-select
-                     v-model="form.val32"
-                     placeholder="请选择催收员"
-                     filterable
-                     multiple
-                     collapse-tags
-                     clearable
-                   >
-                     <el-option
-                       v-for="item in val32_data"
-                       :key="item.value"
-                       :label="item.label"
-                       :value="item.value"
-                     >
-                     </el-option>
-                   </el-select>-->
+
                   <el-input v-model="form.odvNameFiter" width="200" @focus="onClickSelectUser3" clearable placeholder="请选择催收员"></el-input>
                 </el-form-item>
 
@@ -80,6 +65,7 @@
                   <el-select
                     v-model="form.val0"
                     placeholder="请选择委托方"
+                    @change="clientCurrent"
                     multiple
                     collapse-tags
                     clearable
@@ -105,7 +91,7 @@
                     :remote-method="querySearch">
                     <el-option
                       v-for="item in val1_data"
-                      :key="item.value"
+                      :key="item.id"
                       :label="item.label"
                       :value="item.value">
                     </el-option>
@@ -765,7 +751,7 @@
 
 <script>
   import tab2 from "./collect-departmental-statistics";
-  import { pageMyCase,getEnum,markColor ,saveSelectFilter,selectByModule,addSynergy,batchNo,addCollectStatus,listOrganization} from
+  import { pageMyCase,getEnum,markColor ,saveSelectFilter,selectByModule,addSynergy,batchNo,addCollectStatus,listOrganization,clientCurrent} from
       "@/common/js/collect-my-case";
   import {role,getUserTree} from '@/common/js/collect-departmental-case'
   const CaseDetail = () => import('@/views/data-manage/detail');
@@ -847,6 +833,7 @@
         },
         val0_data: [],  //委托方
         val1_data: [],  //批次号
+        batchList2:[],
         val4_data: [],  //地区
         val8_data: [],  //逾期账龄
         // 未退案0/正常1/暂停2/关档3/退档4/全部5
@@ -1098,8 +1085,46 @@
       listOrganization().then((data)=>{
         this.departmentTree = data;
       });
+      batchNo().then((data)=>{
+        this.val1_data = data.reduce((acc,item)=>{
+          acc.push({
+            id:item.id,
+            label:item.batchNo,
+            value:item.batchNo
+          })
+          return acc;
+        },[]);
+        this.batchList2 =  data.reduce((acc,item)=>{
+          acc.push({
+            id:item.id,
+            label:item.batchNo,
+            value:item.batchNo
+          })
+          return acc;
+        },[]);
+      });
     },
     methods: {
+      clientCurrent(){
+        if (this.form.val0==null || this.form.val0.length==0){
+          this.$set(this.form, 'val1', [])
+          this.val1_data = this.batchList2
+        }else{
+          clientCurrent(this.form.val0).then((response) => {
+            if (response==null){
+              this.val1_data = [];
+            }else{
+              this.$set(this.form, 'val1', [])
+              this.val1_data = response.reduce((acc,item)=>{
+                acc.push({
+                  value:item.batchNo
+                })
+                return acc;
+              },[]);
+            }
+          })
+        }
+      },
       onClickSelectUser3(){
         this.selectUserVisible3 = true
       },
@@ -1200,6 +1225,8 @@
         batchNo({batchNo:queryString}).then((data)=>{
           this.val1_data = data.reduce((acc,item)=>{
             acc.push({
+              id:item.id,
+              label:item.batchNo,
               value:item.batchNo
             })
             return acc;
