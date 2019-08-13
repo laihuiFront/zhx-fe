@@ -2,7 +2,7 @@
   <div id="member-off" class="page-wraper-sub">
     <el-form ref="form" :model="queryForm" :inline="true" class="query-wrap queryStyle">
       <el-form-item>
-        <el-input v-model="queryForm.number" clearable placeholder="请输入员工号"></el-input>
+        <el-input v-model="queryForm.id" clearable placeholder="请输入员工ID"></el-input>
       </el-form-item>
       <el-form-item>
         <el-input v-model="queryForm.userName" clearable placeholder="请输入员工姓名"></el-input>
@@ -24,9 +24,9 @@
       <el-table-column
         :sortable='true' 
         :sort-orders="['ascending','descending']"         
-        prop="number"
+        prop="id"
         align="center"
-        label="员工号">
+        label="员工ID">
       </el-table-column>
       <el-table-column
         :sortable='true' 
@@ -72,6 +72,7 @@ export default {
     return {
       tableLoad:false,
       queryForm: {
+        id:'',
         pageNum: 1,
         pageSize: 50,
         orderBy:null,
@@ -95,7 +96,7 @@ export default {
       this.memberList = []
       const data = {
         status: 0,
-        number: this.queryForm.number,
+        idStrs: this.queryForm.id?(this.queryForm.id.trim()==""?null:this.queryForm.id.split('\n')):null,
         userName: this.queryForm.userName,
         pageNum: this.queryForm.pageNum,
         pageSize: this.queryForm.pageSize
