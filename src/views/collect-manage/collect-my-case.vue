@@ -74,6 +74,7 @@
                     v-model="form.val1"
                     multiple
                     collapse-tags
+                    clearable
                     filterable
                     remote
                     placeholder="请输入批次号"
@@ -1104,7 +1105,9 @@ export default {
       batchNo({ batchNo: queryString }).then(data => {
         this.val1_data = data.reduce((acc, item) => {
           acc.push({
-            value: item.batchNo
+            id:item.id,
+            label:item.batchNo,
+            value:item.batchNo
           });
           return acc;
         }, []);
@@ -1274,6 +1277,8 @@ export default {
           id,
           name,
           mycase:true,
+          showNext:true,
+          mineCase:true,
           seqNo
         }
       });

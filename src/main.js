@@ -27,11 +27,11 @@ var com = {
       default: true
     }
   },
-  methods: {
+ /* methods: {
     handleEvent(a, b) {
       this.$parent.setCurrentRow(b);
     }
-  }
+  }*/
 };
 Vue.component(
   "ElTable",

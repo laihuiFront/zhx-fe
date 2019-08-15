@@ -2743,7 +2743,8 @@
 
         });
       },
-      showDetail(row) {
+      showDetail(row,event) {
+        console.log("rowclick")
         let id = row.id
         let name = row.name
         let seqNo = row.seqNo

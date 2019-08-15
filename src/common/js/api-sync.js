@@ -87,11 +87,11 @@ export function saveRepayRecord(data){
   })
 }
 
-export function revokeRepayRecord(ids){
+export function revokeRepayRecord(ids,cancelFlag){
   return request({
     url: '/repayRecord/revoke',
     method: 'post',
-    data:{ids}
+    data:{ids,cancelFlag}
   })
 }
 

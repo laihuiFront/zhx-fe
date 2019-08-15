@@ -14,7 +14,7 @@
       @query="onClickQuery"
       :queryForm="queryForm">
       <el-button type="primary" v-if="queryForm.recordStatus==='0'" @click="onClickAdd" v-has="'新建还款记录'">新建还款记录</el-button>
-      <el-button type="primary" v-if="queryForm.recordStatus==='0'" @click="onClickBatchRevoke" v-has="'撤销还款'">撤销还款</el-button>
+      <el-button type="primary" v-if="queryForm.recordStatus==='0'" @click="onClickBatchRevokeShow" v-has="'撤销还款'">撤销还款</el-button>
       <el-upload
         class="upload-demo upload-btn"
         :action="action+'/repayRecord/import'"
@@ -75,7 +75,7 @@
           <el-button
             v-has="'撤销还款'"
             type="text"
-            @click="onClickRevoke(scope.row)"
+            @click="showClickRevoke(scope.row)"
           >撤销还款</el-button>
         </template>
       </el-table-column>
@@ -190,6 +190,42 @@
        <span slot="footer" class="dialog-footer">
           <el-button @click="dialogExportVisible = false">取 消</el-button>
                         <el-button type="primary" @click="changeRadio">确 定</el-button>  
+        </span>
+    </el-dialog>
+
+    <el-dialog
+      title="撤销还款"
+      :visible.sync="showCancel"
+      width="30%"
+      center
+    >
+      <el-form :inline="true">
+        <el-form-item>
+          <el-checkbox v-model="cancelFlag">恢复案件结清状态</el-checkbox><br>
+          撤销时如勾选恢复案件结清状态,更新案件结清状态为未结清,保存操作记录
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+          <el-button @click="showCancel = false">取 消</el-button>
+         <el-button type="primary" @click="onClickBatchRevoke">确 定</el-button>
+        </span>
+    </el-dialog>
+
+    <el-dialog
+      title="撤销还款"
+      :visible.sync="showCancel2"
+      width="30%"
+      center
+    >
+      <el-form :inline="true">
+        <el-form-item>
+          <el-checkbox v-model="cancelFlag">恢复案件结清状态</el-checkbox><br>
+          撤销时如勾选恢复案件结清状态,更新案件结清状态为未结清,保存操作记录
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+          <el-button @click="showCancel2 = false">取 消</el-button>
+         <el-button type="primary" @click="onClickRevoke">确 定</el-button>
         </span>
     </el-dialog>
 
@@ -328,6 +364,10 @@ export default {
       loadingSeqNo: false,
       seqNoList: [],
       selectList:[],
+      showCancel:false,
+      cancelFlag:false,
+      showCancel2:false,
+      recordId:null,
       repayTypeList:[]
     }
   },
@@ -454,6 +494,9 @@ export default {
       this.seqNoQuery("")
       this.$set(this.dialogData, 'editVisible', true)
     },
+    onClickBatchRevokeShow(){
+      this.showCancel = true;
+    },
     onClickBatchRevoke(){
       if(!this.selectList.length){
         this.$message('请选择需要撤销的还款记录')
@@ -465,21 +508,30 @@ export default {
         type: 'warning'
       }).then(() => {
         const ids = this.selectList.map(item => item.id)
-        revokeRepayRecord(ids).then(() => {
+        const cancal = this.cancelFlag?1:0;
+        revokeRepayRecord(ids,cancal).then(() => {
           this.$message('还款记录撤销成功')
+          this.showCancel = false;
           this.onClickQuery()
         })
       }).catch(() => { })
     },
-    onClickRevoke(record){
+    showClickRevoke(record){
+      this.recordId = record.id;
+      this.showCancel2 = true;
+
+    },
+    onClickRevoke(){
       this.$confirm('此操作将撤销该还款记录，是否继续？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        revokeRepayRecord([record.id]).then(() => {
+        const cancal = this.cancelFlag?1:0;
+        revokeRepayRecord([this.recordId],cancal).then(() => {
           this.$message('还款记录撤销成功')
           this.onClickQuery()
+          this.showCancel2 = false;
         })
       }).catch(() => { })
     },
