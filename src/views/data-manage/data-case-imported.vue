@@ -66,7 +66,7 @@
           <el-button type="primary" icon="el-icon-search" @click=search>查询</el-button>
           <el-button type="primary" icon="el-icon-refresh" @click="resetForm()">重置</el-button>
           <el-button type="primary" @click="downLoadZip">导入模板下载</el-button>
-          <el-button type="primary" @click="dialogVisible = true" v-has="'新增批次'">新增批次</el-button>
+          <el-button type="primary" @click="addBatch" v-has="'新增批次'">新增批次</el-button>
           <el-button type="primary" @click="open7" v-has="'删除批次'">删除批次</el-button>
           <el-upload
             class="upload-demo"
@@ -280,7 +280,7 @@
               <el-form-item label="批  次  号"
                             prop="batchNo"
                             :rules="{ required: true, message: '批次号不能为空', trigger: 'blur'}">
-                <el-input v-model="formInline.batchNo" :disabled=true placeholder="请输入批次号" maxlength="80"
+                <el-input v-model="formInline.batchNo" placeholder="请输入批次号" maxlength="80"
                           clearable></el-input>
               </el-form-item>
             </div>
@@ -306,7 +306,7 @@
               <el-form-item label="委  托  方"
                             prop="client"
                             :rules="{required: true, message: '委托方不能为空', trigger: 'blur'}">
-                <el-select v-model="formInline.client" placeholder="请选择委托方" clearable @change="changeBotno">
+                <el-select v-model="formInline.client" placeholder="请选择委托方" clearable >
                   <el-option
                     v-for="item in clientList"
                     :key="item.id"
@@ -339,8 +339,8 @@
                             prop="caseTime"
                             :rules="{required: true, message: '请选择日期', trigger: 'change'}">
                 <div class="block">
+                    <!-- @change="changeBotno" -->
                   <el-date-picker
-                    @change="changeBotno"
                     v-model="formInline.caseTime"
                     align="right"
                     type="date"
@@ -405,7 +405,7 @@
               <el-form-item label="批  次  号"
                             prop="batchNo"
                             :rules="{ required: true, message: '批次号不能为空', trigger: 'blur'}">
-                <el-input v-model="messageForm.batchNo" :disabled=true placeholder="请输入批次号" maxlength="80"
+                <el-input v-model="messageForm.batchNo"  placeholder="请输入批次号" maxlength="80"
                           clearable></el-input>
               </el-form-item>
             </div>
@@ -432,7 +432,7 @@
               <el-form-item label="委  托  方"
                             prop="client"
                             :rules="{required: true, message: '委托方不能为空', trigger: 'blur'}">
-                <el-select v-model="messageForm.client" @change="changeBotno2" placeholder="请选择委托方" clearable>
+                <el-select v-model="messageForm.client"  placeholder="请选择委托方" clearable>
                   <el-option
                     v-for="item in clientList"
                     :key="item.id"
@@ -466,7 +466,6 @@
                             :rules="{required: true, message: '请选择日期', trigger: 'change'}">
                 <div class="block">
                   <el-date-picker
-                    @change="changeBotno3"
                     v-model="messageForm.caseTime"
                     align="right"
                     type="date"
@@ -992,6 +991,9 @@
         this.showExportConfVisible = false;
       },
       editMessage(row) {
+        if (this.$refs["messageForm"]) {
+          this.$refs["messageForm"].resetFields();
+        }
         this.dialogVisible2 = true
         this.messageForm = row
         if (this.messageForm.client) {
@@ -1132,6 +1134,12 @@
           });
         }
       },
+      addBatch(){
+          if (this.$refs["formInline"]) {
+          this.$refs["formInline"].clearValidate();
+        }
+        this.dialogVisible=true
+      }
     },
     created() {
       this.tableLoad = true
@@ -1197,7 +1205,22 @@
   //  .el-select-dropdown__item{
   //     width: 180px ;
   //   }
-
+    .el-input--mini .el-input__inner {
+      width: 220px;
+    }
+    .el-textarea__inner {
+      width: 600px
+    }
+    .dialog-wrap .el-dialog .el-dialog__body {
+        overflow: hidden;
+        height: 320px
+    }
+    .el-pagination .el-select .el-input .el-input__inner {
+      width: 100px
+    }
+    .el-pagination__editor.el-input .el-input__inner {
+     width: 50px;
+    }
   }
 </style>
 
