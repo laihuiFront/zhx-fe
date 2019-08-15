@@ -284,125 +284,6 @@
   </span>
     </el-dialog>
     <el-dialog
-      title="修改批次"
-      :visible.sync="dialogVisible2"
-      width="55%"
-      :close-on-click-modal="false"
-    >
-      <el-form :inline="true" :model="messageForm" ref="messageForm" label-width="100px" class="demo-dynamic">
-        <el-row :gutter="24">
-          <el-col :span="12">
-            <div class="grid-content bg-purple">
-              <el-form-item label="批  次  号"
-                            prop="batchNo"
-                            :rules="{ required: true, message: '批次号不能为空', trigger: 'blur'}">
-                <el-input v-model="messageForm.batchNo" :disabled=true placeholder="请输入批次号" maxlength="80"
-                          clearable></el-input>
-              </el-form-item>
-            </div>
-          </el-col>
-          <el-col :span="12">
-            <div class="grid-content bg-purple">
-              <el-form-item label="催收区域">
-                <el-select v-model="messageForm.area" placeholder="请选择催收区域" clearable>
-                  <el-option
-                    v-for="item in areaList"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.id">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-
-            </div>
-          </el-col>
-        </el-row>
-        <el-row :gutter="24">
-          <el-col :span="12">
-            <div class="grid-content bg-purple">
-              <el-form-item label="委  托  方"
-                            prop="client"
-                            :rules="{required: true, message: '委托方不能为空', trigger: 'blur'}">
-                <el-select v-model="messageForm.client" @change="changeBotno2" placeholder="请选择委托方" clearable>
-                  <el-option
-                    v-for="item in clientList"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.id">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </div>
-          </el-col>
-          <el-col :span="12">
-            <div class="grid-content bg-purple">
-              <el-form-item label="案件类型">
-                <el-select v-model="messageForm.caseType" placeholder="请选择案件类型" clearable>
-                  <el-option
-                    v-for="item in caseTypeList"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.id">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </div>
-          </el-col>
-        </el-row>
-        <el-row :gutter="24">
-          <el-col :span="15">
-            <div class="grid-content bg-purple">
-              <el-form-item label="委案日期"
-                            prop="caseTime"
-                            :rules="{required: true, message: '请选择日期', trigger: 'change'}">
-                <div class="block">
-                  <el-date-picker
-                    @change="changeBotno3"
-                    v-model="messageForm.caseTime"
-                    align="right"
-                    type="date"
-                    placeholder="选择日期"
-                    value-format="yyyy-MM-dd"
-                  >
-                  </el-date-picker>
-                </div>
-              </el-form-item>
-            </div>
-          </el-col>
-
-        </el-row>
-        <el-row :gutter="24">
-          <el-col :span="15">
-            <div class="grid-content bg-purple">
-              <el-form-item label="预计退案日期">
-                <div class="block">
-                  <el-date-picker
-                    v-model="messageForm.returnTime"
-                    align="right"
-                    type="date"
-                    placeholder="选择日期"
-                    value-format="yyyy-MM-dd"
-                  >
-                  </el-date-picker>
-                </div>
-              </el-form-item>
-            </div>
-          </el-col>
-        </el-row>
-        <el-row :gutter="24">
-          <el-col :span="24">
-            <el-form-item label="批次备注">
-              <el-input type="textarea" v-model="messageForm.remark" style="width: 200%;" maxlength="500"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-form>
-      <span slot="footer" class="footer">
-    <el-button @click="dialogVisible2 = false">取 消</el-button>
-    <el-button type="primary" @click="submitmsgForm('messageForm')">确 定</el-button>
-  </span>
-    </el-dialog>
-    <el-dialog
       title="批次案件"
       class="dialog-wrap"
       :visible.sync="detailVisibleCase"
@@ -766,7 +647,7 @@
               <el-form-item label="批  次  号"
                             prop="batchNo"
                             :rules="{ required: true, message: '批次号不能为空', trigger: 'blur'}">
-                <el-input v-model="formInline.batchNo" :disabled=true placeholder="请输入批次号" maxlength="80"
+                <el-input v-model="formInline.batchNo" placeholder="请输入批次号" maxlength="80"
                           clearable></el-input>
               </el-form-item>
             </div>
@@ -792,7 +673,7 @@
               <el-form-item label="委  托  方"
                             prop="client"
                             :rules="{required: true, message: '委托方不能为空', trigger: 'blur'}">
-                <el-select v-model="formInline.client" placeholder="请选择委托方" clearable @change="changeBotno">
+                <el-select v-model="formInline.client" placeholder="请选择委托方" clearable>
                   <el-option
                     v-for="item in clientList"
                     :key="item.id"
@@ -826,7 +707,6 @@
                             :rules="{required: true, message: '请选择日期', trigger: 'change'}">
                 <div class="block">
                   <el-date-picker
-                    @change="changeBotno"
                     v-model="formInline.caseTime"
                     align="right"
                     type="date"
@@ -865,7 +745,7 @@
         <el-row :gutter="24">
           <el-col :span="24">
             <el-form-item label="批次备注">
-              <el-input type="textarea" v-model="formInline.remark" style="width: 200%;height: 180px;"
+              <el-input type="textarea" v-model="formInline.remark" 
                         maxlength="500"></el-input>
             </el-form-item>
           </el-col>
@@ -890,9 +770,9 @@
             <div class="grid-content bg-purple">
               <el-form-item label="批  次  号"
                             prop="batchNo"
-                            :rules="{ required: true, message: '批次号不能为空', trigger: 'blur'}">
-                <el-input v-model="messageForm.batchNo" :disabled=true placeholder="请输入批次号" maxlength="80"
-                          clearable></el-input>
+                            :rules="{ required: true, message: '批次号不能为空', trigger: 'blur'}"  >
+                <el-input  v-model="messageForm.batchNo"  placeholder="请输入批次号" maxlength="80"
+                          clearable  class="fixwidth"></el-input>
               </el-form-item>
             </div>
           </el-col>
@@ -918,7 +798,7 @@
               <el-form-item label="委  托  方"
                             prop="client"
                             :rules="{required: true, message: '委托方不能为空', trigger: 'blur'}">
-                <el-select v-model="messageForm.client" @change="changeBotno2" placeholder="请选择委托方" clearable>
+                <el-select v-model="messageForm.client"  placeholder="请选择委托方" clearable>
                   <el-option
                     v-for="item in clientList"
                     :key="item.id"
@@ -952,7 +832,6 @@
                             :rules="{required: true, message: '请选择日期', trigger: 'change'}">
                 <div class="block">
                   <el-date-picker
-                    @change="changeBotno3"
                     v-model="messageForm.caseTime"
                     align="right"
                     type="date"
@@ -993,7 +872,7 @@
         </el-row>
       </el-form>
       <span slot="footer" class="footer">
-    <el-button @click="backForm">取 消</el-button>
+    <el-button @click="backForm1">取 消</el-button>
     <el-button type="primary" @click="submitmsgForm('messageForm')">确 定</el-button>
   </span>
     </el-dialog>
@@ -1095,7 +974,6 @@
     },
     methods: {
       clientCurrent(){
-        debugger
         if (this.form.clients==null || this.form.clients.length==0){
           this.$set(this.form, 'batchNos', [])
           this.$set(this, 'batchList', this.batchList2)
@@ -1115,42 +993,6 @@
           this.batchList = response;
         })
       },
-      changeBotno2() {
-        for (var i = 0; i <= this.clientList.length; i++) {
-          if (this.messageForm.client === this.clientList[i].id) {
-            this.clientValue = this.clientList[i].name
-            this.$set(this.messageForm, 'batchNo', this.clientValue + '-' +this.formInline.caseTime.split("-").join(""))
-            return
-          }
-        }
-      },
-      changeBotno() {
-        for (var i = 0; i <= this.clientList.length; i++) {
-          if (this.formInline.client === this.clientList[i].id) {
-            this.clientValue = this.clientList[i].name
-            this.$set(this.formInline, 'batchNo', this.clientValue + '-' + this.formInline.caseTime.split("-").join(""))
-            return
-          }
-        }
-      },
-      changeBotno3() {
-        for (var i = 0; i <= this.clientList.length; i++) {
-          if (this.messageForm.client === this.clientList[i].id) {
-            this.clientValue = this.clientList[i].name
-            this.$set(this.messageForm, 'batchNo', this.clientValue + '-' + this.formInline.caseTime.split("-").join(""))
-            return
-          }
-        }
-      },
-      changeBotno1() {
-        for (var i = 0; i <= this.clientList.length; i++) {
-          if (this.formInline.client === this.clientList[i].id) {
-            this.clientValue = this.clientList[i].name
-            this.$set(this.formInline, 'batchNo', this.clientValue + '-' + this.formInline.caseTime.split("-").join(""))
-            return
-          }
-        }
-      },
       backForm() {
         this.dialogVisible = false;
         this.formInline = {
@@ -1159,6 +1001,9 @@
           returnTime: '',
           caseTime: ''
         }
+      },
+      backForm1() {
+        this.dialogVisible3= false;
       },
       showDetail(row) {
         this.detailVisibleCase = false
@@ -1214,6 +1059,7 @@
       submitmsgForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
+            console.log(this.messageForm)
             update(this.messageForm).then((response) => {
               this.dialogVisible3 = false
               batchList().then((response) => {
@@ -1230,9 +1076,11 @@
           }
         });
       },
-      editMessage(row) {
-
-        this.dialogVisible2 = true
+      editMessage2(row) {
+        if (this.$refs["messageForm"]) {
+          this.$refs["messageForm"].resetFields();
+        }
+        this.dialogVisible3 = true
         this.messageForm = row
 
         if (this.messageForm.returnTime!=null && this.messageForm.returnTime=="NULL"){
@@ -1523,47 +1371,6 @@
           });
         })
       },
-      submitmsgForm(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            console.log(this.messageForm)
-            update(this.messageForm).then((response) => {
-              this.dialogVisible2 = false
-              this.search()
-              this.$message({
-                type: 'success',
-                message: '保存成功!'
-              });
-            })
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
-      },
-      editMessage2(row) {
-
-        this.dialogVisible2 = true
-        this.messageForm = row
-        if (this.messageForm.returnTime!=null && this.messageForm.returnTime=="NULL"){
-          this.messageForm.returnTime = '';
-        }
-        this.messageForm.client = parseInt(row.client)
-        if (this.messageForm.caseType) {
-
-          this.messageForm.caseType = parseInt(row.caseType)
-        } else {
-          this.messageForm.caseType = ''
-        }
-        if (this.messageForm.area) {
-
-          this.messageForm.area = parseInt(row.area)
-        } else {
-          this.messageForm.area = ''
-        }
-
-
-      },
       handleSort({column, prop, order}) {
         let startTime = this.form.time[0]
         let endTime = this.form.time[1]
@@ -1603,12 +1410,10 @@
         })
       },
       addBatch(){
+        if (this.$refs["formInline"]) {
+          this.$refs["formInline"].clearValidate();
+        }
         this.dialogVisible = true;
-        this.$nextTick(()=>{
-          if(this.$refs['formInline']){
-            this.$refs['formInline'].resetFields()
-          }
-        });
       },
       returnCaseList() {
         let _self = this
@@ -1956,23 +1761,36 @@
         margin-right: 0px;
       }
     }
-
     .textColor {
       display: inline-block;
       color: #66b1ff;
     }
-
     .el-dialog__header {
       background-color: #f8f8f8;
 
     }
-
     .el-loading-spinner .el-loading-text {
       font-size: 18px;
     }
     .el-table__body tr.current-row > td{
       border-top: 1px solid #0080ff  !important;
       border-bottom: 1px solid #0080ff  !important;
+    }
+    .el-input--mini .el-input__inner {
+      width: 220px;
+    }
+    .el-textarea__inner {
+      width: 600px
+    }
+    .el-pagination .el-select .el-input .el-input__inner {
+      width: 100px
+    }
+    .el-pagination__editor.el-input .el-input__inner {
+     width: 50px;
+    }
+    .dialog-wrap .el-dialog .el-dialog__body {
+      overflow: hidden;
+      height: 320px;
     }
   }
 </style>
