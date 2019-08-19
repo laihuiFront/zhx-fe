@@ -80,6 +80,12 @@
         <el-input type="textarea" v-model="formInline.account" placeholder="请输入账号" style="width: 100%;"
                   rows="3"></el-input>
       </el-form-item>
+
+      <el-form-item v-if="queryConf.sqdh || queryConfFlag">
+        <el-input type="textarea" v-model="formInline.applyOrderNo" placeholder="请输入申请单号" style="width: 100%;"
+                  rows="3"></el-input>
+      </el-form-item>
+
       <el-form-item v-if="queryConf.khh || queryConfFlag">
         <el-input v-model="formInline.bank" placeholder="请输入开户行"></el-input>
       </el-form-item>
@@ -1001,6 +1007,8 @@
         <el-checkbox v-model="queryConf.dah" label="5">档案号</el-checkbox>
 
         <el-checkbox v-model="queryConf.zh" label="1">账号</el-checkbox>
+        <el-checkbox v-model="queryConf.sqdh" label="5">申请单号</el-checkbox>
+
         <el-checkbox v-model="queryConf.khh" label="2">开户行</el-checkbox>
         <el-checkbox v-model="queryConf.aj" label="4">案件ID</el-checkbox>
         <el-checkbox v-model="queryConf.waje" label="5">委案金额</el-checkbox>
@@ -2248,12 +2256,6 @@
         })
       },
       formatMoney(value, places, symbol, thousand, decimal) {
-        var placesTemp = 0 ;
-        value = parseFloat(value).toString();
-        if (value.indexOf(".")>=0){
-          placesTemp = value.length - value.indexOf(".") -1;
-        }
-        places = placesTemp
         places = !isNaN(places = Math.abs(places)) ? places : 2;
         symbol = symbol !== undefined ? symbol : "¥";
         thousand = thousand || ",";

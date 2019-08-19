@@ -105,6 +105,7 @@ export const searchList =  function(form,orderBy,sort,pageSize,pageNum) {
       batchBonds:form.batchBonds,
       pageNum :pageNum,
       pageSize :pageSize,
+      applyOrderNo:form.applyOrderNo==null?"":form.applyOrderNo.replace(/[\n\r\v\s↵]/g,",") 
     }
   })
 }
