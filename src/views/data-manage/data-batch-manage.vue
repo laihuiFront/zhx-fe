@@ -1075,12 +1075,20 @@
           }
         });
       },
+      copy: function (obj) {
+        var newobj={};
+        for(var arr in obj){
+          newobj[arr]=obj[arr]
+        }
+        console.log(newobj)
+        return newobj;
+      },
       editMessage2(row) {
         if (this.$refs["messageForm"]) {
           this.$refs["messageForm"].resetFields();
         }
         this.dialogVisible3 = true
-        this.messageForm = row
+        this.messageForm = this.copy(row)
 
         if (this.messageForm.returnTime!=null && this.messageForm.returnTime=="NULL"){
 
@@ -1487,6 +1495,12 @@
         this.search()
       },
       formatMoney(value, places, symbol, thousand, decimal) {
+        var placesTemp = 0 ;
+        value = parseFloat(value).toString();
+        if (value.indexOf(".")>=0){
+          placesTemp = value.length - value.indexOf(".") -1;
+        }
+        places = placesTemp
         places = !isNaN(places = Math.abs(places)) ? places : 2;
         symbol = symbol !== undefined ? symbol : "¥";
         thousand = thousand || ",";

@@ -581,6 +581,12 @@ export default {
       this.departmentVisible = false;
     },
     formatMoney(value,places, symbol, thousand, decimal) {
+      var placesTemp = 0 ;
+      value = parseFloat(value).toString();
+      if (value.indexOf(".")>=0){
+        placesTemp = value.length - value.indexOf(".") -1;
+      }
+      places = placesTemp
       places = !isNaN(places = Math.abs(places)) ? places : 2;
       symbol = symbol !== undefined ? symbol : "¥";
       thousand = thousand || ",";

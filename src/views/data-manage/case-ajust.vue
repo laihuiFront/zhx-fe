@@ -600,11 +600,6 @@
         this.tableLoad = true
         dataList(this.formInline).then((response) => {
           this.totalCaseNum = response.totalCaseNum
-          this.totalAmt = this.formatMoney(response.totalAmt, 0, "￥")
-          this.repayTotalAmt = this.formatMoney(response.repayTotalAmt, 0, "￥")
-          this.repayNum = response.repayNum
-          this.totalCp = this.formatMoney(response.totalCp, 0, "￥")
-          this.totalPtp = this.formatMoney(response.totalPtp, 0, "￥")
           this.tableData3 = response.pageInfo.list
           //this.pages = response.pages
           this.total = response.pageInfo.total
