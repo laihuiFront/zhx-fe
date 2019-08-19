@@ -311,7 +311,7 @@
       </el-form-item>
       <el-row>
         <el-form-item>
-          <el-button type="primary" icon="el-icon-search" @click="search" style="margin-left:10px;">查询</el-button>
+          <el-button type="primary" icon="el-icon-search" @click="search2" style="margin-left:10px;">查询</el-button>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" icon="el-icon-refresh" @click="resetFormInline" style="margin-left:10px;">重置
@@ -594,7 +594,7 @@
       class="pagination-wrap"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :current-page="currentPage4"
+      :current-page.sync="currentPage4"
       :page-sizes="[100, 500, 2000, 10000, 1000000]"
       :page-size="pages"
       layout="total, sizes, prev, pager, next, jumper"
@@ -2618,24 +2618,24 @@
           this.search()
         })
       },
-      searchdataList(form) {
-        this.formInline.orderBy = this.orderBy;
-        this.formInline.sort = this.sort;
-        this.tableLoad = true
-        dataList(this.formInline).then((response) => {
-          this.totalCaseNum = response.totalCaseNum
-          this.totalAmt = this.formatMoney(response.totalAmt, 0, "￥")
-          this.repayTotalAmt = this.formatMoney(response.repayTotalAmt, 0, "￥")
-          this.repayNum = response.repayNum
-          this.totalCp = this.formatMoney(response.totalCp, 0, "￥")
-          this.totalPtp = this.formatMoney(response.totalPtp, 0, "￥")
-          this.tableData3 = response.pageInfo.list
-          //this.pages = response.pages
-          this.total = response.pageInfo.total
-          this.dialogVisible = false
-          this.tableLoad = false
-        })
-      },
+      // searchdataList(form) {
+      //   this.formInline.orderBy = this.orderBy;
+      //   this.formInline.sort = this.sort;
+      //   this.tableLoad = true
+      //   dataList(this.formInline).then((response) => {
+      //     this.totalCaseNum = response.totalCaseNum
+      //     this.totalAmt = this.formatMoney(response.totalAmt, 0, "￥")
+      //     this.repayTotalAmt = this.formatMoney(response.repayTotalAmt, 0, "￥")
+      //     this.repayNum = response.repayNum
+      //     this.totalCp = this.formatMoney(response.totalCp, 0, "￥")
+      //     this.totalPtp = this.formatMoney(response.totalPtp, 0, "￥")
+      //     this.tableData3 = response.pageInfo.list
+      //     //this.pages = response.pages
+      //     this.total = response.pageInfo.total
+      //     this.dialogVisible = false
+      //     this.tableLoad = false
+      //   })
+      // },
       handleSelectionChange(row) {
         let _self = this
         _self.deleteList = []
@@ -2669,8 +2669,21 @@
         this.pageSize = val
         this.search()
       },
+  // 查询按钮
+      search2() {
+          this.currentPage4=1
+          this.pageNum=1
+          this.search();    
+      },
       search() {
+        this.totalCaseNum=''
+        this.totalAmt = ''
+        this.repayTotalAmt = ''
+        this.repayNum = ''
+        this.totalCp ='' 
+        this.totalPtp = ''
         this.tableLoad = true
+        // this.pageNum=1
         if (this.formInline.odvNameFiter==null || this.formInline.odvNameFiter==""){
           this.$set(this.formInline, 'odvs', [])
         }
@@ -2688,13 +2701,14 @@
 
           //this.pages = response.pages
           this.total = response.pageInfo.total
+       
           this.tableLoad = false
         })
       },
-      handleSizeChange(val) {
-        this.pageSize = val
-        this.search()
-      },
+      // handleSizeChange(val) {
+      //   this.pageSize = val
+      //   this.search()
+      // },
       handleCurrentChange(val) {
         this.pageNum = val;
         this.search()
@@ -2791,6 +2805,12 @@
     },
     created() {
       this.queryConfList();
+      this.totalCaseNum=''
+         this.totalAmt = ''
+        this.repayTotalAmt = ''
+        this.repayNum = ''
+        this.totalCp ='' 
+        this.totalPtp = ''
       this.tableLoad = true
       searchList(this.formInline, this.orderBy, this.sort, this.pageSize, this.pageNum).then((response) => {
         this.tableData3 = response.pageInfo.list

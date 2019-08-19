@@ -377,10 +377,11 @@
           </el-col>
         </el-row>
         <el-row :gutter="24">
-          <el-col :span="24">
+          <el-col :span="24" class="remarkStyle">
             <el-form-item label="批次备注">
-              <el-input type="textarea" v-model="formInline.remark" style="width: 200%;height: 180px;"
+              <el-input type="textarea" v-model="formInline.remark" 
                         maxlength="500" placeholder="请输入批次备注"></el-input>
+                        <!-- style="width: 200%;height: 180px;" -->
             </el-form-item>
           </el-col>
         </el-row>
@@ -498,9 +499,9 @@
           </el-col>
         </el-row>
         <el-row :gutter="24">
-          <el-col :span="24">
+          <el-col :span="24" class="remarkStyle">
             <el-form-item label="批次备注">
-              <el-input type="textarea" v-model="messageForm.remark" style="width: 200%;" maxlength="500" placeholder="请输入批次备注"></el-input>
+              <el-input type="textarea" v-model="messageForm.remark" maxlength="500" placeholder="请输入批次备注"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -1187,9 +1188,9 @@
 
     }
 
-    .el-form-item .el-form-item--mini {
-      width: 80%
-    }
+    // .el-form-item .el-form-item--mini {
+    //   width: 80%
+    // }
 
     .upload-demo {
       display: inline-block;
@@ -1208,8 +1209,21 @@
     .el-input--mini .el-input__inner {
       width: 220px;
     }
+    .remarkStyle{
+      width: 100%;
+      height:100%;
+     
+      .el-form-item__content {
+         width: 100%
+      }
+      .el-form-item{
+        display: flex;
+         padding-left: 12px;
+      }
+    }
+ 
     .el-textarea__inner {
-      width: 600px
+      width: calc(100% - calc(50% - 288px));
     }
     .dialog-wrap .el-dialog .el-dialog__body {
         overflow: hidden;
