@@ -553,10 +553,10 @@
                 <span style="display: inline-block; color: #66b1ff;font-size: 16px;">{{ fetchData.sumPayMoneyMsg }}，</span> </el-form-item
               ><el-form-item style="margin-right:0px;">
                 <span class="color_gray" style="display: inline-block; color: #66b1ff;font-size: 16px;">列表待银行对账金额：</span>
-                <span style="display: inline-block; color: #66b1ff;font-size: 16px;">{{ fetchData.sumRepayMsg }}，</span> </el-form-item
+                <span style="display: inline-block; color: #66b1ff;font-size: 16px;">{{ fetchData.bankAmtMsg }}，</span> </el-form-item
               ><el-form-item style="margin-right:0px;">
                 <span class="color_gray" style="display: inline-block; color: #66b1ff;font-size: 16px;">列表承诺还款金额：</span>
-                <span style="display: inline-block; color: #66b1ff;font-size: 16px;">{{ fetchData.sumBankMsg }}</span>
+                <span style="display: inline-block; color: #66b1ff;font-size: 16px;">{{ fetchData.repayAmtMsg }}</span>
               </el-form-item>
               </el-form>
             </div>
@@ -1247,10 +1247,12 @@
         if (this.form.odvNameFiter==null || this.form.odvNameFiter==""){
           this.$set(this.form, 'val32', [])
         }
+        this.paginationData.currentPage=1
         this.getMainDataForQuery();
       },
 
       getMainDataForQuery(){
+        this.fetchData={}
         this.tableLoad = true
         if (this.deptName==null || this.deptName==""){
           this.form.val31 = '';
@@ -1347,6 +1349,7 @@
         });
       },
       getMainData(){
+        this.fetchData={}
         this.tableLoad = true
         if (this.deptName==null || this.deptName==""){
           this.form.val31 = '';

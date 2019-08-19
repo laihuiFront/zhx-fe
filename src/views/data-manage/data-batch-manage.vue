@@ -743,10 +743,10 @@
           </el-col>
         </el-row>
         <el-row :gutter="24">
-          <el-col :span="24">
-            <el-form-item label="批次备注">
-              <el-input type="textarea" v-model="formInline.remark" 
-                        maxlength="500"></el-input>
+          <el-col :span="24" class="remarkStyle">
+            <el-form-item label="批次备注" label-width="100px !important">          
+                <el-input type="textarea" v-model="formInline.remark" 
+                        maxlength="500"></el-input>              
             </el-form-item>
           </el-col>
         </el-row>
@@ -864,9 +864,9 @@
           </el-col>
         </el-row>
         <el-row :gutter="24">
-          <el-col :span="24">
+          <el-col :span="24" class="remarkStyle">
             <el-form-item label="批次备注">
-              <el-input type="textarea" v-model="messageForm.remark" style="width: 200%;" maxlength="500"></el-input>
+              <el-input type="textarea" v-model="messageForm.remark"  maxlength="500"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -1059,7 +1059,6 @@
       submitmsgForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            console.log(this.messageForm)
             update(this.messageForm).then((response) => {
               this.dialogVisible3 = false
               batchList().then((response) => {
@@ -1753,7 +1752,7 @@
   }
 </script>
 
-<style lang="scss">
+<style lang="scss" >
   #data-batch-manage {
     .pad {
       .el-checkbox {
@@ -1779,11 +1778,22 @@
     .el-input--mini .el-input__inner {
       width: 220px;
     }
+    .remarkStyle{
+      width: 100%;
+      height:100%;    
+      .el-form-item__content {
+         width: 100%;
+      }
+      .el-form-item{
+        display: flex;
+         padding-left: 12px;
+      }
+    }
     .el-textarea__inner {
-      width: 600px
+      width: calc(100% - calc(50% - 288px));
     }
     .el-pagination .el-select .el-input .el-input__inner {
-      width: 100px
+      width: 100px;
     }
     .el-pagination__editor.el-input .el-input__inner {
      width: 50px;
@@ -1791,6 +1801,8 @@
     .dialog-wrap .el-dialog .el-dialog__body {
       overflow: hidden;
       height: 320px;
+
+  
     }
   }
 </style>
