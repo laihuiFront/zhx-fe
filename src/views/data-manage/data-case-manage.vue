@@ -53,6 +53,7 @@
           type="daterange"
           align="right"
           unlink-panels
+          value-format="yyyy-MM-dd"
           range-separator="至"
           start-placeholder="委案日期开始"
           end-placeholder="委案日期结束"

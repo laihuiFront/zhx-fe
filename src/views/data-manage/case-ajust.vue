@@ -17,18 +17,18 @@
         </el-select>
       </el-form-item>
       <el-form-item v-if="queryConf.gaxlh || queryConfFlag">
-        <el-input type="textarea" v-model="formInline.seqNo" placeholder="请输入个案序列号" style="width: 100%;"
+        <el-input type="textarea" v-model="formInline.seqNo" clearable placeholder="请输入个案序列号" style="width: 100%;"
                   rows="3"></el-input>
       </el-form-item>
       <el-form-item v-if="queryConf.hth || queryConfFlag">
-        <el-input v-model="formInline.contractNo" placeholder="请输入合同号"></el-input>
+        <el-input v-model="formInline.contractNo" placeholder="请输入合同号" clearable></el-input>
       </el-form-item>
       <el-form-item v-if="queryConf.zjh || queryConfFlag">
-        <el-input type="textarea" v-model="formInline.identNo" style="width: 100%;" placeholder="请输入证件号"
+        <el-input type="textarea" v-model="formInline.identNo" style="width: 100%;"  clearable placeholder="请输入证件号"
                   rows="3"></el-input>
       </el-form-item>
       <el-form-item v-if="queryConf.xm || queryConfFlag">
-        <el-input type="textarea" v-model="formInline.name" placeholder="请输入姓名" style="width: 100%;"
+        <el-input type="textarea" v-model="formInline.name" placeholder="请输入姓名" clearable style="width: 100%;"
                   rows="3"></el-input>
       </el-form-item>
       <el-form-item v-if="queryConf.ajzt || queryConfFlag">
@@ -60,6 +60,8 @@
           type="daterange"
           align="right"
           unlink-panels
+          clearable
+          value-format="yyyy-MM-dd"
           range-separator="至"
           start-placeholder="操作时间开始"
           end-placeholder="操作时间结束"
@@ -78,9 +80,11 @@
           type="daterange"
           align="right"
           unlink-panels
+          value-format="yyyy-MM-dd"
           range-separator="至"
           start-placeholder="委案日期开始"
           end-placeholder="委案日期结束"
+          clearable
         >
         </el-date-picker>
       </el-form-item>
@@ -94,6 +98,7 @@
           range-separator="至"
           start-placeholder="预计退案日期开始"
           end-placeholder="预计退案日期结束"
+          clearable
         >
         </el-date-picker>
       </el-form-item>
@@ -248,7 +253,7 @@
         width="140"
         prop="context"
         align="center"
-        label="委案日期"
+        label="操作内容"
         sortable="custom"
         :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
@@ -368,7 +373,6 @@
 <script>
   const CaseDetail = () => import('@/views/data-manage/detail');
   import {
-    dataList,
     clientCurrent,
     saveSelectFilter,
     selectByModule,
@@ -439,10 +443,11 @@
         departmentTree: [],
         formInline: {
           odvNameFiter:null,
+          odvNames:null,
           statuss:[1],
           odvs: [],
-          batchNos: [],
           clients: [],
+          creators:[],
           createTime:[],
           time2: [],
           time3: []
@@ -477,7 +482,6 @@
           })
         }
 
-        console.info(selectUserNames,"123");
         this.$set(this, 'deptName', selectUserNames.join(','))
         this.$set(this.formInline, 'depts', selectUserIds)
 
@@ -525,21 +529,6 @@
       showQueryConf() {
         this.showQueryConfVisible = true;
       },
-
-      onClickSelectUser() {
-        this.selectUserVisible = true
-
-        if (!this.odvName) {
-          this.$set(this.fenan, 'odv', '')
-        }
-
-        this.$nextTick(() => {
-          if(this.fenan.odv!=null && this.fenan.odv!=""){
-            this.$refs.tree.setCheckedKeys(this.fenan.odv);
-          }
-
-        })
-      },
       onClickSelectUser2() {
         this.selectUserVisible2 = true
       },
@@ -565,7 +554,7 @@
 
         }
 
-        this.$set(this.formInline, 'odvNames', selectUserNames)
+        this.$set(this.formInline, 'odvNames', selectUserNames.join(','))
         this.$set(this.formInline, 'odvs', selectUserIds)
 
         this.selectUserVisible2 = false
@@ -594,30 +583,24 @@
 
 
 
-      searchdataList(form) {
-        this.formInline.orderBy = this.orderBy;
-        this.formInline.sort = this.sort;
-        this.tableLoad = true
-        dataList(this.formInline).then((response) => {
-          this.totalCaseNum = response.totalCaseNum
-          this.tableData3 = response.pageInfo.list
-          //this.pages = response.pages
-          this.total = response.pageInfo.total
-          this.dialogVisible = false
-          this.tableLoad = false
-        })
-      },
 
       handleSort({column, prop, order}) {
+        if (this.formInline.odvNames==null || this.formInline.odvNames==""){
+          this.$set(this.formInline, 'odvs', [])
+        }
+        if (this.deptName==null || this.deptName==""){
+          this.$set(this.formInline, 'depts', [])
+        }
+        if (this.formInline.odvNameFiter ==null || this.odvNameFiter==""){
+          this.$set(this.formInline, 'creators', [])
+        }
         this.sort = order == null ? "desc" : order.replace("ending", "")
         this.orderBy = prop == null ? "id" : prop
 
         this.tableLoad = true
         searchList(this.formInline, this.orderBy, this.sort, this.pageSize, this.pageNum).then((response) => {
-
-          this.tableData3 = response.pageInfo.list
-
-          this.total = response.pageInfo.total
+          this.tableData3 = response.list
+          this.total = response.total
           this.tableLoad = false
         })
       },
@@ -627,17 +610,19 @@
       },
       search() {
         this.tableLoad = true
-        if (this.formInline.odvNameFiter==null || this.formInline.odvNameFiter==""){
+
+        if (this.formInline.odvNames==null || this.formInline.odvNames==""){
           this.$set(this.formInline, 'odvs', [])
         }
         if (this.deptName==null || this.deptName==""){
           this.$set(this.formInline, 'depts', [])
         }
+        if (this.formInline.odvNameFiter ==null || this.odvNameFiter==""){
+          this.$set(this.formInline, 'creators', [])
+        }
         searchList(this.formInline, this.orderBy, this.sort, this.pageSize, this.pageNum).then((response) => {
-
-          this.tableData3 = response.pageInfo.list
-
-          this.total = response.pageInfo.total
+          this.tableData3 = response.list
+          this.total = response.total
           this.tableLoad = false
         })
       },
@@ -707,12 +692,8 @@
       this.queryConfList();
       this.tableLoad = true
       searchList(this.formInline, this.orderBy, this.sort, this.pageSize, this.pageNum).then((response) => {
-        this.tableData3 = response.pageInfo.list
-
-        this.total = response.pageInfo.total
-        this.tableData3 = response.pageInfo.list.map((item) => {
-          return Object.assign(item, {'class-name': `color_${item.color}`});
-        })
+        this.tableData3 = response.list
+        this.total = response.total
         this.tableLoad = false
       })
 
