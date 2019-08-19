@@ -52,6 +52,15 @@ export default new Router({
           name: 'data-case-manage'
         },
 
+        // 调案记录
+        {
+          path: 'case-ajust',
+          component: resolve => {
+            spinRoute.show();
+            require(['@/views/data-manage/case-ajust'], spinRoute.resolve(resolve))
+          },
+          name: 'case-ajust'
+        },
         // 催记管理
         {
           path: 'data-memorize-manage',

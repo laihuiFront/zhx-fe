@@ -495,13 +495,14 @@ export default {
       this.$set(this.dialogData, 'editVisible', true)
     },
     onClickBatchRevokeShow(){
-      this.showCancel = true;
-    },
-    onClickBatchRevoke(){
       if(!this.selectList.length){
         this.$message('请选择需要撤销的还款记录')
         return
       }
+      this.showCancel = true;
+    },
+    onClickBatchRevoke(){
+
       this.$confirm('此操作将撤销还款记录，是否继续？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',

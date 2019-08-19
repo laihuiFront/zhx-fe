@@ -990,12 +990,20 @@
         this.saveExportCaseConf();
         this.showExportConfVisible = false;
       },
+      copy: function (obj) {
+        var newobj={};
+        for(var arr in obj){
+          newobj[arr]=obj[arr]
+        }
+        console.log(newobj)
+        return newobj;
+      },
       editMessage(row) {
         if (this.$refs["messageForm"]) {
           this.$refs["messageForm"].resetFields();
         }
         this.dialogVisible2 = true
-        this.messageForm = row
+        this.messageForm = this.copy(row)
         if (this.messageForm.client) {
           this.messageForm.client = parseInt(row.client)
         }
