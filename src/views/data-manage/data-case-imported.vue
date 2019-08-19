@@ -381,7 +381,6 @@
             <el-form-item label="批次备注">
               <el-input type="textarea" v-model="formInline.remark" 
                         maxlength="500" placeholder="请输入批次备注"></el-input>
-                        <!-- style="width: 200%;height: 180px;" -->
             </el-form-item>
           </el-col>
         </el-row>
@@ -1191,7 +1190,6 @@
     // .el-form-item .el-form-item--mini {
     //   width: 80%
     // }
-
     .upload-demo {
       display: inline-block;
     }
@@ -1203,37 +1201,32 @@
       border-top: 1px solid #0080ff  !important;
       border-bottom: 1px solid #0080ff  !important;
     }
-  //  .el-select-dropdown__item{
-  //     width: 180px ;
-  //   }
     .el-input--mini .el-input__inner {
       width: 220px;
     }
     .remarkStyle{
       width: 100%;
-      height:100%;
-     
+      height:100%;    
       .el-form-item__content {
-         width: 100%
+        width: 100%;
       }
       .el-form-item{
         display: flex;
          padding-left: 12px;
       }
     }
- 
     .el-textarea__inner {
       width: calc(100% - calc(50% - 288px));
     }
     .dialog-wrap .el-dialog .el-dialog__body {
-        overflow: hidden;
-        height: 320px
+      overflow: hidden;
+      height: 320px;
     }
     .el-pagination .el-select .el-input .el-input__inner {
       width: 100px
     }
     .el-pagination__editor.el-input .el-input__inner {
-     width: 50px;
+      width: 50px;
     }
   }
 </style>

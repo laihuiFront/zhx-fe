@@ -744,12 +744,9 @@
         </el-row>
         <el-row :gutter="24">
           <el-col :span="24" class="remarkStyle">
-            <el-form-item label="批次备注" label-width="100px !important">
-           
+            <el-form-item label="批次备注" label-width="100px !important">          
                 <el-input type="textarea" v-model="formInline.remark" 
-                        maxlength="500"></el-input>
-         
-              
+                        maxlength="500"></el-input>              
             </el-form-item>
           </el-col>
         </el-row>
@@ -1781,27 +1778,22 @@
     .el-input--mini .el-input__inner {
       width: 220px;
     }
-
-
     .remarkStyle{
       width: 100%;
-      height:100%;
-     
+      height:100%;    
       .el-form-item__content {
-         width: 100%
+         width: 100%;
       }
       .el-form-item{
         display: flex;
          padding-left: 12px;
       }
     }
- 
     .el-textarea__inner {
       width: calc(100% - calc(50% - 288px));
     }
-
     .el-pagination .el-select .el-input .el-input__inner {
-      width: 100px
+      width: 100px;
     }
     .el-pagination__editor.el-input .el-input__inner {
      width: 50px;
