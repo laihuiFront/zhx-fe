@@ -562,22 +562,22 @@
                   <span
                     class="color_gray"
                     style="display: inline-block; color: #66b1ff;font-size: 16px;"
-                    >列表提成金额：</span
+                    >列表待銀行对账金额：</span
                   >
                   <span
                     style="display: inline-block; color: #66b1ff;font-size: 16px;"
-                    >{{ fetchData.sumRepayMsg }}，</span
+                    >{{ fetchData.bankAmtMsg }}，</span
                   >
                 </el-form-item>
                 <el-form-item style="margin-right:0px;">
                   <span
                     class="color_gray"
                     style="display: inline-block; color: #66b1ff;font-size: 16px;"
-                    >列表待银行查账金额：</span
+                    >列表承诺还款金额：</span
                   >
                   <span
                     style="display: inline-block; color: #66b1ff;font-size: 16px;"
-                    >{{ fetchData.sumBankMsg }}</span
+                    >{{ fetchData.repayAmtMsg }}</span
                   >
                 </el-form-item>
               </el-form>
@@ -1105,9 +1105,7 @@ export default {
       batchNo({ batchNo: queryString }).then(data => {
         this.val1_data = data.reduce((acc, item) => {
           acc.push({
-            id:item.id,
-            label:item.batchNo,
-            value:item.batchNo
+            value: item.batchNo
           });
           return acc;
         }, []);
@@ -1123,6 +1121,8 @@ export default {
     },
     //查询按钮
     searchHandle() {
+      this.fetchData={}
+      this.paginationData.currentPage=1
       this.getMainDataForQuery();
     },
     getMainDataForQuery() {
@@ -1135,7 +1135,7 @@ export default {
         if (!data) {
           data = { total: 0, list: [] };
         }
-        this.fetchData = data;
+        this.fetchData = data
         this.paginationData.total = data.countCase;
         this.tableData = data.list.map(item => {
           return Object.assign(item, { "class-name": `color_${item.color}` });
@@ -1218,6 +1218,7 @@ export default {
       });
     },
     getMainData() {
+      this.fetchData={}
       this.tableLoad = true;
       pageMyCase(this.realFetchFormData).then(data => {
         if (!data) {

@@ -1380,8 +1380,19 @@
                            (caseDetail.currentuser || mycaseFlag) &&
                             scope.row.telStatusMsg !== '停止跟进'
                         "
+                       
                       @click="stopTel(scope.row.id)"
                     >停止跟进
+                    </el-button
+                    >
+                    <el-button
+                      type="text"
+                      v-if="
+                           (caseDetail.currentuser || mycaseFlag) &&
+                            scope.row.telStatusMsg == '停止跟进'
+                        "                       
+                      @click="resetTel(scope.row.id)"
+                    >恢复跟进
                     </el-button
                     >
                   </template>
@@ -5641,6 +5652,20 @@
         if (this.$route.query.showNext){
           this.showNext = true;
         }
+      },
+        resetTel(id) {          
+            updateTelStatus([
+              {
+                id,
+                telStatusMsg: "未知"
+              }
+            ]).then(res => {
+              getTelList(this.id).then(data => {
+                this.$set(this.caseDetail, "dataCaseTelEntityList", data);
+              });
+              this.$message("该电话已恢复跟进");
+            }).catch(() => {
+          });
       }
     },
     watch: {
