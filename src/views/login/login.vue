@@ -18,8 +18,8 @@
         <el-checkbox v-model="loginForm.checked">是否记住密码</el-checkbox>
       </div>
       <div class="btns">
-        <el-button class="item" size="medium" type="primary" @click="login" style="    width: 105px;" >登录</el-button>
-        <el-button class="item" size="medium" @click="reset"  style="    width: 105px;">重置</el-button>
+        <el-button class="item" size="medium" type="primary" @click="login" style="width: 105px;" v-loading.fullscreen.lock="fullscreenLoading">登录</el-button>
+        <el-button class="item" size="medium" @click="reset" style="width: 105px;">重置</el-button>
       </div>
       <!-- <el-form class="login-form" autoComplete="on" :model="loginForm" ref="loginForm">
         <el-form-item>
@@ -46,7 +46,8 @@ export default {
   name: 'login',
   data(){
     return {
-      loginForm: {}
+      loginForm: {},
+      fullscreenLoading: false
     }
   },
   mounted() {
@@ -54,6 +55,7 @@ export default {
   },
   methods: {
     login(){
+      this.fullscreenLoading = true
       if (this.loginForm.checked){
         this.setCookie(this.loginForm.userName,this.loginForm.password,15)
       }else{
@@ -62,7 +64,7 @@ export default {
 
       this.loginAction(this.loginForm).then(()=>{
         this.$router.replace({ path: '/' })
-      })
+      }).catch(() => this.fullscreenLoading = false)
     },
     setCookie(c_name, c_pwd, exdays) {
       var exdate = new Date(); //获取时间
@@ -175,4 +177,3 @@ export default {
   }
 }
 </style>
-

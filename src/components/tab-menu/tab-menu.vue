@@ -2,11 +2,11 @@
   <section id="tab-menu">
     <span class="left-wrap" @click="onClickLeft"><i class="icon el-icon-arrow-left"></i></span>
     <ul class="menu-wrap" ref='tabList' style="overflow: hidden;">
-      <li 
+      <li
          @click="gotoPage(menu)"
-         class="menu-item" 
-         :class="{active:menu.id === currentMenu.id}" 
-         v-for="(menu) in tabMenus" 
+         class="menu-item"
+         :class="{active:menu.id === currentMenu.id}"
+         v-for="(menu) in tabMenus"
          :key="'tab'+menu.id"
           @contextmenu.prevent="openMenu(menu,$event)">
         <span class="text">{{menu.menuLabel}}</span>
@@ -43,7 +43,9 @@ export default {
   watch: {
     tabMenus(){
       setTimeout(()=>{
-        this.$refs.tabList.scrollTo(this.$refs.tabList.scrollWidth, 0)
+        if(this.$refs.tabList){
+          this.$refs.tabList.scrollTo(this.$refs.tabList.scrollWidth, 0)
+        }
       },250)
     },
     visible(value) {
@@ -169,7 +171,7 @@ export default {
     position: relative;
     flex:1;
     overflow: scroll;
-    
+
     white-space: nowrap;
     &::-webkit-scrollbar{
       display: none;
@@ -229,4 +231,3 @@ export default {
   }
 }
 </style>
-
