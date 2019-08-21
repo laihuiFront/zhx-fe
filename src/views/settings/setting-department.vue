@@ -24,6 +24,7 @@
 		<div class="tablestyle">
 			<div class="header">
 				<el-button type="primary" @click="onClickSave" class="btn">新增</el-button>
+				<el-button type="primary" @click="saveColumnsWidth">保存列宽</el-button>
 			</div>
 			<el-table
 				stripe
@@ -32,22 +33,23 @@
 				highlight-current-row
 				class="tablebodystyle"
 				v-loading="tableLoad"
+				ref="table"
 			>
 				<el-table-column
-					min-width="3"
+					:min-width="columnsWidth.filter(x => x.label=='部门名称')[0].width"
 					label="部门名称"
 					align="center"
 					prop="orgName"
 					show-overflow-tooltip
 				/>
 				<el-table-column
-					min-width="3"
+					:min-width="columnsWidth.filter(x => x.label=='员工人数')[0].width"
 					label="员工人数"
 					align="center"
 					prop="userNum"
 					show-overflow-tooltip
 				/>
-				<el-table-column align="center" label="操作" min-width="8" show-overflow-tooltip>
+				<el-table-column :resizable="false" align="center" label="操作" show-overflow-tooltip  width="300">
 					<template slot-scope="scope">
 						<el-button type="text" size="small" @click="editDepartment(scope.$index,scope.row)">编辑</el-button>
 						<el-button type="text" size="small" @click="deleteDepartment(scope.$index,scope.row)">删除</el-button>
@@ -138,7 +140,9 @@
 		deletMethod,
 		findTableData,
 		addDeptMethod,
-		moveToTargetDepartment
+		moveToTargetDepartment,
+		saveTableInformation,
+		findTableInformationMethod,
 	} from "@/common/js/api-setting";
 	import { forkJoin } from "rxjs";
 	export default {
@@ -165,7 +169,18 @@
 				},
 				nodeSort: "",
 				moveSelectDepartTree: [],
-				showDialog: false
+				showDialog: false,
+				columnsWidth: [
+					{
+						label: "部门名称",
+						width: 400
+					},
+					{
+						label: "员工人数",
+						width: 300
+					}
+				],
+				tableid: "table_1"
 			};
 		},
 		created() {
@@ -173,6 +188,7 @@
 			getDepartmentTree().then(data => {
 				this.moveSelectDepartTree = data;
 			});
+			this.findTableInformation();
 		},
 
 		methods: {
@@ -405,6 +421,58 @@
 			},
 			onSelectDepartment(data) {
 				this.selectDeptId = data.id;
+			},
+			saveColumnsWidth() {
+				this.pageLoading = true;
+				const headers = this.$refs.table.$children
+					.filter(x => x.label && x.minWidth)
+					.map(x => {
+						const obj = {
+							tableid: this.tableid,
+							columnname: x.label,
+							columnwidth: x.columnConfig.width,
+							minwidth: x.columnConfig.minWidth,
+							userid: this.$refs.table.$store.getters.userInfo.id
+						};
+						return obj;
+					});
+				saveTableInformation(headers).then(() => {
+					this.$message.success("保存成功！");
+					this.findTableInformation();
+				});
+				this.pageLoading = false;
+			},
+			// 查询并展示表格
+			findTableInformation() {
+				this.pageLoading = true;
+				findTableInformationMethod(this.tableid).then(data => {
+					if (data != null && data.length > 0) {
+						this.columnsWidth.filter(
+							x => x.label == "部门名称"
+						)[0].width = data.filter(
+							x => x.columnname == "部门名称"
+						)[0].columnwidth;
+
+						this.columnsWidth.filter(
+							x => x.label == "员工人数"
+						)[0].width = data.filter(
+							x => x.columnname == "员工人数"
+						)[0].columnwidth;
+
+						this.$refs.table.$children.filter(
+							x => x.label == "部门名称"
+						)[0].columnConfig.width = data.filter(
+							x => x.columnname == "部门名称"
+						)[0].columnwidth;
+
+						this.$refs.table.$children.filter(
+							x => x.label == "员工人数"
+						)[0].columnConfig.width = data.filter(
+							x => x.columnname == "员工人数"
+						)[0].columnwidth;
+					}
+					this.pageLoading = false;
+				});
 			}
 		}
 	};

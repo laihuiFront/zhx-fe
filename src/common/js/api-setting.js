@@ -161,3 +161,22 @@ export function moveToTargetDepartment(id,pid){
     }
   })
 }
+
+
+export function saveTableInformation(data) {
+  return request({
+    url: '/tableColumnsWidthSettings/save',
+    method: 'post',
+    data
+  })
+}
+
+export function findTableInformationMethod(tableid){
+  return request({
+    url: '/tableColumnsWidthSettings/query',
+    method: 'post',
+    params:{
+      tableid
+    }
+  })
+}
