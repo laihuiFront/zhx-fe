@@ -49,7 +49,7 @@
 					prop="userNum"
 					show-overflow-tooltip
 				/>
-				<el-table-column :resizable="false" align="center" label="操作" show-overflow-tooltip  width="300">
+				<el-table-column :resizable="false" align="center" label="操作" show-overflow-tooltip width="300">
 					<template slot-scope="scope">
 						<el-button type="text" size="small" @click="editDepartment(scope.$index,scope.row)">编辑</el-button>
 						<el-button type="text" size="small" @click="deleteDepartment(scope.$index,scope.row)">删除</el-button>
@@ -142,7 +142,7 @@
 		addDeptMethod,
 		moveToTargetDepartment,
 		saveTableInformation,
-		findTableInformationMethod,
+		findTableInformationMethod
 	} from "@/common/js/api-setting";
 	import { forkJoin } from "rxjs";
 	export default {
@@ -180,7 +180,10 @@
 						width: 300
 					}
 				],
-				tableid: "table_1"
+				tableWidthInformation: {
+					tableid: "table_1",
+					columns: []
+				}
 			};
 		},
 		created() {
@@ -428,15 +431,31 @@
 					.filter(x => x.label && x.minWidth)
 					.map(x => {
 						const obj = {
-							tableid: this.tableid,
 							columnname: x.label,
 							columnwidth: x.columnConfig.width,
-							minwidth: x.columnConfig.minWidth,
-							userid: this.$refs.table.$store.getters.userInfo.id
+							minwidth: x.columnConfig.minWidth
 						};
 						return obj;
 					});
-				saveTableInformation(headers).then(() => {
+				this.tableWidthInformation.columns = [];
+				for (let iterator of headers) {
+					if (
+						iterator.columnname == "部门名称" &&
+						iterator.columnwidth == undefined
+					) {
+						iterator.columnwidth = iterator.minwidth;					
+					}
+					if (
+						iterator.columnname == "员工人数" &&
+						iterator.columnwidth == undefined
+					) {
+						iterator.columnwidth = iterator.minwidth;
+					}
+						delete iterator.minwidth;
+					this.tableWidthInformation.columns.push(iterator);
+				}
+
+				saveTableInformation(this.tableWidthInformation).then(() => {
 					this.$message.success("保存成功！");
 					this.findTableInformation();
 				});
@@ -445,7 +464,7 @@
 			// 查询并展示表格
 			findTableInformation() {
 				this.pageLoading = true;
-				findTableInformationMethod(this.tableid).then(data => {
+				findTableInformationMethod(this.tableWidthInformation.tableid).then(data => {
 					if (data != null && data.length > 0) {
 						this.columnsWidth.filter(
 							x => x.label == "部门名称"
