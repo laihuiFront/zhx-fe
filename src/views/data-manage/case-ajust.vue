@@ -147,13 +147,13 @@
         label="个案序列号"
         show-overflow-tooltip>
         <template slot-scope="scope">
-          <el-button v-if="scope.row.status==3" type="text" style ="color:#999999;" size="small" @click="editCase(scope.row.id, scope.row.name,scope.row.seqNo)">
+          <el-button v-if="scope.row.status==3" type="text" style ="color:#999999;" size="small" @click="editCase(scope.row.caseId, scope.row.name,scope.row.seqNo)">
             {{scope.row.seqNo}}
           </el-button>
-          <el-button v-if="scope.row.status==4" type="text" style ="color:#999999;text-decoration:line-through;" size="small" @click="editCase(scope.row.id, scope.row.name,scope.row.seqNo)">
+          <el-button v-if="scope.row.status==4" type="text" style ="color:#999999;text-decoration:line-through;" size="small" @click="editCase(scope.row.caseId, scope.row.name,scope.row.seqNo)">
             {{scope.row.seqNo}}
           </el-button>
-          <el-button v-if="scope.row.status!=3 && scope.row.status!=4" type="text" size="small" @click="editCase(scope.row.id, scope.row.name,scope.row.seqNo)">
+          <el-button v-if="scope.row.status!=3 && scope.row.status!=4" type="text" size="small" @click="editCase(scope.row.caseId, scope.row.name,scope.row.seqNo)">
             {{scope.row.seqNo}}
           </el-button>
         </template>
@@ -264,7 +264,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage4"
-      :page-sizes="[100, 500, 2000, 10000, 1000000]"
+      :page-sizes="[5, 500, 2000, 10000, 1000000]"
       :page-size="pages"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
@@ -431,7 +431,7 @@
           label: 'orgName'
         },
         deleteStatusList: [],
-        pageSize: 100,
+        pageSize: 5,
         pageNum: 1,
         clientList: [],
         total: 0,
@@ -652,8 +652,7 @@
 
 
       showDetail(row,event) {
-        console.log("rowclick")
-        let id = row.id
+        let id = row.caseId
         let name = row.name
         let seqNo = row.seqNo
         this.$router.push({

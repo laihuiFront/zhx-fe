@@ -398,6 +398,7 @@ export default {
         query:{
           id,
           name,
+          mycase:true,
           seqNo
         }
       })

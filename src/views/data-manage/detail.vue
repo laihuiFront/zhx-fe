@@ -2328,6 +2328,15 @@
                   label="操作人"
                 >
                 </el-table-column>
+                <el-table-column label="操作" width="100">
+                  <template slot-scope="scope">
+                    <el-button type="text" v-if="caseDetail.deleteAuth"
+                               @click="delOpLog(scope.row)"
+                    >删除
+                    </el-button
+                    >
+                  </template>
+                </el-table-column>
               </el-table>
             </el-tab-pane>
             <el-tab-pane label="诉讼案件" name="12" class="tabs-wrap telPanel susong">
@@ -4021,6 +4030,7 @@
     updateAddrStatus,
     synchroSameTel,
     pageDataLog,
+    delOplog,
     updateDataLog,
     delDataLog,
     sameCaseList,
@@ -5038,6 +5048,25 @@
         this.dataCollectInfo = {...row};
         this.dataCollectEditType = "edit";
         this.dialogDataCollectVisible = true;
+      },
+      delOpLog(row){
+        this.$confirm("此操作将删除该信息且无法恢复,是否继续？", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+              delOplog(row.id).then(data => {
+                this.$message({
+                  type: "success",
+                  message: "删除成功"
+                });
+                pageDataLog({caseId: this.id, type: this.logType}).then(data => {
+                  this.logList = data;
+                });
+
+              });
+          });
       },
       delDataCollect(row){
         this.$confirm("此操作将删除该信息且无法恢复,是否继续？", {

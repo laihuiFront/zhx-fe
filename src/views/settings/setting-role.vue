@@ -39,7 +39,7 @@
         :model="roleInfo"
         :rules="rules"
         ref="ruleForm"
-        label-width="100px"
+        label-width="140px"
         class="demo-ruleForm"
       >
         <el-form-item label="角色名称" prop="roleName">
@@ -63,6 +63,16 @@
           <el-select v-model="roleInfo.busiAuth" filterable  placeholder="请选择业务权限" clearable>
             <el-option
               v-for="item in busiAuthList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="删除日志权限" prop="deleteAuth">
+          <el-select v-model="roleInfo.deleteAuth" filterable  placeholder="请选择删除日志权限" clearable>
+            <el-option
+              v-for="item in deleteAuthList"
               :key="item.id"
               :label="item.name"
               :value="item.id">
@@ -116,6 +126,7 @@ export default {
       roleList: [],
       dataAuthList:[{id:1,name:"具有数据权限"},{id:2,name:"不具有数据权限"}],
       busiAuthList:[{id:1,name:"具有业务权限"},{id:2,name:"不具有业务权限"}],
+      deleteAuthList:[{id:1,name:"具有日志删除权限"},{id:2,name:"不具有日志删除权限"}],
       dialogData: {
         editVisible: false,
         roleDesc:'',
@@ -132,6 +143,9 @@ export default {
         ],
         dataAuth:[
           { required: true, message: '请选择数据权限' }
+        ],
+        deleteAuth:[
+          { required: true, message: '请选择日志删除权限' }
         ],
         busiAuth:[
           { required: true, message: '请选择业务权限'}
@@ -174,6 +188,14 @@ export default {
       }
       this.$set(this.dialogData, 'title', '查看角色')
       this.$set(this.dialogData, 'type', 'query')
+      this.currentRow = row
+      this.roleInfo = {
+        roleName: row.roleName,
+        dataAuth:row.dataAuth,
+        busiAuth:row.busiAuth,
+        deleteAuth:row.deleteAuth,
+        roleDesc: row.roleDesc
+      }
       listAuth(row.id).then(response => {
         this.authConfig = response
         this.$set(this.dialogData, 'editVisible', true)
@@ -192,6 +214,7 @@ export default {
         roleName: row.roleName,
         dataAuth:row.dataAuth,
         busiAuth:row.busiAuth,
+        deleteAuth:row.deleteAuth,
         roleDesc: row.roleDesc
       }
       listAuth(row.id).then(response => {
@@ -229,6 +252,7 @@ export default {
             roleName: this.roleInfo.roleName,
             dataAuth:this.roleInfo.dataAuth,
             busiAuth:this.roleInfo.busiAuth,
+            deleteAuth:this.roleInfo.deleteAuth,
             roleDesc: this.roleInfo.roleDesc
           }
           if (this.dialogData.type === 'edit') {

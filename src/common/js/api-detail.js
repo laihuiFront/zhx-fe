@@ -173,6 +173,14 @@ export function delDataCollect(id){
   })
 }
 
+export function delOplog(id){
+  return request({
+    url: '/dataLog/delete',
+    method: 'post',
+    data:{id}
+  })
+}
+
 //利息
 export function getInterestDetail(id) {
   return request({

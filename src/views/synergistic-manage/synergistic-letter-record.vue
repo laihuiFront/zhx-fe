@@ -770,7 +770,7 @@ export default {
       }
     },
     showCase(row) {
-      let id = row.id;
+      let id = row.caseId;
       let name = row.name;
       let seqNo = row.seqno;
       this.$router.push({
