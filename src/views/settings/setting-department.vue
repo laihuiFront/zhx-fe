@@ -24,7 +24,7 @@
 		<div class="tablestyle">
 			<div class="header">
 				<el-button type="primary" @click="onClickSave" class="btn">新增</el-button>
-				<el-button type="primary" @click="saveColumnsWidth">保存列宽</el-button>
+				<el-button type="primary" @click="saveColumnsWidth" v-show="false">保存列宽</el-button>
 			</div>
 			<el-table
 				stripe
@@ -36,20 +36,20 @@
 				ref="table"
 			>
 				<el-table-column
-					:min-width="columnsWidth.filter(x => x.label=='部门名称')[0].width"
+					:min-width="columnsWidth.filter(x => x.columnname=='部门名称')[0].columnwidth"
 					label="部门名称"
 					align="center"
 					prop="orgName"
 					show-overflow-tooltip
 				/>
 				<el-table-column
-					:min-width="columnsWidth.filter(x => x.label=='员工人数')[0].width"
+					:min-width="columnsWidth.filter(x => x.columnname=='员工人数')[0].columnwidth"
 					label="员工人数"
 					align="center"
 					prop="userNum"
 					show-overflow-tooltip
 				/>
-				<el-table-column :resizable="false" align="center" label="操作" show-overflow-tooltip width="300">
+				<el-table-column :resizable="false"  align="center" label="操作" show-overflow-tooltip width="300">
 					<template slot-scope="scope">
 						<el-button type="text" size="small" @click="editDepartment(scope.$index,scope.row)">编辑</el-button>
 						<el-button type="text" size="small" @click="deleteDepartment(scope.$index,scope.row)">删除</el-button>
@@ -140,10 +140,12 @@
 		deletMethod,
 		findTableData,
 		addDeptMethod,
-		moveToTargetDepartment,
+		moveToTargetDepartment
+	} from "@/common/js/api-setting";
+	import {
 		saveTableInformation,
 		findTableInformationMethod
-	} from "@/common/js/api-setting";
+	} from "@/common/js/api-table-column";
 	import { forkJoin } from "rxjs";
 	export default {
 		name: "settingDepartment",
@@ -172,12 +174,12 @@
 				showDialog: false,
 				columnsWidth: [
 					{
-						label: "部门名称",
-						width: 400
+						columnname: "部门名称",
+						columnwidth: 400
 					},
 					{
-						label: "员工人数",
-						width: 300
+						columnname: "员工人数",
+						columnwidth: 300
 					}
 				],
 				tableWidthInformation: {
@@ -458,38 +460,16 @@
 				saveTableInformation(this.tableWidthInformation).then(() => {
 					this.$message.success("保存成功！");
 					this.findTableInformation();
+					this.pageLoading = false;
 				});
-				this.pageLoading = false;
 			},
 			// 查询并展示表格
 			findTableInformation() {
 				this.pageLoading = true;
 				findTableInformationMethod(this.tableWidthInformation.tableid).then(data => {
-					if (data != null && data.length > 0) {
-						this.columnsWidth.filter(
-							x => x.label == "部门名称"
-						)[0].width = data.filter(
-							x => x.columnname == "部门名称"
-						)[0].columnwidth;
-
-						this.columnsWidth.filter(
-							x => x.label == "员工人数"
-						)[0].width = data.filter(
-							x => x.columnname == "员工人数"
-						)[0].columnwidth;
-
-						this.$refs.table.$children.filter(
-							x => x.label == "部门名称"
-						)[0].columnConfig.width = data.filter(
-							x => x.columnname == "部门名称"
-						)[0].columnwidth;
-
-						this.$refs.table.$children.filter(
-							x => x.label == "员工人数"
-						)[0].columnConfig.width = data.filter(
-							x => x.columnname == "员工人数"
-						)[0].columnwidth;
-					}
+					if(data!=null&&data.length>0){
+						this.columnsWidth=data
+				}
 					this.pageLoading = false;
 				});
 			}
