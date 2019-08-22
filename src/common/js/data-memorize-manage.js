@@ -152,24 +152,24 @@ return request({
   })
 }
 
-export const totalDataExport = function(exportConf,area,dept,batchNo,clients,odvs,caseStatuss,measure,result,identNo,cardNo,collectInfo,color,seqno,bailStartDate,bailEndDate,expectStartTime,expectEndTime,collectStartTime,collectEndTime,orderBy,sort,pageSize,pageNum) {
+export const totalDataExport = function(exportConf,areas,depts,batchNo,clients,odvs,caseStatuss,measures,results,identNo,cardNo,collectInfo,colors,seqno,bailStartDate,bailEndDate,expectStartTime,expectEndTime,collectStartTime,collectEndTime,orderBy,sort,pageSize,pageNum) {
 return download({
     url: 'dataCollect/totalDataCollectExport',
     method: 'post',
     data: {
       exportConf:exportConf,
-       areas:  area,
-       depts:  dept,
+       areas:  areas,
+       depts:  depts,
        batchNo:  batchNo ,
        clients:  clients ,
       odvs:  odvs ,
        caseStatuss:  caseStatuss ,
-       measures:  measure ,
-       results:  result,
+       measures:  measures ,
+       results:  results,
        identNo:  identNo ,
        cardNo:  cardNo ,
        collectInfo:  collectInfo ,
-       colors:  color ,
+       colors:  colors ,
        seqno:  seqno ,
        bailStartDate:  bailStartDate ,
        bailEndDate:  bailEndDate ,

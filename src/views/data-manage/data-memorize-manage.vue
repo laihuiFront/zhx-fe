@@ -582,15 +582,15 @@
         val14_data: [
           {
             label: '正常',
-            value: '黑'
+            value: 'BLACK'
           },
           {
             label: '红色',
-            value: '红'
+            value: 'RED'
           },
           {
             label: '蓝色',
-            value: '蓝'
+            value: 'BLUE'
           }/*,
           {
             label: '橙色',
@@ -820,13 +820,13 @@
             this.loading = true;
             this.fullscreenLoading = true
 
-            let bailStartDate = this.formInline.bailTime[0]
-            let bailEndDate = this.formInline.bailTime[1]
-            let expectStartTime = this.formInline.expectTime[0]
-            let expectEndTime = this.formInline.expectTime[1]
-            let collectStartTime = this.formInline.collectTime[0]
-            let collectEndTime = this.formInline.collectTime[1]
-            totalDataExport(this.exportConf,this.formInline.areas, this.formInline.depts, this.formInline.batchNo, this.formInline.clients, this.formInline.odvs, this.formInline.caseStatuss, this.formInline.measures, this.formInline.results, this.formInline.identNo, this.formInline.cardNo, this.formInline.collectInfo, this.formInline.colors, this.formInline.seqno, this.formInline.bailStartDate, this.formInline.bailEndDate, this.formInline.expectStartTime, this.formInline.expectEndTime, this.formInline.collectStartTime, this.formInline.collectEndTime, this.orderBy, this.sort, this.pageSize, this.pageNum).then((response) => {
+            let bailStartDate = this.formInline.bailTime==null?"":this.formInline.bailTime[0]
+            let bailEndDate = this.formInline.bailTime==null?"":this.formInline.bailTime[1]
+            let expectStartTime = this.formInline.expectTime==null?"":this.formInline.expectTime[0]
+            let expectEndTime = this.formInline.expectTime==null?"":this.formInline.expectTime[1]
+            let collectStartTime = this.formInline.collectTime==null?"":this.formInline.collectTime[0]
+            let collectEndTime = this.formInline.collectTime==null?"":this.formInline.collectTime[1]
+            totalDataExport(this.exportConf,this.formInline.areas, this.formInline.depts, this.formInline.batchNo, this.formInline.clients, this.formInline.odvs, this.formInline.caseStatuss, this.formInline.measures, this.formInline.results, this.formInline.identNo, this.formInline.cardNo, this.formInline.collectInfo, this.formInline.colors, this.formInline.seqno, bailStartDate, bailEndDate, expectStartTime, expectEndTime, collectStartTime, collectEndTime, this.orderBy, this.sort, this.pageSize, this.pageNum).then((response) => {
               this.loading = false;
               this.fullscreenLoading = false
 
