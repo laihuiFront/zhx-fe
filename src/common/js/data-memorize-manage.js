@@ -152,7 +152,7 @@ return request({
   })
 }
 
-export const totalDataExport = function(exportConf,area,dept,batchNo,clients,odvs,caseStatus,measure,result,identNo,cardNo,collectInfo,color,seqno,bailStartDate,bailEndDate,expectStartTime,expectEndTime,collectStartTime,collectEndTime,orderBy,sort,pageSize,pageNum) {
+export const totalDataExport = function(exportConf,area,dept,batchNo,clients,odvs,caseStatuss,measure,result,identNo,cardNo,collectInfo,color,seqno,bailStartDate,bailEndDate,expectStartTime,expectEndTime,collectStartTime,collectEndTime,orderBy,sort,pageSize,pageNum) {
 return download({
     url: 'dataCollect/totalDataCollectExport',
     method: 'post',
