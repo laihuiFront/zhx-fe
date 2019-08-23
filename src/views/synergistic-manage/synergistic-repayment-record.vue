@@ -112,6 +112,7 @@
       >
         <el-form-item label="个案案序列号" prop="dyga">
           <el-select
+            class="fixWidth"
             v-model="recordInfo.dataCase.id"
             filterable
             remote
@@ -127,8 +128,8 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="回收催收员" prop="dyga">
-          <el-select v-model="recordInfo.collectUser.id" filterable clearable placeholder="请选择回收催收员">
+        <el-form-item label="回收催收员" prop="dyga" >
+          <el-select v-model="recordInfo.collectUser.id" filterable clearable placeholder="请选择回收催收员" class="fixWidth">
             <el-option
               v-for="item in collectionUserList"
               :key="item.id"
@@ -139,6 +140,7 @@
         </el-form-item>
         <el-form-item label="还款日期" prop="dyga">
           <el-date-picker
+            class="fixWidth"
             clearable
             v-model="recordInfo.repayDate"
             type="date"
@@ -147,13 +149,13 @@
           ></el-date-picker>
         </el-form-item>
         <el-form-item label="确认还款" prop="repayMoney">
-          <el-input v-model="recordInfo.repayMoney" clearable placeholder="请输入确认还款"></el-input>
+          <el-input v-model="recordInfo.repayMoney" clearable placeholder="请输入确认还款" class="fixWidth"></el-input>
         </el-form-item>
         <el-form-item label="还款人" prop="dyga">
-           <el-input v-model="recordInfo.repayUser" clearable placeholder="请输入还款人"></el-input>
+           <el-input v-model="recordInfo.repayUser" clearable placeholder="请输入还款人" class="fixWidth"></el-input>
         </el-form-item>
         <el-form-item label="还款方式" prop="dyga">
-          <el-select v-model="recordInfo.repayType.id" clearable placeholder="请选择还款方式">
+          <el-select v-model="recordInfo.repayType.id" clearable placeholder="请选择还款方式" class="fixWidth">
             <el-option
               v-for="item in payMethod"
               :key="item.id"
@@ -163,7 +165,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="备注" prop="dyga" class="whole">
-          <el-input v-model="recordInfo.remark" clearable placeholder="请输入还款备注"/>      
+          <el-input v-model="recordInfo.remark" clearable placeholder="请输入还款备注" class="fixWidth"/>      
         </el-form-item>
       </el-form>
       <span slot="footer" class="footer">
@@ -869,6 +871,9 @@ export default {
   }
   .el-dialog__footer {
     text-align: center;
+  }
+  .fixWidth .el-input__inner {
+    width: 220px !important ;
   }
 }
 </style>
