@@ -1,5 +1,5 @@
 <template>
-  <div id="collect-departmental-case" class="page-wraper-sub"  v-loading="pageLoading" element-loading-text="拼命加载中">
+  <div id="collect-departmental-case" v-loading="pageLoading" element-loading-text="拼命加载中">
     <el-tabs v-model="activeName"  :class="{tab2:tabnum}" class="tabs-wrap">
       <el-tab-pane label="部门案件" name="tab1"
                    style="height: 100%"
@@ -563,8 +563,6 @@
           </el-col>
         </el-row>
         <el-table highlight-current-row v-loading="tableLoad"
-                  class="table-wrap"
-                  height="1"
                   ref="multipleTable"
                   style="width: 100%;"
                   :data="tableData"
@@ -632,7 +630,7 @@
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="paginationData.currentPage"
-          :page-sizes="[100, 500, 2000, 10000, 1000000]"
+          :page-sizes="pageSizes"
           :page-size="paginationData.pageSize"
           layout="total, sizes, prev, pager, next, jumper"
           :total="paginationData.total">
@@ -648,45 +646,37 @@
       center
     >
       <el-row class="pad">
-
         <el-checkbox v-model="queryConf.bm" label="1" >部门</el-checkbox>
         <el-checkbox v-model="queryConf.csy" label="1" >催收员</el-checkbox>
-
         <el-checkbox v-model="queryConf.wtf" label="1" >委托方</el-checkbox>
         <el-checkbox v-model="queryConf.pch" label="2" >批次号</el-checkbox>
         <el-checkbox v-model="queryConf.gaxlh" label="3" >个案序列号</el-checkbox>
         <el-checkbox v-model="queryConf.xcgjrq" label="4" >下次跟进日期</el-checkbox>
         <el-checkbox v-model="queryConf.dq" label="5" >地区</el-checkbox>
-
         <el-checkbox v-model="queryConf.xm" label="1" >姓名</el-checkbox>
         <el-checkbox v-model="queryConf.zjh" label="2" >证件号</el-checkbox>
         <el-checkbox v-model="queryConf.yqzl" label="3" >逾期账龄</el-checkbox>
         <el-checkbox v-model="queryConf.ajzt" label="4" >案件状态</el-checkbox>
         <el-checkbox v-model="queryConf.cszt" label="5" >催收状态</el-checkbox>
-
         <el-checkbox v-model="queryConf.ajlx" label="1" >案件类型</el-checkbox>
         <el-checkbox v-model="queryConf.waje" label="2" >委案金额</el-checkbox>
         <el-checkbox v-model="queryConf.bszt" label="4" >标色状态</el-checkbox>
         <el-checkbox v-model="queryConf.kh" label="5" >卡号</el-checkbox>
-
         <el-checkbox v-model="queryConf.dah" label="1" >档案号</el-checkbox>
         <el-checkbox v-model="queryConf.gjcs" label="2" >跟进次数</el-checkbox>
         <el-checkbox v-model="queryConf.sfxfp" label="3" >是否新分配</el-checkbox>
         <el-checkbox v-model="queryConf.hkqk" label="4" >还款情况</el-checkbox>
         <el-checkbox v-model="queryConf.zdyxx" label="5" >自定义信息</el-checkbox>
-
         <el-checkbox v-model="queryConf.csfl" label="1" >催收分类</el-checkbox>
         <el-checkbox v-model="queryConf.jmzt" label="2" >减免状态</el-checkbox>
         <el-checkbox v-model="queryConf.bbzt" label="3" >报备状态</el-checkbox>
         <el-checkbox v-model="queryConf.dhhm" label="4" >电话号码</el-checkbox>
-
         <el-checkbox v-model="queryConf.csjl" label="5" >催收记录</el-checkbox>
         <el-checkbox v-model="queryConf.ajfprq" label="5" >案件分配日期</el-checkbox>
         <el-checkbox v-model="queryConf.yjtarq" label="5" >预计退案日期</el-checkbox>
         <el-checkbox v-model="queryConf.zhgjrq" label="5" >最后跟进日期</el-checkbox>
         <el-checkbox v-model="queryConf.hkrq" label="5" >还款日期</el-checkbox>
         <el-checkbox v-model="queryConf.warq" label="5" >委案日期</el-checkbox>
-
       </el-row>
       <span slot="footer" class="footer">
         <el-button @click="showQueryConfVisible = false">取 消</el-button>
@@ -755,6 +745,8 @@
       "@/common/js/collect-my-case";
   import {role,getUserTree} from '@/common/js/collect-departmental-case'
   const CaseDetail = () => import('@/views/data-manage/detail');
+  import {pageSizes} from "@/common/js/const"
+
   export default {
     components: {
       tab2,
@@ -763,6 +755,7 @@
     name: "collectMyCase",
     data() {
       return {
+        pageSizes,
         deptName:"",
         selectUserVisible3:false,
         selectUserTree:[],
@@ -890,7 +883,6 @@
         val31_data: [],  //部门
         val32_data: [],  //催收员
         tableCol_data: [
-
           {
             width:120,
             prop: "odv",
@@ -1143,9 +1135,7 @@
           }).map((item) => {
             return item.id
           })
-
         }
-
         this.$set(this.form, 'odvNameFiter', selectUserNames.join(','))
         this.$set(this.form, 'val32', selectUserIds)
         this.selectUserVisible3 = false
@@ -1173,7 +1163,6 @@
         });
       },
       queryConfList(){
-
         let queryObj = {module:"data-memorize-manage",menu:this.queryConf}
         selectByModule(queryObj).then(data => {
           if (data){
@@ -1249,7 +1238,6 @@
       },
       //查询按钮
       searchHandle() {
-
         if (this.form.odvNameFiter==null || this.form.odvNameFiter==""){
           this.$set(this.form, 'val32', [])
         }
@@ -1464,7 +1452,6 @@
       this["val24_data"] = this.transform(this.$store.getters.caseType.减免状态);
       this["val25_data"] = this.transform(this.$store.getters.caseType.报备状态);
       this.addSynergyFormList = this.$store.getters.caseType.协催类型;
-
     }
   };
 </script>
@@ -1539,14 +1526,14 @@
       margin-bottom: 40px;
       overflow-y: auto;
     }
-    .pagination-wrap{
-      position: fixed;
-      bottom: 0;
-      z-index: 100;
-      min-height: 40px;
-      background-color: white;
-      width: 100%;
-    }
+    // .pagination-wrap{
+    //   position: fixed;
+    //   bottom: 0;
+    //   z-index: 100;
+    //   min-height: 40px;
+    //   background-color: white;
+    //   width: 100%;
+    // }
     .pad{
       .el-checkbox{
         width:24%;

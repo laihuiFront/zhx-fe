@@ -4,8 +4,7 @@
        element-loading-text="拼命加载中"
        v-loading.fullscreen.lock="fullscreenLoading"
        element-loading-spinner="el-icon-loading"
-       element-loading-background="rgba(0, 0, 0, 0.8)"
-       class="page-wraper-sub">
+       element-loading-background="rgba(0, 0, 0, 0.8)">
     <el-form id="repay-record-query" :model="formInline" :inline="true" class="query-wrap queryStyle">
       <el-form-item v-if="queryConf.csqy || queryConfFlag">
         <el-select v-model="formInline.areas" filterable collapse-tags multiple placeholder="请选择催收区域" clearable>
@@ -157,15 +156,13 @@
         </el-form-item>
       </el-row>
     </el-form>
-    <el-table highlight-current-row height="1"
+    <el-table highlight-current-row
               v-loading="tableLoad"
-              class="table-wrap"
               :data="tableData3"
               border
               stripe
               tooltip-effect="dark"
               @row-dblclick="showCase"
-              style="width: 100%;margin-bottom: 40px;"
               @sort-change="handleSort"
               @selection-change="handleSelectionChange">
       <el-table-column
@@ -357,7 +354,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage4"
-      :page-sizes="[100, 500, 2000, 10000, 1000000]"
+      :page-sizes="pageSizes"
       :page-size="pages"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
@@ -400,7 +397,6 @@
       </span>
     </el-dialog>
 
-
     <el-dialog
       title="导出查询结果"
       :visible.sync="dialogVisible2"
@@ -415,7 +411,6 @@
         <el-form-item>
           <el-radio v-model="radio" label="2">按查询条件导出当前分页</el-radio>
         </el-form-item>
-
       </el-form>
       <span slot="footer" class="footer">
     <el-button @click="dialogVisible2 = false">取 消</el-button>
@@ -431,27 +426,22 @@
       :close-on-click-modal="false"
     >
       <el-row class="pad">
-
         <el-checkbox v-model="queryConf.csqy" label="1">催收区域</el-checkbox>
         <el-checkbox v-model="queryConf.bm" label="2">部门</el-checkbox>
         <el-checkbox v-model="queryConf.csy" label="3">催收员</el-checkbox>
         <el-checkbox v-model="queryConf.cscs" label="4">催收措施</el-checkbox>
         <el-checkbox v-model="queryConf.pch" label="5">批次号</el-checkbox>
-
         <el-checkbox v-model="queryConf.zjh" label="2">证件号</el-checkbox>
         <el-checkbox v-model="queryConf.kh" label="3">卡号</el-checkbox>
         <el-checkbox v-model="queryConf.csjl" label="4">催收记录</el-checkbox>
         <el-checkbox v-model="queryConf.gaxlh" label="5">个案序列号</el-checkbox>
-
         <el-checkbox v-model="queryConf.csjg" label="1">催收结果</el-checkbox>
         <el-checkbox v-model="queryConf.wtf" label="2">委托方</el-checkbox>
         <el-checkbox v-model="queryConf.ajzt" label="4">案件状态</el-checkbox>
         <el-checkbox v-model="queryConf.bszt" label="5">标色状态</el-checkbox>
-
         <el-checkbox v-model="queryConf.csrq" label="1">催收日期</el-checkbox>
         <el-checkbox v-model="queryConf.wtrq" label="2">委托日期</el-checkbox>
         <el-checkbox v-model="queryConf.yjtarq" label="3">预计退案日期</el-checkbox>
-
       </el-row>
       <span slot="footer" class="footer">
         <el-button @click="showQueryConfVisible = false">取 消</el-button>
@@ -468,7 +458,6 @@
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span><span @click="selectUnAllExport" style="cursor: pointer;margin-left: 10px;">反选</span></div>
       <el-row class="pad" ref="boxWrapper">
-
         <el-checkbox v-model="exportConf.name" label="2">姓名</el-checkbox>
         <el-checkbox v-model="exportConf.account" label="3">账号</el-checkbox>
         <el-checkbox v-model="exportConf.cardNo" label="3">卡号</el-checkbox>
@@ -560,11 +549,13 @@
     deleteDataCollectRecord,
     updateDataCollectRecord
   } from '@/common/js/data-memorize-manage.js'
+  import {pageSizes} from "@/common/js/const"
 
   export default {
     name: 'dataMemorizeManage',
     data() {
       return {
+        pageSizes,
         radio: "1",
         tableHeight: 50,
         tableLoad: false,
@@ -665,7 +656,6 @@
           }).map((item) => {
             return item.id
           })
-
         }
         this.$set(this.formInline, 'odvNameFiter', selectUserNames.join(','))
         this.$set(this.formInline, 'odvs', selectUserIds)
@@ -696,7 +686,6 @@
         });
       },
       queryConfList() {
-
         let queryObj = {module: "data-memorize-manage", menu: this.queryConf}
         selectByModule(queryObj).then(data => {
           if (data) {
@@ -765,8 +754,7 @@
             });
             this.search()
           })
-        }).catch(() => {
-        });
+        }).catch(() => {});
       },
       selectAllExport(){
         this._selectAllInit('exportConf');
@@ -868,7 +856,6 @@
             message: '请先选择导出记录!'
           });
         }
-
       },
       totalDataCollectExport() {
         this.exportType = 2;
@@ -1028,14 +1015,14 @@
         margin-bottom: 50px;
         overflow-y: auto;
       }*/
-    .pagination-wrap {
-      position: fixed;
-      bottom: 0;
-      z-index: 100;
-      min-height: 40px;
-      background-color: white;
-      width: 100%;
-    }
+    // .pagination-wrap {
+    //   position: fixed;
+    //   bottom: 0;
+    //   z-index: 100;
+    //   min-height: 40px;
+    //   background-color: white;
+    //   width: 100%;
+    // }
 
     .pad {
       .el-checkbox {

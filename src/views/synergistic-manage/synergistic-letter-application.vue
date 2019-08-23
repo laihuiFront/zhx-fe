@@ -1,7 +1,6 @@
 <template>
   <div
     id="dclxh"
-    class="page-wraper-sub"
     v-loading="loading2"
     v-loading.fullscreen.lock="fullscreenLoading"
     element-loading-text="正在处理中"
@@ -23,8 +22,6 @@
         >导入信函记录</el-button
       >
     </el-upload>
-
-
       <el-tabs v-model="activeName" class="tabs-wrap">
         <el-tab-pane label="信函申请" name="tab1">
           <el-dialog
@@ -243,8 +240,6 @@
             </el-col>
           </el-row>
            <el-table highlight-current-row v-loading="tableLoad"
-            class="table-wrap"
-            height="1"
             ref="multipleTable"
             :data="tableData"
             border
@@ -293,7 +288,7 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="paginationData.currentPage"
-            :page-sizes="[100, 500, 2000, 10000, 1000000]"
+            :page-sizes="pageSizes"
             :page-size="paginationData.pageSize"
             layout="total, sizes, prev, pager, next, jumper"
             :total="paginationData.total"
@@ -341,6 +336,8 @@ import {
 //import CaseDetail from '@/views/data-manage/detail';
 const CaseDetail = () => import("@/views/data-manage/detail");
 import tab2 from "./synergistic-letter-application-2.vue";
+import {pageSizes} from "@/common/js/const"
+
 export default {
   name: "synergisticLetterApplication",
   components: {
@@ -349,6 +346,7 @@ export default {
   },
   data() {
     return {
+      pageSizes,
       loading2: false,
       fullscreenLoading: false,
       tableLoad: false,
@@ -735,8 +733,6 @@ export default {
 </script>
 
 <style lang="scss">
-#synergistic-letter-application {
-}
 #dclxh {
   height: calc(100% - 21px);
   position: relative;
@@ -750,14 +746,14 @@ export default {
     top: 5px;
     z-index: 22;
   }
-  .pagination-wrap {
-    position: fixed;
-    bottom: 0;
-    z-index: 100;
-    min-height: 40px;
-    background-color: white;
-    width: 100%;
-  }
+  // .pagination-wrap {
+  //   position: fixed;
+  //   bottom: 0;
+  //   z-index: 100;
+  //   min-height: 40px;
+  //   background-color: white;
+  //   width: 100%;
+  // }
 
    tr.current-row > td{
     position: relative;

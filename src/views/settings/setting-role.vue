@@ -1,5 +1,5 @@
 <template>
-  <div id="setting-role" class="page-wraper-sub" v-loading="loading2"
+  <div id="setting-role" v-loading="loading2"
        v-loading.fullscreen.lock="fullscreenLoading"
        element-loading-text="正在保存中"
        element-loading-spinner="el-icon-loading"
@@ -16,11 +16,11 @@
         <el-button type="primary" @click="onClickAdd" v-has="'新增角色'">新增角色</el-button>
       </el-form-item>
     </el-form>
-    <el-table v-loading="tableLoad" :data="roleList"  highlight-current-row height="1" border stripe  style="width: 100%" class="table-wrap">
-      <el-table-column prop="roleName"  align="center" label="角色名称" width="300"></el-table-column>
-      <el-table-column prop="roleDesc"  align="center" label="角色描述" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="updateUser.userName"  align="center" label="修改人" width="200"></el-table-column>
-      <el-table-column label="操作"   align="center" width="200">
+    <el-table v-loading="tableLoad" :data="roleList" highlight-current-row border stripe style="width: 100%">
+      <el-table-column prop="roleName" align="center" label="角色名称" width="300"></el-table-column>
+      <el-table-column prop="roleDesc" align="center" label="角色描述" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="updateUser.userName" align="center" label="修改人" width="200"></el-table-column>
+      <el-table-column label="操作" align="center" width="200">
         <template slot-scope="scope">
           <el-button type="text" @click="onClickQueryOne(scope.row)" v-has="'查看'">查看</el-button>
           <el-button type="text" v-if="scope.row.id !== 14" @click="onClickEdit(scope.row)" v-has="'修改'">修改</el-button>
@@ -300,4 +300,3 @@ export default {
   }
 }
 </style>
-

@@ -1,5 +1,5 @@
 <template>
-  <div id="member-off" class="page-wraper-sub">
+  <div id="member-off">
     <el-form ref="form" :model="queryForm" :inline="true" class="query-wrap queryStyle">
       <el-form-item>
         <el-input v-model="queryForm.id" clearable placeholder="请输入员工ID"></el-input>
@@ -18,18 +18,16 @@
       stripe
       @sort-change="handleSort"
       :data="memberList"
-      style="width: 100%"
-      height="1"
-      class="table-wrap">
+      style="width: 100%">
       <el-table-column
-        :sortable='true' 
-        :sort-orders="['ascending','descending']"         
+        :sortable='true'
+        :sort-orders="['ascending','descending']"
         prop="id"
         align="center"
         label="员工ID">
       </el-table-column>
       <el-table-column
-        :sortable='true' 
+        :sortable='true'
         :sort-orders="['ascending','descending']"
         align="center"
         prop="userName"
@@ -37,14 +35,14 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        :sortable='true' 
+        :sortable='true'
         :sort-orders="['ascending','descending']"
         align="center"
         prop="department"
         label="原部门">
       </el-table-column>
       <el-table-column
-        :sortable='true' 
+        :sortable='true'
         :sort-orders="['ascending','descending']"
         prop="leaveTime"
         align="center"
@@ -57,7 +55,7 @@
       :current-page.sync="queryForm.pageNum"
       :page-size.sync="queryForm.pageSize"
       layout="total, sizes, prev, pager, next, jumper"
-      :page-sizes="[50, 100, 200, 500]"
+      :page-sizes="pageSizes"
       :total="total"
       class="pagination-wrap">
     </el-pagination>
@@ -66,10 +64,13 @@
 
 <script>
 import {listMember} from '@/common/js/api-member'
+import {pageSizes} from "@/common/js/const"
+
 export default {
   name: 'memberOff',
   data(){
     return {
+      pageSizes,
       tableLoad:false,
       queryForm: {
         id:'',
@@ -127,5 +128,3 @@ export default {
   }
 }
 </style>
-
-

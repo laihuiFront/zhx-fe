@@ -1,5 +1,5 @@
 <template>
-  <div id="setting-remind" class="page-wraper-sub">
+  <div id="setting-remind">
     <el-form ref="form" :model="saveForm" :inline="true" class="query-wrap">
       <el-form-item>
         <el-date-picker
@@ -18,13 +18,11 @@
         </el-button>
       </el-form-item>
     </el-form>
-     <el-table highlight-current-row class="table-wrap"
-      height="1"
+     <el-table highlight-current-row
       :data="tableData"
       border stripe
       v-loading="tableLoad"
       style="width: 100%">
-
       <el-table-column
         prop="receiveUserName"
         align="center"
@@ -60,12 +58,11 @@
       :current-page.sync="saveForm.pageNum"
       :page-size.sync="saveForm.pageSize"
       layout="total, sizes, prev, pager, next, jumper"
-      :page-sizes="[50, 100, 200, 500]"
-      :total="total"
-      class="pagination-wrap">
+      :page-sizes="pageSizes"
+      :total="total">
     </el-pagination>
     <el-dialog
-      title="新增"
+      title="添加提醒"
       :visible.sync="dialogVisible"
       width="600px"
       custom-class="dia-top"
@@ -96,8 +93,8 @@
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer" style="display: flex;justify-content: center">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false;saveContent()">保存</el-button>
+        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="saveContent">发送</el-button>
       </span>
     </el-dialog>
 
@@ -127,11 +124,13 @@
 
 <script>
 import {list,deleteOne,save,roleList,getUserTree} from '@/common/js/setting-remind';
+import {pageSizes} from "@/common/js/const"
 
 export default {
   name: 'settingRemind',
   data(){
     return{
+      pageSizes,
       defaultProps: {
         children: 'children',
         label: 'name'
@@ -193,7 +192,7 @@ export default {
           message: '提交成功',
           type: 'success'
         });
-      });
+      }).catch(() => {});
     },
     getMainData(){
       this.tableLoad = true
@@ -244,10 +243,10 @@ export default {
 
 <style lang="scss">
 #setting-remind{
-  .el-table__body-wrapper{
-    overflow-y: auto;
-    overflow-x:hidden;
-  }
+  // .el-table__body-wrapper{
+  //   overflow-y: auto;
+  //   overflow-x:hidden;
+  // }
   .r-list{
     min-width: 220px;
     box-sizing: border-box;
@@ -287,4 +286,3 @@ export default {
   }
 }
 </style>
-

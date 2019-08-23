@@ -1,12 +1,11 @@
 <template>
-  <div id="setting-template" class="page-wraper-sub">
+  <div id="setting-template">
     <el-row style="margin-bottom: 15px;">
       <el-button type="primary" style="float: right"
                  @click="handleClick()" v-has="'添加信函模板'">添加信函模板
       </el-button>
     </el-row>
-     <el-table highlight-current-row class="table-wrap"
-      height="1"
+     <el-table highlight-current-row
       :data="tableData"
       border stripe
       v-loading="tableLoad"
@@ -175,9 +174,9 @@ export default {
 
 <style lang="scss">
 #setting-template{
-  .el-table__body-wrapper{
-    overflow-y: auto;
-  }
+  // .el-table__body-wrapper{
+  //   overflow-y: auto;
+  // }
   .r-list{
     min-width: 220px;
     box-sizing: border-box;
@@ -217,4 +216,3 @@ export default {
   }
 }
 </style>
-

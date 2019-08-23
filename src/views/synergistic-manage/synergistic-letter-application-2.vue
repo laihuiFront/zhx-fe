@@ -1,6 +1,5 @@
 <template>
   <div
-    style="height:100%;display:flex;flex-direction:column;"
     v-loading="loading2"
     v-loading.fullscreen.lock="fullscreenLoading"
     element-loading-text="正在处理中"
@@ -240,12 +239,10 @@
       </el-row>
        <span slot="footer" class="dialog-footer">
           <el-button @click="dialogVisibleCase = false">取 消</el-button>
-              <el-button type="primary" @click="changeRadio">确 定</el-button>  
+              <el-button type="primary" @click="changeRadio">确 定</el-button>
         </span>
     </el-dialog>
      <el-table highlight-current-row v-loading="tableLoad"
-      class="table-wrap"
-      height="1"
       ref="multipleTable"
       :data="tableData"
       border
@@ -300,13 +297,12 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="paginationData.currentPage"
-      :page-sizes="[100, 500, 2000, 10000, 1000000]"
+      :page-sizes="pageSizes"
       :page-size="paginationData.pageSize"
       layout="total, sizes, prev, pager, next, jumper"
       :total="paginationData.total"
     >
     </el-pagination>
-
 
     <el-dialog
       title="导出选择"
@@ -317,7 +313,6 @@
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span><span @click="selectUnAllExport" style="cursor: pointer;margin-left:10px;">反选</span></div>
       <el-row class="pad" ref="boxWrapper">
-
         <el-checkbox v-model="exportConf.id" label="2">ID</el-checkbox>
         <el-checkbox v-model="exportConf.batchNo" label="3">批次号</el-checkbox>
         <el-checkbox v-model="exportConf.client" label="3">委托方</el-checkbox>
@@ -413,6 +408,8 @@ import {
 } from "@/common/js/synergistic-letter-application.js";
 //import CaseDetail from '@/views/data-manage/detail';
 const CaseDetail = () => import("@/views/data-manage/detail");
+import {pageSizes} from "@/common/js/const"
+
 export default {
   name: "synergisticLetterApplication2",
   components: {
@@ -421,6 +418,7 @@ export default {
   props: ["active"],
   data() {
     return {
+      pageSizes,
     	radio:'1',
       dialogVisibleCase:false,
       showExportConfVisible: false,

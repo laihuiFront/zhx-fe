@@ -168,13 +168,11 @@
         <el-checkbox v-model="queryConf.wtf" label="3" >委托方</el-checkbox>
         <el-checkbox v-model="queryConf.warq" label="4" >委案日期</el-checkbox>
         <el-checkbox v-model="queryConf.hsbm" label="5" >回收部门</el-checkbox>
-
         <el-checkbox v-model="queryConf.hscsy" label="1" >回收催收员</el-checkbox>
         <el-checkbox v-model="queryConf.dq" label="2" >地区</el-checkbox>
         <el-checkbox v-model="queryConf.ajzt" label="3" >案件状态</el-checkbox>
         <el-checkbox v-model="queryConf.yqzl" label="4" >逾期账龄</el-checkbox>
         <el-checkbox v-model="queryConf.cszt" label="5" >催收状态</el-checkbox>
-
         <el-checkbox v-model="queryConf.yjtarq" label="1" >预计退案日期</el-checkbox>
         <el-checkbox v-model="queryConf.ajlx" label="2" >案件类型</el-checkbox>
         <el-checkbox v-model="queryConf.gaxlh" label="2" >个案序列号</el-checkbox>
@@ -182,7 +180,6 @@
         <el-checkbox v-model="queryConf.zh" label="2" >账号</el-checkbox>
         <el-checkbox v-model="queryConf.kh" label="2" >卡号</el-checkbox>
         <el-checkbox v-model="queryConf.tjrq" label="2" >提交日期</el-checkbox>
-
       </el-row>
       <span slot="footer" class="footer">
         <el-button @click="showQueryConfVisible = false">取 消</el-button>
@@ -225,7 +222,6 @@ export default {
   },
   props:{
     queryForm:{
-
       type:Object,
       default(){
         return {}

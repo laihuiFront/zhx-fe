@@ -3,7 +3,6 @@
        v-loading="loading2"
        v-loading.fullscreen.lock="fullscreenLoading"
        element-loading-text="正在加载中"
-
        element-loading-spinner="el-icon-loading"
        element-loading-background="rgba(0, 0, 0, 0.7)"
   >
@@ -25,7 +24,7 @@
         >{{data.orgName}}</span>
       </el-tree>
     </div>
-    <div class="right-wrap page-wraper-sub">
+    <div class="right-wrap">
       <el-form ref="form" :model="queryForm" :inline="true" class="query-wrap queryStyle">
         <el-form-item>
           <el-input type="textarea" v-model="queryForm.id" style="width: 100%;" placeholder="请输入员工ID"
@@ -85,7 +84,7 @@
           </el-form-item>
         </el-row>
       </el-form>
-      <el-table v-loading="tableLoad" highlight-current-row sortable="custom" border stripe  @sort-change="handleSort"  @selection-change="handleSelectionChange" :row-class-name="rowColor"  height="1" :data="memberList" style="width: 100%" class="table-wrap">
+      <el-table v-loading="tableLoad" highlight-current-row sortable="custom" border stripe @sort-change="handleSort" @selection-change="handleSelectionChange" :row-class-name="rowColor" :data="memberList" style="width: 100%">
         <el-table-column type="selection" align="center" width="55"></el-table-column>
         <el-table-column sortable="custom" :sort-orders="['ascending','descending']"  align="center" prop="id" min-width="100" label="员工ID" show-overflow-tooltip></el-table-column>
         <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="userName" min-width="120" label="员工姓名" show-overflow-tooltip></el-table-column>
@@ -134,10 +133,9 @@
         @current-change="onClickQuery2"
         :current-page.sync="queryForm.pageNum"
         :page-size.sync="queryForm.pageSize"
-        :page-sizes="[50, 100, 200, 500]"
+        :page-sizes="pageSizes"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
-        class="pagination-wrap"
       ></el-pagination>
     </div>
     <el-dialog
@@ -240,8 +238,6 @@
           <el-button type="primary" @click="onClickSaveDept">确 定</el-button>
         </span>
       </el-dialog>
-
-
     </el-dialog>
     <el-dialog
       width="300px"
@@ -280,10 +276,13 @@
   import {baseURL} from '@/common/js/request.js';
   import { getDepartmentTree, getRoleList } from '@/common/js/api-setting'
   import { listMember, deleteMember,changeBatchStatus,batchDelete,updateDept,exportList,exportModule, resetMember,changeStatus, addMember, updateMember, getUserById, getPositionList,getLoginName} from '@/common/js/api-member'
+  import {pageSizes} from "@/common/js/const"
+
   export default {
     name: 'memberIn',
     data () {
       return {
+        pageSizes,
         header:{Authorization:localStorage.token},
         queryDepartment:null,
         tableLoad:false,
@@ -817,7 +816,7 @@
     display: flex;
     overflow: hidden;
     .left-wrap {
-      margin-right: 48px;
+      margin-right: 25px;
       height: 100%;
       overflow-y: auto;
       flex: 0 0 1;
@@ -845,7 +844,7 @@
     }
     .right-wrap {
       flex: 1;
-      overflow: hidden;
+      overflow-y: auto;
     }
     .upload-demo{
       display: inline-block;

@@ -1,11 +1,10 @@
 <template>
   <div
     id="statistics-month"
-    class="page-wraper-sub"
     v-loading="loading"
     element-loading-text="拼命加载中"
     v-loading.fullscreen.lock="fullscreenLoading"
-       element-loading-spinner="el-icon-loading"
+    element-loading-spinner="el-icon-loading"
     element-loading-background="rgba(0, 0, 0, 0.7)"
   >
     <el-form ref="form" :model="formInline" :inline="true" class="query-wrap queryStyle">
@@ -86,9 +85,7 @@
               stripe
               show-summary
               :summary-method="getSummaries"
-              height="350"
               style="width: 100%"
-      class="table-wrap"
     >
       <el-table-column prop="odv" align="center" label="催收员">
       </el-table-column>
@@ -259,7 +256,7 @@
       if (
         this.formInline.time == null ||
         this.formInline.time == "" ||
-        (this.formInline.time2 == null || this.formInline.time2 == "") 
+        (this.formInline.time2 == null || this.formInline.time2 == "")
       ) {
           this.$message({
           type: "error",
@@ -291,7 +288,7 @@
       if (
         this.formInline.time == null ||
         this.formInline.time == "" ||
-        (this.formInline.time2 == null || this.formInline.time2 == "") 
+        (this.formInline.time2 == null || this.formInline.time2 == "")
       ) {
         this.$message({
           type: "error",

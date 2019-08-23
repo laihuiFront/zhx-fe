@@ -1,5 +1,5 @@
 <template>
-  <div id="collect-my-case" class="page-wraper-sub" v-loading="pageLoading" element-loading-text="拼命加载中">
+  <div id="collect-my-case" v-loading="pageLoading" element-loading-text="拼命加载中">
     <el-tabs v-model="activeName" :class="{tab2:tabnum}" class="tabs-wrap">
       <el-tab-pane label="我的案件" style="height: 100%" name="tab1">
         <el-dialog
@@ -590,8 +590,6 @@
           border
           stripe
           style="width: 100%;"
-          class="table-wrap"
-          height="1"
           :row-class-name="rowColor"
           :cell-style="{ whiteSpace: 'nowrap' }"
           @row-dblclick="showDetail"
@@ -610,7 +608,6 @@
             align="center"
           >
             <template slot-scope="scope">
-
               <el-button v-if="scope.row.caseStatus==3" type="text" style ="color:#999999;" size="small"  @click="showCase(scope.row.id, scope.row.name, scope.row.seqno)">
                 {{scope.row.seqno}}
               </el-button>
@@ -640,7 +637,7 @@
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="paginationData.currentPage"
-          :page-sizes="[100, 500, 2000, 10000, 1000000]"
+          :page-sizes="pageSizes"
           :page-size="paginationData.pageSize"
           layout="total, sizes, prev, pager, next, jumper"
           :total="paginationData.total"
@@ -662,42 +659,35 @@
       :close-on-click-modal="false"
     >
       <el-row class="pad">
-
         <el-checkbox v-model="queryConf.wtf" label="1" >委托方</el-checkbox>
         <el-checkbox v-model="queryConf.pch" label="2" >批次号</el-checkbox>
         <el-checkbox v-model="queryConf.gaxlh" label="3" >个案序列号</el-checkbox>
         <el-checkbox v-model="queryConf.xcgjrq" label="4" >下次跟进日期</el-checkbox>
         <el-checkbox v-model="queryConf.dq" label="5" >地区</el-checkbox>
-
         <el-checkbox v-model="queryConf.xm" label="1" >姓名</el-checkbox>
         <el-checkbox v-model="queryConf.zjh" label="2" >证件号</el-checkbox>
         <el-checkbox v-model="queryConf.yqzl" label="3" >逾期账龄</el-checkbox>
         <el-checkbox v-model="queryConf.ajzt" label="4" >案件状态</el-checkbox>
         <el-checkbox v-model="queryConf.cszt" label="5" >催收状态</el-checkbox>
-
         <el-checkbox v-model="queryConf.ajlx" label="1" >案件类型</el-checkbox>
         <el-checkbox v-model="queryConf.waje" label="2" >委案金额</el-checkbox>
         <el-checkbox v-model="queryConf.bszt" label="4" >标色状态</el-checkbox>
         <el-checkbox v-model="queryConf.kh" label="5" >卡号</el-checkbox>
-
         <el-checkbox v-model="queryConf.dah" label="1" >档案号</el-checkbox>
         <el-checkbox v-model="queryConf.gjcs" label="2" >跟进次数</el-checkbox>
         <el-checkbox v-model="queryConf.sfxfp" label="3" >是否新分配</el-checkbox>
         <el-checkbox v-model="queryConf.hkqk" label="4" >还款情况</el-checkbox>
         <el-checkbox v-model="queryConf.zdyxx" label="5" >自定义信息</el-checkbox>
-
         <el-checkbox v-model="queryConf.csfl" label="1" >催收分类</el-checkbox>
         <el-checkbox v-model="queryConf.jmzt" label="2" >减免状态</el-checkbox>
         <el-checkbox v-model="queryConf.bbzt" label="3" >报备状态</el-checkbox>
         <el-checkbox v-model="queryConf.dhhm" label="4" >电话号码</el-checkbox>
-
         <el-checkbox v-model="queryConf.csjl" label="5" >催收记录</el-checkbox>
         <el-checkbox v-model="queryConf.ajfprq" label="5" >案件分配日期</el-checkbox>
         <el-checkbox v-model="queryConf.yjtarq" label="5" >预计退案日期</el-checkbox>
         <el-checkbox v-model="queryConf.zhgjrq" label="5" >最后跟进日期</el-checkbox>
         <el-checkbox v-model="queryConf.hkrq" label="5" >还款日期</el-checkbox>
         <el-checkbox v-model="queryConf.warq" label="5" >委案日期</el-checkbox>
-
       </el-row>
       <span slot="footer" class="footer">
         <el-button @click="showQueryConfVisible = false">取 消</el-button>
@@ -723,6 +713,8 @@ import {
 } from "@/common/js/collect-my-case";
 //import CaseDetail from "@/views/data-manage/detail";
 const CaseDetail = () => import("@/views/data-manage/detail");
+import {pageSizes} from "@/common/js/const"
+
 export default {
   components: {
     tab2,
@@ -732,6 +724,7 @@ export default {
   name: "collectMyCase",
   data() {
     return {
+      pageSizes,
       tabnum:null,
       tableLoad: false,
       paginationData: {
@@ -1007,12 +1000,6 @@ export default {
     }
   },
   watch: {
-    form: {
-      handler(newObj) {
-        console.log(Object.values(newObj));
-      },
-      deep: true
-    },
     activeName(v){
       if (v=="tab2"){
         this.tabnum=true;
@@ -1078,7 +1065,6 @@ export default {
       });
     },
     queryConfList(){
-
       let queryObj = {module:"collect-my-case",menu:this.queryConf}
       selectByModule(queryObj).then(data => {
           if (data){
@@ -1443,14 +1429,14 @@ body #collect-my-case .tab2{
     margin-bottom: 40px;
     overflow-y: auto;
   }
-  .pagination-wrap{
-    position: fixed;
-    bottom: 0;
-    z-index: 100;
-    min-height: 40px;
-    background-color: white;
-    width: 100%;
-  }
+  // .pagination-wrap{
+  //   position: fixed;
+  //   bottom: 0;
+  //   z-index: 100;
+  //   min-height: 40px;
+  //   background-color: white;
+  //   width: 100%;
+  // }
   .pad{
      .el-checkbox{
         width:24%;

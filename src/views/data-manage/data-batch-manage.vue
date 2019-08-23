@@ -3,10 +3,8 @@
        v-loading="loading"
        element-loading-text="拼命加载中"
        v-loading.fullscreen.lock="fullscreenLoading"
-
        element-loading-spinner="el-icon-loading"
-       element-loading-background="rgba(0, 0, 0, 0.7)"
-       class="page-wraper-sub">
+       element-loading-background="rgba(0, 0, 0, 0.7)">
     <el-form ref="form" :model="form" :inline="true" class="query-wrap queryStyle">
       <el-form-item>
         <el-select v-model="form.areas" placeholder="请选择催收区域"  filterable multiple collapse-tags clearable>
@@ -87,8 +85,6 @@
       </el-row>
     </el-form>
     <el-table highlight-current-row v-loading="tableLoad"
-              class="table-wrap"
-              height="1"
               :data="DataList"
               border
               stripe
@@ -254,7 +250,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage4"
-      :page-sizes="[100, 500, 2000, 10000, 1000000]"
+      :page-sizes="pageSizes"
       :page-size="pages"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
@@ -290,7 +286,7 @@
       :close-on-click-modal="false"
       width="90%"
     >
-      <el-table highlight-current-row class="table-wrap"
+      <el-table highlight-current-row
                 ref="CasetableData"
                 :data="CasetableData"
                 border
@@ -535,7 +531,7 @@
         @size-change="handleSizeChange1"
         @current-change="handleCurrentChange1"
         :current-page="currentPage5"
-        :page-sizes="[100, 500, 2000, 10000, 1000000]"
+        :page-sizes="pageSizes"
         :page-size="pages1"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total1">
@@ -555,7 +551,6 @@
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span><span @click="selectUnAllExport" style="cursor: pointer;margin-left:10px;">反选</span></div>
       <el-row class="pad" ref="boxWrapper">
-
         <el-checkbox v-model="exporttBatchConf.batchNo" label="2">批次号</el-checkbox>
         <el-checkbox v-model="exporttBatchConf.batchStatus" label="3">批次状态</el-checkbox>
         <el-checkbox v-model="exporttBatchConf.client" label="3">委托方</el-checkbox>
@@ -585,7 +580,6 @@
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllCollectExport" style="cursor: pointer;">全选</span><span @click="selectUnAllCollectExport" style="cursor: pointer;margin-left:10px;">反选</span></div>
       <el-row class="pad" ref="boxWrapper">
-
         <el-checkbox v-model="exportCollectConf.name" label="2">姓名</el-checkbox>
         <el-checkbox v-model="exportCollectConf.account" label="3">账号</el-checkbox>
         <el-checkbox v-model="exportCollectConf.cardNo" label="3">卡号</el-checkbox>
@@ -744,9 +738,9 @@
         </el-row>
         <el-row :gutter="24">
           <el-col :span="24" class="remarkStyle">
-            <el-form-item label="批次备注" label-width="100px !important">          
-                <el-input type="textarea" v-model="formInline.remark" 
-                        maxlength="500"></el-input>              
+            <el-form-item label="批次备注" label-width="100px !important">
+              <el-input type="textarea" v-model="formInline.remark"
+                        maxlength="500"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -903,6 +897,7 @@
     update,
     backCase
   } from '@/common/js/data-batch-manage.js'
+  import {pageSizes} from "@/common/js/const"
 
   export default {
     components: {
@@ -911,6 +906,7 @@
     name: 'dataBatchManage',
     data() {
       return {
+        pageSizes,
         CasetableData: [],
         detailVisibleCase: false,
         radio: "1",
@@ -1729,7 +1725,6 @@
       }
     },
 
-
     created() {
       this.tableLoad = true
       dataList(null, null, null, this.form.batchStatuss, null, null, null, this.orderBy, this.sort, this.pageSize, this.pageNum).then((response) => {
@@ -1794,7 +1789,7 @@
     }
     .remarkStyle{
       width: 100%;
-      height:100%;    
+      height:100%;
       .el-form-item__content {
          width: 100%;
       }
@@ -1815,9 +1810,6 @@
     .dialog-wrap .el-dialog .el-dialog__body {
       overflow: hidden;
       height: 320px;
-
-  
     }
   }
 </style>
-

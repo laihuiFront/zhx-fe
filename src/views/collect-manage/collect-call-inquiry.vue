@@ -1,5 +1,5 @@
 <template>
-  <div id="collect-call-inquiry" class="page-wraper-sub">
+  <div id="collect-call-inquiry">
     <el-dialog
       :title="detailTitle"
       class="dialog-wrap"
@@ -12,7 +12,7 @@
     <el-form :inline="true" ref="form1" :model="form1" label-width="80px" class="queryStyle">
       <el-form-item prop="val1">
         <el-checkbox-group v-model="form1.val1">
-          <el-checkbox true-label="1" false-label="2">精准匹配</el-checkbox>       
+          <el-checkbox true-label="1" false-label="2">精准匹配</el-checkbox>
         </el-checkbox-group>
       </el-form-item>
       <el-form-item prop="val2">
@@ -84,8 +84,6 @@
       </el-row>
     </el-form>
      <el-table highlight-current-row v-loading="tableLoad"
-      class="table-wrap"
-      height="1"
       :data="tableData"
       tooltip-effect="dark"
       border
@@ -113,15 +111,15 @@
 
       <el-table-column
         label="姓名"
-        align="center" 
+        align="center"
         min-width="5"
-        prop="name" 
+        prop="name"
         sortable="custom"
-        :sort-orders="['ascending','descending']"  
+        :sort-orders="['ascending','descending']"
         show-overflow-tooltip
       >
-      <template slot-scope="scope">     
-           {{scope.row.name}}        
+      <template slot-scope="scope">
+           {{scope.row.name}}
       </template>
       </el-table-column>
 
@@ -129,9 +127,9 @@
         label="卡号"
         align="center"
         min-width="5"
-        prop="cardNo" 
+        prop="cardNo"
         sortable="custom"
-        :sort-orders="['ascending','descending']"  
+        :sort-orders="['ascending','descending']"
         show-overflow-tooltip
       >
       <template slot-scope="scope">
@@ -143,9 +141,9 @@
         label="委案金额"
         align="center"
         min-width="5"
-        prop="moneyMsg" 
+        prop="moneyMsg"
         sortable="custom"
-        :sort-orders="['ascending','descending']"  
+        :sort-orders="['ascending','descending']"
         show-overflow-tooltip
       >
       <template slot-scope="scope">
@@ -157,13 +155,13 @@
         label="委案日期"
         align="center"
         min-width="5"
-        prop="caseDate" 
+        prop="caseDate"
         sortable="custom"
-        :sort-orders="['ascending','descending']"  
+        :sort-orders="['ascending','descending']"
         show-overflow-tooltip
       >
       <template slot-scope="scope">
-           {{scope.row.caseDate}} 
+           {{scope.row.caseDate}}
       </template>
       </el-table-column>
 
@@ -171,13 +169,13 @@
         label="催收状态"
         align="center"
         min-width="5"
-        prop="collectStatusMsg" 
+        prop="collectStatusMsg"
         sortable="custom"
-        :sort-orders="['ascending','descending']"  
+        :sort-orders="['ascending','descending']"
         show-overflow-tooltip
       >
       <template slot-scope="scope">
-           {{scope.row.collectStatusMsg}}    
+           {{scope.row.collectStatusMsg}}
       </template>
       </el-table-column>
 
@@ -185,9 +183,9 @@
         label="上次通电"
         align="center"
         min-width="5"
-        prop="collectDate" 
+        prop="collectDate"
         sortable="custom"
-        :sort-orders="['ascending','descending']"  
+        :sort-orders="['ascending','descending']"
         show-overflow-tooltip
       >
       <template slot-scope="scope">
@@ -239,7 +237,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="paginationData.currentPage"
-      :page-sizes="[100, 500, 2000, 10000, 1000000]"
+      :page-sizes="pageSizes"
       :page-size="paginationData.pageSize"
       layout="total, sizes, prev, pager, next, jumper"
       :total="paginationData.total">
@@ -251,6 +249,8 @@
 import {pageCaseTel,addComment,getEnum} from '@/common/js/collect-call-inquiry.js';
 //import CaseDetail from '@/views/data-manage/detail';
 const CaseDetail = () => import('@/views/data-manage/detail');
+import {pageSizes} from "@/common/js/const"
+
 export default {
   name: 'collectCallInquiry',
   components:{
@@ -258,6 +258,7 @@ export default {
   },
   data(){
     return {
+      pageSizes,
       tableLoad:false,
       paginationData:{
         pageSize:100,
@@ -268,7 +269,7 @@ export default {
       dialogVisible:false,
       textarea3: '',
       form1:{
-        val1:'2',  //查询方式
+        val1:'1',  //查询方式
         val2:'',  //委托方
         val3:'',//姓名
         val4:'',//电话
@@ -317,7 +318,7 @@ export default {
         sort:'desc'
       },
     }
-  },  
+  },
 
   computed:{
     realFetchFormData(){
@@ -380,11 +381,8 @@ export default {
       this.tableLoad = true
       this.realFetchFormData.orderBy = this.sort.orderBy
       this.realFetchFormData.sort = this.sort.sort
-
       pageCaseTel(this.realFetchFormData).then((data)=>{
-
         this.paginationData.total = data.total;
-
         this.tableData = data.list;
         this.tableLoad = false
       })
@@ -465,5 +463,3 @@ export default {
    text-align: center;
  }
 </style>
-
-

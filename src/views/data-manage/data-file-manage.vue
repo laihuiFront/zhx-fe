@@ -1,5 +1,5 @@
 <template>
-  <div id="data-file-manage" class="page-wraper-sub"
+  <div id="data-file-manage"
        v-loading="loading2"
        v-loading.fullscreen.lock="fullscreenLoading"
        :element-loading-text="loadinText"
@@ -28,7 +28,6 @@
           range-separator="至"
           start-placeholder="档案变更日期开始"
           end-placeholder="档案变更日期结束"
-
         >
         </el-date-picker>
       </el-form-item>
@@ -62,8 +61,6 @@
       </el-row>
     </el-form>
     <el-table highlight-current-row v-loading="tableLoad"
-              class="table-wrap"
-              height="1"
               border
               stripe
               ref="multipleTable"
@@ -99,7 +96,7 @@
         align="center"
         show-overflow-tooltip>
         <template slot-scope="scope">
-          <div v-for="(domain, index) in scope.row.telList">
+          <div v-for="domain in scope.row.telList" :key="domain.id">
             <span>{{domain.tel}}</span> <br/>
           </div>
         </template>
@@ -110,7 +107,7 @@
         min-width="200"
         show-overflow-tooltip>
         <template slot-scope="scope">
-          <div v-for="(domain, index) in scope.row.addressList">
+          <div v-for="domain in scope.row.addressList" :key="domain.id">
             <span>{{domain.address}}</span> <br/>
           </div>
         </template>
@@ -130,7 +127,7 @@
         min-width="200"
         show-overflow-tooltip>
         <template slot-scope="scope">
-          <div v-for="(domain, index) in scope.row.remarkList">
+          <div v-for="domain in scope.row.remarkList" :key="domain.id">
             <span>{{domain.remark}}</span> <br/>
           </div>
         </template>
@@ -148,7 +145,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage4"
-      :page-sizes="[100, 500, 2000, 10000, 1000000]"
+      :page-sizes="pageSizes"
       :page-size="pages"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
@@ -179,10 +176,8 @@
             <div class="grid-content bg-purple">
               <el-form-item
                 label="姓名"
-                prop="name"                
-                :rules="{
-      required: true, message: '姓名不能为空', trigger: 'blur'
-    }"
+                prop="name"
+                :rules="{required: true, message: '姓名不能为空', trigger: 'blur'}"
               >
                 <el-input v-model="dynamicValidateForm.name" clearable placeholder="请输入姓名"></el-input>
               </el-form-item>
@@ -193,9 +188,7 @@
               <el-form-item
                 label="证件号"
                 prop="identNo"
-                :rules="{
-      required: true, message: '证件号不能为空', trigger: 'blur'
-    }"
+                :rules="{required: true, message: '证件号不能为空', trigger: 'blur'}"
               >
                 <el-input v-model="dynamicValidateForm.identNo" clearable placeholder="请输入证件号"></el-input>
               </el-form-item>
@@ -206,26 +199,22 @@
           <el-col :span="12">
             <div class="grid-content bg-purple">
               <span>电话信息</span>
-
             </div>
           </el-col>
           <el-col :span="12">
             <div class="grid-content bg-purple layout">
               <el-button type="text" icon="el-icon-plus" @click="addDomainPhone">新增电话</el-button>
-
             </div>
           </el-col>
         </el-row>
-        <el-row :gutter="20" class="addNewData" v-for="(domain, index) in dynamicValidateForm.telList"
+        <el-row :gutter="20" class="addNewData" v-for="domain in dynamicValidateForm.telList"
                 :key="domain.key">
           <el-col :span="12">
             <div class="grid-content bg-purple">
               <el-form-item
                 label="电话类型"
-
               >
                 <el-input v-model="domain.teltype" clearable placeholder="请输入电话类型"></el-input>
-
               </el-form-item>
             </div>
           </el-col>
@@ -238,7 +227,6 @@
               </el-form-item>
               <el-form-item>
                 <el-button type="text" @click.prevent="removeDomainPhone(domain)">删除</el-button>
-
               </el-form-item>
             </div>
           </el-col>
@@ -247,17 +235,15 @@
           <el-col :span="12">
             <div class="grid-content bg-purple">
               <span>地址信息</span>
-
             </div>
           </el-col>
           <el-col :span="12">
             <div class="grid-content bg-purple layout">
               <el-button type="text" icon="el-icon-plus" @click="addDomainAddress">新增地址</el-button>
-
             </div>
           </el-col>
         </el-row>
-        <el-row :gutter="20" class="addNewData" v-for="(domain, index) in dynamicValidateForm.addressList"
+        <el-row :gutter="20" class="addNewData" v-for="domain in dynamicValidateForm.addressList"
                 :key="domain.key">
           <el-col :span="12">
             <div class="grid-content bg-purple">
@@ -285,7 +271,7 @@
             </div>
           </el-col>
         </el-row>
-        <el-row :gutter="20" class="addNewData" v-for="(domain, index) in dynamicValidateForm.remarksList"
+        <el-row :gutter="20" class="addNewData" v-for="domain in dynamicValidateForm.remarksList"
                 :key="domain.key">
           <el-col :span="12">
             <div class="grid-content bg-purple">
@@ -322,9 +308,7 @@
               <el-form-item
                 label="姓名"
                 prop="name"
-                :rules="{
-      required: true, message: '姓名不能为空', trigger: 'blur'
-    }"
+                :rules="{required: true, message: '姓名不能为空', trigger: 'blur'}"
               >
                 <el-input v-model="dynamicValidateForm2.name" clearable></el-input>
               </el-form-item>
@@ -335,9 +319,7 @@
               <el-form-item
                 label="证件号"
                 prop="identNo"
-                :rules="{
-      required: true, message: '证件号不能为空', trigger: 'blur'
-    }"
+                :rules="{required: true, message: '证件号不能为空', trigger: 'blur'}"
               >
                 <el-input v-model="dynamicValidateForm2.identNo" clearable></el-input>
               </el-form-item>
@@ -357,16 +339,14 @@
             </div>
           </el-col>
         </el-row>
-        <el-row :gutter="20" class="addNewData" v-for="(domain, index) in dynamicValidateForm2.telList"
+        <el-row :gutter="20" class="addNewData" v-for="domain in dynamicValidateForm2.telList"
                 :key="domain.key">
           <el-col :span="12">
             <div class="grid-content bg-purple">
               <el-form-item
                 label="电话类型"
-
               >
                 <el-input v-model="domain.teltype" clearable></el-input>
-
               </el-form-item>
             </div>
           </el-col>
@@ -388,7 +368,6 @@
           <el-col :span="12">
             <div class="grid-content bg-purple">
               <span>地址信息</span>
-
             </div>
           </el-col>
           <el-col :span="12">
@@ -398,7 +377,7 @@
             </div>
           </el-col>
         </el-row>
-        <el-row :gutter="20" class="addNewData" v-for="(domain, index) in dynamicValidateForm2.addressList"
+        <el-row :gutter="20" class="addNewData" v-for="domain in dynamicValidateForm2.addressList"
                 :key="domain.key">
           <el-col :span="12">
             <div class="grid-content bg-purple">
@@ -408,9 +387,6 @@
               >
                 <el-input v-model="domain.address" clearable></el-input>
               </el-form-item>
-              <el-form-item>
-                <!--              <el-button type="text" @click.prevent="removeDomainAddress(domain)">删除</el-button>
-                -->            </el-form-item>
             </div>
           </el-col>
         </el-row>
@@ -427,7 +403,7 @@
             </div>
           </el-col>
         </el-row>
-        <el-row :gutter="20" class="addNewData" v-for="(domain, index) in dynamicValidateForm2.remarkList"
+        <el-row :gutter="20" class="addNewData" v-for="domain in dynamicValidateForm2.remarkList"
                 :key="domain.key">
           <el-col :span="12">
             <div class="grid-content bg-purple">
@@ -463,18 +439,18 @@
   </span>
     </el-dialog>
   </div>
-
-
 </template>
 
 <script>
   import {dataList, remoweData, addData, downModule} from '@/common/js/data-file-manage.js'
   import {baseURL} from '@/common/js/request.js';
+  import {pageSizes} from "@/common/js/const"
 
   export default {
     name: 'dataFileManage',
     data() {
       return {
+        pageSizes,
         fullscreenLoading: false,
         tableLoad: false,
         loadinText: "正在导入中",
@@ -547,8 +523,6 @@
         this.dialogVisible3 = true
         this.dynamicValidateForm2 = row
       },
-
-
       uploadSuccess(res, file, fileList) {
         if (res.code == 100) {
           this.$message({
@@ -653,8 +627,6 @@
             message: '请选择需要删除的数据!'
           });
         }
-
-
       },
       handleSort({column, prop, order}) {
         this.sort = order == null ? "desc" : order.replace("ending", "")
@@ -729,17 +701,14 @@
         this.total = response.total
         this.tableLoad = false
       })
-
     },
   }
-
 </script>
 
 <style lang="scss">
   #data-file-manage {
     .el-dialog__header {
       background-color: #f8f8f8;
-
     }
 
     .layout {
@@ -751,14 +720,12 @@
       margin-right: 30px !important;
       border-bottom: 2px solid #f1f1f1;
       margin-bottom: 10px;
-
     }
 
     .addNewData {
       margin-left: 25px !important;
       margin-right: 25px !important;
       margin-bottom: 10px;
-
     }
 
     .el-loading-spinner .el-loading-text {
@@ -766,4 +733,3 @@
     }
   }
 </style>
-

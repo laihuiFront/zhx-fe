@@ -1,5 +1,5 @@
 <template>
-  <div id="data-case-manage" class="page-wraper-sub"
+  <div id="data-case-manage"
        v-loading="loading2"
        v-loading.fullscreen.lock="fullscreenLoading"
        element-loading-text="正在加载中"
@@ -117,14 +117,11 @@
     </el-form>
 
     <el-table highlight-current-row v-loading="tableLoad"
-              class="table-wrap"
-              height="1"
               ref="multipleTable"
               :data="tableData3"
               border
               stripe
               show-overflow-tooltip
-              style="min-height:390px;margin-bottom: 40px;"
               @row-dblclick="showDetail"
               @sort-change="handleSort"
               :fit="true"
@@ -264,12 +261,11 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage4"
-      :page-sizes="[5, 500, 2000, 10000, 1000000]"
+      :page-sizes="pageSizes"
       :page-size="pages"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
     </el-pagination>
-
 
     <el-dialog
       title="选择催收员"
@@ -343,8 +339,6 @@
       </span>
     </el-dialog>
 
-
-
     <el-dialog
       width="400px"
       title="选择部门"
@@ -384,6 +378,7 @@
     searchList,
     caseStatus
   } from '@/common/js/case-ajust.js'
+  import {pageSizes} from "@/common/js/const"
 
   export default {
     name: 'dataCaseManage',
@@ -392,6 +387,7 @@
     },
     data() {
       return {
+        pageSizes,
         radio: "1",
         formInline1: {},
         tableLoad: false,
@@ -731,14 +727,14 @@
   /*  .el-table .el-table__body-wrapper {
       overflow-x: hidden;
     }*/
-    .pagination-wrap {
-      position: fixed;
-      bottom: 0;
-      z-index: 100;
-      min-height: 40px;
-      background-color: white;
-      width: 100%;
-    }
+    // .pagination-wrap {
+    //   position: fixed;
+    //   bottom: 0;
+    //   z-index: 100;
+    //   min-height: 40px;
+    //   background-color: white;
+    //   width: 100%;
+    // }
 
     .pad {
       .el-checkbox {

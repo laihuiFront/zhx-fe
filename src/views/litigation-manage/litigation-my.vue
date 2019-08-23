@@ -1,7 +1,7 @@
 <template>
-  <div id="litigation-my" class="page-wraper-sub">
+  <div id="litigation-my">
   	 <el-tabs v-model="activeName2"  @tab-click="handleClick" class="tabs-wrap">
-    <el-tab-pane label="我的诉讼案件" name="first"> 
+    <el-tab-pane label="我的诉讼案件" name="first">
       <el-form ref="form" :model="form" :inline="true" class="query-wrap queryStyle">
         <el-form-item>
           <el-select v-model="form.legalStatus" filterable collapse-tags multiple  placeholder="请选择案件状态" clearable>
@@ -20,18 +20,15 @@
           <el-input v-model="form.cstName" placeholder="请输入姓名" clearable></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" icon="el-icon-search" @click="search">查询</el-button> 
-          <el-button type="primary" icon="el-icon-refresh" @click="clench">重置</el-button> 
+          <el-button type="primary" icon="el-icon-search" @click="search">查询</el-button>
+          <el-button type="primary" icon="el-icon-refresh" @click="clench">重置</el-button>
         </el-form-item>
         <el-form-item class="operation-item">
           <el-button type="primary" v-has="'添加诉讼案件'" @click="addDataform">添加诉讼案件</el-button>
-        </el-form-item> 
+        </el-form-item>
       </el-form>
-  	
+
    <el-table highlight-current-row v-loading="tableLoad"
-    class="table-wrap"
-    height="1"
-             highlight-current-row
     :data="DataList"
     border
     stripe
@@ -174,11 +171,11 @@
     @size-change="handleSizeChange"
     @current-change="handleCurrentChange"
     :current-page="currentPage4"
-    :page-sizes="[100, 500, 2000, 10000, 1000000]"
+    :page-sizes="pageSizes"
     :page-size="pages"
     layout="total, sizes, prev, pager, next, jumper"
     :total="total">
-  </el-pagination>	
+  </el-pagination>
   	<el-dialog
   :title="dialogTitle"
   append-to-body
@@ -214,7 +211,7 @@
   </el-form-item>
   	</div></el-col>
 </el-row>
- 
+
   <el-row :gutter="20">
   <el-col :span="8">
   	<div class="grid-content bg-purple">
@@ -249,8 +246,8 @@
   </el-form-item>
   	</div></el-col>
 </el-row>
- 
-  
+
+
   <el-row :gutter="20">
   <el-col :span="8">
   	<div class="grid-content bg-purple">
@@ -278,7 +275,7 @@
   </el-form-item>
   	</div></el-col>
 </el-row>
- 
+
  <el-row :gutter="20">
   <el-col :span="8">
   	<div class="grid-content bg-purple">
@@ -299,7 +296,7 @@
   </el-form-item>
   	</div></el-col>
 </el-row>
-  
+
  <el-row :gutter="20">
   <el-col :span="8">
   	<div class="grid-content bg-purple">
@@ -355,7 +352,7 @@
   </el-form-item>
   	</div></el-col>
 </el-row>
-   
+
     <el-row :gutter="20">
   <el-col :span="8">
   	<div class="grid-content bg-purple">
@@ -455,7 +452,7 @@
   	</div></el-col>
   	<el-col :span="8">
   	<div class="grid-content bg-purple">
-      
+
   	</div></el-col>
 </el-row>
 
@@ -475,7 +472,7 @@
     <el-input type="textarea" style="width: 280%;" placeholder="请输入判决书" v-model="formInline.judgment"></el-input>
   </el-form-item>
   	</div></el-col>
-  
+
 </el-row>
 
 <el-row :gutter="20">
@@ -485,10 +482,10 @@
      <el-input type="textarea" style="width: 280%;" placeholder="请输入备注" v-model="formInline.remark"></el-input>
   </el-form-item>
   	</div></el-col>
-  
+
 </el-row>
 </el-form>
- 
+
   <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible = false">取 消</el-button>
     <el-button type="primary" @click="SaveData">确 定</el-button>
@@ -518,19 +515,17 @@
           <el-button type="primary" icon="el-icon-refresh" @click="clench2">重置</el-button>
         </el-form-item>
         <el-form-item class="operation-item">
-          <el-button type="primary" @click="addDataform">添加诉讼案件</el-button>  
-        </el-form-item>    
+          <el-button type="primary" @click="addDataform">添加诉讼案件</el-button>
+        </el-form-item>
       </el-form>
-  	
+
    <el-table highlight-current-row v-loading="tableLoad"
-    class="table-wrap"
-    height="1"
     :data="DataList2"
     border
     stripe
-          tooltip-effect="dark"
-          @sort-change="handleSort2"
-     style="width: 100%">
+    tooltip-effect="dark"
+    @sort-change="handleSort2"
+    style="width: 100%">
     <el-table-column
       prop="legalStatusMsg"
       align="center"
@@ -667,11 +662,11 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage4"
-      :page-sizes="[100, 500, 2000, 10000, 1000000]"
+      :page-sizes="pageSizes"
       :page-size="pages"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
-    </el-pagination>	
+    </el-pagination>
   	<el-dialog
     class="dialog-wrap"
   :title="dialogTitle"
@@ -708,7 +703,7 @@
   </el-form-item>
   	</div></el-col>
 </el-row>
- 
+
   <el-row :gutter="20">
   <el-col :span="8">
   	<div class="grid-content bg-purple">
@@ -743,8 +738,8 @@
   </el-form-item>
   	</div></el-col>
 </el-row>
- 
-  
+
+
   <el-row :gutter="20">
   <el-col :span="8">
   	<div class="grid-content bg-purple">
@@ -772,7 +767,7 @@
   </el-form-item>
   	</div></el-col>
 </el-row>
- 
+
  <el-row :gutter="20">
   <el-col :span="8">
   	<div class="grid-content bg-purple">
@@ -793,7 +788,7 @@
   </el-form-item>
   	</div></el-col>
 </el-row>
-  
+
  <el-row :gutter="20">
   <el-col :span="8">
   	<div class="grid-content bg-purple">
@@ -851,7 +846,7 @@
   </el-form-item>
   	</div></el-col>
 </el-row>
-   
+
     <el-row :gutter="20">
   <el-col :span="8">
   	<div class="grid-content bg-purple">
@@ -957,7 +952,7 @@
   	</div></el-col>
   	<el-col :span="8">
   	<div class="grid-content bg-purple">
-      
+
   	</div></el-col>
 </el-row>
 
@@ -977,7 +972,7 @@
     <el-input type="textarea" style="width: 280%;" placeholder="请输入判决书"  v-model="formInline.judgment"></el-input>
   </el-form-item>
   	</div></el-col>
-  
+
 </el-row>
 
 <el-row :gutter="20">
@@ -987,10 +982,10 @@
      <el-input type="textarea" style="width: 280%;" placeholder="请输入备注"  v-model="formInline.remark"></el-input>
   </el-form-item>
   	</div></el-col>
-  
+
 </el-row>
 </el-form>
- 
+
   <span slot="footer" class="dialog-footer">
     <el-button  @click="dialogVisible = false">取 消</el-button>
     <el-button type="primary" @click="SaveData" v-if=!isTrue> 确 定</el-button>
@@ -1001,15 +996,18 @@
 </template>
 
 <script>
-				import {getCaseTypeList,dataList,remoweData,addData,PersonList,checkData,dataList2} from '@/common/js/litigation-my.js'
+import {getCaseTypeList,dataList,remoweData,addData,PersonList,checkData,dataList2} from '@/common/js/litigation-my.js'
+import {pageSizes} from "@/common/js/const"
+
 export default {
   name: 'litigationMy',
 	data(){
   		return{
-  				orderBy:"id",
-      sort:"desc",
+        pageSizes,
+        orderBy:"id",
+        sort:"desc",
         tableLoad:false,
-  			 activeName2: 'first',
+        activeName2: 'first',
   			isTrue:false,
   			dialogTitle:'新增',
   			progressList:[{name:"立案",id:"filing"},{name:"收案",id:"back"},{name:"保全",id:"presv"},{name:"开庭",id:"court"},{name:"判决",id:"decree"},{name:"执行",id:"enforce"}],
@@ -1026,10 +1024,10 @@ export default {
   		  currentPage4: 1,
         pages:1,
         total:100,
-         DataList: [],
-         DataList2: [],
-         PersonDataList:[],
-         checkId:'',
+        DataList: [],
+        DataList2: [],
+        PersonDataList:[],
+        checkId:'',
   	}
   },
    methods: {
@@ -1037,13 +1035,11 @@ export default {
       this.sort = order==null?"desc":order.replace("ending","")
       this.orderBy = prop==null?"id":prop
       this.search()
-
-    },  
+    },
     handleSort2( {column,prop,order}){
       this.sort = order==null?"desc":order.replace("ending","")
       this.orderBy = prop==null?"id":prop
       this.search2()
-
     },
    	 handleClick(tab, event) {
         console.log(tab, event);
@@ -1053,7 +1049,6 @@ export default {
    		this.dialogTitle="详情"
    		this.isTrue=true
    		this.formInline=row
-   		
    		this.formInline.progress=parseInt(row.progress)
    		this.formInline.owner=parseInt(row.owner)
    	},
@@ -1062,7 +1057,7 @@ export default {
    		this.dialogVisible=true
    		this.dialogTitle="新增"
    		this.isTrue=false
-   		
+
    	},
    	checkresource(){
    		checkData(this.checkform,this.checkId).then((response)=>{
@@ -1074,7 +1069,7 @@ export default {
           this.search()
           this.formInline={}
           this.checkId=''
-          })    
+          })
    	},
    	SaveData(){
    		addData(this.formInline).then((response)=>{
@@ -1085,7 +1080,7 @@ export default {
           this.dialogVisible=false;
           this.search()
           this.formInline={}
-})    
+})
    	},
    	checkDatasure(id){
    		this.dialogVisible1=true;
@@ -1108,7 +1103,7 @@ export default {
    		this.isTrue=false
    	},
    	deleteData(id){
-         	let _self=this 
+         	let _self=this
         _self.$confirm('是否删除?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -1127,7 +1122,7 @@ export default {
             type: 'success',
             message: '已取消删除!'
           });
-        });  
+        });
    	},
    	clench(){
   		this.form={}
@@ -1141,7 +1136,7 @@ export default {
             this.DataList=response.list
               this.total = response.total
               this.tableLoad = false
-})    
+})
   	},
   	search2(){
       this.tableLoad = true
@@ -1149,7 +1144,7 @@ export default {
             this.DataList2=response.list
               this.total = response.total
               this.tableLoad = false
-})    
+})
   	},
   		handleSizeChange(val){
 	   this.pageSize=val
@@ -1165,14 +1160,14 @@ created() {
              // this.pages = response.pages
               this.total = response.total
               this.tableLoad = false
-})    
+})
   this.tableLoad = true
         dataList2(this.form).then((response)=>{
               this.DataList2=response.list
              // this.pages = response.pages
               this.total = response.total
               this.tableLoad = false
-})    
+})
                 PersonList().then((response)=>{
           	this.PersonDataList=response
           })
@@ -1211,8 +1206,5 @@ created() {
       overflow: hidden;
     }
   }
-
 }
 </style>
-
-

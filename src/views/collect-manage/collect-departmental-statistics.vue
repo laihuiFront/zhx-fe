@@ -1,43 +1,49 @@
 <template>
-  <div id="collect-repayment-statistics" style="display:flex;flex-direction:column;height:100%;">
+  <div id="collect-repayment-statistics">
     <section class="topDataWp">
       <el-row :gutter="10">
-        <el-col :span="4"
-        ><span class="topSpan">上月还款金额：</span>{{ topData.lastPaidMoney }}</el-col
-        >
-        <el-col :span="4"
-        ><span class="topSpan">上月承诺还款金额：</span>{{ topData.lastRepayAmt }}</el-col
-        >
-        <el-col :span="5"
-        ><span class="topSpan">上月待银行查账金额：</span>{{ topData.lastBankAmt }}</el-col
-        >
-        <el-col :span="5"
-        ><span class="topSpan">上月提成（已还款）：</span>{{
-          topData.lastRepaidAmt
-          }}</el-col
-        >
-        <el-col :span="6"
-        ><span class="topSpan">上月提成（待银行查账金额）：</span>{{ topData.lastRepaidBankAmt }}</el-col
-        >
+        <el-col :span="4">
+          <span class="topSpan">上月还款金额：</span>
+          <span>{{ topData.lastPaidMoney }}</span>
+        </el-col>
+        <el-col :span="4">
+          <span class="topSpan">上月承诺还款金额：</span>
+          <span>{{ topData.lastRepayAmt }}</span>
+        </el-col>
+        <el-col :span="5">
+          <span class="topSpan">上月待银行查账金额：</span>
+          <span>{{ topData.lastBankAmt }}</span>
+        </el-col>
+        <el-col :span="5">
+          <span class="topSpan">上月提成（已还款）：</span>
+          <span>{{ topData.lastRepaidAmt }}</span>
+        </el-col>
+        <el-col :span="6">
+          <span class="topSpan">上月提成（待银行查账金额）：</span>
+          <span>{{ topData.lastRepaidBankAmt }}</span>
+        </el-col>
       </el-row>
       <el-row :gutter="10" style="margin-top: 15px;">
-        <el-col :span="4"
-        ><span class="topSpan">本月还款金额：</span>{{ topData.thisPaidMoney }}</el-col
-        >
-        <el-col :span="4"
-        ><span class="topSpan">本月承诺还款金额：</span>{{ topData.thisRepayAmt }}</el-col
-        >
-        <el-col :span="5"
-        ><span class="topSpan">本月待银行查账金额：</span>{{ topData.thisBankAmt }}</el-col
-        >
-        <el-col :span="5"
-        ><span class="topSpan">本月提成（已还款）：</span>{{
-          topData.thisRepaidAmt
-          }}</el-col
-        >
-        <el-col :span="6"
-        ><span class="topSpan">本月提成（待银行查账金额）：</span>{{ topData.thisRepaidBankAmt }}</el-col
-        >
+        <el-col :span="4">
+          <span class="topSpan">本月还款金额：</span>
+          <span>{{ topData.thisPaidMoney }}</span>
+        </el-col>
+        <el-col :span="4">
+          <span class="topSpan">本月承诺还款金额：</span>
+          <span>{{ topData.thisRepayAmt }}</span>
+        </el-col>
+        <el-col :span="5">
+          <span class="topSpan">本月待银行查账金额：</span>
+          <span>{{ topData.thisBankAmt }}</span>
+        </el-col>
+        <el-col :span="5">
+          <span class="topSpan">本月提成（已还款）：</span>
+          <span>{{ topData.thisRepaidAmt }}</span>
+        </el-col>
+        <el-col :span="6">
+          <span class="topSpan">本月提成（待银行查账金额）：</span>
+          <span>{{ topData.thisRepaidBankAmt }}</span>
+        </el-col>
       </el-row>
     </section>
     <section class="form">
@@ -192,8 +198,6 @@
       </div>
         <!-- class="tableStyle" -->
        <el-table highlight-current-row v-loading="tableLoad"
-        class="table-wrap" 
-        height="1"
         ref="multipleTable"
         :data="tableData"
         border
@@ -202,13 +206,13 @@
         style="width: 100%;"
         @selection-change="handleSelectionChange"
       >
-
        <el-table-column
             label="个案序列号"
             prop="seqno"
-            show-overflow-tooltip                 
+            show-overflow-tooltip
             header-align="center"
             align="center"
+            width="180"
           >
             <template slot-scope="scope">
               <el-button
@@ -230,11 +234,10 @@
       </el-table>
 
     <el-pagination
-      class="pagination-wrap"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="paginationData.currentPage"
-      :page-sizes="[100, 500, 2000, 10000, 1000000]"
+      :page-sizes="pageSizes"
       :page-size="paginationData.pageSize"
       layout="total, sizes, prev, pager, next, jumper"
       :total="paginationData.total"
@@ -554,9 +557,7 @@ export default {
         }).map((item) => {
           return item.id
         })
-
       }
-
       this.$set(this.form1, 'odvNameFiter', selectUserNames.join(','))
       this.$set(this.form1, 'val9', selectUserIds)
       this.selectUserVisible3 = false
@@ -682,13 +683,13 @@ export default {
     },
 
      showCase3(row) {
-        let id= row.id 
+        let id= row.id
         let name = row.targetName
         let seqNo = row.seqno
       this.$router.push({
         path: "case-detail",
         query: {
-          id,     
+          id,
           name,
           mycase:true,
           seqNo

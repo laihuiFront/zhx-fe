@@ -39,9 +39,7 @@
       @selection-change="onSelectRow"
       border stripe
       :data="logList"
-      style="width: 100%"
-      height="1"
-      class="table-wrap">
+      style="width: 100%">
       <el-table-column
         type="selection"
         align="center"
@@ -71,19 +69,21 @@
       :current-page.sync="queryForm.pageNum"
       :page-size.sync="queryForm.pageSize"
       layout="total, sizes, prev, pager, next, jumper"
-      :page-sizes="[50, 100, 200, 500]"
-      :total="total"
-      class="pagination-wrap">
+      :page-sizes="pageSizes"
+      :total="total">
     </el-pagination>
   </div>
 </template>
 
 <script>
 import {getLogType, getOperationLog, deleteLogs} from '@/common/js/api-setting'
+import {pageSizes} from "@/common/js/const"
+
 export default {
   name: 'settingLog',
   data() {
     return {
+      pageSizes,
       tableLoad:false,
       queryForm: {
         pageNum: 1,
@@ -161,5 +161,3 @@ export default {
   }
 }
 </style>
-
-

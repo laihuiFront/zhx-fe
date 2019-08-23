@@ -4,8 +4,7 @@
        v-loading.fullscreen.lock="fullscreenLoading"
        element-loading-text="拼命加载中"
        element-loading-spinner="el-icon-loading"
-       element-loading-background="rgba(0, 0, 0, 0.7)"
-       class="page-wraper-sub">
+       element-loading-background="rgba(0, 0, 0, 0.7)">
     <el-form ref="form" :model="form" :inline="true" class="query-wrap queryStyle">
       <el-form-item>
         <el-select  v-model="form.areas" placeholder="请选择催收区域" collapse-tags multiple clearable>
@@ -145,8 +144,6 @@
       </el-row>
     </el-form>
     <el-table highlight-current-row v-loading="tableLoad"
-              class="table-wrap"
-              height="1"
               ref="multipleTable"
               :data="DataList"
               border
@@ -261,7 +258,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage4"
-      :page-sizes="[100, 500, 2000, 10000, 1000000]"
+      :page-sizes="pageSizes"
       :page-size="pages"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
@@ -379,7 +376,7 @@
         <el-row :gutter="24">
           <el-col :span="24" class="remarkStyle">
             <el-form-item label="批次备注">
-              <el-input type="textarea" v-model="formInline.remark" 
+              <el-input type="textarea" v-model="formInline.remark"
                         maxlength="500" placeholder="请输入批次备注"></el-input>
             </el-form-item>
           </el-col>
@@ -744,11 +741,13 @@
     downLoadZip,
     downCaseModule
   } from '@/common/js/data-case-imported.js';
+  import {pageSizes} from "@/common/js/const"
 
   export default {
     name: 'dataCaseImported',
     data() {
       return {
+        pageSizes,
         fullscreenLoading: false,
         tableLoad: false,
         action: baseURL + '/dataCase',
@@ -793,7 +792,6 @@
     },
     methods: {
       showBatchList(query){
-
         batchList2({"batchNo":query}).then((response) => {
           this.batchList = response;
         })
@@ -1192,7 +1190,6 @@
     }
     .el-dialog__header {
       background-color: #f8f8f8;
-
     }
 
     // .el-form-item .el-form-item--mini {
@@ -1214,7 +1211,7 @@
     }
     .remarkStyle{
       width: 100%;
-      height:100%;    
+      height:100%;
       .el-form-item__content {
         width: 100%;
       }
@@ -1238,5 +1235,3 @@
     }
   }
 </style>
-
-

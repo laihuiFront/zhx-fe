@@ -1,5 +1,5 @@
 <template>
-  <div id="synergistic-record" class="page-wraper-sub"
+  <div id="synergistic-record"
        v-loading="loading2"
        v-loading.fullscreen.lock="fullscreenLoading"
        element-loading-text="拼命加载中"
@@ -16,9 +16,7 @@
               :data="recordList"
               border
               stripe
-              style="width: 100%"
-              height="1"
-              class="table-wrap">
+              style="width: 100%">
       <el-table-column sortable="custom" :sort-orders="['ascending','descending']" min-width="120" align="center"
                        prop="synergisticType.name" label="协催类型" show-overflow-tooltip></el-table-column>
       <el-table-column sortable="custom" :sort-orders="['ascending','descending']" min-width="120" align="center"
@@ -59,9 +57,8 @@
       :current-page.sync="queryForm.pageNum"
       :page-size.sync="queryForm.pageSize"
       layout="total, sizes, prev, pager, next, jumper"
-      :page-sizes="[100, 500, 2000, 10000, 1000000]"
+      :page-sizes="pageSizes"
       :total="total"
-      class="pagination-wrap"
     ></el-pagination>
     <el-dialog
       title="导出查询结果"
@@ -81,10 +78,9 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
    <el-button @click="dialogExportVisible = false">取 消</el-button>
-    <el-button type="primary" @click="changeRadio">确 定</el-button>  
+    <el-button type="primary" @click="changeRadio">确 定</el-button>
         </span>
     </el-dialog>
-
 
     <el-dialog
       title="导出选择"
@@ -139,6 +135,7 @@
 <script>
   import {SynRecordQuery} from './components'
   import {getSynergisticRecordList,saveSelectFilter,selectByModule, expAllSynergisticRecord, expCurrentSynergisticRecord} from '@/common/js/api-sync'
+  import {pageSizes} from "@/common/js/const"
 
   export default {
     name: 'synergisticRecord',
@@ -147,6 +144,7 @@
     },
     data() {
       return {
+        pageSizes,
         radio: '1',
         loading2: false,
         fullscreenLoading: false,
@@ -320,5 +318,3 @@
     }
   }
 </style>
-
-

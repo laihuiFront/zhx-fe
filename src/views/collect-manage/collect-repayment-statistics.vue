@@ -1,5 +1,5 @@
 <template>
-  <div id="collect-repayment-statistics" style="display:flex;flex-direction:column;height:100%;">
+  <div id="collect-repayment-statistics">
     <section class="topDataWp">
       <el-row :gutter="10">
         <el-col :span="4"
@@ -171,23 +171,20 @@
         </span>
       </div>
        <el-table highlight-current-row v-loading="tableLoad"
-        class="table-wrap"
-        height="1"
         ref="multipleTable"
         :data="tableData"
         border
         stripe
         tooltip-effect="dark"
-        style="height:390px;margin-bottom: 40px;margin-top:10px;"
         @selection-change="handleSelectionChange"
       >
-      
           <el-table-column
             label="个案序列号"
             prop="seqno"
-            show-overflow-tooltip                 
+            show-overflow-tooltip
             header-align="center"
             align="center"
+            width="180"
           >
             <template slot-scope="scope">
               <el-button
@@ -199,8 +196,6 @@
               >
             </template>
           </el-table-column>
-
-      
         <el-table-column
           v-for="(item, index) in tablecol_data"
           align="center"
@@ -214,7 +209,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="paginationData.currentPage"
-      :page-sizes="[100, 500, 2000, 10000, 1000000]"
+      :page-sizes="pageSizes"
       :page-size="paginationData.pageSize"
       layout="total, sizes, prev, pager, next, jumper"
       :total="paginationData.total"
@@ -224,6 +219,7 @@
 
 <script>
 import { batchNo, pay, getEnum,listOrganization,role } from "@/common/js/collect-my-case";
+import {pageSizes} from "@/common/js/const"
 
 export default {
   name: "collectRepaymentStatistics",
@@ -256,6 +252,7 @@ export default {
       }
     ];
     return {
+      pageSizes,
       paginationData: {
         pageSize: 100,
         total: 0,
@@ -528,7 +525,7 @@ export default {
     },
     showCase2(row) {
       console.log(row)
-        let id= row.id 
+        let id= row.id
         let name = row.targetName
         let seqNo = row.seqno
       this.$router.push({
@@ -565,17 +562,16 @@ export default {
     margin-bottom: 40px;
     overflow-y: auto;
   }
-  .pagination-wrap{
-    position: fixed;
-    bottom: 0;
-    z-index: 100;
-    min-height: 40px;
-    background-color: white;
-    width: 100%;
-  }
-  .el-table__body-wrapper {
-    height: calc(100% - 74px);
-  }
-
+  // .pagination-wrap{
+  //   position: fixed;
+  //   bottom: 0;
+  //   z-index: 100;
+  //   min-height: 40px;
+  //   background-color: white;
+  //   width: 100%;
+  // }
+  // .el-table__body-wrapper {
+  //   height: calc(100% - 74px);
+  // }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div id="synergistic-repayment-record" class="page-wraper-sub"
+  <div id="synergistic-repayment-record"
   		v-loading="loading2"
   	  v-loading.fullscreen.lock="fullscreenLoading"
     element-loading-text="拼命加载中"
@@ -9,7 +9,7 @@
       <el-tab-pane label="还款记录" name="0"></el-tab-pane>
       <el-tab-pane label="已撤销" name="1"></el-tab-pane>
     </el-tabs>
-    <repay-record-query 
+    <repay-record-query
       @reset="onClickReset"
       @query="onClickQuery"
       :queryForm="queryForm">
@@ -41,9 +41,7 @@
       border
       stripe
       :data="recordList"
-      height="1"
-      style="width: 100%;min-height: 400px;margin-bottom: 40px;"
-      class="table-wrap">
+      style="width: 100%;">
       <el-table-column type="selection" width="50" align="center"></el-table-column>
       <el-table-column width="120"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="dataCase.batchNo" label="批次号" show-overflow-tooltip></el-table-column>
       <el-table-column width="160" sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="dataCase.cardNo" label="卡号" show-overflow-tooltip></el-table-column>
@@ -82,7 +80,7 @@
             @click="editMethod(scope.row)"
           >编辑</el-button>
         </template>
-     
+
       </el-table-column>
     </el-table>
     <el-pagination
@@ -91,9 +89,8 @@
       :current-page.sync="queryForm.pageNum"
       :page-size.sync="queryForm.pageSize"
       layout="total, sizes, prev, pager, next, jumper"
-      :page-sizes="[100, 500, 2000, 10000, 1000000]"
+      :page-sizes="pageSizes"
       :total="total"
-      class="pagination-wrap"
     ></el-pagination>
     <el-dialog
       :title="dialogData.title"
@@ -108,7 +105,7 @@
         :rules="rules"
         label-width="120px"
         class="add-form"
-        ref="recordInfo" 
+        ref="recordInfo"
       >
         <el-form-item label="个案案序列号" prop="dyga">
           <el-select
@@ -165,7 +162,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="备注" prop="dyga" class="whole">
-          <el-input v-model="recordInfo.remark" clearable placeholder="请输入还款备注" class="fixWidth"/>      
+          <el-input v-model="recordInfo.remark" clearable placeholder="请输入还款备注" class="fixWidth"/>
         </el-form-item>
       </el-form>
       <span slot="footer" class="footer">
@@ -186,11 +183,11 @@
         <el-form-item>
           <el-radio label="2" v-model="radio" @click="handleCommand('current')">按查询条件导出当前分页</el-radio>
         </el-form-item>
-       
+
       </el-form>
        <span slot="footer" class="dialog-footer">
           <el-button @click="dialogExportVisible = false">取 消</el-button>
-                        <el-button type="primary" @click="changeRadio">确 定</el-button>  
+                        <el-button type="primary" @click="changeRadio">确 定</el-button>
         </span>
     </el-dialog>
 
@@ -302,8 +299,8 @@
       :visible.sync="showEditForm"
       width="40%"
     >
-      <el-form     
-        :model="repayRecordInfo"  
+      <el-form
+        :model="repayRecordInfo"
         label-width="200px"
         ref="repayRecordInfo"
         :rules="repayRecordInfoRules"
@@ -315,7 +312,7 @@
           <el-form-item label="还款日期" prop="repayDate">
           <el-date-picker
            v-model="repayRecordInfo.repayDate"
-            clearable          
+            clearable
             type="date"
             value-format="yyyy-MM-dd"
             placeholder="请选择还款日期"
@@ -348,11 +345,11 @@
 </template>
 
 <script>
-  import {baseURL} from '@/common/js/request.js';
+import {baseURL} from '@/common/js/request.js';
 import {RepayRecordQuery} from './components'
-import {getRepayRecordList, 
+import {getRepayRecordList,
         getRepayRecordQuerySum,
-        getCollectionUserList, 
+        getCollectionUserList,
         saveRepayRecord,
         getEnum,
         saveSelectFilter,
@@ -366,6 +363,8 @@ import {getRepayRecordList,
         findById,
         updateRepayRecord
         } from '@/common/js/api-sync'
+import {pageSizes} from "@/common/js/const"
+
 export default {
   name: 'synergisticRepaymentRecord',
   components:{
@@ -373,6 +372,7 @@ export default {
   },
   data(){
     return {
+      pageSizes,
     	radio:"1",
     	loading2:false,
     	fullscreenLoading:false,
@@ -715,7 +715,7 @@ export default {
     onClickSave(formName){
       this.fullscreenLoading=true
        this.$refs[formName].validate((valid) => {
-        if (valid) {  
+        if (valid) {
       saveRepayRecord(this.recordInfo).then(data => {
         this.$message('新增还款记录成功')
         this.onClickQuery()
@@ -748,7 +748,7 @@ export default {
           }
           if(res.repayType==undefined){
             res.repayType=this.repayTypeId
-             this.repayRecordInfo = res       
+             this.repayRecordInfo = res
           }else{
             this.repayRecordInfo = res
           }
@@ -759,21 +759,21 @@ export default {
             message: '查询失败'
           })
         }
-      })            
+      })
     },
     // 操作列中编辑按钮，记录修改功能
     saveEditForm(formName) {
        this.fullscreenLoading=true
       this.$refs[formName].validate((valid) => {
-        if (valid) {   
-          updateRepayRecord(this.repayRecordInfo).then(response => {         
+        if (valid) {
+          updateRepayRecord(this.repayRecordInfo).then(response => {
               this.$message({
                 type: 'success',
                 message: '保存成功'
               })
             this.fullscreenLoading=false
               this.showEditForm = false
-              this.onClickQuery()        
+              this.onClickQuery()
             })
         } else {
           console.log('error submit!!')
@@ -782,7 +782,7 @@ export default {
         }
       })
     },
-    backForm(){     
+    backForm(){
       this.showEditForm = false
     }
   }
@@ -798,17 +798,16 @@ export default {
     }
   }
   .el-tabs__content{
-
     overflow-y: auto;
   }
-  .pagination-wrap{
-    position: fixed;
-    bottom: 0;
-    z-index: 100;
-    min-height: 40px;
-    background-color: white;
-    width: 100%;
-  }
+  // .pagination-wrap{
+  //   position: fixed;
+  //   bottom: 0;
+  //   z-index: 100;
+  //   min-height: 40px;
+  //   background-color: white;
+  //   width: 100%;
+  // }
   .statistics-wrap{
     margin: 12px 0 24px;
   }
@@ -877,5 +876,3 @@ export default {
   }
 }
 </style>
-
-

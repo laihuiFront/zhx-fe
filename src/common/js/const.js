@@ -20,3 +20,5 @@ export const logType = [{
   value: '/dataCase/distribution',
   label: '分配案件'
 }]
+
+export const pageSizes = [100, 200, 500, 1000]

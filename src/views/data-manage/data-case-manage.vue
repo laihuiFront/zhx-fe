@@ -1,5 +1,5 @@
 <template>
-  <div id="data-case-manage" class="page-wraper-sub"
+  <div id="data-case-manage"
        v-loading="loading2"
        v-loading.fullscreen.lock="fullscreenLoading"
        element-loading-text="正在加载中"
@@ -420,15 +420,12 @@
     </el-row>-->
 
     <el-table highlight-current-row v-loading="tableLoad"
-              class="table-wrap"
-              height="1"
               ref="multipleTable"
               :data="tableData3"
               border
               stripe
               show-overflow-tooltip
               :row-class-name="rowColor"
-              style="min-height:390px;margin-bottom: 40px;"
               @selection-change="handleSelectionChange"
               @row-dblclick="showDetail"
               @sort-change="handleSort"
@@ -602,7 +599,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page.sync="currentPage4"
-      :page-sizes="[100, 500, 2000, 10000, 1000000]"
+      :page-sizes="pageSizes"
       :page-size="pages"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
@@ -630,13 +627,10 @@
           </el-form-item>
         </div>
       </el-form>
-
       <span slot="footer" class="footer">
     <el-button @click="detailVisible2 = false">取 消</el-button>
     <el-button type="primary" @click="sureAddShow('formInline')">确 定</el-button>
   </span>
-
-
     </el-dialog>
     <el-dialog
       title="快速分案"
@@ -679,20 +673,20 @@
       <div class="filter" v-if="showSendVisible1">
       	<h1>分配选项</h1>
       	 <el-checkbox-group v-model="fenan.sendType">
-      		<el-checkbox v-for="item in Aoptions" :label="item.id" >{{item.name}}</el-checkbox>
+      		<el-checkbox v-for="item in Aoptions" :label="item.id" :key="item.id">{{item.name}}</el-checkbox>
       	 </el-checkbox-group>
       </div>
        <div class="filter" v-if="showSendVisible1">
       	<h1>分配方式</h1>
       	<el-radio-group v-model="fenan.mathType">
-			    <el-radio v-for="item in Boptions":label="item.id" :key="item.id">{{item.name}}</el-radio>
+			    <el-radio v-for="item in Boptions" :label="item.id" :key="item.id">{{item.name}}</el-radio>
 			  </el-radio-group>
       </div>
        <div class="filter" v-if="showSendVisible1">
       	<h1>催收员<p @click="onClickSelectUser2">[<span>点击选择</span>]</p></h1>
 
       	<ul class="salesman-ul">
-      		<li v-for="(item,index) in fenan.odvNames">
+      		<li v-for="(item,index) in fenan.odvNames" :key="item.id">
       			<p>{{item}}（业务员）<el-input v-model="fenan.odvPercent[index]" type="number"></el-input>%</p>
       		</li>
       	</ul>
@@ -994,37 +988,30 @@
       :close-on-click-modal="false"
     >
       <el-row class="pad">
-
         <el-checkbox v-model="queryConf.csqy" label="1">催收区域</el-checkbox>
         <el-checkbox v-model="queryConf.pc" label="2">批次</el-checkbox>
         <el-checkbox v-model="queryConf.wtf" label="3">委托方</el-checkbox>
         <el-checkbox v-model="queryConf.ajlx" label="4">案件类型</el-checkbox>
         <el-checkbox v-model="queryConf.warq" label="5">委案日期</el-checkbox>
-
         <el-checkbox v-model="queryConf.cjh" label="1">车架号</el-checkbox>
         <el-checkbox v-model="queryConf.pzh" label="2">牌照号</el-checkbox>
         <el-checkbox v-model="queryConf.cssb" label="3">催收手别</el-checkbox>
         <el-checkbox v-model="queryConf.xm" label="4">姓名</el-checkbox>
         <el-checkbox v-model="queryConf.dah" label="5">档案号</el-checkbox>
-
         <el-checkbox v-model="queryConf.zh" label="1">账号</el-checkbox>
         <el-checkbox v-model="queryConf.sqdh" label="5">申请单号</el-checkbox>
-
         <el-checkbox v-model="queryConf.khh" label="2">开户行</el-checkbox>
         <el-checkbox v-model="queryConf.aj" label="4">案件ID</el-checkbox>
         <el-checkbox v-model="queryConf.waje" label="5">委案金额</el-checkbox>
-
         <el-checkbox v-model="queryConf.yqts" label="1">逾期天数</el-checkbox>
         <el-checkbox v-model="queryConf.kh" label="2">卡号</el-checkbox>
         <el-checkbox v-model="queryConf.gaxlh" label="3">个案序列号</el-checkbox>
         <el-checkbox v-model="queryConf.zjh" label="4">证件号</el-checkbox>
         <el-checkbox v-model="queryConf.csjl" label="5">催收记录</el-checkbox>
-
         <el-checkbox v-model="queryConf.bm" label="1">部门</el-checkbox>
         <el-checkbox v-model="queryConf.csy" label="2">催收员</el-checkbox>
         <el-checkbox v-model="queryConf.bbzt" label="3">报备状态</el-checkbox>
         <el-checkbox v-model="queryConf.jmzt" label="4">减免状态</el-checkbox>
-
         <el-checkbox v-model="queryConf.ajzt" label="5">案件状态</el-checkbox>
         <el-checkbox v-model="queryConf.yqzl" label="5">逾期账龄</el-checkbox>
         <el-checkbox v-model="queryConf.cszt" label="5">催收状态</el-checkbox>
@@ -1037,7 +1024,6 @@
         <el-checkbox v-model="queryConf.yjtarq" label="5">预计退案日期</el-checkbox>
         <el-checkbox v-model="queryConf.sjtarq" label="5">实际退案日期</el-checkbox>
         <el-checkbox v-model="queryConf.zhgjrq" label="5">最后跟进日期</el-checkbox>
-
       </el-row>
       <span slot="footer" class="footer">
         <el-button @click="showQueryConfVisible = false">取 消</el-button>
@@ -1054,7 +1040,6 @@
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllTelExport" style="cursor: pointer;">全选</span><span @click="selectUnAllTelExport" style="cursor: pointer;margin-left:10px;">反选</span></div>
       <el-row class="pad" ref="boxWrapper">
-
         <el-checkbox v-model="exportTelConf.seqno" label="2">个案序列号</el-checkbox>
         <el-checkbox v-model="exportTelConf.name" label="3">姓名</el-checkbox>
         <el-checkbox v-model="exportTelConf.cardNo" label="3">卡号</el-checkbox>
@@ -1407,6 +1392,7 @@
     selectDataCaseExport,
     totalDataBatchExport
   } from '@/common/js/data-case-manage.js'
+  import {pageSizes} from "@/common/js/const"
 
   export default {
     name: 'dataCaseManage',
@@ -1415,6 +1401,7 @@
     },
     data() {
       return {
+        pageSizes,
         radio: "1",
         formInline1: {},
         tableLoad: false,
@@ -1602,11 +1589,6 @@
         },]
       }
     },
-    watch:{
-    	radio1(val){
-    		console.log(val)
-    	}
-    },
     methods: {
       onClickSaveDept() {
         let selectDataArr = this.$refs.tree.getCheckedNodes()
@@ -1625,7 +1607,6 @@
         console.info(selectUserNames,"123");
         this.$set(this, 'deptName', selectUserNames.join(','))
         this.$set(this.formInline, 'depts', selectUserIds)
-
         this.departmentVisible = false
       },
 
@@ -1637,7 +1618,6 @@
       },
 
       clientCurrent(){
-
         if (this.formInline.clients==null || this.formInline.clients.length==0){
           this.$set(this.formInline, 'batchNos', [])
           this.batchList = this.batchList2
@@ -1649,8 +1629,6 @@
             }else{
               //this.$set(this.formInline, 'batchNos', response)
               this.batchList = response;
-
-
             }
           })
         }
@@ -1723,7 +1701,6 @@
           this.showExportCollectConfVisible = true;
         });
       },
-
 
       queryConfList() {
         this.$set(this, 'loading2', true)
@@ -1809,7 +1786,6 @@
           this.showSendVisible1 = false;
           this.showSendVisible2 = true
         })
-
       },
       last(){
         this.showSendVisible1 = true;
@@ -1855,7 +1831,6 @@
           if(this.fenan.odv!=null && this.fenan.odv!=""){
             this.$refs.tree.setCheckedKeys(this.fenan.odv);
           }
-
         })
       },
       onClickSelectUser2() {
@@ -1999,10 +1974,7 @@
                 this.loading2 = false
                 this.fullscreenLoading = false
               })
-            }).catch(() => {
-
-            });
-
+            }).catch(() => {});
           } else if (command === "2") {
             this.$confirm('是否继续?', '提示', {
               confirmButtonText: '确定',
@@ -2021,9 +1993,7 @@
                 this.loading2 = false
                 this.fullscreenLoading = false
               })
-            }).catch(() => {
-
-            });
+            }).catch(() => {});
           } else if (command === "3") {
             this.$confirm('是否继续?', '提示', {
               confirmButtonText: '确定',
@@ -2042,9 +2012,7 @@
                 this.loading2 = false
                 this.fullscreenLoading = false
               })
-            }).catch(() => {
-
-            });
+            }).catch(() => {});
           } else if (command === "4") {
             this.$confirm('是否继续?', '提示', {
               confirmButtonText: '确定',
@@ -2063,9 +2031,7 @@
                 this.loading2 = false
                 this.fullscreenLoading = false
               })
-            }).catch(() => {
-
-            });
+            }).catch(() => {});
           } else {
             this.$confirm('是否删除?', '提示', {
               confirmButtonText: '确定',
@@ -2084,11 +2050,7 @@
                 this.loading2 = false
                 this.fullscreenLoading = false
               })
-            }).catch(() => {
-
-            });
-
-
+            }).catch(() => {});
           }
         } else {
           this.$message({
@@ -2096,7 +2058,6 @@
             message: '请选择数据!'
           });
         }
-
       },
       handleExport(command) {
         if (this.formInline.odvNameFiter==null || this.formInline.odvNameFiter==""){
@@ -2121,25 +2082,21 @@
         } else if (command === "exportTel") {
           if (this.deleteList.length >= 1) {
             this.queryExportTelConfList();
-
           } else {
             this.$message({
               type: 'info',
               message: '请选择需要导出的数据!'
             });
           }
-
         } else if (command === "exportCollect") {
           if (this.deleteList.length >= 1) {
             this.queryExportCollectConfList();
-
           } else {
             this.$message({
               type: 'info',
               message: '请选择需要导出的数据!'
             });
           }
-
         }else if (command === "exportLog"){
           if (this.deleteList.length >= 1) {
             this.loading2 = true
@@ -2152,7 +2109,6 @@
               this.loading2 = false
               this.fullscreenLoading = false
             })
-
           } else {
             this.$message({
               type: 'info',
@@ -2160,10 +2116,8 @@
             });
           }
         }
-
       },
       handleCommand(command) {
-
         if (this.deleteList.length >= 1) {
           if (command === "important") {
             this.detailVisible4 = true
@@ -2688,14 +2642,14 @@
       search2() {
           this.currentPage4=1
           this.pageNum=1
-          this.search();    
+          this.search();
       },
       search() {
         this.totalCaseNum=''
         this.totalAmt = ''
         this.repayTotalAmt = ''
         this.repayNum = ''
-        this.totalCp ='' 
+        this.totalCp =''
         this.totalPtp = ''
         this.tableLoad = true
         // this.pageNum=1
@@ -2716,7 +2670,7 @@
 
           //this.pages = response.pages
           this.total = response.pageInfo.total
-       
+
           this.tableLoad = false
         })
       },
@@ -2824,7 +2778,7 @@
          this.totalAmt = ''
         this.repayTotalAmt = ''
         this.repayNum = ''
-        this.totalCp ='' 
+        this.totalCp =''
         this.totalPtp = ''
       this.tableLoad = true
       searchList(this.formInline, this.orderBy, this.sort, this.pageSize, this.pageNum).then((response) => {
@@ -2917,14 +2871,14 @@
   /*  .el-table .el-table__body-wrapper {
       overflow-x: hidden;
     }*/
-    .pagination-wrap {
-      position: fixed;
-      bottom: 0;
-      z-index: 100;
-      min-height: 40px;
-      background-color: white;
-      width: 100%;
-    }
+    // .pagination-wrap {
+    //   position: fixed;
+    //   bottom: 0;
+    //   z-index: 100;
+    //   min-height: 40px;
+    //   background-color: white;
+    //   width: 100%;
+    // }
 
     .pad {
       .el-checkbox {
@@ -2943,13 +2897,12 @@
       font-size: 18px;
     }
 
-    .el-table__body-wrapper {
-      height: calc(100% - 74px);
-    }
+    // .el-table__body-wrapper {
+    //   height: calc(100% - 74px);
+    // }
 
     .el-dialog__header {
       background-color: #f8f8f8;
-
     }
 
     .textColor {
@@ -3036,6 +2989,4 @@
       border-bottom: 1px solid #0080ff  !important;
     }
   }
-
-
 </style>

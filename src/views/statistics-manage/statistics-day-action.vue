@@ -1,9 +1,8 @@
 <template>
-  <div id="statistics-day-action" class="page-wraper-sub"
+  <div id="statistics-day-action"
        v-loading="loading"
        element-loading-text="拼命加载中"
        v-loading.fullscreen.lock="fullscreenLoading"
-
        element-loading-spinner="el-icon-loading"
        element-loading-background="rgba(0, 0, 0, 0.7)">
     <el-form ref="form" :model="formInline" :inline="true" class="query-wrap queryStyle">
@@ -53,10 +52,8 @@
               border
               stripe
               show-summary
-              height="350"
               :summary-method="getSummaries"
-              style="width: 100%"
-              class="table-wrap">
+              style="width: 100%">
       <el-table-column
         prop="odvName"
         align="center"
@@ -211,9 +208,8 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="currentPage4"
-        :page-sizes="[100, 500, 2000, 10000, 1000000]"
+        :page-sizes="pageSizes"
         :page-size="pages"
-        class="pagination-wrap"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total">
       </el-pagination>
@@ -253,11 +249,13 @@
     messageList,
     selectDataCaseExport
   } from '@/common/js/statistics-day-action.js'
+  import {pageSizes} from "@/common/js/const"
 
   export default {
     name: 'statisticsDayAction',
     data() {
       return {
+        pageSizes,
         defaultProps: {
           children: 'children',
           label: 'name'
@@ -416,7 +414,7 @@
 //          this.tableLoad = false
 //          this.total=response.totalNum
 //        })
-//          
+//
     },
   }
 </script>
@@ -433,4 +431,3 @@
     }
   }
 </style>
-

@@ -1,5 +1,5 @@
 <template>
-  <div id="synergistic-application" class="page-wraper-sub"
+  <div id="synergistic-application"
        v-loading="loading2"
        v-loading.fullscreen.lock="fullscreenLoading"
        element-loading-text="正在导入中"
@@ -13,7 +13,6 @@
       @reset="onClickReset"
       @query="onClickQuery"
       :queryForm="queryForm">
-
       <el-button type="primary" v-if="queryForm.applyStatus==='0'" @click="onClickBatchApprove(1)" v-has="'同意协催'">同意协催
       </el-button>
       <el-popover
@@ -79,9 +78,7 @@
               border
               stripe
               :data="recordList"
-              style="width: 100%;min-height: 400px;margin-bottom: 40px;"
-              height="1"
-              class="table-wrap">
+              style="width: 100%;">
       <el-table-column type="selection" width="50" align="center"></el-table-column>
       <el-table-column sortable="custom" :sort-orders="['ascending','descending']" prop="synergisticType.name"
                        align="center" min-width="120" label="协催类型" show-overflow-tooltip></el-table-column>
@@ -121,7 +118,6 @@
             placement="bottom-end"
             trigger="click"
             title="编辑操作记录"
-
             width="500"
             v-model="scope.row.finishVisible">
             <div>
@@ -147,10 +143,9 @@
       @current-change="onClickQuery"
       :current-page.sync="queryForm.pageNum"
       :page-size.sync="queryForm.pageSize"
-      :page-sizes="[100, 500, 2000, 10000, 1000000]"
+      :page-sizes="pageSizes"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total"
-      class="pagination-wrap"
     ></el-pagination>
     <el-dialog
       title="导出查询结果"
@@ -186,7 +181,6 @@
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span><span @click="selectUnAllExport" style="cursor: pointer;margin-left: 10px;">反选</span></div>
       <el-row class="pad" ref="boxWrapper">
-
         <el-checkbox v-model="exportConf.id" label="2">ID</el-checkbox>
         <el-checkbox v-model="exportConf.batchNo" label="3">批次号</el-checkbox>
         <el-checkbox v-model="exportConf.client" label="3">委托方</el-checkbox>
@@ -225,7 +219,6 @@
         <el-button type="primary" @click="exportExcel">确 定</el-button>
       </span>
     </el-dialog>
-
   </div>
 </template>
 
@@ -241,6 +234,7 @@
     approveSynergisticRecord,
     finishSynergisticRecord
   } from '@/common/js/api-sync'
+  import {pageSizes} from "@/common/js/const"
 
   export default {
     name: 'synergisticApplication',
@@ -249,6 +243,7 @@
     },
     data() {
       return {
+        pageSizes,
         radio: "1",
         dialogVisible1: false,
         loading2: false,
@@ -542,19 +537,18 @@
       }
     }
 
-    .el-tabs__content {
+    // .el-tabs__content {
+    //   overflow-y: auto;
+    // }
 
-      overflow-y: auto;
-    }
-
-    .pagination-wrap {
-      position: fixed;
-      bottom: 0;
-      z-index: 100;
-      min-height: 40px;
-      background-color: white;
-      width: 100%;
-    }
+    // .pagination-wrap {
+    //   position: fixed;
+    //   bottom: 0;
+    //   z-index: 100;
+    //   min-height: 40px;
+    //   background-color: white;
+    //   width: 100%;
+    // }
     tr.current-row > td{
       position: relative;
       &::before{
@@ -582,4 +576,3 @@
     }
   }
 </style>
-

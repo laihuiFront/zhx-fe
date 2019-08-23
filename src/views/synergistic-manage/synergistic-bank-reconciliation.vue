@@ -1,5 +1,5 @@
 <template>
-  <div id="synergistic-bank-reconciliation" class="page-wraper-sub"
+  <div id="synergistic-bank-reconciliation"
        v-loading="loading2"
        v-loading.fullscreen.lock="fullscreenLoading"
        element-loading-text="拼命加载中"
@@ -41,9 +41,7 @@
               border
               stripe
               :data="recordList"
-              height="1"
-              style="width: 100%;min-height: 400px;margin-bottom: 40px;"
-              class="table-wrap">
+              style="width: 100%;">
       <el-table-column type="selection" width="50" align="center"></el-table-column>
       <el-table-column sortable="custom" width="120" align="center" :sort-orders="['ascending','descending']"
                        prop="dataCase.batchNo" label="批次号" show-overflow-tooltip></el-table-column>
@@ -99,9 +97,8 @@
       :current-page.sync="queryForm.pageNum"
       :page-size.sync="queryForm.pageSize"
       layout="total, sizes, prev, pager, next, jumper"
-      :page-sizes="[100, 500, 2000, 10000, 1000000]"
+      :page-sizes="pageSizes"
       :total="total"
-      class="pagination-wrap"
     ></el-pagination>
     <el-dialog
       :title="dialogData.title"
@@ -266,6 +263,7 @@
     expAllBankReconRecord,
     expCurrentBankReconRecord
   } from '@/common/js/api-sync'
+  import {pageSizes} from "@/common/js/const"
 
   export default {
     name: 'synergisticBankReconciliation',
@@ -274,6 +272,7 @@
     },
     data() {
       return {
+        pageSizes,
         radio: '1',
         loading2: false,
         fullscreenLoading: false,
@@ -545,18 +544,17 @@
     }
 
     .el-tabs__content {
-
       overflow-y: auto;
     }
 
-    .pagination-wrap {
-      position: fixed;
-      bottom: 0;
-      z-index: 100;
-      min-height: 40px;
-      background-color: white;
-      width: 100%;
-    }
+    // .pagination-wrap {
+    //   position: fixed;
+    //   bottom: 0;
+    //   z-index: 100;
+    //   min-height: 40px;
+    //   background-color: white;
+    //   width: 100%;
+    // }
 
     .add-form {
       display: flex;

@@ -1,9 +1,8 @@
 <template>
-  <div id="statistics-day" class="page-wraper-sub"
+  <div id="statistics-day"
        v-loading="loading"
        element-loading-text="拼命加载中"
        v-loading.fullscreen.lock="fullscreenLoading"
-
        element-loading-spinner="el-icon-loading"
        element-loading-background="rgba(0, 0, 0, 0.7)">
     <el-form ref="form" :model="formInline" :inline="true" class="query-wrap queryStyle">
@@ -57,9 +56,7 @@
               stripe
               show-summary
               :summary-method="getSummaries"
-              style="width: 100%"
-              height="1"
-              class="table-wrap">
+              style="width: 100%">
       <el-table-column
         prop="odv"
         align="center"
@@ -188,7 +185,6 @@
           label="有效通电"
           align="center"
         >
-
         </el-table-column>
         <el-table-column
           prop="sumPhoneNum"
@@ -454,5 +450,3 @@
     }
   }
 </style>
-
-

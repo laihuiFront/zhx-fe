@@ -1,7 +1,6 @@
 <template>
   <div
     id="xhjl"
-    class="page-wraper-sub"
     v-loading="loading2"
     v-loading.fullscreen.lock="fullscreenLoading"
     element-loading-text="拼命加载中"
@@ -219,15 +218,13 @@
                 :on-error="
                   () => {
                     this.fullscreenLoading = false;
-                          this.loading2 = false;
-
+                    this.loading2 = false;
                   }
                 "
                 :on-progress="
                   () => {
                     this.fullscreenLoading = true;
-                          this.loading2 = true;
-
+                    this.loading2 = true;
                   }
                 "
                 :on-success="fileStatu"
@@ -269,8 +266,6 @@
       </el-col>
     </el-row>
      <el-table highlight-current-row v-loading="tableLoad"
-      class="table-wrap"
-      height="1"
       ref="multipleTable"
       :data="tableData"
       border
@@ -319,11 +314,10 @@
        </el-table-column>
     </el-table>
     <el-pagination
-      class="pagination-wrap"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="paginationData.currentPage"
-      :page-sizes="[100, 500, 2000, 10000, 1000000]"
+      :page-sizes="pageSizes"
       :page-size="paginationData.pageSize"
       layout="total, sizes, prev, pager, next, jumper"
       :total="paginationData.total"
@@ -365,7 +359,6 @@
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span><span @click="selectUnAllExport" style="cursor: pointer;margin-left: 10px;">反选</span></div>
       <el-row class="pad" ref="boxWrapper">
-
         <el-checkbox v-model="exportConf.id" label="2">ID</el-checkbox>
         <el-checkbox v-model="exportConf.batchNo" label="3">批次号</el-checkbox>
         <el-checkbox v-model="exportConf.client" label="3">委托方</el-checkbox>
@@ -435,6 +428,7 @@ import {
 } from "@/common/js/synergistic-letter-application.js";
 import CaseDetail from "@/views/data-manage/detail";
 import { baseURL } from "@/common/js/request.js";
+import {pageSizes} from "@/common/js/const"
 
 export default {
   name: "synergisticLetterApplication2",
@@ -443,6 +437,7 @@ export default {
   },
   data() {
     return {
+      pageSizes,
       moduleVisible:false,
       moduleForm:{moduleId:null},
     	radio:'1',
@@ -752,11 +747,9 @@ export default {
         this.moduleVisible = false;
         this.getMainData();
       });
-
     },
     exportCx(command) {
       this.fullscreenLoading = true;
-
       if (command == 1) {
         this.realFetchFormData.exportConf = this.exportConf;
         dccxjgInfo(this.realFetchFormData).then(()=>{
@@ -933,10 +926,6 @@ export default {
       margin-right: 0px;
     }
   }
-  height: calc(100% - 21px);
-  .el-table {
-    height: calc(100% - 143px);
-  }
   .upload-demo {
     padding-bottom: 20px;
     .el-upload {
@@ -958,6 +947,5 @@ export default {
       margin-right: 0px;
     }
   }
-
 }
 </style>

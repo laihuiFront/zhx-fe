@@ -1,15 +1,12 @@
 <template>
-  <div id="setting-reward" class="page-wraper-sub"
+  <div id="setting-reward"
        v-loading="loading"
        element-loading-text="拼命加载中"
        v-loading.fullscreen.lock="fullscreenLoading"
        element-loading-spinner="el-icon-loading"
        element-loading-background="rgba(0, 0, 0, 0.7)">
     <el-tabs v-model="activeName" class="tabs-wrap">
-      <el-tab-pane label="业务员、经理" name="tab1"
-                   style="height: 100%"
-      >
-
+      <el-tab-pane label="业务员、经理" name="tab1" style="height: 100%">
         <div class="buttons">
           <el-button type="primary" @click="onclickSave">保存</el-button>
         </div>
@@ -18,18 +15,14 @@
                   :data="dataList"
                   border
                   highlight-current-row
-                  :header-cell-style="discountHeaderStyle1"
-                  height="1"
-                  class="table-wrap">
+                  :header-cell-style="discountHeaderStyle1">
           <el-table-column
             prop="client"
             align="center"
             label="条线"
           >
           </el-table-column>
-
           <el-table-column label="业务员提成" align="center">
-
             <el-table-column
               prop="odvLowMsg"
               label="基础提成"
@@ -55,7 +48,6 @@
                 <span v-if="scope.row.enable ==='特殊2'">元/户</span>
               </template>
             </el-table-column>
-
             <el-table-column
               prop="odvBasicMsg"
               label="低标"
@@ -215,8 +207,8 @@
             </template>
           </el-table-column>
         </el-table>
-        <div style="margin-top:30px;text-align: center;">
-          <span style="height: 100%;display: inline-flex;align-items: center;">提成说明: </span>
+        <div style="margin-top:30px;display: flex;align-items: center;justify-content: center;">
+          <span>提成说明: </span>
           <el-input type="textarea" label="提成说明" v-model="tips" style="width: 800px;" resize="none" placeholder="请输入提成说明" rows="6" maxlength="500"></el-input>
         </div>
       </el-tab-pane>
@@ -260,7 +252,6 @@
 	</div>
 </template>
 
-
 <script>
   import {clientList, updatePercent, updateRemark, findRemark, clientList2, updateStandard} from '@/common/js/api-reward.js'
 
@@ -289,7 +280,6 @@
          this.$refs.tab1.doLayout()
        })
       }
-
     },
     methods: {
       discountHeaderStyle1({row, column, rowIndex, columnIndex}) {
@@ -344,8 +334,6 @@
           }
         }
       },
-
-
       onclickSave() {
         updatePercent(this.dataList).then((response) => {
           updateRemark(this.tips).then((response) => {
@@ -367,11 +355,9 @@
         this.disableSave = false;
 
       },
-
       onClickEdit2(row) {
        row.editType = "edit";
       },
-
       onclickSave2() {
         if(isNaN(this.dataList2.standard1Msg) || isNaN(this.dataList2.standard2Msg) ||
             isNaN(this.dataList2.reward1Msg) || isNaN(this.dataList2.reward2Msg) || isNaN(this.dataList2.reward3Msg) ||
@@ -392,7 +378,6 @@
           });
         }
       },
-
      setTableData(data){
        if(data){
          this.dataList2 = Object.assign({}, data)
@@ -422,7 +407,6 @@
         ]
      }
     },
-
      created() {
       clientList().then((response) => {
         this.dataList = response
@@ -481,6 +465,5 @@
       margin-bottom: 10px;
       text-align: right;
     }
-
   }
 </style>

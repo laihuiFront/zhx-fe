@@ -64,13 +64,12 @@
         </span>
       </el-tree>
        <el-table v-if="currentEnum.name && currentEnum.name !== '地区'"
-        border stripe
+        border
+        stripe
         :data="configData"
         style="width: 100%;"
         v-loading="tableLoad"
-                 highlight-current-row
-        class="table-wrap"
-        height="1"
+        highlight-current-row
       >
         <el-table-column v-if="currentEnum.name==='催收区域' || currentEnum.name==='催收结果'" prop="id" label="ID" align="center">
           <template slot-scope="scope">
@@ -414,9 +413,7 @@ export default {
     flex: 1;
     height: 100%;
     padding: 20px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
+    overflow-y: auto;
     .el-card__header {
       margin-bottom: 30px;
       padding: 0;
@@ -428,7 +425,6 @@ export default {
         color: #1e1f24;
         .title {
           flex: 1;
-
         }
       }
     }

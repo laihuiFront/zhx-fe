@@ -1,9 +1,8 @@
 <template>
-  <div id="relief-management" class="page-wraper-sub"
+  <div id="relief-management"
        v-loading="loading"
        element-loading-text="拼命加载中"
        v-loading.fullscreen.lock="fullscreenLoading"
-
        element-loading-spinner="el-icon-loading"
        element-loading-background="rgba(0, 0, 0, 0.7)">
     <!-- <el-upload
@@ -126,7 +125,7 @@
           <el-button icon="el-icon-refresh" type="primary" @click="clear">重置</el-button>
           <el-button type="primary" @click="showQueryConf" style="margin-left:10px;">查询条件配置</el-button>
           <el-button type="primary" 　v-show="istrue1" v-has="'新增减免'" @click=addData>新增减免</el-button>
-          <el-button type="primary" 　v-show="istrue2" v-has="'批量撤销'" @click=open8>批量撤销</el-button>        
+          <el-button type="primary" 　v-show="istrue2" v-has="'批量撤销'" @click=open8>批量撤销</el-button>
            <el-upload
             :headers="header"
             class="upload-demo"
@@ -299,17 +298,16 @@
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="currentPage4"
-          :page-sizes="[100, 500, 2000, 10000, 1000000]"
+          :page-sizes="pageSizes"
           :page-size="pages"
           layout="total, sizes, prev, pager, next, jumper"
           :total="total">
         </el-pagination>
       </el-tab-pane>
       <el-tab-pane label="已审核" name="second">
-        <el-table highlight-current-row class="table-wrap"
+        <el-table highlight-current-row
                   ref="multipleTable"
                   :data="tableData3"
-                  height="1"
                   style="width: 100%;"
                   border
                   stripe
@@ -437,8 +435,6 @@
             :sort-orders="['ascending','descending']"
             show-overflow-tooltip>
           </el-table-column>
-
-
           <el-table-column
             label="操作"
             align="center"
@@ -452,19 +448,17 @@
 
         </el-table>
         <el-pagination
-          class="pagination-wrap"
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="currentPage4"
-          :page-sizes="[100, 500, 2000, 10000, 1000000]"
+          :page-sizes="pageSizes"
           :page-size="pages"
           layout="total, sizes, prev, pager, next, jumper"
           :total="total">
         </el-pagination>
       </el-tab-pane>
       <el-tab-pane label="已完成" name="third">
-        <el-table highlight-current-row class="table-wrap"
-                  height="1"
+        <el-table highlight-current-row
                   ref="multipleTable"
                   :data="tableData3"
                   style="width: 100%"
@@ -594,8 +588,6 @@
             width="150"
             show-overflow-tooltip>
           </el-table-column>
-
-
           <el-table-column
             label="操作"
             width="120"
@@ -606,13 +598,12 @@
               <el-button type="text" size="small" @click="downloadList(scope.row)"  >下载附件</el-button>
             </template>
           </el-table-column>
-
         </el-table>
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="currentPage4"
-          :page-sizes="[100, 500, 2000, 10000, 1000000]"
+          :page-sizes="pageSizes"
           :page-size="pages"
           layout="total, sizes, prev, pager, next, jumper"
           :total="total"
@@ -660,9 +651,7 @@
         </el-form-item>
         <el-form-item label="有效期"
                       prop="reduceValidTime"
-                      :rules="{
-       type: 'string', required: true, message: '请选择时间', trigger: 'blur' 
-    }">
+                      :rules="{type: 'string', required: true, message: '请选择时间', trigger: 'blur'}">
           <div class="block">
             <el-date-picker
               value-format="yyyy-MM-dd"
@@ -713,21 +702,17 @@
       :close-on-click-modal="false"
     >
       <el-row class="pad">
-
         <el-checkbox v-model="queryConf.pch" label="1">批次号</el-checkbox>
         <el-checkbox v-model="queryConf.gaxlh" label="2">个案序列号</el-checkbox>
         <el-checkbox v-model="queryConf.dxxm" label="3">对象姓名</el-checkbox>
         <el-checkbox v-model="queryConf.csqy" label="4">催收区域</el-checkbox>
         <el-checkbox v-model="queryConf.wtf" label="5">委托方</el-checkbox>
-
         <el-checkbox v-model="queryConf.yqzl" label="1">逾期账龄</el-checkbox>
         <el-checkbox v-model="queryConf.jmzt" label="2">减免状态</el-checkbox>
         <el-checkbox v-model="queryConf.cszt" label="3">催收状态</el-checkbox>
         <el-checkbox v-model="queryConf.tjrq" label="4">提交日期</el-checkbox>
         <el-checkbox v-model="queryConf.yxrq" label="5">有效日期</el-checkbox>
-
         <el-checkbox v-model="queryConf.wcrq" label="1">完成日期</el-checkbox>
-
       </el-row>
       <span slot="footer" class="footer">
         <el-button @click="showQueryConfVisible = false">取 消</el-button>
@@ -744,7 +729,6 @@
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span><span @click="selectUnAllExport" style="cursor: pointer;margin-left:10px;">反选</span></div>
       <el-row class="pad">
-
         <el-checkbox v-model="exportConf.seqno" label="2">个案序列号</el-checkbox>
         <el-checkbox v-model="exportConf.name" label="3">案人姓名</el-checkbox>
         <el-checkbox v-model="exportConf.collect_status" label="3">催收状态</el-checkbox>
@@ -757,15 +741,12 @@
         <el-checkbox v-model="exportConf.reduce_result" label="4">减免结果</el-checkbox>
         <el-checkbox v-model="exportConf.en_repay_amt" label="5">实际还款金额</el-checkbox>
         <el-checkbox v-model="exportConf.reduce_update_time" label="5">减免状态更新时间</el-checkbox>
-
-
       </el-row>
       <span slot="footer" class="footer">
         <el-button @click="showExportConfVisible = false">取 消</el-button>
         <el-button type="primary" @click="exportData">确 定</el-button>
       </span>
     </el-dialog>
-
 
     <el-dialog
       title="附件列表"
@@ -774,7 +755,6 @@
       :close-on-click-modal="false"
       width="500px"
     >
-
       <el-table highlight-current-row
                 :data="reduceFileList"
                 border
@@ -786,14 +766,10 @@
           label="附件名称"
         >
           <template slot-scope="scope">
-            <el-button type="text" size="small"
-                       @click="downLoadFile(scope.row)">{{scope.row.fileName}}
-            </el-button>
+            <el-button type="text" size="small" @click="downLoadFile(scope.row)">{{scope.row.fileName}}</el-button>
           </template>
         </el-table-column>
-
       </el-table>
-
     </el-dialog>
   </div>
 </template>
@@ -823,6 +799,8 @@
     remoweDataList
   } from '@/common/js/relief-management.js'
   import {baseURL} from '@/common/js/request.js';
+  import {pageSizes} from "@/common/js/const"
+
   export default {
     name: 'reliefManagement',
     components: {
@@ -830,6 +808,7 @@
     },
     data() {
       return {
+        pageSizes,
         loadingSeqNo: false,
         seqNoList: [],
         reduceFileVisible:false,
@@ -1424,19 +1403,19 @@
 
 <style lang="scss">
   #relief-management {
-    .el-tabs__content {
-      margin-bottom: 40px;
-      overflow-y: auto;
-    }
+    // .el-tabs__content {
+    //   margin-bottom: 40px;
+    //   overflow-y: auto;
+    // }
 
-    .pagination-wrap {
-      position: fixed;
-      bottom: 0;
-      z-index: 100;
-      min-height: 40px;
-      background-color: white;
-      width: 100%;
-    }
+    // .pagination-wrap {
+    //   position: fixed;
+    //   bottom: 0;
+    //   z-index: 100;
+    //   min-height: 40px;
+    //   background-color: white;
+    //   width: 100%;
+    // }
 
     .pad {
       .el-checkbox {
@@ -1459,5 +1438,3 @@
     }
   }
 </style>
-
-

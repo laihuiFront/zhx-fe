@@ -1,5 +1,5 @@
 <template>
-  <div id="litigation-apply" class="page-wraper-sub">
+  <div id="litigation-apply">
     <el-form ref="form" :model="form" :inline="true" class="query-wrap queryStyle">
       <el-form-item>
         <el-input v-model="form.legalNo" placeholder="请输入案号" clearable></el-input>
@@ -8,23 +8,20 @@
         <el-input v-model="form.cstName" placeholder="请输入姓名" clearable></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="search">查询</el-button> 
-        <el-button type="primary" icon="el-icon-refresh" @click="clench">重置</el-button> 
+        <el-button type="primary" icon="el-icon-search" @click="search">查询</el-button>
+        <el-button type="primary" icon="el-icon-refresh" @click="clench">重置</el-button>
       </el-form-item>
       <el-form-item class="operation-item">
         <el-button type="primary" v-has="'添加诉讼案件'" @click="addDataform">添加诉讼案件</el-button>
       </el-form-item>
     </el-form>
    <el-table highlight-current-row v-loading="tableLoad"
-    class="table-wrap"
-    height="1"
-             highlight-current-row
     :data="DataList"
     border
     stripe
-          tooltip-effect="dark"
-          @sort-change="handleSort"
-     style="width: 100%">
+    tooltip-effect="dark"
+    @sort-change="handleSort"
+    style="width: 100%">
     <el-table-column
       prop="legalStatusMsg"
       align="center"
@@ -179,15 +176,14 @@
     </el-table-column>
   </el-table>
   	 <el-pagination
-      class="pagination-wrap"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage4"
-      :page-sizes="[100, 500, 2000, 10000, 1000000]"
+      :page-sizes="pageSizes"
       :page-size="pages"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
-    </el-pagination>	
+    </el-pagination>
   	<el-dialog
     :title="dialogTitle"
     :visible.sync="dialogVisible"
@@ -258,7 +254,6 @@
             </el-form-item>
           </div></el-col>
       </el-row>
-
 
       <el-row :gutter="20">
         <el-col :span="8">
@@ -471,9 +466,8 @@
             </el-form-item>
           </div></el-col>
         <el-col :span="8">
-          <div class="grid-content bg-purple">
-
-          </div></el-col>
+          <div class="grid-content bg-purple"></div>
+        </el-col>
       </el-row>
 
       <el-row :gutter="20">
@@ -491,8 +485,8 @@
             <el-form-item label="判决书">
               <el-input type="textarea" style="width: 280%;" placeholder="请输入判决书" v-model="formInline.judgment"></el-input>
             </el-form-item>
-          </div></el-col>
-
+          </div>
+        </el-col>
       </el-row>
 
       <el-row :gutter="20">
@@ -505,7 +499,6 @@
         </el-col>
       </el-row>
     </el-form>
-
 
     <div v-if=isTrue>
       <el-row :gutter="20">
@@ -574,9 +567,7 @@
               <el-form :model="ruleForm" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-form-item label="办案进度"
                               prop="progress"
-                              :rules="{
-      required: true, message: '请选择办案进度', trigger: 'change'
-    }">
+                              :rules="{required: true, message: '请选择办案进度', trigger: 'change'}">
                   <el-select v-model="ruleForm.progress" filterable  placeholder="请选择办案进度" clearable>
                     <el-option
                       v-for="item in progressList"
@@ -588,9 +579,7 @@
                 </el-form-item>
                 <el-form-item label="办理时间"
                               prop="handleDate"
-                              :rules="{
-       type: 'string', required: true, message: '请选择时间', trigger: 'change'
-    }">
+                              :rules="{type: 'string', required: true, message: '请选择时间', trigger: 'change'}">
                   <div class="block">
                     <el-date-picker
                       value-format="yyyy-MM-dd"
@@ -690,9 +679,7 @@
               <el-form :model="ruleForm1" ref="ruleForm1" :inline="true" label-width="180px" class="demo-ruleForm">
                 <el-form-item label="收费金额"
                               prop="fee"
-                              :rules="{
-      required: true, message: '收费不能为空', trigger: 'blur'
-    }">
+                              :rules="{required: true, message: '收费不能为空', trigger: 'blur'}">
                   <el-input v-model="ruleForm1.fee" placeholder="请输入收费金额"></el-input>
                 </el-form-item>
                 <el-form-item label="收费人">
@@ -711,9 +698,7 @@
 
                 <el-form-item label="收费日期"
                               prop="chargeDate"
-                              :rules="{
-       type: 'string', required: true, message: '请选择时间', trigger: 'change'
-    }">
+                              :rules="{type: 'string', required: true, message: '请选择时间', trigger: 'change'}">
                   <div class="block">
                     <el-date-picker
                       value-format="yyyy-MM-dd"
@@ -750,7 +735,6 @@
     <el-button type="primary" @click="submitForm('ruleForm1')">确 定</el-button>
   </span>
             </el-dialog>
-            </el-tab-pane>
           </el-tabs>
         </el-col>
       </el-row>
@@ -767,11 +751,11 @@
   :close-on-click-modal="false"
   >
 <el-form ref="checkform" :model="checkform" label-width="80px">
- 
+
   <el-form-item label="审批结果"
   	 prop="resource"
  		:rules="{
-      required: true, message: '请选择审批结果', trigger: 'change'  
+      required: true, message: '请选择审批结果', trigger: 'change'
     }">
     <el-radio-group v-model="checkform.resource">
       <el-radio :label="1">通过</el-radio>
@@ -781,7 +765,7 @@
      <el-form-item label="所属人"
      	 prop="owner"
  		:rules="{
-     required: true, message: '请选择所属人', trigger: 'change' 
+     required: true, message: '请选择所属人', trigger: 'change'
     }">
      <el-select v-model="checkform.owner" filterable  placeholder="请选择所属人" clearable>
     <el-option
@@ -802,12 +786,14 @@
 </template>
 
 <script>
-			import {dataList,remoweData,addData,PersonList,checkData,detaildata,saveHandle,saveFee,deleteHandle,deleteFee} from '@/common/js/litigation-apply.js'	
+import {dataList,remoweData,addData,PersonList,checkData,detaildata,saveHandle,saveFee,deleteHandle,deleteFee} from '@/common/js/litigation-apply.js'
+import {pageSizes} from "@/common/js/const"
 
 export default {
   name: 'litigationApply',
   	data(){
   		return{
+        pageSizes,
         tableLoad:false,
   			payMethodList:[{id:1,value:"现金"},{id:2,value:"支票"},{id:3,value:"邮政汇款"},{id:4,value:"银行电汇"},{id:5,value:"网上支付"},{id:6,value:"其他"},],
   			feeTypeList:[],
@@ -878,13 +864,13 @@ export default {
         }).catch(() => {
         });
       },
- 
+
 handleSort( {column,prop,order}){
       this.sort = order==null?"desc":order.replace("ending","")
       this.orderBy = prop==null?"id":prop
       this.search()
 
-    },   	
+    },
    	  submitFormCheck(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
@@ -902,7 +888,7 @@ handleSort( {column,prop,order}){
             message: '删除成功!'
           });
           this.showmessage(this.formInline)
-          })    
+          })
    	},
    	deleteFeeList(id){
    		deleteFee(id).then((response)=>{
@@ -911,7 +897,7 @@ handleSort( {column,prop,order}){
             message: '删除成功!'
           });
           this.showmessage(this.formInline)
-          })    
+          })
    	},
    	submitForm1(formName) {
         this.$refs[formName].validate((valid) => {
@@ -948,7 +934,7 @@ handleSort( {column,prop,order}){
           this.showmessage(this.formInline)
           this.ruleForm1={}
            this.changeId=''
-          })    
+          })
    	},
    	edithandleList(row){
    		this.ruleForm=row
@@ -965,7 +951,7 @@ handleSort( {column,prop,order}){
           this.showmessage(this.formInline)
           this.ruleForm={}
           this.changeId=''
-          })    
+          })
    	},
    	handleClick(tab, event) {
         console.log(tab, event);
@@ -974,7 +960,7 @@ handleSort( {column,prop,order}){
    		detaildata(row.id).then((response)=>{
       this.dialogVisible=true
    		this.dialogTitle="详情"
-   		this.isTrue=true 
+   		this.isTrue=true
    		this.handleList=response.handleList
    		this.feeList=response.feeList
    		this.formInline=response.legalEntity
@@ -995,7 +981,7 @@ handleSort( {column,prop,order}){
    		this.dialogTitle="新增"
    		this.isTrue=false
    		this.addId=''
-   		
+
    	},
    	checkresource(){
    		checkData(this.checkform,this.checkId).then((response)=>{
@@ -1007,7 +993,7 @@ handleSort( {column,prop,order}){
           this.search()
           this.formInline={}
           this.checkId=''
-          })    
+          })
    	},
    	SaveData(){
    		addData(this.formInline,this.addId).then((response)=>{
@@ -1019,7 +1005,7 @@ handleSort( {column,prop,order}){
           this.search()
           this.formInline={}
           this.addId=""
-})    
+})
    	},
    	checkDatasure(id){
    		this.dialogVisible1=true;
@@ -1043,7 +1029,7 @@ handleSort( {column,prop,order}){
    		this.addId=row.id
    	},
    	deleteData(id){
-         	let _self=this 
+         	let _self=this
         _self.$confirm('是否删除?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -1062,7 +1048,7 @@ handleSort( {column,prop,order}){
             type: 'success',
             message: '已取消删除!'
           });
-        });  
+        });
    	},
    	clench(){
   		this.form={}
@@ -1074,7 +1060,7 @@ handleSort( {column,prop,order}){
              // this.pages = response.pages
               this.total = response.total
               this.tableLoad = false
-})    
+})
   	},
   		handleSizeChange(val){
 	   this.pageSize=val
@@ -1089,7 +1075,7 @@ this.pageNum=val;
               this.DataList=response.list
               this.total = response.total
               this.tableLoad = false
-})    
+})
                 PersonList().then((response)=>{
           	this.PersonDataList=response
           })
@@ -1109,8 +1095,6 @@ this.pageNum=val;
     border-top: 1px solid #0080ff  !important;
     border-bottom: 1px solid #0080ff  !important;
   }
-	 
+
 }
 </style>
-
-
