@@ -56,7 +56,7 @@
       @current-change="onClickQuery"
       :current-page.sync="queryForm.pageNum"
       :page-size.sync="queryForm.pageSize"
-      layout="prev, pager, next, jumper,total, sizes"
+      layout="total, sizes, prev, pager, next, jumper"
       :page-sizes="[50, 100, 200, 500]"
       :total="total"
       class="pagination-wrap">

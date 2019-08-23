@@ -70,14 +70,19 @@
       <el-table-column min-width="150"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="remark" label="备注" show-overflow-tooltip></el-table-column>
       <el-table-column width="120"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="dataCase.mVal" label="佣金比例" show-overflow-tooltip></el-table-column>
       <el-table-column width="130"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="dataCase.commissionMoneyMsg" label="佣金" show-overflow-tooltip></el-table-column>
-      <el-table-column label="操作" width="100"  v-if="queryForm.recordStatus==='0'"  align="center">
+      <el-table-column label="操作" width="150"  v-if="queryForm.recordStatus==='0'"  align="center">
         <template slot-scope="scope">
           <el-button
             v-has="'撤销还款'"
             type="text"
             @click="showClickRevoke(scope.row)"
           >撤销还款</el-button>
+          <el-button
+            type="text"
+            @click="editMethod(scope.row)"
+          >编辑</el-button>
         </template>
+     
       </el-table-column>
     </el-table>
     <el-pagination
@@ -85,7 +90,7 @@
       @current-change="onClickQuery"
       :current-page.sync="queryForm.pageNum"
       :page-size.sync="queryForm.pageSize"
-      layout="prev, pager, next, jumper,total, sizes"
+      layout="total, sizes, prev, pager, next, jumper"
       :page-sizes="[100, 500, 2000, 10000, 1000000]"
       :total="total"
       class="pagination-wrap"
@@ -97,12 +102,13 @@
       :close-on-click-modal="false"
       width="50%"
     >
+        <!-- ref="ruleForm" -->
       <el-form
         :model="recordInfo"
         :rules="rules"
-        ref="ruleForm"
         label-width="120px"
         class="add-form"
+        ref="recordInfo" 
       >
         <el-form-item label="个案案序列号" prop="dyga">
           <el-select
@@ -140,8 +146,8 @@
             placeholder="请选择还款日期"
           ></el-date-picker>
         </el-form-item>
-        <el-form-item label="确认还款金额" prop="dyga">
-          <el-input v-model="recordInfo.repayMoney" clearable placeholder="请输入确认还款金额"></el-input>
+        <el-form-item label="确认还款" prop="repayMoney">
+          <el-input v-model="recordInfo.repayMoney" clearable placeholder="请输入确认还款"></el-input>
         </el-form-item>
         <el-form-item label="还款人" prop="dyga">
            <el-input v-model="recordInfo.repayUser" clearable placeholder="请输入还款人"></el-input>
@@ -156,20 +162,13 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="还款备注" prop="dyga" class="whole">
-          <el-select v-model="recordInfo.remark" clearable placeholder="请选择还款备注">
-            <el-option
-              v-for="item in payRemark"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id"
-            ></el-option>
-          </el-select>
+        <el-form-item label="备注" prop="dyga" class="whole">
+          <el-input v-model="recordInfo.remark" clearable placeholder="请输入还款备注"/>      
         </el-form-item>
       </el-form>
       <span slot="footer" class="footer">
         <el-button @click="onClickCancel">取 消</el-button>
-        <el-button type="primary" @click="onClickSave">保 存</el-button>
+        <el-button type="primary" @click="onClickSave('recordInfo')">保 存</el-button>
       </span>
     </el-dialog>
     <el-dialog
@@ -296,6 +295,53 @@
         <el-button type="primary" @click="exportExcel">确 定</el-button>
       </span>
     </el-dialog>
+    <el-dialog
+      title="还款记录"
+      :visible.sync="showEditForm"
+      width="40%"
+    >
+      <el-form     
+        :model="repayRecordInfo"  
+        label-width="200px"
+        ref="repayRecordInfo"
+        :rules="repayRecordInfoRules"
+      >
+        <el-form-item label="确认还款" prop="repayMoney">
+          <el-input v-model="repayRecordInfo.repayMoney" clearable placeholder="请输入确认还款" class="fixWidth">
+          </el-input>
+        </el-form-item>
+          <el-form-item label="还款日期" prop="repayDate">
+          <el-date-picker
+           v-model="repayRecordInfo.repayDate"
+            clearable          
+            type="date"
+            value-format="yyyy-MM-dd"
+            placeholder="请选择还款日期"
+            class="fixWidth"
+          ></el-date-picker>
+          </el-form-item>
+        <el-form-item label="还款人" prop="repayUser">
+           <el-input v-model="repayRecordInfo.repayUser" clearable placeholder="请输入还款人" class="fixWidth"></el-input>
+        </el-form-item>
+         <el-form-item label="还款方式" >
+          <el-select v-model="repayRecordInfo.repayType.id"  clearable placeholder="请选择还款方式" class="fixWidth">
+            <el-option
+              v-for="item in payMethod"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="备注" prop="remark">
+          <el-input v-model="repayRecordInfo.remark"  clearable placeholder="请输入备注" class="fixWidth"></el-input>
+        </el-form-item>
+      </el-form>
+        <span slot="footer" class="footer">
+          <el-button @click="backForm">取 消</el-button>
+          <el-button type="primary" @click="saveEditForm('repayRecordInfo')">保 存</el-button>
+        </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -314,7 +360,10 @@ import {getRepayRecordList,
         expAllRepayRecord,
         expCurrentRepayRecord,
         getSeqNoList,
-        getRepayTypeList} from '@/common/js/api-sync'
+        getRepayTypeList,
+        findById,
+        updateRepayRecord
+        } from '@/common/js/api-sync'
 export default {
   name: 'synergisticRepaymentRecord',
   components:{
@@ -343,7 +392,7 @@ export default {
         editVisible: false
       },
       rules: {
-
+          repayMoney : [{ required: true, message: '确认还款不能为空', trigger: 'blur' }]
       },
       recordInfo:{
         dataCase:{id:null},
@@ -368,7 +417,19 @@ export default {
       cancelFlag:false,
       showCancel2:false,
       recordId:null,
-      repayTypeList:[]
+      repayTypeList:[],
+      showEditForm:false,
+      repayRecordInfo:{
+      repayType:{
+        id:null
+       }
+      },
+      repayTypeId:{
+        id:''
+      },
+      repayRecordInfoRules:{
+        repayMoney : [{ required: true, message: '确认还款不能为空', trigger: 'blur' }]
+      }
     }
   },
   created() {
@@ -486,6 +547,9 @@ export default {
       })
     },
     onClickAdd(){
+      if (this.$refs['recordInfo']) {
+        this.$refs['recordInfo'].clearValidate()
+      }
       this.recordInfo = {
         dataCase:{id:null},
         collectUser:{id:null},
@@ -646,12 +710,22 @@ export default {
     onClickCancel(){
       this.$set(this.dialogData, 'editVisible', false)
     },
-    onClickSave(){
+    onClickSave(formName){
+      this.fullscreenLoading=true
+       this.$refs[formName].validate((valid) => {
+        if (valid) {  
       saveRepayRecord(this.recordInfo).then(data => {
         this.$message('新增还款记录成功')
         this.onClickQuery()
         this.$set(this.dialogData, 'editVisible', false)
-      })
+        this.fullscreenLoading=false
+       })
+      } else {
+        console.log('error submit!!')
+        this.fullscreenLoading=false
+        return false
+      }
+     })
     },
     seqNoQuery(query){
       this.loadingSeqNo = true
@@ -663,6 +737,51 @@ export default {
         this.seqNoList = data.list
         this.loadingSeqNo = false
       })
+    },
+    editMethod(row){
+      findById(row.id).then(res => {
+        if (res) {
+          if (this.$refs['repayRecordInfo']) {
+            this.$refs['repayRecordInfo'].clearValidate()
+          }
+          if(res.repayType==undefined){
+            res.repayType=this.repayTypeId
+             this.repayRecordInfo = res       
+          }else{
+            this.repayRecordInfo = res
+          }
+           this.showEditForm=true
+        } else {
+          this.$message({
+            type: 'error',
+            message: '查询失败'
+          })
+        }
+      })            
+    },
+    // 操作列中编辑按钮，记录修改功能
+    saveEditForm(formName) {
+       this.fullscreenLoading=true
+      this.$refs[formName].validate((valid) => {
+        if (valid) {   
+          updateRepayRecord(this.repayRecordInfo).then(response => {         
+              this.$message({
+                type: 'success',
+                message: '保存成功'
+              })
+            this.fullscreenLoading=false
+              this.showEditForm = false
+              this.onClickQuery()        
+            })
+        } else {
+          console.log('error submit!!')
+          this.fullscreenLoading=false
+          return false
+        }
+      })
+    },
+    backForm(){     
+      this.showEditForm = false
     }
   }
 }
@@ -702,9 +821,9 @@ export default {
     .el-form-item {
       display: flex;
       width: 50%;
-      &.whole{
-        width: 100%;
-      }
+      // &.whole{
+      //   width: 100%;
+      // }
       .el-form-item__content {
         flex: 1;
         margin-left: 0 !important;
@@ -744,6 +863,12 @@ export default {
       z-index: 100;
       overflow: hidden;
     }
+  }
+  .fixWidth{
+    width: 220px;
+  }
+  .el-dialog__footer {
+    text-align: center;
   }
 }
 </style>

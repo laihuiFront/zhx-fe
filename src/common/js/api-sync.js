@@ -222,3 +222,21 @@ export const getUserTree = function(){
   })
 }
 
+export function findById(id){
+  return request({
+    url: '/repayRecord/queryOne',
+    method: 'post',
+    params:{
+      id
+    }
+  })
+}
+export function updateRepayRecord(data){
+  return request({
+    url: '/repayRecord/update',
+    method: 'post',
+    data
+  })
+}
+
+

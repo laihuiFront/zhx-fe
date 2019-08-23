@@ -134,8 +134,12 @@
               :disabled="true"
             ></el-input>
           </el-form-item>
-          <el-form-item >
-          </el-form-item>
+             <el-form-item label="最低还款额">
+              <el-input
+                v-model="caseDetail.minimumPayment"
+                :disabled="true"
+              ></el-input>
+            </el-form-item>
           <el-form-item label="最新欠款" >
             <el-input
               v-model="caseDetail.interestDate"
@@ -535,12 +539,6 @@
             <el-form-item label="委案期数">
               <el-input
                 v-model="caseDetail.entrustPeriods"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="最低还款额">
-              <el-input
-                v-model="caseDetail.minimumPayment"
                 :disabled="true"
               ></el-input>
             </el-form-item>
