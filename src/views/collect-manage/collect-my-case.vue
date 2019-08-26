@@ -592,7 +592,7 @@
           style="width: 100%;"
           :row-class-name="rowColor"
           :cell-style="{ whiteSpace: 'nowrap' }"
-          @row-dblclick="showDetail"
+          @row-dblclick="showCase"
           @selection-change="handleSelectionChange"
           @sort-change="sortHandle"
         >
@@ -608,13 +608,13 @@
             align="center"
           >
             <template slot-scope="scope">
-              <el-button v-if="scope.row.caseStatus==3" type="text" style ="color:#999999;" size="small"  @click="showCase(scope.row.id, scope.row.name, scope.row.seqno)">
+              <el-button v-if="scope.row.caseStatus==3" type="text" style ="color:#999999;" size="small"  @click="showCase(scope.row)">
                 {{scope.row.seqno}}
               </el-button>
-              <el-button v-if="scope.row.caseStatus==4" type="text" style ="color:#999999;text-decoration:line-through;" size="small"  @click="showCase(scope.row.id, scope.row.name, scope.row.seqno)">
+              <el-button v-if="scope.row.caseStatus==4" type="text" style ="color:#999999;text-decoration:line-through;" size="small"  @click="showCase(scope.row)">
                 {{scope.row.seqno}}
               </el-button>
-              <el-button v-if="scope.row.caseStatus!=3 && scope.row.caseStatus!=4" type="text" size="small" @click="showCase(scope.row.id, scope.row.name, scope.row.seqno)">
+              <el-button v-if="scope.row.caseStatus!=3 && scope.row.caseStatus!=4" type="text" size="small" @click="showCase(scope.row)">
                 {{scope.row.seqno}}
               </el-button>
             </template>
@@ -711,15 +711,12 @@ import {
   clientCurrent,
   addCollectStatus
 } from "@/common/js/collect-my-case";
-//import CaseDetail from "@/views/data-manage/detail";
-const CaseDetail = () => import("@/views/data-manage/detail");
 import {pageSizes} from "@/common/js/const"
 
 export default {
   components: {
     tab2,
-    tab3,
-    CaseDetail
+    tab3
   },
   name: "collectMyCase",
   data() {
@@ -1011,7 +1008,7 @@ export default {
     }
   },
   created() {
-    this.init();
+    this.searchHandle();
     this.queryConfList();
     batchNo().then((data)=>{
       this.val1_data = data.reduce((acc,item)=>{
@@ -1114,7 +1111,7 @@ export default {
     getMainDataForQuery() {
       this.tableLoad = true;
       pageMyCase(this.realFetchFormData).then(data => {
-        sessionStorage.setItem(
+        localStorage.setItem(
           "mine",
           JSON.stringify(data.list)
         );
@@ -1247,34 +1244,19 @@ export default {
           : "")
       );
     },
-    showCase(id, name, seqNo) {
-      this.$router.push({
-        path: "case-detail",
-        query: {
-          id,
-          name,
-          mycase:true,
-          showNext:true,
-          mineCase:true,
-          seqNo
-        }
-      });
-    },
-    showDetail(row) {
-      let id = row.id;
-      let name = row.name;
-      let seqNo = row.seqno;
-      this.$router.push({
-        path: "case-detail",
-        query: {
-          id,
-          name,
-          mycase:true,
-          showNext:true,
-          mineCase:true,
-          seqNo
-        }
-      });
+    showCase(row) {
+      window.open(`#/zhx/case-detail?id=${row.id}&type=1`)
+      // this.$router.push({
+      //   path: "case-detail",
+      //   query: {
+      //     id,
+      //     name,
+      //     mycase:true,
+      //     showNext:true,
+      //     mineCase:true,
+      //     seqNo
+      //   }
+      // });
     },
     resetForm(formName) {
       //this.$refs[formName].resetFields();
@@ -1330,9 +1312,6 @@ export default {
       getEnum({ name }).then(data => {
         this[target] = this.transform(data, transData);
       });
-    },
-    init() {
-      this.getMainDataForQuery();
     },
   },
 
@@ -1425,10 +1404,10 @@ body #collect-my-case .tab2{
 /*  .el-table .el-table__body-wrapper {
     overflow-x: hidden;
   }*/
-  .el-tabs__content{
-    margin-bottom: 40px;
-    overflow-y: auto;
-  }
+  // .el-tabs__content{
+  //   margin-bottom: 40px;
+  //   overflow-y: auto;
+  // }
   // .pagination-wrap{
   //   position: fixed;
   //   bottom: 0;

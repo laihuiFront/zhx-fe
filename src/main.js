@@ -103,11 +103,11 @@ router.beforeEach((to, from, next) => {
           .dispatch("getUserInfoAction")
           .then(() => {
             store.dispatch("getUserMenu").then(() => {
-              if (to.path.includes("case-detail")) {
-                store.dispatch("initCaseDetailPage", to.query);
-              } else {
+              // if (to.path.includes("case-detail")) {
+              //   store.dispatch("initCaseDetailPage", to.query);
+              // } else {
                 store.dispatch("initPageMenu", to.path);
-              }
+              // }
               next();
             });
           })

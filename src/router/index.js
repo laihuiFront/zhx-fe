@@ -472,20 +472,15 @@ export default new Router({
           },
           name: 'synergistic-canceld'
         },
-
-        {
-          path: 'case-detail',
-          component: resolve => {
-            spinRoute.show();
-            require(['@/views/data-manage/detail'], spinRoute.resolve(resolve))
-          },
-          name: 'case-detail'
-        },
       ]
     },
     {
       path: '/login',
       component: () => import('@/views/login/login')
+    },
+    {
+      path: '/zhx/case-detail',
+      component: () => import('@/views/data-manage/detail')
     }
   ]
 })

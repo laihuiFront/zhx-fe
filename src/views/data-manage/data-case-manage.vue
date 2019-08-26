@@ -1345,8 +1345,6 @@
 </template>
 
 <script>
-  //import CaseDetail from './detail'
-  const CaseDetail = () => import('@/views/data-manage/detail');
   import {
     dataList,
     getSynergyTypeList,
@@ -1396,9 +1394,9 @@
 
   export default {
     name: 'dataCaseManage',
-    components: {
-      CaseDetail
-    },
+    // components: {
+    //   CaseDetail
+    // },
     data() {
       return {
         pageSizes,
@@ -2751,14 +2749,15 @@
         })
       },
       editCase(id, name, seqNo) {
-        this.$router.push({
-          path: 'case-detail',
-          query: {
-            id,
-            name,
-            seqNo
-          }
-        })
+        window.open(`#/zhx/case-detail?id=${id}`)
+      //   this.$router.push({
+      //     path: 'case-detail',
+      //     query: {
+      //       id,
+      //       name,
+      //       seqNo
+      //     }
+      //   })
       },
       onClickSelectDept() {
         if (this.departmentVisible){

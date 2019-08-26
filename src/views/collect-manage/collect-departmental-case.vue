@@ -1,9 +1,7 @@
 <template>
   <div id="collect-departmental-case" v-loading="pageLoading" element-loading-text="拼命加载中">
     <el-tabs v-model="activeName"  :class="{tab2:tabnum}" class="tabs-wrap">
-      <el-tab-pane label="部门案件" name="tab1"
-                   style="height: 100%"
-      >
+      <el-tab-pane label="部门案件" name="tab1" style="height: 100%">
         <el-dialog
           :title="detailTitle"
           class="dialog-wrap"
@@ -52,7 +50,6 @@
                 label-width="20px"
                 class="query-wrap queryStyle"
               >
-
                 <el-form-item prop="val31" v-if="queryConf.bm || queryConfFlag">
                   <el-input v-model="deptName" width="200" @focus="onClickSelectUser" clearable placeholder="请选择部门"></el-input>
                 </el-form-item>
@@ -589,7 +586,6 @@
             show-overflow-tooltip
             align="center"
           >
-
           </el-table-column>
           <el-table-column
             label="个案序列号"
@@ -744,13 +740,11 @@
   import { pageMyCase,getEnum,markColor ,saveSelectFilter,selectByModule,addSynergy,batchNo,addCollectStatus,listOrganization,clientCurrent} from
       "@/common/js/collect-my-case";
   import {role,getUserTree} from '@/common/js/collect-departmental-case'
-  const CaseDetail = () => import('@/views/data-manage/detail');
   import {pageSizes} from "@/common/js/const"
 
   export default {
     components: {
-      tab2,
-      CaseDetail
+      tab2
     },
     name: "collectMyCase",
     data() {
@@ -1177,21 +1171,21 @@
         this.showQueryConfVisible = true;
       },
       showCase(row) {
-        debugger;
-        let id = row.id
-        let name = row.name
-        let seqNo = row.seqno
-        this.$router.push({
-          path:'case-detail',
-          query:{
-            id,
-            name,
-            mycase:true,
-            showNext:true,
-            deptCase:true,
-            seqNo
-          }
-        })
+        window.open(`#/zhx/case-detail?id=${row.id}&type=2`)
+        // let id = row.id
+        // let name = row.name
+        // let seqNo = row.seqno
+        // this.$router.push({
+        //   path:'case-detail',
+        //   query:{
+        //     id,
+        //     name,
+        //     mycase:true,
+        //     showNext:true,
+        //     deptCase:true,
+        //     seqNo
+        //   }
+        // })
       },
       formatMoney(value,places, symbol, thousand, decimal) {
         var placesTemp = 0 ;
@@ -1255,7 +1249,7 @@
           if(!data){
             data = {total:0,list:[]}
           }
-          sessionStorage.setItem(
+          localStorage.setItem(
             "dept",
             JSON.stringify(data.list)
           );
@@ -1505,13 +1499,13 @@
       flex:none;
     }
   #collect-departmental-case {
-    .el-tabs__content{
-      margin-bottom: 40px;
-      overflow-y: auto;
-    }
-    .el-table th.gutter{
-      display: table-cell!important;
-    }
+    // .el-tabs__content{
+    //   margin-bottom: 40px;
+    //   overflow-y: auto;
+    // }
+    // .el-table th.gutter{
+    //   display: table-cell!important;
+    // }
     // height: 100%;
     // .el-table .el-table__body-wrapper{
     //   height: calc(100% - 50px);
@@ -1521,10 +1515,6 @@
     }*/
     .el-table th>.cell{
       white-space: nowrap;
-    }
-    .el-tabs__content{
-      margin-bottom: 40px;
-      overflow-y: auto;
     }
     // .pagination-wrap{
     //   position: fixed;

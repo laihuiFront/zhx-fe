@@ -79,11 +79,8 @@
               class="inputDiv"
               style="font-size: 11px;"
             >
-
               <span v-if="caseDetail.realReturnTime==null || caseDetail.realReturnTime==''">{{ caseDetail.expectTime }}</span>
-              <span v-else>{{ caseDetail.expectTime }}(已于{{
-                    caseDetail.realReturnTime
-                  }}退案)</span>
+              <span v-else>{{ caseDetail.expectTime }}（已于{{caseDetail.realReturnTime}}退案）</span>
             </div>
           </el-form-item>
           <el-form-item label="委案金额">
@@ -111,9 +108,7 @@
           <el-form-item label="已还款">
             <div class="inputDiv" style="font-size: 12px;">
                 <span
-                >{{ caseDetail.enRepayAmtMsg }}(委案余额:{{
-                    caseDetail.balanceMsg
-                  }})</span
+                >{{ caseDetail.enRepayAmtMsg }}（委案余额:{{caseDetail.balanceMsg}}）</span
                 >
               <span
                 style="color: red;"
@@ -147,14 +142,8 @@
             ></el-input>
           </el-form-item>
           <el-form-item label="逾期天数">
-
             <div class="inputDiv" style="font-size: 12px;">
-                <span
-                >{{ caseDetail.overdueDays }}(最新逾期天数:{{
-                    caseDetail.overdueNewDays
-                  }})</span
-                >
-
+              <span>{{ caseDetail.overdueDays }}（最新逾期天数:{{caseDetail.overdueNewDays}}）</span>
             </div>
           </el-form-item>
           <el-form-item label="已还期数" >
@@ -201,10 +190,9 @@
           <el-form-item >
           </el-form-item>
           <el-form-item label="单位名称" >
-            <el-input
-              v-model="caseDetail.unitName"
-              :disabled="true"
-            ></el-input>
+            <div class="inputDiv" style="font-size: 12px;">
+              <span>{{ caseDetail.unitName}}</span>
+            </div>
           </el-form-item>
           <el-form-item label="单位地址" >
             <div class="inputDiv" style="font-size: 12px;">
@@ -1378,7 +1366,7 @@
                            (caseDetail.currentuser || mycaseFlag) &&
                             scope.row.telStatusMsg !== '停止跟进'
                         "
-                       
+
                       @click="stopTel(scope.row.id)"
                     >停止跟进
                     </el-button
@@ -1388,7 +1376,7 @@
                       v-if="
                            (caseDetail.currentuser || mycaseFlag) &&
                             scope.row.telStatusMsg == '停止跟进'
-                        "                       
+                        "
                       @click="resetTel(scope.row.id)"
                     >恢复跟进
                     </el-button
@@ -2025,7 +2013,7 @@
             >
               <div class="first">
                 <p style="line-height: 30px">承诺还款记录</p>
-                <el-table highlight-current-row width="100%" border stripe  height="1" show-overflow-tooltip style="min-height:200px;" :data="memorizeList2">
+                <el-table highlight-current-row width="100%" border stripe show-overflow-tooltip :data="memorizeList2">
                   <el-table-column
                     prop="repayAmtMsg"
                     show-overflow-tooltip
@@ -2054,7 +2042,7 @@
                   待银行查账记录
                   <el-button type="text" @click="addCpInfo">新增</el-button>
                 </p>
-                <el-table highlight-current-row width="100%;" border stripe  height="1" show-overflow-tooltip style="min-height:200px;" :data="cpList">
+                <el-table highlight-current-row width="100%;" border stripe show-overflow-tooltip :data="cpList">
                   <el-table-column
                     prop="cpMoneyMsg"
                     align="center"
@@ -2294,10 +2282,6 @@
                 :data="logList"
                 border
                 stripe
-                height="1"
-                max-height=350
-                style="width: 100%;min-height: 200px;"
-                class="table-wrap"
               >
                 <el-table-column
                   prop="opTime"
@@ -2626,8 +2610,10 @@
             <el-form-item label="电话" prop="mobile">
               <el-col :span="16">
                 <el-input
-                  v-model="batchForm.mobile" clearable
+                  v-model="batchForm.mobile"
+                  clearable
                   placeholder="请输入电话号码"
+                  class="phoneNumber"
                 ></el-input>
               </el-col>
               <el-col :span="4">
@@ -2749,16 +2735,14 @@
             :data="syncMemorizeList"
             style="width: 97%"
             border
-            height="550px"
             stripe
-            class="table-wrap"
           >
             <el-table-column
               prop="createTime"
               sortable
               :sort-orders="['ascending','descending']"
-              width="120"
-              label="时间"
+              width="130"
+              label="催收时间"
               show-overflow-tooltip
             ></el-table-column>
             <el-table-column
@@ -2777,7 +2761,7 @@
             <el-table-column
               prop="mobile"
               width="120"
-              label="电话/地址"
+              label="电话"
               show-overflow-tooltip
             ></el-table-column>
             <el-table-column
@@ -3235,15 +3219,12 @@
                   placeholder="请输入联系方式"
                   clearable
                 ></el-input>
-
               </el-form-item>
-
             </div>
           </el-col>
           <el-col :span="12">
             <div class="grid-content bg-purple">
               <el-form-item label=" ">
-
                 <el-select
                   v-model="messageForm.contactWay2"
                   placeholder="请选择" @change="changeWay"
@@ -3258,14 +3239,11 @@
                   </el-option>
                 </el-select>
               </el-form-item>
-
             </div>
           </el-col>
-
         </el-row>
 
         <el-row :gutter="24">
-
           <el-col :span="12">
             <div class="grid-content bg-purple">
               <el-form-item label="是否共债">
@@ -3315,7 +3293,6 @@
         </el-row>
 
         <el-row :gutter="24">
-
           <el-col :span="12">
             <div class="grid-content bg-purple">
               <el-form-item label="承诺还款日期">
@@ -3762,7 +3739,6 @@
       </span>
     </el-dialog>
 
-
     <el-dialog
       title="催收小结(带*为必填字段)"
       :visible.sync="showCollectInfoVisible"
@@ -3800,7 +3776,7 @@
       class="addr-dialog-wrap"
       :close-on-click-modal="false"
     >
-      <div style="    padding-top: 10px;">
+      <div style="padding-top: 10px;">
         <el-input
           type="textarea"
           :rows="4"
@@ -3850,7 +3826,7 @@
       class="addr-dialog-wrap warninghead"
       :close-on-click-modal="false"
     >
-      <div style="    padding-top: 10px ;">
+      <div style="padding-top: 10px ;">
         <el-input
           type="textarea"
           :rows="4"
@@ -3970,7 +3946,6 @@
                 border
                 stripe
       >
-
         <el-table-column
           prop="fileName"
           align="center"
@@ -3986,9 +3961,7 @@
             <el-button type="text" size="small" @click="deleteReduceFile(scope.row.id)">删除</el-button>
           </template>
         </el-table-column>
-
       </el-table>
-
     </el-dialog>
   </div>
 </template>
@@ -4075,13 +4048,11 @@
     //   }
     // },
     computed: {
-      ...mapGetters(["userInfo"]),
-      id() {
-        return this.$route.query.id;
-      }
+      ...mapGetters(["userInfo"])
     },
     data() {
       return {
+        id: null,
         seq:'',
         action: baseURL,
         historyType:"1",
@@ -4183,7 +4154,8 @@
         repayTypeList: [],
         repayRemarkList: [],
         ptpList: [],
-        $routeKey: ''
+        $routeKey: '',
+        caseType: null
       };
     },
 
@@ -4417,171 +4389,63 @@
 
       },
       lastCase(){
-        let id = null;
-        let tempId = null;
-        let name = null;
-        let seqNo = null;
-        let isIn = true;
-        var myArray=new Array()
-        let data = null;
-        if (this.mineCase){
-          data = sessionStorage.getItem(
-            "mine"
-          );
-        }
-        if (this.deptCase){
-          data = sessionStorage.getItem(
-            "dept"
-          );
-        }
-        if (data==null || data==""){
-          this.$message({
-            type: "info",
-            message: "当前查询结果无数据!"
-          });
-          return ;
-        }
-        myArray = JSON.parse(data);
-        if (myArray==null || myArray.length==0){
-          this.$message({
-            type: "info",
-            message: "当前查询结果无数据!"
-          });
-          return ;
-        }
-        for (var i=0;i<myArray.length;i++){
-            if (this.id==myArray[i].id){
-              isIn = false;
-               if (i==0){
-                  //当前列表没有下一条
-                 this.$message({
-                   type: "info",
-                   message: "当前列表没有上一条!"
-                 });
-                 return ;
-               }
-              tempId = myArray[i-1].id;
-            }
-        }
-        if (isIn){
-          this.$message({
-            type: "info",
-            message: "案件不在当前查询结果中!"
-          });
-          return ;
-        }
-        let thisData = {id:tempId};
-        lastCase(thisData).then(data => {
-          debugger;
-          id = data.id;
-          name = data.name;
-          seqNo = data.seqNo;
-          if(this.mineCase){
-            this.$router.push({
-              path: 'case-detail',
-              query: {
-                id,
-                name,
-                mycase:this.$route.query.mycase,
-                showNext:this.$route.query.showNext,
-                mineCase:true,
-                seqNo
-              }
-            })
-          }else if (this.deptCase){
-            this.$router.push({
-              path: 'case-detail',
-              query: {
-                id,
-                name,
-                mycase:this.$route.query.mycase,
-                showNext:this.$route.query.showNext,
-                deptCase:true,
-                seqNo
-              }
-            })
-          }
-        });
+        this.getCase(-1)
       },
       nextCase(){
-        let id = null;
-        let tempId = null;
-        let name = null;
-        let seqNo = null;
-        let isIn = true;
-        var myArray=new Array()
-        let data = null;
-        if (this.mineCase){
-          data = sessionStorage.getItem(
-            "mine"
-          );
+        this.getCase(1)
+      },
+      getCase(val){
+        let cases=[]
+        let data = null
+
+        //我的案件
+        if (this.caseType == 1){
+          data = localStorage.getItem("mine")
         }
-        if (this.deptCase){
-          data = sessionStorage.getItem(
-            "dept"
-          );
+        //部门案件
+        else if (this.caseType == 2){
+          data = localStorage.getItem("dept")
         }
+
         if (data==null || data==""){
           this.$message({
             type: "info",
-            message: "当前查询结果无数据!"
-          });
-          return ;
+            message: "当前查询结果无数据！"
+          })
+          return
         }
-        myArray = JSON.parse(data);
-
-        for (var i=0;i<myArray.length;i++){
-          if (this.id==myArray[i].id){
-            isIn = false;
-            if (i>=(myArray.length-1)){
-              //当前列表没有下一条
-              this.$message({
-                type: "info",
-                message: "当前列表没有下一条!"
-              });
-              return ;
-            }
-            tempId = myArray[i+1].id;
-          }
-        }
-        if (isIn){
+        cases = JSON.parse(data)
+        if (cases==null || cases.length==0){
           this.$message({
             type: "info",
-            message: "案件不在当前查询结果中!"
-          });
-          return ;
+            message: "当前查询结果无数据！"
+          })
+          return
         }
-        let thisData = {id:tempId};
-        lastCase(thisData).then(data => {
-          id = data.id;
-          name = data.name;
-          seqNo = data.seqNo;
-          if(this.mineCase){
-            this.$router.push({
-              path: 'case-detail',
-              query: {
-                id,
-                name,
-                mycase:this.$route.query.mycase,
-                showNext:this.$route.query.showNext,
-                mineCase:true,
-                seqNo
-              }
+        cases.map((c,index) => c.index = index)
+        const currentCase = cases.filter(c => c.id == this.id)
+        if(currentCase.length > 0){
+          const currentCaseIndex = currentCase[0].index
+          if(currentCaseIndex == 0 && val == -1){
+            this.$message({
+              type: "info",
+              message: "当前已经是第一条数据！"
             })
-          }else if (this.deptCase){
-            this.$router.push({
-              path: 'case-detail',
-              query: {
-                id,
-                name,
-                mycase:this.$route.query.mycase,
-                showNext:this.$route.query.showNext,
-                deptCase:true,
-                seqNo
-              }
+          }else if(currentCaseIndex == cases.length-1 && val == 1){
+            this.$message({
+              type: "info",
+              message: "当前已经是最后一条数据！"
             })
+          }else{
+            this.batchForm = {sType: 0}
+            this.queryDetail(cases[currentCaseIndex+val].id)
           }
-        });
+        }else{
+          this.$message({
+            type: "info",
+            message: "案件不在当前查询结果中！"
+          })
+        }
       },
       saveCollectInfo() {
         saveCollectInfo(this.id, this.caseDetail.collectInfo).then(data => {
@@ -4699,7 +4563,6 @@
         this.messageForm = {};
       },
       editData(row) {
-        console.log(row);
         this.adddialogVisible = true;
         this.messageForm = row;
         getReduceApplyList(this.id).then(data => {
@@ -5460,31 +5323,40 @@
           });
         });
       },
-      queryDetail() {
+      queryDetail(id = this.$route.query.id) {
         this.otherActiveName = "1";
 
-        if (this.$route.query.mycase){
-          this.$set(this, 'mycaseFlag', true)
-        }else{
-          this.$set(this, 'mycaseFlag', false)
+        this.id = id
+        const caseType = this.$route.query.type
+        this.caseType = caseType
+        //我的案件/部门案件
+        if(caseType == 1 || caseType == 2){
+          this.showNext = true
         }
-        if (this.$route.query.mineCase){
-          this.$set(this, 'mineCase', true)
-        }else{
-          this.$set(this, 'mineCase', false)
-        }
-        if (this.$route.query.deptCase){
-          this.$set(this, 'deptCase', true)
-        }else{
-          this.$set(this, 'deptCase', false)
-        }
-        if (this.$route.query.showNext){
-          this.$set(this, 'showNext', true)
-        }else{
-          this.$set(this, 'showNext', false)
-        }
+
+        // if (this.$route.query.mycase){
+        //   this.$set(this, 'mycaseFlag', true)
+        // }else{
+        //   this.$set(this, 'mycaseFlag', false)
+        // }
+        // if (this.$route.query.mineCase){
+        //   this.$set(this, 'mineCase', true)
+        // }else{
+        //   this.$set(this, 'mineCase', false)
+        // }
+        // if (this.$route.query.deptCase){
+        //   this.$set(this, 'deptCase', true)
+        // }else{
+        //   this.$set(this, 'deptCase', false)
+        // }
+        // if (this.$route.query.showNext){
+        //   this.$set(this, 'showNext', true)
+        // }else{
+        //   this.$set(this, 'showNext', false)
+        // }
         getCaseDetail(this.id).then(data => {
           this.caseDetail = data;
+          document.title = `${data.name}-[${data.seqNo}]-案件详情`
         });
         getSameBatchCollect(this.id).then(data => {
           this.syncMemorizeList = data;
@@ -5614,9 +5486,7 @@
       },
       initPageData(ida) {
         let id = ida || this.$route.query.id || "";
-        let data = sessionStorage.getItem(id) || "";
-
-        console.log(data == "");
+        let data = localStorage.getItem(id) || "";
         if (data) {
           if (this.$route.query.mycase){
             this.$set(this, 'mycaseFlag', true)
@@ -5638,7 +5508,6 @@
           for (let [k, v] of Object.entries(obj)) {
             this.$set(this, k, v);
           }
-          console.log(obj.caseDetail.name)
         } else {
           this.queryDetail();
           this.batchForm = {sType: 0};
@@ -5648,7 +5517,7 @@
         }
       },
       sameRouteChange() {
-        sessionStorage.setItem(
+        localStorage.setItem(
           this.$route.query.id,
           JSON.stringify(this._data, function (key, value) {
             if (key == "$routeKey") {
@@ -5666,7 +5535,6 @@
         this.deptCase = false;
       },
       showMyCaseFlag(){
-
         if (this.$route.query.mycase){
           this.mycaseFlag = true;
         }
@@ -5680,7 +5548,7 @@
           this.showNext = true;
         }
       },
-        resetTel(id) {          
+      resetTel(id) {
             updateTelStatus([
               {
                 id,
@@ -5695,22 +5563,20 @@
           });
       }
     },
-    watch: {
-
-      $route: {
-        handler(n, o) {
-          if (n.name == "case-detail") {
-            // console.log('routeWatch',n.query.id)
-            // this.sameRouteChange();
-            // this.$routeKey = n.query.id;
-            this.resetContent();
-            this.initPageData();
-
-          }
-        },
-        immediate: true
-      }
-    },
+    // watch: {
+    //   $route: {
+    //     handler(n, o) {
+    //       if (n.name == "case-detail") {
+    //         // console.log('routeWatch',n.query.id)
+    //         // this.sameRouteChange();
+    //         // this.$routeKey = n.query.id;
+    //         this.resetContent();
+    //         this.initPageData();
+    //       }
+    //     },
+    //     immediate: true
+    //   }
+    // },
     beforeRouteUpdate(to, from, next) {
       // 导航离开该组件的对应路由时调用
       // 可以访问组件实例 `this`
@@ -5723,7 +5589,6 @@
       this.resetContent();
       this.initPageData(this.$route.query.id);
       // console.log("routerLify1",this.$route.query.id)
-
     },
     beforeRouteLeave(to, from, next) {
       // 导航离开该组件的对应路由时调用
@@ -5732,10 +5597,10 @@
       next();
     },
     created() {
-      window.addEventListener("beforeunload", () => {
-        sessionStorage.clear();
-      });
-      //this.queryDetail();
+      // window.addEventListener("beforeunload", () => {
+      //   localStorage.clear();
+      // });
+      this.queryDetail();
       this.batchForm = {sType: 0};
       /*PersonList().then(response => {
         this.PersonDataList = response;
@@ -5746,6 +5611,10 @@
 
 <style lang="scss">
   #case-detail {
+    width: 100%;
+    padding: 10px;
+    overflow-x: hidden;
+
     .el-table__body tr.current-row > td{
       border-top: 1px solid #0080ff  !important;
       border-bottom: 1px solid #0080ff  !important;
@@ -5829,6 +5698,7 @@
               background: #fff;
               border-radius: 5px;
               padding: 8px;
+              min-height: 30px;
 
               .item {
                 margin-bottom: 4px;
@@ -5887,7 +5757,7 @@
             .sendTel4Style{
               margin-left: 0px;
             }
-            
+
             .addPhoneStyle{
               margin-left: 0px
             }
@@ -5975,7 +5845,7 @@
         }
 
         .operation {
-          margin-top: 20px;
+          margin-top: 10px;
           text-align: center;
         }
       }
@@ -5984,6 +5854,10 @@
         flex: 0 0 60%;
         width: 60%;
       }
+    }
+
+    .phoneNumber input{
+      padding: 0 15px;
     }
   }
 
