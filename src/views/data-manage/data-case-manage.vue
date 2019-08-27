@@ -427,7 +427,7 @@
               show-overflow-tooltip
               :row-class-name="rowColor"
               @selection-change="handleSelectionChange"
-              @row-dblclick="showDetail"
+              @row-dblclick="showCase"
               @sort-change="handleSort"
               :fit="true"
     >
@@ -446,13 +446,13 @@
         label="个案序列号"
         show-overflow-tooltip>
         <template slot-scope="scope">
-          <el-button v-if="scope.row.status==3" type="text" style ="color:#999999;" size="small" @click="editCase(scope.row.id, scope.row.name,scope.row.seqNo)">
+          <el-button v-if="scope.row.status==3" type="text" style ="color:#999999;" size="small" @click="showCase(scope.row)">
             {{scope.row.seqNo}}
           </el-button>
-          <el-button v-if="scope.row.status==4" type="text" style ="color:#999999;text-decoration:line-through;" size="small" @click="editCase(scope.row.id, scope.row.name,scope.row.seqNo)">
+          <el-button v-if="scope.row.status==4" type="text" style ="color:#999999;text-decoration:line-through;" size="small" @click="showCase(scope.row)">
             {{scope.row.seqNo}}
           </el-button>
-          <el-button v-if="scope.row.status!=3 && scope.row.status!=4" type="text" size="small" @click="editCase(scope.row.id, scope.row.name,scope.row.seqNo)">
+          <el-button v-if="scope.row.status!=3 && scope.row.status!=4" type="text" size="small" @click="showCase(scope.row)">
             {{scope.row.seqNo}}
           </el-button>
         </template>
@@ -1394,9 +1394,6 @@
 
   export default {
     name: 'dataCaseManage',
-    // components: {
-    //   CaseDetail
-    // },
     data() {
       return {
         pageSizes,
@@ -2724,20 +2721,6 @@
 
         });
       },
-      showDetail(row,event) {
-        console.log("rowclick")
-        let id = row.id
-        let name = row.name
-        let seqNo = row.seqNo
-        this.$router.push({
-          path: 'case-detail',
-          query: {
-            id,
-            name,
-            seqNo
-          }
-        })
-      },
       showCity(){
         areaStepList(this.formInline.province).then((response) => {
           this.cityList = response
@@ -2748,8 +2731,8 @@
           this.countyList = response
         })
       },
-      editCase(id, name, seqNo) {
-        window.open(`#/zhx/case-detail?id=${id}`)
+      showCase(row) {
+        window.open(`#/zhx/case-detail?id=${row.id}`)
       //   this.$router.push({
       //     path: 'case-detail',
       //     query: {

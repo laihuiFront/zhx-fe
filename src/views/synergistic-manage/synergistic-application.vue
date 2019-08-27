@@ -75,6 +75,7 @@
     <el-table highlight-current-row v-loading="tableLoad"
               @selection-change="onSelectRow"
               @sort-change="handleSort"
+              @row-dblclick="showCase"
               border
               stripe
               :data="recordList"
@@ -88,7 +89,7 @@
                        min-width="160" label="个案序列号" show-overflow-tooltip>
         <template slot-scope="scope">
           <el-button type="text" size="small"
-                     @click="editCase(scope.row.dataCase.id, scope.row.dataCase.name,scope.row.dataCase.seqNo)">
+                     @click="showCase(scope.row)">
             {{scope.row.dataCase.seqNo}}
           </el-button>
         </template>
@@ -352,15 +353,16 @@
         //this.dialogVisible1 = false;
 
       },
-      editCase(id, name, seqNo) {
-        this.$router.push({
-          path: 'case-detail',
-          query: {
-            id,
-            name,
-            seqNo
-          }
-        })
+      showCase(row) {
+        window.open(`#/zhx/case-detail?id=${row.dataCase.id}`)
+        // this.$router.push({
+        //   path: 'case-detail',
+        //   query: {
+        //     id,
+        //     name,
+        //     seqNo
+        //   }
+        // })
       },
       uploadSuccess(res, file, fileList) {
         this.loading2 = true

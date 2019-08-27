@@ -35,9 +35,11 @@
       <!--<span class="item" style="margin-right:0px;">总提成值：{{sumForm.dataCase.mVal?parseFloat(sumForm.dataCase.mVal).toFixed(2):0}}，</span>-->
       <span class="item" style="margin-right:0px;">总佣金额：{{sumForm.dataCase.commissionMoneyMsg?sumForm.dataCase.commissionMoneyMsg:0}}</span>
     </div>
-      <el-table highlight-current-row v-loading="tableLoad"
+      <el-table highlight-current-row
+      v-loading="tableLoad"
       @selection-change="onSelectRow"
       @sort-change="handleSort"
+      @row-dblclick="showCase"
       border
       stripe
       :data="recordList"
@@ -49,7 +51,7 @@
       <el-table-column width="120"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="dataCase.name" label="姓名" show-overflow-tooltip></el-table-column>
       <el-table-column min-width="160"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="dataCase.seqNo" label="个案序列号" show-overflow-tooltip>
         <template slot-scope="scope">
-          <el-button type="text" size="small" @click="editCase(scope.row.dataCase.id, scope.row.dataCase.name,scope.row.dataCase.seqNo)">{{scope.row.dataCase.seqNo}}</el-button>
+          <el-button type="text" size="small" @click="showCase(scope.row)">{{scope.row.dataCase.seqNo}}</el-button>
         </template>
       </el-table-column>
       <el-table-column width="120"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="dataCase.client" label="委托方" show-overflow-tooltip></el-table-column>
@@ -499,15 +501,16 @@ export default {
         this.fullscreenLoading=false
       }
     },
-    editCase(id, name, seqNo){
-      this.$router.push({
-        path:'case-detail',
-        query:{
-          id,
-          name,
-          seqNo
-        }
-      })
+    showCase(row){
+      window.open(`#/zhx/case-detail?id=${row.dataCase.id}`)
+      // this.$router.push({
+      //   path:'case-detail',
+      //   query:{
+      //     id,
+      //     name,
+      //     seqNo
+      //   }
+      // })
     },
     onClickReset(){
       this.queryForm = {

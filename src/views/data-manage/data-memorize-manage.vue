@@ -708,17 +708,18 @@
         this.totalDataCollectExport()
       },
       showCase(row) {
-        let id = row.caseId
-        let name = row.name
-        let seqNo = row.seqno
-        this.$router.push({
-          path: 'case-detail',
-          query: {
-            id,
-            name,
-            seqNo
-          }
-        })
+        window.open(`#/zhx/case-detail?id=${row.caseId}`)
+        // let id = row.caseId
+        // let name = row.name
+        // let seqNo = row.seqno
+        // this.$router.push({
+        //   path: 'case-detail',
+        //   query: {
+        //     id,
+        //     name,
+        //     seqNo
+        //   }
+        // })
       },
       editMessage(record) {
         this.recordInfo = {

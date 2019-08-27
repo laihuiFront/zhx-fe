@@ -11,8 +11,10 @@
       :queryForm="queryForm">
       <el-button type="primary" @click="changeRadio" v-has="'导出查询结果'">导出查询结果</el-button>
     </syn-record-query>
-    <el-table highlight-current-row v-loading="tableLoad"
+    <el-table highlight-current-row
+              v-loading="tableLoad"
               @sort-change="handleSort"
+              @row-dblclick="showCase"
               :data="recordList"
               border
               stripe
@@ -24,8 +26,7 @@
       <el-table-column sortable="custom" :sort-orders="['ascending','descending']" min-width="160" align="center"
                        prop="dataCase.seqNo" label="个案序列号" show-overflow-tooltip>
         <template slot-scope="scope">
-          <el-button type="text" size="small"
-                     @click="editCase(scope.row.dataCase.id, scope.row.dataCase.name,scope.row.dataCase.seqNo)">
+          <el-button type="text" size="small" @click="showCase(scope.row)">
             {{scope.row.dataCase.seqNo}}
           </el-button>
         </template>
@@ -238,15 +239,16 @@
         //this.dialogExportVisible = false;
 
       },
-      editCase(id, name, seqNo) {
-        this.$router.push({
-          path: 'case-detail',
-          query: {
-            id,
-            name,
-            seqNo
-          }
-        })
+      showCase(row) {
+        window.open(`#/zhx/case-detail?id=${row.dataCase.id}`)
+        // this.$router.push({
+        //   path: 'case-detail',
+        //   query: {
+        //     id,
+        //     name,
+        //     seqNo
+        //   }
+        // })
       },
       onClickReset() {
         this.queryForm = {

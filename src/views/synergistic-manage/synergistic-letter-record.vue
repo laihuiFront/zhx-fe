@@ -274,6 +274,7 @@
       :cell-style="{ whiteSpace: 'nowrap' }"
       @selection-change="handleSelectionChange"
       @sort-change="sortHandle"
+      @row-dblclick="showCase"
     >
       <el-table-column type="selection" width="55"> </el-table-column>
       <el-table-column
@@ -426,15 +427,11 @@ import {
   dccxjgInfo,
   dccxjgInfoThis
 } from "@/common/js/synergistic-letter-application.js";
-import CaseDetail from "@/views/data-manage/detail";
 import { baseURL } from "@/common/js/request.js";
 import {pageSizes} from "@/common/js/const"
 
 export default {
   name: "synergisticLetterApplication2",
-  components: {
-    CaseDetail
-  },
   data() {
     return {
       pageSizes,
@@ -627,14 +624,6 @@ export default {
       };
     }
   },
-  watch: {
-    form: {
-      handler(newObj) {
-        console.log(Object.values(newObj));
-      },
-      deep: true
-    }
-  },
   created() {
     this.init();
   },
@@ -763,17 +752,18 @@ export default {
       }
     },
     showCase(row) {
-      let id = row.caseId;
-      let name = row.name;
-      let seqNo = row.seqno;
-      this.$router.push({
-        path: "case-detail",
-        query: {
-          id,
-          name,
-          seqNo
-        }
-      });
+      window.open(`#/zhx/case-detail?id=${row.caseId}`)
+      // let id = row.caseId;
+      // let name = row.name;
+      // let seqNo = row.seqno;
+      // this.$router.push({
+      //   path: "case-detail",
+      //   query: {
+      //     id,
+      //     name,
+      //     seqNo
+      //   }
+      // });
     },
     sortHandle({ prop, order }) {
       this.sort.sort = order.replace("ending", "");

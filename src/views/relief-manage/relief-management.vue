@@ -147,18 +147,17 @@
     </el-form>
     <el-tabs v-model="activeName2"  @tab-click="handleClick" class="tabs-wrap">
       <el-tab-pane label="待审核" name="first">
-        <el-table highlight-current-row class="table-wrap"
-                  height="1"
+        <el-table highlight-current-row
                   ref="multipleTable"
                   :data="tableData3"
-                  style="width: 150%;"
+                  style="width: 100%;"
                   border
                   stripe
                   tooltip-effect="dark"
                   @sort-change="handleSort"
                   @selection-change="handleSelectionChange"
                   v-loading="tableLoad"
-                  @row-dblclick="dbeditCase"
+                  @row-dblclick="showCase"
         >
           <el-table-column
             type="selection"
@@ -174,8 +173,8 @@
             min-width="160"
           >
             <template slot-scope="scope">
-              <el-button type="text" size="small"
-                         @click="editCase(scope.row.caseId, scope.row.targetName,scope.row.seqno)">{{scope.row.seqno}}
+              <el-button type="text" size="small" @click="showCase(scope.row)">
+                {{scope.row.seqno}}
               </el-button>
             </template>
           </el-table-column>
@@ -315,7 +314,7 @@
                   @sort-change="handleSort"
                   @selection-change="handleSelectionChange"
                   v-loading="tableLoad"
-                  @row-dblclick="dbeditCase"
+                  @row-dblclick="showCase"
         >
           <el-table-column
             type="selection"
@@ -331,8 +330,8 @@
             :sort-orders="['ascending','descending']"
           >
             <template slot-scope="scope">
-              <el-button type="text" size="small"
-                         @click="editCase(scope.row.caseId, scope.row.targetName,scope.row.seqno)">{{scope.row.seqno}}
+              <el-button type="text" size="small" @click="showCase(scope.row)">
+                {{scope.row.seqno}}
               </el-button>
             </template>
           </el-table-column>
@@ -468,7 +467,7 @@
                   @sort-change="handleSort"
                   @selection-change="handleSelectionChange"
                   v-loading="tableLoad"
-                  @row-dblclick="dbeditCase"
+                  @row-dblclick="showCase"
         >
           <el-table-column
             type="selection"
@@ -484,8 +483,8 @@
             :sort-orders="['ascending','descending']"
           >
             <template slot-scope="scope">
-              <el-button type="text" size="small"
-                         @click="editCase(scope.row.caseId, scope.row.targetName,scope.row.seqno)">{{scope.row.seqno}}
+              <el-button type="text" size="small" @click="showCase(scope.row)">
+                {{scope.row.seqno}}
               </el-button>
             </template>
           </el-table-column>
@@ -606,8 +605,7 @@
           :page-sizes="pageSizes"
           :page-size="pages"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="total"
-          class="pagination-wrap">
+          :total="total">
         </el-pagination>
       </el-tab-pane>
     </el-tabs>
@@ -775,7 +773,6 @@
 </template>
 
 <script>
-  const CaseDetail = () => import('@/views/data-manage/detail');
   import {
     areaList,
     sureData,
@@ -803,9 +800,6 @@
 
   export default {
     name: 'reliefManagement',
-    components: {
-      CaseDetail
-    },
     data() {
       return {
         pageSizes,
@@ -964,19 +958,16 @@
 
 
       },
-      editCase(id, name, seqNo) {
-        this.$router.push({
-          path: 'case-detail',
-          query: {
-            id,
-            name,
-            seqNo
-          }
-        })
-
-      },
-      dbeditCase(row) {
-        this.editCase(row.caseId, row.targetName, row.seqno)
+      showCase(row) {
+        window.open(`#/zhx/case-detail?id=${row.caseId}`)
+        // this.$router.push({
+        //   path: 'case-detail',
+        //   query: {
+        //     id,
+        //     name,
+        //     seqNo
+        //   }
+        // })
       },
       open7(row) {
         this.$confirm('确定审核通过减免申请转入待提交吗？', '提示', {

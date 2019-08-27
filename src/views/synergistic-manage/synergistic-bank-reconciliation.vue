@@ -35,9 +35,11 @@
       <el-button type="primary" @click="changeRadio" style="margin-left:0px;" v-has="'导出查询结果'">导出查询结果
       </el-button>
     </bank-record-query>
-    <el-table highlight-current-row v-loading="tableLoad"
+    <el-table highlight-current-row
+              v-loading="tableLoad"
               @sort-change="handleSort"
               @selection-change="onSelectRow"
+              @row-dblclick="showCase"
               border
               stripe
               :data="recordList"
@@ -55,7 +57,7 @@
                        prop="dataCase.seqNo" label="个案序列号" show-overflow-tooltip>
         <template slot-scope="scope">
           <el-button type="text" size="small"
-                     @click="editCase(scope.row.dataCase.id, scope.row.dataCase.name,scope.row.dataCase.seqNo)">
+                     @click="showCase(scope.row)">
             {{scope.row.dataCase.seqNo}}
           </el-button>
         </template>
@@ -344,15 +346,16 @@
           });
         }
       },
-      editCase(id, name, seqNo) {
-        this.$router.push({
-          path: 'case-detail',
-          query: {
-            id,
-            name,
-            seqNo
-          }
-        })
+      showCase(row) {
+        window.open(`#/zhx/case-detail?id=${row.dataCase.id}`)
+        // this.$router.push({
+        //   path: 'case-detail',
+        //   query: {
+        //     id,
+        //     name,
+        //     seqNo
+        //   }
+        // })
       },
       onClickReset() {
         this.queryForm = {

@@ -406,15 +406,10 @@ import {
   dccxjg,
   dccxjgThis
 } from "@/common/js/synergistic-letter-application.js";
-//import CaseDetail from '@/views/data-manage/detail';
-const CaseDetail = () => import("@/views/data-manage/detail");
 import {pageSizes} from "@/common/js/const"
 
 export default {
   name: "synergisticLetterApplication2",
-  components: {
-    CaseDetail
-  },
   props: ["active"],
   data() {
     return {
@@ -728,17 +723,18 @@ export default {
       }
     },
     showCase(row) {
-      let id = row.caseId;
-      let name = row.name;
-      let seqNo = row.seqno;
-      this.$router.push({
-        path: "case-detail",
-        query: {
-          id,
-          name,
-          seqNo
-        }
-      });
+      window.open(`#/zhx/case-detail?id=${row.caseId}`)
+      // let id = row.caseId;
+      // let name = row.name;
+      // let seqNo = row.seqno;
+      // this.$router.push({
+      //   path: "case-detail",
+      //   query: {
+      //     id,
+      //     name,
+      //     seqNo
+      //   }
+      // });
     },
     sortHandle({ prop, order }) {
       this.sort.sort = order.replace("ending", "");

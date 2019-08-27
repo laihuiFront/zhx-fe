@@ -333,15 +333,12 @@ import {
   cancelLetter,
   pageDataLetter
 } from "@/common/js/synergistic-letter-application.js";
-//import CaseDetail from '@/views/data-manage/detail';
-const CaseDetail = () => import("@/views/data-manage/detail");
 import tab2 from "./synergistic-letter-application-2.vue";
 import {pageSizes} from "@/common/js/const"
 
 export default {
   name: "synergisticLetterApplication",
   components: {
-    CaseDetail,
     tab2
   },
   data() {
@@ -571,17 +568,18 @@ export default {
       this.fullscreenLoading = false;
     },
     showCase(row) {
-      let id = row.caseId;
-      let name = row.name;
-      let seqNo = row.seqno;
-      this.$router.push({
-        path: "case-detail",
-        query: {
-          id,
-          name,
-          seqNo
-        }
-      });
+      window.open(`#/zhx/case-detail?id=${row.caseId}`)
+      // let id = row.caseId;
+      // let name = row.name;
+      // let seqNo = row.seqno;
+      // this.$router.push({
+      //   path: "case-detail",
+      //   query: {
+      //     id,
+      //     name,
+      //     seqNo
+      //   }
+      // });
     },
     sortHandle({ prop, order }) {
       this.sort.sort = order.replace("ending", "");
