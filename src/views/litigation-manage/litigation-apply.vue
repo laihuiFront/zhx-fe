@@ -817,7 +817,9 @@ export default {
   		  },
   		  currentPage4: 1,
         pages:1,
-        total:100,
+        total:0,
+        pageSize:100,
+        pageNum:1,
          DataList: [],
          PersonDataList:[],
          checkId:'',
@@ -1064,9 +1066,21 @@ handleSort( {column,prop,order}){
   	},
   		handleSizeChange(val){
 	   this.pageSize=val
-},
+        dataList(this.form,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
+          this.DataList=response.list
+          // this.pages = response.pages
+          this.total = response.total
+          this.tableLoad = false
+        })
+      },
 handleCurrentChange(val){
 this.pageNum=val;
+  dataList(this.form,this.orderBy,this.sort,this.pageSize,this.pageNum).then((response)=>{
+    this.DataList=response.list
+    // this.pages = response.pages
+    this.total = response.total
+    this.tableLoad = false
+  })
 },
    },
       created() {

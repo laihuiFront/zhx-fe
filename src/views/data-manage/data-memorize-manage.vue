@@ -471,6 +471,7 @@
         <el-checkbox v-model="exportConf.relation" label="5">关系</el-checkbox>
         <el-checkbox v-model="exportConf.collectPhoneAddr" label="5">电话/地址</el-checkbox>
         <el-checkbox v-model="exportConf.contractType" label="5">联络类型</el-checkbox>
+        <el-checkbox v-model="exportConf.collectTime" label="5">催收时间</el-checkbox>
         <el-checkbox v-model="exportConf.result" label="5">催收内容</el-checkbox>
         <el-checkbox v-model="exportConf.odv" label="5">催收人员</el-checkbox>
         <el-checkbox v-model="exportConf.method" label="5">谈判方式</el-checkbox>
@@ -662,7 +663,7 @@
         this.selectUserVisible3 = false
       },
       saveExportCollectConf() {
-        let queryObj = {module: "data-memorize-manage-exportCollect", menu: this.exportCollectConf}
+        let queryObj = {module: "data-memorize-manage-exportCollect", menu: this.exportConf}
         saveSelectFilter(queryObj).then(data => {
         });
       },
@@ -860,6 +861,12 @@
       },
       totalDataCollectExport() {
         this.exportType = 2;
+        let queryObj = {module: "data-memorize-manage-exportCollect", menu: this.exportConf}
+        selectByModule(queryObj).then(data => {
+          if (data && data.menu) {
+            this.exportConf = JSON.parse(data.menu);
+          }
+        });
         this.showExportConfVisible = true;
         this.dialogVisible2 = false;
       },

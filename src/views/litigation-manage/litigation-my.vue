@@ -1,5 +1,5 @@
 <template>
-  <div id="litigation-my">
+  <div id="litigation-my" class="page-wraper-sub">
   	 <el-tabs v-model="activeName2"  @tab-click="handleClick" class="tabs-wrap">
     <el-tab-pane label="我的诉讼案件" name="first">
       <el-form ref="form" :model="form" :inline="true" class="query-wrap queryStyle">
@@ -29,6 +29,9 @@
       </el-form>
 
    <el-table highlight-current-row v-loading="tableLoad"
+    class="table-wrap"
+    height="1"
+             highlight-current-row
     :data="DataList"
     border
     stripe
@@ -170,11 +173,11 @@
     class="pagination-wrap"
     @size-change="handleSizeChange"
     @current-change="handleCurrentChange"
-    :current-page="currentPage4"
-    :page-sizes="pageSizes"
-    :page-size="pages"
+    :current-page="currentPage1"
+    :page-sizes="[100, 500, 2000, 10000, 1000000]"
+    :page-size="pages1"
     layout="total, sizes, prev, pager, next, jumper"
-    :total="total">
+    :total="total1">
   </el-pagination>
   	<el-dialog
   :title="dialogTitle"
@@ -520,12 +523,14 @@
       </el-form>
 
    <el-table highlight-current-row v-loading="tableLoad"
+    class="table-wrap"
+    height="1"
     :data="DataList2"
     border
     stripe
-    tooltip-effect="dark"
-    @sort-change="handleSort2"
-    style="width: 100%">
+          tooltip-effect="dark"
+          @sort-change="handleSort2"
+     style="width: 100%">
     <el-table-column
       prop="legalStatusMsg"
       align="center"
@@ -659,10 +664,10 @@
   </el-table>
   	 <el-pagination
       class="pagination-wrap"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
+      @size-change="handleSizeChange2"
+      @current-change="handleCurrentChange2"
       :current-page="currentPage4"
-      :page-sizes="pageSizes"
+      :page-sizes="[100, 500, 2000, 10000, 1000000]"
       :page-size="pages"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
@@ -996,18 +1001,15 @@
 </template>
 
 <script>
-import {getCaseTypeList,dataList,remoweData,addData,PersonList,checkData,dataList2} from '@/common/js/litigation-my.js'
-import {pageSizes} from "@/common/js/const"
-
+				import {getCaseTypeList,dataList,remoweData,addData,PersonList,checkData,dataList2} from '@/common/js/litigation-my.js'
 export default {
   name: 'litigationMy',
 	data(){
   		return{
-        pageSizes,
-        orderBy:"id",
-        sort:"desc",
+  				orderBy:"id",
+      sort:"desc",
         tableLoad:false,
-        activeName2: 'first',
+  			 activeName2: 'first',
   			isTrue:false,
   			dialogTitle:'新增',
   			progressList:[{name:"立案",id:"filing"},{name:"收案",id:"back"},{name:"保全",id:"presv"},{name:"开庭",id:"court"},{name:"判决",id:"decree"},{name:"执行",id:"enforce"}],
@@ -1023,136 +1025,175 @@ export default {
   		  },
   		  currentPage4: 1,
         pages:1,
-        total:100,
-        DataList: [],
-        DataList2: [],
-        PersonDataList:[],
-        checkId:'',
+        currentPage1:1,
+        pages1:1,
+        total1:0,
+        total:0,
+        pageSize:100,
+        pageNum:1,
+        pageSize2:100,
+        pageNum2:1,
+         DataList: [],
+         DataList2: [],
+         PersonDataList:[],
+         checkId:'',
   	}
   },
    methods: {
-   	handleSort( {column,prop,order}){
-      this.sort = order==null?"desc":order.replace("ending","")
-      this.orderBy = prop==null?"id":prop
-      this.search()
-    },
-    handleSort2( {column,prop,order}){
-      this.sort = order==null?"desc":order.replace("ending","")
-      this.orderBy = prop==null?"id":prop
-      this.search2()
-    },
-   	 handleClick(tab, event) {
-        console.log(tab, event);
-     },
-   	showmessage(row){
-   		this.dialogVisible=true
-   		this.dialogTitle="详情"
-   		this.isTrue=true
-   		this.formInline=row
-   		this.formInline.progress=parseInt(row.progress)
-   		this.formInline.owner=parseInt(row.owner)
-   	},
-   	addDataform(){
-   		this.formInline={};
-   		this.dialogVisible=true
-   		this.dialogTitle="新增"
-   		this.isTrue=false
+     handleSort({column, prop, order}) {
+       this.sort = order == null ? "desc" : order.replace("ending", "")
+       this.orderBy = prop == null ? "id" : prop
+       this.search()
 
-   	},
-   	checkresource(){
-   		checkData(this.checkform,this.checkId).then((response)=>{
-          this.$message({
-            type: 'success',
-            message: '审核成功!'
-          });
-          this.dialogVisible=false;
-          this.search()
-          this.formInline={}
-          this.checkId=''
-          })
-   	},
-   	SaveData(){
-   		addData(this.formInline).then((response)=>{
-          this.$message({
-            type: 'success',
-            message: '保存成功!'
-          });
-          this.dialogVisible=false;
-          this.search()
-          this.formInline={}
-})
-   	},
-   	checkDatasure(id){
-   		this.dialogVisible1=true;
-   		this.checkId=id;
-   	},
-   	editData(row){
-   		this.dialogVisible=true;
-   		this.dialogTitle="修改";
-   		this.formInline=JSON.parse(JSON.stringify(row))
-   		this.formInline.progress=row.progress
-      if(!this.formInline.progress){
-        this.formInline.progress=""
-      }
-
-      if (row.owner==null || row.owner==""){
-        this.$set(this.formInline, 'owner',this.PersonDataList )
-      }else{
-   		  this.formInline.owner=parseInt(row.owner)
-      }
-   		this.isTrue=false
-   	},
-   	deleteData(id){
-         	let _self=this
-        _self.$confirm('是否删除?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning',
-          center: true
-        }).then(() => {
-           	remoweData(id).then((response)=>{
-            _self.$message({
-            type: 'success',
-            message: '删除成功!'
-          });
-          _self.search(this.form)
-})
-        }).catch(() => {
-            _self.$message({
-            type: 'success',
-            message: '已取消删除!'
-          });
-        });
-   	},
-   	clench(){
-  		this.form={}
-  	},
-     clench2(){
-   	  this.form2={}
      },
-  	search(){
-      this.tableLoad = true
-  		dataList(this.form,this.orderBy,this.sort).then((response)=>{
-            this.DataList=response.list
-              this.total = response.total
-              this.tableLoad = false
-})
-  	},
-  	search2(){
-      this.tableLoad = true
-  		dataList2(this.form2,this.orderBy,this.sort).then((response)=>{
-            this.DataList2=response.list
-              this.total = response.total
-              this.tableLoad = false
-})
-  	},
-  		handleSizeChange(val){
-	   this.pageSize=val
-},
-handleCurrentChange(val){
-this.pageNum=val;
-},
-},
+     handleSort2({column, prop, order}) {
+       this.sort = order == null ? "desc" : order.replace("ending", "")
+       this.orderBy = prop == null ? "id" : prop
+       this.search2()
+
+     },
+     handleClick(tab, event) {
+       console.log(tab, event);
+     },
+     showmessage(row) {
+       this.dialogVisible = true
+       this.dialogTitle = "详情"
+       this.isTrue = true
+       this.formInline = row
+
+       this.formInline.progress = parseInt(row.progress)
+       this.formInline.owner = parseInt(row.owner)
+     },
+     addDataform() {
+       this.formInline = {};
+       this.dialogVisible = true
+       this.dialogTitle = "新增"
+       this.isTrue = false
+
+     },
+     checkresource() {
+       checkData(this.checkform, this.checkId).then((response) => {
+         this.$message({
+           type: 'success',
+           message: '审核成功!'
+         });
+         this.dialogVisible = false;
+         this.search()
+         this.formInline = {}
+         this.checkId = ''
+       })
+     },
+     SaveData() {
+       addData(this.formInline).then((response) => {
+         this.$message({
+           type: 'success',
+           message: '保存成功!'
+         });
+         this.dialogVisible = false;
+         this.search()
+         this.formInline = {}
+       })
+     },
+     checkDatasure(id) {
+       this.dialogVisible1 = true;
+       this.checkId = id;
+     },
+     editData(row) {
+       this.dialogVisible = true;
+       this.dialogTitle = "修改";
+       this.formInline = JSON.parse(JSON.stringify(row))
+       this.formInline.progress = row.progress
+       if (!this.formInline.progress) {
+         this.formInline.progress = ""
+       }
+
+       if (row.owner == null || row.owner == "") {
+         this.$set(this.formInline, 'owner', this.PersonDataList)
+       } else {
+         this.formInline.owner = parseInt(row.owner)
+       }
+       this.isTrue = false
+     },
+     deleteData(id) {
+       let _self = this
+       _self.$confirm('是否删除?', '提示', {
+         confirmButtonText: '确定',
+         cancelButtonText: '取消',
+         type: 'warning',
+         center: true
+       }).then(() => {
+         remoweData(id).then((response) => {
+           _self.$message({
+             type: 'success',
+             message: '删除成功!'
+           });
+           _self.search(this.form)
+         })
+       }).catch(() => {
+         _self.$message({
+           type: 'success',
+           message: '已取消删除!'
+         });
+       });
+     },
+     clench() {
+       this.form = {}
+     },
+     clench2() {
+       this.form2 = {}
+     },
+     search() {
+       this.tableLoad = true
+       dataList(this.form, this.orderBy, this.sort).then((response) => {
+         this.DataList = response.list
+         this.total1 = response.total
+         this.tableLoad = false
+       })
+     },
+     search2() {
+       this.tableLoad = true
+       dataList2(this.form2, this.orderBy, this.sort).then((response) => {
+         this.DataList2 = response.list
+         this.total = response.total
+         this.tableLoad = false
+       })
+     },
+     handleSizeChange(val) {
+       this.pageSize = val
+       this.tableLoad = true
+       dataList(this.form, this.orderBy, this.sort, this.pageSize, this.pageNum).then((response) => {
+         this.DataList = response.list
+         this.total1 = response.total
+         this.tableLoad = false
+       })
+     },
+     handleCurrentChange(val) {
+       this.pageNum = val;
+       dataList(this.form, this.orderBy, this.sort, this.pageSize, this.pageNum).then((response) => {
+         this.DataList = response.list
+         this.total1 = response.total
+         this.tableLoad = false
+       })
+     },
+     handleSizeChange2(val) {
+       this.pageSize2 = val
+       this.tableLoad = true
+       dataList2(this.form2, this.orderBy, this.sort, this.pageSize2, this.pageNum2).then((response) => {
+         this.DataList2 = response.list
+         this.total = response.total
+         this.tableLoad = false
+       })
+     },
+     handleCurrentChange2(val) {
+       this.pageNum2 = val;
+       this.tableLoad = true
+       dataList2(this.form2, this.orderBy, this.sort, this.pageSize2, this.pageNum2).then((response) => {
+         this.DataList2 = response.list
+         this.total = response.total
+         this.tableLoad = false
+       })
+     },
+   },
 created() {
     this.tableLoad = true
               dataList(this.form).then((response)=>{
@@ -1206,5 +1247,8 @@ created() {
       overflow: hidden;
     }
   }
+
 }
 </style>
+
+
