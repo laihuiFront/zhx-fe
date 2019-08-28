@@ -12,7 +12,7 @@ import { Message, MessageBox } from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 import "@/common/scss/element-variables.scss";
 import { localCache } from "@/common/js/auth";
-import has from "./common/js/directives";
+import "@/common/js/directives";
 
 Vue.use(ElementUI, { size: "mini" });
 
@@ -42,6 +42,18 @@ Vue.component(
     }
   })
 );
+Vue.component(
+  "ElDialog",
+  Vue.extend({
+    extends: ElementUI.Dialog,
+    props: {
+      'v-dialogDrag': {
+        default: true
+      }
+    }
+  })
+);
+
 Vue.config.productionTip = false;
 Vue.mixin({
   beforeRouteLeave: function(to, from, next) {
