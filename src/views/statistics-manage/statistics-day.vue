@@ -42,7 +42,7 @@
         </el-date-picker>
       </el-form-item>
       <el-form-item style="margin-left:10px;">
-        <el-button type="primary" icon="el-icon-search" @click="query">开始统计</el-button>
+        <el-button type="primary" icon="el-icon-search" @click="query2">开始统计</el-button>
         <el-button type="primary" icon="el-icon-refresh" @click="clench">重置</el-button>
       </el-form-item>
       <el-form-item class="operation-item">
@@ -200,16 +200,16 @@
         </el-table-column>
       </el-table-column>
     </el-table>
-    <!--<el-pagination
+    <el-pagination
       class="pagination-wrap"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :current-page="currentPage4"
-      :page-sizes="[10, 100, 200, 500, 1000]"
+      :current-page.sync="currentPage4"
+      :page-sizes="pageSizes"
       :page-size="pages"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
-    </el-pagination>-->
+    </el-pagination>
     <el-dialog
       title="选择催收员"
       class="dialog-wrap"
@@ -243,6 +243,7 @@
     dataList,
     selectDataCaseExport
   } from '@/common/js/statistics-day.js'
+   import {pageSizes} from "@/common/js/const"
 
   export default {
     name: 'statisticsDay',
@@ -260,6 +261,8 @@
         dataList: [],
         currentPage4: 1,
         pages: 1,
+        pageNum:1,
+        pageSize:100,
         total: 0,
         formInline: {
           odv: [],
@@ -271,7 +274,8 @@
         PersonList: [],
         areaList: [],
         clientList: [],
-        tableData3: []
+        tableData3: [],
+        pageSizes
       }
     },
     methods: {
@@ -347,19 +351,13 @@
       },
       handleSizeChange(val) {
         this.pageSize = val
-        this.tableLoad = true
-        dataList(this.formInline, this.pageSize, this.pageNum).then((response) => {
-          this.tableData3 = response
-          this.tableLoad = false
-        })
+        this.currentPage4=1
+        this.pageNum=1
+        this.query()
       },
       handleCurrentChange(val) {
         this.pageNum = val;
-        this.tableLoad = true
-        dataList(this.formInline, this.pageSize, this.pageNum).then((response) => {
-          this.tableData3 = response
-          this.tableLoad = false
-        })
+         this.query()
       },
       onSubmit() {
 
@@ -398,15 +396,43 @@
         }
         this.loading = true;
         this.fullscreenLoading = true;
-        dataList(this.formInline).then((response) => {
+        dataList(this.formInline,this.pageSize, this.pageNum).then((response) => {
           this.tableData3 = response.list
+          this.total=response.total
           this.loading = false;
           this.fullscreenLoading = false;
         })
        /* setTimeout(() => {
           this.tableLoad = false;
         }, 2000);*/
-      }
+      },
+      query2() {
+        if (this.formInline.time == null || this.formInline.time.length == 0) {
+          this.$message({
+            type: 'error',
+            message: '请选择查询时间段!'
+          });
+          return;
+        }
+        this.loading = true;
+        this.fullscreenLoading = true;
+        dataList(this.formInline,this.pageSize, 1).then((response) => {
+          this.tableData3 = response.list
+          this.total=response.total
+          this.currentPage4=1
+          this.loading = false;
+          this.fullscreenLoading = false;
+        })
+       /* setTimeout(() => {
+          this.tableLoad = false;
+        }, 2000);*/
+      },
+  // queryMethod(){
+  //   // this.pageNum=1
+  //   this.currentPage4=1
+  //   this.query2()
+  // }
+
     },
     created() {
  /*     areaList().then((response) => {
@@ -423,12 +449,12 @@
       getUserTree().then(data => {
         this.selectUserTree = [data]
       })
-//        this.tableLoad = true
-//            dataList(this.formInline).then((response)=>{
-//          this.tableData3=response.list
-//          this.tableLoad = false
-//          this.total=response.totalNum
-//        })
+      //  this.tableLoad = true
+      //      dataList(this.formInline).then((response)=>{
+      //    this.tableData3=response.list
+      //    this.tableLoad = false
+      //    this.total=response.totalNum
+      //  })
 
 
     },

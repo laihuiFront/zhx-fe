@@ -35,8 +35,8 @@ return request({
        clients:form.clients,
       dateSearchStart:form.time[0],
       dateSearchEnd:form.time[1],
-       pageNum:pageNum ? pageNum : 1,
-       pageSize:pageSize ? pageSize : 100
+      pageSize:pageSize, 
+       pageNum:pageNum
     }
   })
 }
