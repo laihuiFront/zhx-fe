@@ -8,10 +8,11 @@
           :visible.sync="detailVisible"
           :close-on-click-modal="false"
           width="90%"
+          v-dialogDrag
         >
           <case-detail :id="detailId" ref="detail"></case-detail>
         </el-dialog>
-        <el-dialog title="申请协催" class="dialog-wrap" :visible.sync="dialogVisible" width="50%" :close-on-click-modal="false">
+        <el-dialog title="申请协催" class="dialog-wrap" :visible.sync="dialogVisible" width="50%" :close-on-click-modal="false" v-dialogDrag>
           <el-form  class="demo-form-inline" label-width="120px">
             <div class="grid-content bg-purple">
               <el-form-item label="协催类型">
@@ -657,6 +658,7 @@
       width="60%"
       center
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <el-row class="pad">
         <el-checkbox v-model="queryConf.wtf" label="1" >委托方</el-checkbox>

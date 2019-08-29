@@ -269,6 +269,7 @@
       :visible.sync="dialogVisible"
       width="55%"
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <el-form :inline="true" :model="formInline" ref="formInline" label-width="100px" class="demo-dynamic">
         <el-row :gutter="24">
@@ -394,6 +395,7 @@
       :visible.sync="dialogVisible2"
       width="55%"
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <el-form :inline="true" :model="messageForm" ref="messageForm" label-width="100px" class="demo-dynamic">
         <el-row :gutter="24">
@@ -513,6 +515,7 @@
       :visible.sync="ImportdialogVisible"
       width="30%"
       :before-close="handleClose"
+      v-dialogDrag
     >
       <span>{{ImportMsg}}</span>
       <span slot="footer" class="footer">
@@ -526,6 +529,7 @@
       width="60%"
       center
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span><span @click="selectUnAllExport" style="cursor: pointer;margin-left: 10px;">反选</span></div>
       <el-row class="pad" ref="boxWrapper">

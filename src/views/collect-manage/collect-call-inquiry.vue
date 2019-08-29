@@ -6,6 +6,7 @@
       :visible.sync="detailVisible"
       :close-on-click-modal="false"
       width="90%"
+      v-dialogDrag
     >
       <case-detail :id="detailId" ref='detail'></case-detail>
     </el-dialog>
@@ -220,6 +221,7 @@
       :visible.sync="dialogVisible"
       width="30%"
       :close-on-click-modal="false"
+      v-dialogDrag
       >
       <el-input
         type="textarea"

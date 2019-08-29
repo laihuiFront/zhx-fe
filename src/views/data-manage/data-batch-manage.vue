@@ -261,6 +261,7 @@
       width="30%"
       center
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <el-row :gutter="20">
         <el-col :span="10">
@@ -285,6 +286,7 @@
       :visible.sync="detailVisibleCase"
       :close-on-click-modal="false"
       width="90%"
+      v-dialogDrag
     >
       <el-table highlight-current-row
                 ref="CasetableData"
@@ -548,6 +550,7 @@
       width="60%"
       center
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span><span @click="selectUnAllExport" style="cursor: pointer;margin-left:10px;">反选</span></div>
       <el-row class="pad" ref="boxWrapper">
@@ -577,6 +580,7 @@
       width="60%"
       center
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllCollectExport" style="cursor: pointer;">全选</span><span @click="selectUnAllCollectExport" style="cursor: pointer;margin-left:10px;">反选</span></div>
       <el-row class="pad" ref="boxWrapper">
@@ -633,6 +637,7 @@
       :visible.sync="dialogVisible"
       width="55%"
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <el-form :inline="true" :model="formInline" ref="formInline" label-width="100px" class="demo-dynamic">
         <el-row :gutter="24">
@@ -757,6 +762,7 @@
       :visible.sync="dialogVisible3"
       width="55%"
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <el-form :inline="true" :model="messageForm" ref="messageForm" label-width="100px" class="demo-dynamic">
         <el-row :gutter="24">

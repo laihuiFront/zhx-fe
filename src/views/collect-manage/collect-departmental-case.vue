@@ -8,6 +8,7 @@
           :visible.sync="detailVisible"
           :close-on-click-modal="false"
           width="90%"
+          v-dialogDrag
         >
           <case-detail :id="detailId" ref='detail'></case-detail>
         </el-dialog>
@@ -16,7 +17,9 @@
           class="dialog-wrap"
           :visible.sync="dialogVisible"
           :close-on-click-modal="false"
-          width="50%">
+          width="50%"
+          v-dialogDrag
+          >
           <el-form  class="demo-form-inline" label-width="120px">
             <div class="grid-content bg-purple">
               <el-form-item label="协催类型">
@@ -640,6 +643,7 @@
       :visible.sync="showQueryConfVisible"
       width="60%"
       center
+      v-dialogDrag
     >
       <el-row class="pad">
         <el-checkbox v-model="queryConf.bm" label="1" >部门</el-checkbox>
@@ -687,6 +691,7 @@
       :visible.sync="departmentVisible"
       :close-on-click-modal="false"
       append-to-body
+      v-dialogDrag
     >
       <el-tree
         v-if="departmentTree.length>0"
@@ -717,6 +722,7 @@
       :visible.sync="selectUserVisible3"
       :close-on-click-modal="false"
       width="600px"
+      v-dialogDrag
     >
       <el-tree
         :data="selectUserTree"

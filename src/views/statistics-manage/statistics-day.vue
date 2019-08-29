@@ -63,7 +63,7 @@
         label="催收员"
       >
       </el-table-column>
-      <el-table-column label="8:00前" align="center">
+      <el-table-column label="8:00以前" align="center">
         <el-table-column
           prop="countConPhoneNum"
           label="有效通电"

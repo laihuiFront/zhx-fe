@@ -610,6 +610,7 @@
       :visible.sync="detailVisible"
       :close-on-click-modal="false"
       width="90%"
+      v-dialogDrag
     >
       <case-detail :id="detailId" ref='detail'></case-detail>
     </el-dialog>
@@ -619,6 +620,7 @@
       :visible.sync="detailVisible2"
       :close-on-click-modal="false"
       width="40%"
+      v-dialogDrag
     >
       <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline" label-width="120px">
         <div class="grid-content bg-purple">
@@ -638,6 +640,7 @@
       :visible.sync="detailVisible3"
       :close-on-click-modal="false"
       width="30%"
+      v-dialogDrag
     >
       <el-form :inline="true" ref="fenan" :model="fenan" class="demo-form-inline" label-width="120px">
         <div class="grid-content bg-purple">
@@ -658,6 +661,7 @@
       class="dialog-wrap"
       :visible.sync="detailVisible11"
       :close-on-click-modal="false"
+      v-dialogDrag
       >
       <el-form :inline="true" ref="fenan" :model="fenan" class="demo-form-inline" label-width="120px">
       	<div class="top">
@@ -742,6 +746,7 @@
       :visible.sync="selectUserVisible2"
       :close-on-click-modal="false"
       width="600px"
+      v-dialogDrag
     >
       <el-tree
         :data="selectUserTree"
@@ -764,6 +769,7 @@
       :visible.sync="selectUserVisible3"
       :close-on-click-modal="false"
       width="600px"
+      v-dialogDrag
     >
       <el-tree
         :data="selectUserTree"
@@ -786,6 +792,7 @@
       :visible.sync="detailVisible8"
       :close-on-click-modal="false"
       width="30%"
+      v-dialogDrag
     >
       <el-form :inline="true" ref="fenan" :model="fenan" class="demo-form-inline" label-width="120px">
         <div class="grid-content bg-purple">
@@ -807,6 +814,7 @@
       :visible.sync="selectUserVisible"
       :close-on-click-modal="false"
       width="600px"
+      v-dialogDrag
     >
       <el-tree
         :data="selectUserTree"
@@ -827,6 +835,7 @@
       :visible.sync="detailVisible4"
       :close-on-click-modal="false"
       width="30%"
+      v-dialogDrag
     >
       <el-form :inline="true" ref="formInline1" :model="formInline1" class="demo-form-inline" label-width="120px">
         <div class="grid-content bg-purple">
@@ -854,6 +863,7 @@
       :visible.sync="detailVisible5"
       :close-on-click-modal="false"
       width="30%"
+      v-dialogDrag
     >
       <el-form :inline="true" ref="formInline1" :model="formInline1" class="demo-form-inline" label-width="120px">
         <div class="grid-content bg-purple">
@@ -882,6 +892,7 @@
       :visible.sync="detailVisible6"
       :close-on-click-modal="false"
       width="30%"
+      v-dialogDrag
     >
       <el-form :inline="true" ref="formInline1" :model="formInline1" class="demo-form-inline" label-width="120px">
         <div class="grid-content bg-purple">
@@ -910,6 +921,7 @@
       :visible.sync="detailVisible7"
       :close-on-click-modal="false"
       width="30%"
+      v-dialogDrag
     >
       <el-form :inline="true" ref="formInline1" :model="formInline1" class="demo-form-inline" label-width="120px">
         <div class="grid-content bg-purple">
@@ -931,6 +943,7 @@
       :visible.sync="detailVisible9"
       :close-on-click-modal="false"
       width="50%"
+      v-dialogDrag
     >
       <el-form :model="addSynergyForm" class="demo-form-inline" label-width="120px">
         <div class="grid-content bg-purple">
@@ -961,6 +974,7 @@
       width="30%"
       center
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <el-row :gutter="20">
         <el-col :span="10">
@@ -986,6 +1000,7 @@
       width="60%"
       center
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <el-row class="pad">
         <el-checkbox v-model="queryConf.csqy" label="1">催收区域</el-checkbox>
@@ -1037,6 +1052,7 @@
       width="60%"
       center
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllTelExport" style="cursor: pointer;">全选</span><span @click="selectUnAllTelExport" style="cursor: pointer;margin-left:10px;">反选</span></div>
       <el-row class="pad" ref="boxWrapper">
@@ -1067,6 +1083,7 @@
       width="60%"
       center
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllCollectExport" style="cursor: pointer;">全选</span><span @click="selectUnAllCollectExport" style="cursor: pointer;margin-left:10px;">反选</span></div>
       <el-row class="pad" ref="boxWrapper">
@@ -1124,6 +1141,7 @@
       width="60%"
       center
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span><span @click="selectUnAllExport" style="cursor: pointer;margin-left:10px;">反选</span></div>
       <el-row class="pad" ref="boxWrapper">
@@ -1326,6 +1344,7 @@
       :visible.sync="departmentVisible"
       :close-on-click-modal="false"
       append-to-body
+      v-dialogDrag
     >
         <el-tree
           :data="departmentTree"

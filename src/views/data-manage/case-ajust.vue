@@ -273,6 +273,7 @@
       :visible.sync="selectUserVisible2"
       :close-on-click-modal="false"
       width="600px"
+      v-dialogDrag
     >
       <el-tree
         :data="selectUserTree"
@@ -295,6 +296,7 @@
       :visible.sync="selectUserVisible3"
       :close-on-click-modal="false"
       width="600px"
+      v-dialogDrag
     >
       <el-tree
         :data="selectUserTree"
@@ -317,6 +319,7 @@
       width="60%"
       center
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <el-row class="pad">
         <el-checkbox v-model="queryConf.wtf" label="3">委托方</el-checkbox>
@@ -346,6 +349,7 @@
       :visible.sync="departmentVisible"
       :close-on-click-modal="false"
       append-to-body
+      v-dialogDrag
     >
         <el-tree
           :data="departmentTree"

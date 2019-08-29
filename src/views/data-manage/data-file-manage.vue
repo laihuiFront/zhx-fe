@@ -155,6 +155,7 @@
       title="导入"
       :visible.sync="dialogVisible"
       width="30%"
+      v-dialogDrag
     >
       导入
       <span slot="footer" class="dialog-footer" id="EndFooter">
@@ -168,6 +169,7 @@
       :visible.sync="dialogVisible2"
       width="70%"
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <el-form :inline="true" :model="dynamicValidateForm" ref="dynamicValidateForm" label-width="100px"
                class="demo-dynamic">
@@ -299,6 +301,7 @@
       :visible.sync="dialogVisible3"
       width="70%"
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <el-form :inline="true" disabled :model="dynamicValidateForm2" ref="dynamicValidateForm2" label-width="100px"
                class="demo-dynamic">
@@ -432,6 +435,7 @@
       width="30%"
       :before-close="handleClose"
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <span>{{ImportMsg}}</span>
       <span slot="footer" class="footer">

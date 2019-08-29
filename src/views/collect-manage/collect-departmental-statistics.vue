@@ -251,6 +251,7 @@
       :visible.sync="departmentVisible"
       :close-on-click-modal="false"
       append-to-body
+      v-dialogDrag
     >
       <el-tree
         v-if="departmentTree.length>0"
@@ -280,6 +281,7 @@
       :visible.sync="selectUserVisible3"
       :close-on-click-modal="false"
       width="600px"
+      v-dialogDrag
     >
       <el-tree
         :data="selectUserTree"

@@ -2786,6 +2786,7 @@
       width="45%"
       append-to-body
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <el-form :inline="true" :model="formInline" class="demo-form-inline">
         <el-form-item label="姓名">
@@ -2856,6 +2857,7 @@
       append-to-body
       class="addr-dialog-wrap"
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <el-form
         :inline="true"
@@ -2929,6 +2931,7 @@
       append-to-body
       class="addr-dialog-wrap"
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <el-form
         :inline="true"
@@ -2999,6 +3002,7 @@
       append-to-body
       class="addr-dialog-wrap"
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <el-form
         :inline="true"
@@ -3070,6 +3074,7 @@
       append-to-body
       class="addr-dialog-wrap"
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <el-form
         :inline="true"
@@ -3122,6 +3127,7 @@
       append-to-body
       class="addr-dialog-wrap"
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <el-form
         :inline="true"
@@ -3177,6 +3183,7 @@
       width="60%"
       append-to-body
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <el-form
         :inline="true"
@@ -3360,6 +3367,7 @@
       width="60%"
       append-to-body
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <el-form
         :inline="true"
@@ -3613,6 +3621,7 @@
       append-to-body
       class="addr-dialog-wrap"
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <el-form
         :inline="true"
@@ -3666,6 +3675,7 @@
       append-to-body
       class="addr-dialog-wrap"
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <el-form
         :inline="true"
@@ -3746,6 +3756,7 @@
       append-to-body
       class="addr-dialog-wrap"
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <el-form
         :inline="true"
@@ -3775,6 +3786,7 @@
       append-to-body
       class="addr-dialog-wrap"
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <div style="padding-top: 10px;">
         <el-input
@@ -3825,6 +3837,7 @@
       append-to-body
       class="addr-dialog-wrap warninghead"
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <div style="padding-top: 10px ;">
         <el-input
@@ -3858,6 +3871,7 @@
       :visible.sync="showHistory"
       :close-on-click-modal="false"
       width="60%"
+      v-dialogDrag
     >
       <div style="margin-bottom:5px;">
         <el-radio-group
@@ -3923,6 +3937,7 @@
       :visible.sync="reduceFileVisible"
       :close-on-click-modal="false"
       width="500px"
+      v-dialogDrag
     >
       <el-upload
         class="upload-demo"

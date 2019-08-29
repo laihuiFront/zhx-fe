@@ -48,6 +48,7 @@
       :visible.sync="detailVisible"
       :close-on-click-modal="false"
       width="800px"
+      v-dialogDrag
     >
       <el-table highlight-current-row
                 :data="odvList"

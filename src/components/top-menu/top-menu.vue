@@ -27,6 +27,7 @@
       </el-dropdown>
     </section>
     <el-dialog
+      v-dialogDrag
       title="修改密码"
       :visible.sync="dialogVisible"
       width="30%"
@@ -52,6 +53,7 @@
       title="修改坐席号"
       :visible.sync="dialogHomePhoneVisible"
       width="30%"
+      v-dialogDrag
     >
       <el-form :model="ruleForm3" status-icon :rules="rules3" ref="ruleForm3" label-width="100px" class="demo-ruleForm">
         <el-form-item label="坐席号" prop="oldPassword">
@@ -70,6 +72,7 @@
       :visible.sync="detailVisible"
       :close-on-click-modal="false"
       width="800px"
+      v-dialogDrag
     >
       <el-table highlight-current-row
                 :data="remindList"
