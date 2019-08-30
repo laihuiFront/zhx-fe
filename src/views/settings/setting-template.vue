@@ -37,6 +37,7 @@
       width="1000px"
       custom-class="dia-top"
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <div class="dia-top-inp">
         <span

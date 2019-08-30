@@ -186,6 +186,7 @@
     width="60%"
     center
     :close-on-click-modal="false"
+    v-dialogDrag
   >
     <el-row class="pad">
       <el-checkbox v-model="queryConf.csqy" label="1" >姓名</el-checkbox>
@@ -224,6 +225,7 @@
       :visible.sync="selectUserVisible3"
       :close-on-click-modal="false"
       width="600px"
+      v-dialogDrag
     >
       <el-tree
         :data="selectUserTree"

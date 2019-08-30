@@ -112,6 +112,7 @@
     width="60%"
     center
     :close-on-click-modal="false"
+    v-dialogDrag
   >
     <el-row class="pad">
 

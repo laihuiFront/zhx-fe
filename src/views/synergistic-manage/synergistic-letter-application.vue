@@ -30,10 +30,11 @@
             :visible.sync="detailVisible"
             :close-on-click-modal="false"
             width="90%"
+            v-dialogDrag
           >
             <case-detail :id="detailId" ref="detail"></case-detail>
           </el-dialog>
-          <el-dialog title="同意协催" :visible.sync="dialogVisible" width="30%" :close-on-click-modal="false">
+          <el-dialog title="同意协催" :visible.sync="dialogVisible" width="30%" :close-on-click-modal="false" v-dialogDrag>
             <el-input
               type="textarea"
               :autosize="{ minRows: 6, maxRows: 14 }"
@@ -306,6 +307,7 @@
       :visible.sync="ImportdialogVisible"
       width="30%"
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <span>{{ ImportMsg }}</span>
       <span slot="footer" class="footer">

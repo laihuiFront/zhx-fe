@@ -12,10 +12,11 @@
       :visible.sync="detailVisible"
       :close-on-click-modal="false"
       width="90%"
+      v-dialogDrag
     >
       <case-detail></case-detail>
     </el-dialog>
-    <el-dialog title="同意协催" :visible.sync="dialogVisible" width="30%" :close-on-click-modal="false">
+    <el-dialog title="同意协催" :visible.sync="dialogVisible" width="30%" :close-on-click-modal="false" v-dialogDrag>
       <el-input
         type="textarea"
         :autosize="{ minRows: 6, maxRows: 14 }"
@@ -227,6 +228,7 @@
       width="30%"
       center
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <el-row :gutter="20">
         <el-col :span="10"><div class="grid-content bg-purple">
@@ -310,6 +312,7 @@
       width="60%"
       center
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span><span @click="selectUnAllExport" style="cursor: pointer;margin-left:10px;">反选</span></div>
       <el-row class="pad" ref="boxWrapper">
@@ -360,6 +363,7 @@
       :visible.sync="moduleVisible"
       :close-on-click-modal="false"
       width="30%"
+      v-dialogDrag
     >
       <el-form :inline="true" ref="moduleForm" :model="moduleForm" class="demo-form-inline" label-width="120px">
         <div class="grid-content bg-purple">

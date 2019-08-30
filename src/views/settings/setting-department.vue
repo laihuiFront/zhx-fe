@@ -69,7 +69,7 @@
 				</el-table-column>
 			</el-table>
 		</div>
-		<el-dialog title="编辑部门名称" class="dialog-wrap" :visible.sync="showDepartmentDialog" width="30%">
+		<el-dialog title="编辑部门名称" class="dialog-wrap" :visible.sync="showDepartmentDialog" width="30%" v-dialogDrag>
 			<el-form
 				ref="form_update"
 				:model="form_update"
@@ -86,7 +86,7 @@
 				<el-button type="primary" @click="saveDept('form_update')">确 定</el-button>
 			</span>
 		</el-dialog>
-		<el-dialog title="新增部门名称" class="dialog-wrap" :visible.sync="showDepartmentDialog2" width="30%">
+		<el-dialog title="新增部门名称" class="dialog-wrap" :visible.sync="showDepartmentDialog2" width="30%" v-dialogDrag>
 			<el-form
 				ref="form_add"
 				:model="form_add"
@@ -111,6 +111,7 @@
 			:close-on-click-modal="true"
 			:append-to-body="true"
 			width="400px"
+			v-dialogDrag
 		>
 			<el-tree
 				v-if="moveSelectDepartTree.length>0"
