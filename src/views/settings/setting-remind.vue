@@ -70,11 +70,12 @@
     >
       <el-form
         :model="saveForm"
+        :rules="rules"
         ref="ruleForm"
         label-width="100px"
         class="demo-ruleForm"
       >
-        <el-form-item label="角色" prop="roleId">
+        <el-form-item label="角色" prop="role">
           <el-select v-model="saveForm.role" placeholder="请选择角色" @change="onClickSelectRole"
                      filterable collapse-tags multiple     clearable>
             <el-option
@@ -143,7 +144,18 @@ export default {
       roleList:[],
       total:0,
       dialogVisible:false,
-      saveForm:{creattime:null,starttime:null,endTime:null,role:null,context:'',receiveUserName:null,roleId:null,pageNum:1,pageSize:50,receiveUsers:[]}
+      rules: {
+        role: [
+          { required: true, message: '请选择角色', trigger: 'change' }
+        ],
+        receiveUserName: [
+          { required: true, message: '请输入接收人', trigger: 'change' }
+        ],
+        context: [
+          { required: true, message: '请选择内容', trigger: 'change' }
+        ],
+      },
+      saveForm:{creattime:null,starttime:null,endTime:null,role:null,context:'',receiveUserName:null,roleId:null,pageNum:1,pageSize:100,receiveUsers:[]}
     }
   },
   created(){
@@ -185,14 +197,20 @@ export default {
       })
     },
     saveContent(){
-      this.tableLoad = true
-      save(this.saveForm).then((data)=>{
-        this.getMainData();
-        this.$message({
-          message: '提交成功',
-          type: 'success'
-        });
-      }).catch(() => {});
+      this.$refs.ruleForm.validate((valid)=>{
+        if(valid){
+          this.tableLoad = true
+          save(this.saveForm).then((data)=>{
+            this.getMainData();
+            this.$message({
+              message: '提交成功',
+              type: 'success'
+            });
+          }).catch(() => {});
+        }else{
+          this.$message('校验失败，请根据提示修改后提交')
+        }
+      })
     },
     getMainData(){
       this.tableLoad = true
@@ -205,10 +223,17 @@ export default {
       });
     },
     handleClick(){
+      this.$nextTick(()=>{
+        if(this.$refs['ruleForm']){
+          this.$refs['ruleForm'].resetFields()
+        }
+      });
       roleList().then((data)=>{
         this.roleList = data
       });
-      this.saveForm={role:null,context:'',receiveUserName:null,roleId:null,receiveUsers:[]}
+      let currentPageNum = this.saveForm.pageNum;
+      let currentPageSize = this.saveForm.pageSize;
+      this.saveForm={role:[],context:'',receiveUserName:null,roleId:null,receiveUsers:[],pageNum:currentPageNum,pageSize:currentPageSize}
        this.dialogVisible = true;
     },
     deleteOne({id}){
