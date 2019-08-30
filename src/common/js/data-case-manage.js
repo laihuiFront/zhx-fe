@@ -105,7 +105,7 @@ export const searchList =  function(form,orderBy,sort,pageSize,pageNum) {
       batchBonds:form.batchBonds,
       pageNum :pageNum,
       pageSize :pageSize,
-      applyOrderNo:form.applyOrderNo==null?"":form.applyOrderNo.replace(/[\n\r\v\s↵]/g,",") 
+      applyOrderNo:form.applyOrderNo==null?"":form.applyOrderNo.replace(/[\n\r\v\s↵]/g,",")
     }
   })
 }
@@ -730,7 +730,7 @@ export function listOrganization(data) {
   })
 }
 
-export  const batchList2= function(data){
+export const batchList2= function(data){
   return request({
     url: '/dataBatch/selectBatchNo',
     method: 'post',
@@ -738,4 +738,18 @@ export  const batchList2= function(data){
   })
 }
 
+export const queryDept = function(data){
+  return request({
+    url: '/dataCase/queryDept',
+    method: 'post',
+    data
+  })
+}
 
+export const queryOdv = function(data){
+  return request({
+    url: '/dataCase/queryOdv',
+    method: 'post',
+    data
+  })
+}

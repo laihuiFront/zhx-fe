@@ -1210,9 +1210,9 @@
       border-top: 1px solid #0080ff  !important;
       border-bottom: 1px solid #0080ff  !important;
     }
-    .el-input--mini .el-input__inner {
-      width: 220px;
-    }
+    // .el-input--mini .el-input__inner {
+    //   width: 220px;
+    // }
     .remarkStyle{
       width: 100%;
       height:100%;
@@ -1221,7 +1221,7 @@
       }
       .el-form-item{
         display: flex;
-         padding-left: 12px;
+        padding-left: 12px;
       }
     }
     .el-textarea__inner {

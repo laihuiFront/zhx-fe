@@ -124,9 +124,9 @@
       <el-form-item v-if="queryConf.csjl || queryConfFlag">
         <el-input v-model="formInline.collectInfo" placeholder="请输入催收记录"></el-input>
       </el-form-item>
-      <el-form-item v-if="queryConf.bm || queryConfFlag">
+      <!-- <el-form-item v-if="queryConf.bm || queryConfFlag">
         <el-input v-model="formInline.deptFiter" placeholder="请输入部门过滤条件"></el-input>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item v-if="queryConf.bm || queryConfFlag">
         <!--<el-select v-model="formInline.depts" filterable collapse-tags multiple placeholder="请选择部门" clearable>
           <el-option
@@ -136,7 +136,9 @@
             :value="item.id">
           </el-option>
         </el-select>-->
-        <el-input v-model="deptName" width="200" @focus="onClickSelectDept" clearable placeholder="请选择部门"></el-input>
+        <el-autocomplete v-model="deptName" width="200" clearable placeholder="请输入部门" :fetch-suggestions="showDeptName" @select="selectDept">
+          <el-button slot="append" icon="el-icon-search" @click="onClickSelectDept"></el-button>
+        </el-autocomplete>
       </el-form-item>
       <el-form-item v-if="queryConf.csy || queryConfFlag">
         <!--<el-select v-model="formInline.odvs" filterable collapse-tags multiple placeholder="请选择催收员" clearable>
@@ -147,7 +149,9 @@
             :value="item.id">
           </el-option>
         </el-select>-->
-        <el-input v-model="formInline.odvNameFiter" width="160" @focus="onClickSelectUser3" clearable placeholder="请选择催收员"></el-input>
+        <el-autocomplete v-model="formInline.odvNameFiter" width="160" clearable placeholder="请输入催收员" :fetch-suggestions="showOdvName" @select="selectOdv">
+          <el-button slot="append" icon="el-icon-search" @click="onClickSelectUser3"></el-button>
+        </el-autocomplete>
       </el-form-item>
       <el-form-item v-if="queryConf.bbzt || queryConfFlag">
         <el-select v-model="formInline.reportStatuss" filterable collapse-tags multiple placeholder="请选择报备状态" clearable>
@@ -1407,7 +1411,9 @@
     selectOpExport,
     pageDataExport,
     selectDataCaseExport,
-    totalDataBatchExport
+    totalDataBatchExport,
+    queryDept,
+    queryOdv
   } from '@/common/js/data-case-manage.js'
   import {pageSizes} from "@/common/js/const"
 
@@ -1605,22 +1611,18 @@
     },
     methods: {
       onClickSaveDept() {
-        let selectDataArr = this.$refs.tree.getCheckedNodes()
-        let selectUserNames = []
-        let selectUserIds = []
-
-        if (selectDataArr.length > 0) {
-          selectUserNames = selectDataArr.map((item) => {
-            return item.orgName
-          })
-          selectUserIds = selectDataArr.map((item) => {
-            return item.id
-          })
+        const checkedNodes = this.$refs.tree.getCheckedNodes()
+        if (checkedNodes.length == 0){
+          return
         }
 
-        console.info(selectUserNames,"123");
-        this.$set(this, 'deptName', selectUserNames.join(','))
-        this.$set(this.formInline, 'depts', selectUserIds)
+        const checkedNodesIds = checkedNodes.map((item) => item.id)
+        const nodes = checkedNodes.filter(x => !checkedNodesIds.includes(x.parent.id))
+        const nodesIds = nodes.map(item => item.id)
+        const nodesNames = nodes.map(item => item.orgName)
+
+        this.$set(this, 'deptName', nodesNames.join(','))
+        this.$set(this.formInline, 'depts', nodesIds)
         this.departmentVisible = false
       },
 
@@ -1629,6 +1631,24 @@
         batchList2({"batchNo":query}).then((response) => {
           this.$set(this, 'batchList', response)
         })
+      },
+
+      showDeptName(deptName,callback){
+        queryDept({deptName}).then(data => callback(data)).catch(() => {})
+      },
+
+      showOdvName(odvName,callback){
+        queryOdv({odvName}).then(data => callback(data)).catch(() => {})
+      },
+
+      selectDept(dept){
+        this.deptName = dept.value
+        this.$set(this.formInline, 'depts', [dept.id])
+      },
+
+      selectOdv(odv){
+        this.$set(this.formInline, 'odvNameFiter', odv.value)
+        this.$set(this.formInline, 'odvs', [odv.id])
       },
 
       clientCurrent(){
