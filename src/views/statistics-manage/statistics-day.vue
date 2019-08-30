@@ -7,7 +7,7 @@
        element-loading-background="rgba(0, 0, 0, 0.7)">
     <el-form ref="form" :model="formInline" :inline="true" class="query-wrap queryStyle">
       <el-form-item>
-        <el-input v-model="odvName" width="200" @focus="onClickSelectUser" clearable placeholder="请选择催收员"></el-input>
+        <el-input v-model="formInline.odvName" width="200" @focus="onClickSelectUser" clearable placeholder="请选择催收员"></el-input>
       </el-form-item>
       <el-form-item>
         <el-select v-model="formInline.areas" placeholder="请选择催收区域" filterable
@@ -266,12 +266,12 @@
         pageSize:100,
         total: 0,
         formInline: {
+          odvName: '',
           odv: [],
           areas:[],
           clients:[],
           time: []
         },
-        odvName: "",
         PersonList: [],
         areaList: [],
         clientList: [],
@@ -296,16 +296,12 @@
             return item.id
           })
         }
-        this.odvName = selectUserNames.join(',')
+        this.$set(this.formInline, 'odvName', selectUserNames.join(','))
         this.$set(this.formInline, 'odv', selectUserIds)
         this.selectUserVisible = false
       },
-      onClickSelectUser() {
+      onClickSelectUser() {   
         this.selectUserVisible = true
-        if (!this.odvName) {
-          this.$set(this.formInline, 'odv', [])
-        }
-
         this.$nextTick(() => {
           this.$refs.tree.setCheckedKeys(this.formInline.odv);
         })
@@ -408,6 +404,9 @@
         }, 2000);*/
       },
       query2() {
+        if (this.formInline.odvName==null || this.formInline.odvName==""){
+          this.$set(this.formInline, 'odv', [])
+        }
         if (this.formInline.time == null || this.formInline.time.length == 0) {
           this.$message({
             type: 'error',
@@ -427,13 +426,7 @@
        /* setTimeout(() => {
           this.tableLoad = false;
         }, 2000);*/
-      },
-  // queryMethod(){
-  //   // this.pageNum=1
-  //   this.currentPage4=1
-  //   this.query2()
-  // }
-
+      }
     },
     created() {
  /*     areaList().then((response) => {
