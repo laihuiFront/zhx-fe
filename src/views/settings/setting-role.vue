@@ -34,6 +34,7 @@
       :visible.sync="dialogData.editVisible"
       :close-on-click-modal="false"
       width="50%"
+      v-dialogDrag
     >
       <el-form
         :model="roleInfo"

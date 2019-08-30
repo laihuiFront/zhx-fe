@@ -191,7 +191,7 @@
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
     </el-pagination>-->
-    <el-dialog :title="dialogTitle" :visible.sync="dialogTableVisible" class="dialog-wrap" width="80%">
+    <el-dialog :title="dialogTitle" :visible.sync="dialogTableVisible" class="dialog-wrap" width="80%" v-dialogDrag>
       <el-table :data="gridData" border
                 stripe>
         <el-table-column property="phoneTime" label="通话时间"></el-table-column>
@@ -221,6 +221,7 @@
       :visible.sync="selectUserVisible"
       :close-on-click-modal="false"
       width="600px"
+      v-dialogDrag
     >
       <el-tree
         :data="selectUserTree"

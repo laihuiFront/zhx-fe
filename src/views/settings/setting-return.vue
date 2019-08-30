@@ -35,6 +35,7 @@
       width="600px"
       custom-class="dia-top"
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <el-form
         :model="saveForm"

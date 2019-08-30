@@ -136,6 +136,7 @@
       :visible.sync="selectUserVisible"
       :close-on-click-modal="false"
       width="600px"
+      v-dialogDrag
     >
       <el-tree
         :data="selectUserTree"

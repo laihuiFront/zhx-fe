@@ -616,6 +616,7 @@
       :visible.sync="dialogVisible"
       width="40%"
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <el-form :model="ruleForm" ref="ruleForm" :disabled="MessageTrue" :inline=true label-width="100px"
                class="demo-ruleForm">
@@ -673,6 +674,7 @@
       width="30%"
       center
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <el-row :gutter="20">
         <el-col :span="10">
@@ -698,6 +700,7 @@
       width="60%"
       center
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <el-row class="pad">
         <el-checkbox v-model="queryConf.pch" label="1">批次号</el-checkbox>
@@ -724,6 +727,7 @@
       width="60%"
       center
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span><span @click="selectUnAllExport" style="cursor: pointer;margin-left:10px;">反选</span></div>
       <el-row class="pad">
@@ -752,6 +756,7 @@
       :visible.sync="reduceFileVisible"
       :close-on-click-modal="false"
       width="500px"
+      v-dialogDrag
     >
       <el-table highlight-current-row
                 :data="reduceFileList"

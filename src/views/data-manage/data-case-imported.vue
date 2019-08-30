@@ -1229,7 +1229,6 @@
     }
     .dialog-wrap .el-dialog .el-dialog__body {
       overflow: hidden;
-      height: 320px;
     }
     .el-pagination .el-select .el-input .el-input__inner {
       width: 100px

@@ -144,6 +144,7 @@
       :visible.sync="dialogData.editVisible"
       :close-on-click-modal="false"
       width="50%"
+      v-dialogDrag
     >
       <el-form
         :model="memberInfo"
@@ -215,6 +216,7 @@
         :visible.sync="dialogData.departmentVisible"
         :close-on-click-modal="false"
         append-to-body
+        v-dialogDrag
       >
         <el-tree
           v-if="departmentTree.length>0"
@@ -246,6 +248,7 @@
       :visible.sync="dialogData.departmentVisible2"
       :close-on-click-modal="false"
       append-to-body
+      v-dialogDrag
     >
       <el-tree
         v-if="departmentTree.length>0"

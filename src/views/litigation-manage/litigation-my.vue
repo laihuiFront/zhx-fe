@@ -185,6 +185,7 @@
   :visible.sync="dialogVisible"
   width="90%"
   :close-on-click-modal="false"
+  v-dialogDrag
   >
  <el-form :inline="true" :model="formInline" class="demo-form-inline" label-width="140px" :disabled="isTrue">
  	<el-row :gutter="24">
@@ -679,6 +680,7 @@
   :visible.sync="dialogVisible"
   width="90%"
   :close-on-click-modal="false"
+  v-dialogDrag
   >
  <el-form :inline="true" :model="formInline" class="demo-form-inline" label-width="140px" :disabled="isTrue">
  	<el-row :gutter="24">

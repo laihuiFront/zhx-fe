@@ -67,6 +67,7 @@
       width="30%"
       center
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <el-form :inline="true">
         <el-form-item>
@@ -89,6 +90,7 @@
       width="60%"
       center
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span><span @click="selectUnAllExport" style="cursor: pointer;margin-left:10px;">反选</span></div>
       <el-row class="pad" ref="boxWrapper">

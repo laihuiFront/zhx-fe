@@ -67,6 +67,7 @@
       width="600px"
       custom-class="dia-top"
       :close-on-click-modal="false"
+      v-dialogDrag
     >
       <el-form
         :model="saveForm"
@@ -104,6 +105,7 @@
       :visible.sync="selectUserVisible"
       :close-on-click-modal="false"
       width="600px"
+      v-dialogDrag
     >
       <el-tree
         :data="selectUserTree"
