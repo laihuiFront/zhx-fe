@@ -234,10 +234,10 @@
         width="250">
         <template slot-scope="scope">
           <el-button type="text" size="small" v-if="scope.row.batchStatus!=2 && scope.row.batchStatus!=0"
-                     @click="open2(scope.row.id)" v-has="'退案'">退案
+                     @click="open2(scope.row.id,scope.row.batchNo)" v-has="'退案'">退案
           </el-button>
           <el-button type="text" size="small" v-if="scope.row.batchStatus!=1 && scope.row.batchStatus!=0"
-                     @click="backCaseList(scope.row.id)" v-has="'退案'">恢复
+                     @click="backCaseList(scope.row.id,scope.row.batchNo)" v-has="'退案'">恢复
           </el-button>
           <el-button type="text" size="small" @click="editMessage2(scope.row)" v-has="'编辑'">编辑</el-button>
           <el-button type="text" size="small" @click="deleteMessage(scope.row.id,scope.row.batchNo)" v-has="'删除'">删除</el-button>
@@ -1465,8 +1465,8 @@
           this.search()
         })
       },*/
-      returnMessage(id) {
-        let arry = [{id: id}]
+      returnMessage(id,batchNo) {
+        let arry = [{id: id,batchNo:batchNo}]
         returnCase(arry).then((response) => {
           this.$message({
             type: 'success',
@@ -1475,8 +1475,8 @@
           this.search()
         })
       },
-      BackMessage(id) {
-        let arry = [{id: id}]
+      BackMessage(id,batchNo) {
+        let arry = [{id: id,batchNo:batchNo}]
         backCase(arry).then((response) => {
           this.$message({
             type: 'success',
@@ -1657,24 +1657,24 @@
 
         });
       },
-      open2(id) {
+      open2(id,batchNo) {
         this.$confirm(' 是否退案?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.returnMessage(id)
+          this.returnMessage(id,batchNo)
         }).catch(() => {
 
         });
       },
-      backCaseList(id) {
+      backCaseList(id,batchNo) {
         this.$confirm(' 是否恢复?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.BackMessage(id)
+          this.BackMessage(id,batchNo)
         }).catch(() => {
 
         });
