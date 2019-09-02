@@ -1185,7 +1185,6 @@
                 >
               </el-popover>
             </el-form-item>
-
           </el-form>
         </div>
       </el-collapse-item>
@@ -5347,6 +5346,7 @@
         //我的案件/部门案件
         if(caseType == 1 || caseType == 2){
           this.showNext = true
+          this.mycaseFlag = true
         }
 
         // if (this.$route.query.mycase){
@@ -5592,25 +5592,25 @@
     //     immediate: true
     //   }
     // },
-    beforeRouteUpdate(to, from, next) {
-      // 导航离开该组件的对应路由时调用
-      // 可以访问组件实例 `this`
-      // console.log(this);
-      // this.sameRouteChange();
+    // beforeRouteUpdate(to, from, next) {
+    //   // 导航离开该组件的对应路由时调用
+    //   // 可以访问组件实例 `this`
+    //   // console.log(this);
+    //   // this.sameRouteChange();
 
-      // console.log("routerLify",this.$route.query.id)
-      this.sameRouteChange();
-      next();
-      this.resetContent();
-      this.initPageData(this.$route.query.id);
-      // console.log("routerLify1",this.$route.query.id)
-    },
-    beforeRouteLeave(to, from, next) {
-      // 导航离开该组件的对应路由时调用
-      // 可以访问组件实例 `this`
-      this.sameRouteChange();
-      next();
-    },
+    //   // console.log("routerLify",this.$route.query.id)
+    //   this.sameRouteChange();
+    //   next();
+    //   this.resetContent();
+    //   this.initPageData(this.$route.query.id);
+    //   // console.log("routerLify1",this.$route.query.id)
+    // },
+    // beforeRouteLeave(to, from, next) {
+    //   // 导航离开该组件的对应路由时调用
+    //   // 可以访问组件实例 `this`
+    //   this.sameRouteChange();
+    //   next();
+    // },
     created() {
       // window.addEventListener("beforeunload", () => {
       //   localStorage.clear();

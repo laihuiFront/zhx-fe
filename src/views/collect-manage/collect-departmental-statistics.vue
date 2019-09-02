@@ -302,16 +302,12 @@
 
 <script>
 import { batchNo, pay, getEnum,listOrganization,getUserTree } from "@/common/js/collect-my-case";
-
 import {role} from '@/common/js/collect-departmental-case'
- const CaseDetail2 = () => import('@/views/data-manage/detail');
+import {pageSizes} from "@/common/js/const"
+
 export default {
-     components: {
-      CaseDetail2
-    },
   name: "collectRepaymentStatistics",
   data() {
-
     const tablecol_common = [
       {
         label: "批次号",
@@ -340,6 +336,7 @@ export default {
       }
     ];
     return {
+      pageSizes,
       paginationData: {
         pageSize: 100,
         total: 0,
