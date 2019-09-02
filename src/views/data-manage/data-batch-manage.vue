@@ -647,14 +647,14 @@
                             prop="batchNo"
                             :rules="{ required: true, message: '批次号不能为空', trigger: 'blur'}">
                 <el-input v-model="formInline.batchNo" placeholder="请输入批次号" maxlength="80"
-                          clearable></el-input>
+                          clearable class="fixWidth"></el-input>
               </el-form-item>
             </div>
           </el-col>
           <el-col :span="12">
             <div class="grid-content bg-purple">
               <el-form-item label="催收区域">
-                <el-select v-model="formInline.areaListId" placeholder="请选择催收区域" clearable>
+                <el-select v-model="formInline.areaListId" placeholder="请选择催收区域" clearable class="fixWidth">
                   <el-option
                     v-for="item in areaList"
                     :key="item.id"
@@ -672,7 +672,7 @@
               <el-form-item label="委  托  方"
                             prop="client"
                             :rules="{required: true, message: '委托方不能为空', trigger: 'blur'}">
-                <el-select v-model="formInline.client" placeholder="请选择委托方" clearable>
+                <el-select v-model="formInline.client" placeholder="请选择委托方" clearable class="fixWidth">
                   <el-option
                     v-for="item in clientList"
                     :key="item.id"
@@ -686,7 +686,7 @@
           <el-col :span="12">
             <div class="grid-content bg-purple">
               <el-form-item label="案件类型">
-                <el-select v-model="formInline.caseType" placeholder="请选择案件类型" clearable>
+                <el-select v-model="formInline.caseType" placeholder="请选择案件类型" clearable class="fixWidth">
                   <el-option
                     v-for="item in caseTypeList"
                     :key="item.id"
@@ -772,14 +772,14 @@
                             prop="batchNo"
                             :rules="{ required: true, message: '批次号不能为空', trigger: 'blur'}"  >
                 <el-input  v-model="messageForm.batchNo"  placeholder="请输入批次号" maxlength="80"
-                          clearable  class="fixwidth"></el-input>
+                          clearable  class="fixWidth"></el-input>
               </el-form-item>
             </div>
           </el-col>
           <el-col :span="12">
             <div class="grid-content bg-purple">
               <el-form-item label="催收区域">
-                <el-select v-model="messageForm.area" placeholder="请选择催收区域" clearable>
+                <el-select v-model="messageForm.area" placeholder="请选择催收区域" clearable class="fixWidth">
                   <el-option
                     v-for="item in areaList"
                     :key="item.id"
@@ -798,7 +798,7 @@
               <el-form-item label="委  托  方"
                             prop="client"
                             :rules="{required: true, message: '委托方不能为空', trigger: 'blur'}">
-                <el-select v-model="messageForm.client"  placeholder="请选择委托方" clearable>
+                <el-select v-model="messageForm.client"  placeholder="请选择委托方" clearable class="fixWidth">
                   <el-option
                     v-for="item in clientList"
                     :key="item.id"
@@ -812,7 +812,7 @@
           <el-col :span="12">
             <div class="grid-content bg-purple">
               <el-form-item label="案件类型">
-                <el-select v-model="messageForm.caseType" placeholder="请选择案件类型" clearable>
+                <el-select v-model="messageForm.caseType" placeholder="请选择案件类型" clearable class="fixWidth">
                   <el-option
                     v-for="item in caseTypeList"
                     :key="item.id"
@@ -1465,8 +1465,8 @@
           this.search()
         })
       },*/
-      returnMessage(id,batchNo) {
-        let arry = [{id: id,batchNo:batchNo}]
+      returnMessage(id) {
+        let arry = [{id: id}]
         returnCase(arry).then((response) => {
           this.$message({
             type: 'success',
@@ -1790,7 +1790,7 @@
       border-top: 1px solid #0080ff  !important;
       border-bottom: 1px solid #0080ff  !important;
     }
-    .el-input--mini .el-input__inner {
+    .fixWidth{
       width: 220px;
     }
     .remarkStyle{
