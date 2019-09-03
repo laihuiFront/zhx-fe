@@ -1,15 +1,39 @@
 import request from '@/common/js/request'
 
-export function findOne(){
+export function queryCallCenters(){
   return request({
-    url: '/telIp/findOne',
+    url: '/telIp/queryCallCenters',
     method: 'post'
   })
 }
 
-export function update(data){
+export function addCallCenter(data){
   return request({
-    url: '/telIp/update',
+    url: '/telIp/addCallCenter',
+    method: 'post',
+    data
+  })
+}
+
+export function queryCallCenter(data){
+  return request({
+    url: '/telIp/queryCallCenter',
+    method: 'post',
+    data
+  })
+}
+
+export function updateCallCenter(data){
+  return request({
+    url: '/telIp/updateCallCenter',
+    method: 'post',
+    data
+  })
+}
+
+export function deleteCallCenters(data){
+  return request({
+    url: '/telIp/deleteCallCenters',
     method: 'post',
     data
   })

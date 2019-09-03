@@ -1224,14 +1224,14 @@
                 <div class="right-oper">
                   <el-button
                     type="primary"
-                    @click="sendTel3"
+                    @click="sendTelBatch"
                     v-if=" caseDetail.currentuser || mycaseFlag"
                   >手机批量呼出
                   </el-button>
                   <el-button
                     class="sendTel4Style"
                     type="primary"
-                    @click="sendTel4"
+                    @click="sendTelBatch2"
                     v-if=" caseDetail.currentuser || mycaseFlag"
                   >座机批量呼出
                   </el-button>
@@ -3881,7 +3881,7 @@
           <el-radio :label="2">同号码所有催记</el-radio>
         </el-radio-group>
       </div>
-      <el-table :data="telhistory" height="1" style="min-height: 300px;">
+      <el-table :data="telhistory">
         <el-table-column
           property="collectTime"
           label="通话时间"
@@ -3894,10 +3894,10 @@
           property="mobile"
           label="电话号码"
         ></el-table-column>
-        <el-table-column
+        <!-- <el-table-column
           property="sType"
           label="电话类型"
-        ></el-table-column>
+        ></el-table-column> -->
         <el-table-column
           property="collectInfo"
           label="通话内容"
@@ -3924,11 +3924,8 @@
           type="primary"
           @click="showHistory=false"
         >关闭
-        </el-button
-        >
+        </el-button>
       </div>
-
-      >
     </el-dialog>
     <el-dialog
       title="附件列表"
@@ -4174,93 +4171,24 @@
     },
 
     methods: {
-      //phoneSelectList
-      sendTel4(){
-
-        if (this.phoneSelectList ==null || this.phoneSelectList.length==0){
-          this.$message({
-            type: "info",
-            message: "请先选择号码 "
-          });
-          return;
-        }
-        if (this.phoneSelectList.length>10){
-          this.$message({
-            type: "info",
-            message: "拨打的号码数量超过10个 "
-          });
-          return;
-        }
-        let telStatus = false
-        for (var i=0;i<this.phoneSelectList.length;i++){
-          if (this.phoneSelectList[i]!=null &&this.phoneSelectList[i].telStatusMsg=="停止跟进"){
-            this.$message({
-              type: "info",
-              message: "有电话处于停止跟进状态，禁止拨打! "
-            });
-            telStatus = true;
-            break;
-
-          }
-        }
-        if (telStatus){
-          return;
-        }
-        const customer = this.caseDetail.telIpManage.customer
-        const psw = this.caseDetail.telIpManage.psw
-        // 呼出的分机号(坐席号)
-        const agent = this.caseDetail.officePhone==null?"":this.caseDetail.officePhone;
-        // 被叫号码
-        var tels =new Array()
-        for (var i=0;i<this.phoneSelectList.length;i++){
-          tels.push("7"+this.phoneSelectList[i].tel)
-        }
-        const callees = tels
-
-        const url = "http://"+this.caseDetail.telIpManage.address+"/openapi/V2.0.x/CallMultiNumbers"
-        const time = new Date().getTime()
-        const seq = this.caseDetail.id
-        this.batchForm.seq = time
-        const auth = `${customer}@${time}@${seq}@${psw}`
-        const digest = md5(auth)
-        const data = {
-          authentication : {
-            customer,
-            agent:agent,
-            timestamp: time,
-            seq:seq,
-            digest
-          },
-          param: {
-            debug: "true",
-            lang: "zh_CN"
-          },
-          request : {
-            seq,
-            userData:time,
-            agent,
-            callees
-          }
-        }
-        sendTelBatch(data,this.caseDetail.telIpManage.address).then(data => {
-          this.$message({
-            type: "success",
-            message: "拨号成功"
-          });
-        });
+      sendTelBatch(){
+        this._sendTelBatch(9)
       },
-      sendTel3(){
+      sendTelBatch2(){
+        this._sendTelBatch(7)
+      },
+      _sendTelBatch(phoneNoPrefix){
         if (this.phoneSelectList ==null || this.phoneSelectList.length==0){
           this.$message({
             type: "info",
-            message: "请先选择号码 "
+            message: "请先选择号码"
           });
           return;
         }
         if (this.phoneSelectList.length>10){
           this.$message({
             type: "info",
-            message: "拨打的号码数量超过10个 "
+            message: "拨打的号码数量不能超过10个"
           });
           return;
         }
@@ -4269,28 +4197,32 @@
           if (this.phoneSelectList[i]!=null &&this.phoneSelectList[i].telStatusMsg=="停止跟进"){
             this.$message({
               type: "info",
-              message: "有电话处于停止跟进状态，禁止拨打! "
+              message: "有电话处于停止跟进状态，禁止拨打"
             });
             telStatus = true;
             break;
-
           }
         }
         if (telStatus){
           return;
         }
-        const customer = this.caseDetail.telIpManage.customer
-        const psw = this.caseDetail.telIpManage.psw
+
+        const callCenter = this.caseDetail.callCenter
+        if(!callCenter){
+          this.$message({
+            type: "error",
+            message: "请先在坐席设置中配置呼叫中心"
+          })
+          return
+        }
+
+        const customer = callCenter.customer
+        const psw = callCenter.psw
         // 呼出的分机号(坐席号)
         const agent = this.caseDetail.officePhone==null?"":this.caseDetail.officePhone;
         // 被叫号码
-        var tels =new Array()
-        for (var i=0;i<this.phoneSelectList.length;i++){
-          tels.push("9"+this.phoneSelectList[i].tel)
-        }
-        const callees = tels
-
-        const url = "http://"+this.caseDetail.telIpManage.address+"/openapi/V2.0.x/CallMultiNumbers"
+        const callees = this.phoneSelectList.map(item => `${phoneNoPrefix}${item.tel}`)
+        const url = `http://${callCenter.address}/openapi/V2.0.x/CallMultiNumbers`
         const time = new Date().getTime()
         const seq = this.caseDetail.id
         this.batchForm.seq = time
@@ -4315,62 +4247,35 @@
             callees
           }
         }
-        sendTelBatch(data,this.caseDetail.telIpManage.address).then(data => {
+        sendTelBatch(data,callCenter.address).then(data => {
           this.$message({
             type: "success",
             message: "拨号成功"
-          });
-        });
-
-      },
-      sendTel2(){
-        const customer = this.caseDetail.telIpManage.customer
-        const psw = this.caseDetail.telIpManage.psw
-        // 呼出的分机号(坐席号)
-        const agent = this.caseDetail.officePhone==null?"":this.caseDetail.officePhone;
-        // 被叫号码
-        const callee = "7"+this.batchForm.mobile
-
-        const url = "http://"+this.caseDetail.telIpManage.address+"/openapi/V2.0.6/CallNumber"
-        const time = new Date().getTime()
-        const seq = this.caseDetail.id
-        this.batchForm.seq = time
-        const auth = `${customer}@${time}@${seq}@${psw}`
-        const digest = md5(auth)
-        const data = {
-          authentication : {
-            customer,
-            timestamp: time,
-            seq:seq,
-            digest
-          },
-          param: {
-            debug: "true",
-            lang: "zh_CN"
-          },
-          request : {
-            seq,
-            userData:time,
-            agent,
-            callee
-          }
-        }
-        sendTel(data,this.caseDetail.telIpManage.address).then(data => {
-          this.$message({
-            type: "success",
-            message: "拨号成功"
-          });
-        });
+          })
+        })
       },
       sendTel(){
-        const customer = this.caseDetail.telIpManage.customer
-        const psw = this.caseDetail.telIpManage.psw
+        this._sendTel(9)
+      },
+      sendTel2(){
+        this._sendTel(7)
+      },
+      _sendTel(phoneNoPrefix){
+        const callCenter = this.caseDetail.callCenter
+        if(!callCenter){
+          this.$message({
+            type: "error",
+            message: "请先在坐席设置中配置呼叫中心"
+          })
+          return
+        }
+        const customer = callCenter.customer
+        const psw = callCenter.psw
         // 呼出的分机号(坐席号)
         const agent = this.caseDetail.officePhone==null?"":this.caseDetail.officePhone;
         // 被叫号码
-        const callee = "9"+this.batchForm.mobile
-
-        const url = "http://"+this.caseDetail.telIpManage.address+"/openapi/V2.0.6/CallNumber"
+        const callee = `${phoneNoPrefix}${this.batchForm.mobile}`
+        const url = `http://${callCenter.address}/openapi/V2.0.6/CallNumber`
         const time = new Date().getTime()
         const seq = this.caseDetail.id
         this.batchForm.seq = time
@@ -4394,13 +4299,12 @@
             callee
           }
         }
-        sendTel(data,this.caseDetail.telIpManage.address).then(data => {
+        sendTel(data,callCenter.address).then(data => {
           this.$message({
             type: "success",
             message: "拨号成功"
-          });
-        });
-
+          })
+        })
       },
       lastCase(){
         this.getCase(-1)

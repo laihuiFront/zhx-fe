@@ -96,12 +96,13 @@ export function resetPassword(form) {
   })
 }
 
-export function updatePhone(form) {
+export function updatePhone(data) {
   return request({
     method:'post',
     url:'/user/updateOfficePhone',
-    data:{
-      officePhone:form.officePhone
+    data: {
+      officePhone: data.officePhone,
+      callcenterid: data.callCenter
     }
   })
 }

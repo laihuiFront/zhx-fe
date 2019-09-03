@@ -21,7 +21,7 @@
       </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="editPassword">修改密码</el-dropdown-item>
-          <el-dropdown-item command="editHomePhone">修改坐席号</el-dropdown-item>
+          <el-dropdown-item command="editHomePhone">修改坐席设置</el-dropdown-item>
           <el-dropdown-item command="logOut">退出</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -50,20 +50,30 @@
     </el-dialog>
 
     <el-dialog
-      title="修改坐席号"
+      title="修改坐席设置"
       :visible.sync="dialogHomePhoneVisible"
-      width="30%"
+      width="400px"
       v-dialogDrag
     >
-      <el-form :model="ruleForm3" status-icon :rules="rules3" ref="ruleForm3" label-width="100px" class="demo-ruleForm">
-        <el-form-item label="坐席号" prop="oldPassword">
-          <el-input v-model="ruleForm3.officePhone" width="160" autocomplete="off"></el-input>
+      <el-form :model="ruleForm3" status-icon :rules="rules3" ref="ruleForm3" label-width="80px" class="ruleForm3">
+        <el-form-item label="呼叫中心" prop="callCenter">
+          <el-select v-model="ruleForm3.callCenter" clearable placeholder="请选择呼叫中心" @change="callCenterChanged">
+            <el-option
+              v-for="item in callCenters"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id">
+            </el-option>
+          </el-select>
         </el-form-item>
-        <el-form-item>
-          <el-button @click="dialogHomePhoneVisible = false">取消</el-button>
-          <el-button type="primary" @click="submitForm2('ruleForm3')">提交</el-button>
+        <el-form-item label="坐席号" prop="officePhone">
+          <el-input v-model="ruleForm3.officePhone"></el-input>
         </el-form-item>
       </el-form>
+      <span slot="footer" class="footer">
+        <el-button @click="dialogHomePhoneVisible = false">取消</el-button>
+        <el-button type="primary" @click="submitForm2('ruleForm3')">保存</el-button>
+      </span>
     </el-dialog>
 
     <el-dialog
@@ -76,11 +86,9 @@
     >
       <el-table highlight-current-row
                 :data="remindList"
-                style="min-height:150px;"
                 border
                 stripe
       >
-
         <el-table-column
           prop="createTime"
           align="center"
@@ -88,7 +96,6 @@
           label="发送时间"
         >
         </el-table-column>
-
         <el-table-column
           prop="sendUserName"
           label="发送人"
@@ -115,7 +122,7 @@
         @current-change="showRemindList"
         :current-page.sync="pageNum"
         :page-size.sync="pageSize"
-        :page-sizes="[10, 20, 50, 100]"
+        :page-sizes="pageSizes"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
         class="pagination-wrap"
@@ -132,11 +139,13 @@
   import oneLevel from './one-level'
   import twoLevel from './two-level'
   import {resetPassword, initMind, remindList,updatePhone,findMine} from '@/store/actions.js';
+  import {queryCallCenters} from '@/common/js/api-tel.js'
+  import {pageSizes} from "@/common/js/const"
 
   export default {
     name: 'topMenu',
     data() {
-      var validatePass = (rule, value, callback) => {
+      const validatePass = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入密码'));
         } else {
@@ -146,18 +155,7 @@
           callback();
         }
       };
-      var  validateOfficePhone = (rule, value, callback) => {
-
-        if (value === '') {
-          callback(new Error('请输入坐席号'));
-        } else {
-          if (this.ruleForm3.officePhone !== '') {
-            this.$refs.ruleForm3.validateField('officePhone');
-          }
-          callback();
-        }
-      };
-      var validatePass2 = (rule, value, callback) => {
+      const validatePass2 = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请再次输入密码'));
         } else if (value !== this.ruleForm2.pass) {
@@ -167,6 +165,7 @@
         }
       };
       return {
+        pageSizes,
         pageNum: 0,
         pageSize: 10,
         total: 0,
@@ -175,7 +174,9 @@
         remindList: [],
         dialogHomePhoneVisible:false,
         dialogVisible: false,
+        callCenters: [],
         ruleForm3:{
+          callCenter: null,
           oldOfficePhone:'',
           officePhone:''
         },
@@ -196,10 +197,12 @@
           ],
         },
         rules3:{
+          callCenter: [
+            { required: true, message: '请选择呼叫中心', trigger: 'blur' }
+          ],
           officePhone: [
-            {
-              validator: validateOfficePhone, trigger: 'blur'
-            }],
+            { required: true, message: '请输入坐席号', trigger: 'blur' }
+          ],
         }
       }
     },
@@ -239,10 +242,12 @@
           findMine().then((response) => {
             this.$set(this.ruleForm3, 'officePhone', response.officePhone)
             this.$set(this.ruleForm3, 'oldOfficePhone', response.officePhone)
+            this.$set(this.ruleForm3, 'callCenter', response.callcenterid)
             this.dialogHomePhoneVisible = true
-
           })
-
+          queryCallCenters().then((response)=>{
+            this.callCenters = response
+          })
         }
       },
       submitForm2(formName) {
@@ -253,26 +258,18 @@
           });
           return;
         }
-        if (this.ruleForm3.officePhone == this.ruleForm3.oldOfficePhone){
-          this.$message({
-            type: 'info',
-            message: '请修改坐席号!'
-          });
-          return;
-        }
         this.$refs[formName].validate((valid) => {
           if (valid) {
             updatePhone(this.ruleForm3).then((response) => {
               this.$message({
                 type: 'success',
-                message: '修改坐席号成功!'
+                message: '修改坐席设置成功!'
               });
               this.dialogHomePhoneVisible = false;
               this.$refs["ruleForm3"].resetFields();
-            })
-
+            }).catch(() => {})
           } else {
-            console.log('error submit!!');
+            // console.log('error submit!!');
             return false;
           }
         });
@@ -297,8 +294,10 @@
       },
       ...mapActions([
         'logoutAction',
-
-      ])
+      ]),
+      callCenterChanged(callCenterID){
+        this.$set(this.ruleForm3, 'callCenter', callCenterID)
+      }
     }
   }
 </script>
@@ -411,5 +410,9 @@
         display: none;
       }
     }
+  }
+
+  .ruleForm3 .el-select{
+    display: block;
   }
 </style>
