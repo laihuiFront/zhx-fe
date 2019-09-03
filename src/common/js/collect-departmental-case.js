@@ -13,3 +13,19 @@ export const getUserTree = function(){
     method: 'post'
   })
 }
+
+export const queryDept = function(data){
+  return request({
+    url: '/select/queryDeptCase',
+    method: 'post',
+    data
+  })
+}
+
+export const queryOdv = function(data){
+  return request({
+    url: '/select/queryUser',
+    method: 'post',
+    data
+  })
+}

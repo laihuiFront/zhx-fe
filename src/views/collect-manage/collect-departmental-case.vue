@@ -54,11 +54,17 @@
                 class="query-wrap queryStyle"
               >
                 <el-form-item prop="val31" v-if="queryConf.bm || queryConfFlag">
-                  <el-input v-model="deptName" width="200" @focus="onClickSelectUser" clearable placeholder="请选择部门"></el-input>
+                  <!-- <el-input v-model="deptName" width="200" @focus="onClickSelectUser" clearable placeholder="请选择部门"></el-input> -->
+                   <el-autocomplete v-model="deptName" width="200" clearable placeholder="请输入部门" :fetch-suggestions="showDeptName" @select="selectDept">
+                     <el-button slot="append" icon="el-icon-search" @click="onClickSelectDept"></el-button>
+                   </el-autocomplete>
                 </el-form-item>
                 <el-form-item prop="val32" v-if="queryConf.csy || queryConfFlag">
 
-                  <el-input v-model="form.odvNameFiter" width="200" @focus="onClickSelectUser3" clearable placeholder="请选择催收员"></el-input>
+                <!-- <el-input v-model="form.odvNameFiter" width="200" @focus="onClickSelectUser3" clearable placeholder="请选择催收员"></el-input>  -->
+                 <el-autocomplete v-model="form.odvNameFiter" width="160" clearable placeholder="请输入催收员" :fetch-suggestions="showOdvName" @select="selectOdv">
+                    <el-button slot="append" icon="el-icon-search" @click="onClickSelectUser3"></el-button>
+                  </el-autocomplete>         
                 </el-form-item>
 
                 <el-form-item prop="val0" v-if="queryConf.wtf || queryConfFlag">
@@ -685,7 +691,7 @@
     </el-dialog>
 
     <el-dialog
-      width="300px"
+      width="400px"
       title="选择部门"
       class="dialog-wrap department-wrap"
       :visible.sync="departmentVisible"
@@ -699,11 +705,15 @@
         :data="departmentTree"
         node-key="id"
         :expand-on-click-node="false"
-        @node-click="onSelectDepartment"
-        :default-expanded-keys="[departmentTree[0].id]"
+        default-expand-all
         class="tree-wrap"
         width="200px"
+        :props="defaultProps"
+        show-checkbox
+        @check="onSelectDepartment" 
       >
+        <!-- @node-click="onSelectDepartment" -->
+        <!-- :default-expanded-keys="[departmentTree[0].id]" -->
           <span
             :class="{active:form.val31 === data.id}"
             class="custom-tree-node"
@@ -745,7 +755,7 @@
   import tab2 from "./collect-departmental-statistics";
   import { pageMyCase,getEnum,markColor ,saveSelectFilter,selectByModule,addSynergy,batchNo,addCollectStatus,listOrganization,clientCurrent} from
       "@/common/js/collect-my-case";
-  import {role,getUserTree} from '@/common/js/collect-departmental-case'
+  import {role,getUserTree,queryDept,queryOdv} from '@/common/js/collect-departmental-case'
   import {pageSizes} from "@/common/js/const"
 
   export default {
@@ -820,7 +830,7 @@
           overdueDaysStart:"",
           overdueDaysEnd:"",
           val30: "", //跟进次数下限
-          val31: "", //部门
+          val31: [], //部门
           val32: [], //催收员
           val33: "", //案件分配
         },
@@ -964,7 +974,9 @@
           orderBy: 'id',
           sort:'desc'
         },
-        pageLoading:false
+        pageLoading:false,
+        selectDataArr:[]
+       
       };
     },
     computed: {
@@ -1002,7 +1014,7 @@
           val25: reportStatuss,
           val27: telPhone,
           val28: collectMeasure,
-          val31:dept,
+          val31:depts,
           val32:odvs,
           val33
         } = this.form;
@@ -1048,7 +1060,7 @@
           collectMeasure,
           pageNum: this.paginationData.currentPage,
           pageSize: this.paginationData.pageSize,
-          dept,
+          depts,
           odvs,
           sType:1,
           orderBy: this.sort.orderBy,
@@ -1118,7 +1130,14 @@
         }
       },
       onClickSelectUser3(){
-        this.selectUserVisible3 = true
+        if (this.selectUserVisible3){
+          return;
+        }
+        this.selectUserTree = []
+        getUserTree({"odv":this.form.odvNameFiter}).then((data)=>{
+          this.selectUserTree = [data];
+          this.selectUserVisible3 = true
+        });
       },
       onClickSaveUser3() {
         let selectDataArr = this.$refs.tree.getCheckedNodes()
@@ -1144,12 +1163,19 @@
         this.departmentVisible = true
       },
       onSelectDepartment (data, node) {
-        this.currentDept = data
+       this.selectDataArr = this.$refs.tree.getCheckedNodes()
       },
       onClickSaveDept () {
-        this.$set(this.form, 'val31', this.currentDept.id)
-        this.deptName = this.currentDept.orgName;
-        this.departmentVisible = false;
+        if (this.selectDataArr.length == 0){
+          return
+        }
+        const checkedNodesIds = this.selectDataArr.map((item) => item.id)
+        const nodes = this.selectDataArr.filter(x => !checkedNodesIds.includes(x.parent.id))
+        const nodesIds = nodes.map(item => item.id)
+        const nodesNames = nodes.map(item => item.orgName)
+        this.$set(this, 'deptName', nodesNames.join(','))
+        this.$set(this.form, 'val31', nodesIds)
+        this.departmentVisible = false
       },
       saveConf(){
         this.showQueryConfVisible = false;
@@ -1364,6 +1390,7 @@
         //this.$refs[formName].resetFields();
         this.form = {
           odvNameFiter:null,
+          deptFiter:'',
           val0: [], //委托方
           val1: [], //批次号
           val2: [], //下次跟进日期
@@ -1440,6 +1467,30 @@
           this.selectUserTree = [data]
         })
       },
+      showDeptName(deptName,callback){
+        queryDept({deptName}).then(data => callback(data)).catch(() => {})
+      },
+      showOdvName(odvName,callback){
+        queryOdv({odvName}).then(data => callback(data)).catch(() => {})
+      },
+      selectDept(dept){      
+        this.deptName = dept.value
+        this.$set(this.form, 'val31', [dept.id])
+      },
+      onClickSelectDept() {
+        if (this.departmentVisible){
+          return;
+        }
+        this.departmentTree = []
+        listOrganization({"orgName":this.form.deptFiter}).then((data)=>{
+          this.departmentTree = data;
+          this.departmentVisible = true
+        });
+      },
+      selectOdv(odv){
+        this.$set(this.form, 'odvNameFiter', odv.value)
+        this.$set(this.form, 'val32', [odv.id])
+      }
     },
     mounted(){
       this["val0_data"] = this.transform(this.$store.getters.caseType.委托方);
