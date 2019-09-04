@@ -64,7 +64,7 @@
                 <!-- <el-input v-model="form.odvNameFiter" width="200" @focus="onClickSelectUser3" clearable placeholder="请选择催收员"></el-input>  -->
                  <el-autocomplete v-model="form.odvNameFiter" width="160" clearable placeholder="请输入催收员" :fetch-suggestions="showOdvName" @select="selectOdv">
                     <el-button slot="append" icon="el-icon-search" @click="onClickSelectUser3"></el-button>
-                  </el-autocomplete>         
+                  </el-autocomplete>
                 </el-form-item>
 
                 <el-form-item prop="val0" v-if="queryConf.wtf || queryConfFlag">
@@ -581,15 +581,14 @@
         >
           <el-table-column
             type="selection"
-            min-width="5"
+            width="55"
             align="center">
           </el-table-column>
-
           <el-table-column
             label="跟进次数"
             prop="countFollow"
             sortable="custom"
-            width="120"
+            min-width="12"
             :sort-orders="['ascending', 'descending']"
             header-align="center"
             show-overflow-tooltip
@@ -600,7 +599,7 @@
             label="个案序列号"
             prop="seqno"
             sortable="custom"
-            width="180"
+            min-width="18"
             :sort-orders="['ascending', 'descending']"
             header-align="center"
             show-overflow-tooltip
@@ -622,7 +621,6 @@
             v-for="(item, index) in tableCol_data"
             :key="index"
             v-bind="item"
-            min-width="5"
             header-align="center"
             sortable="custom"
             show-overflow-tooltip
@@ -710,7 +708,7 @@
         width="200px"
         :props="defaultProps"
         show-checkbox
-        @check="onSelectDepartment" 
+        @check="onSelectDepartment"
       >
         <!-- @node-click="onSelectDepartment" -->
         <!-- :default-expanded-keys="[departmentTree[0].id]" -->
@@ -894,77 +892,77 @@
         val32_data: [],  //催收员
         tableCol_data: [
           {
-            width:120,
+            'min-width':12,
             prop: "odv",
             label: "催收员"
           },
           {
-            width:120,
+            'min-width':14,
             prop: "collectStatusMsg",
             label: "催收状态"
           },
           {
-            width:140,
+            'min-width':18,
             prop: "caseDate",
             label: "委案日期"
           },
           {
-            width:120,
+            'min-width':12,
             prop: "name",
             label: "姓名"
           },
           {
-            width:180,
+            'min-width':18,
             prop: "cardNo",
             label: "卡号"
           },
           {
-            width:180,
+            'min-width':18,
             prop: "identNo",
             label: "身份证"
           },
           {
+            'min-width': 14,
             prop: "moneyMsg",
-            width: 140,
             label: "委案金额"
           },
           {
-            width: 140,
+            'min-width': 14,
             prop: "principle",
             label: "本金"
           },
           {
-            width: 140,
+            'min-width': 14,
             prop: "moneyStartMsg",
             label: "最新欠款"
           },
           {
-            width: 140,
+            'min-width': 14,
             prop: "enRepayAmtMsg",
             label: "已还款金额"
           },
           {
-            width: 140,
+            'min-width': 18,
             prop: "repayAmtMsg",
             label: "承诺还款金额"
           },
           {
-            width: 120,
+            'min-width': 12,
             prop: "overdueDays",
             label: "逾期天数"
           },
           {
-            width: 120,
+            'min-width': 12,
             prop: "leaveDays",
             label: "闲置天数"
           },
           {
-            width: 140,
+            'min-width': 18,
             prop: "expectTime",
             label: "预计退案日期"
           },
           {
-            width: 180,
+            'min-width': 12,
             prop: "collectInfo",
             label: "催收小结"
           }
@@ -976,7 +974,7 @@
         },
         pageLoading:false,
         selectDataArr:[]
-       
+
       };
     },
     computed: {
@@ -1473,7 +1471,7 @@
       showOdvName(odvName,callback){
         queryOdv({odvName}).then(data => callback(data)).catch(() => {})
       },
-      selectDept(dept){      
+      selectDept(dept){
         this.deptName = dept.value
         this.$set(this.form, 'val31', [dept.id])
       },

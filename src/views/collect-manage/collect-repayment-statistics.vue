@@ -184,7 +184,7 @@
             show-overflow-tooltip
             header-align="center"
             align="center"
-            width="180"
+            min-width="18"
           >
             <template slot-scope="scope">
               <el-button
@@ -201,6 +201,8 @@
           align="center"
           v-bind="item"
           :key="index"
+          show-overflow-tooltip
+          min-width="12"
         ></el-table-column>
       </el-table>
     <!-- </section> -->
@@ -297,17 +299,17 @@ export default {
         },
         {
           label: "待银行查账金额",
-          width:160,
+          // width:160,
           prop: "bankAmtMsg"
         },
         {
           label: "待银行查账日期",
-          width:160,
+          // width:160,
           prop: "bankTime"
         },
         {
           label: "待银行查账金额提成",
-          width:160,
+          // width:160,
           prop: "repaidAmtMMsg"
         },
         {
@@ -316,7 +318,7 @@ export default {
         },
         {
           label: "还款日期",
-          width:160,
+          // width:160,
           prop: "repayTime"
         },
         {
@@ -337,7 +339,7 @@ export default {
         },
         {
           label: "确认时间",
-          width:180,
+          // width:180,
           prop: "confimTime"
         },
         {

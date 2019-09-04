@@ -590,20 +590,19 @@
           :data="tableData"
           border
           stripe
-          style="width: 100%;"
           :row-class-name="rowColor"
           :cell-style="{ whiteSpace: 'nowrap' }"
           @row-dblclick="showCase"
           @selection-change="handleSelectionChange"
           @sort-change="sortHandle"
         >
-          <el-table-column type="selection" min-width="5"></el-table-column>
+          <el-table-column type="selection" width="55"></el-table-column>
           <el-table-column
             label="个案序列号"
+            min-width="18"
             prop="seqno"
             show-overflow-tooltip
             sortable="custom"
-            width="180"
             :sort-orders="['ascending', 'descending']"
             header-align="center"
             align="center"
@@ -624,14 +623,12 @@
             v-for="(item, index) in tableCol_data"
             :key="index"
             v-bind="item"
-            min-width="5"
             show-overflow-tooltip
             sortable="custom"
             :sort-orders="['ascending', 'descending']"
             header-align="center"
             align="center"
           ></el-table-column>
-
         </el-table>
         <el-pagination
           class="pagination-wrap"
@@ -833,76 +830,75 @@ export default {
       val25_data: [], //报备状态
       tableCol_data: [
         {
-          width:120,
+          'min-width':14,
           prop: "collectStatusMsg",
           label: "催收状态"
         },
         {
-          width:140,
+          'min-width':18,
           prop: "caseDate",
           label: "委案日期"
         },
         {
-          width:120,
+          'min-width':12,
           prop: "name",
           label: "姓名"
         },
         {
-          width:180,
+          'min-width':18,
           prop: "cardNo",
           label: "卡号"
         },
         {
-          width:180,
+          'min-width':18,
           prop: "identNo",
           label: "身份证"
         },
         {
+          'min-width': 14,
           prop: "moneyMsg",
-          width: 140,
           label: "委案金额"
         },
         {
-          width: 140,
+          'min-width': 14,
           prop: "principle",
           label: "本金"
         },
         {
-          width: 140,
+          'min-width': 14,
           prop: "moneyStartMsg",
           label: "最新欠款"
         },
         {
-          width: 140,
+          'min-width': 14,
           prop: "enRepayAmtMsg",
           label: "已还款金额"
         },
         {
-          width: 140,
+          'min-width': 18,
           prop: "repayAmtMsg",
           label: "承诺还款金额"
         },
         {
-          width: 120,
+          'min-width': 12,
           prop: "overdueDays",
           label: "逾期天数"
         },
         {
-          width: 120,
+          'min-width': 12,
           prop: "leaveDays",
           label: "闲置天数"
         },
         {
-          width: 140,
+          'min-width': 18,
           prop: "expectTime",
           label: "预计退案日期"
         },
         {
-          width: 180,
+          'min-width': 12,
           prop: "collectInfo",
           label: "催收小结"
         }
-
       ],
       multipleSelection: [],
       detailVisible: false,
@@ -1381,11 +1377,11 @@ body #collect-my-case .tab2{
     overflow-y: hidden;
   }
 }
-body #collect-my-case .tab2{
-  .el-table .el-table__body-wrapper{
-    overflow-x: auto;
-  }
-}
+// body #collect-my-case .tab2{
+//   .el-table .el-table__body-wrapper{
+//     overflow-x: auto;
+//   }
+// }
 .myCase-pop {
   .el-form-item--mini {
     display: inline-block;

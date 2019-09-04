@@ -32,7 +32,7 @@
                 <span :class="[
                       { blue: caseDetail.color === 'BLUE' },
                       { red: caseDetail.color === 'RED' }
-                    ]">{{ caseDetail.name}}</span>
+                    ]">{{ caseDetail.name}}{{caseDetail.gender ? `（${caseDetail.gender}）` : ''}}</span>
             </div>
           </el-form-item>
           <el-form-item label="委托方">
@@ -3869,7 +3869,7 @@
       class="dialog-wrap"
       :visible.sync="showHistory"
       :close-on-click-modal="false"
-      width="60%"
+      width="75%"
       v-dialogDrag
     >
       <div style="margin-bottom:5px;">
