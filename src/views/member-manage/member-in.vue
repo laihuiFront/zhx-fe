@@ -86,11 +86,12 @@
       </el-form>
       <el-table v-loading="tableLoad" highlight-current-row sortable="custom" border stripe @sort-change="handleSort" @selection-change="handleSelectionChange" :row-class-name="rowColor" :data="memberList" style="width: 100%">
         <el-table-column type="selection" align="center" width="55"></el-table-column>
-        <el-table-column sortable="custom" :sort-orders="['ascending','descending']"  align="center" prop="id" min-width="100" label="员工ID" show-overflow-tooltip></el-table-column>
-        <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="userName" min-width="120" label="员工姓名" show-overflow-tooltip></el-table-column>
-        <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center"  prop="loginName" min-width="120" show-overflow-tooltip label="账号"></el-table-column>
-        <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center"  prop="enableMsg" min-width="120" show-overflow-tooltip label="状态"></el-table-column>
+        <el-table-column sortable="custom" :sort-orders="['ascending','descending']"  align="center" prop="id" min-width="90" label="员工ID" show-overflow-tooltip></el-table-column>
+        <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="userName" min-width="130" label="员工姓名" show-overflow-tooltip></el-table-column>
+        <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center"  prop="loginName" min-width="130" show-overflow-tooltip label="账号"></el-table-column>
+        <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center"  prop="enableMsg" min-width="130" show-overflow-tooltip label="状态"></el-table-column>
         <!-- <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="sex" min-width="60" label="性别" show-overflow-tooltip width="70"></el-table-column>-->
+        <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="callCenter" min-width="120" label="呼叫中心" show-overflow-tooltip></el-table-column>
         <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="officePhone" min-width="120" label="坐席号" show-overflow-tooltip></el-table-column>
         <!--<el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="mobile" min-width="120" label="手机" show-overflow-tooltip></el-table-column>
         <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="joinTime" min-width="120" label="入职日期" show-overflow-tooltip></el-table-column>
@@ -184,6 +185,16 @@
         </el-form-item>
         <el-form-item label="手机号" prop="mobile">
           <el-input v-model="memberInfo.mobile" placeholder="请输入手机号"></el-input>
+        </el-form-item>
+        <el-form-item label="呼叫中心" prop="callCenter">
+          <el-select v-model="memberInfo.callCenter" clearable placeholder="请选择呼叫中心" @change="callCenterChanged">
+            <el-option
+              v-for="item in callCenters"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id">
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="坐席号" prop="officePhone">
           <el-input v-model="memberInfo.officePhone" placeholder="请输入坐席号"></el-input>
@@ -280,6 +291,7 @@
   import { getDepartmentTree, getRoleList } from '@/common/js/api-setting'
   import { listMember, deleteMember,changeBatchStatus,batchDelete,updateDept,exportList,exportModule, resetMember,changeStatus, addMember, updateMember, getUserById, getPositionList,getLoginName} from '@/common/js/api-member'
   import {pageSizes} from "@/common/js/const"
+  import {queryCallCenters} from '@/common/js/api-tel.js'
 
   export default {
     name: 'memberIn',
@@ -331,7 +343,8 @@
         roleList: [],
         positionList: [],
         multipleSelection:[],
-        returnName: null
+        returnName: null,
+        callCenters: []
       }
     },
     created () {
@@ -345,6 +358,9 @@
       })
       getPositionList().then(response => {
         this.positionList = response
+      })
+      queryCallCenters().then((response)=>{
+        this.callCenters = response
       })
     },
     methods: {
@@ -437,6 +453,7 @@
           department: this.queryForm.department,
           loginName: this.queryForm.loginName,
           userName: this.queryForm.userName,
+          callCenter: this.queryForm.callCenter,
           officePhone:this.queryForm.officePhone,
           accountStatus:this.queryForm.accountStatus,
           pageNum: this.queryForm.pageNum,
@@ -578,6 +595,7 @@
           this.memberInfo.userName2 = response.userName
           const roleList = this.memberInfo.roleList.map(item => item.id)
           this.$set(this.memberInfo, 'roleList', roleList)
+          this.$set(this.memberInfo, 'callCenter', response.callcenterid)
           this.$set(this.dialogData, 'editVisible', true)
         })
       },
@@ -752,7 +770,7 @@
                 this.returnName = null
                 let { ...resultData } = this.memberInfo
                 resultData.roleList = resultData.roleList.map(item => { return { id: item } })
-                if (this.dialogData.type === 'add') {
+                if (this.dialogData.type === 'add') {                
                   addMember(resultData).then(response => {
                     this.onClickQuery()
                     this.onClickCancel()
@@ -777,9 +795,12 @@
               let { ...resultData } = this.memberInfo
               resultData.roleList = resultData.roleList.map(item => { return { id: item } })
               if (this.dialogData.type === 'add') {
+                resultData.callcenterid=resultData.callCenter
+                delete resultData.callCenter
                 addMember(resultData).then(response => {
                   this.onClickQuery()
                   this.onClickCancel()
+                  this.$message.success('操作成功')
                 })
                 this.loading2 = false
                 this.fullscreenLoading = false
@@ -787,6 +808,7 @@
                 updateMember(resultData).then(response => {
                   this.onClickQuery()
                   this.onClickCancel()
+                  this.$message.success('操作成功')
                 })
                 this.loading2 = false
                 this.fullscreenLoading = false
@@ -805,6 +827,9 @@
         } else {
           return null
         }
+      },
+      callCenterChanged(callCenterID){
+        this.$set(this.memberInfo, 'callCenter', callCenterID)
       }
     }
   }
