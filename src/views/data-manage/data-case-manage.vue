@@ -322,7 +322,7 @@
       </el-form-item>
       <el-row>
         <el-form-item>
-          <el-button type="primary" icon="el-icon-search" @click="search2" style="margin-left:10px;">查询</el-button>
+          <el-button type="primary" icon="el-icon-search" @click="search2">查询</el-button>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" icon="el-icon-refresh" @click="resetFormInline" style="margin-left:10px;">重置

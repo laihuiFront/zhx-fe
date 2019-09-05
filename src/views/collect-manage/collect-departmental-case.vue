@@ -485,57 +485,59 @@
                   </el-date-picker>
                 </el-form-item>
                 <!--</el-popover>-->
-                <el-form-item>
-                  <el-button
-                    type="primary"
-                    icon="el-icon-search"
-                    @click="searchHandle"
-                  >查询</el-button
-                  >
-                </el-form-item>
+                <el-row>
+                  <el-form-item>
+                    <el-button
+                      type="primary"
+                      icon="el-icon-search"
+                      @click="searchHandle"
+                    >查询</el-button
+                    >
+                  </el-form-item>
 
-                <el-form-item>
-                  <el-button
-                    type="primary"
-                    icon="el-icon-refresh"
-                    @click="resetForm('form')"
-                  >重置</el-button
-                  >
-                </el-form-item>
-                <el-form-item>
-                  <el-button
-                    type="primary"
-                    @click="showQueryConf"
-                  >查询条件配置</el-button
-                  >
-                </el-form-item>
-                <el-form-item>
-                  <el-dropdown trigger="click"
-                               v-dropdown-patch @command="colorHandle" v-has="'案件标色'">
-                    <el-button type="primary">案件标色<i class="el-icon-arrow-down el-icon--right"></i></el-button>
-                    <el-dropdown-menu slot="dropdown">
-                      <el-dropdown-item command="黑">黑色</el-dropdown-item>
-                      <el-dropdown-item command="红">红色</el-dropdown-item>
-                      <el-dropdown-item command="蓝">蓝色</el-dropdown-item>
-                      <!--<el-dropdown-item command="橙">橙色</el-dropdown-item>
-                      <el-dropdown-item command="紫">紫色</el-dropdown-item>
-                      <el-dropdown-item command="棕">棕色</el-dropdown-item>-->
-                    </el-dropdown-menu>
-                  </el-dropdown>
-                </el-form-item>
-                <el-form-item>
-                  <el-dropdown v-dropdown-patch trigger="click" @command="modStatusHandle" v-has="'修改催收状态'">
-                    <el-button type="primary">修改催收状态<i class="el-icon-arrow-down el-icon--right"></i></el-button>
-                    <el-dropdown-menu slot="dropdown">
-                      <el-dropdown-item :command="item.id"
-                                        v-for="(item,i) in collectStatusList2" :key="i">{{item.name}}
-                      </el-dropdown-item>
-                    </el-dropdown-menu>
-                  </el-dropdown>
-                </el-form-item>
-                <el-form-item>
-                  <el-button type="primary" v-has="'申请协催'" @click="applyUrge">申请协催</el-button>
-                </el-form-item>
+                  <el-form-item>
+                    <el-button
+                      type="primary"
+                      icon="el-icon-refresh"
+                      @click="resetForm('form')"
+                    >重置</el-button
+                    >
+                  </el-form-item>
+                  <el-form-item>
+                    <el-button
+                      type="primary"
+                      @click="showQueryConf"
+                    >查询条件配置</el-button
+                    >
+                  </el-form-item>
+                  <el-form-item>
+                    <el-dropdown trigger="click"
+                                v-dropdown-patch @command="colorHandle" v-has="'案件标色'">
+                      <el-button type="primary">案件标色<i class="el-icon-arrow-down el-icon--right"></i></el-button>
+                      <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item command="黑">黑色</el-dropdown-item>
+                        <el-dropdown-item command="红">红色</el-dropdown-item>
+                        <el-dropdown-item command="蓝">蓝色</el-dropdown-item>
+                        <!--<el-dropdown-item command="橙">橙色</el-dropdown-item>
+                        <el-dropdown-item command="紫">紫色</el-dropdown-item>
+                        <el-dropdown-item command="棕">棕色</el-dropdown-item>-->
+                      </el-dropdown-menu>
+                    </el-dropdown>
+                  </el-form-item>
+                  <el-form-item>
+                    <el-dropdown v-dropdown-patch trigger="click" @command="modStatusHandle" v-has="'修改催收状态'">
+                      <el-button type="primary">修改催收状态<i class="el-icon-arrow-down el-icon--right"></i></el-button>
+                      <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item :command="item.id"
+                                          v-for="(item,i) in collectStatusList2" :key="i">{{item.name}}
+                        </el-dropdown-item>
+                      </el-dropdown-menu>
+                    </el-dropdown>
+                  </el-form-item>
+                  <el-form-item>
+                    <el-button type="primary" v-has="'申请协催'" @click="applyUrge">申请协催</el-button>
+                  </el-form-item>
+                </el-row>
               </el-form>
             </div>
           </el-col>
