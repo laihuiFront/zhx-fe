@@ -82,13 +82,13 @@
                        prop="submitTime" label="提交时间" show-overflow-tooltip></el-table-column>
       <el-table-column sortable="custom" width="100" align="center" :sort-orders="['ascending','descending']"
                        prop="remark" label="备注" show-overflow-tooltip></el-table-column>
-      <el-table-column label="操作" width="100" v-if="queryForm.status==='0'" align="center">
+      <el-table-column label="操作" width="80" v-if="queryForm.status==='0'" align="center">
         <template slot-scope="scope">
           <el-button
             v-has="'作废'"
             type="text"
             @click="onClicCancelBankRecon(scope.row.id)"
-          >作废待银行对账
+          >作废
           </el-button>
         </template>
       </el-table-column>

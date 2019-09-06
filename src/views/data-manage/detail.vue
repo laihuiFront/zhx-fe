@@ -3882,7 +3882,7 @@
           <el-radio :label="2">同号码所有催记</el-radio>
         </el-radio-group>
       </div>
-      <el-table :data="telhistory">
+      <el-table :data="telhistory" v-loading="telhistoryLoading">
         <el-table-column
           property="collectTime"
           label="通话时间"
@@ -4167,7 +4167,8 @@
         repayRemarkList: [],
         ptpList: [],
         $routeKey: '',
-        caseType: null
+        caseType: null,
+        telhistoryLoading: false
       };
     },
 
@@ -4539,13 +4540,17 @@
       },
 
       getHistoryTel(val) {
+        this.telhistoryLoading = true
+        this.telhistory = []
         detailTelCurrentCollect({
           caseId: this.id,
           detailType: val,
           mobile: this.currentRow.tel
         }).then(data => {
-          this.$set(this, "telhistory", data);
-        });
+          this.telhistory = data
+        }).catch(() => {}).finally(() => {
+          this.telhistoryLoading = false
+        })
       },
       uploadSuccess(res, file, fileList) {
         if (res.code == 100) {
@@ -5535,10 +5540,10 @@
     padding: 10px;
     overflow-x: hidden;
 
-    .el-table__body tr.current-row > td{
-      border-top: 1px solid #0080ff  !important;
-      border-bottom: 1px solid #0080ff  !important;
-    }
+    // .el-table__body tr.current-row > td{
+    //   border-top: 1px solid #0080ff  !important;
+    //   border-bottom: 1px solid #0080ff  !important;
+    // }
     .basic-info{
       .title-box{
         display: flex;

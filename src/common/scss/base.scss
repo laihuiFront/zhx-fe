@@ -164,8 +164,39 @@ body .el-popover .popper__arrow{
   border-right: 1px solid #0080ff  !important;
 }
 
+.el-table__body tr.current-row > td{
+  position: relative;
+  &::before{
+    height: 1px;
+    background: #0080ff;
+    left: -1px;
+    top: 0;
+    content: '';
+    position: absolute;
+    width: calc(100% + 1px);
+    z-index: 100;
+    overflow: hidden;
+  }
+  &::after{
+    height: 1px;
+    background: #0080ff;
+    left: -1px;
+    bottom: 0;
+    content: '';
+    position: absolute;
+    width: calc(100% + 1px);
+    z-index: 100;
+    overflow: hidden;
+  }
+}
+
 body .el-checkbox+.el-checkbox{
   margin-left: initial;
 }
 
-
+.el-table-column--selection .cell{
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+}

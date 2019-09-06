@@ -724,7 +724,7 @@ export default {
       tabnum:null,
       tableLoad: false,
       paginationData: {
-        pageSize: 100,
+        pageSize: pageSizes[0],
         total: 0,
         currentPage: 1
       },
@@ -1104,25 +1104,7 @@ export default {
     searchHandle() {
       this.fetchData={}
       this.paginationData.currentPage=1
-      this.getMainDataForQuery();
-    },
-    getMainDataForQuery() {
-      this.tableLoad = true;
-      pageMyCase(this.realFetchFormData).then(data => {
-        localStorage.setItem(
-          "mine",
-          JSON.stringify(data.list)
-        );
-        if (!data) {
-          data = { total: 0, list: [] };
-        }
-        this.fetchData = data
-        this.paginationData.total = data.countCase;
-        this.tableData = data.list.map(item => {
-          return Object.assign(item, { "class-name": `color_${item.color}` });
-        });
-        this.tableLoad = false;
-      });
+      this.getMainData();
     },
     rowColor({ row }) {
       if (row.caseStatus==3){
@@ -1205,6 +1187,10 @@ export default {
         if (!data) {
           data = { total: 0, list: [] };
         }
+        localStorage.setItem(
+          "mine",
+          JSON.stringify(data.list)
+        )
         this.fetchData = data;
         this.paginationData.total = data.countCase;
         this.tableData = data.list.map(item => {
@@ -1420,30 +1406,30 @@ body #collect-my-case .tab2{
        margin-right: 0px;
      }
   }
-  tr.current-row > td{
-    position: relative;
-    &::before{
-      height: 1px;
-      background: #0080ff;
-      left: 0;
-      top: 1px;
-      content: '';
-      position: absolute;
-      width: 100%;
-      z-index: 100;
-      overflow: hidden;
-    }
-    &:after{
-      height: 1px;
-      background: #0080ff;
-      left: 0;
-      bottom: 1px;
-      content: '';
-      position: absolute;
-      width: 100%;
-      z-index: 100;
-      overflow: hidden;
-    }
-  }
+  // tr.current-row > td{
+  //   position: relative;
+  //   &::before{
+  //     height: 1px;
+  //     background: #0080ff;
+  //     left: -1px;
+  //     top: 1px;
+  //     content: '';
+  //     position: absolute;
+  //     width: calc(100% + 1px);
+  //     z-index: 100;
+  //     overflow: hidden;
+  //   }
+  //   &::after{
+  //     height: 1px;
+  //     background: #0080ff;
+  //     left: -1px;
+  //     bottom: 1px;
+  //     content: '';
+  //     position: absolute;
+  //     width: calc(100% + 1px);
+  //     z-index: 100;
+  //     overflow: hidden;
+  //   }
+  // }
 }
 </style>

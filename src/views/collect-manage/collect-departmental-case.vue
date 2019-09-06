@@ -777,7 +777,7 @@
         departmentTree: [],
         tableLoad:false,
         paginationData:{
-          pageSize:100,
+          pageSize:pageSizes[0],
           total:0,
           currentPage:1
         },
@@ -1273,30 +1273,7 @@
           this.$set(this.form, 'val32', [])
         }
         this.paginationData.currentPage=1
-        this.getMainDataForQuery();
-      },
-
-      getMainDataForQuery(){
-        this.fetchData={}
-        this.tableLoad = true
-        if (this.deptName==null || this.deptName==""){
-          this.form.val31 = '';
-        }
-        pageMyCase(this.realFetchFormData).then((data)=>{
-          if(!data){
-            data = {total:0,list:[]}
-          }
-          localStorage.setItem(
-            "dept",
-            JSON.stringify(data.list)
-          );
-          this.fetchData = data;
-          this.paginationData.total = data.countCase;
-          this.tableData = data.list.map((item)=>{
-            return Object.assign(item, {'class-name': `color_${item.color}`});
-          })
-          this.tableLoad = false
-        });
+        this.getMainData();
       },
       rowColor({row}){
         if (row.caseStatus==3){
@@ -1383,6 +1360,10 @@
           if(!data){
             data = {total:0,list:[]}
           }
+          localStorage.setItem(
+            "dept",
+            JSON.stringify(data.list)
+          )
           this.fetchData = data;
           this.paginationData.total = data.countCase;
           this.tableData = data.list.map((item)=>{
@@ -1452,8 +1433,7 @@
         });
       },
       init(){
-        //this.getMainData();
-        this.getMainDataForQuery();
+        this.getMainData();
         /* this.getEnumHandle('委托方', 'val0_data');
          this.getEnumHandle('地区', 'val4_data');
          this.getEnumHandle('逾期账龄', 'val8_data');
@@ -1592,30 +1572,30 @@
         margin-right: 0px;
       }
     }
-    tr.current-row > td{
-      position: relative;
-      &::before{
-        height: 1px;
-        background: #0080ff;
-        left: 0;
-        top: 1px;
-        content: '';
-        position: absolute;
-        width: 100%;
-        z-index: 100;
-        overflow: hidden;
-      }
-      &:after{
-        height: 1px;
-        background: #0080ff;
-        left: 0;
-        bottom: 1px;
-        content: '';
-        position: absolute;
-        width: 100%;
-        z-index: 100;
-        overflow: hidden;
-      }
-    }
+    // tr.current-row > td{
+    //   position: relative;
+    //   &::before{
+    //     height: 1px;
+    //     background: #0080ff;
+    //     left: 0;
+    //     top: 1px;
+    //     content: '';
+    //     position: absolute;
+    //     width: 100%;
+    //     z-index: 100;
+    //     overflow: hidden;
+    //   }
+    //   &:after{
+    //     height: 1px;
+    //     background: #0080ff;
+    //     left: 0;
+    //     bottom: 1px;
+    //     content: '';
+    //     position: absolute;
+    //     width: 100%;
+    //     z-index: 100;
+    //     overflow: hidden;
+    //   }
+    // }
   }
 </style>
