@@ -2948,6 +2948,7 @@
         <el-form-item label="待银行查账时间">
           <el-date-picker
             v-model="cpInfo.cpDate"
+            value-format="yyyy-MM-dd"
             type="date"
             placeholder="选择日期"
           ></el-date-picker>
