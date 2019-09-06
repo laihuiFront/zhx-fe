@@ -955,6 +955,11 @@
           },
           {
             'min-width': 12,
+            prop: "lastFollowTime",
+            label: "上次跟进日期"
+          },
+          {
+            'min-width': 12,
             prop: "leaveDays",
             label: "闲置天数"
           },
