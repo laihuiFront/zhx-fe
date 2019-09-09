@@ -1465,8 +1465,8 @@
           this.search()
         })
       },*/
-      returnMessage(id) {
-        let arry = [{id: id}]
+      returnMessage(id,batchNo) {
+        let arry = [{id: id,batchNo:batchNo}]
         returnCase(arry).then((response) => {
           this.$message({
             type: 'success',
