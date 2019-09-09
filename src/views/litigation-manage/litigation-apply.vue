@@ -565,6 +565,7 @@
               append-to-body
               :close-on-click-modal="false"
               v-dialogDrag
+              class="dialog-wrap"
             >
               <el-form :model="ruleForm" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-form-item label="办案进度"
@@ -678,6 +679,7 @@
               append-to-body
               :close-on-click-modal="false"
               v-dialogDrag
+              class="dialog-wrap"
             >
               <el-form :model="ruleForm1" ref="ruleForm1" :inline="true" label-width="180px" class="demo-ruleForm">
                 <el-form-item label="收费金额"
@@ -753,6 +755,7 @@
   width="30%"
   :close-on-click-modal="false"
   v-dialogDrag
+  class="dialog-wrap"
   >
 <el-form ref="checkform" :model="checkform" label-width="80px">
 

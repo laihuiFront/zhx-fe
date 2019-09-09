@@ -222,6 +222,7 @@
       width="30%"
       :close-on-click-modal="false"
       v-dialogDrag
+      class="dialog-wrap"
       >
       <el-input
         type="textarea"

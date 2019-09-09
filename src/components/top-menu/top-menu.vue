@@ -31,6 +31,7 @@
       title="修改密码"
       :visible.sync="dialogVisible"
       width="30%"
+      class="dialog-wrap"
     >
       <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
         <el-form-item label="旧密码" prop="oldPassword">
@@ -54,6 +55,7 @@
       :visible.sync="dialogHomePhoneVisible"
       width="400px"
       v-dialogDrag
+      class="dialog-wrap"
     >
       <el-form :model="ruleForm3" status-icon :rules="rules3" ref="ruleForm3" label-width="80px" class="ruleForm3">
         <el-form-item label="呼叫中心" prop="callCenter">

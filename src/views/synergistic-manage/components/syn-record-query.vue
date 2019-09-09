@@ -113,7 +113,12 @@
     center
     :close-on-click-modal="false"
     v-dialogDrag
+    class="dialog-wrap"
   >
+    <div class="selectAllBtn">
+      <el-button type="primary" @click="selectAll" >全部选中</el-button>
+      <el-button type="primary" @click="cancelSelectAll" >全部取消</el-button>
+    </div>
     <el-row class="pad">
 
       <el-checkbox v-model="queryConf.csqy" label="1" >催收区域</el-checkbox>
@@ -259,6 +264,16 @@ export default {
         this.queryForm.applyTimeEnd = null
       }
     },
+    selectAll(){
+        for (let p in this.queryConf) {
+          this.queryConf[p] = true;
+       }
+      },
+    cancelSelectAll(){
+       for (let p in this.queryConf) {
+         this.queryConf[p] = false;
+      }
+    }
   }
 }
 </script>
@@ -274,6 +289,9 @@ export default {
   }
   .el-select-dropdown{
     width:180px !important;
+  }
+  .selectAllBtn{
+    margin-bottom: 10px;
   }
 }
 </style>

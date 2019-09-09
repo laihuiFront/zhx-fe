@@ -650,7 +650,12 @@
       width="60%"
       center
       v-dialogDrag
+      class="dialog-wrap"
     >
+      <div class="selectAllBtn">
+        <el-button type="primary" @click="selectAll" >全部选中</el-button>
+        <el-button type="primary" @click="cancelSelectAll" >全部取消</el-button>
+      </div>
       <el-row class="pad">
         <el-checkbox v-model="queryConf.bm" label="1" >部门</el-checkbox>
         <el-checkbox v-model="queryConf.csy" label="1" >催收员</el-checkbox>
@@ -1475,6 +1480,16 @@
       selectOdv(odv){
         this.$set(this.form, 'odvNameFiter', odv.value)
         this.$set(this.form, 'val32', [odv.id])
+      },
+      selectAll(){
+        for (let p in this.queryConf) {
+          this.queryConf[p] = true;
+       }
+      },
+      cancelSelectAll(){
+        for (let p in this.queryConf) {
+          this.queryConf[p] = false;
+        }
       }
     },
     mounted(){
@@ -1597,5 +1612,8 @@
     //     overflow: hidden;
     //   }
     // }
+    .selectAllBtn{
+      margin-bottom: 10px;
+    }
   }
 </style>

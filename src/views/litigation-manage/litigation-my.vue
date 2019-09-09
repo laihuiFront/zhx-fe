@@ -186,6 +186,7 @@
   width="90%"
   :close-on-click-modal="false"
   v-dialogDrag
+  class="dialog-wrap"
   >
  <el-form :inline="true" :model="formInline" class="demo-form-inline" label-width="140px" :disabled="isTrue">
  	<el-row :gutter="24">
