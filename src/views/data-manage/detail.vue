@@ -11,6 +11,7 @@
         <div style="text-align: right; margin-right:20px;" >
           <el-button type="primary" align="right" size="mini" @click="lastCase" v-if="showNext">上条</el-button>
           <el-button type="primary" align="right" size="mini" @click="nextCase"  v-if="showNext">下条</el-button>
+          <el-button type="primary" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showEdit">编辑</el-button>
           <el-button type="primary" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showCommentVisible=true">评语</el-button>
           <el-button type="primary" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showWarningVisible=true">警告</el-button>
           <el-button type="primary" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showCollectInfo">催收小结</el-button>
@@ -3975,6 +3976,601 @@
         </el-table-column>
       </el-table>
     </el-dialog>
+
+    <el-dialog
+      title="修改案件(带*号为必填字段)"
+      :visible.sync="dialogEditCaseVisible"
+      width="45%"
+      append-to-body
+      class="case-dialog-wrap"
+      :close-on-click-modal="false"
+      v-dialogDrag
+    >
+      <el-form
+        :inline="true"
+        :model="caseInfo"
+        :rules="rules"
+        ref="ruleForm"
+        class="address-form"
+        label-width="110px"
+      >
+        <el-form-item label="个案序列号" prop="seqNo">
+          <el-input
+            v-model="caseInfo.seqNo"
+            clearable
+            placeholder="请输入个案序列号"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="催收手别" prop="collectHand">
+          <el-input
+            v-model="caseInfo.collectHand"
+            clearable
+            placeholder="请输入催收手别"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="姓名" prop="name">
+          <el-input
+            v-model="caseInfo.name"
+            clearable
+            placeholder="请输入姓名"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="催收区域" prop="collectArea">
+          <el-select v-model="caseInfo.collectArea" filterable  placeholder="请选择催收区域" clearable>
+            <el-option
+              v-for="item in areaList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="性别" prop="gender">
+          <el-radio-group v-model="caseInfo.gender" clearable  >
+            <el-radio label="男">男</el-radio>
+            <el-radio label="女">女</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="委托方" prop="client">
+          <el-select v-model="caseInfo.client" filterable  placeholder="请选择委托方" clearable>
+            <el-option
+              v-for="item in clientList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="证件号" prop="identNo">
+          <el-input
+            v-model="caseInfo.identNo"
+            placeholder="请输入证件号"
+            clearable
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="证件类型" prop="identType">
+          <el-input
+            v-model="caseInfo.identType"
+            clearable
+            placeholder="请输入证件类型"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="卡号" prop="cardNo">
+          <el-input
+            v-model="caseInfo.cardNo"
+            clearable
+            placeholder="请输入卡号"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="委案日期" prop="caseDate">
+          <el-date-picker
+            v-model="caseInfo.caseDate"
+            align="right"
+            type="date"
+            clearable
+            placeholder="请选择委案日期"
+            value-format="yyyy-MM-dd"
+          >
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="委案金额" prop="money">
+          <el-input
+            v-model="caseInfo.money"
+            clearable
+            type="number"
+            placeholder="请输入委案金额"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="M值系数" prop="mVal">
+          <el-input
+            v-model="caseInfo.mVal"
+            clearable
+            type="number"
+            placeholder="请输入M值系数"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="预计退案日期" prop="expectTime">
+          <el-date-picker
+            v-model="caseInfo.expectTime"
+            align="right"
+            type="date"
+            clearable
+            placeholder="请选择退案日期"
+            value-format="yyyy-MM-dd"
+          >
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="是否结清" prop="settleFlag">
+          <el-radio-group v-model="caseInfo.settleFlag" clearable  >
+            <el-radio label="已结清">是</el-radio>
+            <el-radio label="未结清">是</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="逾期账龄" prop="accountAge">
+          <el-select v-model="caseInfo.accountAge" filterable  placeholder="请选择逾期账龄" clearable>
+            <el-option
+              v-for="item in accountAgeList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="逾期天数" prop="overdueDays">
+          <el-input
+            v-model="caseInfo.overdueDays"
+            type="number"
+            clearable
+            placeholder="请输入逾期天数"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="所在区域" class="whole address">
+          <div>
+          <el-select v-model="caseInfo.province"  placeholder="请选择省份" @change="showCity()" clearable>
+              <el-option
+                v-for="item in addressList"
+                :key="item.name"
+                :label="item.name"
+                :value="item.name">
+              </el-option>
+          </el-select>
+          <el-select v-model="caseInfo.city"  placeholder="请选择市" @change="showcounty()" clearable>
+            <el-option
+              v-for="item in cityList"
+              :key="item.name"
+              :label="item.name"
+              :value="item.name">
+            </el-option>
+          </el-select>
+          <el-select v-model="caseInfo.county"  placeholder="请选择县" clearable>
+            <el-option
+              v-for="item in countyList"
+              :key="item.name"
+              :label="item.name"
+              :value="item.name">
+            </el-option>
+          </el-select>
+          </div>
+        </el-form-item>
+        <el-form-item label="公司佣金比率">
+          <el-input
+            v-model="caseInfo.commissionRate"
+            type="number"
+            clearable
+            placeholder="请输入公司佣金比率"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="公司佣金金额">
+          <el-input
+            v-model="caseInfo.commissionMoney"
+            type="number"
+            clearable
+            placeholder="请输入公司佣金金额"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="请输入委案期数">
+          <el-input
+            v-model="caseInfo.entrustPeriods"
+            type="number"
+            clearable
+            placeholder="请输入委案期数"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="币种">
+          <el-input
+            v-model="caseInfo.currencyType"
+            clearable
+            placeholder="请输入币种"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="货款订单号">
+          <el-input
+            v-model="caseInfo.orderNo"
+            clearable
+            placeholder="请输入货款订单号"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="产品名称">
+          <el-input
+            v-model="caseInfo.goods"
+            clearable
+            placeholder="请输入产品名称"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="人民币">
+          <el-input
+            v-model="caseInfo.rmb"
+            clearable
+            placeholder="请输入人民币"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="港币">
+          <el-input
+            v-model="caseInfo.hkd"
+            clearable
+            placeholder="请输入港币"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="外币">
+          <el-input
+            v-model="caseInfo.foreignCurrency"
+            clearable
+            placeholder="请输入外币"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="账号">
+          <el-input
+            v-model="caseInfo.accountNo"
+            clearable
+            placeholder="请输入账号"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="账户名称"  class="whole">
+          <el-input
+            v-model="caseInfo.accountName"
+            clearable
+            placeholder="请输入账户名称"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="逾期日期">
+          <el-date-picker
+            v-model="caseInfo.overdueDate"
+            align="right"
+            type="date"
+            clearable
+            placeholder="请选择逾期日期"
+            value-format="yyyy-MM-dd"
+          >
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="逾期金额">
+          <el-input
+            v-model="caseInfo.overdueMoney"
+            type="number"
+            clearable
+            placeholder="请输入逾期金额"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="逾期本金">
+          <el-input
+            v-model="caseInfo.overduePrinciple"
+            type="number"
+            clearable
+            placeholder="请输入逾期本金"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="逾期利息">
+          <el-input
+            v-model="caseInfo.overdueInterest"
+            type="number"
+            clearable
+            placeholder="请输入逾期利息"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="逾期罚息">
+          <el-input
+            v-model="caseInfo.overdueDefaultInterest"
+            type="number"
+            clearable
+            placeholder="请输入逾期罚息"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="逾期管理费">
+          <el-input
+            v-model="caseInfo.overdueManagementCost"
+            type="number"
+            clearable
+            placeholder="请输入逾期管理费"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="违约金">
+          <el-input
+            v-model="caseInfo.penalty"
+            type="number"
+            clearable
+            placeholder="请输入违约金"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="还款期限">
+          <el-input
+            v-model="caseInfo.repayDeadline"
+            clearable
+            placeholder="请输入还款期限"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="逾期期数">
+          <el-input
+            v-model="caseInfo.entrustPeriods"
+            type="number"
+            clearable
+            placeholder="请输入逾期期数"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="曾逾期次数">
+          <el-input
+            v-model="caseInfo.overdueTimes"
+            type="number"
+            clearable
+            placeholder="请输入曾逾期次数"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="已还期数">
+          <el-input
+            v-model="caseInfo.repaidPeriods"
+            type="number"
+            clearable
+            placeholder="请输入已还期数"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="委托期限">
+          <el-input
+            v-model="caseInfo.caseDeadline"
+            clearable
+            placeholder="请输入委托期限"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="档案号">
+          <el-input
+            v-model="caseInfo.archiveNo"
+            clearable
+            placeholder="请输入档案号数"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="开户行">
+          <el-input
+            v-model="caseInfo.bank"
+            clearable
+            placeholder="请输入开户行"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="催收分类">
+          <el-input
+            v-model="caseInfo.collectionType"
+            clearable
+            placeholder="请输入催收分类"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="拖欠级别">
+          <el-input
+            v-model="caseInfo.defaultLevel"
+            clearable
+            placeholder="请输入拖欠级别"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="卡类">
+          <el-input
+            v-model="caseInfo.cardType"
+            clearable
+            placeholder="请输入卡类"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="信用额度">
+          <el-input
+            v-model="caseInfo.creditLine"
+            clearable
+            placeholder="请输入信用额度"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="固定额度">
+          <el-input
+            v-model="caseInfo.fixedQuota"
+            clearable
+            placeholder="请输入固定额度"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="最低还款额">
+          <el-input
+            v-model="caseInfo.minimumPayment"
+            type="number"
+            clearable
+            placeholder="请输入最低还款额"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="滞纳金">
+          <el-input
+            v-model="caseInfo.lateFee"
+            type="number"
+            clearable
+            placeholder="请输入滞纳金"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="超限费">
+          <el-input
+            v-model="caseInfo.overrunFee"
+            clearable
+            type="number"
+            placeholder="请输入超限费"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="账单周期">
+          <el-input
+            v-model="caseInfo.billCycle"
+            clearable
+            placeholder="请输入账单周期"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="未出账金额">
+          <el-input
+            v-model="caseInfo.outstandingAmount"
+            clearable
+            type="number"
+            placeholder="请输入未出账金额"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="账单日">
+          <el-date-picker
+            v-model="caseInfo.billDate"
+            align="right"
+            type="date"
+            clearable
+            placeholder="请选择账单日"
+            value-format="yyyy-MM-dd"
+          >
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="开卡日">
+          <el-date-picker
+            v-model="caseInfo.activeCardDate"
+            align="right"
+            type="date"
+            clearable
+            placeholder="请选择开卡日"
+            value-format="yyyy-MM-dd"
+          >
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="最后消费日">
+            <el-date-picker
+              v-model="caseInfo.lastConsumeDate"
+              align="right"
+              type="date"
+              clearable
+              placeholder="请选择最后消费日"
+              value-format="yyyy-MM-dd"
+            >
+            </el-date-picker>
+        </el-form-item>
+        <el-form-item label="停卡日">
+            <el-date-picker
+              v-model="caseInfo.stopCardDate"
+              align="right"
+              type="date"
+              clearable
+              placeholder="请选择停卡日"
+              value-format="yyyy-MM-dd"
+            >
+            </el-date-picker>
+        </el-form-item>
+        <el-form-item label="主副卡">
+          <el-input
+            v-model="caseInfo.mainDeputyCard"
+            clearable
+            placeholder="请输入主副卡"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="副卡卡人">
+          <el-input
+            v-model="caseInfo.deputyCardUserName"
+            clearable
+            placeholder="请输入副卡卡人"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="申请单号">
+          <el-input
+            v-model="caseInfo.applyOrderNo"
+            clearable
+            placeholder="请输入申请单号"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="最后提现日">
+          <el-date-picker
+            v-model="caseInfo.lastWithdrawDate"
+            align="right"
+            clearable
+            type="date"
+            placeholder="请选择最后提现日"
+            value-format="yyyy-MM-dd"
+          >
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="最后还款金额">
+          <el-input
+            v-model="caseInfo.lastRepayMoney"
+            type="number"
+            clearable
+            placeholder="请输入最后还款金额"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="最后还款日">
+          <el-date-picker
+            v-model="caseInfo.lastRepayDate"
+            align="right"
+            type="date"
+            clearable
+            placeholder="请选择最后还款日"
+            value-format="yyyy-MM-dd"
+          >
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="保证金">
+          <el-input
+            v-model="caseInfo.bail"
+            type="number"
+            placeholder="请输入保证金"
+            clearable
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="本金">
+          <el-input
+            v-model="caseInfo.principle"
+            type="number"
+            placeholder="请输入本金"
+            clearable
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="信贷分类">
+          <el-input
+            v-model="caseInfo.loanType"
+            placeholder="请输入信贷分类"
+            clearable
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="剩余本金">
+          <el-input
+            v-model="caseInfo.residualPrinciple"
+            type="number"
+            clearable
+            placeholder="请输入剩余本金"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="贷款日期">
+          <el-date-picker
+            v-model="caseInfo.loanDate"
+            align="right"
+            type="date"
+            clearable
+            placeholder="请选择贷款日期"
+            value-format="yyyy-MM-dd"
+          >
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="贷款截止日">
+          <el-date-picker
+            v-model="caseInfo.loanDeadline"
+            align="right"
+            type="date"
+            clearable
+            placeholder="请选择贷款截止日"
+            value-format="yyyy-MM-dd"
+          >
+          </el-date-picker>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogEditCaseVisible = false">取 消</el-button>
+        <el-button type="primary" @click="saveCase">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -3982,6 +4578,7 @@
   import {mapGetters} from "vuex";
   import {
     getCaseDetail,
+    selectById,
     onClickAddWarning,
     addWarning,
     lastCase,
@@ -3996,6 +4593,7 @@
     PhonetypeList,
     getCommentDetail,
     getInterestDetail,
+    updateCase,
     getSynergyDetail,
     deleteReduceFile,
     listReduceFile,
@@ -4043,6 +4641,7 @@
     getRepayRemark,
     sendTel,
     sendTelBatch,
+    areaStepList,
     getRepayType,
     saveBank
   } from "@/common/js/api-detail";
@@ -4078,6 +4677,7 @@
         showCommentVisible:false,
         showWarningVisible:false,
         showCollectInfoVisible: false,
+        dialogEditCaseVisible:false,
         adddialogVisible: false,
         addCommentVisible: false,
         commentAddContent: null,
@@ -4141,6 +4741,36 @@
         batchAddTelContent: null,
         dialogAddrVisible: false,
         addressInfo: {},
+        addressList:[],
+        areaList:[],
+        accountAgeList:[],
+        clientList:[],
+        cityList:[],
+        countyList:[],
+        caseInfo:{},
+        rules: {
+          seqNo: [
+            { required: true, message: '请输入个案序列号', trigger: 'blur' }
+          ],
+          name: [
+            { required: true, message: '请输入姓名', trigger: 'blur' }
+          ],
+          client: [
+            { required: true, message: '请选择委托方', trigger: 'blur' }
+          ],
+          identNo: [
+            { required: true, message: '请选择证件号码', trigger: 'blur' }
+          ],
+          cardNo: [
+            { required: true, message: '请选择卡号', trigger: 'blur' }
+          ],
+          caseDate: [
+            { required: true, message: '请选择委案日期', trigger: 'blur' }
+          ],
+          money: [
+            { required: true, message: '请选择委案金额', trigger: 'blur' }
+          ],
+        },
         synergyInfo: {},
         addrSelectList: [],
         logType: "",
@@ -4173,6 +4803,16 @@
     },
 
     methods: {
+      showCity(){
+        areaStepList(this.caseInfo.province).then((response) => {
+          this.cityList = response
+        })
+      },
+      showcounty(){
+        areaStepList(this.caseInfo.city).then((response) => {
+          this.countyList = response
+        })
+      },
       sendTelBatch(){
         this._sendTelBatch(9)
       },
@@ -4375,6 +5015,40 @@
           });
           this.showCollectInfoVisible = false;
         });
+      },
+      saveCase(){
+        this.$refs.ruleForm.validate((valid)=>{
+            if(valid){
+              this.caseInfo.id = this.$route.query.id;
+              updateCase(this.caseInfo).then(data => {
+                this.$message({
+                  type: "success",
+                  message: "保存成功"
+                });
+                this.dialogEditCaseVisible = false;
+              });
+            }else{
+              this.$message('校验失败，请根据提示修改后提交')
+              return
+            }
+        })
+
+      },
+      showEdit(){
+        selectById({"id":this.$route.query.id}).then(data => {
+          this.caseInfo = data
+          if (data.client){
+            this.caseInfo.client = parseInt(data.client);
+          }
+          if (data.collectArea) {
+            this.caseInfo.collectArea = parseInt(data.collectArea);
+          }
+          if (data.accountAge) {
+            this.caseInfo.accountAge = parseInt(data.accountAge);
+          }
+          this.dialogEditCaseVisible = true;
+        });
+
       },
       showCollectInfo() {
         this.showCollectInfoVisible = true;
@@ -5527,6 +6201,12 @@
       // });
       this.queryDetail();
       this.batchForm = {sType: 0};
+      areaStepList("地区").then((response) => {
+        this.addressList = response
+      })
+      this.areaList = this.$store.getters.caseType.催收区域;
+      this.clientList = this.$store.getters.caseType.委托方;
+      this.accountAgeList = this.$store.getters.caseType.逾期账龄;
       /*PersonList().then(response => {
         this.PersonDataList = response;
       });*/
@@ -5785,8 +6465,39 @@
       padding: 0 15px;
     }
   }
+  .case-dialog-wrap {
+    .el-dialog__body {
+      .el-form {
+        display: flex;
+        flex-wrap: wrap;
 
+        .el-form-item {
+          display: flex;
+          width: 50%;
+          margin-right: 0;
+
+          &.whole {
+            width: 100%;
+          }
+
+          .el-form-item__content {
+            flex: 1;
+            margin-left: 0 !important;
+
+            .el-select {
+              width: 100%;
+            }
+
+            .el-date-editor {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
   .addr-dialog-wrap {
+
     .el-dialog__body {
       .el-form {
         display: flex;
@@ -5851,7 +6562,14 @@
   .telPanel .el-table__body-wrapper {
     overflow-x: hidden;
   }
-
+  .address {
+ /*   .el-input{
+      width:200px;
+    }*/
+    .el-select{
+      width:200px !important;;
+    }
+  }
   .warninghead .el-dialog__body{
     padding-top: 10px;
   }

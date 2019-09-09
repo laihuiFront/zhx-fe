@@ -576,3 +576,26 @@ export function listReduceFile(data) {
     data
   })
 }
+export const areaStepList = function(name) {
+  return request({
+    url: '/sys/dictionary/select/list/name',
+    method: 'post',
+    data:{
+      name:name
+    }
+  })
+}
+export function updateCase(data) {
+  return request({
+    url: 'dataCase/updateCase',
+    method: 'post',
+    data
+  })
+}
+export function selectById(data) {
+  return request({
+    url: 'dataCase/findById',
+    method: 'post',
+    data
+  })
+}
