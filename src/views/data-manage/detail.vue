@@ -2787,6 +2787,7 @@
       append-to-body
       :close-on-click-modal="false"
       v-dialogDrag
+      class="dialog-wrap"
     >
       <el-form :inline="true" :model="formInline" class="demo-form-inline">
         <el-form-item label="姓名">
@@ -2855,7 +2856,7 @@
       :visible.sync="dialogAddrVisible"
       width="45%"
       append-to-body
-      class="addr-dialog-wrap"
+      class="addr-dialog-wrap dialog-wrap"
       :close-on-click-modal="false"
       v-dialogDrag
     >
@@ -2929,7 +2930,7 @@
       :visible.sync="dialogCpVisible"
       width="45%"
       append-to-body
-      class="addr-dialog-wrap"
+      class="addr-dialog-wrap dialog-wrap"
       :close-on-click-modal="false"
       v-dialogDrag
     >
@@ -3001,7 +3002,7 @@
       :visible.sync="dialogDataCollectVisible"
       width="45%"
       append-to-body
-      class="addr-dialog-wrap"
+      class="addr-dialog-wrap dialog-wrap"
       :close-on-click-modal="false"
       v-dialogDrag
     >
@@ -3073,7 +3074,7 @@
       :visible.sync="dialogArchiveVisible"
       width="45%"
       append-to-body
-      class="addr-dialog-wrap"
+      class="addr-dialog-wrap dialog-wrap"
       :close-on-click-modal="false"
       v-dialogDrag
     >
@@ -3126,7 +3127,7 @@
       :visible.sync="dialogLetterVisible"
       width="45%"
       append-to-body
-      class="addr-dialog-wrap"
+      class="addr-dialog-wrap dialog-wrap"
       :close-on-click-modal="false"
       v-dialogDrag
     >
@@ -3185,6 +3186,7 @@
       append-to-body
       :close-on-click-modal="false"
       v-dialogDrag
+      class="dialog-wrap"
     >
       <el-form
         :inline="true"
@@ -3620,7 +3622,7 @@
       :visible.sync="dialogSyergyAplVisible"
       width="30%"
       append-to-body
-      class="addr-dialog-wrap"
+      class="addr-dialog-wrap dialog-wrap"
       :close-on-click-modal="false"
       v-dialogDrag
     >
@@ -3674,7 +3676,7 @@
       :visible.sync="dialogSyergyResultVisible"
       width="35%"
       append-to-body
-      class="addr-dialog-wrap"
+      class="addr-dialog-wrap dialog-wrap"
       :close-on-click-modal="false"
       v-dialogDrag
     >
@@ -3755,7 +3757,7 @@
       :visible.sync="showCollectInfoVisible"
       width="30%"
       append-to-body
-      class="addr-dialog-wrap"
+      class="addr-dialog-wrap dialog-wrap"
       :close-on-click-modal="false"
       v-dialogDrag
     >
@@ -3785,7 +3787,7 @@
       :visible.sync="showCommentVisible"
       width="30%"
       append-to-body
-      class="addr-dialog-wrap"
+      class="addr-dialog-wrap dialog-wrap"
       :close-on-click-modal="false"
       v-dialogDrag
     >
@@ -3836,7 +3838,7 @@
       :visible.sync="showWarningVisible"
       width="30%"
       append-to-body
-      class="addr-dialog-wrap warninghead"
+      class="addr-dialog-wrap warninghead dialog-wrap"
       :close-on-click-modal="false"
       v-dialogDrag
     >
