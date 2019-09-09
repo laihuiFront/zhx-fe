@@ -1056,6 +1056,7 @@
       center
       :close-on-click-modal="false"
       v-dialogDrag
+      class="dialog-wrap"
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllTelExport" style="cursor: pointer;">全选</span><span @click="selectUnAllTelExport" style="cursor: pointer;margin-left:10px;">反选</span></div>
       <el-row class="pad" ref="boxWrapper">
@@ -1087,6 +1088,7 @@
       center
       :close-on-click-modal="false"
       v-dialogDrag
+      class="dialog-wrap"
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllCollectExport" style="cursor: pointer;">全选</span><span @click="selectUnAllCollectExport" style="cursor: pointer;margin-left:10px;">反选</span></div>
       <el-row class="pad" ref="boxWrapper">
@@ -1145,6 +1147,7 @@
       center
       :close-on-click-modal="false"
       v-dialogDrag
+      class="dialog-wrap"
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span><span @click="selectUnAllExport" style="cursor: pointer;margin-left:10px;">反选</span></div>
       <el-row class="pad" ref="boxWrapper">
