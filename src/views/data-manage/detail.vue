@@ -4026,7 +4026,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="性别" prop="gender">
-          <el-radio-group v-model="caseInfo.gender" clearable  >
+          <el-radio-group v-model="caseInfo.gender" clearable>
             <el-radio label="男">男</el-radio>
             <el-radio label="女">女</el-radio>
           </el-radio-group>
@@ -4126,7 +4126,7 @@
         </el-form-item>
         <el-form-item label="所在区域" class="whole address">
           <div>
-          <el-select v-model="caseInfo.province"  placeholder="请选择省份" @change="showCity()" clearable>
+          <el-select v-model="caseInfo.provinceName"  placeholder="请选择省份" @change="showCity()" clearable>
               <el-option
                 v-for="item in addressList"
                 :key="item.name"
@@ -4134,7 +4134,7 @@
                 :value="item.name">
               </el-option>
           </el-select>
-          <el-select v-model="caseInfo.city"  placeholder="请选择市" @change="showcounty()" clearable>
+          <el-select v-model="caseInfo.cityName"  placeholder="请选择市" @change="showcounty()" clearable>
             <el-option
               v-for="item in cityList"
               :key="item.name"
@@ -4142,7 +4142,7 @@
               :value="item.name">
             </el-option>
           </el-select>
-          <el-select v-model="caseInfo.county"  placeholder="请选择县" clearable>
+          <el-select v-model="caseInfo.countyName"  placeholder="请选择县" clearable>
             <el-option
               v-for="item in countyList"
               :key="item.name"
@@ -4220,7 +4220,7 @@
         </el-form-item>
         <el-form-item label="账号">
           <el-input
-            v-model="caseInfo.accountNo"
+            v-model="caseInfo.account"
             clearable
             placeholder="请输入账号"
           ></el-input>
@@ -4804,12 +4804,12 @@
 
     methods: {
       showCity(){
-        areaStepList(this.caseInfo.province).then((response) => {
+        areaStepList(this.caseInfo.provinceName).then((response) => {
           this.cityList = response
         })
       },
       showcounty(){
-        areaStepList(this.caseInfo.city).then((response) => {
+        areaStepList(this.caseInfo.cityName).then((response) => {
           this.countyList = response
         })
       },
@@ -5025,6 +5025,7 @@
                   type: "success",
                   message: "保存成功"
                 });
+                this.queryDetail();
                 this.dialogEditCaseVisible = false;
               });
             }else{
@@ -5035,6 +5036,11 @@
 
       },
       showEdit(){
+        this.$nextTick(()=>{
+          if(this.$refs['ruleForm']){
+            this.$refs['ruleForm'].resetFields()
+          }
+        });
         selectById({"id":this.$route.query.id}).then(data => {
           this.caseInfo = data
           if (data.client){
@@ -6466,8 +6472,11 @@
     }
   }
   .case-dialog-wrap {
+
     .el-dialog__body {
+      overflow: auto;
       .el-form {
+        height: 480px;
         display: flex;
         flex-wrap: wrap;
 
@@ -6567,7 +6576,7 @@
       width:200px;
     }*/
     .el-select{
-      width:200px !important;;
+      width:190px !important;;
     }
   }
   .warninghead .el-dialog__body{

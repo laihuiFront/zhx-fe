@@ -12,7 +12,7 @@
       </el-select>
     </el-form-item>
     <el-form-item  v-if="queryConf.pc || queryConfFlag">
-      <el-select  v-model="queryForm.dataCase.batchNos" filterable multiple collapse-tags placeholder="请选择批次" clearable>
+      <el-select  v-model="queryForm.dataCase.batchNos" filterable multiple collapse-tags placeholder="请选择批次" remote  :remote-method="querySearch"  clearable>
         <el-option
           v-for="item in batchList"
           :key="item.id"
@@ -141,7 +141,7 @@
 </template>
 
 <script>
-import {getEnum,getBatchList,getStatusList,saveSelectFilter,selectByModule} from '@/common/js/api-sync'
+import {getEnum,getBatchList,getStatusList,saveSelectFilter,batchNo,selectByModule} from '@/common/js/api-sync'
 export default {
   name:'repayRecordQuery',
   props:{
@@ -175,6 +175,12 @@ export default {
     this.queryConfList();
   },
   methods:{
+    //查询批次号
+    querySearch(queryString) {
+      batchNo({ batchNo: queryString }).then(data => {
+        this.batchList = data;
+      });
+    },
     thisReset(){
       this.names=null,
         this.seqNos=null,

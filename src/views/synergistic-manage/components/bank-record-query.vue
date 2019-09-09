@@ -15,7 +15,7 @@
       </el-select>
     </el-form-item>
     <el-form-item v-if="queryConf.pc || queryConfFlag">
-      <el-select style="width: 180px;" v-model="queryForm.dataCase.batchNos"   filterable collapse-tags multiple placeholder="请选择批次" clearable>
+      <el-select style="width: 180px;" v-model="queryForm.dataCase.batchNos"  remote  :remote-method="querySearch" filterable collapse-tags multiple placeholder="请选择批次" clearable>
         <el-option
           v-for="item in batchList"
           :key="item.id"
@@ -215,7 +215,7 @@
 
 <script>
 import ELTreeSelect from '@/components/el-tree-select/elTreeSelect'
-import {getEnum, getBatchList,getUserTree, getCollectionUserList, getStatusList,saveSelectFilter,selectByModule} from '@/common/js/api-sync'
+import {getEnum, getBatchList,getUserTree, getCollectionUserList, getStatusList,saveSelectFilter,batchNo,selectByModule} from '@/common/js/api-sync'
 import { getDepartmentTree } from '@/common/js/api-setting'
 export default {
   name:'bankRecordQuery',
@@ -286,6 +286,12 @@ export default {
     this.queryConfList();
   },
   methods: {
+    //查询批次号
+    querySearch(queryString) {
+      batchNo({ batchNo: queryString }).then(data => {
+        this.batchList = data;
+      });
+    },
     onClickSelectUser3(){
       this.selectUserVisible3 = true
     },
