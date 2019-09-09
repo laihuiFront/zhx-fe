@@ -177,6 +177,7 @@
       :visible.sync="dialogExportVisible"
       width="30%"
       center
+      class="dialog-wrap"
     >
       <el-form :inline="true">
         <el-form-item>
@@ -198,6 +199,7 @@
       :visible.sync="showCancel"
       width="30%"
       center
+      class="dialog-wrap"
     >
       <el-form :inline="true">
         <el-form-item>
@@ -216,6 +218,7 @@
       :visible.sync="showCancel2"
       width="30%"
       center
+      class="dialog-wrap"
     >
       <el-form :inline="true">
         <el-form-item>
@@ -234,6 +237,7 @@
       :visible.sync="showExportConfVisible"
       width="60%"
       center
+      class="dialog-wrap"
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span><span @click="selectUnAllExport" style="cursor: pointer;margin-left:10px;">反选</span></div>
       <el-row class="pad" ref="boxWrapper">
@@ -300,6 +304,7 @@
       title="还款记录"
       :visible.sync="showEditForm"
       width="40%"
+      class="dialog-wrap"
     >
       <el-form
         :model="repayRecordInfo"

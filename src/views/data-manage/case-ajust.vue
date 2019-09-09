@@ -320,8 +320,13 @@
       center
       :close-on-click-modal="false"
       v-dialogDrag
+      class="dialog-wrap"
     >
-      <el-row class="pad">
+      <div class="selectAllBtn">
+        <el-button type="primary" @click="selectAll" >全部选中</el-button>
+        <el-button type="primary" @click="cancelSelectAll" >全部取消</el-button>
+      </div>
+      <el-row class="pad" ref="boxWrapper">
         <el-checkbox v-model="queryConf.wtf" label="3">委托方</el-checkbox>
         <el-checkbox v-model="queryConf.gaxlh" label="3">个案序列号</el-checkbox>
         <el-checkbox v-model="queryConf.hth" label="1">催收区域</el-checkbox>
@@ -685,7 +690,18 @@
           this.departmentVisible = true
         });
       },
-
+      selectAll(){
+        this._selectAllInit('queryConf');
+        for (let p in this.queryConf) {
+          this.queryConf[p] = true;
+        }
+      },
+      cancelSelectAll(){
+        this._selectAllInit('queryConf');
+        for (let p in this.queryConf) {
+          this.queryConf[p] = false;
+        }
+      }
     },
     created() {
       this.queryConfList();
@@ -848,6 +864,9 @@
     .el-table__body tr.current-row > td{
       border-top: 1px solid #0080ff  !important;
       border-bottom: 1px solid #0080ff  !important;
+    }
+    .selectAllBtn{
+      margin-bottom: 10px;
     }
   }
 

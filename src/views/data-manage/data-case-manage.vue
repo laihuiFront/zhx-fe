@@ -978,6 +978,7 @@
       center
       :close-on-click-modal="false"
       v-dialogDrag
+      class="dialog-wrap"
     >
       <el-row :gutter="20">
         <el-col :span="10">
@@ -1004,8 +1005,13 @@
       center
       :close-on-click-modal="false"
       v-dialogDrag
+      class="dialog-wrap"
     >
-      <el-row class="pad">
+       <div class="selectAllBtn">
+          <el-button type="primary" @click="selectAll" >全部选中</el-button>
+          <el-button type="primary" @click="cancelSelectAll" >全部取消</el-button>
+       </div>
+      <el-row class="pad" ref="boxWrapper">
         <el-checkbox v-model="queryConf.csqy" label="1">催收区域</el-checkbox>
         <el-checkbox v-model="queryConf.pc" label="2">批次</el-checkbox>
         <el-checkbox v-model="queryConf.wtf" label="3">委托方</el-checkbox>
@@ -1745,6 +1751,7 @@
         selectByModule(queryObj).then(data => {
           if (data) {
             this.$set(this, 'queryConf', false)
+            // this.$set(this, 'queryConf', JSON.parse(data.menu))
             this.queryConf = JSON.parse(data.menu);
             this.queryConfFlag = false;
           } else {
@@ -2794,6 +2801,18 @@
         });
       },
 
+      selectAll(){
+        this._selectAllInit('queryConf');
+        for (var p in this.queryConf) {
+          this.queryConf[p] = true;
+        }
+      },
+      cancelSelectAll(){
+        this._selectAllInit('queryConf');
+        for (var p in this.queryConf) {
+          this.queryConf[p] = false;
+        }
+      }
     },
     created() {
       this.queryConfList();
@@ -3011,5 +3030,8 @@
     //   border-top: 1px solid #0080ff  !important;
     //   border-bottom: 1px solid #0080ff  !important;
     // }
+    .selectAllBtn{
+      margin-bottom: 10px;
+    }
   }
 </style>

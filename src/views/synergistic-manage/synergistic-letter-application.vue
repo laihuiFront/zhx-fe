@@ -34,7 +34,7 @@
           >
             <case-detail :id="detailId" ref="detail"></case-detail>
           </el-dialog>
-          <el-dialog title="同意协催" :visible.sync="dialogVisible" width="30%" :close-on-click-modal="false" v-dialogDrag>
+          <el-dialog title="同意协催" :visible.sync="dialogVisible" width="30%" :close-on-click-modal="false" v-dialogDrag class="dialog-wrap">
             <el-input
               type="textarea"
               :autosize="{ minRows: 6, maxRows: 14 }"

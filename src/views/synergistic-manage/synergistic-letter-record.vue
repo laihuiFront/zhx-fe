@@ -17,7 +17,7 @@
     >
       <case-detail :id="detailId" ref="detail"></case-detail>
     </el-dialog>
-    <el-dialog title="同意协催" :visible.sync="dialogVisible" width="30%" :close-on-click-modal="false" v-dialogDrag>
+    <el-dialog title="同意协催" :visible.sync="dialogVisible" width="30%" :close-on-click-modal="false" v-dialogDrag class="dialog-wrap">
       <el-input
         type="textarea"
         :autosize="{ minRows: 6, maxRows: 14 }"
@@ -246,6 +246,7 @@
         center
         :close-on-click-modal="false"
         v-dialogDrag
+        class="dialog-wrap"
       >
         <el-row :gutter="20">
           <el-col :span="10"><div class="grid-content bg-purple">
@@ -361,6 +362,7 @@
       center
       :close-on-click-modal="false"
       v-dialogDrag
+      class="dialog-wrap"
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span><span @click="selectUnAllExport" style="cursor: pointer;margin-left: 10px;">反选</span></div>
       <el-row class="pad" ref="boxWrapper">

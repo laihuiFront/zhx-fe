@@ -405,6 +405,7 @@
       center
       :close-on-click-modal="false"
       v-dialogDrag
+      class="dialog-wrap"
     >
       <el-form :inline="true">
         <el-form-item>
@@ -427,8 +428,13 @@
       center
       :close-on-click-modal="false"
       v-dialogDrag
+      class="dialog-wrap"
     >
-      <el-row class="pad">
+      <div class="selectAllBtn">
+        <el-button type="primary" @click="selectAll" >全部选中</el-button>
+        <el-button type="primary" @click="cancelSelectAll" >全部取消</el-button>
+      </div>
+      <el-row class="pad" ref="boxWrapper">
         <el-checkbox v-model="queryConf.csqy" label="1">催收区域</el-checkbox>
         <el-checkbox v-model="queryConf.bm" label="2">部门</el-checkbox>
         <el-checkbox v-model="queryConf.csy" label="3">催收员</el-checkbox>
@@ -459,6 +465,7 @@
       center
       :close-on-click-modal="false"
       v-dialogDrag
+      class="dialog-wrap"
     >
       <div style="margin-bottom: 10px;"><span @click="selectAllExport" style="cursor: pointer;">全选</span><span @click="selectUnAllExport" style="cursor: pointer;margin-left: 10px;">反选</span></div>
       <el-row class="pad" ref="boxWrapper">
@@ -977,6 +984,18 @@
           });
         }
       },
+      selectAll(){
+        this._selectAllInit('queryConf');
+        for (let p in this.queryConf) {
+          this.queryConf[p] = true;
+        }
+      },
+      cancelSelectAll(){
+        this._selectAllInit('queryConf');
+        for (let p in this.queryConf) {
+          this.queryConf[p] = false;
+        }
+      }
     },
     created() {
       this.queryConfList();
@@ -1078,6 +1097,9 @@
     .el-table__body tr.current-row > td{
       border-top: 1px solid #0080ff  !important;
       border-bottom: 1px solid #0080ff  !important;
+    }
+    .selectAllBtn{
+      margin-bottom: 10px;
     }
   }
 </style>

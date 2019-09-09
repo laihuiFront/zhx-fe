@@ -68,6 +68,7 @@
       custom-class="dia-top"
       :close-on-click-modal="false"
       v-dialogDrag
+      class="dialog-wrap"
     >
       <el-form
         :model="saveForm"
