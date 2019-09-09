@@ -5825,8 +5825,10 @@
   }
 
   .el-table {
-    .stop-row {
-      background: red;
+    .stop-row td:not(:last-child){
+      .cell,span{
+        color: red !important;
+      }
     }
   }
 
