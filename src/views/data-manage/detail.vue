@@ -3980,7 +3980,7 @@
     <el-dialog
       title="修改案件(带*号为必填字段)"
       :visible.sync="dialogEditCaseVisible"
-      width="45%"
+      width="50%"
       append-to-body
       class="case-dialog-wrap"
       :close-on-click-modal="false"
