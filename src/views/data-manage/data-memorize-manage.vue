@@ -431,8 +431,8 @@
       class="dialog-wrap"
     >
       <div class="selectAllBtn">
-        <el-button type="primary" @click="selectAll" >全部选中</el-button>
-        <el-button type="primary" @click="cancelSelectAll" >全部取消</el-button>
+        <el-button type="primary" @click="selectMethod(true)" >全部选中</el-button>
+        <el-button type="primary" @click="selectMethod(false)" >全部取消</el-button>
       </div>
       <el-row class="pad" ref="boxWrapper">
         <el-checkbox v-model="queryConf.csqy" label="1">催收区域</el-checkbox>
@@ -984,17 +984,9 @@
           });
         }
       },
-      selectAll(){
+      selectMethod(param){
         this._selectAllInit('queryConf');
-        for (let p in this.queryConf) {
-          this.queryConf[p] = true;
-        }
-      },
-      cancelSelectAll(){
-        this._selectAllInit('queryConf');
-        for (let p in this.queryConf) {
-          this.queryConf[p] = false;
-        }
+        Object.keys(this.queryConf).map(x=>this.queryConf[x]=param)
       }
     },
     created() {
