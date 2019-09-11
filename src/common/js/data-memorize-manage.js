@@ -49,7 +49,7 @@ return request({
        cardNo:  form.cardNo ,
        collectInfo:  form.collectInfo ,
        colors:  form.colors ,
-       seqno:  form.seqno ,
+       seqno:  form.seqno==null?"":form.seqno.replace(/[\n\r\v\s↵]/g,","),
        bailStartDate:  form.bailTime==null?"":form.bailTime[0] ,
        bailEndDate:  form.bailTime==null?"":form.bailTime[1] ,
        expectStartTime:  form.expectTime==null?"":form.expectTime[0] ,

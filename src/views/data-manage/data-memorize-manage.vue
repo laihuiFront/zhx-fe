@@ -60,7 +60,7 @@
         <el-input v-model="formInline.collectInfo" placeholder="请输入催收记录" clearable></el-input>
       </el-form-item>
       <el-form-item v-if="queryConf.gaxlh || queryConfFlag">
-        <el-input v-model="formInline.seqno" placeholder="请输入个案序列号" clearable></el-input>
+        <el-input type="textarea" v-model="formInline.seqno" placeholder="请输入个案序列号" clearable rows="3"></el-input>
       </el-form-item>
       <el-form-item v-if="queryConf.csjg || queryConfFlag">
         <el-select v-model="formInline.results" placeholder="请选择催收结果" filterable collapse-tags multiple clearable>
@@ -147,7 +147,7 @@
       </el-form-item>
       <el-row>
         <el-form-item>
-          <el-button type="primary" icon="el-icon-search" @click="search">查询</el-button>
+          <el-button type="primary" icon="el-icon-search" @click="search2">查询</el-button>
           <el-button type="primary" icon="el-icon-refresh" @click="resetForm">重置</el-button>
           <el-button type="primary" @click="showQueryConf">查询条件配置</el-button>
           <el-button type="primary" @click="open7" v-has="'删除催记'">删除催记</el-button>
@@ -897,6 +897,12 @@
           this.total = response.total
           this.tableLoad = false
         })
+      },
+      // 查询按钮
+      search2() {
+          this.currentPage4=1
+          this.pageNum=1
+          this.search();
       },
       search() {
         this.tableLoad = true
