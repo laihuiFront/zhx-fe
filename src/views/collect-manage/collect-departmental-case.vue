@@ -858,7 +858,7 @@
         val11_data: [],  //案件类型
         val14_data: [
           {
-            label:'黑色',
+            label:'正常',
             value:'BLACK'
           },
           {

@@ -1321,16 +1321,16 @@ export default {
     this.addSynergyFormList = this.$store.getters.caseType.协催类型;
     this["val14_data"] =[
       {
-        label: "黑色",
-        value: "黑"
+        label: "正常",
+        value: "BLACK"
       },
       {
         label: "红色",
-        value: "红"
+        value: "RED"
       },
       {
         label: "蓝色",
-        value: "蓝"
+        value: "BLUE"
       }]
   }
 
