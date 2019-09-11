@@ -961,7 +961,7 @@
           {
             'min-width': 12,
             prop: "lastFollowTime",
-            label: "上次跟进日期"
+            label: "上次跟进时间"
           },
           {
             'min-width': 12,

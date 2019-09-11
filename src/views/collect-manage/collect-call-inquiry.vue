@@ -103,11 +103,17 @@
         header-align="center" align="center"
         show-overflow-tooltip
         >
-        <template slot-scope="scope">
-          <el-button style="text-decoration: underline" type="text" size="small"
-                     @click="showCase(scope.row)">{{scope
-            .row.seqNo}}</el-button>
-        </template>
+          <template slot-scope="scope">
+            <el-button v-if="scope.row.status==3" type="text" style ="color:#999999;" size="small" @click="showCase(scope.row)">
+              {{scope.row.seqNo}}
+            </el-button>
+            <el-button v-if="scope.row.status==4" type="text" style ="color:#999999;text-decoration:line-through;" size="small" @click="showCase(scope.row)">
+              {{scope.row.seqNo}}
+            </el-button>
+            <el-button v-if="scope.row.status!=3 && scope.row.status!=4" type="text" size="small" @click="showCase(scope.row)">
+              {{scope.row.seqNo}}
+            </el-button>
+          </template>
       </el-table-column>
 
       <el-table-column
@@ -391,18 +397,19 @@ export default {
       })
     },
     showCase(row){
-      let id = row.id
-      let name = row.name
-      let seqNo = row.seqNo
-      this.$router.push({
-        path:'case-detail',
-        query:{
-          id,
-          name,
-          mycase:true,
-          seqNo
-        }
-      })
+      window.open(`#/zhx/case-detail?id=${row.id}`)
+      // let id = row.id
+      // let name = row.name
+      // let seqNo = row.seqNo
+      // this.$router.push({
+      //   path:'case-detail',
+      //   query:{
+      //     id,
+      //     name,
+      //     mycase:true,
+      //     seqNo
+      //   }
+      // })
     },
     handleCurrentChange(currentPage){
       this.paginationData.currentPage = currentPage;
