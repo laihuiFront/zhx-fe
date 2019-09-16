@@ -21,7 +21,13 @@
           @click="onClickAdd"
           v-has="'新增'"
         >新增</el-button>
-        <el-button type="primary" :disabled="disableSave" @click="onclickSave" v-has="'保存'">保存</el-button>
+        <!-- <el-button type="primary" :disabled="disableSave" @click="onclickSave" v-has="'保存'">保存</el-button> -->
+        <el-button
+          type="primary" 
+          @click="onClickSave" 
+          class="btn"
+          v-if="currentEnum.name && currentEnum.name === '地区'"
+         >新增</el-button>     
       </div>
       <el-tree
         v-if="currentEnum.name && currentEnum.name === '地区'"
@@ -31,6 +37,8 @@
         class="tree-wrap"
         width="400px"
         v-loading="tableLoad"
+        @node-click="clickNode"
+        :default-expand-all="true"
       >
         <span class="custom-tree-node" slot-scope="{ node, data }">
           <span>
@@ -40,17 +48,17 @@
               v-show="data.isEdit"
               clearable
               v-model="data.name"
-              :placeholder="'请输入'"
+              :placeholder="'请输入'"             
             ></el-input>
             <span v-show="!data.isEdit">{{data.name}}</span>
-            <el-switch
+            <!-- <el-switch
               @change="onEnableChange($event, node, data)"
               v-model="data.status"
               :active-value="1"
               :inactive-value="0"
-            ></el-switch>
+            ></el-switch> -->
           </span>
-          <span>
+          <!-- <span>
             <el-button
               v-if="node.level<=2"
               icon="el-icon-circle-plus"
@@ -60,9 +68,105 @@
             ></el-button>
             <el-button icon="el-icon-edit" type="text" @click="edit(node, data)" title="修改"></el-button>
             <el-button icon="el-icon-delete" type="text" @click="remove(node, data)" title="删除"></el-button>
-          </span>
+          </span> -->
         </span>
       </el-tree>
+
+    <!-- v-if="currentEnum.name && currentEnum.name === '地区'" -->
+		<el-table
+      v-if="currentEnum.name==='地区'"
+			stripe
+			border
+			:data="tableData"
+			highlight-current-row
+			class="tablebodystyle"
+			v-loading="tableLoad"			
+			>
+       <el-table-column
+          v-if="currentEnum.name==='地区'"
+					label="地区名称"
+					align="center"
+					prop="name"
+					show-overflow-tooltip
+				>
+         <template slot-scope="scope">
+           {{scope.row.name}}
+         </template>
+        </el-table-column>
+
+        <el-table-column
+          v-if="currentEnum.name==='地区'"
+					label="是否启用"
+					align="center"
+					prop="statusMsg"
+					show-overflow-tooltip
+				>
+         <template slot-scope="scope">
+           {{scope.row.statusMsg}}
+         </template>
+        </el-table-column>
+				<el-table-column :resizable="false"  align="center" label="操作" show-overflow-tooltip width="300"  v-if="currentEnum.name==='地区'">
+					<template slot-scope="scope">
+						<el-button type="text" size="small" @click="editArea(scope.$index,scope.row)">编辑</el-button>
+						<el-button type="text" size="small" @click="deleteArea(scope.$index,scope.row)">删除</el-button>
+					</template>
+				</el-table-column>
+			</el-table>
+
+		<el-dialog title="编辑地区" class="dialog-wrap" :visible.sync="showAreaDialog" width="30%" v-dialogDrag>
+			<el-form
+				ref="form_update"
+				:model="form_update"
+				label-position="right"
+				label-width="100px"
+				:rules="rules"
+			>
+				<el-form-item label="地区名称" prop="name">
+					<el-input v-model="form_update.name" class="fixedWidth" maxlength="65"></el-input>
+				</el-form-item>
+				<el-form-item label="是否启用" prop="status">
+              <!-- @change="onEnableChange($event, node, data)" -->
+            <el-switch
+              v-model="form_update.status"
+              :active-value="1"
+              :inactive-value="0"
+            ></el-switch>
+					<!-- <el-input v-model="form_add.sta" class="fixedWidth" maxlength="65"></el-input> -->
+				</el-form-item>
+			</el-form>
+			<span slot="footer" class="footer">
+				<el-button @click="showAreaDialog = false">取 消</el-button>
+				<el-button type="primary" @click="saveArea('form_update')">确 定</el-button>
+			</span>
+		</el-dialog>
+
+    <el-dialog title="新增地区" class="dialog-wrap" :visible.sync="showAreaDialog2" width="30%" v-dialogDrag>
+			<el-form
+				ref="form_add"
+				:model="form_add"
+				label-position="right"
+				label-width="100px"
+				:rules="rules"
+			>
+				<el-form-item label="地区名称" prop="name">
+					<el-input v-model="form_add.name" class="fixedWidth" maxlength="65"></el-input>
+				</el-form-item>
+				<el-form-item label="是否启用" prop="status">
+              <!-- @change="onEnableChange($event, node, data)" -->
+            <el-switch
+              v-model="form_add.status"
+              :active-value="1"
+              :inactive-value="0"
+            ></el-switch>
+					<!-- <el-input v-model="form_add.sta" class="fixedWidth" maxlength="65"></el-input> -->
+				</el-form-item>
+			</el-form>
+			<span slot="footer" class="footer">
+				<el-button @click="showAreaDialog2 = false">取 消</el-button>
+				<el-button type="primary" @click="addArea('form_add')">确 定</el-button>
+			</span>
+		</el-dialog>
+
        <el-table v-if="currentEnum.name && currentEnum.name !== '地区'"
         border
         stripe
@@ -115,16 +219,17 @@
             ></el-switch>
           </template>
         </el-table-column>-->
-        <el-table-column prop="status" label="启用" align="center">
+        <el-table-column prop="status" label="启用" align="center"  v-if="currentEnum.name!=='地区'">
           <template slot-scope="scope">
             <el-switch
-              v-if="scope.row.editType==='edit' || scope.row.editType==='add'"
+              v-if="scope.row.editType==='edit' || scope.row.editType==='add'"          
               v-model="scope.row.tempStatus"
               :active-value="1"
               :inactive-value="0"
             ></el-switch>
+
             <el-switch
-              v-else
+              v-if="scope.row.editType!=='edit' && scope.row.editType!=='add'&&currentEnum.name!=='地区'"
               :disabled="true"
               v-model="scope.row.status"
               :active-value="1"
@@ -159,7 +264,8 @@
 </template>
 
 <script>
-import { getConfigList, insertConfigData, deleteConfigData } from '@/common/js/api-setting'
+import { getConfigList, insertConfigData, deleteConfigData,findAreaTableData,addAreaMethod,saveAreaMethod,deleteAreaMethod } from '@/common/js/api-setting'
+import { forkJoin } from "rxjs";
 export default {
   name: 'settingEnum',
   data () {
@@ -167,7 +273,24 @@ export default {
       tableLoad:false,
       configList: [],
       activeIndex: 0,
-      configData: []
+      configData: [],
+      treeObjid: "",
+      tableData:[],
+      form_add: {},
+      form_update:{},
+			initValue: {
+        name: '',
+        status:''
+      },
+      showAreaDialog2:false,
+      showAreaDialog:false,
+      status:0,
+      rules: {
+					name: [
+						{ required: true, message: "地区名称不能为空", trigger: "blur" }
+					]
+        },
+        newid:''
     }
   },
   computed: {
@@ -181,24 +304,24 @@ export default {
         return {}
       }
     },
-    disableSave () {
-      if (this.currentEnum.name && this.currentEnum.name === '地区') {
-        return false
-      } else {
-        if (this.configData.length) {
-          const hasEditItem = this.configData.some(item => item.editType === 'edit' || item.editType === 'add')
-          if (hasEditItem) {
-            return false
-          } else {
-            return true
-          }
-        } else {
-          return true
-        }
-      }
-    }
+    // disableSave () {
+    //   if (this.currentEnum.name && this.currentEnum.name === '地区') {
+    //     return false
+    //   } else {
+    //     if (this.configData.length) {
+    //       const hasEditItem = this.configData.some(item => item.editType === 'edit' || item.editType === 'add')
+    //       if (hasEditItem) {
+    //         return false
+    //       } else {
+    //         return true
+    //       }
+    //     } else {
+    //       return true
+    //     }
+    //   }
+    // }
   },
-  watch: {
+  watch: {   
     currentEnum (newVal, OldVal) {
       if (newVal.id) {
         this.configData = []
@@ -208,7 +331,22 @@ export default {
             this.configData = response
             this.tableLoad = false
           })
-        }else{
+        }
+        else if(newVal.name=="地区"){
+          this.newid=newVal.id
+          getConfigList(newVal.id,0).then(response => {
+            let val=[]
+            let root={}
+            root.children=response
+            root.id=403
+            root.name='所有地区'
+            val.push(root)
+            this.configData = val
+            this.tableLoad = false
+          })
+          // this.getConfigList(param1,param2)
+        }
+        else{
           getConfigList(newVal.id,0).then(response => {
             this.configData = response
             this.tableLoad = false
@@ -235,52 +373,52 @@ export default {
         sysFlag:1
       })
     },
-    onclickSave () {
-      if (this.currentEnum.name === '地区') {
-        insertConfigData(this.configData).then(() => {
-          this.$message('保存成功')
-          this.tableLoad = true
-          getConfigList(this.currentEnum.id).then(response => {
-            this.configData = response
-            this.tableLoad = false
-          })
-        })
-      } else {
-        const toSaveList = this.configData.filter(item => item.editType === 'add' || item.editType === 'edit')
-        const hasEmpty = toSaveList.some(item => {
-          if (this.currentEnum.name === '催收模板') {
-            return !(item.tempName && item.tempDescription)
-          } else {
-            return !item.tempName
-          }
-        })
-        if (hasEmpty) {
-          this.$message('修改或删除的配置项含有空值，请修改后重新提交')
-          return
-        }
-        const data = toSaveList.map((item) => {
-          return {
-            type: 0,
-            id: item.id,
-            name: item.tempName,
-            status: item.tempStatus,
-            sysFlag:item.tempSysFlag,
-            description: item.tempDescription,
-            parent: {
-              id: this.currentEnum.id
-            }
-          }
-        })
-        insertConfigData(data).then(() => {
-          this.$message('保存成功')
-          this.tableLoad = true
-          getConfigList(this.currentEnum.id).then(response => {
-            this.configData = response
-            this.tableLoad = false
-          })
-        })
-      }
-    },
+    // onclickSave () {
+    //   if (this.currentEnum.name === '地区') {
+    //     insertConfigData(this.configData).then(() => {
+    //       this.$message('保存成功')
+    //       this.tableLoad = true
+    //       getConfigList(this.currentEnum.id).then(response => {
+    //         this.configData = response
+    //         this.tableLoad = false
+    //       })
+    //     })
+    //   } else {
+    //     const toSaveList = this.configData.filter(item => item.editType === 'add' || item.editType === 'edit')
+    //     const hasEmpty = toSaveList.some(item => {
+    //       if (this.currentEnum.name === '催收模板') {
+    //         return !(item.tempName && item.tempDescription)
+    //       } else {
+    //         return !item.tempName
+    //       }
+    //     })
+    //     if (hasEmpty) {
+    //       this.$message('修改或删除的配置项含有空值，请修改后重新提交')
+    //       return
+    //     }
+    //     const data = toSaveList.map((item) => {
+    //       return {
+    //         type: 0,
+    //         id: item.id,
+    //         name: item.tempName,
+    //         status: item.tempStatus,
+    //         sysFlag:item.tempSysFlag,
+    //         description: item.tempDescription,
+    //         parent: {
+    //           id: this.currentEnum.id
+    //         }
+    //       }
+    //     })
+    //     insertConfigData(data).then(() => {
+    //       this.$message('保存成功')
+    //       this.tableLoad = true
+    //       getConfigList(this.currentEnum.id).then(response => {
+    //         this.configData = response
+    //         this.tableLoad = false
+    //       })
+    //     })
+    //   }
+    // },
     onClickEdit (row) {
       this.$set(row, 'tempName', row.name)
       this.$set(row, 'tempDescription', row.description)
@@ -344,20 +482,133 @@ export default {
 
 
     },
-    onEnableChange ($event, node, data) {
-      console.log($event)
-      this.updateTreeStatus(data, $event)
+    // onEnableChange ($event, node, data) {
+    //   console.log($event)
+    //   this.updateTreeStatus(data, $event)
+    // },
+    // updateTreeStatus (data, $event) {
+    //   this.$set(data, 'status', $event)
+    //   if (data.children) {
+    //     for (let i = 0; i < data.children.length; i++) {
+    //       this.updateTreeStatus(data.children[i], $event)
+    //     }
+    //   } else {
+    //     return
+    //   }
+    // },
+    clickNode(obj, node, data){
+      this.treeObjid = obj.id;
+      this.tableData = [];
+      this.initTable();
     },
-    updateTreeStatus (data, $event) {
-      this.$set(data, 'status', $event)
-      if (data.children) {
-        for (let i = 0; i < data.children.length; i++) {
-          this.updateTreeStatus(data.children[i], $event)
-        }
-      } else {
-        return
-      }
-    }
+    initTable(){
+       this.tableLoad = true
+      findAreaTableData(this.treeObjid).then(res => {
+         this.tableLoad = false
+         this.tableData=res   
+      });
+    },
+    onClickSave() {
+				this.form_add = { ...this.initValue };
+				if (this.$refs["form_add"]) {
+					this.$refs["form_add"].clearValidate();
+				}
+				this.showAreaDialog2 = true;
+      },
+    editArea(index, row) {
+				if (this.$refs["form_update"]) {
+					this.$refs["form_update"].resetFields();
+				}
+				this.showAreaDialog = true;
+        this.form_update = row;
+      },
+    addArea(formName) {
+				this.showAreaDialog2 = false;
+				this.tableLoad = true;
+				this.$refs[formName].validate(valid => {
+					if (valid) {
+            this.form_add.dictionaryId = this.treeObjid;
+							addAreaMethod(this.form_add).then(() => {
+								this.$message.success("操作成功");
+		        	forkJoin([
+									getConfigList(this.newid,0),
+									findAreaTableData(this.treeObjid)
+								]).subscribe(results => {
+                    let val=[]
+                    let root={}
+                    root.children=results[0]
+                    root.id=403
+                    root.name='所有地区'
+                    val.push(root)
+										this.configData = val;
+										this.tableData = results[1];								
+										this.tableLoad = false;
+									
+								});
+							});				
+					}
+				});
+      },
+      saveArea() {
+				this.showAreaDialog = false;
+        this.tableLoad = true;        
+				saveAreaMethod(this.form_update).then(() => {				
+          this.$message.success("地区更新成功");
+            forkJoin([
+									getConfigList(this.newid,0),
+									findAreaTableData(this.treeObjid)
+								]).subscribe(results => {
+                    let val=[]
+                    let root={}
+                    root.children=results[0]
+                    root.id=403
+                    root.name='所有地区'
+                    val.push(root)
+										this.configData = val;
+										this.tableData = results[1];								
+										this.tableLoad = false;									
+								});
+				    });
+        },
+      deleteArea(index, row) {			
+				this.$confirm("确认删除？", "提示", {
+					confirmButtonText: "确定",
+					cancelButtonText: "取消",
+					type: "warning"
+				}).then(() => {
+					this.tableLoad = true;
+					deleteAreaMethod(row)
+						.then(() => {
+							this.tableData.splice(index, 1);
+							this.$message.success("部门更新成功");
+							forkJoin([
+								getConfigList(this.newid,0),
+								findAreaTableData(this.treeObjid)
+							]).subscribe(results => {
+									  let val=[]
+                    let root={}
+                    root.children=results[0]
+                    root.id=403
+                    root.name='所有地区'
+                    val.push(root)
+										this.configData = val;	
+									this.tableData = results[1];						
+									this.tableLoad = false;
+							});
+						}).catch(() => {            
+            getConfigList(this.newid,0).then(response => {   
+              let val=[]
+              let root={}
+              root.children=response
+              root.id=403
+              root.name='所有地区'
+              val.push(root)        
+              this.configData = val
+              this.tableLoad = false
+          })
+				});
+			});
+		}
   }
 }
 </script>
@@ -429,13 +680,17 @@ export default {
       }
     }
     .el-card__body {
+
       overflow-y: auto;
       flex: 1;
       padding: 0;
-      text-align: center;
+      // text-align: center;
+      display: flex;
+		flex-direction: row;
       .tree-wrap {
-        display: inline-block;
-        width: 400px;
+         display: inline-block;
+        width: 300px;
+        text-align: left;
         .el-tree-node__content {
           height: 40px;
         }
@@ -451,6 +706,9 @@ export default {
             width: 150px;
           }
         }
+      }
+      .tablebodystyle{
+        display:inline-block;
       }
     }
     &.table-class{
@@ -469,5 +727,8 @@ export default {
     border-top: 1px solid #0080ff  !important;
     border-bottom: 1px solid #0080ff  !important;
   }
+  .fixedWidth {
+		width: 240px;
+	}
 }
 </style>

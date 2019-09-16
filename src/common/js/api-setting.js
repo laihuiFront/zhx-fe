@@ -162,4 +162,37 @@ export function moveToTargetDepartment(id,pid){
   })
 }
 
+export function findAreaTableData(id){
+  return request({
+    url: '/sys/dictionary/findAreaTableData',
+    method: 'post',
+    params:{
+      id
+    }
+  })
+}
+
+export function addAreaMethod(data) {
+  return request({
+    url: '/sys/dictionary/addArea',
+    method: 'post',
+    data
+  })
+}
+
+export function saveAreaMethod(data){
+  return request({
+    url: '/sys/dictionary/saveArea',
+    method: 'post',
+    data
+  })
+}
+
+export function deleteAreaMethod(data){
+  return request({
+    url: '/sys/dictionary/deleteArea',
+    method: 'post',
+    data
+  })
+}
 
