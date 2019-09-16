@@ -121,13 +121,15 @@
                   <el-select
                     v-model="form.val4"
                     placeholder="请选择地区"
+                    multiple
+                    collapse-tags
                     clearable
                   >
                     <el-option
                       v-for="item in val4_data"
-                      :key="item.value"
+                      :key="item.label"
                       :label="item.label"
-                      :value="item.value"
+                      :value="item.label"
                     ></el-option>
                   </el-select>
                 </el-form-item>
@@ -925,7 +927,7 @@ export default {
         val1: batchNos,
         val2,
         val3,
-        val4: area,
+        val4: areas,
         val5,
         val6,
         val7,
@@ -961,7 +963,7 @@ export default {
         caseDateEnd: (!!val7 && val7[1]) || "",
         nextFollDateStart: (!!val2 && val2[0]) || "",
         nextFollDateEnd: (!!val2 && val2[1]) || "",
-        area: area + "" ? area : null,
+        areas: areas + "" ? areas : null,
         name:val5==null?"":val5.replace(/[\n\r\v\s↵]/g,","),
         identNo:val6==null?"":val6.replace(/[\n\r\v\s↵]/g,","),
         accountAges,
