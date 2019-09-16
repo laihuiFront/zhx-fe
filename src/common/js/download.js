@@ -9,8 +9,9 @@ const service = axios.create({
   // baseURL: 'http://zhx.zaijushou.xyz',
   //baseURL: 'http://127.0.0.1:9119',
   //baseURL: 'http://116.62.124.251:9119',
-  baseURL: 'http://192.168.25.208:9119',
+  //baseURL: 'http://192.168.25.208:9119',
   //baseURL: 'http://113.57.119.214:9997',
+  baseURL: 'http://172.16.0.25:9119',
   //timeout: 10000, // 请求超时时间,
   responseType :'blob',
   method:'POST'
