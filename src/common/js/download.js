@@ -4,11 +4,13 @@ import store from '../../store'
 import router from '../../router'
 import { localCache, removeCache } from '@/common/js/auth'
 
-export const baseURL = process.env.baseURL
-
 // 创建axios实例
 const service = axios.create({
-  baseURL,
+  // baseURL: 'http://zhx.zaijushou.xyz',
+  //baseURL: 'http://127.0.0.1:9119',
+  //baseURL: 'http://116.62.124.251:9119',
+  baseURL: 'http://192.168.25.208:9119',
+  //baseURL: 'http://113.57.119.214:9997',
   //timeout: 10000, // 请求超时时间,
   responseType :'blob',
   method:'POST'
@@ -17,7 +19,7 @@ const service = axios.create({
 // request拦截器
 service.interceptors.request.use(config => {
   if(!config.url.includes('login')){
-      config.headers['Authorization'] = localCache('token')
+    config.headers['Authorization'] = localCache('token')
   }
   return config
 }, error => {
@@ -45,17 +47,17 @@ service.interceptors.response.use(
       }
       return Promise.reject('error')
     } else {
-        let url = window.URL.createObjectURL(new Blob([res]))
-        let link = document.createElement('a')
-        link.style.display = 'none'
-        link.href = url
+      let url = window.URL.createObjectURL(new Blob([res]))
+      let link = document.createElement('a')
+      link.style.display = 'none'
+      link.href = url
 
-        link.setAttribute('download', responseInfo.data)
+      link.setAttribute('download', responseInfo.data)
 
-        document.body.appendChild(link)
-        link.click()
-        return true
-      }
+      document.body.appendChild(link)
+      link.click()
+      return true
+    }
   },
   error => {
     console.log('err' + error)// for debug
