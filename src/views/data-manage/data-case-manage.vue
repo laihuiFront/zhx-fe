@@ -1044,7 +1044,6 @@
         <el-checkbox v-model="queryConf.fpzt" label="5">分配状态</el-checkbox>
         <el-checkbox v-model="queryConf.pcgz" label="5">批次共债</el-checkbox>
         <el-checkbox v-model="queryConf.hkrq" label="5">还款日期</el-checkbox>
-        <el-checkbox v-model="queryConf.warq" label="5">委案日期</el-checkbox>
         <el-checkbox v-model="queryConf.yjtarq" label="5">预计退案日期</el-checkbox>
         <el-checkbox v-model="queryConf.sjtarq" label="5">实际退案日期</el-checkbox>
         <el-checkbox v-model="queryConf.zhgjrq" label="5">最后跟进日期</el-checkbox>
