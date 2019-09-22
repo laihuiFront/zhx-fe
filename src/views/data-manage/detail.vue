@@ -1204,20 +1204,20 @@
                 <div class="left-oper">
                   <el-button
                     @click="changePhoneStatus('有效')"
-                    v-if=" caseDetail.currentuser || mycaseFlag"
                   >标记为有效
+                    <!-- v-if=" caseDetail.currentuser || mycaseFlag" -->
                   </el-button
                   >
                   <el-button
                     @click="changePhoneStatus('未知')"
-                    v-if=" caseDetail.currentuser || mycaseFlag"
                   >标记为未知
+                    <!-- v-if=" caseDetail.currentuser || mycaseFlag" -->
                   </el-button
                   >
                   <el-button
                     @click="changePhoneStatus('无效')"
-                    v-if=" caseDetail.currentuser || mycaseFlag"
                   >标记为无效
+                    <!-- v-if=" caseDetail.currentuser || mycaseFlag" -->
                   </el-button
                   >
                   <el-button @click="showAllTel">显示全部电话</el-button>
@@ -1226,22 +1226,22 @@
                   <el-button
                     type="primary"
                     @click="sendTelBatch"
-                    v-if=" caseDetail.currentuser || mycaseFlag"
                   >手机批量呼出
+                    <!-- v-if=" caseDetail.currentuser || mycaseFlag" -->
                   </el-button>
                   <el-button
                     class="sendTel4Style"
                     type="primary"
                     @click="sendTelBatch2"
-                    v-if=" caseDetail.currentuser || mycaseFlag"
                   >座机批量呼出
+                    <!-- v-if=" caseDetail.currentuser || mycaseFlag" -->
                   </el-button>
                   <el-button
                     class="addPhoneStyle"
                     type="primary"
                     @click="addPhone"
-                    v-if=" caseDetail.currentuser || mycaseFlag"
                   >新增电话
+                    <!-- v-if=" caseDetail.currentuser || mycaseFlag" -->
                   </el-button
                   >
                   <el-popover
@@ -1250,8 +1250,8 @@
                     width="500"
                     trigger="click"
                     v-model="batchAddTelVisible"
-                    v-if=" caseDetail.currentuser || mycaseFlag"
                   >
+                    <!-- v-if=" caseDetail.currentuser || mycaseFlag" -->
                     <div>
                       <el-input
                         type="textarea"
@@ -1344,41 +1344,41 @@
                       type="text"
                       @click="editPhone(scope.row)"
                       v-if="
-                           (caseDetail.currentuser || mycaseFlag) &&
                             scope.row.telStatusMsg !== '停止跟进'
                         "
                     >编辑
+                           <!-- (caseDetail.currentuser || mycaseFlag) && -->
                     </el-button
                     >
                     <el-button
                       type="text"
                       @click="deleteTel(scope.row.id)"
                       v-if="
-                           (caseDetail.currentuser || mycaseFlag) &&
                             scope.row.telStatusMsg !== '停止跟进'
                         "
                     >删除
+                           <!-- (caseDetail.currentuser || mycaseFlag) && -->
                     </el-button
                     >
                     <el-button
                       type="text"
                       v-if="
-                           (caseDetail.currentuser || mycaseFlag) &&
                             scope.row.telStatusMsg !== '停止跟进'
                         "
 
                       @click="stopTel(scope.row.id)"
                     >停止跟进
+                           <!-- (caseDetail.currentuser || mycaseFlag) && -->
                     </el-button
                     >
                     <el-button
                       type="text"
                       v-if="
-                           (caseDetail.currentuser || mycaseFlag) &&
                             scope.row.telStatusMsg == '停止跟进'
                         "
                       @click="resetTel(scope.row.id)"
                     >恢复跟进
+                           <!-- (caseDetail.currentuser || mycaseFlag) && -->
                     </el-button
                     >
                   </template>
