@@ -1,7 +1,7 @@
 <template>
   <div>
     <section id="top-menu">
-      <img src="./logo_1 .png" alt="" class="logo">
+      <img src="logo_2 .png" alt="" class="logo">
       <el-menu
         class="el-menu-demo"
         mode="horizontal"
