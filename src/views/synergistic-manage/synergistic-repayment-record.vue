@@ -49,6 +49,17 @@
       @selection-change="onSelectRow"
       @sort-change="handleSort"
       @row-dblclick="showCase"
+      :row-class-name="rowColor"
+      border
+      stripe
+      :data="recordList"
+      style="width: 100%;">
+      <el-table-column type="selection" width="50" align="center"></el-table-column>
+      <el-table-column width="120"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="dataCase.batchNo" label="批次号" show-overflow-tooltip></el-table-column>
+      <el-table-column width="160" sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="dataCase.cardNo" label="卡号" show-overflow-tooltip></el-table-column>
+      <el-table-column width="160"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="dataCase.identNo" label="证件号" show-overflow-tooltip></el-table-column>
+      <el-table-column width="120"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="dataCase.name" label="姓名" show-overflow-tooltip></el-table-column>
+      <el-table-column min-width="160"  sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="dataCase.seqNo" label="个案序列号" show-overflow-tooltip>
       :data="recordList">
       <el-table-column type="selection" width="55" align="center"></el-table-column>
       <el-table-column min-width="180" sortable="custom" align="center" :sort-orders="['ascending','descending']" prop="dataCase.seqNo" label="个案序列号" show-overflow-tooltip>
@@ -797,7 +808,14 @@ export default {
     },
     backForm(){
       this.showEditForm = false
-    }
+    },
+    rowColor({row}) {
+      if (row.dataCase.status==3){
+        return `color_3`;
+      }else if(row.dataCase.status==4){
+        return `color_4`;
+      }
+    },
   }
 }
 </script>
@@ -811,6 +829,13 @@ export default {
       width: 24%;
       margin-right: 0px;
     }
+  }
+  .color_3 {
+    color: #999999;
+  }
+  .color_4 {
+    text-decoration:line-through;
+    color: #999999;
   }
   .el-tabs__content{
     overflow-y: auto;

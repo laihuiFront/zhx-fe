@@ -1,4 +1,16 @@
 <template>
+  <div>
+    <section id="top-menu">
+      <img src="logo_1 .png" alt="" class="logo">
+      <el-menu
+        class="el-menu-demo"
+        mode="horizontal"
+        background-color="#132c51"
+        text-color="#fff"
+        active-text-color="#fff"
+        :default-active="$route.path">
+        <component v-for="(item) in menu" :data="item" :is="item.children?'two-level':'one-level'"
+                   :key="item.id"></component>
   <div id="top-menu">
     <div class="logo">
       <img src="./logo_1 .png">
