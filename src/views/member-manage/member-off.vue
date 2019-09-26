@@ -14,12 +14,10 @@
     </el-form>
      <el-table highlight-current-row v-loading="tableLoad"
       sortable="custom"
-      border
-      stripe
       @sort-change="handleSort"
-      :data="memberList"
-      style="width: 100%">
+      :data="memberList">
       <el-table-column
+        min-width="80"
         :sortable='true'
         :sort-orders="['ascending','descending']"
         prop="id"
@@ -27,6 +25,7 @@
         label="员工ID">
       </el-table-column>
       <el-table-column
+        min-width="120"
         :sortable='true'
         :sort-orders="['ascending','descending']"
         align="center"
@@ -35,6 +34,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
+        min-width="160"
         :sortable='true'
         :sort-orders="['ascending','descending']"
         align="center"
@@ -42,6 +42,7 @@
         label="原部门">
       </el-table-column>
       <el-table-column
+        min-width="140"
         :sortable='true'
         :sort-orders="['ascending','descending']"
         prop="leaveTime"
@@ -56,8 +57,7 @@
       :page-size.sync="queryForm.pageSize"
       layout="total, sizes, prev, pager, next, jumper"
       :page-sizes="pageSizes"
-      :total="total"
-      class="pagination-wrap">
+      :total="total">
     </el-pagination>
   </div>
 </template>
@@ -75,7 +75,7 @@ export default {
       queryForm: {
         id:'',
         pageNum: 1,
-        pageSize: 50,
+        pageSize: pageSizes[0],
         orderBy:null,
         sort:null
       },
@@ -88,7 +88,6 @@ export default {
   },
   methods:{
     handleSort({column,prop,order}){
-      // console.log(prop,'@',order)
       this.queryForm.orderBy = prop
       this.queryForm.sort = order === 'ascending' ? 'asc':'desc'
       this.onClickQuery()
@@ -116,15 +115,11 @@ export default {
       }
     }
   }
-
 }
 </script>
 
 <style lang="scss">
 #member-off{
-  .el-table__body tr.current-row > td{
-    border-top: 1px solid #0080ff  !important;
-    border-bottom: 1px solid #0080ff  !important;
-  }
+
 }
 </style>

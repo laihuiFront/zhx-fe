@@ -87,16 +87,13 @@
      <el-table highlight-current-row v-loading="tableLoad"
       :data="tableData"
       tooltip-effect="dark"
-      border
-      stripe
-      style="width: 100%"
       sortable="custom"
       @row-dblclick="showCase"
       @sort-change="sortHandle"
     >
       <el-table-column
         label="个案序列号"
-        min-width="5"
+        min-width="180"
         prop="seqNo"
         sortable="custom"
         :sort-orders="['ascending','descending']"
@@ -119,7 +116,7 @@
       <el-table-column
         label="姓名"
         align="center"
-        min-width="5"
+        min-width="120"
         prop="name"
         sortable="custom"
         :sort-orders="['ascending','descending']"
@@ -133,7 +130,7 @@
       <el-table-column
         label="卡号"
         align="center"
-        min-width="5"
+        min-width="180"
         prop="cardNo"
         sortable="custom"
         :sort-orders="['ascending','descending']"
@@ -147,35 +144,35 @@
       <el-table-column
         label="委案金额"
         align="center"
-        min-width="5"
+        min-width="120"
         prop="moneyMsg"
         sortable="custom"
         :sort-orders="['ascending','descending']"
         show-overflow-tooltip
       >
-      <template slot-scope="scope">
-           {{scope.row.moneyMsg}}
-      </template>
+        <template slot-scope="scope">
+          {{scope.row.moneyMsg}}
+        </template>
       </el-table-column>
 
       <el-table-column
         label="委案日期"
         align="center"
-        min-width="5"
+        min-width="120"
         prop="caseDate"
         sortable="custom"
         :sort-orders="['ascending','descending']"
         show-overflow-tooltip
       >
       <template slot-scope="scope">
-           {{scope.row.caseDate}}
+        {{scope.row.caseDate}}
       </template>
       </el-table-column>
 
       <el-table-column
         label="催收状态"
         align="center"
-        min-width="5"
+        min-width="100"
         prop="collectStatusMsg"
         sortable="custom"
         :sort-orders="['ascending','descending']"
@@ -187,17 +184,17 @@
       </el-table-column>
 
       <el-table-column
-        label="上次通电"
+        label="上次通电时间"
         align="center"
-        min-width="5"
+        min-width="180"
         prop="collectDate"
         sortable="custom"
         :sort-orders="['ascending','descending']"
         show-overflow-tooltip
       >
       <template slot-scope="scope">
-        <span class="block">
-           {{scope.row.collectDate}}
+        <span>
+          {{scope.row.collectDate}}
         </span>
       </template>
       </el-table-column>
@@ -206,14 +203,13 @@
         v-for="(item, index) in tablecol_data"
         v-bind="item"
         :key="index"
-        min-width="5"
         sortable="custom"
         :sort-orders="['ascending','descending']"
         align="center"
         header-align="center"
         show-overflow-tooltip
       ></el-table-column>
-      <el-table-column label="操作" align="center"  min-width="5">
+      <el-table-column label="操作" align="center" width="100">
       <template slot-scope="scope">
           <el-button type="text" align="center" @click="dialogVisible=true;currentRow = scope;textarea3 = currentRow.comment" v-has="'评语'">
             评语
@@ -242,7 +238,6 @@
       </span>
     </el-dialog>
     <el-pagination
-      class="pagination-wrap"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="paginationData.currentPage"
@@ -270,7 +265,7 @@ export default {
       pageSizes,
       tableLoad:false,
       paginationData:{
-        pageSize:100,
+        pageSize:pageSizes[0],
         total:0,
         currentPage:1
       },
@@ -304,17 +299,22 @@ export default {
       // }]
       tablecol_data:[
         {
+          'min-width': 140,
           prop:'proRepayAmtMsg',
-          width:130,
           label:'承诺还款金额'
-        },{
+        },
+        {
+          'min-width': 120,
           prop:'enRepayAmtMsg',
-          width:130,
-          label:'已还款金额'
-        },{
+          label:'已还金额'
+        },
+        {
+          'min-width': 100,
           prop:'accountAge',
           label:'账龄'
-        },{
+        },
+        {
+          'min-width': 140,
           prop:'odv',
           label:'催收员'
         },
@@ -454,22 +454,6 @@ export default {
 
 <style lang="scss">
 #collect-call-inquiry{
-   tr.current-row > td{
-    border-top: 1px solid #0080ff  !important;
-    border-bottom: 1px solid #0080ff  !important;
-  }
+  min-width: 1700px !important;
 }
-
-.el-input,.el-select{
-  width: 180px;
-}
-
- .data-case-condition-wrap {
-   overflow-x: hidden;
- }
-
- .block{
-   display: block;
-   text-align: center;
- }
 </style>

@@ -7,11 +7,7 @@
        element-loading-background="rgba(0, 0, 0, 0.7)">
         <el-table v-loading="tableLoad"
                   :data="dataList"
-                  border
-                  style="width: 100%;margin-top:50px;"
-                  highlight-current-row
-                  height="1"
-                  class="table-wrap">
+                  highlight-current-row>
           <el-table-column
             prop="line"
             align="center"
@@ -49,11 +45,6 @@
     >
       <el-table highlight-current-row
                 :data="repayList"
-                class="table-wrap"
-                height="1"
-                border
-                style="margin-top:10px;min-height:390px;margin-bottom: 40px;"
-                stripe
       >
 
         <el-table-column
@@ -84,7 +75,6 @@
   </div>
 </template>
 
-
 <script>
   import {loadDataOdv,showRepay} from '@/common/js/collect-director.js'
 
@@ -113,7 +103,6 @@
       loadDataOdv().then((response) => {
         this.dataList = response
       })
-
     },
   }
 </script>
@@ -126,11 +115,9 @@
       width: 40px;
     }
 
-
     .el-table__body-wrapper {
       overflow-x: hidden;
     }
-
 
     .has-gutter .gutter {
       display: block !important;

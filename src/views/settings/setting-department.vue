@@ -1,75 +1,76 @@
 <template>
 	<div id="setting-department" v-loading="pageLoading" element-loading-text="拼命加载中">
 		<div class="treeStyle">
-			<div class="header">
+			<div>
 				<el-button type="primary" @click="onClickMove" class="movebtn">移动</el-button>
 			</div>
-			<el-tree
-				v-if="departmentTree.length>0"
-				ref="tree"
-				:data="departmentTree"
-				node-key="id"
-				:expand-on-click-node="false"
-				class="tree-wrap"
-				width="400px"
-				@node-click="clickNode"
-				:default-expanded-keys="expandedlist"
-				:default-expand-all="true"
-			>
-				<span class="custom-tree-node" slot-scope="{ node, data }">
-					<span>{{data.orgName}}</span>
-				</span>
-			</el-tree>
+      <div class="deptTree">
+        <el-tree
+          v-if="departmentTree.length>0"
+          ref="tree"
+          :data="departmentTree"
+          node-key="id"
+          :expand-on-click-node="false"
+          class="tree-wrap"
+          @node-click="clickNode"
+          :default-expanded-keys="expandedlist"
+          :default-expand-all="true"
+        >
+          <span class="custom-tree-node" slot-scope="{ node, data }">
+            <span>{{data.orgName}}</span>
+          </span>
+        </el-tree>
+      </div>
 		</div>
 		<div class="tablestyle">
-			<div class="header">
+			<div>
 				<el-button type="primary" @click="onClickSave" class="btn">新增</el-button>
 				<el-button type="primary" @click="saveColumnsWidth" v-show="false">保存列宽</el-button>
 			</div>
-			<el-table
-				stripe
-				border
-				:data="tableData"
-				highlight-current-row
-				class="tablebodystyle"
-				v-loading="tableLoad"
-				ref="table"
-			>
-				<el-table-column
-					:min-width="columnsWidth.filter(x => x.columnname=='部门名称')[0].columnwidth"
-					label="部门名称"
-					align="center"
-					prop="orgName"
-					show-overflow-tooltip
-				/>
-				<el-table-column
-					:min-width="columnsWidth.filter(x => x.columnname=='员工人数')[0].columnwidth"
-					label="员工人数"
-					align="center"
-					prop="userNum"
-					show-overflow-tooltip
-				/>
-				<el-table-column :resizable="false"  align="center" label="操作" show-overflow-tooltip width="300">
-					<template slot-scope="scope">
-						<el-button type="text" size="small" @click="editDepartment(scope.$index,scope.row)">编辑</el-button>
-						<el-button type="text" size="small" @click="deleteDepartment(scope.$index,scope.row)">删除</el-button>
-						<el-button
-							v-if="scope.row.begin!==0"
-							type="text"
-							size="small"
-							@click="moveUp(scope.$index,scope.row)"
-						>上移</el-button>
-						<el-button
-							v-if="scope.row.last!==0"
-							type="text"
-							size="small"
-							@click="moveDown(scope.$index,scope.row)"
-						>下移</el-button>
-					</template>
-				</el-table-column>
-			</el-table>
+      <div class="deptTable">
+        <el-table
+          :data="tableData"
+          highlight-current-row
+          class="tablebodystyle"
+          v-loading="tableLoad"
+          ref="table"
+        >
+          <el-table-column
+            :min-width="columnsWidth.filter(x => x.columnname=='部门名称')[0].columnwidth"
+            label="部门名称"
+            align="center"
+            prop="orgName"
+            show-overflow-tooltip
+          />
+          <el-table-column
+            :min-width="columnsWidth.filter(x => x.columnname=='员工人数')[0].columnwidth"
+            label="员工人数"
+            align="center"
+            prop="userNum"
+            show-overflow-tooltip
+          />
+          <el-table-column :resizable="false"  align="center" label="操作" show-overflow-tooltip width="300">
+            <template slot-scope="scope">
+              <el-button type="text" size="small" @click="editDepartment(scope.$index,scope.row)">编辑</el-button>
+              <el-button type="text" size="small" @click="deleteDepartment(scope.$index,scope.row)">删除</el-button>
+              <el-button
+                v-if="scope.row.begin!==0"
+                type="text"
+                size="small"
+                @click="moveUp(scope.$index,scope.row)"
+              >上移</el-button>
+              <el-button
+                v-if="scope.row.last!==0"
+                type="text"
+                size="small"
+                @click="moveDown(scope.$index,scope.row)"
+              >下移</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
 		</div>
-		<el-dialog title="编辑部门名称" class="dialog-wrap" :visible.sync="showDepartmentDialog" width="30%" v-dialogDrag>
+		<el-dialog title="编辑部门名称" class="dialog-wrap" :visible.sync="showDepartmentDialog" width="30%" v-dialogDrag :close-on-click-modal="false">
 			<el-form
 				ref="form_update"
 				:model="form_update"
@@ -86,7 +87,7 @@
 				<el-button type="primary" @click="saveDept('form_update')">确 定</el-button>
 			</span>
 		</el-dialog>
-		<el-dialog title="新增部门名称" class="dialog-wrap" :visible.sync="showDepartmentDialog2" width="30%" v-dialogDrag>
+		<el-dialog title="新增部门名称" class="dialog-wrap" :visible.sync="showDepartmentDialog2" width="30%" v-dialogDrag :close-on-click-modal="false">
 			<el-form
 				ref="form_add"
 				:model="form_add"
@@ -108,10 +109,10 @@
 			title="选择目标部门"
 			class="dialog-wrap"
 			:visible.sync="showDialog"
-			:close-on-click-modal="true"
 			:append-to-body="true"
 			width="400px"
 			v-dialogDrag
+      :close-on-click-modal="false"
 		>
 			<el-tree
 				v-if="moveSelectDepartTree.length>0"
@@ -180,7 +181,7 @@
 					},
 					{
 						columnname: "员工人数",
-						columnwidth: 300
+						columnwidth: 120
 					}
 				],
 				tableWidthInformation: {
@@ -194,7 +195,7 @@
 			getDepartmentTree().then(data => {
 				this.moveSelectDepartTree = data;
 			});
-			this.findTableInformation();
+			// this.findTableInformation();
 		},
 
 		methods: {
@@ -243,8 +244,8 @@
 				this.form_update = row;
 			},
 			deleteDepartment(index, row) {
-				this.expandedlist.push(row.parent.id);
-				this.$confirm("确认删除？", "提示", {
+        this.expandedlist.push(row.parent.id);
+				this.$confirm( `确认删除[${row.orgName}]吗？`, "提示", {
 					confirmButtonText: "确定",
 					cancelButtonText: "取消",
 					type: "warning"
@@ -274,7 +275,9 @@
 						.catch(() => {
 							this.initTree();
 						});
-				});
+				}).catch(() => {
+
+        });
 			},
 			saveDept() {
 				this.showDepartmentDialog = false;
@@ -446,7 +449,7 @@
 						iterator.columnname == "部门名称" &&
 						iterator.columnwidth == undefined
 					) {
-						iterator.columnwidth = iterator.minwidth;					
+						iterator.columnwidth = iterator.minwidth;
 					}
 					if (
 						iterator.columnname == "员工人数" &&
@@ -488,18 +491,34 @@
 			width: 240px;
 		}
 		.treeStyle {
-			display: inline-block;
-			width: 20%;
-			height: 100%;
-			overflow-y: auto;
+      display: inline-flex;
+      flex-direction: column;
+			width: 30%;
+      height: 100%;
+      padding-right: 10px;
+      border-right: 1px solid #e8e8e8;
+
+      .deptTree{
+        margin-top: 10px;
+        flex: 1;
+        overflow-y: auto;
+      }
 		}
 		.tree-wrap {
 			margin-top: 5px;
 		}
 		.tablestyle {
-			display: inline-block;
-			width: 80%;
-			height: calc(100%);
+      display: inline-flex;
+      flex-direction: column;
+			width: 75%;
+      height: calc(100%);
+      margin-left: 20px;
+
+      .deptTable{
+        margin-top: 10px;
+        flex: 1;
+        overflow-y: auto;
+      }
 		}
 		.tablebodystyle {
 			height: calc(100% - 30px);
@@ -511,9 +530,7 @@
 			width: calc(100%);
 			overflow-x: hidden;
 		}
-		.header {
-			text-align: right;
-		}
+
 		.tree-wrap {
 			flex: 0.1;
 			.el-tree-node__content {
@@ -556,5 +573,3 @@
 		}
 	}
 </style>
-
-

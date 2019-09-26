@@ -187,15 +187,11 @@
                   >重置</el-button
                 >
               </el-form-item>
-              <el-form-item>
-                <el-button v-has="'批量确认信函'" type="primary" @click="qrHandle"
-                  >批量确认信函</el-button
-                >
+              <el-form-item v-has="'批量确认信函'">
+                <el-button type="primary" @click="qrHandle">批量确认信函</el-button>
               </el-form-item>
-              <el-form-item>
-                <el-button v-has="'撤销信函'" type="primary" @click="cxHandle"
-                  >撤销信函</el-button
-                >
+              <el-form-item v-has="'撤销信函'">
+                <el-button type="primary" @click="cxHandle">撤销信函</el-button>
               </el-form-item>
              <!-- <el-form-item>
                 <el-dropdown
@@ -248,10 +244,6 @@
      <el-table highlight-current-row v-loading="tableLoad"
       ref="multipleTable"
       :data="tableData"
-      border
-      stripe
-      style="width: 100%"
-      :cell-style="{ whiteSpace: 'nowrap' }"
       @selection-change="handleSelectionChange"
       @row-dblclick="showCase"
       @sort-change="sortHandle"
@@ -263,7 +255,7 @@
         prop="seqno"
         sortable="custom"
         :sort-orders="['ascending', 'descending']"
-        min-width="160"
+        min-width="180"
         header-align="center"
         align="center"
       >
@@ -288,7 +280,7 @@
         align="center"
       >
       </el-table-column>
-       <el-table-column label="操作" width="180"   align="center">
+       <el-table-column label="操作" width="140" align="center">
          <template slot-scope="scope">
            <el-button type="text" size="small" @click="showXh(scope.row)">选择模板</el-button>
            <el-button type="text" size="small" @click="exportCurrent(scope.row)">导出</el-button>
@@ -296,7 +288,6 @@
        </el-table-column>
     </el-table>
     <el-pagination
-      class="pagination-wrap"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="paginationData.currentPage"
@@ -431,7 +422,7 @@ export default {
       fullscreenLoading: false,
       tableLoad: false,
       paginationData: {
-        pageSize: 100,
+        pageSize: pageSizes[0],
         total: 0,
         currentPage: 1
       },
@@ -486,66 +477,77 @@ export default {
       // synergyResult  协催结果
       tableCol_data: [
         {
+          'min-width': 120,
           prop: "name",
           label: "姓名"
         },
         {
+          'min-width': 100,
           prop: "collectStatusMsg",
           label: "催收状态"
         },
         {
+          'min-width': 120,
           prop: "caseAmtMsg",
-          width:"120",
           label: "委案金额"
         },
         {
+          'min-width': 120,
           prop: "repayAmtMsg",
-          width:"120",
           label: "还款金额"
         },
         {
+          'min-width': 140,
           prop: "address",
           label: "地址"
         },
         {
+          'min-width': 100,
           prop: "times",
           label: "信函次数"
         },
         {
+          'min-width': 180,
           prop: "address",
           label: "申请内容"
         },
         {
+          'min-width': 140,
           prop: "applyContext",
-          label: "地址"
+          label: "地址类型"
         },
         {
+          'min-width': 100,
           prop: "module",
-          label: "模板"
+          label: "信函模板"
         },
         {
+          'min-width': 140,
           prop: "relationer",
           label: "联系人"
         },
         {
+          'min-width': 140,
           prop: "applyDate",
-          width:"130",
           label: "申请时间"
         },
         {
+          'min-width': 120,
           prop: "applyer",
           label: "申请人"
         },
         {
+          'min-width': 140,
           prop: "synergyDate",
-          width:"130",
           label: "协催时间"
         },
         {
+          'min-width': 120,
           prop: "synergyer",
           label: "协催人"
         },
         {
+          'min-width': 180,
           prop: "synergyResult",
           label: "协催结果"
         }

@@ -104,7 +104,6 @@
               </el-option>
             </el-select>
           </el-form-item>
-        </el-row>
         <el-form-item prop="val5">
           <el-date-picker
             v-model="form1.val5"
@@ -144,15 +143,20 @@
           >
           </el-date-picker>
         </el-form-item>
-        <el-form-item>
-          <el-button type="primary" icon="el-icon-search" @click="getMainData">查询</el-button>
-          <el-button
-            type="primary"
-            icon="el-icon-refresh"
-            @click="resetForm('form1');getMainData()"
-            >重置</el-button
-          >
-        </el-form-item>
+        </el-row>
+        <el-row>
+          <el-form-item>
+            <el-button type="primary" icon="el-icon-search" @click="getMainData">查询</el-button>
+          </el-form-item>
+          <el-form-item>
+            <el-button
+              type="primary"
+              icon="el-icon-refresh"
+              @click="resetForm('form1');getMainData()"
+              >重置</el-button
+            >
+          </el-form-item>
+        </el-row>
       </el-form>
     </section>
     <!-- <section class="table-wrap"> -->
@@ -173,25 +177,24 @@
        <el-table highlight-current-row v-loading="tableLoad"
         ref="multipleTable"
         :data="tableData"
-        border
-        stripe
         tooltip-effect="dark"
         @selection-change="handleSelectionChange"
+        @row-dblclick="showCase"
       >
           <el-table-column
+            min-width="180"
             label="个案序列号"
             prop="seqno"
             show-overflow-tooltip
             header-align="center"
             align="center"
-            min-width="18"
           >
             <template slot-scope="scope">
               <el-button
                 style="text-decoration: underline"
                 type="text"
                 size="small"
-                @click="showCase2(scope.row)"
+                @click="showCase(scope.row)"
                 >{{ scope.row.seqno }}</el-button
               >
             </template>
@@ -202,12 +205,10 @@
           v-bind="item"
           :key="index"
           show-overflow-tooltip
-          min-width="12"
         ></el-table-column>
       </el-table>
     <!-- </section> -->
     <el-pagination
-      class="pagination-wrap"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="paginationData.currentPage"
@@ -228,27 +229,27 @@ export default {
   data() {
     const tablecol_common = [
       {
+        'min-width':120,
         label: "批次号",
         prop: "batchNo"
       },
       {
+        'min-width':120,
         label: "姓名",
         prop: "targetName"
       },
-      // {
-      //   label: "个案序列号",
-      //   width:140,
-      //   prop: "seqno"
-      // },
       {
+        'min-width':140,
         label: "委托方",
         prop: "client"
       },
       {
+        'min-width':120,
         label: "账龄",
         prop: "accountAge"
       },
       {
+        'min-width':120,
         label: "委案金额",
         prop: "moneyMsg"
       }
@@ -256,7 +257,7 @@ export default {
     return {
       pageSizes,
       paginationData: {
-        pageSize: 100,
+        pageSize: pageSizes[0],
         total: 0,
         currentPage: 1
       },
@@ -294,55 +295,62 @@ export default {
       tablecol_raw1: [
         ...tablecol_common,
         {
+          'min-width':80,
           label: "提成系数",
           prop: "mValMsg"
         },
         {
+          'min-width':100,
           label: "待银行查账金额",
-          // width:160,
           prop: "bankAmtMsg"
         },
         {
+          'min-width':140,
           label: "待银行查账日期",
-          // width:160,
           prop: "bankTime"
         },
         {
+          'min-width':120,
           label: "待银行查账金额提成",
-          // width:160,
           prop: "repaidAmtMMsg"
         },
         {
+          'min-width':120,
           label: "还款金额",
           prop: "repayAmtMsg"
         },
         {
+          'min-width':120,
           label: "还款日期",
-          // width:160,
           prop: "repayTime"
         },
         {
+          'min-width':120,
           label: "还款提成",
           prop: "repaidBankAmtMMsg"
         },
         {
+          'min-width':120,
           label: "还款人",
           prop: "payName"
         },
         {
+          'min-width':120,
           label: "还款方式",
-          prop: "payMethod"
+          prop: "repayType.name"
         },
         {
+          'min-width':120,
           label: "确认人",
           prop: "confimName"
         },
         {
+          'min-width':180,
           label: "确认时间",
-          // width:180,
           prop: "confimTime"
         },
         {
+          'min-width':100,
           label: "备注",
           prop: "remark"
         }
@@ -521,24 +529,9 @@ export default {
     },
     init() {
       this.getMainData();
-      /*this.getEnumHandle("委托方", "val2_data");
-      this.getEnumHandle("逾期账龄", "val4_data");*/
-
     },
-    showCase2(row) {
-      console.log(row)
-        let id= row.id
-        let name = row.targetName
-        let seqNo = row.seqno
-      this.$router.push({
-        path: "case-detail",
-        query: {
-          id,
-          name,
-          mycase:true,
-          seqNo
-        }
-      });
+    showCase(row) {
+      window.open(`#/zhx/case-detail?id=${row.caseId}&type=1`)
     }
   },
   mounted(){
@@ -564,16 +557,5 @@ export default {
     margin-bottom: 40px;
     overflow-y: auto;
   }
-  // .pagination-wrap{
-  //   position: fixed;
-  //   bottom: 0;
-  //   z-index: 100;
-  //   min-height: 40px;
-  //   background-color: white;
-  //   width: 100%;
-  // }
-  // .el-table__body-wrapper {
-  //   height: calc(100% - 74px);
-  // }
 }
 </style>

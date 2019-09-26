@@ -5,18 +5,6 @@
        v-loading.fullscreen.lock="fullscreenLoading"
        element-loading-spinner="el-icon-loading"
        element-loading-background="rgba(0, 0, 0, 0.7)">
-    <!-- <el-upload
-            class="upload-demo"
-            :action="action+'/reduce/import'"
-            :headers="header"
-            align="right"
-            style="margin-bottom: 15px;margin-right:20px;"
-            :show-file-list="false"
-            :on-success="uploadSuccess"
-            :on-progress="onProgress"
-          >
-            <el-button type="primary"  >导入减免申请结果</el-button>
-          </el-upload> -->
     <el-form ref="form" :model="formInline" :inline="true" class="query-wrap queryStyle">
       <el-form-item v-if="queryConf.pch || queryConfFlag">
         <el-input v-model="formInline.batchNo" clearable placeholder="请输入批次号"></el-input>
@@ -122,10 +110,20 @@
       <el-row>
         <el-form-item>
           <el-button icon="el-icon-search" type="primary" @click="search">查询</el-button>
+        </el-form-item>
+        <el-form-item>
           <el-button icon="el-icon-refresh" type="primary" @click="clear">重置</el-button>
-          <el-button type="primary" @click="showQueryConf" style="margin-left:10px;">查询条件配置</el-button>
-          <el-button type="primary" 　v-show="istrue1" v-has="'新增减免'" @click=addData>新增减免</el-button>
-          <el-button type="primary" 　v-show="istrue2" v-has="'批量撤销'" @click=open8>批量撤销</el-button>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="showQueryConf">查询条件配置</el-button>
+        </el-form-item>
+        <el-form-item v-show="istrue1" v-has="'新增减免'">
+          <el-button type="primary" @click="addData">新增减免</el-button>
+        </el-form-item>
+        <el-form-item v-show="istrue2" v-has="'批量撤销'">
+          <el-button type="primary" @click="open8">批量撤销</el-button>
+        </el-form-item>
+        <el-form-item>
            <el-upload
             :headers="header"
             class="upload-demo"
@@ -134,14 +132,23 @@
             :on-success="uploadSuccess"
             :on-progress="onProgress"
           >
-            <el-button type="primary"  >导入减免申请结果</el-button>
+            <el-button type="primary">导入减免申请结果</el-button>
           </el-upload>
-          <el-button type="primary" 　v-show="istrue3" v-has="'导出减免结果'" @click="changeRadio">导出待审核减免申请</el-button>
-          <el-button type="primary" 　v-show="istrue3" v-has="'批量审核'" @click=open9>批量审核</el-button>
-          <el-button type="primary" 　v-show="istrue6" v-has="'批量确认'" @click=open10>批量确认</el-button>
-          <el-button type="primary" 　v-show="istrue4" v-has="'批量下载附件'" @click=moredownDataList>批量下载附件</el-button>
-          <el-button type="primary" 　v-show="istrue5" v-has="'导出减免结果'" @click="changeRadio">导出减免结果</el-button>
-
+        </el-form-item>
+        <el-form-item v-show="istrue3" v-has="'导出减免结果'">
+          <el-button type="primary" @click="changeRadio">导出待审核减免申请</el-button>
+        </el-form-item>
+        <el-form-item v-show="istrue3" v-has="'批量审核'">
+          <el-button type="primary" @click="open9">批量审核</el-button>
+        </el-form-item>
+        <el-form-item v-show="istrue6" v-has="'批量确认'">
+          <el-button type="primary" @click="open10">批量确认</el-button>
+        </el-form-item>
+        <el-form-item v-show="istrue4" v-has="'批量下载附件'">
+          <el-button type="primary" @click="moredownDataList">批量下载附件</el-button>
+        </el-form-item>
+        <el-form-item v-show="istrue5" v-has="'导出减免结果'">
+          <el-button type="primary" @click="changeRadio">导出减免结果</el-button>
         </el-form-item>
       </el-row>
     </el-form>
@@ -150,9 +157,6 @@
         <el-table highlight-current-row
                   ref="multipleTable"
                   :data="tableData3"
-                  style="width: 100%;"
-                  border
-                  stripe
                   tooltip-effect="dark"
                   @sort-change="handleSort"
                   @selection-change="handleSelectionChange"
@@ -170,7 +174,8 @@
             label="个案序列号"
             sortable="custom"
             :sort-orders="['ascending','descending']"
-            min-width="160"
+            min-width="180"
+            show-overflow-tooltip
           >
             <template slot-scope="scope">
               <el-button type="text" size="small" @click="showCase(scope.row)">
@@ -183,7 +188,7 @@
             align="center"
             label="案人姓名"
             sortable="custom"
-            width="120"
+            min-width="120"
             :sort-orders="['ascending','descending']"
             show-overflow-tooltip>
           </el-table-column>
@@ -191,7 +196,7 @@
             prop="collectStatusMsg"
             align="center"
             label="催收状态"
-            width="120"
+            min-width="100"
             sortable="custom"
             :sort-orders="['ascending','descending']"
             show-overflow-tooltip>
@@ -199,7 +204,7 @@
           <el-table-column
             prop="moneyMsg"
             align="center"
-            width="120"
+            min-width="120"
             label="委案金额"
             sortable="custom"
             :sort-orders="['ascending','descending']"
@@ -209,7 +214,7 @@
             prop="completeTime"
             align="center"
             label="完成时间"
-            width="130"
+            min-width="140"
             sortable="custom"
             :sort-orders="['ascending','descending']"
             show-overflow-tooltip>
@@ -217,7 +222,7 @@
           <el-table-column
             prop="completeUser"
             label="完成人"
-            width="120"
+            min-width="120"
             align="center"
             sortable="custom"
             :sort-orders="['ascending','descending']"
@@ -226,7 +231,7 @@
           <el-table-column
             prop="approveRepayAmtMsg"
             align="center"
-            min-width="130"
+            min-width="140"
             label="批复还款金额"
             sortable="custom"
             :sort-orders="['ascending','descending']"
@@ -237,14 +242,14 @@
             align="center"
             label="有效日期"
             sortable="custom"
-            width="120"
+            min-width="120"
             :sort-orders="['ascending','descending']"
             show-overflow-tooltip>
           </el-table-column>
           <el-table-column
             prop="reduceStatusMsg"
             align="center"
-            width="120"
+            min-width="120"
             label="减免状态"
             sortable="custom"
             :sort-orders="['ascending','descending']"
@@ -254,7 +259,7 @@
             prop="reduceResult"
             label="减免结果"
             align="center"
-            width="120"
+            min-width="120"
             sortable="custom"
             :sort-orders="['ascending','descending']"
             show-overflow-tooltip>
@@ -262,7 +267,7 @@
           <el-table-column
             prop="enRepayAmtMsg"
             align="center"
-            width="130"
+            min-width="140"
             label="实际还款金额"
             sortable="custom"
             :sort-orders="['ascending','descending']"
@@ -271,18 +276,16 @@
           <el-table-column
             prop="reduceUpdateTime"
             align="center"
-            width="150"
+            min-width="160"
             label="减免状态更新时间"
             sortable="custom"
             :sort-orders="['ascending','descending']"
             show-overflow-tooltip>
           </el-table-column>
-
           <el-table-column
             label="操作"
             width="250"
-            align="center"
-            show-overflow-tooltip>
+            align="center">
             <template slot-scope="scope">
               <el-button type="text" size="small" @click="open7(scope.row)" v-has="'批量审核'">审核</el-button>
               <el-button type="text" size="small" @click="showMessage(scope.row)">查看</el-button>
@@ -293,7 +296,6 @@
           </el-table-column>
         </el-table>
         <el-pagination
-          class="pagination-wrap"
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="currentPage4"
@@ -307,9 +309,6 @@
         <el-table highlight-current-row
                   ref="multipleTable"
                   :data="tableData3"
-                  style="width: 100%;"
-                  border
-                  stripe
                   tooltip-effect="dark"
                   @sort-change="handleSort"
                   @selection-change="handleSelectionChange"
@@ -326,8 +325,9 @@
             align="center"
             label="个案序列号"
             sortable="custom"
-            min-width="160"
+            min-width="180"
             :sort-orders="['ascending','descending']"
+            show-overflow-tooltip
           >
             <template slot-scope="scope">
               <el-button type="text" size="small" @click="showCase(scope.row)">
@@ -339,7 +339,7 @@
             prop="targetName"
             align="center"
             label="案人姓名"
-            width="120"
+            min-width="120"
             sortable="custom"
             :sort-orders="['ascending','descending']"
             show-overflow-tooltip>
@@ -348,7 +348,7 @@
             prop="collectStatusMsg"
             align="center"
             label="催收状态"
-            width="120"
+            min-width="100"
             sortable="custom"
             :sort-orders="['ascending','descending']"
             show-overflow-tooltip>
@@ -357,7 +357,7 @@
             prop="moneyMsg"
             align="center"
             label="委案金额"
-            width="120"
+            min-width="120"
             sortable="custom"
             :sort-orders="['ascending','descending']"
             show-overflow-tooltip>
@@ -365,7 +365,7 @@
           <el-table-column
             prop="completeTime"
             align="center"
-            width="130"
+            min-width="140"
             label="完成时间"
             sortable="custom"
             :sort-orders="['ascending','descending']"
@@ -375,7 +375,7 @@
             prop="completeUser"
             label="完成人"
             align="center"
-            width="120"
+            min-width="120"
             sortable="custom"
             :sort-orders="['ascending','descending']"
             show-overflow-tooltip>
@@ -384,7 +384,7 @@
             prop="approveRepayAmtMsg"
             align="center"
             sortable="custom"
-            width="120"
+            min-width="140"
             :sort-orders="['ascending','descending']"
             label="批复还款金额"
             show-overflow-tooltip>
@@ -394,7 +394,7 @@
             align="center"
             label="有效日期"
             sortable="custom"
-            width="120"
+            min-width="120"
             :sort-orders="['ascending','descending']"
             show-overflow-tooltip>
           </el-table-column>
@@ -402,7 +402,7 @@
             prop="reduceStatusMsg"
             align="center"
             label="减免状态"
-            width="120"
+            min-width="120"
             sortable="custom"
             :sort-orders="['ascending','descending']"
             show-overflow-tooltip>
@@ -410,7 +410,7 @@
           <el-table-column
             prop="reduceResult"
             label="减免结果"
-            width="120"
+            min-width="120"
             align="center"
             sortable="custom"
             :sort-orders="['ascending','descending']"
@@ -419,7 +419,7 @@
           <el-table-column
             prop="enRepayAmtMsg"
             align="center"
-            width="130"
+            min-width="140"
             sortable="custom"
             :sort-orders="['ascending','descending']"
             label="实际还款金额"
@@ -429,7 +429,7 @@
             prop="reduceUpdateTime"
             align="center"
             label="减免状态更新时间"
-            width="150"
+            min-width="160"
             sortable="custom"
             :sort-orders="['ascending','descending']"
             show-overflow-tooltip>
@@ -437,8 +437,7 @@
           <el-table-column
             label="操作"
             align="center"
-            width="170"
-            show-overflow-tooltip>
+            width="170">
             <template slot-scope="scope">
               <el-button type="text" size="small" @click="editMessage(scope.row)" v-has="'修改'">修改</el-button>
               <el-button type="text" size="small" @click="deteleList(scope.row.id)" v-has="'删除'">删除</el-button>
@@ -460,9 +459,6 @@
         <el-table highlight-current-row
                   ref="multipleTable"
                   :data="tableData3"
-                  style="width: 100%"
-                  border
-                  stripe
                   tooltip-effect="dark"
                   @sort-change="handleSort"
                   @selection-change="handleSelectionChange"
@@ -478,9 +474,10 @@
             prop="seqno"
             align="center"
             label="个案序列号"
-            min-width="160"
+            min-width="180"
             sortable="custom"
             :sort-orders="['ascending','descending']"
+            show-overflow-tooltip
           >
             <template slot-scope="scope">
               <el-button type="text" size="small" @click="showCase(scope.row)">
@@ -492,7 +489,7 @@
             prop="targetName"
             align="center"
             label="案人姓名"
-            width="120"
+            min-width="120"
             sortable="custom"
             :sort-orders="['ascending','descending']"
             show-overflow-tooltip>
@@ -501,7 +498,7 @@
             prop="collectStatusMsg"
             align="center"
             label="催收状态"
-            width="120"
+            min-width="100"
             sortable="custom"
             :sort-orders="['ascending','descending']"
             show-overflow-tooltip>
@@ -510,7 +507,7 @@
             prop="moneyMsg"
             align="center"
             label="委案金额"
-            width="120"
+            min-width="120"
             sortable="custom"
             :sort-orders="['ascending','descending']"
             show-overflow-tooltip>
@@ -519,7 +516,7 @@
             prop="completeTime"
             align="center"
             label="完成时间"
-            width="120"
+            min-width="120"
             sortable="custom"
             :sort-orders="['ascending','descending']"
             show-overflow-tooltip>
@@ -527,7 +524,7 @@
           <el-table-column
             prop="completeUser"
             label="完成人"
-            width="120"
+            min-width="120"
             sortable="custom"
             :sort-orders="['ascending','descending']"
             align="center"
@@ -537,7 +534,7 @@
             prop="approveRepayAmtMsg"
             align="center"
             label="批复还款金额"
-            width="130"
+            min-width="140"
             sortable="custom"
             :sort-orders="['ascending','descending']"
             show-overflow-tooltip>
@@ -546,7 +543,7 @@
             prop="reduceValidTime"
             align="center"
             label="有效日期"
-            width="120"
+            min-width="120"
             sortable="custom"
             :sort-orders="['ascending','descending']"
             show-overflow-tooltip>
@@ -555,7 +552,7 @@
             prop="reduceStatusMsg"
             align="center"
             label="减免状态"
-            width="120"
+            min-width="120"
             sortable="custom"
             :sort-orders="['ascending','descending']"
             show-overflow-tooltip>
@@ -564,7 +561,7 @@
             prop="reduceResult"
             label="减免结果"
             align="center"
-            width="120"
+            min-width="120"
             sortable="custom"
             :sort-orders="['ascending','descending']"
             show-overflow-tooltip>
@@ -573,7 +570,7 @@
             prop="enRepayAmtMsg"
             align="center"
             label="实际还款金额"
-            width="130"
+            min-width="140"
             sortable="custom"
             :sort-orders="['ascending','descending']"
             show-overflow-tooltip>
@@ -584,7 +581,7 @@
             sortable="custom"
             :sort-orders="['ascending','descending']"
             label="减免状态更新时间"
-            width="150"
+            min-width="160"
             show-overflow-tooltip>
           </el-table-column>
           <el-table-column
@@ -594,7 +591,7 @@
             show-overflow-tooltip>
             <template slot-scope="scope">
               <el-button type="text" size="small" @click="showMessage(scope.row)">查看</el-button>
-              <el-button type="text" size="small" @click="downloadList(scope.row)"  >下载附件</el-button>
+              <el-button type="text" size="small" @click="downloadList(scope.row)">下载附件</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -843,7 +840,7 @@
         accountAgeList: [],
         dataList: [],
         currentPage4: 1,
-        pages: 100,
+        pages: pageSizes[0],
         total: 0,
         formInline: {
           time1: [],
@@ -886,7 +883,6 @@
             this.fullscreenLoading = false
             this.tableLoad = false
           })
-
         } else {
           this.ImportdialogVisible = true
           this.ImportMsg = res.msg
@@ -903,7 +899,6 @@
           this.loadingSeqNo = false
         })
       },
-
       saveExportReliefConf() {
         let queryObj = {module: "data-relief-record-exportRelief", menu: this.exportConf}
         saveSelectFilter(queryObj).then(data => {
@@ -935,7 +930,6 @@
         });
       },
       queryConfList() {
-
         let queryObj = {module: "data-case-manage", menu: this.queryConf}
         selectByModule(queryObj).then(data => {
           if (data) {
@@ -967,19 +961,9 @@
         this.exportType = 1;
         this.queryExportReliefonfList();
         //this.dialogVisible1 = false;
-
-
       },
       showCase(row) {
         window.open(`#/zhx/case-detail?id=${row.caseId}`)
-        // this.$router.push({
-        //   path: 'case-detail',
-        //   query: {
-        //     id,
-        //     name,
-        //     seqNo
-        //   }
-        // })
       },
       open7(row) {
         this.$confirm('确定审核通过减免申请转入待提交吗？', '提示', {
@@ -1033,7 +1017,6 @@
         this.sort = order == null ? "desc" : order.replace("ending", "")
         this.orderBy = prop == null ? "id" : prop
         this.search()
-
       },
       downloadList(row) {
         this.reduceFileList = []
@@ -1041,7 +1024,6 @@
         listReduceFile({"reduceId":row.id}).then((data) => {
           this.reduceFileList = data
         })
-
       },
       downLoadFile(row){
         let downloadData = {"fileId":row.fileId,"fileName":row.fileName}
@@ -1050,10 +1032,8 @@
             type: 'success',
             message: '下载成功!'
           });
-
         })
       },
-
       selectAllExport(){
         for(var p in this.exportConf){//遍历json对象的每个key/value对,p为key
           this.exportConf[p] = true;
@@ -1088,7 +1068,6 @@
           this.fullscreenLoading = false
           this.loading = false
         })
-
       },
       pageDataExport() {
         this.fullscreenLoading = true
@@ -1265,7 +1244,6 @@
         }
       },
       moredownDataList() {
-
         if (this.deleteList.length >= 1) {
           this.fullscreenLoading = true
           this.loading = true
@@ -1274,7 +1252,6 @@
           })
           this.fullscreenLoading = false
           this.loading = false
-
         } else {
           this.$message({
             type: 'error',
@@ -1373,7 +1350,6 @@
       }
     },
     created() {
-
       /*accountAgeList().then((response) => {
         this.accountAgeList = response
       })*/
@@ -1410,19 +1386,7 @@
 
 <style lang="scss">
   #relief-management {
-    // .el-tabs__content {
-    //   margin-bottom: 40px;
-    //   overflow-y: auto;
-    // }
-
-    // .pagination-wrap {
-    //   position: fixed;
-    //   bottom: 0;
-    //   z-index: 100;
-    //   min-height: 40px;
-    //   background-color: white;
-    //   width: 100%;
-    // }
+    min-width: 2000px !important;
 
     .pad {
       .el-checkbox {
@@ -1433,15 +1397,6 @@
 
     .el-dialog__header {
       background-color: #f8f8f8;
-    }
-    .el-table__body tr.current-row > td{
-      border-top: 1px solid #0080ff  !important;
-      border-bottom: 1px solid #0080ff  !important;
-    }
-    .upload-demo{
-      display: inline-block;
-      margin-left: 10px;
-      margin-right: 10px;
     }
     .selectAllBtn{
       margin-bottom: 10px;

@@ -40,6 +40,9 @@ const mutations = {
   SET_CACHEFLUSHFLAG(state,flag){
     state.cacheflushFlag = flag;
   },
+  [types.SET_BREADCRUMB](state, breadcrumb){
+    state.breadcrumb = breadcrumb
+  },
 }
 
 export default mutations

@@ -10,18 +10,13 @@
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" @click="search">查询</el-button>
         <el-button type="primary" icon="el-icon-refresh" @click="clench">重置</el-button>
-      </el-form-item>
-      <el-form-item class="operation-item">
         <el-button type="primary" v-has="'添加诉讼案件'" @click="addDataform">添加诉讼案件</el-button>
       </el-form-item>
     </el-form>
    <el-table highlight-current-row v-loading="tableLoad"
     :data="DataList"
-    border
-    stripe
     tooltip-effect="dark"
-    @sort-change="handleSort"
-    style="width: 100%">
+    @sort-change="handleSort">
     <el-table-column
       prop="legalStatusMsg"
       align="center"
@@ -65,7 +60,7 @@
     <el-table-column
       prop="legalDate"
       align="center"
-      width="120"
+      min-width="120"
       label="委案日期"
       show-overflow-tooltip
         sortable="custom"
@@ -105,7 +100,7 @@
     <el-table-column
       prop="costMsg"
       align="center"
-      width="120"
+      min-width="120"
       label="费用"
       show-overflow-tooltip
         sortable="custom"
@@ -165,7 +160,7 @@
     <el-table-column
       align="center"
       label="操作"
-      width="200"
+      min-width="200"
      >
      <template slot-scope="scope">
        <el-button type="text" size="small"  @click="checkDatasure(scope.row.id)" v-has="'审核'">审核</el-button>
@@ -825,7 +820,7 @@ export default {
   		  currentPage4: 1,
         pages:1,
         total:0,
-        pageSize:100,
+        pageSize:pageSizes[0],
         pageNum:1,
          DataList: [],
          PersonDataList:[],
@@ -1107,15 +1102,11 @@ this.pageNum=val;
 
 <style lang="scss">
 #litigation-apply{
+  min-width: 2040px !important;
+
 	.addTitle{
 		padding: 10px;
 		background-color: #e3e2e2;
 	}
-
-  .el-table__body tr.current-row > td{
-    border-top: 1px solid #0080ff  !important;
-    border-bottom: 1px solid #0080ff  !important;
-  }
-
 }
 </style>

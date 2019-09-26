@@ -144,7 +144,6 @@
                 clearable
               ></el-input>
             </el-form-item>
-
             <el-form-item prop="val8">
               <el-input
                 v-model="form.val8"
@@ -175,66 +174,64 @@
               </el-select>
             </el-form-item>
             <el-row>
-            <el-form-item>
-              <el-button type="primary" icon="el-icon-search" @click="searchHandle"
-                >查询</el-button
-              >
-            </el-form-item>
-            <el-form-item>
-              <el-button
-                type="primary"
-                icon="el-icon-refresh"
-                @click="resetForm('form')"
-                >重置</el-button
-              >
-            </el-form-item>
-            <!--<el-form-item>
-              <el-dropdown
-                @command="exportXh"
-                v-has="'导出信函'"
-                v-dropdown-patch
-              >
-                <el-button type="primary">导出信函<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i></el-button>
-                <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item
-                    v-for="(item, index) in moduleList"
-                    :key="index"
-                    :command="item.id"
-                    >{{ item.title }}
-                  </el-dropdown-item>
-                </el-dropdown-menu>
-              </el-dropdown>
-            </el-form-item>-->
-            <el-form-item>
-              <el-button type="primary" @click="changeRadio">导出查询结果</el-button>
-            </el-form-item>
-            <el-form-item>
-              <el-upload
-                class="upload-demo"
-                :action="action"
-                :headers="headers"
-                :show-file-list="false"
-                accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                :multiple="false"
-                :on-error="
-                  () => {
-                    this.fullscreenLoading = false;
-                    this.loading2 = false;
-                  }
-                "
-                :on-progress="
-                  () => {
-                    this.fullscreenLoading = true;
-                    this.loading2 = true;
-                  }
-                "
-                :on-success="fileStatu"
-              >
-                <el-button class="daoru" type="primary" v-has="'导入信函记录'"
-                  >导入信函记录</el-button
+              <el-form-item>
+                <el-button type="primary" icon="el-icon-search" @click="searchHandle"
+                  >查询</el-button
                 >
-              </el-upload>
-            </el-form-item>
+              </el-form-item>
+              <el-form-item>
+                <el-button
+                  type="primary"
+                  icon="el-icon-refresh"
+                  @click="resetForm('form')"
+                  >重置</el-button
+                >
+              </el-form-item>
+              <!--<el-form-item>
+                <el-dropdown
+                  @command="exportXh"
+                  v-has="'导出信函'"
+                  v-dropdown-patch
+                >
+                  <el-button type="primary">导出信函<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i></el-button>
+                  <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item
+                      v-for="(item, index) in moduleList"
+                      :key="index"
+                      :command="item.id"
+                      >{{ item.title }}
+                    </el-dropdown-item>
+                  </el-dropdown-menu>
+                </el-dropdown>
+              </el-form-item>-->
+              <el-form-item>
+                <el-button type="primary" @click="changeRadio">导出查询结果</el-button>
+              </el-form-item>
+              <el-form-item v-has="'导入信函记录'">
+                <el-upload
+                  class="upload-demo"
+                  :action="action"
+                  :headers="headers"
+                  :show-file-list="false"
+                  accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                  :multiple="false"
+                  :on-error="
+                    () => {
+                      this.fullscreenLoading = false;
+                      this.loading2 = false;
+                    }
+                  "
+                  :on-progress="
+                    () => {
+                      this.fullscreenLoading = true;
+                      this.loading2 = true;
+                    }
+                  "
+                  :on-success="fileStatu"
+                >
+                  <el-button class="daoru" type="primary">导入信函记录</el-button>
+                </el-upload>
+              </el-form-item>
             </el-row>
           </el-form>
         </div>
@@ -271,10 +268,6 @@
      <el-table highlight-current-row v-loading="tableLoad"
       ref="multipleTable"
       :data="tableData"
-      border
-      stripe
-      style="width: 100%"
-      :cell-style="{ whiteSpace: 'nowrap' }"
       @selection-change="handleSelectionChange"
       @sort-change="sortHandle"
       @row-dblclick="showCase"
@@ -285,9 +278,10 @@
         prop="seqno"
         sortable="custom"
         :sort-orders="['ascending', 'descending']"
-        min-width="120"
+        min-width="180"
         header-align="center"
         align="center"
+        show-overflow-tooltip
       >
         <template slot-scope="scope">
           <el-button
@@ -304,13 +298,13 @@
         :key="index"
         v-bind="item"
         sortable="custom"
-        min-width="100"
         :sort-orders="['ascending', 'descending']"
         header-align="center"
         align="center"
+        show-overflow-tooltip
       >
       </el-table-column>
-       <el-table-column label="操作" width="180"   align="center">
+       <el-table-column label="操作" width="180" align="center">
          <template slot-scope="scope">
            <el-button type="text" size="small" @click="showXh(scope.row)">选择模板</el-button>
            <el-button type="text" size="small" @click="exportCurrent(scope.row)">导出</el-button>
@@ -454,7 +448,7 @@ export default {
       ImportdialogVisible: false,
       ImportMsg: "",
       paginationData: {
-        pageSize: 10,
+        pageSize: pageSizes[0],
         total: 0,
         currentPage: 1
       },
@@ -510,63 +504,72 @@ export default {
       // synergyResult  协催结果
       tableCol_data: [
         {
+          'min-width': 120,
           prop: "name",
           label: "姓名"
         },
         {
+          'min-width': 100,
           prop: "collectStatusMsg",
           label: "催收状态"
         },
         {
+          'min-width': 120,
           prop: "caseAmtMsg",
           label: "委案金额"
         },
         {
+          'min-width': 120,
           prop: "repayAmtMsg",
           label: "还款金额"
         },
         {
+          'min-width': 120,
           prop: "address",
           label: "地址"
         },
         {
+          'min-width': 100,
           prop: "times",
           label: "信函次数"
         },
         {
-          prop: "address",
+          'min-width': 180,
+          prop: "applyContext",
           label: "申请内容"
         },
         {
-          prop: "applyContext",
-          label: "地址"
-        },
-        {
+          'min-width': 120,
           prop: "module",
           label: "模板"
         },
         {
+          'min-width': 120,
           prop: "relationer",
           label: "联系人"
         },
         {
+          'min-width': 140,
           prop: "applyDate",
           label: "申请时间"
         },
         {
+          'min-width': 120,
           prop: "applyer",
           label: "申请人"
         },
         {
+          'min-width': 140,
           prop: "synergyDate",
-          width:160,
           label: "协催时间"
         },
         {
+          'min-width': 120,
           prop: "synergyer",
           label: "协催人"
         },
         {
+          'min-width': 180,
           prop: "synergyResult",
           label: "协催结果"
         }
@@ -728,7 +731,6 @@ export default {
       dcxh({ module: row.moduleId, id:row.id ,caseId:row.caseId});
     },
     showXh(row){
-      debugger;
       this.moduleForm.id = row.id;
       this.moduleForm.caseId = row.caseId;
       this.moduleVisible = true;
@@ -759,17 +761,6 @@ export default {
     },
     showCase(row) {
       window.open(`#/zhx/case-detail?id=${row.caseId}`)
-      // let id = row.caseId;
-      // let name = row.name;
-      // let seqNo = row.seqno;
-      // this.$router.push({
-      //   path: "case-detail",
-      //   query: {
-      //     id,
-      //     name,
-      //     seqNo
-      //   }
-      // });
     },
     sortHandle({ prop, order }) {
       this.sort.sort = order.replace("ending", "");
@@ -912,10 +903,8 @@ export default {
 
 <style lang="scss">
 #xhjl {
-  .el-table__body tr.current-row > td{
-    border-top: 1px solid #0080ff  !important;
-    border-bottom: 1px solid #0080ff  !important;
-  }
+  min-width: 2320px !important;
+
   .pad {
     .el-checkbox {
       width: 24%;

@@ -23,11 +23,11 @@
         >新增</el-button>
         <!-- <el-button type="primary" :disabled="disableSave" @click="onclickSave" v-has="'保存'">保存</el-button> -->
         <el-button
-          type="primary" 
-          @click="onClickSave" 
+          type="primary"
+          @click="onClickSave"
           class="btn"
           v-if="currentEnum.name && currentEnum.name === '地区'"
-         >新增</el-button>     
+         >新增</el-button>
       </div>
       <el-tree
         v-if="currentEnum.name && currentEnum.name === '地区'"
@@ -48,7 +48,7 @@
               v-show="data.isEdit"
               clearable
               v-model="data.name"
-              :placeholder="'请输入'"             
+              :placeholder="'请输入'"
             ></el-input>
             <span v-show="!data.isEdit">{{data.name}}</span>
             <!-- <el-switch
@@ -75,12 +75,10 @@
     <!-- v-if="currentEnum.name && currentEnum.name === '地区'" -->
 		<el-table
       v-if="currentEnum.name==='地区'"
-			stripe
-			border
 			:data="tableData"
 			highlight-current-row
 			class="tablebodystyle"
-			v-loading="tableLoad"			
+			v-loading="tableLoad"
 			>
        <el-table-column
           v-if="currentEnum.name==='地区'"
@@ -168,10 +166,7 @@
 		</el-dialog>
 
        <el-table v-if="currentEnum.name && currentEnum.name !== '地区'"
-        border
-        stripe
         :data="configData"
-        style="width: 100%;"
         v-loading="tableLoad"
         highlight-current-row
       >
@@ -222,7 +217,7 @@
         <el-table-column prop="status" label="启用" align="center"  v-if="currentEnum.name!=='地区'">
           <template slot-scope="scope">
             <el-switch
-              v-if="scope.row.editType==='edit' || scope.row.editType==='add'"          
+              v-if="scope.row.editType==='edit' || scope.row.editType==='add'"
               v-model="scope.row.tempStatus"
               :active-value="1"
               :inactive-value="0"
@@ -321,7 +316,7 @@ export default {
     //   }
     // }
   },
-  watch: {   
+  watch: {
     currentEnum (newVal, OldVal) {
       if (newVal.id) {
         this.configData = []
@@ -505,7 +500,7 @@ export default {
        this.tableLoad = true
       findAreaTableData(this.treeObjid).then(res => {
          this.tableLoad = false
-         this.tableData=res   
+         this.tableData=res
       });
     },
     onClickSave() {
@@ -541,18 +536,18 @@ export default {
                     root.name='所有地区'
                     val.push(root)
 										this.configData = val;
-										this.tableData = results[1];								
+										this.tableData = results[1];
 										this.tableLoad = false;
-									
+
 								});
-							});				
+							});
 					}
 				});
       },
       saveArea() {
 				this.showAreaDialog = false;
-        this.tableLoad = true;        
-				saveAreaMethod(this.form_update).then(() => {				
+        this.tableLoad = true;
+				saveAreaMethod(this.form_update).then(() => {
           this.$message.success("地区更新成功");
             forkJoin([
 									getConfigList(this.newid,0),
@@ -565,12 +560,12 @@ export default {
                     root.name='所有地区'
                     val.push(root)
 										this.configData = val;
-										this.tableData = results[1];								
-										this.tableLoad = false;									
+										this.tableData = results[1];
+										this.tableLoad = false;
 								});
 				    });
         },
-      deleteArea(index, row) {			
+      deleteArea(index, row) {
 				this.$confirm("确认删除？", "提示", {
 					confirmButtonText: "确定",
 					cancelButtonText: "取消",
@@ -591,18 +586,18 @@ export default {
                     root.id=403
                     root.name='所有地区'
                     val.push(root)
-										this.configData = val;	
-									this.tableData = results[1];						
+										this.configData = val;
+									this.tableData = results[1];
 									this.tableLoad = false;
 							});
-						}).catch(() => {            
-            getConfigList(this.newid,0).then(response => {   
+						}).catch(() => {
+            getConfigList(this.newid,0).then(response => {
               let val=[]
               let root={}
               root.children=response
               root.id=403
               root.name='所有地区'
-              val.push(root)        
+              val.push(root)
               this.configData = val
               this.tableLoad = false
           })
@@ -720,12 +715,8 @@ export default {
     }
   }
 
-  .el-table .el-input /deep/ input{
+  .el-table .el-input input{
     text-align: center;
-  }
-  .el-table__body tr.current-row > td{
-    border-top: 1px solid #0080ff  !important;
-    border-bottom: 1px solid #0080ff  !important;
   }
   .fixedWidth {
 		width: 240px;

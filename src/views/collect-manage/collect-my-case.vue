@@ -590,8 +590,6 @@
          <el-table highlight-current-row v-loading="tableLoad"
           ref="multipleTable"
           :data="tableData"
-          border
-          stripe
           :row-class-name="rowColor"
           :cell-style="{ whiteSpace: 'nowrap' }"
           @row-dblclick="showCase"
@@ -600,8 +598,8 @@
         >
           <el-table-column type="selection" width="55"></el-table-column>
           <el-table-column
+            min-width="180"
             label="个案序列号"
-            min-width="18"
             prop="seqno"
             show-overflow-tooltip
             sortable="custom"
@@ -633,7 +631,6 @@
           ></el-table-column>
         </el-table>
         <el-pagination
-          class="pagination-wrap"
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="paginationData.currentPage"
@@ -837,72 +834,72 @@ export default {
       val25_data: [], //报备状态
       tableCol_data: [
         {
-          'min-width':14,
+          'min-width':100,
           prop: "collectStatusMsg",
           label: "催收状态"
         },
         {
-          'min-width':18,
+          'min-width':120,
           prop: "caseDate",
           label: "委案日期"
         },
         {
-          'min-width':12,
+          'min-width':120,
           prop: "name",
           label: "姓名"
         },
         {
-          'min-width':18,
+          'min-width':180,
           prop: "cardNo",
           label: "卡号"
         },
         {
-          'min-width':18,
+          'min-width':180,
           prop: "identNo",
           label: "身份证"
         },
         {
-          'min-width': 14,
+          'min-width': 120,
           prop: "moneyMsg",
           label: "委案金额"
         },
         {
-          'min-width': 14,
+          'min-width': 120,
           prop: "principle",
           label: "本金"
         },
         {
-          'min-width': 14,
+          'min-width': 120,
           prop: "moneyStartMsg",
           label: "最新欠款"
         },
         {
-          'min-width': 14,
+          'min-width': 120,
           prop: "enRepayAmtMsg",
           label: "已还款金额"
         },
         {
-          'min-width': 18,
+          'min-width': 140,
           prop: "repayAmtMsg",
           label: "承诺还款金额"
         },
         {
-          'min-width': 12,
+          'min-width': 120,
           prop: "overdueDays",
           label: "逾期天数"
         },
         {
-          'min-width': 12,
+          'min-width': 120,
           prop: "leaveDays",
           label: "闲置天数"
         },
         {
-          'min-width': 18,
+          'min-width': 180,
           prop: "expectTime",
           label: "预计退案日期"
         },
         {
-          'min-width': 12,
+          'min-width': 120,
           prop: "collectInfo",
           label: "催收小结"
         }
@@ -1390,6 +1387,8 @@ body #collect-my-case .tab2{
   }
 
 #collect-my-case {
+  min-width: 2200px !important;
+
   .el-table th.gutter{
     display: table-cell!important;
   }

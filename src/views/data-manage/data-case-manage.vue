@@ -325,14 +325,14 @@
           <el-button type="primary" icon="el-icon-search" @click="search2">查询</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" icon="el-icon-refresh" @click="resetFormInline" style="margin-left:10px;">重置
+          <el-button type="primary" icon="el-icon-refresh" @click="resetFormInline">重置
           </el-button>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="showQueryConf" style="margin-left:10px;">查询条件配置</el-button>
+          <el-button type="primary" @click="showQueryConf">查询条件配置</el-button>
         </el-form-item>
         <el-form-item>
-          <el-dropdown v-dropdown-patch @command="fenancheck" style="margin-left:10px;" v-has="'分案'" placement="bottom">
+          <el-dropdown v-dropdown-patch @command="fenancheck" v-has="'分案'" placement="bottom">
             <el-button type="primary">
               分案<i class="el-icon-arrow-down el-icon--right"></i>
             </el-button>
@@ -343,7 +343,7 @@
             </el-dropdown-menu>
           </el-dropdown>
         </el-form-item>
-        <el-form-item style="margin-left: 10px;">
+        <el-form-item>
           <el-dropdown v-dropdown-patch @command="guanlianjian" v-has="'案件'">
             <el-button type="primary">
               案件<i class="el-icon-arrow-down el-icon--right"></i>
@@ -359,7 +359,7 @@
             </el-dropdown-menu>
           </el-dropdown>
         </el-form-item>
-        <el-form-item style="margin-left: 10px;">
+        <el-form-item>
           <el-dropdown v-dropdown-patch @command="handleCommand" v-has="'修改'" placement="bottom">
             <el-button type="primary">
               修改<i class="el-icon-arrow-down el-icon--right"></i>
@@ -372,13 +372,13 @@
             </el-dropdown-menu>
           </el-dropdown>
         </el-form-item>
-        <el-form-item style="margin-left: 10px;">
+        <el-form-item>
           <el-button type="primary" @click="addshow" v-has="'添加评语'">添加评语</el-button>
         </el-form-item>
-        <el-form-item style="margin-left: 10px;">
+        <el-form-item>
           <el-button type="primary" @click="xiecui" v-has="'申请协催'">申请协催</el-button>
         </el-form-item>
-        <el-form-item style="margin-left: 10px;">
+        <el-form-item>
           <el-dropdown v-dropdown-patch @command="handleExport" v-has="'导出'" placement="bottom">
             <el-button type="primary">
               导出<i class="el-icon-arrow-down el-icon--right"></i>
@@ -392,7 +392,7 @@
             </el-dropdown-menu>
           </el-dropdown>
         </el-form-item>
-        <el-form-item style="margin-left: 10px;">
+        <el-form-item>
           <el-dropdown v-dropdown-patch @command="biaose" v-has="'案件标色'">
             <el-button type="primary">
               案件标色<i class="el-icon-arrow-down el-icon--right"></i>
@@ -409,27 +409,23 @@
         </el-form-item>
       </el-row>
     </el-form>
-    <!--<el-row :gutter="24">
-      <el-col :span="18" style="width: 100%;">-->
-        <div class="grid-content bg-purple" style="line-height: 40px;">
-          <span>查询结果统计：</span>
-          <span class="textColor">列表案量：{{totalCaseNum}}件，</span>
-          <span class="textColor"> 列表金额：{{totalAmt}}，</span>
-          <span class="textColor"> 列表还款案量：{{repayNum}}件，</span>
-          <span class="textColor"> 列表还款金额：{{repayTotalAmt}}，</span>
-          <span class="textColor"> 列表待银行查账金额：{{totalCp}}，</span>
-          <span class="textColor"> 列表承诺还款金额：{{totalPtp}}</span>
-        </div>
-  <!--    </el-col>
-    </el-row>-->
-
+      <div class="grid-content bg-purple queryResultSummary">
+        <i class="el-icon-info"></i>
+        <span>查询结果统计：</span>
+        <span v-if="tableLoad" class="queryStyle">查询中，请稍候...</span>
+        <span v-else>
+          <span class="queryStyle">列表案量：</span><span class="textColor">{{totalCaseNum}}</span><span class="queryStyle">件，</span>
+          <span class="queryStyle">列表金额：</span><span class="textColor">{{totalAmt}}</span><span class="queryStyle">，</span>
+          <span class="queryStyle">列表还款案量：</span><span class="textColor">{{repayNum}}</span><span class="queryStyle">件，</span>
+          <span class="queryStyle">列表还款金额：</span><span class="textColor">{{repayTotalAmt}}</span><span class="queryStyle">，</span>
+          <span class="queryStyle">列表待银行查账金额：</span><span class="textColor">{{totalCp}}</span><span class="queryStyle">，</span>
+          <span class="queryStyle">列表承诺还款金额：</span><span class="textColor">{{totalPtp}}</span>
+        </span>
+      </div>
     <div>
       <el-table highlight-current-row v-loading="tableLoad"
                 ref="multipleTable"
                 :data="tableData3"
-                border
-                stripe
-                show-overflow-tooltip
                 :row-class-name="rowColor"
                 @selection-change="handleSelectionChange"
                 @row-dblclick="showCase"
@@ -441,7 +437,7 @@
           align="center">
         </el-table-column>
         <el-table-column
-          min-width="18"
+          min-width="180"
           prop="seqNo"
           sortable="custom"
           :sort-orders="['ascending','descending']"
@@ -461,7 +457,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          min-width="16"
+          min-width="140"
           prop="odv"
           align="center"
           sortable="custom"
@@ -470,7 +466,7 @@
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
-          min-width="14"
+          min-width="100"
           prop="collectStatusMsg"
           align="center"
           sortable="custom"
@@ -479,7 +475,7 @@
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
-          min-width="18"
+          min-width="120"
           prop="caseDate"
           align="center"
           label="委案日期"
@@ -488,7 +484,7 @@
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
-          min-width="12"
+          min-width="120"
           prop="name"
           sortable="custom"
           :sort-orders="['ascending','descending']"
@@ -497,7 +493,7 @@
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
-          min-width="18"
+          min-width="180"
           prop="cardNo"
           sortable="custom"
           :sort-orders="['ascending','descending']"
@@ -506,7 +502,7 @@
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
-          min-width="18"
+          min-width="180"
           prop="identNo"
           sortable="custom"
           :sort-orders="['ascending','descending']"
@@ -515,7 +511,7 @@
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
-          min-width="14"
+          min-width="120"
           prop="moneyMsg"
           sortable="custom"
           :sort-orders="['ascending','descending']"
@@ -524,7 +520,7 @@
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
-          min-width="14"
+          min-width="120"
           prop="principle"
           sortable="custom"
           :sort-orders="['ascending','descending']"
@@ -533,7 +529,7 @@
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
-          min-width="14"
+          min-width="120"
           prop="latestOverdueMoney"
           sortable="custom"
           :sort-orders="['ascending','descending']"
@@ -542,7 +538,7 @@
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
-          min-width="14"
+          min-width="120"
           prop="enRepayAmtMsg"
           align="center"
           sortable="custom"
@@ -551,7 +547,7 @@
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
-          min-width="18"
+          min-width="140"
           prop="proRepayAmtMsg"
           label="承诺还款金额"
           sortable="custom"
@@ -560,7 +556,7 @@
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
-          min-width="12"
+          min-width="120"
           prop="overdueDays"
           sortable="custom"
           :sort-orders="['ascending','descending']"
@@ -569,7 +565,7 @@
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
-          min-width="12"
+          min-width="120"
           prop="leaveDays"
           sortable="custom"
           :sort-orders="['ascending','descending']"
@@ -578,7 +574,7 @@
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
-          min-width="18"
+          min-width="180"
           prop="expectTime"
           sortable="custom"
           :sort-orders="['ascending','descending']"
@@ -587,7 +583,7 @@
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
-          min-width="12"
+          min-width="120"
           prop="collectInfo"
           sortable="custom"
           align="center"
@@ -2213,10 +2209,8 @@
               message: '请选择数据!'
             });
           }
-
         }else if (command === "b") {
           this.detailVisible8 = true
-
         } else {
           authSend(this.formInline).then((response) => {
             this.totalCount = response.totalCount;
@@ -2232,9 +2226,7 @@
             this.detailVisible11 = true
             this.showSendVisible1 = true
             this.showSendVisible2 = false
-
           })
-
         }
       },
       totalDataExport() {
@@ -2507,8 +2499,6 @@
           this.mVal = ''
           this.search()
         })
-
-
       },
       sureAddShow6() {
         let datasList = []
@@ -2526,7 +2516,6 @@
           this.collectArea = ''
           this.search()
         })
-
       },
       sureAddShow5() {
         let datasList = []
@@ -2544,7 +2533,6 @@
           this.collectStatus = ''
           this.search()
         })
-
       },
       sureAddShow4() {
         let datasList = []
@@ -2595,7 +2583,6 @@
             return false;
           }
         });
-
       },
       xiecui() {
         if (this.deleteList.length >= 1) {
@@ -2655,7 +2642,6 @@
           Object.id = currentValue.id
           _self.deleteList.push(Object)
         })
-        console.log(_self.deleteList)
       },
       handleSort({column, prop, order}) {
         this.sort = order == null ? "desc" : order.replace("ending", "")
@@ -2800,7 +2786,7 @@
         });
       },
       selectMethod(param){
-        this._selectAllInit('queryConf');      
+        this._selectAllInit('queryConf');
         Object.keys(this.queryConf).map(x=>this.queryConf[x]=param)
       }
     },
@@ -2894,6 +2880,8 @@
 
 <style lang="scss">
   #data-case-manage {
+    min-width: 2400px !important;
+
     .el-loading-mask{
       z-index:3000 !important;
     }
@@ -2921,7 +2909,7 @@
 
     .el-form-item--mini .el-form-item__content, .el-form-item--mini .el-form-item__labe
     .el-form--inline .el-form-item {
-      margin-right: -10px;
+      // margin-right: -10px;
       line-height: 21px;
     }
 
@@ -2939,7 +2927,7 @@
 
     .textColor {
       display: inline-block;
-      color: #66b1ff;
+      color: #5175fa;
 
     }
     .color_3 {

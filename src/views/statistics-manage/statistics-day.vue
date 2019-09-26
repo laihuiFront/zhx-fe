@@ -41,26 +41,27 @@
           end-placeholder="催收日期结束">
         </el-date-picker>
       </el-form-item>
-      <el-form-item style="margin-left:10px;">
+      <el-form-item>
         <el-button type="primary" icon="el-icon-search" @click="query2">开始统计</el-button>
+      </el-form-item>
+      <el-form-item>
         <el-button type="primary" icon="el-icon-refresh" @click="clench">重置</el-button>
       </el-form-item>
-      <el-form-item class="operation-item">
+      <el-form-item>
         <el-button type="primary" @click="onSubmit">导出查询结果</el-button>
       </el-form-item>
     </el-form>
 
     <el-table highlight-current-row v-loading="tableLoad"
               :data="tableData3"
-              border
-              stripe
               show-summary
-              :summary-method="getSummaries"
-              style="width: 100%">
+              :summary-method="getSummaries">
       <el-table-column
         prop="odv"
         align="center"
         label="催收员"
+        min-width="100"
+        show-overflow-tooltip
       >
       </el-table-column>
       <el-table-column label="8:00以前" align="center">
@@ -68,6 +69,8 @@
           prop="countConPhoneNum"
           label="有效通电"
           align="center"
+          min-width="80"
+          show-overflow-tooltip
         >
           <template slot-scope="scope">
             {{scope.row.list[0].countConPhoneNum}}
@@ -77,6 +80,8 @@
           prop="countPhoneNum"
           label="总通电量"
           align="center"
+          min-width="80"
+          show-overflow-tooltip
         >
           <template slot-scope="scope">
             {{scope.row.list[0].countPhoneNum}}
@@ -86,6 +91,8 @@
           prop="countCasePhoneNum"
           label="个案量"
           align="center"
+          min-width="80"
+          show-overflow-tooltip
         >
           <template slot-scope="scope">
             {{scope.row.list[0].countCasePhoneNum}}
@@ -97,6 +104,8 @@
           prop="countConPhoneNum"
           label="有效通电"
           align="center"
+          min-width="80"
+          show-overflow-tooltip
         >
           <template slot-scope="scope">
             {{scope.row.list[1].countConPhoneNum}}
@@ -106,6 +115,8 @@
           prop="countPhoneNum"
           label="总通电量"
           align="center"
+          min-width="80"
+          show-overflow-tooltip
         >
           <template slot-scope="scope">
             {{scope.row.list[1].countPhoneNum}}
@@ -115,6 +126,8 @@
           prop="countCasePhoneNum"
           label="个案量"
           align="center"
+          min-width="80"
+          show-overflow-tooltip
         >
           <template slot-scope="scope">
             {{scope.row.list[1].countCasePhoneNum}}
@@ -126,6 +139,8 @@
           prop="countConPhoneNum"
           label="有效通电"
           align="center"
+          min-width="80"
+          show-overflow-tooltip
         >
           <template slot-scope="scope">
             {{scope.row.list[2].countConPhoneNum}}
@@ -135,6 +150,8 @@
           prop="countPhoneNum"
           label="总通电量"
           align="center"
+          min-width="80"
+          show-overflow-tooltip
         >
           <template slot-scope="scope">
             {{scope.row.list[2].countPhoneNum}}
@@ -144,6 +161,8 @@
           prop="countCasePhoneNum"
           label="个案量"
           align="center"
+          min-width="80"
+          show-overflow-tooltip
         >
           <template slot-scope="scope">
             {{scope.row.list[2].countCasePhoneNum}}
@@ -155,6 +174,8 @@
           prop="countConPhoneNum"
           label="有效通电"
           align="center"
+          min-width="80"
+          show-overflow-tooltip
         >
           <template slot-scope="scope">
             {{scope.row.list[3].countConPhoneNum}}
@@ -164,6 +185,8 @@
           prop="countPhoneNum"
           label="总通电量"
           align="center"
+          min-width="80"
+          show-overflow-tooltip
         >
           <template slot-scope="scope">
             {{scope.row.list[3].countPhoneNum}}
@@ -173,6 +196,8 @@
           prop="countCasePhoneNum"
           label="个案量"
           align="center"
+          min-width="80"
+          show-overflow-tooltip
         >
           <template slot-scope="scope">
             {{scope.row.list[3].countCasePhoneNum}}
@@ -184,24 +209,29 @@
           prop="sumConPhoneNum"
           label="有效通电"
           align="center"
+          min-width="80"
+          show-overflow-tooltip
         >
         </el-table-column>
         <el-table-column
           prop="sumPhoneNum"
           label="总通电量"
           align="center"
+          min-width="80"
+          show-overflow-tooltip
         >
         </el-table-column>
         <el-table-column
           prop="sumCasePhoneNum"
           label="个案量"
           align="center"
+          min-width="80"
+          show-overflow-tooltip
         >
         </el-table-column>
       </el-table-column>
     </el-table>
     <el-pagination
-      class="pagination-wrap"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page.sync="currentPage4"
@@ -263,7 +293,7 @@
         currentPage4: 1,
         pages: 1,
         pageNum:1,
-        pageSize:100,
+        pageSize:pageSizes[0],
         total: 0,
         formInline: {
           odvName: '',
@@ -300,7 +330,7 @@
         this.$set(this.formInline, 'odv', selectUserIds)
         this.selectUserVisible = false
       },
-      onClickSelectUser() {   
+      onClickSelectUser() {
         this.selectUserVisible = true
         this.$nextTick(() => {
           this.$refs.tree.setCheckedKeys(this.formInline.odv);
@@ -357,7 +387,6 @@
          this.query()
       },
       onSubmit() {
-
         if (this.formInline.time == null || this.formInline.time.length == 0) {
           this.$message({
             type: 'error',
@@ -449,24 +478,12 @@
       //    this.tableLoad = false
       //    this.total=response.totalNum
       //  })
-
-
     },
   }
 </script>
 
 <style lang="scss">
   #statistics-day {
-    .el-form--inline .el-form-item {
-      margin-right: 0px;
-    }
-
-    .el-table .el-table__body-wrapper {
-      overflow-x: hidden !important;
-    }
-    .el-table__body tr.current-row > td{
-      border-top: 1px solid #0080ff  !important;
-      border-bottom: 1px solid #0080ff  !important;
-    }
+    min-width: 1400px !important;
   }
 </style>

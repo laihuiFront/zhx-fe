@@ -159,8 +159,6 @@
     <el-table highlight-current-row
               v-loading="tableLoad"
               :data="tableData3"
-              border
-              stripe
               tooltip-effect="dark"
               @row-dblclick="showCase"
               @sort-change="handleSort"
@@ -170,12 +168,11 @@
         align="center"
         width="55">
       </el-table-column>
-
       <el-table-column
+        min-width="180"
         prop="seqno"
         sortable="custom"
         align="center"
-        min-width="160"
         :sort-orders="['ascending','descending']"
         label="个案序列号"
       >
@@ -186,11 +183,11 @@
             size="small"
             @click="showCase(scope.row)"
           >{{ scope.row.seqno }}
-          </el-button
-          >
+          </el-button>
         </template>
       </el-table-column>
       <el-table-column
+        min-width="120"
         prop="name"
         sortable="custom"
         align="center"
@@ -199,53 +196,53 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
+        min-width="120"
         prop="measure"
         sortable="custom"
-        min-width="120"
         align="center"
         :sort-orders="['ascending','descending']"
         label="催收措施"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
+        min-width="120"
         prop="collectTime"
         label="催收时间"
-        width="130"
         sortable="custom"
         :sort-orders="['ascending','descending']"
         align="center"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
+        min-width="120"
         prop="targetName"
         sortable="custom"
         :sort-orders="['ascending','descending']"
-        min-width="120"
         align="center"
         label="对象姓名"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
+        min-width="120"
         prop="relation"
         label="与案人关系"
-        min-width="120"
         align="center"
         sortable="custom"
         :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
+        min-width="120"
         prop="telType"
         label="电话类型"
         align="center"
-        min-width="120"
         sortable="custom"
         :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
+        min-width="120"
         prop="mobile"
-        width="120"
         align="center"
         sortable="custom"
         :sort-orders="['ascending','descending']"
@@ -253,44 +250,44 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
+        min-width="120"
         prop="collectInfo"
         label="催收记录"
-        min-width="120"
         align="center"
         sortable="custom"
         :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
+        min-width="160"
         prop="result"
         label="催收结果"
-        min-width="160"
         align="center"
         sortable="custom"
         :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
+        min-width="120"
         prop="methodMsg"
         label="还款方式"
-        min-width="120"
         align="center"
         sortable="custom"
         :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
+        min-width="120"
         prop="repayTime"
         label="承诺还款日期"
-        width="120"
         align="center"
         sortable="custom"
         :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
+        min-width="130"
         label="承诺还款金额"
-        width="130"
         align="center"
         prop="repayAmtMsg"
         sortable="custom"
@@ -301,8 +298,8 @@
         </template>
       </el-table-column>
       <el-table-column
+        min-width="120"
         label="减免金额"
-        width="120"
         sortable="custom"
         :sort-orders="['ascending','descending']"
         align="center"
@@ -313,27 +310,27 @@
         </template>
       </el-table-column>
       <el-table-column
+        min-width="120"
         prop="reduceStatusMsg"
         label="减免状态"
         sortable="custom"
         align="center"
-        min-width="130"
         :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
+        min-width="140"
         prop="odv"
         label="催收员"
         sortable="custom"
         align="center"
-        min-width="130"
         :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
+        min-width="100"
         prop="collectStatusMsg"
         label="催收状态"
-        min-width="130"
         align="center"
         sortable="custom"
         :sort-orders="['ascending','descending']"
@@ -350,7 +347,6 @@
       </el-table-column>
     </el-table>
     <el-pagination
-      class="pagination-wrap"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage4"
@@ -1036,9 +1032,10 @@
 
 <style lang="scss">
   #data-memorize-manage {
+    min-width: 2450px !important;
+
     .el-dialog__header {
       background-color: #f8f8f8;
-
     }
 
     /*  .el-tabs__content{

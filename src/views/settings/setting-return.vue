@@ -1,24 +1,19 @@
 <template>
   <div id="setting-remind" class="page-wraper-sub">
 
-     <el-table highlight-current-row class="table-wrap"
-      height="1"
+     <el-table highlight-current-row
       :data="tableData"
-      border stripe
-      v-loading="tableLoad"
-      style="width: 100%">
-
+      v-loading="tableLoad">
       <el-table-column
         prop="seeFlagMsg"
         align="center"
         label="是否可见">
       </el-table-column>
-       <el-table-column
-         prop="timeAreaMg"
-         align="center"
-         label="间隔天数">
-       </el-table-column>
-
+      <el-table-column
+        prop="timeAreaMg"
+        align="center"
+        label="间隔天数">
+      </el-table-column>
       <el-table-column
         align="center"
         label="操作"
@@ -30,9 +25,9 @@
     </el-table>
 
     <el-dialog
-      title="编辑"
+      title="退案案件设置"
       :visible.sync="dialogVisible"
-      width="600px"
+      width="350px"
       custom-class="dia-top"
       :close-on-click-modal="false"
       v-dialogDrag
@@ -41,12 +36,12 @@
       <el-form
         :model="saveForm"
         ref="ruleForm"
-        label-width="100px"
+        label-width="80px"
         class="demo-ruleForm"
       >
         <el-form-item label="是否可见" prop="roleId">
           <el-select v-model="saveForm.seeFlag" placeholder="请选择是否可见" @change="showDays()"
-                     clearable>
+                     clearable style="display:block">
             <el-option
               v-for="item in roleList"
               :key="item.id"
@@ -56,17 +51,14 @@
           </el-select>
         </el-form-item>
         <el-form-item label="间隔天数" prop="receiveUserName" v-if="daysVisble">
-          <el-input  v-model="saveForm.timeArea" type="number" oninput="if(value<0)value=''" style="width:140px;" placeholder="请输入间隔天数"></el-input>
+          <el-input  v-model="saveForm.timeArea" type="number" oninput="if(value<0)value=''" placeholder="请输入间隔天数"></el-input>
         </el-form-item>
-
       </el-form>
-      <span slot="footer" class="dialog-footer" style="display: flex;justify-content: center">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false;saveContent()">发送</el-button>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="dialogVisible = false;saveContent()">保存</el-button>
       </span>
     </el-dialog>
-
-
   </div>
 </template>
 
@@ -125,8 +117,6 @@ export default {
       }
        this.dialogVisible = true;
     },
-
-
     init(){
       this.getMainData();
     },
@@ -136,10 +126,6 @@ export default {
 
 <style lang="scss">
 #setting-remind{
-  .el-table__body-wrapper{
-    overflow-y: auto;
-    overflow-x:hidden;
-  }
   .r-list{
     min-width: 220px;
     box-sizing: border-box;
@@ -173,10 +159,5 @@ export default {
     align-items: flex-start;
 
   }
-  .el-table__body tr.current-row > td{
-    border-top: 1px solid #0080ff  !important;
-    border-bottom: 1px solid #0080ff  !important;
-  }
 }
 </style>
-

@@ -7,22 +7,7 @@
     element-loading-spinner="el-icon-loading"
     element-loading-background="rgba(0, 0, 0, 0.7)"
   >
-    <el-upload
-      class="upload-demo"
-      :action="action"
-      :headers="headers"
-      :show-file-list="false"
-      :on-success="fileStatu"
-      :on-error="()=>{this.fullscreenLoading = false;}"
-      :on-progress="()=>{this.fullscreenLoading = true;}"
-      accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-      :multiple="false"
-    >
-      <el-button class="daoru" type="primary" v-has="'导入信函记录'"
-        >导入信函记录</el-button
-      >
-    </el-upload>
-      <el-tabs v-model="activeName" class="tabs-wrap">
+    <el-tabs v-model="activeName" class="tabs-wrap">
         <el-tab-pane label="信函申请" name="tab1">
           <el-dialog
             :title="detailTitle"
@@ -222,18 +207,25 @@
                         >重置</el-button
                       >
                     </el-form-item>
-                    <el-form-item>
-                      <el-button type="primary" v-has="'同意协催'" @click="showXc"
-                        >同意协催</el-button
+                    <el-form-item v-has="'导入信函记录'">
+                      <el-upload
+                        :action="action"
+                        :headers="headers"
+                        :show-file-list="false"
+                        :on-success="fileStatu"
+                        :on-error="()=>{this.fullscreenLoading = false;}"
+                        :on-progress="()=>{this.fullscreenLoading = true;}"
+                        accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                        :multiple="false"
                       >
+                        <el-button type="primary">导入信函记录</el-button>
+                      </el-upload>
                     </el-form-item>
-                    <el-form-item>
-                      <el-button
-                        type="primary"
-                        v-has="'撤销信函'"
-                        @click="cxHandle"
-                        >撤销信函</el-button
-                      >
+                    <el-form-item v-has="'同意协催'">
+                      <el-button type="primary" @click="showXc">同意协催</el-button>
+                    </el-form-item>
+                    <el-form-item v-has="'撤销信函'">
+                      <el-button type="primary" @click="cxHandle">撤销信函</el-button>
                     </el-form-item>
                   </el-row>
                 </el-form>
@@ -243,10 +235,6 @@
            <el-table highlight-current-row v-loading="tableLoad"
             ref="multipleTable"
             :data="tableData"
-            border
-            stripe
-            style="width: 100%"
-            :cell-style="{ whiteSpace: 'nowrap' }"
             @selection-change="handleSelectionChange"
             @row-dblclick="showCase"
             @sort-change="sortHandle"
@@ -255,12 +243,12 @@
             <el-table-column
               label="个案序列号"
               prop="seqno"
-              :key='Math.random()'
               sortable="custom"
               :sort-orders="['ascending', 'descending']"
               min-width="160"
               header-align="center"
               align="center"
+              show-overflow-tooltip
             >
               <template slot-scope="scope">
                 <el-button
@@ -277,15 +265,14 @@
               :key="index"
               v-bind="item"
               sortable="custom"
-              min-width="140"
               :sort-orders="['ascending', 'descending']"
               header-align="center"
               align="center"
+              show-overflow-tooltip
             >
             </el-table-column>
           </el-table>
           <el-pagination
-            class="pagination-wrap"
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="paginationData.currentPage"
@@ -352,7 +339,7 @@ export default {
       ImportdialogVisible: false,
       ImportMsg: "",
       paginationData: {
-        pageSize: 100,
+        pageSize: pageSizes[0],
         total: 0,
         currentPage: 1
       },
@@ -407,62 +394,72 @@ export default {
       // synergyResult  协催结果
       tableCol_data: [
         {
+          'min-width': 120,
           prop: "name",
           label: "姓名"
         },
         {
+          'min-width': 100,
           prop: "collectStatusMsg",
           label: "催收状态"
         },
         {
+          'min-width': 120,
           prop: "caseAmtMsg",
-          width:"120",
           label: "委案金额"
         },
         {
+          'min-width': 120,
           prop: "repayAmtMsg",
-          width:"120",
           label: "还款金额"
         },
         {
+          'min-width': 180,
           prop: "address",
           label: "地址"
         },
         {
+          'min-width': 100,
           prop: "times",
           label: "信函次数"
         },
         {
+          'min-width': 180,
           prop: "applyContext",
           label: "申请内容"
         },
         {
+          'min-width': 120,
           prop: "module",
           label: "模板"
         },
         {
+          'min-width': 120,
           prop: "relationer",
           label: "联系人"
         },
         {
+          'min-width': 140,
           prop: "applyDate",
-          width:"130",
           label: "申请时间"
         },
         {
+          'min-width': 120,
           prop: "applyer",
           label: "申请人"
         },
         {
+          'min-width': 140,
           prop: "synergyDate",
-          width:"130",
           label: "协催时间"
         },
         {
+          'min-width': 120,
           prop: "synergyer",
           label: "协催人"
         },
         {
+          'min-width': 180,
           prop: "synergyResult",
           label: "协催结果"
         }
@@ -527,14 +524,6 @@ export default {
       };
     }
   },
-  watch: {
-    form: {
-      handler(newObj) {
-        console.log(Object.values(newObj));
-      },
-      deep: true
-    }
-  },
   created() {
     this.init();
   },
@@ -571,17 +560,6 @@ export default {
     },
     showCase(row) {
       window.open(`#/zhx/case-detail?id=${row.caseId}`)
-      // let id = row.caseId;
-      // let name = row.name;
-      // let seqNo = row.seqno;
-      // this.$router.push({
-      //   path: "case-detail",
-      //   query: {
-      //     id,
-      //     name,
-      //     seqNo
-      //   }
-      // });
     },
     sortHandle({ prop, order }) {
       this.sort.sort = order.replace("ending", "");
@@ -734,51 +712,6 @@ export default {
 
 <style lang="scss">
 #dclxh {
-  height: calc(100% - 21px);
-  position: relative;
-  #upload-demo{
-    position: absolute;
-    right: 0px;
-  }
-  .daoru {
-    position: absolute;
-    right: 33px;
-    top: 5px;
-    z-index: 22;
-  }
-  // .pagination-wrap {
-  //   position: fixed;
-  //   bottom: 0;
-  //   z-index: 100;
-  //   min-height: 40px;
-  //   background-color: white;
-  //   width: 100%;
-  // }
-
-   tr.current-row > td{
-    position: relative;
-    &::before{
-      height: 1px;
-      background: #0080ff;
-      left: 0;
-      top: 1px;
-      content: '';
-      position: absolute;
-      width: 100%;
-      z-index: 100;
-      overflow: hidden;
-    }
-    &:after{
-      height: 1px;
-      background: #0080ff;
-      left: 0;
-      bottom: 1px;
-      content: '';
-      position: absolute;
-      width: 100%;
-      z-index: 100;
-      overflow: hidden;
-    }
-  }
+  min-width: 2320px !important;
 }
 </style>

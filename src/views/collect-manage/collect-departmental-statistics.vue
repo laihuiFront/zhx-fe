@@ -200,30 +200,27 @@
        <el-table highlight-current-row v-loading="tableLoad"
         ref="multipleTable"
         :data="tableData"
-        border
-        stripe
         tooltip-effect="dark"
-        style="width: 100%;"
-        @selection-change="handleSelectionChange"
-      >
-       <el-table-column
-            label="个案序列号"
-            prop="seqno"
-            show-overflow-tooltip
-            header-align="center"
-            align="center"
-            min-width="18"
+        @row-dblclick="showCase"
+        >
+          <el-table-column
+              label="个案序列号"
+              prop="seqno"
+              show-overflow-tooltip
+              header-align="center"
+              align="center"
+              min-width="180"
           >
             <template slot-scope="scope">
               <el-button
                 style="text-decoration: underline"
                 type="text"
                 size="small"
-                @click="showCase3(scope.row)"
+                @click="showCase(scope.row)"
                 >{{ scope.row.seqno }}</el-button
               >
             </template>
-          </el-table-column>
+        </el-table-column>
 
         <el-table-column
           v-for="(item, index) in tablecol_data"
@@ -231,7 +228,6 @@
           align="center"
           :key="index"
           show-overflow-tooltip
-          min-width="12"
         ></el-table-column>
       </el-table>
 
@@ -312,27 +308,27 @@ export default {
   data() {
     const tablecol_common = [
       {
+        'min-width': 120,
         label: "批次号",
         prop: "batchNo"
       },
       {
+        'min-width': 120,
         label: "姓名",
         prop: "targetName"
       },
-      // {
-      //   label: "个案序列号",
-      //   width:"160",
-      //   prop: "seqno"
-      // },
       {
+        'min-width': 100,
         label: "委托方",
         prop: "client"
       },
       {
+        'min-width': 100,
         label: "账龄",
         prop: "accountAge"
       },
       {
+        'min-width': 120,
         label: "委案金额",
         prop: "money"
       }
@@ -340,7 +336,7 @@ export default {
     return {
       pageSizes,
       paginationData: {
-        pageSize: 100,
+        pageSize: pageSizes[0],
         total: 0,
         currentPage: 1
       },
@@ -389,57 +385,62 @@ export default {
       tablecol_raw1: [
         ...tablecol_common,
         {
+          'min-width': 120,
           label: "提成系数",
           prop: "mVal"
         },
         {
+          'min-width': 120,
           label: "待银行查账金额",
-          // width:"140",
           prop: "bankAmt"
         },
         {
+          'min-width': 120,
           label: "待银行查账日期",
-          // width:"160",
           prop: "bankTime"
         },
         {
+          'min-width': 140,
           label: "待银行查账提成金额",
-          // width:"140",
           prop: "repaidAmtM"
         },
         {
+          'min-width': 120,
           label: "还款金额",
-          // width:"140",
           prop: "repayAmt"
         },
         {
+          'min-width': 120,
           label: "还款日期",
-          // width:"160",
           prop: "picih"
         },
         {
+          'min-width': 140,
           label: "还款提成值",
-          // width:"140",
           prop: "repaidBankAmtM"
         },
         {
+          'min-width': 120,
           label: "还款人",
           prop: "payName"
         },
         {
+          'min-width': 120,
           label: "还款方式",
           prop: "payMethod"
         },
         {
+          'min-width': 120,
           label: "确认人",
           prop: "confimName"
         },
         {
+          'min-width': 180,
           label: "确认时间",
-          // width:"180",
           prop: "confimTime"
         },
         {
+          'min-width': 100,
           label: "备注",
           prop: "remark"
         }
@@ -447,30 +448,37 @@ export default {
       tablecol_raw2: [
         ...tablecol_common,
         {
+          'min-width': 120,
           label: "提成系数",
           prop: "mVal"
         },
         {
+          'min-width': 120,
           label: "待银行查账金额",
           prop: "bankAmt"
         },
         {
+          'min-width': 120,
           label: "待银行查账日期",
           prop: "bankTime"
         },
         {
+          'min-width': 140,
           label: "待银行查账提成金额",
           prop: "repaidAmtM"
         },
         {
+          'min-width': 120,
           label: "还款人",
           prop: "payName"
         },
         {
+          'min-width': 120,
           label: "还款方式",
           prop: "payMethod"
         },
         {
+          'min-width': 100,
           label: "备注",
           prop: "remark"
         }
@@ -478,18 +486,22 @@ export default {
       tablecol_raw3: [
         ...tablecol_common,
         {
+          'min-width': 120,
           label: "提成系数",
           prop: "mVal"
         },
         {
+          'min-width': 120,
           label: "承诺还款金额",
           prop: "repayAmt"
         },
         {
+          'min-width': 120,
           label: "承诺还款日期",
           prop: "repayTime"
         },
         {
+          'min-width': 100,
           label: "备注",
           prop: "remark"
         }
@@ -619,7 +631,6 @@ export default {
       this.deptName = ""
       this.getMainData();
     },
-    handleSelectionChange() {},
     transform(data, obj = [["name", "label"], ["id", "value"]]) {
       return data.reduce((acc, item) => {
         for (let [key, tarKey] of obj) {
@@ -683,19 +694,8 @@ export default {
       })
     },
 
-     showCase3(row) {
-        let id= row.id
-        let name = row.targetName
-        let seqNo = row.seqno
-      this.$router.push({
-        path: "case-detail",
-        query: {
-          id,
-          name,
-          mycase:true,
-          seqNo
-        }
-      });
+    showCase(row) {
+      window.open(`#/zhx/case-detail?id=${row.caseId}`)
     }
   },
   mounted(){

@@ -6,22 +6,20 @@
        element-loading-spinner="el-icon-loading"
        element-loading-background="rgba(0, 0, 0, 0.7)">
 
-    <div slot="header" style="text-align: right;margin-bottom: 20px;">
+    <div slot="header" style="margin-bottom: 20px;">
       <el-button type="primary" @click="addCallCenter">新增</el-button>
       <el-button type="primary" @click="delCallCenters">删除</el-button>
-      <!-- <el-button type="primary" @click="onclickSave">保存</el-button> -->
     </div>
     <el-table v-loading ="tableLoad"
-              border
-              style="width: 100%;"
               :data="tableData"
               @selection-change="selectionChange">
-      <el-table-column type="selection" align="center" width="50"></el-table-column>
+      <el-table-column type="selection" align="center" width="55"></el-table-column>
       <el-table-column
         prop="name"
         align="center"
         label="名称"
         min-width="80"
+        show-overflow-tooltip
       >
       </el-table-column>
       <el-table-column
@@ -29,23 +27,26 @@
         align="center"
         label="IP"
         min-width="80"
+        show-overflow-tooltip
       >
       </el-table-column>
       <el-table-column
         prop="customer"
         align="center"
         label="账号"
-        min-width="100"
+        min-width="80"
+        show-overflow-tooltip
       >
       </el-table-column>
       <el-table-column
         prop="psw"
         align="center"
         label="密码"
-        min-width="100"
+        min-width="120"
+        show-overflow-tooltip
       >
       </el-table-column>
-      <el-table-column label="操作" align="center" min-width="50">
+      <el-table-column label="操作" align="center" width="120">
         <template slot-scope="scope">
           <el-button type="text" @click="editCallCenter(scope.row.id)">修改</el-button>
           <el-button type="text" @click="deleteCallCenter(scope.row.id)">删除</el-button>

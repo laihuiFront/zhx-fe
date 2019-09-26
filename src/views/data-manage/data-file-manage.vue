@@ -34,9 +34,11 @@
       <el-row>
         <el-form-item>
           <el-button type="primary" icon="el-icon-search" @click=search>查询</el-button>
+        </el-form-item>
+        <el-form-item>
           <el-button type="primary" icon="el-icon-refresh" @click=clench>重置</el-button>
         </el-form-item>
-        <el-form-item style="margin-left: -6px;">
+        <el-form-item>
           <el-button type="primary" @click="downModule" v-has="'模板下载'">模板下载</el-button>
         </el-form-item>
         <el-form-item>
@@ -44,7 +46,7 @@
             :action="action+'/dataArchive/import'"
             :headers="header"
             :show-file-list=false
-            style="display:inline-block;margin-right:5px;"
+            style="display:inline-block;"
             :on-success="uploadSuccess"
             :on-progress="onProgress"
              accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -61,12 +63,9 @@
       </el-row>
     </el-form>
     <el-table highlight-current-row v-loading="tableLoad"
-              border
-              stripe
               ref="multipleTable"
               :data="DataList"
               tooltip-effect="dark"
-              style="width: 100%"
               @sort-change="handleSort"
               @selection-change="handleSelectionChange">
       <el-table-column
@@ -75,15 +74,16 @@
         width="55">
       </el-table-column>
       <el-table-column
+        min-width="180"
         label="证件号"
         align="center"
-        min-width="160"
         sortable="custom"
         :sort-orders="['ascending','descending']"
         prop="identNo"
       >
       </el-table-column>
       <el-table-column
+        min-width="120"
         prop="name"
         align="center"
         sortable="custom"
@@ -92,6 +92,7 @@
       >
       </el-table-column>
       <el-table-column
+        min-width="140"
         label="电话号码"
         align="center"
         show-overflow-tooltip>
@@ -102,9 +103,9 @@
         </template>
       </el-table-column>
       <el-table-column
+        min-width="200"
         label="地址"
         align="center"
-        min-width="200"
         show-overflow-tooltip>
         <template slot-scope="scope">
           <div v-for="domain in scope.row.addressList" :key="domain.id">
@@ -113,10 +114,10 @@
         </template>
       </el-table-column>
       <el-table-column
+        min-width="140"
         label="档案变更日期"
         prop="updateTime"
         sortable="custom"
-        width="140"
         align="center"
         :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
@@ -133,6 +134,7 @@
         </template>
       </el-table-column>
       <el-table-column
+        width="80"
         label="操作"
         align="center">
         <template slot-scope="scope">
@@ -523,7 +525,6 @@
 
       },
       showMessage(row) {
-        console.log(row)
         this.dialogVisible3 = true
         this.dynamicValidateForm2 = row
       },
@@ -592,7 +593,6 @@
           Object.id = currentValue.id
           _self.deleteList.push(Object)
         })
-        console.log(_self.deleteList)
       },
       handleSizeChange(val) {
         this.pageSize = val
@@ -668,7 +668,6 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            console.log(this.dynamicValidateForm)
             addData(this.dynamicValidateForm).then((response) => {
               this.dialogVisible2 = false
               this.search()
@@ -711,6 +710,8 @@
 
 <style lang="scss">
   #data-file-manage {
+    min-width: 1330px !important;
+
     .el-dialog__header {
       background-color: #f8f8f8;
     }

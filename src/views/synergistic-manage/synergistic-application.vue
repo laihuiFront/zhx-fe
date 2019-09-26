@@ -13,102 +13,103 @@
       @reset="onClickReset"
       @query="onClickQuery"
       :queryForm="queryForm">
-      <el-button type="primary" v-if="queryForm.applyStatus==='0'" @click="onClickBatchApprove(1)" v-has="'同意协催'">同意协催
-      </el-button>
-      <el-popover
-        v-has="'完成协催'"
-        v-if="queryForm.applyStatus==='1'"
-        placement="bottom-start"
-        trigger="manual"
-        title="编辑操作记录"
-        width="500"
-        v-model="finishVisible">
-        <div>
-          <el-input
-            type="textarea"
-            :rows="4"
-            placeholder="请输入结果"
-            v-model="finishContent">
-          </el-input>
-        </div>
-        <div style="text-align: right; margin-top: 12px">
-          <el-button size="mini" type="text" @click="finishVisible=false">取消</el-button>
-          <el-button type="primary" size="mini" @click="onClickBatchSaveFinish">确定</el-button>
-        </div>
-        <el-button type="primary" slot="reference" @click="onclickBatchFinish" style="margin-right:10px;">完成协催</el-button>
-      </el-popover>
-
-      <el-button type="primary" @click="onClickBatchApprove(-1)" v-has="'撤销协催'">撤销协催</el-button>
-      <el-upload
-        class="upload-demo upload-btn"
-        :action="action+'/synergistic/finishedSynergisticImport'"
-        :headers="header"
-        :show-file-list="false"
-        :on-success="uploadSuccess"
-        style="display:inline-block;margin-left:10px;"
-        accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-      >
-        <el-button type="primary" v-has="'导入完成待办协催'">导入完成待办协催</el-button>
-      </el-upload>
-      <el-upload
-        class="upload-demo upload-btn"
-        :action="action+'/synergistic/synergisticRecordImport'"
-        :headers="header"
-        :show-file-list="false"
-        :on-success="uploadSuccess"
-        style="display:inline-block;margin-left:10px;"
-        accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-      >
-        <el-button type="primary" v-has="'导入协催记录'">导入协催记录</el-button>
-      </el-upload>
-      <!--<el-dropdown trigger="click" @command="handleCommand" v-if="queryForm.applyStatus==='1'" style="display:inline-block;margin-left:10px;" v-has="'导出查询结果'">
+      <el-form-item v-if="queryForm.applyStatus==='0'" v-has="'同意协催'">
+        <el-button type="primary" @click="onClickBatchApprove(1)">同意协催</el-button>
+      </el-form-item>
+      <el-form-item v-if="queryForm.applyStatus==='1'" v-has="'完成协催'">
+        <el-popover
+          placement="bottom-start"
+          trigger="manual"
+          title="编辑操作记录"
+          width="500"
+          v-model="finishVisible">
+          <div>
+            <el-input
+              type="textarea"
+              :rows="4"
+              placeholder="请输入结果"
+              v-model="finishContent">
+            </el-input>
+          </div>
+          <div style="text-align: right; margin-top: 12px">
+            <el-button size="mini" type="text" @click="finishVisible=false">取消</el-button>
+            <el-button type="primary" size="mini" @click="onClickBatchSaveFinish">确定</el-button>
+          </div>
+          <el-button type="primary" slot="reference" @click="onclickBatchFinish">完成协催</el-button>
+        </el-popover>
+      </el-form-item>
+      <el-form-item v-has="'撤销协催'">
+        <el-button type="primary" @click="onClickBatchApprove(-1)">撤销协催</el-button>
+      </el-form-item>
+      <el-form-item v-has="'导入完成待办协催'">
+        <el-upload
+          class="upload-demo upload-btn"
+          :action="action+'/synergistic/finishedSynergisticImport'"
+          :headers="header"
+          :show-file-list="false"
+          :on-success="uploadSuccess"
+          accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        >
+          <el-button type="primary">导入完成待办协催</el-button>
+        </el-upload>
+      </el-form-item>
+      <el-form-item v-has="'导入协催记录'">
+        <el-upload
+          class="upload-demo upload-btn"
+          :action="action+'/synergistic/synergisticRecordImport'"
+          :headers="header"
+          :show-file-list="false"
+          :on-success="uploadSuccess"
+          accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        >
+          <el-button type="primary">导入协催记录</el-button>
+        </el-upload>
+      </el-form-item>
+      <!--<el-dropdown trigger="click" @command="handleCommand" v-if="queryForm.applyStatus==='1'" style="display:inline-block;" v-has="'导出查询结果'">
         <el-button type="primary">导出查询结果<i class="el-icon-arrow-down el-icon--right"></i></el-button>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="all">导出全部</el-dropdown-item>
           <el-dropdown-item command="current">导出当前分页</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>-->
-      <el-button type="primary" v-has="'导出查询条件'" v-if="queryForm.applyStatus==='1'"
-                 style="display:inline-block;margin-left:10px;" @click="changeRadio">导出查询结果
-      </el-button>
+      <el-form-item v-if="queryForm.applyStatus==='1'" v-has="'导出查询条件'">
+        <el-button type="primary" @click="changeRadio">导出查询结果</el-button>
+      </el-form-item>
     </syn-record-query>
     <el-table highlight-current-row v-loading="tableLoad"
               @selection-change="onSelectRow"
               @sort-change="handleSort"
               @row-dblclick="showCase"
-              border
-              stripe
-              :data="recordList"
-              style="width: 100%;">
-      <el-table-column type="selection" width="50" align="center"></el-table-column>
-      <el-table-column sortable="custom" :sort-orders="['ascending','descending']" prop="synergisticType.name"
-                       align="center" min-width="120" label="协催类型" show-overflow-tooltip></el-table-column>
-      <el-table-column sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.collectStatusMsg"
-                       align="center" min-width="120" label="催收状态" show-overflow-tooltip></el-table-column>
+              :data="recordList">
+      <el-table-column type="selection" width="55" align="center"></el-table-column>
       <el-table-column sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.seqNo" align="center"
-                       min-width="160" label="个案序列号" show-overflow-tooltip>
-        <template slot-scope="scope">
+                       min-width="180" label="个案序列号" show-overflow-tooltip>
+                       <template slot-scope="scope">
           <el-button type="text" size="small"
                      @click="showCase(scope.row)">
             {{scope.row.dataCase.seqNo}}
           </el-button>
         </template>
       </el-table-column>
+      <el-table-column sortable="custom" :sort-orders="['ascending','descending']" prop="synergisticType.name"
+                       align="center" min-width="120" label="协催类型" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.collectStatusMsg"
+                       align="center" min-width="100" label="催收状态" show-overflow-tooltip></el-table-column>
       <el-table-column sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.identNo"
-                       align="center" min-width="160" label="证件号" show-overflow-tooltip></el-table-column>
-      <el-table-column sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.name" align="center"
-                       min-width="120" label="姓名" show-overflow-tooltip></el-table-column>
+                       align="center" min-width="180" label="证件号" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.name"
+                       align="center" min-width="120" label="姓名" show-overflow-tooltip></el-table-column>
       <el-table-column sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.moneyMsg"
                        align="center" min-width="120" label="委案金额" show-overflow-tooltip></el-table-column>
       <el-table-column sortable="custom" :sort-orders="['ascending','descending']" prop="dataCase.repayMoneyMsg"
                        align="center" min-width="120" label="还款金额" show-overflow-tooltip></el-table-column>
-      <el-table-column sortable="custom" :sort-orders="['ascending','descending']" prop="applyContent" align="center"
-                       min-width="150" label="申请内容" show-overflow-tooltip></el-table-column>
-      <el-table-column sortable="custom" :sort-orders="['ascending','descending']" prop="applyTime" align="center"
-                       min-width="140" label="申请时间" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" :sort-orders="['ascending','descending']" prop="applyContent"
+                       align="center" min-width="180" label="申请内容" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" :sort-orders="['ascending','descending']" prop="applyTime"
+                       align="center" min-width="140" label="申请时间" show-overflow-tooltip></el-table-column>
       <el-table-column sortable="custom" :sort-orders="['ascending','descending']" prop="applyUser.userName"
                        align="center" min-width="140" label="催收员" show-overflow-tooltip></el-table-column>
-      <el-table-column label="操作" show-overflow-tooltip width="200" align="center">
+      <el-table-column label="操作" show-overflow-tooltip width="160" align="center">
         <template slot-scope="scope">
           <el-button type="text" v-if="queryForm.applyStatus==='0'" @click="onClickApprove(scope.row, 1)"
                      v-has="'同意协催'">同意协催
@@ -263,7 +264,7 @@
         total: 0,
         queryForm: {
           pageNum: 1,
-          pageSize: 100,
+          pageSize: pageSizes[0],
           applyStatus: 0,
           finishStatus: 0,
           synergisticType: {},
@@ -536,48 +537,12 @@
 
 <style lang="scss">
   #synergistic-application {
+    min-width: 1720px !important;
+
     .pad {
       .el-checkbox {
         width: 24%;
         margin-right: 0px;
-      }
-    }
-
-    // .el-tabs__content {
-    //   overflow-y: auto;
-    // }
-
-    // .pagination-wrap {
-    //   position: fixed;
-    //   bottom: 0;
-    //   z-index: 100;
-    //   min-height: 40px;
-    //   background-color: white;
-    //   width: 100%;
-    // }
-    tr.current-row > td{
-      position: relative;
-      &::before{
-        height: 1px;
-        background: #0080ff;
-        left: 0;
-        top: 1px;
-        content: '';
-        position: absolute;
-        width: 100%;
-        z-index: 100;
-        overflow: hidden;
-      }
-      &:after{
-        height: 1px;
-        background: #0080ff;
-        left: 0;
-        bottom: 1px;
-        content: '';
-        position: absolute;
-        width: 100%;
-        z-index: 100;
-        overflow: hidden;
       }
     }
   }

@@ -1,22 +1,19 @@
 <template>
   <div id="setting-template">
     <el-row style="margin-bottom: 15px;">
-      <el-button type="primary" style="float: right"
-                 @click="handleClick()" v-has="'添加信函模板'">添加信函模板
-      </el-button>
+      <el-button type="primary" @click="handleClick()" v-has="'添加信函模板'">添加信函模板</el-button>
     </el-row>
      <el-table highlight-current-row
       :data="tableData"
-      border stripe
-      v-loading="tableLoad"
-      style="width: 100%">
+      v-loading="tableLoad">
       <el-table-column
+        min-width="80"
         prop="id"
         align="center"
-        width="100"
         label="ID">
       </el-table-column>
       <el-table-column
+        min-width="160"
         prop="title"
         align="center"
         label="模板名称">
@@ -81,7 +78,7 @@ export default {
       tableData:[],
       dialogVisible:false,
       msg:'',
-      title:'添加模板',
+      title:'添加信函模板',
       myConfig:{
         initialFrameHeight: 240,
         // 初始容器宽度
@@ -135,17 +132,17 @@ export default {
     handleClick(currentRow){
       if(currentRow){
       	this.currentRow = currentRow;
-      	this.title = "修改模板";
+      	this.title = "修改信函模板";
       	this.input = currentRow.title;
       	this.addmodule=false;
       }else{
-      	this.title = "添加模板";
+      	this.title = "添加信函模板";
       	this.addmodule=true;
       }
        this.dialogVisible = true;
     },
     deleteOne({id}){
-      this.$confirm('此操作将永久删除该条内容, 是否继续?', '提示', {
+      this.$confirm('此操作将永久删除该模板, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -158,10 +155,7 @@ export default {
           this.getMainData();
         })
       }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        });
+
       });
     },
     init(){
@@ -176,9 +170,6 @@ export default {
 
 <style lang="scss">
 #setting-template{
-  // .el-table__body-wrapper{
-  //   overflow-y: auto;
-  // }
   .r-list{
     min-width: 220px;
     box-sizing: border-box;
@@ -210,11 +201,6 @@ export default {
     justify-content: center;
     margin-bottom: 10px;
     align-items: center;
-
-  }
-  .el-table__body tr.current-row > td{
-    border-top: 1px solid #0080ff  !important;
-    border-bottom: 1px solid #0080ff  !important;
   }
 }
 </style>

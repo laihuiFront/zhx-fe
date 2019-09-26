@@ -29,38 +29,40 @@
       </el-form-item>
       <el-form-item>
         <el-button icon="el-icon-search" type="primary" @click="onClickQuery">查询</el-button>
+      </el-form-item>
+      <el-form-item>
         <el-button icon="el-icon-refresh" type="primary" @click="onClickReset">重置</el-button>
       </el-form-item>
-      <el-form-item class="operation-item">
+      <el-form-item>
         <el-button type="primary" @click="onClickDelete" v-has="'删除'">删除</el-button>
       </el-form-item>
     </el-form>
      <el-table highlight-current-row v-loading="tableLoad"
       @selection-change="onSelectRow"
-      border stripe
-      :data="logList"
-      style="width: 100%">
+      :data="logList">
       <el-table-column
         type="selection"
         align="center"
         width="55">
       </el-table-column>
       <el-table-column
+        min-width="140"
         prop="createTime"
         align="center"
         label="日志时间">
       </el-table-column>
       <el-table-column
+        min-width="300"
         prop="logContent"
         align="center"
         label="日志内容"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
+        min-width="140"
         prop="userName"
         align="center"
-        label="操作人"
-        width="200">
+        label="操作人">
       </el-table-column>
     </el-table>
     <el-pagination
@@ -87,7 +89,7 @@ export default {
       tableLoad:false,
       queryForm: {
         pageNum: 1,
-        pageSize: 50,
+        pageSize: pageSizes[0],
         date:[]
       },
       total: 0,
@@ -155,9 +157,6 @@ export default {
 
 <style lang="scss">
 #setting-log{
-  .el-table__body tr.current-row > td{
-    border-top: 1px solid #0080ff  !important;
-    border-bottom: 1px solid #0080ff  !important;
-  }
+
 }
 </style>

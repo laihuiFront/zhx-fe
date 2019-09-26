@@ -22,7 +22,7 @@
       </el-select>
     </el-form-item>
     <el-form-item  v-if="queryConf.wtf || queryConfFlag">
-      <el-select  clearable v-model="queryForm.dataCase.clients" filterable collapse-tags multiple placeholder="请选择委托方" clearable>
+      <el-select  clearable v-model="queryForm.dataCase.clients" filterable collapse-tags multiple placeholder="请选择委托方">
         <el-option
           v-for="item in clientList"
           :key="item.id"
@@ -251,7 +251,6 @@ export default {
       }
     },
     caseDateChange(val){
-      console.log(val)
       if(val){
         this.queryForm.dataCase.caseDateStart = val[0]
         this.queryForm.dataCase.caseDateEnd = val[1]
@@ -261,7 +260,6 @@ export default {
       }
     },
     applyTimeChange(val){
-      console.log(val)
       if(val){
         this.queryForm.applyTimeStart = val[0]
         this.queryForm.applyTimeEnd = val[1]
@@ -280,7 +278,6 @@ export default {
 
 <style lang="scss" scoped>
 #syn-record-query{
-
   .pad{
     .el-checkbox{
       width:24%;
@@ -295,4 +292,3 @@ export default {
   }
 }
 </style>
-

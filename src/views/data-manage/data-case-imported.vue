@@ -146,9 +146,6 @@
     <el-table highlight-current-row v-loading="tableLoad"
               ref="multipleTable"
               :data="DataList"
-              border
-              stripe
-              style="width: 100%"
               @selection-change="handleSelectionChange"
               @sort-change="handleSort"
     >
@@ -162,7 +159,9 @@
         :sort-orders="['ascending','descending']"
         label="批次号"
         align="center"
-        prop="batchNo">
+        prop="batchNo"
+        min-width="120"
+        show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="clientMsg"
@@ -170,7 +169,8 @@
         align="center"
         label="委托方"
         :sort-orders="['ascending','descending']"
-        width="140">
+        min-width="100"
+        show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="statusMsg"
@@ -178,6 +178,7 @@
         sortable="custom"
         label="批次状态"
         :sort-orders="['ascending','descending']"
+        min-width="80"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
@@ -185,7 +186,7 @@
         :sort-orders="['ascending','descending']"
         prop="caseTime"
         label="委案日期"
-        width="120"
+        min-width="120"
         align="center"
         show-overflow-tooltip>
       </el-table-column>
@@ -195,6 +196,7 @@
         prop="userCount"
         align="center"
         label="户数"
+        min-width="80"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
@@ -202,19 +204,16 @@
         :sort-orders="['ascending','descending']"
         label="总金额"
         align="center"
-        width="120"
+        min-width="120"
         prop="totalAmtMsg"
         show-overflow-tooltip>
-        <template slot-scope="scope">
-          {{scope.row.totalAmtMsg}}
-        </template>
       </el-table-column>
       <el-table-column
         sortable="custom"
         align="center"
         :sort-orders="['ascending','descending']"
         prop="uploadTime"
-        width="140"
+        min-width="120"
         label="上传时间"
         show-overflow-tooltip>
       </el-table-column>
@@ -223,13 +222,14 @@
         label="批次备注"
         align="center"
         sortable="custom"
+        min-width="100"
         :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         label="操作"
         align="center"
-        width="200"
+        width="180"
       >
         <template slot-scope="scope">
           <el-upload
@@ -993,20 +993,12 @@
         this.saveExportCaseConf();
         this.showExportConfVisible = false;
       },
-      copy: function (obj) {
-        var newobj={};
-        for(var arr in obj){
-          newobj[arr]=obj[arr]
-        }
-        console.log(newobj)
-        return newobj;
-      },
       editMessage(row) {
         if (this.$refs["messageForm"]) {
           this.$refs["messageForm"].resetFields();
         }
         this.dialogVisible2 = true
-        this.messageForm = this.copy(row)
+        this.messageForm = {...row}
         if (this.messageForm.client) {
           this.messageForm.client = parseInt(row.client)
         }
@@ -1016,7 +1008,6 @@
         if (this.messageForm.area) {
           this.messageForm.area = parseInt(row.area)
         }
-
       },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
@@ -1047,7 +1038,6 @@
       submitmsgForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            console.log(this.messageForm)
             update(this.messageForm).then((response) => {
               this.dialogVisible2 = false
               batchList().then((response) => {
@@ -1085,8 +1075,6 @@
         this.tableLoad = true
         dataList(this.form.areas, this.form.batchNos, this.form.clients, this.form.caseTypes, startTime, endTime, this.orderBy, this.sort, this.pageSize, this.pageNum).then((response) => {
           this.DataList = response.pageInfo.list
-          console.info(response.pageInfo.pages);
-          // this.pages = response.pageInfo.pages
           this.total = response.pageInfo.total
           this.tableLoad = false
         })
@@ -1187,6 +1175,8 @@
 
 <style lang="scss">
   #data-case-imported {
+    min-width: 1200px !important;
+
     .pad {
       .el-checkbox {
         width: 24%;
@@ -1196,24 +1186,12 @@
     .el-dialog__header {
       background-color: #f8f8f8;
     }
-
-    // .el-form-item .el-form-item--mini {
-    //   width: 80%
-    // }
     .upload-demo {
       display: inline-block;
     }
-
     .el-loading-spinner .el-loading-text {
       font-size: 18px;
     }
-    .el-table__body tr.current-row > td{
-      border-top: 1px solid #0080ff  !important;
-      border-bottom: 1px solid #0080ff  !important;
-    }
-    // .el-input--mini .el-input__inner {
-    //   width: 220px;
-    // }
     .remarkStyle{
       width: 100%;
       height:100%;
@@ -1230,12 +1208,6 @@
     }
     .dialog-wrap .el-dialog .el-dialog__body {
       overflow: hidden;
-    }
-    .el-pagination .el-select .el-input .el-input__inner {
-      width: 100px
-    }
-    .el-pagination__editor.el-input .el-input__inner {
-      width: 50px;
     }
   }
 </style>

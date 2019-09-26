@@ -1,6 +1,6 @@
 <template>
   <div id="litigation-my" class="page-wraper-sub">
-  	 <el-tabs v-model="activeName2"  @tab-click="handleClick" class="tabs-wrap">
+  	 <el-tabs v-model="activeName2" class="tabs-wrap">
     <el-tab-pane label="我的诉讼案件" name="first">
       <el-form ref="form" :model="form" :inline="true" class="query-wrap queryStyle">
         <el-form-item>
@@ -22,29 +22,22 @@
         <el-form-item>
           <el-button type="primary" icon="el-icon-search" @click="search">查询</el-button>
           <el-button type="primary" icon="el-icon-refresh" @click="clench">重置</el-button>
-        </el-form-item>
-        <el-form-item class="operation-item">
           <el-button type="primary" v-has="'添加诉讼案件'" @click="addDataform">添加诉讼案件</el-button>
         </el-form-item>
       </el-form>
 
    <el-table highlight-current-row v-loading="tableLoad"
-    class="table-wrap"
-    height="1"
-             highlight-current-row
     :data="DataList"
-    border
-    stripe
     tooltip-effect="dark"
-    @sort-change="handleSort"
-     style="width: 100%">
+    @sort-change="handleSort">
     <el-table-column
       prop="legalStatusMsg"
       align="center"
       min-width="120"
       label="案件状态"
-       sortable="custom"
-          :sort-orders="['ascending','descending']"
+      sortable="custom"
+      :sort-orders="['ascending','descending']"
+      show-overflow-tooltip
      >
     </el-table-column>
    <el-table-column
@@ -52,40 +45,49 @@
       align="center"
       min-width="120"
       label="办案进度"
-       sortable="custom"
-          :sort-orders="['ascending','descending']"
+      sortable="custom"
+      :sort-orders="['ascending','descending']"
+      show-overflow-tooltip
      >
-    </el-table-column><el-table-column
+    </el-table-column>
+    <el-table-column
       prop="legalTypeMsg"
       align="center"
       min-width="120"
       label="案件类型"
-       sortable="custom"
-          :sort-orders="['ascending','descending']"
+      sortable="custom"
+      :sort-orders="['ascending','descending']"
+      show-overflow-tooltip
      >
-    </el-table-column><el-table-column
+    </el-table-column>
+    <el-table-column
       prop="cstName"
       align="center"
       min-width="120"
       label="客户姓名"
-       sortable="custom"
-          :sort-orders="['ascending','descending']"
+      sortable="custom"
+      :sort-orders="['ascending','descending']"
+      show-overflow-tooltip
      >
-    </el-table-column><el-table-column
+    </el-table-column>
+    <el-table-column
       prop="legalDate"
       align="center"
-      width="120"
+      min-width="120"
       label="委案日期"
-       sortable="custom"
-          :sort-orders="['ascending','descending']"
+      sortable="custom"
+      :sort-orders="['ascending','descending']"
+      show-overflow-tooltip
      >
-    </el-table-column><el-table-column
+    </el-table-column>
+    <el-table-column
       prop="clientele"
       align="center"
       min-width="120"
       label="委托人"
-       sortable="custom"
-          :sort-orders="['ascending','descending']"
+      sortable="custom"
+      :sort-orders="['ascending','descending']"
+      show-overflow-tooltip
      >
     </el-table-column>
     <el-table-column
@@ -93,8 +95,9 @@
       align="center"
       min-width="120"
       label="被告人"
-       sortable="custom"
-          :sort-orders="['ascending','descending']"
+      sortable="custom"
+      :sort-orders="['ascending','descending']"
+      show-overflow-tooltip
      >
     </el-table-column>
     <el-table-column
@@ -102,17 +105,19 @@
       align="center"
       min-width="120"
       label="标的"
-       sortable="custom"
-          :sort-orders="['ascending','descending']"
+      sortable="custom"
+      :sort-orders="['ascending','descending']"
+      show-overflow-tooltip
      >
     </el-table-column>
     <el-table-column
       prop="costMsg"
       align="center"
-      width="120"
+      min-width="120"
       label="费用"
-       sortable="custom"
-          :sort-orders="['ascending','descending']"
+      sortable="custom"
+      :sort-orders="['ascending','descending']"
+      show-overflow-tooltip
      >
     </el-table-column>
     <el-table-column
@@ -120,32 +125,39 @@
       align="center"
       min-width="120"
       label="所属人"
-       sortable="custom"
-          :sort-orders="['ascending','descending']"
+      sortable="custom"
+      :sort-orders="['ascending','descending']"
+      show-overflow-tooltip
      >
-    </el-table-column><el-table-column
+    </el-table-column>
+    <el-table-column
       prop="agent"
       min-width="120"
       align="center"
       label="代理律师"
-       sortable="custom"
-          :sort-orders="['ascending','descending']"
+      sortable="custom"
+      :sort-orders="['ascending','descending']"
+      show-overflow-tooltip
      >
-    </el-table-column><el-table-column
+    </el-table-column>
+    <el-table-column
       prop="court"
       align="center"
       min-width="120"
       label="受案法院"
-       sortable="custom"
-          :sort-orders="['ascending','descending']"
+      sortable="custom"
+      :sort-orders="['ascending','descending']"
+      show-overflow-tooltip
      >
-    </el-table-column><el-table-column
+    </el-table-column>
+    <el-table-column
       prop="legalNo"
       align="center"
       min-width="120"
       label="案号"
-       sortable="custom"
-          :sort-orders="['ascending','descending']"
+      sortable="custom"
+      :sort-orders="['ascending','descending']"
+      show-overflow-tooltip
      >
     </el-table-column>
     <el-table-column
@@ -153,8 +165,9 @@
       align="center"
       min-width="180"
       label="备注"
-       sortable="custom"
-          :sort-orders="['ascending','descending']"
+      sortable="custom"
+      :sort-orders="['ascending','descending']"
+      show-overflow-tooltip
      >
     </el-table-column>
     <el-table-column
@@ -170,11 +183,10 @@
     </el-table-column>
   </el-table>
     <el-pagination
-    class="pagination-wrap"
     @size-change="handleSizeChange"
     @current-change="handleCurrentChange"
     :current-page="currentPage1"
-    :page-sizes="[100, 500, 2000, 10000, 1000000]"
+    :page-sizes="pageSizes"
     :page-size="pages1"
     layout="total, sizes, prev, pager, next, jumper"
     :total="total1">
@@ -251,8 +263,6 @@
   </el-form-item>
   	</div></el-col>
 </el-row>
-
-
   <el-row :gutter="20">
   <el-col :span="8">
   	<div class="grid-content bg-purple">
@@ -280,7 +290,6 @@
   </el-form-item>
   	</div></el-col>
 </el-row>
-
  <el-row :gutter="20">
   <el-col :span="8">
   	<div class="grid-content bg-purple">
@@ -301,7 +310,6 @@
   </el-form-item>
   	</div></el-col>
 </el-row>
-
  <el-row :gutter="20">
   <el-col :span="8">
   	<div class="grid-content bg-purple">
@@ -336,7 +344,6 @@
   </el-form-item>
   	</div></el-col>
 </el-row>
-
      <el-row :gutter="20">
   <el-col :span="8">
   	<div class="grid-content bg-purple">
@@ -357,7 +364,6 @@
   </el-form-item>
   	</div></el-col>
 </el-row>
-
     <el-row :gutter="20">
   <el-col :span="8">
   	<div class="grid-content bg-purple">
@@ -392,7 +398,6 @@
   </el-form-item>
   	</div></el-col>
 </el-row>
-
   <el-row :gutter="20">
   <el-col :span="8">
   	<div class="grid-content bg-purple">
@@ -434,7 +439,6 @@
   </el-form-item>
   	</div></el-col>
 </el-row>
-
 <el-row :gutter="20">
   <el-col :span="8">
   	<div class="grid-content bg-purple">
@@ -457,10 +461,8 @@
   	</div></el-col>
   	<el-col :span="8">
   	<div class="grid-content bg-purple">
-
   	</div></el-col>
 </el-row>
-
 <el-row :gutter="20">
   <el-col :span="16">
   	<div class="grid-content bg-purple">
@@ -469,7 +471,6 @@
   </el-form-item>
   	</div></el-col>
 </el-row>
-
 <el-row :gutter="20">
   <el-col :span="16">
   	<div class="grid-content bg-purple">
@@ -477,9 +478,7 @@
     <el-input type="textarea" style="width: 280%;" placeholder="请输入判决书" v-model="formInline.judgment"></el-input>
   </el-form-item>
   	</div></el-col>
-
 </el-row>
-
 <el-row :gutter="20">
   <el-col :span="16">
   	<div class="grid-content bg-purple">
@@ -487,10 +486,8 @@
      <el-input type="textarea" style="width: 280%;" placeholder="请输入备注" v-model="formInline.remark"></el-input>
   </el-form-item>
   	</div></el-col>
-
 </el-row>
 </el-form>
-
   <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible = false">取 消</el-button>
     <el-button type="primary" @click="SaveData">确 定</el-button>
@@ -518,69 +515,72 @@
         <el-form-item>
           <el-button type="primary" icon="el-icon-search" @click="search2">查询</el-button>
           <el-button type="primary" icon="el-icon-refresh" @click="clench2">重置</el-button>
-        </el-form-item>
-        <el-form-item class="operation-item">
           <el-button type="primary" @click="addDataform">添加诉讼案件</el-button>
         </el-form-item>
       </el-form>
 
    <el-table highlight-current-row v-loading="tableLoad"
-    class="table-wrap"
-    height="1"
     :data="DataList2"
-    border
-    stripe
-          tooltip-effect="dark"
-          @sort-change="handleSort2"
-     style="width: 100%">
+    tooltip-effect="dark"
+    @sort-change="handleSort2">
     <el-table-column
       prop="legalStatusMsg"
       align="center"
       min-width="120"
       label="案件状态"
-        sortable="custom"
-          :sort-orders="['ascending','descending']"
+      sortable="custom"
+      :sort-orders="['ascending','descending']"
+      show-overflow-tooltip
      >
     </el-table-column>
-   <el-table-column
+    <el-table-column
       prop="progressMsg"
       align="center"
       min-width="120"
       label="办案进度"
-        sortable="custom"
-          :sort-orders="['ascending','descending']"
+      sortable="custom"
+      :sort-orders="['ascending','descending']"
+      show-overflow-tooltip
      >
-    </el-table-column><el-table-column
+    </el-table-column>
+    <el-table-column
       prop="legalTypeMsg"
       align="center"
       min-width="120"
       label="案件类型"
-        sortable="custom"
-          :sort-orders="['ascending','descending']"
+      sortable="custom"
+      :sort-orders="['ascending','descending']"
+      show-overflow-tooltip
      >
-    </el-table-column><el-table-column
+    </el-table-column>
+    <el-table-column
       prop="cstName"
       align="center"
       min-width="120"
       label="客户姓名"
-        sortable="custom"
-          :sort-orders="['ascending','descending']"
+      sortable="custom"
+      :sort-orders="['ascending','descending']"
+      show-overflow-tooltip
      >
-    </el-table-column><el-table-column
+    </el-table-column>
+    <el-table-column
       prop="legalDate"
       align="center"
       min-width="120"
       label="委案日期"
-        sortable="custom"
-          :sort-orders="['ascending','descending']"
+      sortable="custom"
+      :sort-orders="['ascending','descending']"
+      show-overflow-tooltip
      >
-    </el-table-column><el-table-column
+    </el-table-column>
+    <el-table-column
       prop="clientele"
       align="center"
       min-width="120"
       label="委托人"
-        sortable="custom"
-          :sort-orders="['ascending','descending']"
+      sortable="custom"
+      :sort-orders="['ascending','descending']"
+      show-overflow-tooltip
      >
     </el-table-column>
     <el-table-column
@@ -588,8 +588,9 @@
       min-width="120"
       align="center"
       label="被告人"
-        sortable="custom"
-          :sort-orders="['ascending','descending']"
+      sortable="custom"
+      :sort-orders="['ascending','descending']"
+      show-overflow-tooltip
      >
     </el-table-column>
     <el-table-column
@@ -597,8 +598,9 @@
       min-width="120"
       align="center"
       label="标的"
-        sortable="custom"
-          :sort-orders="['ascending','descending']"
+      sortable="custom"
+      :sort-orders="['ascending','descending']"
+      show-overflow-tooltip
      >
     </el-table-column>
     <el-table-column
@@ -606,8 +608,9 @@
       min-width="120"
       align="center"
       label="费用"
-        sortable="custom"
-          :sort-orders="['ascending','descending']"
+      sortable="custom"
+      :sort-orders="['ascending','descending']"
+      show-overflow-tooltip
      >
     </el-table-column>
     <el-table-column
@@ -615,32 +618,39 @@
       align="center"
       min-width="120"
       label="所属人"
-        sortable="custom"
-          :sort-orders="['ascending','descending']"
+      sortable="custom"
+      :sort-orders="['ascending','descending']"
+      show-overflow-tooltip
      >
-    </el-table-column><el-table-column
+    </el-table-column>
+    <el-table-column
       prop="agent"
       align="center"
       min-width="120"
       label="代理律师"
-        sortable="custom"
-          :sort-orders="['ascending','descending']"
+      sortable="custom"
+      :sort-orders="['ascending','descending']"
+      show-overflow-tooltip
      >
-    </el-table-column><el-table-column
+    </el-table-column>
+    <el-table-column
       prop="court"
       align="center"
       min-width="120"
       label="受案法院"
-        sortable="custom"
-          :sort-orders="['ascending','descending']"
+      sortable="custom"
+      :sort-orders="['ascending','descending']"
+      show-overflow-tooltip
      >
-    </el-table-column><el-table-column
+    </el-table-column>
+    <el-table-column
       prop="legalNo"
       align="center"
       min-width="120"
       label="案号"
-        sortable="custom"
-          :sort-orders="['ascending','descending']"
+      sortable="custom"
+      :sort-orders="['ascending','descending']"
+      show-overflow-tooltip
      >
     </el-table-column>
     <el-table-column
@@ -648,8 +658,9 @@
       align="center"
       min-width="180"
       label="备注"
-        sortable="custom"
-          :sort-orders="['ascending','descending']"
+      sortable="custom"
+      :sort-orders="['ascending','descending']"
+      show-overflow-tooltip
      >
     </el-table-column>
     <el-table-column
@@ -665,11 +676,10 @@
     </el-table-column>
   </el-table>
   	 <el-pagination
-      class="pagination-wrap"
       @size-change="handleSizeChange2"
       @current-change="handleCurrentChange2"
       :current-page="currentPage4"
-      :page-sizes="[100, 500, 2000, 10000, 1000000]"
+      :page-sizes="pageSizes"
       :page-size="pages"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
@@ -1004,15 +1014,18 @@
 </template>
 
 <script>
-				import {getCaseTypeList,dataList,remoweData,addData,PersonList,checkData,dataList2} from '@/common/js/litigation-my.js'
+import {getCaseTypeList,dataList,remoweData,addData,PersonList,checkData,dataList2} from '@/common/js/litigation-my.js'
+import {pageSizes} from "@/common/js/const"
+
 export default {
   name: 'litigationMy',
 	data(){
   		return{
-  				orderBy:"id",
-      sort:"desc",
+        pageSizes,
+        orderBy:"id",
+        sort:"desc",
         tableLoad:false,
-  			 activeName2: 'first',
+        activeName2: 'first',
   			isTrue:false,
   			dialogTitle:'新增',
   			progressList:[{name:"立案",id:"filing"},{name:"收案",id:"back"},{name:"保全",id:"presv"},{name:"开庭",id:"court"},{name:"判决",id:"decree"},{name:"执行",id:"enforce"}],
@@ -1032,14 +1045,14 @@ export default {
         pages1:1,
         total1:0,
         total:0,
-        pageSize:100,
+        pageSize:pageSizes[0],
         pageNum:1,
-        pageSize2:100,
+        pageSize2:pageSizes[0],
         pageNum2:1,
-         DataList: [],
-         DataList2: [],
-         PersonDataList:[],
-         checkId:'',
+        DataList: [],
+        DataList2: [],
+        PersonDataList:[],
+        checkId:'',
   	}
   },
    methods: {
@@ -1047,16 +1060,11 @@ export default {
        this.sort = order == null ? "desc" : order.replace("ending", "")
        this.orderBy = prop == null ? "id" : prop
        this.search()
-
      },
      handleSort2({column, prop, order}) {
        this.sort = order == null ? "desc" : order.replace("ending", "")
        this.orderBy = prop == null ? "id" : prop
        this.search2()
-
-     },
-     handleClick(tab, event) {
-       console.log(tab, event);
      },
      showmessage(row) {
        this.dialogVisible = true
@@ -1072,7 +1080,6 @@ export default {
        this.dialogVisible = true
        this.dialogTitle = "新增"
        this.isTrue = false
-
      },
      checkresource() {
        checkData(this.checkform, this.checkId).then((response) => {
@@ -1225,33 +1232,6 @@ created() {
 
 <style lang="scss">
 #litigation-my{
-  tr.current-row > td{
-    position: relative;
-    &::before{
-      height: 1px;
-      background: #0080ff;
-      left: 0;
-      top: 1px;
-      content: '';
-      position: absolute;
-      width: 100%;
-      z-index: 100;
-      overflow: hidden;
-    }
-    &:after{
-      height: 1px;
-      background: #0080ff;
-      left: 0;
-      bottom: 1px;
-      content: '';
-      position: absolute;
-      width: 100%;
-      z-index: 100;
-      overflow: hidden;
-    }
-  }
-
+  min-width: 2020px !important;
 }
 </style>
-
-

@@ -27,8 +27,7 @@
     <div class="right-wrap">
       <el-form ref="form" :model="queryForm" :inline="true" class="query-wrap queryStyle">
         <el-form-item>
-          <el-input type="textarea" v-model="queryForm.id" style="width: 100%;" placeholder="请输入员工ID"
-                    rows="3"></el-input>
+          <el-input type="textarea" v-model="queryForm.id" placeholder="请输入员工ID" rows="3"></el-input>
         </el-form-item>
         <el-form-item>
           <el-input v-model="queryForm.loginName" clearable placeholder="请输入账号"></el-input>
@@ -52,14 +51,27 @@
         <el-row>
           <el-form-item>
             <el-button icon="el-icon-search" type="primary" @click="onClickQuery">查询</el-button>
+          </el-form-item>
+          <el-form-item>
             <el-button icon="el-icon-refresh" type="primary" @click="onClickReset">重置</el-button>
-            <el-button type="primary" @click="onClickAdd" v-has="'新增员工'">新增员工</el-button>
-            <el-button type="primary" @click="onClickUpdateDept" >修改部门</el-button>
-            <el-button type="primary" @click="onClickBatchDelete" >刪除</el-button>
-            <el-button type="primary" @click="onClickBatchLeave" >离职</el-button>
-            <el-button type="primary" @click="onClickModuleImport" >导入模板下载</el-button>
+          </el-form-item>
+          <el-form-item v-has="'新增员工'">
+            <el-button type="primary" @click="onClickAdd">新增员工</el-button>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="onClickUpdateDept">修改部门</el-button>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="onClickBatchDelete">刪除</el-button>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="onClickBatchLeave">离职</el-button>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="onClickModuleImport">导入模板下载</el-button>
+          </el-form-item>
+          <el-form-item>
             <el-upload
-              class="upload-demo"
               :action="action+'/user/import'"
               :headers="header"
               :show-file-list=false
@@ -67,10 +79,11 @@
               :on-progress="onProgress"
               accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             >
-              <el-button type="primary" style="margin-left:10px;">导入员工信息</el-button>
+              <el-button type="primary">导入员工信息</el-button>
             </el-upload>
+          </el-form-item>
+          <el-form-item>
             <el-upload
-              class="upload-demo"
               :action="action+'/user/simpleImport'"
               :headers="header"
               :show-file-list=false
@@ -78,26 +91,28 @@
               :on-progress="onProgress"
               accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             >
-              <el-button type="primary" style="margin-left:10px;">导入企业员工信息</el-button>
+              <el-button type="primary">导入企业员工信息</el-button>
             </el-upload>
-            <el-button type="primary" @click="onClickImport" style="margin-left:10px;">导出员工信息</el-button>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="onClickImport">导出员工信息</el-button>
           </el-form-item>
         </el-row>
       </el-form>
-      <el-table v-loading="tableLoad" highlight-current-row sortable="custom" border stripe @sort-change="handleSort" @selection-change="handleSelectionChange" :row-class-name="rowColor" :data="memberList" style="width: 100%">
+      <el-table v-loading="tableLoad" highlight-current-row sortable="custom" @sort-change="handleSort" @selection-change="handleSelectionChange" :row-class-name="rowColor" :data="memberList">
         <el-table-column type="selection" align="center" width="55"></el-table-column>
-        <el-table-column sortable="custom" :sort-orders="['ascending','descending']"  align="center" prop="id" min-width="90" label="员工ID" show-overflow-tooltip></el-table-column>
-        <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="userName" min-width="130" label="员工姓名" show-overflow-tooltip></el-table-column>
-        <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center"  prop="loginName" min-width="130" show-overflow-tooltip label="账号"></el-table-column>
-        <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center"  prop="enableMsg" min-width="130" show-overflow-tooltip label="状态"></el-table-column>
+        <el-table-column sortable="custom" :sort-orders="['ascending','descending']"  align="center" prop="id" min-width="80" label="员工ID" show-overflow-tooltip></el-table-column>
+        <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="userName" min-width="120" label="员工姓名" show-overflow-tooltip></el-table-column>
+        <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center"  prop="loginName" min-width="140" show-overflow-tooltip label="账号"></el-table-column>
+        <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center"  prop="enableMsg" min-width="100" show-overflow-tooltip label="状态"></el-table-column>
         <!-- <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="sex" min-width="60" label="性别" show-overflow-tooltip width="70"></el-table-column>-->
-        <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="callCenter" min-width="120" label="呼叫中心" show-overflow-tooltip></el-table-column>
+        <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="callCenter" min-width="140" label="呼叫中心" show-overflow-tooltip></el-table-column>
         <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="officePhone" min-width="120" label="坐席号" show-overflow-tooltip></el-table-column>
         <!--<el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="mobile" min-width="120" label="手机" show-overflow-tooltip></el-table-column>
         <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="joinTime" min-width="120" label="入职日期" show-overflow-tooltip></el-table-column>
         <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="actualTime" min-width="120" label="下组日期" show-overflow-tooltip></el-table-column>-->
         <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="roleList" :formatter="formatRole" min-width="140" label="员工角色" show-overflow-tooltip></el-table-column>
-        <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="department" min-width="160" label="部门" show-overflow-tooltip></el-table-column>
+        <el-table-column sortable="custom" :sort-orders="['ascending','descending']" align="center" prop="department" min-width="140" label="部门" show-overflow-tooltip></el-table-column>
         <el-table-column label="操作" width="250"  align="center">
           <template slot-scope="scope">
             <el-button type="text" @click="onClickEdit(scope.row)"  v-has="'修改'">修改</el-button>
@@ -309,7 +324,7 @@
         departmentTree: [],
         queryForm: {
           pageNum: 1,
-          pageSize: 50,
+          pageSize: pageSizes[0],
           id:'',
           accountStatus:null,
           department: null,
@@ -364,7 +379,6 @@
       })
     },
     methods: {
-
       rowColor({row}){
         return `color_${row.color}`;
       },
@@ -446,7 +460,6 @@
       onClickQuery () {
         this.memberList = []
         this.$set(this.queryForm, 'pageNum', 1);
-        this.$set(this.queryForm, 'pageSize', 50);
         const data = {
           status: 1,
           idStrs: this.queryForm.id?(this.queryForm.id.trim()==""?null:this.queryForm.id.split('\n')):null,
@@ -712,7 +725,6 @@
             type: "success"
           });
         })
-
       },
       onClickReset () {
         this.queryForm = {
@@ -753,7 +765,6 @@
             type: "success"
           });
         });
-
       },
       onClickSave () {
         this.$refs.ruleForm.validate((valid)=>{
@@ -770,7 +781,7 @@
                 this.returnName = null
                 let { ...resultData } = this.memberInfo
                 resultData.roleList = resultData.roleList.map(item => { return { id: item } })
-                if (this.dialogData.type === 'add') {                
+                if (this.dialogData.type === 'add') {
                   addMember(resultData).then(response => {
                     this.onClickQuery()
                     this.onClickCancel()
@@ -819,7 +830,6 @@
             return
           }
         })
-
       },
       formatRole (row, column, cellValue) {
         if (cellValue && cellValue.length > 0) {
@@ -837,18 +847,13 @@
 
 <style lang="scss">
   #member-in {
-    .el-loading-mask{
-      z-index:3000 !important;
-    }
-    height: 100%;
+    min-width: 1650px !important;
+
     display: flex;
-    overflow: hidden;
     .left-wrap {
-      margin-right: 25px;
-      height: 100%;
+      display: inline-block;
       overflow-y: auto;
-      flex: 0 0 1;
-      width: 18%;
+      width: 240px;
       border-right: 1px solid #e8e8e8;
       .tree-wrap {
         height: 100%;
@@ -870,12 +875,11 @@
         }
       }
     }
-    .right-wrap {
-      flex: 1;
-      overflow-y: auto;
-    }
-    .upload-demo{
+    .right-wrap{
+      height: 100%;
+      width: calc(100% - 270px);
       display: inline-block;
+      margin-left: 20px;
     }
     .color_BLACK {
       color: #000000;
@@ -927,10 +931,6 @@
           }
         }
       }
-    }
-    .el-table__body tr.current-row > td{
-      border-top: 1px solid #0080ff  !important;
-      border-bottom: 1px solid #0080ff  !important;
     }
   }
 </style>

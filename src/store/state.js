@@ -4,7 +4,8 @@ const state = {
   tabMenus: [],
   currentMenu: {},
   cacheflushFlag:false,
-  caseType: {}
+  caseType: {},
+  breadcrumb: [],
 }
 
 export default state

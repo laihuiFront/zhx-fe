@@ -33,12 +33,9 @@
             >
           </el-form-item>
         </el-form>
-         <el-table highlight-current-row 
-          class="table-wrap"
-          height="1"
+         <el-table highlight-current-row
           v-loading="tableLoad"
           :data="tableData1"
-          style="width: 100%;"
         >
           <el-table-column
             v-for="(item, index) in tablecol_data1"
@@ -113,12 +110,7 @@
           </el-form-item>
         </el-form>
          <el-table highlight-current-row v-loading="tableLoad"
-          class="table-wrap"
-          height="1"
           :data="tableData2"
-          border
-          stripe
-          style="width: 100%"
         >
           <el-table-column
             v-for="(item, index) in tablecol_data2"
@@ -198,12 +190,7 @@
           </el-form-item>
         </el-form>
          <el-table highlight-current-row v-loading="tableLoad"
-          class="table-wrap"
-          height="1"
           :data="tableData3"
-          border
-          stripe
-          style="width: 100%"
         >
           <el-table-column
             v-for="(item, index) in tablecol_data3"

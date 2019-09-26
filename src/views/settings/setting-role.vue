@@ -10,16 +10,18 @@
       </el-form-item>
       <el-form-item>
         <el-button icon="el-icon-search" type="primary" @click="onClickQuery">查询</el-button>
+      </el-form-item>
+      <el-form-item>
         <el-button icon="el-icon-refresh" type="primary" @click="onClickReset">重置</el-button>
       </el-form-item>
-      <el-form-item class="operation-item">
-        <el-button type="primary" @click="onClickAdd" v-has="'新增角色'">新增角色</el-button>
+      <el-form-item v-has="'新增角色'">
+        <el-button type="primary" @click="onClickAdd">新增角色</el-button>
       </el-form-item>
     </el-form>
-    <el-table v-loading="tableLoad" :data="roleList" highlight-current-row border stripe style="width: 100%">
-      <el-table-column prop="roleName" align="center" label="角色名称" width="300"></el-table-column>
-      <el-table-column prop="roleDesc" align="center" label="角色描述" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="updateUser.userName" align="center" label="修改人" width="200"></el-table-column>
+    <el-table v-loading="tableLoad" :data="roleList" highlight-current-row>
+      <el-table-column prop="roleName" align="center" label="角色名称" min-width="200" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="roleDesc" align="center" label="角色描述" min-width="400"  show-overflow-tooltip></el-table-column>
+      <el-table-column prop="updateUser.userName" align="center" label="修改人" min-width="200" show-overflow-tooltip></el-table-column>
       <el-table-column label="操作" align="center" width="200">
         <template slot-scope="scope">
           <el-button type="text" @click="onClickQueryOne(scope.row)" v-has="'查看'">查看</el-button>
@@ -287,6 +289,8 @@ export default {
 
 <style lang="scss">
 #setting-role {
+  min-width: 1000px !important;
+
   .dialog-wrap {
     .auth-wrap {
       border-radius: 5px;
@@ -294,10 +298,6 @@ export default {
   }
   .el-table--scrollable-y .el-table__body-wrapper{
     overflow-x: hidden;
-  }
-  .el-table__body tr.current-row > td{
-    border-top: 1px solid #0080ff  !important;
-    border-bottom: 1px solid #0080ff  !important;
   }
 }
 </style>

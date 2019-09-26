@@ -7,12 +7,7 @@
        element-loading-background="rgba(0, 0, 0, 0.7)">
     <el-table v-loading="tableLoad"
               :data="dataList"
-              border
-              style="width: 100%;margin-top:50px;"
-              highlight-current-row
-              height="1"
-              class="table-wrap">
-
+              highlight-current-row>
       <el-table-column
         prop="odvName"
         align="center"
@@ -38,8 +33,6 @@
         align="center"
       >
       </el-table-column>
-
-
     </el-table>
 
     <el-dialog
@@ -52,10 +45,7 @@
     >
       <el-table highlight-current-row
                 :data="odvList"
-                border
-                stripe
       >
-
         <el-table-column
           prop="line"
           align="center"
@@ -83,7 +73,6 @@
     </el-dialog>
   </div>
 </template>
-
 
 <script>
   import {manageList,showOdv} from '@/common/js/collect-director.js'
@@ -128,7 +117,6 @@
       overflow-x: hidden;
     }
 
-
     .has-gutter .gutter {
       display: block !important;
     }
@@ -136,6 +124,5 @@
       border-top: 1px solid #0080ff  !important;
       border-bottom: 1px solid #0080ff  !important;
     }
-
   }
 </style>

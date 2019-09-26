@@ -69,6 +69,26 @@ export const initPageMenu = function({state, commit}, toPath) {
     commit(types.SET_CURRENT_MENU, toMenu)
     commit(types.PUSH_TAB_MENUS, allMenu[0])
     commit(types.PUSH_TAB_MENUS, toMenu)
+
+    const _breadcrumb = []
+    _breadcrumb.push({
+      id: toMenu.id,
+      label: toMenu.menuLabel
+    })
+    queryBreadcrumb(_breadcrumb,allMenu,toMenu)
+    _breadcrumb.reverse()
+    commit(types.SET_BREADCRUMB,_breadcrumb)
+  }
+}
+
+function queryBreadcrumb(arr,allMenu,childMenu){
+  const parentMenu = findMenuInAllByID(allMenu,childMenu.parent.id)
+  if(parentMenu){
+    arr.push({
+      id: parentMenu.id,
+      label: parentMenu.menuLabel
+    })
+    queryBreadcrumb(arr,allMenu,parentMenu)
   }
 }
 
@@ -141,7 +161,7 @@ export function loadByTypeAction({commit, state}) {
 }
 
 // 根据路由查找对应的菜单对象
-function findMenuInAll(arr, str) {
+export function findMenuInAll(arr, str) {
   for(let i = 0; i < arr.length; i++) {
     if (arr[i].leafNode) {
       if ('/zhx' + arr[i].menuUrl === str) {
@@ -151,6 +171,20 @@ function findMenuInAll(arr, str) {
       }
     } else {
       const menu = findMenuInAll(arr[i].children, str)
+      if (menu) {
+        return menu
+      }
+    }
+  }
+}
+
+export function findMenuInAllByID(arr, id) {
+  for(let i = 0; i < arr.length; i++) {
+    if (arr[i].id === id) {
+      return arr[i]
+    }
+    if (!arr[i].leafNode) {
+      const menu = findMenuInAllByID(arr[i].children, id)
       if (menu) {
         return menu
       }

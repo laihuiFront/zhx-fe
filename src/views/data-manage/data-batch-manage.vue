@@ -86,9 +86,6 @@
     </el-form>
     <el-table highlight-current-row v-loading="tableLoad"
               :data="DataList"
-              border
-              stripe
-              style="width: 100%;"
               @selection-change="handleSelectionChange"
               @sort-change="handleSort"
     >
@@ -101,18 +98,20 @@
         prop="areaMsg"
         align="center"
         sortable="custom"
-        width="130"
+        min-width="100"
         :sort-orders="['ascending','descending']"
         label="催收区域"
+        show-overflow-tooltip
       >
       </el-table-column>
       <el-table-column
         prop="batchNo"
         align="center"
         sortable="custom"
-        min-width="140"
+        min-width="120"
         :sort-orders="['ascending','descending']"
         label="批次号"
+        show-overflow-tooltip
       >
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="dataCsae(scope.row.batchNo)">{{scope.row.batchNo}}</el-button>
@@ -122,16 +121,17 @@
         prop="clientMsg"
         align="center"
         sortable="custom"
-        min-width="120"
+        min-width="100"
         :sort-orders="['ascending','descending']"
         label="委托方"
+        show-overflow-tooltip
       >
       </el-table-column>
       <el-table-column
         prop="statusMsg"
         align="center"
         sortable="custom"
-        min-width="120"
+        min-width="80"
         :sort-orders="['ascending','descending']"
         label="批次状态"
         show-overflow-tooltip>
@@ -140,7 +140,7 @@
         prop="caseTime"
         align="center"
         label="委案日期"
-        width="120"
+        min-width="120"
         sortable="custom"
         :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
@@ -148,6 +148,7 @@
       <el-table-column
         prop="userCount"
         align="center"
+        min-width="80"
         sortable="custom"
         :sort-orders="['ascending','descending']"
         label="户数"
@@ -179,7 +180,7 @@
         label="预计退案时间"
         sortable="custom"
         :sort-orders="['ascending','descending']"
-        width="140"
+        min-width="140"
         align="center"
         show-overflow-tooltip>
       </el-table-column>
@@ -187,41 +188,32 @@
         prop="realReturnTime"
         sortable="custom"
         :sort-orders="['ascending','descending']"
-        width="140"
+        min-width="140"
         align="center"
         label="实际退案时间"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="createTime"
-        width="140"
+        min-width="140"
         sortable="custom"
         :sort-orders="['ascending','descending']"
         align="center"
         label="录入时间"
         show-overflow-tooltip>
       </el-table-column>
-      <!--<el-table-column
-        prop="batchRemark"
-        min-width="250"
-        sortable="custom"
-        :sort-orders="['ascending','descending']"
-        align="center"
-        label="批次备注"
-        show-overflow-tooltip>
-      </el-table-column>-->
       <el-table-column
         prop="creatUser"
         sortable="custom"
         :sort-orders="['ascending','descending']"
         label="录入人员"
         align="center"
-        width="140"
+        min-width="140"
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         prop="remark"
-        min-width="180"
+        min-width="100"
         align="center"
         sortable="custom"
         :sort-orders="['ascending','descending']"
@@ -231,7 +223,7 @@
       <el-table-column
         align="center"
         label="操作"
-        width="250">
+        width="200">
         <template slot-scope="scope">
           <el-button type="text" size="small" v-if="scope.row.batchStatus!=2 && scope.row.batchStatus!=0"
                      @click="open2(scope.row.id,scope.row.batchNo)" v-has="'退案'">退案
@@ -1080,20 +1072,12 @@
           }
         });
       },
-      copy: function (obj) {
-        var newobj={};
-        for(var arr in obj){
-          newobj[arr]=obj[arr]
-        }
-        console.log(newobj)
-        return newobj;
-      },
       editMessage2(row) {
         if (this.$refs["messageForm"]) {
           this.$refs["messageForm"].resetFields();
         }
         this.dialogVisible3 = true
-        this.messageForm = this.copy(row)
+        this.messageForm = {...row}
 
         if (this.messageForm.returnTime!=null && this.messageForm.returnTime=="NULL"){
 
@@ -1109,7 +1093,6 @@
         if (this.messageForm.area) {
           this.messageForm.area = parseInt(row.area)
         }
-
       },
       deleteMessage(id,batchNo) {
         let arry = [{id: id,batchNo:batchNo}]
@@ -1517,7 +1500,6 @@
         return symbol + negative + (j ? i.substr(0, j) + thousand : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousand) + (places ? decimal + Math.abs(number - i).toFixed(places).slice(2) : "");
       },
       uploadSuccess(res, file, fileList) {
-        console.info(res)
         if (res.code == 100) {
           this.$message({
             type: 'success',
@@ -1570,7 +1552,6 @@
           _self.MoreBackCaseList.push(BackCaseList)
           _self.selectDataBatchExportList.push(currentValue.id)
           _self.selectDataCollectExportByBatchList.push(Project)
-          console.info(currentValue.batchNo);
           _self.batchNos.push(currentValue.batchNo);
         })
 
@@ -1772,6 +1753,8 @@
 
 <style lang="scss" >
   #data-batch-manage {
+    min-width: 1880px !important;
+
     .pad {
       .el-checkbox {
         width: 24%;
@@ -1784,15 +1767,14 @@
     }
     .el-dialog__header {
       background-color: #f8f8f8;
-
     }
     .el-loading-spinner .el-loading-text {
       font-size: 18px;
     }
-    .el-table__body tr.current-row > td{
-      border-top: 1px solid #0080ff  !important;
-      border-bottom: 1px solid #0080ff  !important;
-    }
+    // .el-table__body tr.current-row > td{
+    //   border-top: 1px solid #0080ff  !important;
+    //   border-bottom: 1px solid #0080ff  !important;
+    // }
     .fixWidth{
       width: 220px;
     }

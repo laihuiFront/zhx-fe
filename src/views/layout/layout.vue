@@ -1,13 +1,15 @@
 <template>
   <div id="layout">
-    <top-menu class="top-wrap"></top-menu>
-    <tab-menu class="tab-wrap"></tab-menu>
-    <section class="page-wrap">
-      <keep-alive :exclude="exclude">
-        <router-view/>
-      </keep-alive>
-      <!--<router-view/>-->
-    </section>
+    <top-menu class="menu"></top-menu>
+    <div class="page">
+      <tab-menu class="tab-wrap"></tab-menu>
+      <section class="page-wrap">
+        <keep-alive :exclude="exclude">
+          <router-view/>
+        </keep-alive>
+        <!--<router-view/>-->
+      </section>
+    </div>
   </div>
 </template>
 
@@ -50,26 +52,33 @@ export default {
 
 <style lang="scss">
 #layout{
+  width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   overflow: hidden;
-  .top-wrap{
-    flex: 0 0 80px;
-    height: 80px;
+  .menu{
+    width: 210px;
+    height: 100%;
   }
-  .tab-wrap{
-    flex: 0 0 35px;
-    height: 35px;
+  .page{
+    width: calc(100% - 210px);
   }
   .page-wrap{
-    position: relative;
-  	overflow-x:hidden;
-  	overflow-y:auto;
-    flex:1;
-    margin: 16px;
-	  border-radius: 5px;
+    width: 100%;
+    height: calc(100% - 65px);
+    padding: 24px;
+    overflow: auto;
+    background-color: #F0F2F5;
+
+    > div{
+      min-width: 100%;
+      min-height: 100%;
+      padding: 24px;
+      background-color: #fff;
+      border-radius: 3px;
+      position: relative;
+    }
   }
 }
 </style>
-

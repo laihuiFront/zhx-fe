@@ -1,5 +1,5 @@
 <template>
-  <section id="home-page">
+  <div id="home-page">
     <div class="item-wrap" v-if="userData.roleName.indexOf('member')>=0">
       <p class="header">锁定账号数量</p>
       <div class="content" @click="toAccount">
@@ -18,7 +18,7 @@
         {{userData.distributeNum}}
       </div>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>
@@ -64,6 +64,7 @@
   display: flex;
   justify-content: center;
   .item-wrap{
+    margin-top: 30px;
     margin-right: 24px;
     // box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.34);
     border: 1px solid #409eff;
@@ -84,4 +85,3 @@
   }
 }
 </style>
-

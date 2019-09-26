@@ -6,6 +6,7 @@
     v-loading.fullscreen.lock="fullscreenLoading"
     element-loading-spinner="el-icon-loading"
     element-loading-background="rgba(0, 0, 0, 0.7)"
+    :style="{minWidth:pageWidth}"
   >
     <el-form ref="form" :model="formInline" :inline="true" class="query-wrap queryStyle">
       <el-form-item>
@@ -55,7 +56,9 @@
           value-format="yyyy-MM"
           placeholder="催收月份开始"
         >
-        </el-date-picker>至
+        </el-date-picker>
+      </el-form-item>
+      <el-form-item>
         <el-date-picker
           v-model="formInline.time2"
           type="month"
@@ -64,15 +67,13 @@
         >
         </el-date-picker>
       </el-form-item>
-      <el-form-item style="margin-left:10px;">
-        <el-button type="primary" icon="el-icon-search" @click="query"
-          >开始统计</el-button
-        >
-        <el-button type="primary" icon="el-icon-refresh" @click="clench"
-          >重置</el-button
-        >
+      <el-form-item>
+        <el-button type="primary" icon="el-icon-search" @click="query">开始统计</el-button>
       </el-form-item>
-      <el-form-item class="operation-item">
+      <el-form-item>
+        <el-button type="primary" icon="el-icon-refresh" @click="clench">重置</el-button>
+      </el-form-item>
+      <el-form-item>
         <el-button type="primary" @click="onSubmit">导出查询结果</el-button>
       </el-form-item>
     </el-form>
@@ -81,13 +82,10 @@
       v-if="tableData3.length > 0"
               v-loading="tableLoad"
               :data="tableData3"
-              border
-              stripe
               show-summary
               :summary-method="getSummaries"
-              style="width: 100%"
     >
-      <el-table-column prop="odv" align="center" label="催收员">
+      <el-table-column prop="odv" align="center" label="催收员" min-width="100" show-overflow-tooltip>
       </el-table-column>
       <el-table-column
         :label="item.area"
@@ -99,17 +97,31 @@
           label="有效通电"
           align="center"
           prop="countConPhoneNum"
+          min-width="80"
+          show-overflow-tooltip
         >
           <template slot-scope="scope">
             {{ scope.row.list[index].countConPhoneNum }}
           </template>
         </el-table-column>
-        <el-table-column label="总通电量" align="center" prop="countPhoneNum">
+        <el-table-column
+          label="总通电量"
+          align="center"
+          prop="countPhoneNum"
+          min-width="80"
+          show-overflow-tooltip
+        >
           <template slot-scope="scope">
             {{ scope.row.list[index].countPhoneNum }}
           </template>
         </el-table-column>
-        <el-table-column label="个案量" align="center" prop="countCasePhoneNum">
+        <el-table-column
+          label="个案量"
+          align="center"
+          prop="countCasePhoneNum"
+          min-width="80"
+          show-overflow-tooltip
+        >
           <template slot-scope="scope">
             {{ scope.row.list[index].countCasePhoneNum }}
           </template>
@@ -176,7 +188,7 @@
       total: 0,
       odvName: "",
       dataList: [],
-     formInline: { time: "", time2: "" },
+      formInline: { time: "", time2: "" },
       PersonList: [],
       areaList: [],
       clientList: [],
@@ -315,7 +327,6 @@
           this.loading = false;
           this.fullscreenLoading = false;
         })
-
     }
   },
   created() {
@@ -353,19 +364,17 @@
     getUserTree().then(data => {
       this.selectUserTree = [data];
     });
-  }
+  },
+  computed: {
+    pageWidth: function () {
+      return `${300 + 240 * this.dataList.length}px`
+    }
+  },
 };
 </script>
 
 <style lang="scss">
 #statistics-month {
-  .el-form--inline .el-form-item {
-    margin-right: 0px;
-  }
-  .el-table__body tr.current-row > td{
-    border-top: 1px solid #0080ff  !important;
-    border-bottom: 1px solid #0080ff  !important;
-  }
   .selectMonthStyle{
     width: 350px;
   }

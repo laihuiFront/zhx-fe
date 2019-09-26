@@ -1,5 +1,5 @@
 <template>
-  <div id="data-case-manage"
+  <div id="case-adjust"
        v-loading="loading2"
        v-loading.fullscreen.lock="fullscreenLoading"
        element-loading-text="正在加载中"
@@ -104,14 +104,13 @@
       </el-form-item>
       <el-row>
         <el-form-item>
-          <el-button type="primary" icon="el-icon-search" @click="search" style="margin-left:10px;">查询</el-button>
+          <el-button type="primary" icon="el-icon-search" @click="search">查询</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" icon="el-icon-refresh" @click="resetFormInline" style="margin-left:10px;">重置
-          </el-button>
+          <el-button type="primary" icon="el-icon-refresh" @click="resetFormInline">重置</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="showQueryConf" style="margin-left:10px;">查询条件配置</el-button>
+          <el-button type="primary" @click="showQueryConf">查询条件配置</el-button>
         </el-form-item>
       </el-row>
     </el-form>
@@ -119,15 +118,11 @@
     <el-table highlight-current-row v-loading="tableLoad"
               ref="multipleTable"
               :data="tableData3"
-              border
-              stripe
-              show-overflow-tooltip
-              @row-dblclick="showDetail"
+              @row-dblclick="showCase"
               @sort-change="handleSort"
-              :fit="true"
     >
       <el-table-column
-        width="160"
+        min-width="140"
         prop="client"
         align="center"
         sortable="custom"
@@ -136,7 +131,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        width="180"
+        min-width="180"
         prop="seqNo"
         sortable="custom"
         :sort-orders="['ascending','descending']"
@@ -144,28 +139,28 @@
         label="个案序列号"
         show-overflow-tooltip>
         <template slot-scope="scope">
-          <el-button v-if="scope.row.status==3" type="text" style ="color:#999999;" size="small" @click="editCase(scope.row.caseId, scope.row.name,scope.row.seqNo)">
+          <el-button v-if="scope.row.status==3" type="text" style ="color:#999999;" size="small" @click="showCase(scope.row)">
             {{scope.row.seqNo}}
           </el-button>
-          <el-button v-if="scope.row.status==4" type="text" style ="color:#999999;text-decoration:line-through;" size="small" @click="editCase(scope.row.caseId, scope.row.name,scope.row.seqNo)">
+          <el-button v-if="scope.row.status==4" type="text" style ="color:#999999;text-decoration:line-through;" size="small" @click="showCase(scope.row)">
             {{scope.row.seqNo}}
           </el-button>
-          <el-button v-if="scope.row.status!=3 && scope.row.status!=4" type="text" size="small" @click="editCase(scope.row.caseId, scope.row.name,scope.row.seqNo)">
+          <el-button v-if="scope.row.status!=3 && scope.row.status!=4" type="text" size="small" @click="showCase(scope.row)">
             {{scope.row.seqNo}}
           </el-button>
         </template>
       </el-table-column>
       <el-table-column
-      width="160"
-      prop="contractNo"
-      align="center"
-      sortable="custom"
-      :sort-orders="['ascending','descending']"
-      label="合同号"
-      show-overflow-tooltip>
-    </el-table-column>
+        min-width="160"
+        prop="contractNo"
+        align="center"
+        sortable="custom"
+        :sort-orders="['ascending','descending']"
+        label="合同号"
+        show-overflow-tooltip>
+      </el-table-column>
       <el-table-column
-        width="120"
+        min-width="120"
         prop="name"
         sortable="custom"
         :sort-orders="['ascending','descending']"
@@ -174,7 +169,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        width="180"
+        min-width="180"
         prop="identNo"
         sortable="custom"
         :sort-orders="['ascending','descending']"
@@ -183,7 +178,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        width="160"
+        min-width="160"
         prop="statusMsg"
         align="center"
         sortable="custom"
@@ -192,7 +187,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        width="140"
+        min-width="100"
         prop="collectStatusMsg"
         align="center"
         sortable="custom"
@@ -201,7 +196,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        width="160"
+        min-width="140"
         prop="createTime"
         align="center"
         sortable="custom"
@@ -210,7 +205,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        width="160"
+        min-width="140"
         prop="creatorName"
         align="center"
         sortable="custom"
@@ -219,7 +214,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        width="160"
+        min-width="140"
         prop="lastOdv"
         align="center"
         sortable="custom"
@@ -228,7 +223,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        width="160"
+        min-width="140"
         prop="odv"
         align="center"
         sortable="custom"
@@ -237,7 +232,7 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
-        width="140"
+        min-width="140"
         prop="dept"
         align="center"
         label="催收部门"
@@ -245,9 +240,8 @@
         :sort-orders="['ascending','descending']"
         show-overflow-tooltip>
       </el-table-column>
-
       <el-table-column
-        width="140"
+        min-width="140"
         prop="context"
         align="center"
         label="操作内容"
@@ -654,22 +648,9 @@
           time3: []
         }
       },
-
-
-      showDetail(row,event) {
-        let id = row.caseId
-        let name = row.name
-        let seqNo = row.seqNo
-        this.$router.push({
-          path: 'case-detail',
-          query: {
-            id,
-            name,
-            seqNo
-          }
-        })
+      showCase(row) {
+        window.open(`#/zhx/case-detail?id=${row.caseId}`)
       },
-
       editCase(id, name, seqNo) {
         this.$router.push({
           path: 'case-detail',
@@ -729,7 +710,9 @@
 </script>
 
 <style lang="scss">
-  #data-case-manage {
+  #case-adjust {
+    min-width: 2450px !important;
+
     .el-loading-mask{
       z-index:3000 !important;
     }
@@ -757,7 +740,7 @@
 
     .el-form-item--mini .el-form-item__content, .el-form-item--mini .el-form-item__labe
     .el-form--inline .el-form-item {
-      margin-right: -10px;
+      // margin-right: -10px;
       line-height: 21px;
     }
 
@@ -765,9 +748,9 @@
       font-size: 18px;
     }
 
-    .el-table__body-wrapper {
-      height: calc(100% - 74px);
-    }
+    // .el-table__body-wrapper {
+    //   height: calc(100% - 74px);
+    // }
 
     .el-dialog__header {
       background-color: #f8f8f8;
@@ -853,14 +836,12 @@
     .salesman-ul .el-input--mini{
       width: 25%;
     }
-    .el-table__body tr.current-row > td{
-      border-top: 1px solid #0080ff  !important;
-      border-bottom: 1px solid #0080ff  !important;
-    }
+    // .el-table__body tr.current-row > td{
+    //   border-top: 1px solid #0080ff  !important;
+    //   border-bottom: 1px solid #0080ff  !important;
+    // }
     .selectAllBtn{
       margin-bottom: 10px;
     }
   }
-
-
 </style>

@@ -15,15 +15,8 @@
               v-loading="tableLoad"
               @sort-change="handleSort"
               @row-dblclick="showCase"
-              :data="recordList"
-              border
-              stripe
-              style="width: 100%">
-      <el-table-column sortable="custom" :sort-orders="['ascending','descending']" min-width="120" align="center"
-                       prop="synergisticType.name" label="协催类型" show-overflow-tooltip></el-table-column>
-      <el-table-column sortable="custom" :sort-orders="['ascending','descending']" min-width="120" align="center"
-                       prop="dataCase.collectStatusMsg" label="催收状态" show-overflow-tooltip></el-table-column>
-      <el-table-column sortable="custom" :sort-orders="['ascending','descending']" min-width="160" align="center"
+              :data="recordList">
+      <el-table-column sortable="custom" :sort-orders="['ascending','descending']" min-width="180" align="center"
                        prop="dataCase.seqNo" label="个案序列号" show-overflow-tooltip>
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="showCase(scope.row)">
@@ -31,15 +24,19 @@
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column sortable="custom" :sort-orders="['ascending','descending']" min-width="160" align="center"
+      <el-table-column sortable="custom" :sort-orders="['ascending','descending']" min-width="120" align="center"
+                       prop="synergisticType.name" label="协催类型" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" :sort-orders="['ascending','descending']" min-width="100" align="center"
+                       prop="dataCase.collectStatusMsg" label="催收状态" show-overflow-tooltip></el-table-column>
+      <el-table-column sortable="custom" :sort-orders="['ascending','descending']" min-width="180" align="center"
                        prop="dataCase.identNo" label="证件号" show-overflow-tooltip></el-table-column>
-      <el-table-column sortable="custom" :sort-orders="['ascending','descending']" min-width="130" align="center"
+      <el-table-column sortable="custom" :sort-orders="['ascending','descending']" min-width="120" align="center"
                        prop="dataCase.name" label="姓名" show-overflow-tooltip></el-table-column>
       <el-table-column sortable="custom" :sort-orders="['ascending','descending']" min-width="120" align="center"
                        prop="dataCase.moneyMsg" label="委案金额" show-overflow-tooltip></el-table-column>
       <el-table-column sortable="custom" :sort-orders="['ascending','descending']" min-width="120" align="center"
                        prop="dataCase.repayMoneyMsg" label="还款金额" show-overflow-tooltip></el-table-column>
-      <el-table-column sortable="custom" :sort-orders="['ascending','descending']" min-width="150" align="center"
+      <el-table-column sortable="custom" :sort-orders="['ascending','descending']" min-width="180" align="center"
                        prop="applyContent" label="申请内容" show-overflow-tooltip></el-table-column>
       <el-table-column sortable="custom" :sort-orders="['ascending','descending']" min-width="140" align="center"
                        prop="applyTime" label="申请时间" show-overflow-tooltip></el-table-column>
@@ -162,7 +159,7 @@
         total: 0,
         queryForm: {
           pageNum: 1,
-          pageSize: 100,
+          pageSize: pageSizes[0],
           applyStatus: 1,
           finishStatus: 1,
           synergisticType: {},
@@ -245,14 +242,6 @@
       },
       showCase(row) {
         window.open(`#/zhx/case-detail?id=${row.dataCase.id}`)
-        // this.$router.push({
-        //   path: 'case-detail',
-        //   query: {
-        //     id,
-        //     name,
-        //     seqNo
-        //   }
-        // })
       },
       onClickReset() {
         this.queryForm = {
@@ -281,7 +270,6 @@
         })
       },
       handleSort({column, prop, order}) {
-        // console.log(prop,'@',order)
         this.queryForm.orderBy = prop
         this.queryForm.sort = order === 'ascending' ? 'asc' : 'desc'
         this.onClickQuery()
@@ -312,15 +300,13 @@
 
 <style lang="scss">
   #synergistic-record {
+    min-width: 1880px !important;
+
     .pad {
       .el-checkbox {
         width: 24%;
         margin-right: 0px;
       }
-    }
-    .el-table__body tr.current-row > td{
-      border-top: 1px solid #0080ff  !important;
-      border-bottom: 1px solid #0080ff  !important;
     }
   }
 </style>

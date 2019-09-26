@@ -12,13 +12,26 @@
       color:#666;
     }
   }
-  // .el-table__body-wrapper{
-  //   overflow-y: auto;
-  //   overflow-x: auto;
-  //   // height: calc(100% - 45px);
-  // }
   th.gutter{
     display: table-cell!important;
+  }
+  .el-table__header div.cell{
+    padding: 0 2px;
+  }
+  .el-table__body td:not(:last-child){
+    div.cell{
+      padding: 0 2px;
+      button{
+        width: 100%;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        border: 0;
+      }
+    }
+  }
+
+  td{
+    border-color: #e8e8e8 !important;
   }
 }
 

@@ -2,18 +2,13 @@
   <div id="setting-remind" class="page-wraper-sub">
 
      <el-table highlight-current-row class="table-wrap"
-      height="1"
       :data="tableData"
-      border stripe
-      v-loading="tableLoad"
-      style="width: 100%">
-
+      v-loading="tableLoad">
       <el-table-column
         prop="statusMsg"
         align="center"
         label="是否可以复制证件号码">
       </el-table-column>
-
       <el-table-column
         align="center"
         label="操作"
@@ -24,10 +19,6 @@
         </template>
       </el-table-column>
     </el-table>
-
-
-
-
   </div>
 </template>
 
@@ -46,7 +37,6 @@ export default {
     this.init();
   },
   methods:{
-
     getMainData(){
       this.tableLoad = true
       list().then((data)=>{
@@ -70,10 +60,7 @@ export default {
             });
           }
         });
-
     },
-
-
     init(){
       this.getMainData();
     },
@@ -83,10 +70,6 @@ export default {
 
 <style lang="scss">
 #setting-remind{
-  .el-table__body-wrapper{
-    overflow-y: auto;
-    overflow-x:hidden;
-  }
   .r-list{
     min-width: 220px;
     box-sizing: border-box;
@@ -118,12 +101,6 @@ export default {
     justify-content: center;
     margin-bottom: 10px;
     align-items: flex-start;
-
-  }
-  .el-table__body tr.current-row > td{
-    border-top: 1px solid #0080ff  !important;
-    border-bottom: 1px solid #0080ff  !important;
   }
 }
 </style>
-

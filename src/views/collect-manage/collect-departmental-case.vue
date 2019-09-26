@@ -572,10 +572,7 @@
         </el-row>
         <el-table highlight-current-row v-loading="tableLoad"
                   ref="multipleTable"
-                  style="width: 100%;"
                   :data="tableData"
-                  border
-                  stripe
                   :row-class-name="rowColor"
                   @selection-change="handleSelectionChange"
                   @row-dblclick="showCase"
@@ -590,7 +587,7 @@
             label="跟进次数"
             prop="countFollow"
             sortable="custom"
-            min-width="12"
+            min-width="120"
             :sort-orders="['ascending', 'descending']"
             header-align="center"
             show-overflow-tooltip
@@ -601,17 +598,17 @@
             label="个案序列号"
             prop="seqno"
             sortable="custom"
-            min-width="18"
+            min-width="180"
             :sort-orders="['ascending', 'descending']"
             header-align="center"
             show-overflow-tooltip
             align="center"
           >
             <template slot-scope="scope">
-              <el-button v-if="scope.row.caseStatus==3" type="text" style ="color:#999999;" size="small"  @click="showCase(scope.row)">
+              <el-button v-if="scope.row.caseStatus==3" type="text" style ="color:#999999;" size="small" @click="showCase(scope.row)">
                 {{scope.row.seqno}}
               </el-button>
-              <el-button v-if="scope.row.caseStatus==4" type="text" style ="color:#999999;text-decoration:line-through;" size="small"  @click="showCase(scope.row)">
+              <el-button v-if="scope.row.caseStatus==4" type="text" style ="color:#999999;text-decoration:line-through;" size="small" @click="showCase(scope.row)">
                 {{scope.row.seqno}}
               </el-button>
               <el-button v-if="scope.row.caseStatus!=3 && scope.row.caseStatus!=4" type="text" size="small" @click="showCase(scope.row)">
@@ -631,7 +628,6 @@
           ></el-table-column>
         </el-table>
         <el-pagination
-          class="pagination-wrap"
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="paginationData.currentPage"
@@ -899,82 +895,82 @@
         val32_data: [],  //催收员
         tableCol_data: [
           {
-            'min-width':12,
+            'min-width':140,
             prop: "odv",
             label: "催收员"
           },
           {
-            'min-width':14,
+            'min-width':100,
             prop: "collectStatusMsg",
             label: "催收状态"
           },
           {
-            'min-width':18,
+            'min-width':120,
             prop: "caseDate",
             label: "委案日期"
           },
           {
-            'min-width':12,
+            'min-width':120,
             prop: "name",
             label: "姓名"
           },
           {
-            'min-width':18,
+            'min-width':180,
             prop: "cardNo",
             label: "卡号"
           },
           {
-            'min-width':18,
+            'min-width':180,
             prop: "identNo",
             label: "身份证"
           },
           {
-            'min-width': 14,
+            'min-width': 120,
             prop: "moneyMsg",
             label: "委案金额"
           },
           {
-            'min-width': 14,
+            'min-width': 120,
             prop: "principle",
             label: "本金"
           },
           {
-            'min-width': 14,
+            'min-width': 120,
             prop: "moneyStartMsg",
             label: "最新欠款"
           },
           {
-            'min-width': 14,
+            'min-width': 120,
             prop: "enRepayAmtMsg",
             label: "已还款金额"
           },
           {
-            'min-width': 18,
+            'min-width': 140,
             prop: "repayAmtMsg",
             label: "承诺还款金额"
           },
           {
-            'min-width': 12,
+            'min-width': 120,
             prop: "overdueDays",
             label: "逾期天数"
           },
           {
-            'min-width': 12,
+            'min-width': 180,
             prop: "lastFollowTime",
             label: "上次跟进时间"
           },
           {
-            'min-width': 12,
+            'min-width': 120,
             prop: "leaveDays",
             label: "闲置天数"
           },
           {
-            'min-width': 18,
+            'min-width': 180,
             prop: "expectTime",
             label: "预计退案日期"
           },
           {
-            'min-width': 12,
+            'min-width': 120,
             prop: "collectInfo",
             label: "催收小结"
           }
@@ -986,7 +982,6 @@
         },
         pageLoading:false,
         selectDataArr:[]
-
       };
     },
     computed: {
@@ -1079,12 +1074,6 @@
       }
     },
     watch: {
-      form: {
-        handler(newObj) {
-          console.log(Object.values(newObj));
-        },
-        deep: true
-      },
       activeName(v){
         if (v=="tab2"){
           this.tabnum=true;
@@ -1535,77 +1524,27 @@
     text-decoration:line-through;
     color: #999999;
   }
-/*  body #collect-departmental-case .tab2{
-    .el-tabs__content{
-        margin-bottom: 40px;
-        overflow-y: hidden;
-      }
-  }*/
-  body #collect-departmental-case .tab2{
-    .el-table .el-table__body-wrapper{
-      overflow-x: auto;
-    }
+  .el-table--border {
+    flex:none;
   }
-    .el-table--border {
-      flex:none;
-    }
+
   #collect-departmental-case {
-    // .el-tabs__content{
-    //   margin-bottom: 40px;
-    //   overflow-y: auto;
-    // }
-    // .el-table th.gutter{
-    //   display: table-cell!important;
-    // }
-    // height: 100%;
-    // .el-table .el-table__body-wrapper{
-    //   height: calc(100% - 50px);
-    // }
-    /*.el-table .el-table__body-wrapper {
-      overflow-x: hidden;
-    }*/
+    min-width: 2630px !important;
+
+    .tab2{
+      .el-table .el-table__body-wrapper{
+        overflow-x: auto;
+      }
+    }
     .el-table th>.cell{
       white-space: nowrap;
     }
-    // .pagination-wrap{
-    //   position: fixed;
-    //   bottom: 0;
-    //   z-index: 100;
-    //   min-height: 40px;
-    //   background-color: white;
-    //   width: 100%;
-    // }
     .pad{
       .el-checkbox{
         width:24%;
         margin-right: 0px;
       }
     }
-    // tr.current-row > td{
-    //   position: relative;
-    //   &::before{
-    //     height: 1px;
-    //     background: #0080ff;
-    //     left: 0;
-    //     top: 1px;
-    //     content: '';
-    //     position: absolute;
-    //     width: 100%;
-    //     z-index: 100;
-    //     overflow: hidden;
-    //   }
-    //   &:after{
-    //     height: 1px;
-    //     background: #0080ff;
-    //     left: 0;
-    //     bottom: 1px;
-    //     content: '';
-    //     position: absolute;
-    //     width: 100%;
-    //     z-index: 100;
-    //     overflow: hidden;
-    //   }
-    // }
     .selectAllBtn{
       margin-bottom: 10px;
     }

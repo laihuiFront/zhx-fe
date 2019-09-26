@@ -20,33 +20,35 @@
     </el-form>
      <el-table highlight-current-row
       :data="tableData"
-      border stripe
-      v-loading="tableLoad"
-      style="width: 100%">
+      v-loading="tableLoad">
       <el-table-column
+        min-width="120"
         prop="receiveUserName"
         align="center"
         label="接收人">
       </el-table-column>
-       <el-table-column
-         prop="context"
-         align="center"
-         label="内容">
+      <el-table-column
+        min-width="200"
+        prop="context"
+        align="center"
+        label="内容">
        </el-table-column>
        <el-table-column
-         prop="sendUserName"
-         align="center"
-         label="发送人">
+        min-width="120"
+        prop="sendUserName"
+        align="center"
+        label="发送人">
        </el-table-column>
        <el-table-column
-         prop="createTime"
-         align="center"
-         label="发送时间">
+        min-width="140"
+        prop="createTime"
+        align="center"
+        label="发送时间">
        </el-table-column>
       <el-table-column
         align="center"
         label="操作"
-        width="120">
+        width="100">
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="deleteOne(scope.row)">删除</el-button>
         </template>
@@ -158,7 +160,18 @@ export default {
           { required: true, message: '请选择内容', trigger: 'change' }
         ],
       },
-      saveForm:{creattime:null,starttime:null,endTime:null,role:null,context:'',receiveUserName:null,roleId:null,pageNum:1,pageSize:100,receiveUsers:[]}
+      saveForm:{
+        creattime:null,
+        starttime:null,
+        endTime:null,
+        role:null,
+        context:'',
+        receiveUserName:null,
+        roleId:null,
+        pageNum:1,
+        pageSize:pageSizes[0],
+        receiveUsers:[]
+      }
     }
   },
   created(){
@@ -307,10 +320,6 @@ export default {
     margin-bottom: 10px;
     align-items: flex-start;
 
-  }
-  .el-table__body tr.current-row > td{
-    border-top: 1px solid #0080ff  !important;
-    border-bottom: 1px solid #0080ff  !important;
   }
 }
 </style>
