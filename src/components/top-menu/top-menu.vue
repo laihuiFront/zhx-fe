@@ -1,8 +1,10 @@
 <template>
   <div id="top-menu">
     <div class="logo">
-      <img src="./logo_1 .png">
-      <!-- <img src="./logo_2 .png"> -->
+      <!-- 众汇信 -->
+      <img src="./logo_2 .png">
+      <!-- 应时雨 -->
+      <!-- <img src="./logo_1 .png"> -->
     </div>
     <div class="navMenu">
       <el-menu :router="true" :default-active="currentRoute" background-color="#001529" text-color="#A6ADB4" active-text-color="#fff" class="el-menu-demo">
