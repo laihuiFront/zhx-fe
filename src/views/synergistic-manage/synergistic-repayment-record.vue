@@ -38,12 +38,16 @@
         <el-button type="primary" @click="handleCommand('all')">导出查询结果</el-button>
       </el-form-item>
     </repay-record-query>
-    <div class="statistics-wrap" v-if="queryForm.recordStatus==='0'">
-      <span class="title">查询结果统计：</span>
-      <span class="item" style="margin-right:0px;">总还款额：{{sumForm.repayMoneyMsg?sumForm.repayMoneyMsg:0}}，</span>
-      <!--<span class="item" style="margin-right:0px;">总提成值：{{sumForm.dataCase.mVal?parseFloat(sumForm.dataCase.mVal).toFixed(2):0}}，</span>-->
-      <span class="item" style="margin-right:0px;">总佣金额：{{sumForm.dataCase.commissionMoneyMsg?sumForm.dataCase.commissionMoneyMsg:0}}</span>
-    </div>
+
+           <div class="grid-content bg-purple queryResultSummary" v-if="queryForm.recordStatus==='0'">
+              <i class="el-icon-info"></i>
+              <span>查询结果统计：</span>
+              <span v-if="tableLoad" class="queryStyle">查询中，请稍候...</span>
+              <span v-else>
+                <span class="queryStyle">总还款额：</span><span class="textColor">{{sumForm.repayMoneyMsg?sumForm.repayMoneyMsg:0}}</span><span class="queryStyle">，</span>
+                <span class="queryStyle">总佣金额：</span><span class="textColor">{{sumForm.dataCase.commissionMoneyMsg?sumForm.dataCase.commissionMoneyMsg:0 }}</span>
+              </span>
+            </div>
     <el-table highlight-current-row
       v-loading="tableLoad"
       @selection-change="onSelectRow"
@@ -873,6 +877,9 @@ export default {
   }
   .fixWidth .el-input__inner {
     width: 220px !important ;
+  }
+  .textColor{
+    color: #5175fa;
   }
 }
 </style>

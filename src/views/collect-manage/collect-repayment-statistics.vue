@@ -160,20 +160,24 @@
       </el-form>
     </section>
     <!-- <section class="table-wrap"> -->
-      <div style="padding-bottom: 20px;">
-        <span style="color: black;font-size: 16px;">查询结果统计：</span>
-        <span class="" v-if="form1.val1 == 0">
-          <span style="color: #66b1ff;font-size: 16px;">列表还款金额：{{ topData.paidMoney }}，</span>
-          <span style="color: #66b1ff;font-size: 16px;">还款提成金额：{{ topData.repaidAmt }}</span>
+      <div class="grid-content bg-purple queryResultSummary">
+        <i class="el-icon-info"></i>
+        <span>查询结果统计：</span>
+        <span v-if="tableLoad" class="queryStyle">查询中，请稍候...</span>
+        <span v-else>
+          <span class="" v-if="form1.val1 == 0">
+            <span class="queryStyle">列表还款金额：</span><span class="textColor">{{topData.paidMoney}}</span><span class="queryStyle">，</span>
+            <span class="queryStyle">还款提成金额：</span><span class="textColor">{{topData.repaidAmt}}</span><span class="queryStyle"></span>
+          </span>
+          <span class="" v-if="form1.val1 == 1">
+            <span class="queryStyle">列表待银行查账金额：</span><span class="textColor">{{topData.bankAmtC}}</span><span class="queryStyle">，</span>
+            <span class="queryStyle">待银行查账提成金额：</span><span class="textColor">{{topData.repaidBankAmt}}</span><span class="queryStyle"></span>
+          </span>
+          <span class="" v-if="form1.val1 == 2">
+            <span class="queryStyle">列表承诺还款金额：</span><span class="textColor">{{topData.repayAmtP}}</span><span class="queryStyle"></span>
+          </span>
         </span>
-        <span class="" v-if="form1.val1 == 1">
-          <span style="color: #66b1ff;font-size: 16px;">列表待银行查账金额：{{ topData.bankAmtC }}，</span>
-          <span style="color: #66b1ff;font-size: 16px;">待银行查账提成金额：{{ topData.repaidBankAmt }}</span>
-        </span>
-        <span class="" v-if="form1.val1 == 2">
-          <span style="color: #66b1ff;font-size: 16px;">列表承诺还款金额：{{ topData.repayAmtP }} </span>
-        </span>
-      </div>
+      </div>        
        <el-table highlight-current-row v-loading="tableLoad"
         ref="multipleTable"
         :data="tableData"

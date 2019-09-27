@@ -9,25 +9,28 @@
           {{caseDetail.name + '-[' + caseDetail.seqNo + ']-案件详情'}}
         </div>
         <div style="text-align: right; margin-right:20px;" >
-          <el-button type="primary" align="right" size="mini" @click="lastCase" v-if="showNext">上条</el-button>
-          <el-button type="primary" align="right" size="mini" @click="nextCase"  v-if="showNext">下条</el-button>
-          <el-button type="primary" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showEdit">编辑</el-button>
-          <el-button type="primary" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showCommentVisible=true">评语</el-button>
-          <el-button type="primary" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showWarningVisible=true">警告</el-button>
-          <el-button type="primary" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showCollectInfo">催收小结</el-button>
+          <el-button type="primary" class="btn" align="right" size="mini" @click="lastCase" v-if="showNext">上条</el-button>
+          <el-button type="primary" class="btn" align="right" size="mini" @click="nextCase"  v-if="showNext">下条</el-button>
+          <el-button type="primary" class="btn" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showEdit">编辑</el-button>
+          <el-button type="primary" class="btn" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showCommentVisible=true">评语</el-button>
+          <el-button type="primary" class="btn" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showWarningVisible=true">警告</el-button>
+          <el-button type="primary" class="btn" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showCollectInfo">催收小结</el-button>
         </div>
       </div>
       <div class="items-wrap">
         <el-form
           :model="caseDetail"
           ref="ruleForm"
-          label-width="130px"
           class="rule-form"
         >
-          <el-form-item label="姓名" >
+          <!-- label-width="130px" -->
+   <div class="form1">
+     <div class="itemStyle">
+          <el-form-item label="姓名" class="lableStyle_name">
             <!-- <el-input v-model="caseDetail.name" :disabled="true" ></el-input>-->
+          </el-form-item>
             <div
-              class="inputDiv"
+              class="inputDiv fixwidth"
               style="font-size: 11px;"
             >
                 <span :class="[
@@ -35,27 +38,37 @@
                       { red: caseDetail.color === 'RED' }
                     ]">{{ caseDetail.name}}{{caseDetail.gender ? `（${caseDetail.gender}）` : ''}}</span>
             </div>
+     </div>     
+            <!-- <div class="sub-title">委托方</div> -->
+        <div class="itemStyle">
+          <el-form-item label="委托方" class="lableStyle">
           </el-form-item>
-          <el-form-item label="委托方">
-            <el-input v-model="caseDetail.client" :disabled="true"></el-input>
+            <el-input v-model="caseDetail.client" :disabled="true" class="fixwidth"></el-input>
+        </div>
+        <div class="itemStyle">
+          <el-form-item label="批次号" class="lableStyle">
           </el-form-item>
-          <el-form-item label="批次号">
             <el-input
               v-model="caseDetail.batchNo"
               :disabled="true"
+              class="fixwidth"
             ></el-input>
+        </div>
+       <div class="itemStyle">
+          <el-form-item label="委案日期" class="lableStyle_date">
           </el-form-item>
-          <el-form-item label="委案日期">
             <div
-              class="inputDiv"
+              class="inputDiv fixwidth"
               style="font-size: 11px;"
             >
               <span>{{ caseDetail.caseDate }}</span>
             </div>
+       </div>
+       <div class="itemStyle">        
+          <el-form-item label="证件号" class="lableStyle">
           </el-form-item>
-          <el-form-item label="证件号" >
             <div
-              class="inputDiv"
+              class="inputDiv fixwidth"
               style="font-size: 11px;"
               :class="[caseDetail.copyAuth ? '' : 'inputUnSelect']"
             >
@@ -64,50 +77,67 @@
                       { red: caseDetail.color === 'RED' }
                     ]">{{ caseDetail.identNo }}</span>
             </div>
+       </div>        
+         <div class="itemStyle">
+           <el-form-item label="卡号" class="lableStyle">
           </el-form-item>
+            <el-input v-model="caseDetail.cardNo" :disabled="true" class="fixwidth"></el-input>
+         </div>
 
-          <el-form-item label="卡号">
-            <el-input v-model="caseDetail.cardNo" :disabled="true"></el-input>
+         <div class="itemStyle">
+          <el-form-item label="催收状态" class="lableStyle_blue">
           </el-form-item>
-          <el-form-item label="催收状态">
             <el-input
               v-model="caseDetail.collectStatusMsg"
               :disabled="true"
+              class="fixwidth"
             ></el-input>
+         </div>
+         <div class="itemStyle">
+          <el-form-item label="预计退案日" class="lableStyle">
           </el-form-item>
-          <el-form-item label="预计退案日">
             <div
-              class="inputDiv"
+              class="inputDiv fixwidth"
               style="font-size: 11px;"
             >
               <span v-if="caseDetail.realReturnTime==null || caseDetail.realReturnTime==''">{{ caseDetail.expectTime }}</span>
               <span v-else>{{ caseDetail.expectTime }}（已于{{caseDetail.realReturnTime}}退案）</span>
             </div>
+         </div>
+         <div class="itemStyle">
+          <el-form-item label="委案金额" class="lableStyle_blue">
           </el-form-item>
-          <el-form-item label="委案金额">
-            <el-input v-model="caseDetail.moneyMsg" :disabled="true"></el-input>
+            <el-input v-model="caseDetail.moneyMsg" :disabled="true"  class="fixwidth"></el-input>
+         </div>
+         <div class="itemStyle">
+          <el-form-item label="逾期日期" class="lableStyle">
           </el-form-item>
-          <el-form-item label="逾期日期">
             <el-input
               v-model="caseDetail.overdueDate"
               :disabled="true"
+               class="fixwidth"
             ></el-input>
-          </el-form-item>
-          <el-form-item label="地区" >
+         </div>         
+         <div class="itemStyle">
+          <el-form-item label="地区" class="lableStyle">
+           </el-form-item>
             <div
-              class="inputDiv"
+              class="inputDiv fixwidth"
               style="font-size: 11px;"
             >
-                <span
-                >{{ caseDetail.provinceName }} {{ caseDetail.cityName }}</span>
+            <span>{{ caseDetail.provinceName }} {{ caseDetail.cityName }}</span>
             </div>
-            <!--<el-input v-model="caseDetail.area" :disabled="true"></el-input>-->
+         </div>
+         <div class="itemStyle">
+          <el-form-item label="催收员" class="lableStyle">
           </el-form-item>
-          <el-form-item label="催收员">
-            <el-input v-model="caseDetail.odv" :disabled="true"></el-input>
+            <el-input v-model="caseDetail.odv" :disabled="true" class="fixwidth"></el-input>
+         </div>
+
+         <div class="itemStyle">
+          <el-form-item label="已还款" class="lableStyle">
           </el-form-item>
-          <el-form-item label="已还款">
-            <div class="inputDiv" style="font-size: 12px;">
+            <div class="inputDiv fixwidth" style="font-size: 12px;">
                 <span
                 >{{ caseDetail.enRepayAmtMsg }}（委案余额:{{caseDetail.balanceMsg}}）</span
                 >
@@ -117,100 +147,128 @@
               >[{{ caseDetail.settleFlag }}]</span
               >
             </div>
+         </div>
+         <div class="itemStyle">
+          <el-form-item label="逾期账龄" class="lableStyle_blue">
           </el-form-item>
-          <el-form-item label="逾期账龄">
             <el-input
               v-model="caseDetail.accountAge"
               :disabled="true"
+              class="fixwidth"
             ></el-input>
+         </div>
+         <div class="itemStyle">
+          <el-form-item label="逾期期数" class="lableStyle">
           </el-form-item>
-          <el-form-item label="逾期期数" >
             <el-input
               v-model="caseDetail.overduePeriods"
               :disabled="true"
+              class="fixwidth"
             ></el-input>
-          </el-form-item>
-             <el-form-item label="最低还款额">
+         </div>
+         <div class="itemStyle">
+             <el-form-item label="最低还款额" class="lableStyle">
+              </el-form-item>
               <el-input
                 v-model="caseDetail.minimumPayment"
                 :disabled="true"
+                class="fixwidth"
               ></el-input>
-            </el-form-item>
-          <el-form-item label="最新欠款" >
+         </div>
+         <div class="itemStyle">
+          <el-form-item label="最新欠款" class="lableStyle_blue">
+          </el-form-item>
             <el-input
               v-model="caseDetail.interestDate"
               :disabled="true"
+              class="fixwidth"
             ></el-input>
+         </div>
+         <div class="itemStyle">
+          <el-form-item label="逾期天数" class="lableStyle">
           </el-form-item>
-          <el-form-item label="逾期天数">
-            <div class="inputDiv" style="font-size: 12px;">
+            <div class="inputDiv fixwidth" style="font-size: 12px;">
               <span>{{ caseDetail.overdueDays }}（最新逾期天数:{{caseDetail.overdueNewDays}}）</span>
             </div>
+         </div>
+         <div class="itemStyle">
+          <el-form-item label="已还期数" class="lableStyle">
           </el-form-item>
-          <el-form-item label="已还期数" >
             <el-input
               v-model="caseDetail.repaidPeriods"
               :disabled="true"
+              class="fixwidth"
             ></el-input>
+         </div>
+         <div class="itemStyle">
+          <el-form-item label="贷款日期" class="lableStyle">
           </el-form-item>
-          <el-form-item  >
-          </el-form-item>
-          <el-form-item >
-
-          </el-form-item>
-          <el-form-item label="贷款日期">
             <el-input
               v-model="caseDetail.loanDate"
               :disabled="true"
+              class="fixwidth"
             ></el-input>
+         </div>
+         <div class="itemStyle">
+          <el-form-item label="剩余本金" class="lableStyle">
           </el-form-item>
-          <el-form-item >
-          </el-form-item>
-          <el-form-item label="剩余本金">
             <el-input
               v-model="caseDetail.residualPrinciple"
               :disabled="true"
+              class="fixwidth"
             ></el-input>
+         </div>
+         <div class="itemStyle">
+          <el-form-item label="本金" class="lableStyle">
           </el-form-item>
-          <el-form-item label="本金">
             <el-input
               v-model="caseDetail.principle"
               :disabled="true"
+              class="fixwidth"
             ></el-input>
+         </div>
+         <div class="itemStyle">
+          <el-form-item label="每月还款" class="lableStyle">
           </el-form-item>
-          <el-form-item label="每月还款">
             <el-input
               v-model="caseDetail.monthlyRepayments"
               :disabled="true"
+              class="fixwidth"
             ></el-input>
+         </div>
+         <div class="itemStyle">
+            <el-form-item label="单位名称" class="lableStyle">
           </el-form-item>
-          <el-form-item >
-          </el-form-item>
-          <el-form-item >
-          </el-form-item>
-          <el-form-item >
-          </el-form-item>
-          <el-form-item label="单位名称" >
-            <div class="inputDiv" style="font-size: 12px;">
+            <div class="inputDiv fixwidth" style="font-size: 12px;">
               <span>{{ caseDetail.unitName}}</span>
             </div>
+         </div>
+         <div class="itemStyle">
+          <el-form-item label="单位地址" class="lableStyle">
           </el-form-item>
-          <el-form-item label="单位地址" >
-            <div class="inputDiv" style="font-size: 12px;">
+            <div class="inputDiv fixwidth" style="font-size: 12px;">
               <span>{{ caseDetail.unitAddress}}</span>
             </div>
+         </div>
+         <div class="itemStyle">
+          <el-form-item label="户籍地址" class="lableStyle">
           </el-form-item>
-          <el-form-item label="户籍地址" >
-            <div class="inputDiv" style="font-size: 12px;">
+            <div class="inputDiv fixwidth" style="font-size: 12px;">
               <span>{{ caseDetail.censusRegisterAddress}}</span>
             </div>
+         </div>
+         <div class="itemStyle">
+          <el-form-item label="家庭地址" class="lableStyle">
           </el-form-item>
-          <el-form-item label="家庭地址" >
-            <div class="inputDiv" style="font-size: 12px;">
+            <div class="inputDiv fixwidth" style="font-size: 12px;">
               <span>{{ caseDetail.homeAddress}}</span>
             </div>
-          </el-form-item>
+         </div>
+      <div class="pinyu1">
+         <div class="commentStyle">
+           <div class="pinyu">          
           <el-form-item label="最新评语" class="whole">
+          </el-form-item>           
             <div class="content-wrap">
               <el-popover
                 placement="bottom-start"
@@ -220,14 +278,7 @@
                 trigger="click"
                 v-model="addCommentVisible"
               >
-                <div>
-                  <el-input
-                    type="textarea"
-                    :rows="4"
-                    placeholder="请输入评语"
-                    v-model="commentAddContent"
-                  >
-                  </el-input>
+                <div>             
                   <el-radio-group
                     v-model="commentAddColor"
                     style="margin-top:10px;"
@@ -235,7 +286,6 @@
                     <el-radio label="黑">正常</el-radio>
                     <el-radio label="蓝">标蓝</el-radio>
                     <el-radio label="红">标红</el-radio>
-                    <!-- <el-radio label="">不更改</el-radio>-->
                   </el-radio-group>
                 </div>
                 <div style="text-align: right; margin-top: 12px">
@@ -277,13 +327,26 @@
                 </li>
               </ul>
             </div>
-          </el-form-item>
-
+          </div>
+          <div>
+                 <el-input
+                    type="textarea"
+                    :rows="1"
+                    placeholder="请输入评语"
+                    v-model="commentAddContent" 
+                    class="inputStyle"                 
+                  >
+                  </el-input>
+              </div>
+            </div>         
+         </div>
+    </div>
+            <!--<el-input v-model="caseDetail.area" :disabled="true"></el-input>-->
         </el-form>
       </div>
     </div>
     <el-collapse v-model="activeNames">
-      <el-collapse-item title="同批次共债案件" name="1">
+      <el-collapse-item title="同批次共债案件" name="1" class="titleStyle">
         <el-table
           highlight-current-row
           :data="dependCase"
@@ -311,7 +374,7 @@
           </el-table-column>
         </el-table>
       </el-collapse-item>
-      <el-collapse-item title="其他信息" name="2">
+      <el-collapse-item title="其他信息" name="2" class="titleStyle">
         <div class="items-wrap">
           <el-form
             :model="caseDetail"
@@ -319,873 +382,1262 @@
             label-width="130px"
             class="rule-form"
           >
-            <el-form-item label="证件类型">
-              <el-input v-model="caseDetail.identType" :disabled="true"></el-input>
+          <div class="style1" >
+            <div class="itemStyle">
+            <el-form-item label="证件类型" class="lableStyle">
             </el-form-item>
-            <el-form-item label="合同编号">
-              <el-input v-model="caseDetail.contractNo" :disabled="true"></el-input>
+              <el-input v-model="caseDetail.identType" :disabled="true" class="fixwidth"></el-input>
+            </div>
+            <div class="itemStyle">
+            <el-form-item label="合同编号" class="lableStyle">
             </el-form-item>
-            <el-form-item label="人民币">
-              <el-input v-model="caseDetail.rmb" :disabled="true"></el-input>
-            </el-form-item>
-            <el-form-item label="港币">
-              <el-input v-model="caseDetail.hkd" :disabled="true"></el-input>
-            </el-form-item>
-            <el-form-item label="外币">
+              <el-input v-model="caseDetail.contractNo" :disabled="true" class="fixwidth"></el-input>             
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="人民币" class="lableStyle">
+              </el-form-item>
+              <el-input v-model="caseDetail.rmb" :disabled="true" class="fixwidth"></el-input>             
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="港币" class="lableStyle">
+              </el-form-item>
+              <el-input v-model="caseDetail.hkd" :disabled="true" class="fixwidth"></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="外币" class="lableStyle">
+              </el-form-item>
               <el-input
                 v-model="caseDetail.foreignCurrency"
                 :disabled="true"
+                class="fixwidth"
               ></el-input>
-            </el-form-item>
-
-
-            <el-form-item label="币种">
-              <div class="inputDiv" style="font-size: 12px;">
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="币种" class="lableStyle">
+              </el-form-item>
+              <div class="inputDiv fixwidth" style="font-size: 12px;">
                 <span>{{ caseDetail.currencyType}}</span>
               </div>
-            </el-form-item>
-            <el-form-item label="M值系数">
-              <div class="inputDiv" style="font-size: 12px;">
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="M值系数" class="lableStyle">
+              </el-form-item>
+              <div class="inputDiv fixwidth" style="font-size: 12px;">
                 <span>{{ caseDetail.mVal}}</span>
               </div>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="公司佣金比率" class="lableStyle">
             </el-form-item>
-            <el-form-item label="公司佣金比率">
-              <div class="inputDiv" style="font-size: 12px;">
+              <div class="inputDiv fixwidth" style="font-size: 12px;">
                 <span>{{ caseDetail.commissionRate}}</span>
               </div>
-            </el-form-item>
-            <el-form-item label="公司佣金金额">
-              <div class="inputDiv" style="font-size: 12px;">
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="公司佣金金额" class="lableStyle">
+             </el-form-item>
+              <div class="inputDiv fixwidth" style="font-size: 12px;">
                 <span>{{ caseDetail.commissionMoney}}</span>
               </div>
-            </el-form-item>
-
-
-            <el-form-item label="催收手别">
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="催收手别" class="lableStyle">
+              </el-form-item>
               <el-input
                 v-model="caseDetail.collectHand"
                 :disabled="true"
+                class="fixwidth"
               ></el-input>
-            </el-form-item>
-            <el-form-item label="卡类">
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="卡类" class="lableStyle">
+              </el-form-item>
               <el-input
                 v-model="caseDetail.cardType"
                 :disabled="true"
+                class="fixwidth"
               ></el-input>
-            </el-form-item>
-
-
-
-
-            <el-form-item label="贷款利率">
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="贷款利率" class="lableStyle">
+              </el-form-item>
               <el-input
                 v-model="caseDetail.loanRate"
                 :disabled="true"
+                class="fixwidth"
               ></el-input>
-            </el-form-item>
-            <el-form-item label="车价">
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="车价" class="lableStyle">
+              </el-form-item>
               <el-input
                 v-model="caseDetail.cardModel"
                 :disabled="true"
+                class="fixwidth"
               ></el-input>
-            </el-form-item>
-            <el-form-item label="车价">
-              <el-input
-                v-model="caseDetail.cardPrice"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="车型">
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="车型" class="lableStyle">
+              </el-form-item>
               <el-input
                 v-model="caseDetail.cardModel"
                 :disabled="true"
+                class="fixwidth"
               ></el-input>
-            </el-form-item>
-            <el-form-item label="逾期金额">
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="逾期金额" class="lableStyle">
+              </el-form-item>
               <el-input
                 v-model="caseDetail.overdueMoney"
                 :disabled="true"
+                class="fixwidth"
               ></el-input>
-            </el-form-item>
-            <el-form-item label="逾期本金">
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="逾期本金" class="lableStyle">
+              </el-form-item>
               <el-input
                 v-model="caseDetail.overduePrinciple"
                 :disabled="true"
+                class="fixwidth"
               ></el-input>
-            </el-form-item>
-            <el-form-item label="逾期利息">
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="逾期利息" class="lableStyle">
+              </el-form-item>
               <el-input
                 v-model="caseDetail.overdueInterest"
                 :disabled="true"
+                class="fixwidth"
               ></el-input>
-            </el-form-item>
-            <el-form-item label="逾期罚息">
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="逾期罚息" class="lableStyle">
+              </el-form-item>
               <el-input
                 v-model="caseDetail.overdueDefaultInterest"
                 :disabled="true"
+                class="fixwidth"
               ></el-input>
-            </el-form-item>
-            <el-form-item label="违约金">
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="违约金" class="lableStyle">
+              </el-form-item>
               <el-input
                 v-model="caseDetail.penalty"
                 :disabled="true"
+                class="fixwidth"
               ></el-input>
-            </el-form-item>
-            <el-form-item label="滞纳金">
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="滞纳金" class="lableStyle">
+              </el-form-item>
               <el-input
                 v-model="caseDetail.lateFee"
                 :disabled="true"
+                class="fixwidth"
               ></el-input>
-            </el-form-item>
-            <el-form-item label="案人职位">
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="案人职位" class="lableStyle">
+              </el-form-item>
               <el-input
                 v-model="caseDetail.caseUserPosition"
                 :disabled="true"
+                class="fixwidth"
               ></el-input>
-            </el-form-item>
-            <el-form-item label="案人部门">
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="案人部门" class="lableStyle">
+              </el-form-item>
               <el-input
                 v-model="caseDetail.caseUserDepart"
                 :disabled="true"
+                class="fixwidth"
               ></el-input>
-            </el-form-item>
-            <el-form-item label="银行">
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="银行" class="lableStyle">
+              </el-form-item>
               <el-input
                 v-model="caseDetail.bank"
                 :disabled="true"
+                class="fixwidth"
               ></el-input>
-            </el-form-item>
-            <el-form-item label="账号">
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="银行" class="lableStyle">
+              </el-form-item>
+              <el-input
+                v-model="caseDetail.bank"
+                :disabled="true"
+                class="fixwidth"
+              ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="账号" class="lableStyle">
+              </el-form-item>
               <el-input
                 v-model="caseDetail.account"
                 :disabled="true"
+                class="fixwidth"
               ></el-input>
-            </el-form-item>
-            <el-form-item label="牌照号">
-              <el-input
-                v-model="caseDetail.license"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="品牌">
-              <el-input
-                v-model="caseDetail.brand"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="车架号">
-              <el-input
-                v-model="caseDetail.vin"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="发动机号">
+
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="牌照号" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.license"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="品牌" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.brand"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="车架号" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.vin"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="发动机号" class="lableStyle">
+              </el-form-item>
               <el-input
                 v-model="caseDetail.engineNo"
                 :disabled="true"
+                class="fixwidth"
               ></el-input>
-            </el-form-item>
-            <el-form-item label="经销商">
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="经销商" class="lableStyle">
+              </el-form-item>
               <el-input
                 v-model="caseDetail.dealer"
                 :disabled="true"
+                class="fixwidth"
               ></el-input>
+            </div>
+            <div class="itemStyle">             
+            <el-form-item label="手机" class="lableStyle">
             </el-form-item>
-            <el-form-item label="手机">
-              <el-input v-model="caseDetail.tel" :disabled="true"></el-input>
-            </el-form-item>
-            <el-form-item label="家庭号码">
+              <el-input v-model="caseDetail.tel" :disabled="true" class="fixwidth"></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="家庭号码" class="lableStyle">
+              </el-form-item>
               <el-input
                 v-model="caseDetail.homeTelNumber"
                 :disabled="true"
+                class="fixwidth"
               ></el-input>
-            </el-form-item>
-            <el-form-item label="单位号码">
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="单位号码" class="lableStyle">
+              </el-form-item>
               <el-input
                 v-model="caseDetail.unitTelNumber"
                 :disabled="true"
+                class="fixwidth"
               ></el-input>
-            </el-form-item>
-
-
-            <el-form-item label="对账单地址" class="whole">
-              <div class="inputDiv" style="font-size: 12px;">
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="对账单地址" class="whole lableStyle">
+              </el-form-item>
+              <div class="inputDiv fixwidth" style="font-size: 12px;">
                 <span>{{ caseDetail.statementAddress}}</span>
               </div>
-            </el-form-item>
-            <el-form-item label="承诺还款金额">
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="承诺还款金额" class="lableStyle">
+              </el-form-item>
               <el-input
                 v-model="caseDetail.proRepayAmt"
                 :disabled="true"
+                class="fixwidth"
               ></el-input>
-            </el-form-item>
-            <el-form-item label="待银行查账金额">
-              <el-input
-                v-model="caseDetail.bankAmt"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="委案期数">
-              <el-input
-                v-model="caseDetail.entrustPeriods"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="下次跟进日期" class="half">
-              <el-input
-                v-model="caseDetail.nextFollowDate"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="委托日期">
-              <el-date-picker
-                v-model="caseDetail.caseDate"
-                type="date"
-                :disabled="true"
-              ></el-date-picker>
-            </el-form-item>
-            <el-form-item label="跟进次数">
-              <el-input
-                v-model="caseDetail.collectTimes"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="催收区域">
-              <el-input
-                v-model="caseDetail.collectArea"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="待银行查账金额" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.bankAmt"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="委案期数" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.entrustPeriods"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="下次跟进日期" class="half lableStyle" >
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.nextFollowDate"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="委托日期" class="lableStyle">
+              </el-form-item>
+                <el-date-picker
+                  v-model="caseDetail.caseDate"
+                  type="date"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-date-picker>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="跟进次数" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.collectTimes"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="催收区域" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.collectArea"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="最近催记时间" class="lableStyle">
+              </el-form-item>
+                <el-date-picker
+                  v-model="caseDetail.latestCollectMomorize"
+                  :disabled="true"
+                  type="datetime"
+                  class="fixwidth"
+                ></el-date-picker>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="最后外访" class="lableStyle">
+              </el-form-item>
+                <div class="inputDiv fixwidth" style="font-size: 12px;">
+                  <span>{{ caseDetail.zhwf}}</span>
+                </div>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="自动收回时间" class="lableStyle">
+              </el-form-item>
+                <el-date-picker
+                  v-model="caseDetail.zdshsj"
+                  type="datetime"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-date-picker>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="催收小结" class="width-75 lableStyle">
+              </el-form-item>
+                <div class="inputDiv fixwidth" style="font-size: 12px;">
+                  <span>{{ caseDetail.collectInfo }}</span>
+                </div>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="分配时间" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.distributeTime"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="分配历史" class="lableStyle">
+              </el-form-item>
+                <div class="inputDiv fixwidth" style="font-size: 12px;">
+                  <span>{{ caseDetail.distributeHistory}}</span>
+                </div>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="家庭邮编" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.homeZipCode"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="单位邮编" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.unitZipCode"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
 
-            <el-form-item label="最近催记时间">
-              <el-date-picker
-                v-model="caseDetail.latestCollectMomorize"
-                :disabled="true"
-                type="datetime"
-              ></el-date-picker>
-            </el-form-item>
-            <el-form-item label="最后外访">
-              <div class="inputDiv" style="font-size: 12px;">
-                <span>{{ caseDetail.zhwf}}</span>
-              </div>
-            </el-form-item>
-            <el-form-item label="自动收回时间">
-              <el-date-picker
-                v-model="caseDetail.zdshsj"
-                type="datetime"
-                :disabled="true"
-              ></el-date-picker>
-            </el-form-item>
-            <el-form-item label="催收小结" class="width-75">
-              <div class="inputDiv" style="font-size: 12px;">
-                <span>{{ caseDetail.collectInfo }}</span>
-              </div>
-            </el-form-item>
-            <el-form-item label="分配时间">
-              <el-input
-                v-model="caseDetail.distributeTime"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="分配历史">
-              <div class="inputDiv" style="font-size: 12px;">
-                <span>{{ caseDetail.distributeHistory}}</span>
-              </div>
-            </el-form-item>
-            <el-form-item label="家庭邮编">
-              <el-input
-                v-model="caseDetail.homeZipCode"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="单位邮编">
-              <el-input
-                v-model="caseDetail.unitZipCode"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="对账邮编">
-              <el-input
-                v-model="caseDetail.statementZipCode"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="户籍邮编">
-              <el-input
-                v-model="caseDetail.censusRegisterZipCode"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="对账单邮编">
-              <el-input
-                v-model="caseDetail.statementZipCode"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="户籍地邮编">
-              <el-input
-                v-model="caseDetail.censusRegisterZipCode"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="开户行">
-              <el-input v-model="caseDetail.bank" :disabled="true"></el-input>
-            </el-form-item>
-            <el-form-item label="主副卡">
-              <el-input
-                v-model="caseDetail.mainDeputyCard"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="副卡卡人">
-              <el-input
-                v-model="caseDetail.deputyCardUserName"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="未出账金额">
-              <el-input
-                v-model="caseDetail.outstandingAmount"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="账单日">
-              <el-input
-                v-model="caseDetail.billDate"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="账单周期">
-              <el-input
-                v-model="caseDetail.billCycle"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="固定额度">
-              <el-input
-                v-model="caseDetail.fixedQuota"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="最后消费日">
-              <el-input
-                v-model="caseDetail.lastConsumeDate"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="最后提现日">
-              <el-input
-                v-model="caseDetail.lastWithdrawDate"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="停卡日">
-              <el-input
-                v-model="caseDetail.stopCardDate"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="开卡日">
-              <el-input
-                v-model="caseDetail.activeCardDate"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="对账邮编" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.statementZipCode"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="户籍邮编" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.censusRegisterZipCode"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="对账单邮编" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.statementZipCode"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="户籍地邮编" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.censusRegisterZipCode"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="开户行" class="lableStyle">
+              </el-form-item>
+              <el-input v-model="caseDetail.bank" :disabled="true" class="fixwidth"></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="主副卡" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.mainDeputyCard"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="副卡卡人" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.deputyCardUserName"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="未出账金额" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.outstandingAmount"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="账单日" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.billDate"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="账单周期" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.billCycle"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="固定额度" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.fixedQuota"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="最后消费日" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.lastConsumeDate"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="最后提现日" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.lastWithdrawDate"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="停卡日" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.stopCardDate"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="开卡日" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.activeCardDate"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="曾逾期次数" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.overdueTimes"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="保证金" class="lableStyle">
+              </el-form-item>
+                <el-input v-model="caseDetail.bail" :disabled="true" class="fixwidth"></el-input>
 
-            <el-form-item label="曾逾期次数">
-              <el-input
-                v-model="caseDetail.overdueTimes"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="保证金">
-              <el-input v-model="caseDetail.bail" :disabled="true"></el-input>
-            </el-form-item>
-            <el-form-item label="超限费">
-              <el-input
-                v-model="caseDetail.overrunFee"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="公司佣金">
-              <el-input
-                v-model="caseDetail.commissionMoney"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="还款期限">
-              <el-input
-                v-model="caseDetail.repayDeadline"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="逾期管理费">
-              <el-input
-                v-model="caseDetail.overdueManagementCost"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="信用额度">
-              <el-input
-                v-model="caseDetail.creditLine"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="信贷分类">
-              <el-input
-                v-model="caseDetail.loanType"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="拖欠级别">
-              <el-input
-                v-model="caseDetail.defaultLevel"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="最后还款金额">
-              <el-input
-                v-model="caseDetail.lastRepayMoney"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="最后还款日">
-              <el-input
-                v-model="caseDetail.lastRepayDate"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="账户名称">
-              <el-input
-                v-model="caseDetail.accountName"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="超限费" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.overrunFee"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="公司佣金" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.commissionMoney"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="还款期限" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.repayDeadline"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="逾期管理费" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.overdueManagementCost"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="信用额度" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.creditLine"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="信贷分类" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.loanType"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="拖欠级别" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.defaultLevel"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="最后还款金额" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.lastRepayMoney"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="最后还款日" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.lastRepayDate"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="账户名称" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.accountName"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="催收分类" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.collectionType"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="贷款截止日" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.loanDeadline"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="生日" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.birthday"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="年龄" class="lableStyle">
+              </el-form-item>
+                <el-input v-model="caseDetail.age" :disabled="true" class="fixwidth"></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="QQ" class="lableStyle">
+              </el-form-item>
+                <el-input v-model="caseDetail.qq" :disabled="true" class="fixwidth"></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="邮箱" class="lableStyle">
+              </el-form-item>
+                <el-input v-model="caseDetail.email" :disabled="true" class="fixwidth"></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="职位" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.caseUserPosition"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
 
-            <el-form-item label="催收分类">
-              <el-input
-                v-model="caseDetail.collectionType"
-                :disabled="true"
-              ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="部门" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.caseUserDepart"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="商品" class="lableStyle">
+              </el-form-item>
+                <el-input v-model="caseDetail.goods" :disabled="true" class="fixwidth"></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="商户" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.commercialTenant"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="申请单号" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.applyOrderNo"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="档案号" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.archiveNo"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+            <el-form-item label="省份" class="lableStyle">
             </el-form-item>
-            <el-form-item label="贷款截止日">
-              <el-input
-                v-model="caseDetail.loanDeadline"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="生日">
-              <el-input
-                v-model="caseDetail.birthday"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="年龄">
-              <el-input v-model="caseDetail.age" :disabled="true"></el-input>
-            </el-form-item>
-            <el-form-item label="QQ">
-              <el-input v-model="caseDetail.qq" :disabled="true"></el-input>
-            </el-form-item>
-            <el-form-item label="邮箱">
-              <el-input v-model="caseDetail.email" :disabled="true"></el-input>
-            </el-form-item>
-            <el-form-item label="职位">
-              <el-input
-                v-model="caseDetail.caseUserPosition"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="部门">
-              <el-input
-                v-model="caseDetail.caseUserDepart"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="商品">
-              <el-input v-model="caseDetail.goods" :disabled="true"></el-input>
-            </el-form-item>
-            <el-form-item label="商户">
-              <el-input
-                v-model="caseDetail.commercialTenant"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="申请单号">
-              <el-input
-                v-model="caseDetail.applyOrderNo"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="档案号">
-              <el-input
-                v-model="caseDetail.archiveNo"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="省份">
               <el-input
                 v-model="caseDetail.provinceName"
                 :disabled="true"
+                class="fixwidth"
               ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="城市" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.cityName"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="区县" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.countyName"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="警告" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.warning"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+        
+            <div class="itemStyle">
+              <el-form-item label="社保电脑号" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.socialSecurityComputerNo"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="社保卡号" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.socialSecurityCardNo"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="保单到期日" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.policyExpiryDate"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人1姓名" class="lableStyle">
+                <el-input
+                  v-model="caseDetail.contactName1"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+              </el-form-item>
+
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人1证件" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.contactIdentNo1"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人1家庭电话" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.contactHomeTel1"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人1单位电话" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.contactUnitTel1"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人1手机" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.contactMobile1"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人1单位" class="lableStyle">
+                <div class="inputDiv fixwidth" style="font-size: 12px;">
+                  <span>{{ caseDetail.contactUnit1}}</span>
+                </div>
+              </el-form-item>
+
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人1地址" class="lableStyle">
+              </el-form-item>
+                <div class="inputDiv fixwidth" style="font-size: 12px;">
+                  <span>{{ caseDetail.contactAddress1}}</span>
+                </div>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人2姓名" class="lableStyle">
+                <el-input
+                  v-model="caseDetail.contactName2"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+              </el-form-item>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人2证件" class="lableStyle">
+                <el-input
+                  v-model="caseDetail.contactIdentNo2"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+              </el-form-item>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人2家庭电话" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.contactHomeTel2"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人2单位电话" class="lableStyle">
+                <el-input
+                  v-model="caseDetail.contactUnitTel2"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+              </el-form-item>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人2手机" class="lableStyle">
+              </el-form-item>             
+                <el-input
+                  v-model="caseDetail.contactMobile2"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人2单位" class="lableStyle">
+              </el-form-item>
+                <div class="inputDiv fixwidth" style="font-size: 12px;">
+                  <span>{{ caseDetail.contactUnit2}}</span>
+                </div>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人2地址" class="lableStyle">
+                <div class="inputDiv fixwidth" style="font-size: 12px;">
+                  <span>{{ caseDetail.contactAddress2}}</span>
+                </div>
+              </el-form-item>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人3姓名" class="lableStyle">
+                <el-input
+                  v-model="caseDetail.contactName3"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+              </el-form-item>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人3证件" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.contactIdentNo3"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人3家庭电话" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.contactHomeTel3"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+            <el-form-item label="联系人3单位电话" class="lableStyle">
             </el-form-item>
-            <el-form-item label="城市">
-              <el-input
-                v-model="caseDetail.cityName"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="区县">
-              <el-input
-                v-model="caseDetail.countyName"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="警告">
-              <el-input
-                v-model="caseDetail.warning"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="社保电脑号">
-              <el-input
-                v-model="caseDetail.socialSecurityComputerNo"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="社保卡号">
-              <el-input
-                v-model="caseDetail.socialSecurityCardNo"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="保单到期日">
-              <el-input
-                v-model="caseDetail.policyExpiryDate"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="联系人1姓名">
-              <el-input
-                v-model="caseDetail.contactName1"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="联系人1证件">
-              <el-input
-                v-model="caseDetail.contactIdentNo1"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="联系人1家庭电话">
-              <el-input
-                v-model="caseDetail.contactHomeTel1"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="联系人1单位电话">
-              <el-input
-                v-model="caseDetail.contactUnitTel1"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="联系人1手机">
-              <el-input
-                v-model="caseDetail.contactMobile1"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="联系人1单位">
-              <div class="inputDiv" style="font-size: 12px;">
-                <span>{{ caseDetail.contactUnit1}}</span>
-              </div>
-            </el-form-item>
-            <el-form-item label="联系人1地址">
-              <div class="inputDiv" style="font-size: 12px;">
-                <span>{{ caseDetail.contactAddress1}}</span>
-              </div>
-            </el-form-item>
-            <el-form-item label=""></el-form-item>
-            <el-form-item label="联系人2姓名">
-              <el-input
-                v-model="caseDetail.contactName2"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="联系人2证件">
-              <el-input
-                v-model="caseDetail.contactIdentNo2"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="联系人2家庭电话">
-              <el-input
-                v-model="caseDetail.contactHomeTel2"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="联系人2单位电话">
-              <el-input
-                v-model="caseDetail.contactUnitTel2"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="联系人2手机">
-              <el-input
-                v-model="caseDetail.contactMobile2"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="联系人2单位">
-              <div class="inputDiv" style="font-size: 12px;">
-                <span>{{ caseDetail.contactUnit2}}</span>
-              </div>
-            </el-form-item>
-            <el-form-item label="联系人2地址">
-              <div class="inputDiv" style="font-size: 12px;">
-                <span>{{ caseDetail.contactAddress2}}</span>
-              </div>
-            </el-form-item>
-            <el-form-item label=""></el-form-item>
-            <el-form-item label="联系人3姓名">
-              <el-input
-                v-model="caseDetail.contactName3"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="联系人3证件">
-              <el-input
-                v-model="caseDetail.contactIdentNo3"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="联系人3家庭电话">
-              <el-input
-                v-model="caseDetail.contactHomeTel3"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="联系人3单位电话">
               <el-input
                 v-model="caseDetail.contactUnitTel3"
                 :disabled="true"
+                class="fixwidth"
               ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人3手机" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.contactMobile3"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人3单位" class="lableStyle">
+              </el-form-item>
+                <div class="inputDiv fixwidth" style="font-size: 12px;">
+                  <span>{{ caseDetail.contactUnit3}}</span>
+                </div>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人3地址" class="lableStyle">
+              </el-form-item>
+                <div class="inputDiv fixwidth" style="font-size: 12px;">
+                  <span>{{ caseDetail.contactAddress3}}</span>
+                </div>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人4姓名" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.contactName4"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人4证件" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.contactIdentNo4"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人4家庭电话" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.contactHomeTel4"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人4单位电话" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.contactUnitTel4"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人4手机" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.contactMobile4"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+            <el-form-item label="联系人4单位" class="lableStyle">
             </el-form-item>
-            <el-form-item label="联系人3手机">
-              <el-input
-                v-model="caseDetail.contactMobile3"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="联系人3单位">
-              <div class="inputDiv" style="font-size: 12px;">
-                <span>{{ caseDetail.contactUnit3}}</span>
-              </div>
-            </el-form-item>
-            <el-form-item label="联系人3地址">
-              <div class="inputDiv" style="font-size: 12px;">
-                <span>{{ caseDetail.contactAddress3}}</span>
-              </div>
-            </el-form-item>
-            <el-form-item label=""></el-form-item>
-            <el-form-item label="联系人4姓名">
-              <el-input
-                v-model="caseDetail.contactName4"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="联系人4证件">
-              <el-input
-                v-model="caseDetail.contactIdentNo4"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="联系人4家庭电话">
-              <el-input
-                v-model="caseDetail.contactHomeTel4"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="联系人4单位电话">
-              <el-input
-                v-model="caseDetail.contactUnitTel4"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="联系人4手机">
-              <el-input
-                v-model="caseDetail.contactMobile4"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="联系人4单位">
-              <div class="inputDiv" style="font-size: 12px;">
+              <div class="inputDiv fixwidth" style="font-size: 12px;">
                 <span>{{ caseDetail.contactUnit4}}</span>
               </div>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人4地址" class="lableStyle">
+              </el-form-item>
+                <div class="inputDiv fixwidth" style="font-size: 12px;">
+                  <span>{{ caseDetail.contactAddress4}}</span>
+                </div>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人5姓名" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.contactName5"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人5证件" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.contactIdentNo5"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人5家庭电话" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.contactHomeTel5"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人5单位电话" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.contactUnitTel5"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人5手机" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.contactMobile5"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人5单位" class="lableStyle">
+              </el-form-item>
+                <div class="inputDiv fixwidth" style="font-size: 12px;">
+                  <span>{{ caseDetail.contactUnit5}}</span>
+                </div>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人5地址" class="lableStyle">
+              </el-form-item>
+                <div class="inputDiv fixwidth" style="font-size: 12px;">
+                  <span>{{ caseDetail.contactAddress5}}</span>
+                </div>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人6姓名" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.contactName6"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人6证件" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.contactIdentNo6"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人6家庭电话" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.contactHomeTel6"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人6单位电话" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.contactUnitTel6"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人6手机" class="lableStyle">
+              </el-form-item>
+                <el-input
+                  v-model="caseDetail.contactMobile6"
+                  :disabled="true"
+                  class="fixwidth"
+                ></el-input>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人6单位" class="lableStyle">
+              </el-form-item>
+                <div class="inputDiv fixwidth" style="font-size: 12px;">
+                  <span>{{ caseDetail.contactUnit6}}</span>
+                </div>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="联系人6地址" class="lableStyle">
+              </el-form-item>
+                <div class="inputDiv fixwidth" style="font-size: 12px;">
+                  <span>{{ caseDetail.contactAddress6}}</span>
+                </div>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="原催收记录" class="lableStyle">
+              </el-form-item>
+                <div class="inputDiv fixwidth" style="font-size: 12px;">
+                  <span>{{ caseDetail.lastCollectionRecord}}</span>
+                </div>
+            </div>
+            <div class="itemStyle">
+            <el-form-item label="备注1" class="lableStyle">
             </el-form-item>
-            <el-form-item label="联系人4地址">
-              <div class="inputDiv" style="font-size: 12px;">
-                <span>{{ caseDetail.contactAddress4}}</span>
-              </div>
-            </el-form-item>
-            <el-form-item label=""></el-form-item>
-            <el-form-item label="联系人5姓名">
-              <el-input
-                v-model="caseDetail.contactName5"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="联系人5证件">
-              <el-input
-                v-model="caseDetail.contactIdentNo5"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="联系人5家庭电话">
-              <el-input
-                v-model="caseDetail.contactHomeTel5"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="联系人5单位电话">
-              <el-input
-                v-model="caseDetail.contactUnitTel5"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="联系人5手机">
-              <el-input
-                v-model="caseDetail.contactMobile5"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="联系人5单位">
-              <div class="inputDiv" style="font-size: 12px;">
-                <span>{{ caseDetail.contactUnit5}}</span>
-              </div>
-            </el-form-item>
-            <el-form-item label="联系人5地址">
-              <div class="inputDiv" style="font-size: 12px;">
-                <span>{{ caseDetail.contactAddress5}}</span>
-              </div>
-            </el-form-item>
-            <el-form-item label=""></el-form-item>
-            <el-form-item label="联系人6姓名">
-              <el-input
-                v-model="caseDetail.contactName6"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="联系人6证件">
-              <el-input
-                v-model="caseDetail.contactIdentNo6"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="联系人6家庭电话">
-              <el-input
-                v-model="caseDetail.contactHomeTel6"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="联系人6单位电话">
-              <el-input
-                v-model="caseDetail.contactUnitTel6"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="联系人6手机">
-              <el-input
-                v-model="caseDetail.contactMobile6"
-                :disabled="true"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="联系人6单位">
-              <div class="inputDiv" style="font-size: 12px;">
-                <span>{{ caseDetail.contactUnit6}}</span>
-              </div>
-            </el-form-item>
-            <el-form-item label="联系人6地址">
-              <div class="inputDiv" style="font-size: 12px;">
-                <span>{{ caseDetail.contactAddress6}}</span>
-              </div>
-            </el-form-item>
-            <el-form-item label="原催收记录">
-              <div class="inputDiv" style="font-size: 12px;">
-                <span>{{ caseDetail.lastCollectionRecord}}</span>
-              </div>
-            </el-form-item>
-            <el-form-item label="备注1">
-              <div class="inputDiv" style="font-size: 12px;">
+              <div class="inputDiv fixwidth beizhu" style="font-size: 12px;">
                 <span>{{ caseDetail.remark1}}</span>
               </div>
-            </el-form-item>
-            <el-form-item label="备注2">
-              <div class="inputDiv" style="font-size: 12px;">
-                <span>{{ caseDetail.remark2 }}</span>
-              </div>
-            </el-form-item>
-            <el-form-item label="备注3">
-              <div class="inputDiv" style="font-size: 12px;">
-                <span>{{ caseDetail.remark3}}</span>
-              </div>
-            </el-form-item>
-            <el-form-item label="备注4">
-              <div class="inputDiv" style="font-size: 12px;">
-                <span>{{ caseDetail.remark4}}</span>
-              </div>
-            </el-form-item>
-            <el-form-item label="备注5">
-              <div class="inputDiv" style="font-size: 12px;">
-                <span>{{ caseDetail.remark5}}</span>
-              </div>
-            </el-form-item>
-            <el-form-item label="备注6">
-              <div class="inputDiv" style="font-size: 12px;">
-                <span>{{ caseDetail.remark6}}</span>
-              </div>
-            </el-form-item>
-            <el-form-item label="附件" class="upload-wrap">
-              <el-popover
-                placement="right"
-                title="附件列表"
-                width="500"
-                trigger="click"
-                v-model="uploadVisible"
-              >
-                <el-upload
-                  class="upload-demo upload-btn"
-                  :action="action + '/dataFile/save/import'"
-                  :headers="header"
-                  :show-file-list="false"
-                  :on-success="uploadSuccess"
-                  :data="{ caseId: id }"
-                >
-                  <el-button
-                    style="position:absolute;top:10px;right:10px;"
-                    size="mini"
-                    type="primary"
-                  >上传附件
-                  </el-button
-                  >
-                </el-upload>
-                <el-table
-                  :data="uploadFileList"
-                  border
-                  stripe
-                  width="100%"
-                  :show-header="false"
-                >
-                  <el-table-column
-                    prop="fileName"
-                    label="文件名"
-                  ></el-table-column>
-                </el-table>
-                <el-button type="text" class="upload-btn" slot="reference"
-                >附件列表
-                </el-button
-                >
-              </el-popover>
-            </el-form-item>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="备注2" class="lableStyle">
+              </el-form-item>
+                <div class="inputDiv fixwidth" style="font-size: 12px;">
+                  <span>{{ caseDetail.remark2 }}</span>
+                </div>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="备注3" class="lableStyle">
+              </el-form-item>
+                <div class="inputDiv fixwidth " style="font-size: 12px;">
+                  <span>{{ caseDetail.remark3}}</span>
+                </div>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="备注4" class="lableStyle">
+              </el-form-item>
+                <div class="inputDiv fixwidth" style="font-size: 12px;">
+                  <span>{{ caseDetail.remark4}}</span>
+                </div>
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="备注5" class="lableStyle">
+              </el-form-item>
+                <div class="inputDiv fixwidth" style="font-size: 12px;">
+                  <span>{{ caseDetail.remark5}}</span>
+                </div>
+
+            </div>
+            <div class="itemStyle">
+              <el-form-item label="备注6" class="lableStyle">
+              </el-form-item>
+                <div class="inputDiv fixwidth " style="font-size: 12px;">
+                  <span>{{ caseDetail.remark6}}</span>
+                </div>
+            </div>
+            </div>              
+            <div class="fujian">
+                  <el-form-item label="附件" class="upload-wrap">
+                    <el-popover
+                      placement="right"
+                      title="附件列表"
+                      width="500"
+                      trigger="click"
+                      v-model="uploadVisible"
+                    >
+                      <el-upload
+                        class="upload-demo upload-btn"
+                        :action="action + '/dataFile/save/import'"
+                        :headers="header"
+                        :show-file-list="false"
+                        :on-success="uploadSuccess"
+                        :data="{ caseId: id }"
+                      >
+                        <el-button
+                          style="position:absolute;top:10px;right:10px;"
+                          size="mini"
+                          type="primary"
+                        >上传附件
+                        </el-button
+                        >
+                      </el-upload>
+                      <el-table
+                        :data="uploadFileList"
+                        border
+                        stripe
+                        width="100%"
+                        :show-header="false"
+                      >
+                        <el-table-column
+                          prop="fileName"
+                          label="文件名"
+                        ></el-table-column>
+                      </el-table>
+                      <el-button type="text" class="upload-btn" slot="reference"
+                      >附件列表
+                      </el-button
+                      >
+                    </el-popover>
+                  </el-form-item>
+            </div>         
           </el-form>
         </div>
       </el-collapse-item>
@@ -1226,20 +1678,21 @@
                   <el-button
                     type="primary"
                     @click="sendTelBatch"
+                    class="btn"
                   >手机批量呼出
                     <!-- v-if=" caseDetail.currentuser || mycaseFlag" -->
                   </el-button>
                   <el-button
-                    class="sendTel4Style"
+                    class="sendTel4Style btn"
                     type="primary"
                     @click="sendTelBatch2"
                   >座机批量呼出
                     <!-- v-if=" caseDetail.currentuser || mycaseFlag" -->
                   </el-button>
                   <el-button
-                    class="addPhoneStyle"
+                    class="addPhoneStyle btn"
                     type="primary"
-                    @click="addPhone"
+                    @click="addPhone"                   
                   >新增电话
                     <!-- v-if=" caseDetail.currentuser || mycaseFlag" -->
                   </el-button
@@ -1278,6 +1731,7 @@
                       >
                     </div>
                     <el-button type="primary" slot="reference"
+                    class="btn"
                     >批量新增电话
                     </el-button
                     >
@@ -1287,6 +1741,7 @@
                     type="primary"
                     @click="_synchroSameTel"
                     v-if=" caseDetail.currentuser || mycaseFlag"
+                    class="btn"
                   >同步共债
                   </el-button
                   >
@@ -1310,6 +1765,7 @@
                 <el-table-column prop="tel" label="电话">
                   <template slot-scope="scope">
                     <el-button
+                      class="fontColor"
                       type="text"
                       size="small"
                       @click="
@@ -1338,9 +1794,11 @@
                       slot="reference"
                       type="text"
                       @click="showHistoryTel(scope.row)"
+                      class="fontColor"
                     >历史记录
                     </el-button>
                     <el-button
+                      class="fontColor"
                       type="text"
                       @click="editPhone(scope.row)"
                       v-if="
@@ -1351,6 +1809,7 @@
                     </el-button
                     >
                     <el-button
+                      class="fontColor"
                       type="text"
                       @click="deleteTel(scope.row.id)"
                       v-if="
@@ -1361,6 +1820,7 @@
                     </el-button
                     >
                     <el-button
+                      class="fontColor"
                       type="text"
                       v-if="
                             scope.row.telStatusMsg !== '停止跟进'
@@ -1372,6 +1832,7 @@
                     </el-button
                     >
                     <el-button
+                      class="fontColor"
                       type="text"
                       v-if="
                             scope.row.telStatusMsg == '停止跟进'
@@ -1411,6 +1872,7 @@
                 </div>
                 <div class="right-oper">
                   <el-button
+                    class="btn"
                     type="primary"
                     @click="addAddr"
                     v-if=" caseDetail.currentuser || mycaseFlag"
@@ -1630,6 +2092,7 @@
                     type="primary"
                     @click="onClickAddArchive"
                     v-if=" caseDetail.currentuser || mycaseFlag"
+                    class="btn"
                   >新增案人数据
                   </el-button
                   >
@@ -1691,6 +2154,7 @@
                 </div>
                 <div class="right-oper">
                   <el-button
+                    class="btn"
                     type="primary"
                     @click="addDataCollect"
                     v-if=" caseDetail.currentuser || mycaseFlag"
@@ -1698,6 +2162,7 @@
                   </el-button
                   >
                   <el-button
+                    class="btn"
                     type="primary"
                     @click="_expDataCollect"
                     v-if=" caseDetail.currentuser || mycaseFlag"
@@ -2040,7 +2505,7 @@
               <div class="second">
                 <p style="line-height: 30px">
                   待银行查账记录
-                  <el-button type="text" @click="addCpInfo">新增</el-button>
+                  <el-button type="text" @click="addCpInfo" class="fontColor">新增</el-button>
                 </p>
                 <el-table highlight-current-row width="100%;" border stripe show-overflow-tooltip :data="cpList">
                   <el-table-column
@@ -2117,6 +2582,7 @@
                 </div>
                 <div class="right-oper">
                   <el-button
+                    class="btn"
                     type="primary"
                     @click="showSynergyApply"
                     v-if=" caseDetail.currentuser || mycaseFlag"
@@ -2124,6 +2590,7 @@
                   </el-button
                   >
                   <el-button
+                    class="btn"
                     type="primary"
                     @click="showSynergyResult"
                     v-if=" caseDetail.currentuser || mycaseFlag"
@@ -2314,6 +2781,7 @@
                   <template slot-scope="scope">
                     <el-button type="text" v-if="caseDetail.deleteAuth"
                                @click="delOpLog(scope.row)"
+                               class="fontColor"
                     >删除
                     </el-button
                     >
@@ -2326,6 +2794,7 @@
                 <div class="left-oper"></div>
                 <div class="right-oper">
                   <el-button
+                    class="btn"
                     type="primary"
                     @click="litigationApply"
                     v-if=" caseDetail.currentuser || mycaseFlag"
@@ -2428,6 +2897,7 @@
                 <div class="left-oper"></div>
                 <div class="right-oper">
                   <el-button
+                    class="btn"
                     type="primary"
                     v-if=" caseDetail.currentuser || mycaseFlag"
                     @click="showadddialogVisible"
@@ -2578,6 +3048,7 @@
                 style="float: right; padding: 3px 0"
                 type="text"
                 @click="saveSelfInfo"
+                class="btn"
               >保存
               </el-button
               >
@@ -2595,8 +3066,8 @@
     <div class="basic-info">
       <!-- <el-collapse-item title="催记信息" name="4">-->
       <div class="title-box">
-        <p class="title">催记信息</p>
-        <p class="title">同批次共债催记</p>
+        <p class="title1">催记信息</p>
+        <p class="title2">同批次共债催记</p>
       </div>
 
       <div class="memorize-wrap">
@@ -2604,41 +3075,54 @@
           <el-form
             :model="batchForm"
             ref="batchForm"
-            label-width="100px"
+            label-width="120px"
             class="demo-ruleForm"
           >
-            <el-form-item label="电话" prop="mobile">
-              <el-col :span="16">
+          <div class="rowStyle">         
+            <div class="itemStyle2">
+                <el-form-item label="电话" prop="mobile" class="lableStyle2_phone">
+                    <img src="./bohao1.png" style="padding-left:7px;margin-top: 0px;cursor: pointer;" @click="sendTel2"/>
+                    <img src="./bohao2.png" style="padding-left:4px;margin-top: 0px;cursor: pointer;" @click="sendTel"/>
+                </el-form-item>
+              <!-- <el-col :span="16"> -->
                 <el-input
                   v-model="batchForm.mobile"
                   clearable
                   placeholder="请输入电话号码"
-                  class="phoneNumber"
+                  class="fixwidth2"
                 ></el-input>
-              </el-col>
-              <el-col :span="4">
-                <img src="./bohao1.png" style="padding-left:7px;margin-top: 8px;cursor: pointer;" @click="sendTel2"/>
-              </el-col>
-              <el-col :span="4">
-                <img src="./bohao2.png" style="padding-left:4px;margin-top: 8px;cursor: pointer;" @click="sendTel"/>
-              </el-col>
+              <!-- </el-col>
+              <el-col :span="4"> -->
+              <!-- </el-col>
+              <el-col :span="4"> -->
+              <!-- </el-col>            -->
+            
+            </div>
+            <div class="itemStyle2">
+              <el-form-item label="姓名" prop="targetName" class="lableStyle2">
+              </el-form-item>             
+                <el-input
+                  v-model="batchForm.targetName" clearable
+                  placeholder="请输入姓名"
+                  class="fixwidth2"
+                ></el-input>
+            </div>        
+            <div class="itemStyle2">
+              <el-form-item label="关系" prop="relation" class="lableStyle2">
+              </el-form-item>           
+                <el-input
+                  v-model="batchForm.relation" clearable
+                  placeholder="请输入关系"
+                  class="fixwidth2"
+                ></el-input>
+            </div>
+            <div class="itemStyle2">
+            <el-form-item label="还款方式" prop="method" class="lableStyle2">
             </el-form-item>
-            <el-form-item label="姓名" prop="targetName">
-              <el-input
-                v-model="batchForm.targetName" clearable
-                placeholder="请输入姓名"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="关系" prop="relation">
-              <el-input
-                v-model="batchForm.relation" clearable
-                placeholder="请输入关系"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="还款方式" prop="method">
               <el-select
                 v-model="batchForm.method" clearable
                 placeholder="请选择还款方式"
+                class="fixwidth2"
               >
                 <el-option
                   v-for="item in tpfsList"
@@ -2647,78 +3131,99 @@
                   :value="item.id"
                 ></el-option>
               </el-select>
-            </el-form-item>
-            <el-form-item label="催收结果" prop="result" :rules="{required: true, message: '催收结果不能为空', trigger: 'blur'}">
-              <el-select
-                v-model="batchForm.result"
-                placeholder="请选择催收结果" clearable
-              >
-                <el-option
-                  v-for="item in csjgList"
-                  :key="item.id"
-                  :label="item.name"
-                  :value="item.id"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="承诺还款金额" prop="repayAmt">
-              <el-input
-                v-model="batchForm.repayAmt" clearable
-                placeholder="请输入承诺还款金额"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="承诺还款日期" prop="repayTime">
-              <el-date-picker
-                v-model="batchForm.repayTime" clearable
-                type="date"
-                value-format="yyyy-MM-dd"
-                placeholder="请输入承诺还款日期"
-              ></el-date-picker>
-            </el-form-item>
-            <el-form-item label="通话记录" prop="collectInfo" class="whole" :rules="{required: true, message: '通话记录不能为空', trigger: 'blur'}">
-              <el-input
-                type="textarea" clearable
-                :rows="4"
-                placeholder="请输入通话记录"
-                v-model="batchForm.collectInfo"
-              >
-              </el-input>
-            </el-form-item>
-            <el-form-item label="催收状态" prop="collectStatus" >
-              <el-select
-                v-model="batchForm.collectStatus" clearable
-                placeholder="请选择催收状态"
-              >
-                <el-option
-                  v-for="item in csztList"
-                  :key="item.id"
-                  :label="item.name"
-                  :value="item.id"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label=" " prop="cszt">
-              <el-checkbox
-                v-model="batchForm.sType"
-                :true-label="1"
-                :false-label="0"
-              >更新批次共债案件催收状态
-              </el-checkbox
-              >
-            </el-form-item>
-
-            <el-form-item label="下次跟进日期" prop="nextFollDate">
-              <el-date-picker
-                v-model="batchForm.nextFollDate"
-                type="date"
-                clearable
-                value-format="yyyy-MM-dd"
-                placeholder="请选择下次跟进日期"
-              ></el-date-picker>
-            </el-form-item>
+            </div>
+            <div class="itemStyle2">
+              <el-form-item label="催收结果" class="lableStyle2" prop="result" :rules="{required: true, message: '催收结果不能为空', trigger: 'blur'}">
+              </el-form-item>
+                <el-select
+                  v-model="batchForm.result"
+                  placeholder="请选择催收结果" clearable
+                  class="fixwidth2"
+                >
+                  <el-option
+                    v-for="item in csjgList"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id"
+                  ></el-option>
+                </el-select>
+            </div>
+             <div class="itemStyle2">
+              <el-form-item label="承诺还款金额" prop="repayAmt" class="lableStyle2">
+              </el-form-item>
+                <el-input
+                  v-model="batchForm.repayAmt" clearable
+                  placeholder="请输入承诺还款金额"
+                  class="fixwidth2"
+                ></el-input>              
+             </div>
+             <div class="itemStyle2">
+              <el-form-item label="承诺还款日期" prop="repayTime" class="lableStyle2">
+              </el-form-item>
+                <el-date-picker
+                  v-model="batchForm.repayTime" clearable
+                  type="date"
+                  value-format="yyyy-MM-dd"
+                  placeholder="请输入承诺还款日期"
+                  class="fixwidth2"
+                ></el-date-picker>
+             </div>         
+             <div class="itemStyle2">
+                <el-form-item label="通话记录" prop="collectInfo" class="lableStyle2" :rules="{required: true, message: '通话记录不能为空', trigger: 'blur'}">
+                </el-form-item>
+                  <el-input
+                    type="textarea" clearable
+                    :rows="4"
+                    placeholder="请输入通话记录"
+                    v-model="batchForm.collectInfo"
+                    class="fixwidth2_info"
+                  >
+                  </el-input>
+             </div>
+             <div class="itemStyle2">
+              <el-form-item label="催收状态" prop="collectStatus" class="lableStyle2">
+              </el-form-item>
+                <el-select
+                  v-model="batchForm.collectStatus" clearable
+                  placeholder="请选择催收状态"
+                  class="fixwidth2"
+                >
+                  <el-option
+                    v-for="item in csztList"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id"
+                  ></el-option>
+                </el-select>
+             </div>
+             <div class="itemStyle2">
+              <el-form-item label=" " prop="cszt">
+              </el-form-item>
+                <el-checkbox
+                  v-model="batchForm.sType"
+                  :true-label="1"
+                  :false-label="0"
+                >更新批次共债案件催收状态
+                </el-checkbox
+                >
+             </div>
+             <div class="itemStyle2">
+              <el-form-item label="下次跟进日期" prop="nextFollDate" class="lableStyle2">
+              </el-form-item>
+                <el-date-picker
+                  v-model="batchForm.nextFollDate"
+                  type="date"
+                  clearable
+                  value-format="yyyy-MM-dd"
+                  placeholder="请选择下次跟进日期"
+                  class="fixwidth2"
+                ></el-date-picker>
+             </div>            
+          </div>
           </el-form>
           <div class="operation">
             <el-button type="primary" @click="onClickSaveCollection('batchForm')"
+            class="btn"
             >保存
             </el-button
             >
@@ -6227,6 +6732,15 @@
     width: 100%;
     padding: 10px;
     overflow-x: hidden;
+    background: #F0F2F5;
+      .titleStyle .el-collapse-item__header{
+        background:linear-gradient(to right,#4F6CFA,#5AA6F9);
+        margin-top:24px;
+        border-radius: 3px;
+        font-size: 16px;
+        color: #fff;
+        padding-left: 24px;
+    }
 
     // .el-table__body tr.current-row > td{
     //   border-top: 1px solid #0080ff  !important;
@@ -6234,23 +6748,55 @@
     // }
     .basic-info{
       .title-box{
-        display: flex;
-        .title{
+        display: flex;       
+        .title1{
           width: 40%;
-          margin:12px 0;
+          padding-left: 24px;
+          color: #fff;
+          // margin:12px 0;
+          margin-top: 24px;
+          background:linear-gradient(to right,#4F6CFA,#5AA6F9);
+          height: 48px;
+          display: flex;
+          align-items: center;
+          border-radius: 3px;           
           &:nth-child(1){
-            margin-right: 24px;
+            margin-right: 24px; 
+          }
+        }
+        .title2{
+          width: calc(100% - 40% - 24px);
+          margin-top: 24px;
+          padding-left: 24px;
+          color: #fff;
+          // margin:12px 0;
+          border-radius: 3px; 
+          background:linear-gradient(to right,#4F6CFA,#5AA6F9);          
+          height: 48px;
+          display: flex;
+          align-items: center;          
+          &:nth-child(1){
+            margin-right: 24px; 
           }
         }
       }
       .title-info{
+        padding-left: 24px;
         margin-bottom: 20px;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        background: #ffffff;
+         border-left:3px solid #5175FA;
+        height:40px;
+        border-radius:0px 3px 3px 0px;
+        .btn{
+          background: #5175FA;
+        }
       }
       .blue {
-        color: #409eff;
+        // color: #409eff;
+        color: #5175FA;
       }
 
       .red {
@@ -6260,14 +6806,84 @@
     .inputUnSelect {
       user-select: none;
     }
+    .fujian{
+      width: 100%;
+    }
 
     .items-wrap {
       padding: 24px 24px 24px 0;
       background: #fafafa;
+      border-radius: 3px;
 
       .rule-form {
         display: flex;
         flex-wrap: wrap;
+        .form1{
+          flex-wrap: wrap;
+          display: flex;
+          .pinyu1{
+            width: 100%;
+          }
+        }
+        .commentStyle{
+           margin-top: 20px;
+           margin-left: 10px;
+           .pinyu{
+             display: inline-flex;
+              .inputStyle {
+                width: 100%;
+             }
+           }
+        }
+        .itemStyle_fujian{
+          .el-form-item__label{
+            width: 50px !important;
+          }
+        }
+        .style1{
+          display: contents;
+        }  
+        .itemStyle{
+          display:inline-block;
+          margin-left: 15px;
+          margin-top: 20px;       
+          .lableStyle_name{
+            display: contents;
+            .el-form-item__label{                                 
+              text-align: left;
+              width: 100%;
+              padding-left: 10px;
+            } 
+          }
+          .lableStyle_blue{
+            display: contents;
+            .el-form-item__label{        
+              background: #EDF0FF;
+              color: #a0b3fb;
+              text-align: left;
+              width: 100%;
+              padding-left: 10px;
+            } 
+          }
+          .lableStyle_date{
+            display: contents;
+            .el-form-item__label{       
+              background: #EDF0FF;
+              color: #a0b3fb;
+              text-align: left;
+              width: 100%;
+              padding-left: 10px;
+            } 
+          }
+          .lableStyle{
+            display: contents;
+             .el-form-item__label{       
+              text-align: left;
+              width: 100%;
+              padding-left: 10px;
+            }
+          }
+        }
 
         .el-form-item {
           margin-bottom: 8px;
@@ -6308,7 +6924,6 @@
               margin-left: 12px;
               flex: 1;
               border: 1px solid #dcdfe6;
-              background: #fff;
               border-radius: 5px;
               padding: 8px;
               min-height: 30px;
@@ -6319,7 +6934,7 @@
                 color: #000;
 
                 &.blue {
-                  color: #409eff;
+                  color: #5175FA;
                 }
 
                 &.red {
@@ -6344,6 +6959,13 @@
       .left-wrap {
         flex: 1;
         overflow: hidden;
+        border-radius:3px;
+        .btn{
+          background: #5175FA;
+        }
+        .fontColor{
+          color: #5175FA;
+        }
 
         .el-tabs {
           .el-tabs__item {
@@ -6365,6 +6987,13 @@
               margin-bottom: 12px;
               display: flex;
               justify-content: space-between;
+              .left-oper{
+                .el-button--mini{
+                   background: #EDF0FF;
+                   color: #5175FA;
+                   border:1px solid #A9BAFB;
+                }
+              }
             }
 
             .sendTel4Style{
@@ -6402,11 +7031,28 @@
           }
         }
       }
+      .left-wrap{
+        background: #ffffff;
+        padding-left: 10px;
+        padding-right: 10px;
+        .el-tabs--card>.el-tabs__header .el-tabs__nav {
+           border: none;
+        }
+        .el-tabs--card>.el-tabs__header .el-tabs__item.is-active {
+          border-bottom-color: #5175FA;
+          color: #5175FA;
+        }
+        .el-tabs--card>.el-tabs__header .el-tabs__item {
+          border-left: none;
+        }
+      }
 
       .right-wrap {
         width: 250px;
         margin-left: 20px;
-
+        .btn{
+          color: #5175FA;
+        }
         .el-card {
           .el-card__header {
             padding: 10px;
@@ -6428,6 +7074,47 @@
         margin-right: 24px;
         border: 1px solid #d1d1d1;
         box-sizing: border-box;
+        background: #ffffff;
+        .rowStyle{
+          display: contents;
+          .itemStyle2{
+            display:inline-block;
+            margin-left: 40px;
+            margin-top: 20px;
+            .nameStyle{
+              display: flex;
+            }
+            .fixwidth2{
+                width: 190px !important;
+                display: table;
+            }
+            .fixwidth2_info{
+              width: 420px;
+              .el-textarea__inner {
+                resize: none;
+              }
+            }
+            .lableStyle2_phone{
+                display: contents;
+              .el-form-item__label{        
+                text-align: left;
+                width: 30px;
+                padding-left: 10px;
+              } 
+              .el-form-item__content{
+                text-align: right;
+              }
+            }
+            .lableStyle2{
+              display: contents;
+              .el-form-item__label{        
+                text-align: left;
+                width: 100%;
+                padding-left: 10px;
+              } 
+            }           
+          }
+        }
 
         .el-form {
           display: flex;
@@ -6459,7 +7146,10 @@
 
         .operation {
           margin-top: 10px;
-          text-align: center;
+          text-align: center;         
+            .btn{
+               background: #5175FA;
+            }         
         }
       }
 
@@ -6471,7 +7161,7 @@
 
     .phoneNumber input{
       padding: 0 15px;
-    }
+    } 
   }
   .case-dialog-wrap {
 
@@ -6541,6 +7231,12 @@
   }
 
   .upload-wrap {
+    margin-top: 20px;
+    max-height: 100px;
+    .el-form-item__label{
+      margin-left: 10px;
+      width: 50px !important;
+    }
     .upload-btn {
       display: inline-block;
     }
@@ -6564,10 +7260,19 @@
     min-height: 28px;
     border-radius: 4px;
     border: 1px solid #dcdfe6;
-    display: inline-block;
+    display: inline-block;   
     font-size: inherit;
     padding: 0 15px;
     width: 100%;
+  }
+  .fixwidth{
+    width: 210px !important;
+    display: table;
+  }
+  .beizhu{
+    display: block;
+    max-height: 150px;
+    overflow-y: auto;
   }
 
   .telPanel .el-table__body-wrapper {

@@ -508,82 +508,18 @@
             </div>
           </el-col>
           <el-col :span="22">
-            <div class="grid-content bg-purple">
-              <el-form :inline="true">
-                <el-form-item style="margin-right:0px;">
-                  <span
-                    class="color_gray"
-                    style="display: inline-block; color: black;font-size: 16px;"
-                    >查询结果统计：</span
-                  >
-                </el-form-item>
-                <el-form-item style="margin-right:0px;">
-                  <span
-                    class="color_gray"
-                    style="display: inline-block; color: #66b1ff;font-size: 16px;"
-                    >列表案量：</span
-                  >
-                  <span
-                    style="display: inline-block; color: #66b1ff;font-size: 16px;"
-                    >{{ fetchData.countCase }}件，</span
-                  >
-                </el-form-item>
-                <el-form-item style="margin-right:0px;">
-                  <span
-                    class="color_gray"
-                    style="display: inline-block; color: #66b1ff;font-size: 16px;"
-                    >列表金额：</span
-                  >
-                  <span
-                    style="display: inline-block; color: #66b1ff;font-size: 16px;"
-                    >{{ fetchData.sumMoneyMsg }}，</span
-                  >
-                </el-form-item>
-                <el-form-item style="margin-right:0px;">
-                  <span
-                    class="color_gray"
-                    style="display: inline-block; color: #66b1ff;font-size: 16px;"
-                    >列表还款案量：</span
-                  >
-                  <span
-                    style="display: inline-block; color: #66b1ff;font-size: 16px;"
-                    >{{ fetchData.countCasePay }}件，</span
-                  >
-                </el-form-item>
-                <el-form-item style="margin-right:0px;">
-                  <span
-                    class="color_gray"
-                    style="display: inline-block; color: #66b1ff;font-size: 16px;"
-                    >列表还款金额：</span
-                  >
-                  <span
-                    style="display: inline-block; color: #66b1ff;font-size: 16px;"
-                    >{{ fetchData.sumPayMoneyMsg }}，</span
-                  >
-                </el-form-item>
-                <el-form-item style="margin-right:0px;">
-                  <span
-                    class="color_gray"
-                    style="display: inline-block; color: #66b1ff;font-size: 16px;"
-                    >列表待銀行对账金额：</span
-                  >
-                  <span
-                    style="display: inline-block; color: #66b1ff;font-size: 16px;"
-                    >{{ fetchData.bankAmtMsg }}，</span
-                  >
-                </el-form-item>
-                <el-form-item style="margin-right:0px;">
-                  <span
-                    class="color_gray"
-                    style="display: inline-block; color: #66b1ff;font-size: 16px;"
-                    >列表承诺还款金额：</span
-                  >
-                  <span
-                    style="display: inline-block; color: #66b1ff;font-size: 16px;"
-                    >{{ fetchData.repayAmtMsg }}</span
-                  >
-                </el-form-item>
-              </el-form>
+            <div class="grid-content bg-purple queryResultSummary">
+              <i class="el-icon-info"></i>
+              <span>查询结果统计：</span>
+              <span v-if="tableLoad" class="queryStyle">查询中，请稍候...</span>
+              <span v-else>
+                <span class="queryStyle">列表案量：</span><span class="textColor">{{fetchData.countCase}}</span><span class="queryStyle">件，</span>
+                <span class="queryStyle">列表金额：</span><span class="textColor">{{fetchData.sumMoneyMsg }}</span><span class="queryStyle">，</span>
+                <span class="queryStyle">列表还款案量：</span><span class="textColor">{{fetchData.countCasePay}}</span><span class="queryStyle">件，</span>
+                <span class="queryStyle">列表还款金额：</span><span class="textColor">{{fetchData.sumPayMoneyMsg}}</span><span class="queryStyle">，</span>
+                <span class="queryStyle">列表待银行查账金额：</span><span class="textColor">{{fetchData.bankAmtMsg}}</span><span class="queryStyle">，</span>
+                <span class="queryStyle">列表承诺还款金额：</span><span class="textColor">{{fetchData.repayAmtMsg }}</span>
+              </span>
             </div>
           </el-col>
         </el-row>
@@ -1443,6 +1379,9 @@ body #collect-my-case .tab2{
   // }
   .selectAllBtn{
     margin-bottom: 10px;
+  }
+  .textColor{
+    color: #5175fa;
   }
 }
 </style>
