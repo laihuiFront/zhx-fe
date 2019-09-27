@@ -6811,7 +6811,7 @@
     }
 
     .items-wrap {
-      padding: 0px 24px 24px 24px;
+      padding: 0px 24px 24px 0px;
       background: #fff;
       border-radius: 3px;
 
@@ -6826,7 +6826,6 @@
           }
         }
         .commentStyle{
-           margin-top: 15px;
            margin-left: 25px;
            .pinyu{
              display: inline-flex;
@@ -6856,6 +6855,7 @@
               width: 100%;
               padding-left: 10px;
               margin-bottom: 5px;
+              border-radius: 3px;
             } 
           }
           .lableStyle_blue{
@@ -6867,6 +6867,7 @@
               width: 100%;
               padding-left: 10px;
               margin-bottom: 5px;
+              border-radius: 3px;
             } 
           }
           .lableStyle_riqi{
@@ -6878,6 +6879,7 @@
               width: 100% !important;
               padding-left: 10px;
               margin-bottom: 5px;
+              border-radius: 3px;
             } 
           }
           .lableStyle_date{
@@ -6889,6 +6891,7 @@
               width: 100%;
               padding-left: 10px;
               margin-bottom: 5px;
+              border-radius: 3px;
             } 
           }
           .lableStyle{
@@ -6898,6 +6901,7 @@
               width: 100%;
               padding-left: 10px;
               margin-bottom: 5px;
+              border-radius: 3px;
             }
           }
         }
@@ -7118,6 +7122,7 @@
                 width: 30px;
                 padding-left: 10px;
                 margin-bottom: 5px;
+                border-radius: 3px;
               } 
               .el-form-item__content{
                 text-align: right;
