@@ -541,7 +541,7 @@
               </el-form>
             </div>
           </el-col>
-          <el-col :span="22">
+          <el-col :span="24">
             <div class="grid-content bg-purple queryResultSummary">
               <i class="el-icon-info"></i>
               <span>查询结果统计：</span>

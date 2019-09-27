@@ -688,7 +688,7 @@
                 ></el-input>
             </div>
             <div class="itemStyle">
-              <el-form-item label="下次跟进日期" class="half lableStyle" >
+              <el-form-item label="下次跟进日期" class="half lableStyle_riqi" >
               </el-form-item>
                 <el-input
                   v-model="caseDetail.nextFollowDate"
@@ -6786,7 +6786,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background: #ffffff;
+        background: #fff;
          border-left:3px solid #5175FA;
         height:40px;
         border-radius:0px 3px 3px 0px;
@@ -6811,8 +6811,8 @@
     }
 
     .items-wrap {
-      padding: 24px 24px 24px 0;
-      background: #fafafa;
+      padding: 0px 24px 24px 24px;
+      background: #fff;
       border-radius: 3px;
 
       .rule-form {
@@ -6826,10 +6826,12 @@
           }
         }
         .commentStyle{
-           margin-top: 20px;
-           margin-left: 10px;
+           margin-top: 15px;
+           margin-left: 25px;
            .pinyu{
              display: inline-flex;
+             padding-left: 10px;
+             height: 28px;
               .inputStyle {
                 width: 100%;
              }
@@ -6845,14 +6847,15 @@
         }  
         .itemStyle{
           display:inline-block;
-          margin-left: 15px;
-          margin-top: 20px;       
+          margin-left: 25px;
+          margin-top: 15px; 
           .lableStyle_name{
             display: contents;
             .el-form-item__label{                                 
               text-align: left;
               width: 100%;
               padding-left: 10px;
+              margin-bottom: 5px;
             } 
           }
           .lableStyle_blue{
@@ -6863,6 +6866,18 @@
               text-align: left;
               width: 100%;
               padding-left: 10px;
+              margin-bottom: 5px;
+            } 
+          }
+          .lableStyle_riqi{
+            display: contents;
+            .el-form-item__label{        
+              background: #FFF5ED;
+              color: #f8aa70;
+              text-align: left;
+              width: 100% !important;
+              padding-left: 10px;
+              margin-bottom: 5px;
             } 
           }
           .lableStyle_date{
@@ -6873,6 +6888,7 @@
               text-align: left;
               width: 100%;
               padding-left: 10px;
+              margin-bottom: 5px;
             } 
           }
           .lableStyle{
@@ -6881,6 +6897,7 @@
               text-align: left;
               width: 100%;
               padding-left: 10px;
+              margin-bottom: 5px;
             }
           }
         }
@@ -7032,7 +7049,7 @@
         }
       }
       .left-wrap{
-        background: #ffffff;
+        background: #fff;
         padding-left: 10px;
         padding-right: 10px;
         .el-tabs--card>.el-tabs__header .el-tabs__nav {
@@ -7074,7 +7091,7 @@
         margin-right: 24px;
         border: 1px solid #d1d1d1;
         box-sizing: border-box;
-        background: #ffffff;
+        background: #fff;
         .rowStyle{
           display: contents;
           .itemStyle2{
@@ -7100,6 +7117,7 @@
                 text-align: left;
                 width: 30px;
                 padding-left: 10px;
+                margin-bottom: 5px;
               } 
               .el-form-item__content{
                 text-align: right;
@@ -7111,6 +7129,7 @@
                 text-align: left;
                 width: 100%;
                 padding-left: 10px;
+                margin-bottom:5px;
               } 
             }           
           }
@@ -7234,7 +7253,7 @@
     margin-top: 20px;
     max-height: 100px;
     .el-form-item__label{
-      margin-left: 10px;
+      margin-left: 25px;
       width: 50px !important;
     }
     .upload-btn {
