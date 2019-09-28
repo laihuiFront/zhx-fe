@@ -1,7 +1,7 @@
 <template>
   <div id="setting-remind">
-    <el-form ref="form" :model="saveForm" :inline="true" class="query-wrap">
-      <el-form-item>
+    <el-form ref="form" :model="saveForm" :inline="true" class="query-wrap queryStyle">
+      <el-form-item label="发送日期：">
         <el-date-picker
           v-model="saveForm.creattime"
           type="daterange"

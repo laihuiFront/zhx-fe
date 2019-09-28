@@ -46,10 +46,10 @@
                   :inline="true"
                   ref="form"
                   :model="form"
-                  label-width="80px"
                   class="queryStyle"
                 >
-                  <el-form-item prop="val0">
+                  <!-- label-width="80px" -->
+                  <el-form-item prop="val0" label="委托方：">
                     <el-select
                       v-model="form.val0"
                       placeholder="请选择委托方"
@@ -67,7 +67,7 @@
                       </el-option>
                     </el-select>
                   </el-form-item>
-                  <el-form-item prop="val1">
+                  <el-form-item prop="val1" label="批次号：">
                     <el-select
                       v-model="form.val1"
                       multiple
@@ -85,7 +85,7 @@
                       </el-option>
                     </el-select>
                   </el-form-item>
-                  <el-form-item prop="val2">
+                  <el-form-item prop="val2" label="申请日期：">
                     <el-date-picker
                       v-model="form.val2"
                       value-format="yyyy-MM-dd"
@@ -98,14 +98,14 @@
                     >
                     </el-date-picker>
                   </el-form-item>
-                  <el-form-item prop="val3">
+                  <el-form-item prop="val3" label="个案序列号：">
                     <el-input
                       v-model="form.val3"
                       placeholder="请输入个案序列号"
                       clearable
                     ></el-input>
                   </el-form-item>
-                  <el-form-item prop="val4">
+                  <el-form-item prop="val4" label="催收区域：">
                     <!--<el-cascader
                       :options="val4_data"
                       clearable
@@ -129,14 +129,14 @@
                       </el-option>
                     </el-select>
                   </el-form-item>
-                  <el-form-item prop="val5">
+                  <el-form-item prop="val5" label="姓名：">
                     <el-input
                       v-model="form.val5"
                       placeholder="请输入姓名"
                       clearable
                     ></el-input>
                   </el-form-item>
-                  <el-form-item prop="val7">
+                  <el-form-item prop="val7" label="委案金额下限：">
                     <el-input
                       v-model="form.val7"
                       type="number"
@@ -144,7 +144,7 @@
                       clearable
                     ></el-input>
                   </el-form-item>
-                  <el-form-item prop="val6">
+                  <el-form-item prop="val6" label="委案金额上限：">
                     <el-input
                       v-model="form.val6"
                       type="number"
@@ -153,14 +153,14 @@
                     ></el-input>
                   </el-form-item>
 
-                  <el-form-item prop="val8">
+                  <el-form-item prop="val8" label="申请人：">
                     <el-input
                       v-model="form.val8"
                       placeholder="请输入申请人"
                       clearable
                     ></el-input>
                   </el-form-item>
-                  <el-form-item prop="val9">
+                  <el-form-item prop="val9" label="信函模板：">
                     <el-select
                       v-model="form.val9"
                       placeholder="请选择信函模板"
@@ -175,7 +175,7 @@
                       </el-option>
                     </el-select>
                   </el-form-item>
-                  <el-form-item prop="val10">
+                  <el-form-item prop="val10" label="案件状态：">
                     <el-select
                       v-model="form.val10"
                       placeholder="请选择案件状态"

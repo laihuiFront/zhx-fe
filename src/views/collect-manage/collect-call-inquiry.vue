@@ -10,13 +10,14 @@
     >
       <case-detail :id="detailId" ref='detail'></case-detail>
     </el-dialog>
-    <el-form :inline="true" ref="form1" :model="form1" label-width="80px" class="queryStyle">
+    <!-- label-width="80px" -->
+    <el-form :inline="true" ref="form1" :model="form1" class="queryStyle">
       <el-form-item prop="val1">
         <el-checkbox-group v-model="form1.val1">
           <el-checkbox true-label="1" false-label="2">精准匹配</el-checkbox>
         </el-checkbox-group>
       </el-form-item>
-      <el-form-item prop="val2">
+      <el-form-item prop="val2" label="委托方：">
         <el-select
           v-model="form1.val2"
           placeholder="请选择委托方"
@@ -33,39 +34,39 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item prop="val3">
+      <el-form-item prop="val3" label="姓名：">
         <el-input
           v-model="form1.val3"
           placeholder="请输入姓名"
           clearable
         ></el-input>
       </el-form-item>
-      <el-form-item prop="val4">
+      <el-form-item prop="val4" label="电话：">
         <el-input
           v-model="form1.val4"
           placeholder="请输入电话"
           clearable
         ></el-input>
       </el-form-item>
-      <el-form-item prop="val5">
+      <el-form-item prop="val5" label="地址：">
         <el-input
           v-model="form1.val5"
           placeholder="请输入地址"
           clearable
         ></el-input>
-      </el-form-item><el-form-item prop="val6">
+      </el-form-item><el-form-item prop="val6" label="证件号：">
         <el-input
           v-model="form1.val6"
           placeholder="请输入证件号"
           clearable
         ></el-input>
-      </el-form-item><el-form-item prop="val7">
+      </el-form-item><el-form-item prop="val7" label="卡号：">
         <el-input
           v-model="form1.val7"
           placeholder="请输入卡号"
           clearable
         ></el-input>
-      </el-form-item><el-form-item prop="val8">
+      </el-form-item><el-form-item prop="val8" label="单位名称：">
         <el-input
           v-model="form1.val8"
           placeholder="请输入单位名称"

@@ -6,10 +6,10 @@
        element-loading-spinner="el-icon-loading"
        element-loading-background="rgba(0, 0, 0, 0.7)">
     <el-form ref="form" :model="formInline" :inline="true" class="query-wrap queryStyle">
-      <el-form-item>
+      <el-form-item label="催收员：">
         <el-input v-model="odvName" width="200" @focus="onClickSelectUser" clearable placeholder="请选择催收员"></el-input>
       </el-form-item>
-      <el-form-item>
+      <el-form-item label="催收区域：">
         <el-select v-model="formInline.areas" placeholder="请选择催收区域" filterable multiple collapse-tags clearable>
           <el-option
             v-for="item in areaList"
@@ -19,7 +19,7 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item>
+      <el-form-item label="委托方：">
         <el-select v-model="formInline.clients" placeholder="请选择委托方" filterable multiple collapse-tags clearable>
           <el-option
             v-for="item in clientList"
@@ -29,7 +29,7 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item>
+      <el-form-item label="催收日期：">
         <el-date-picker
           v-model="formInline.time"
           type="daterange"

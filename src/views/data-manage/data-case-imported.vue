@@ -6,7 +6,7 @@
        element-loading-spinner="el-icon-loading"
        element-loading-background="rgba(0, 0, 0, 0.7)">
     <el-form ref="form" :model="form" :inline="true" class="query-wrap queryStyle">
-      <el-form-item>
+      <el-form-item label="催收区域：">
         <el-select  v-model="form.areas" placeholder="请选择催收区域" collapse-tags multiple clearable>
           <el-option
             v-for="item in areaList"
@@ -16,7 +16,7 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item>
+      <el-form-item label="批次号：">
         <el-select v-model="form.batchNos" filterable collapse-tags multiple placeholder="请输入批次号" clearable remote  :remote-method="showBatchList">
           <el-option
             v-for="item in batchList"
@@ -26,8 +26,8 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item>
-        <el-select v-model="form.clients" filterable collapse-tags multiple placeholder="请选择委托方" @change="clientCurrent" clearable>
+      <el-form-item label="委托方：">
+        <el-select  v-model="form.clients" filterable collapse-tags multiple placeholder="请选择委托方" @change="clientCurrent" clearable>
           <el-option
           class="oo"
             v-for="item in clientList"
@@ -37,7 +37,7 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item>
+      <el-form-item label="案件类型：">
         <el-select v-model="form.caseTypes" placeholder="请选择案件类型" filterable collapse-tags multiple clearable>
           <el-option
             v-for="item in caseTypeList"
@@ -47,7 +47,7 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item>
+      <el-form-item label="委案日期：">
         <el-date-picker
           v-model="form.time"
           type="daterange"

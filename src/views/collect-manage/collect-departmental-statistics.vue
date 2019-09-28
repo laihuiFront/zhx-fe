@@ -47,9 +47,10 @@
       </el-row>
     </section>
     <section class="form">
-      <el-form :inline="true" ref="form1" :model="form1" label-width="80px" class="query-wrap queryStyle">
+      <!-- label-width="80px" -->
+      <el-form :inline="true" ref="form1" :model="form1"  class="query-wrap queryStyle">
         <el-row>
-          <el-form-item>
+          <el-form-item label="类型：">
             <el-select
               v-model="form1.val1"
               placeholder="请选择类型"
@@ -64,10 +65,10 @@
               </el-option>
             </el-select>
           </el-form-item>
-            <el-form-item prop="val8">
+            <el-form-item prop="val8" label="部门：">
               <el-input v-model="deptName" width="200" @focus="onClickSelectUser" clearable placeholder="请选择部门"></el-input>
             </el-form-item>
-          <el-form-item prop="val9">
+          <el-form-item prop="val9" label="催收员：">
             <!--<el-select
               v-model="form1.val9"
               placeholder="请选择催收员"
@@ -86,7 +87,7 @@
             </el-select>-->
             <el-input v-model="form1.odvNameFiter" width="200" @focus="onClickSelectUser3" clearable placeholder="请选择催收员"></el-input>
           </el-form-item>
-          <el-form-item prop="val2">
+          <el-form-item prop="val2" label="委托方：">
             <el-select v-model="form1.val2" placeholder="请选择委托方"  collapse-tags multiple clearable>
               <el-option
                 v-for="item in val2_data"
@@ -97,7 +98,7 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item prop="val3">
+          <el-form-item prop="val3" label="批次号：">
             <el-select
               v-model="form1.val3"
               multiple
@@ -113,7 +114,7 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item prop="val4">
+          <el-form-item prop="val4" label="逾期账龄：">
             <el-select
               v-model="form1.val4"
               placeholder="请选择逾期账龄"
@@ -131,7 +132,7 @@
             </el-select>
           </el-form-item>
         </el-row>
-        <el-form-item prop="val5">
+        <el-form-item prop="val5" label="承诺还款日期：">
           <el-date-picker
             v-model="form1.val5"
             value-format="yyyy-MM-dd"
@@ -144,7 +145,7 @@
           >
           </el-date-picker>
         </el-form-item>
-        <el-form-item prop="val6">
+        <el-form-item prop="val6" label="待银行查账日期：">
           <el-date-picker
             v-model="form1.val6"
             value-format="yyyy-MM-dd"
@@ -157,7 +158,7 @@
           >
           </el-date-picker>
         </el-form-item>
-        <el-form-item prop="val7">
+        <el-form-item prop="val7" label="还款日期：">
           <el-date-picker
             v-model="form1.val7"
             value-format="yyyy-MM-dd"

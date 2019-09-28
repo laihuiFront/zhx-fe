@@ -1,10 +1,10 @@
 <template>
   <div id="member-off">
     <el-form ref="form" :model="queryForm" :inline="true" class="query-wrap queryStyle">
-      <el-form-item>
+      <el-form-item label="员工ID：">
         <el-input v-model="queryForm.id" clearable placeholder="请输入员工ID"></el-input>
       </el-form-item>
-      <el-form-item>
+      <el-form-item label="员工姓名：">
         <el-input v-model="queryForm.userName" clearable placeholder="请输入员工姓名"></el-input>
       </el-form-item>
       <el-form-item>

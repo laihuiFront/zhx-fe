@@ -1,7 +1,7 @@
 <template>
   <div id="setting-log" class="page-wraper-sub">
     <el-form ref="form" :model="queryForm" :inline="true" class="query-wrap queryStyle">
-      <el-form-item>
+      <el-form-item label="日志类型：">
         <el-select v-model="queryForm.url" placeholder="请选择日志类型">
           <el-option
             v-for="item in logTypeList"
@@ -11,13 +11,13 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item>
+      <el-form-item label="用户ID：">
         <el-input v-model="queryForm.userId" clearable placeholder="请输入用户ID"></el-input>
       </el-form-item>
-      <el-form-item>
+      <el-form-item label="操作人名：">
         <el-input v-model="queryForm.userName" clearable placeholder="请输入操作人名"></el-input>
       </el-form-item>
-      <el-form-item>
+      <el-form-item label="日志日期：">
         <el-date-picker
           v-model="queryForm.date"
           value-format="yyyy-MM-dd HH:mm:ss"

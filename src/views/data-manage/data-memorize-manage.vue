@@ -6,7 +6,7 @@
        element-loading-spinner="el-icon-loading"
        element-loading-background="rgba(0, 0, 0, 0.8)">
     <el-form id="repay-record-query" :model="formInline" :inline="true" class="query-wrap queryStyle">
-      <el-form-item v-if="queryConf.csqy || queryConfFlag">
+      <el-form-item v-if="queryConf.csqy || queryConfFlag" label="催收区域：">
         <el-select v-model="formInline.areas" filterable collapse-tags multiple placeholder="请选择催收区域" clearable>
           <el-option
             v-for="item in areaList"
@@ -16,7 +16,7 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item v-if="queryConf.bm || queryConfFlag">
+      <el-form-item v-if="queryConf.bm || queryConfFlag" label="部门：">
         <el-select v-model="formInline.depts" filterable collapse-tags multiple placeholder="请选择部门" clearable>
           <el-option
             v-for="item in departmentList"
@@ -26,7 +26,7 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item v-if="queryConf.csy || queryConfFlag">
+      <el-form-item v-if="queryConf.csy || queryConfFlag" label="催收员：">
         <!--<el-select v-model="formInline.odvs" filterable collapse-tags multiple placeholder="请选择催收员" clearable>
           <el-option
             v-for="item in PersonList"
@@ -37,7 +37,7 @@
         </el-select>-->
         <el-input v-model="formInline.odvNameFiter" width="200" @focus="onClickSelectUser3" clearable placeholder="请选择催收员"></el-input>
       </el-form-item>
-      <el-form-item v-if="queryConf.cscs || queryConfFlag">
+      <el-form-item v-if="queryConf.cscs || queryConfFlag" label="催收措施：">
         <el-select v-model="formInline.measures" filterable collapse-tags multiple placeholder="请选择催收措施" clearable>
           <el-option
             v-for="item in sectionList"
@@ -47,22 +47,22 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item v-if="queryConf.pch || queryConfFlag">
+      <el-form-item v-if="queryConf.pch || queryConfFlag" label="批次号：">
         <el-input v-model="formInline.batchNo" placeholder="请输入批次号" clearable></el-input>
       </el-form-item>
-      <el-form-item v-if="queryConf.zjh || queryConfFlag">
+      <el-form-item v-if="queryConf.zjh || queryConfFlag" label="证件号：">
         <el-input v-model="formInline.identNo" placeholder="请输入证件号" clearable></el-input>
       </el-form-item>
-      <el-form-item v-if="queryConf.kh || queryConfFlag">
+      <el-form-item v-if="queryConf.kh || queryConfFlag" label="卡号：">
         <el-input v-model="formInline.cardNo" placeholder="请输入卡号" clearable></el-input>
       </el-form-item>
-      <el-form-item v-if="queryConf.csjl || queryConfFlag">
+      <el-form-item v-if="queryConf.csjl || queryConfFlag" label="催收记录：">
         <el-input v-model="formInline.collectInfo" placeholder="请输入催收记录" clearable></el-input>
       </el-form-item>
-      <el-form-item v-if="queryConf.gaxlh || queryConfFlag">
+      <el-form-item v-if="queryConf.gaxlh || queryConfFlag" label="个案序列号：">
         <el-input type="textarea" v-model="formInline.seqno" placeholder="请输入个案序列号" clearable rows="3"></el-input>
       </el-form-item>
-      <el-form-item v-if="queryConf.csjg || queryConfFlag">
+      <el-form-item v-if="queryConf.csjg || queryConfFlag" label="催收结果：">
         <el-select v-model="formInline.results" placeholder="请选择催收结果" filterable collapse-tags multiple clearable>
           <el-option
             v-for="item in EndList"
@@ -72,7 +72,7 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item v-if="queryConf.wtf || queryConfFlag">
+      <el-form-item v-if="queryConf.wtf || queryConfFlag" label="委托方：">
         <el-select v-model="formInline.clients" collapse-tags filterable multiple placeholder="请选择委托方" clearable>
           <el-option
             v-for="item in clientList"
@@ -83,7 +83,7 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item v-if="queryConf.ajzt || queryConfFlag">
+      <el-form-item v-if="queryConf.ajzt || queryConfFlag" label="案件状态：">
         <el-select v-model="formInline.caseStatuss" filterable collapse-tags multiple placeholder="请选择案件状态" clearable>
           <el-option
             v-for="item in caseStatusList"
@@ -93,7 +93,7 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item v-if="queryConf.bszt || queryConfFlag">
+      <el-form-item v-if="queryConf.bszt || queryConfFlag" label="标色状态：">
         <el-select v-model="formInline.colors" filterable collapse-tags multiple placeholder="请选择标色状态" clearable>
           <el-option
             v-for="item in val14_data"
@@ -103,7 +103,7 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item v-if="queryConf.csrq || queryConfFlag">
+      <el-form-item v-if="queryConf.csrq || queryConfFlag" label="催收日期：">
         <el-date-picker
           v-model="formInline.collectTime"
           type="daterange"
@@ -117,7 +117,7 @@
         >
         </el-date-picker>
       </el-form-item>
-      <el-form-item v-if="queryConf.warq || queryConfFlag">
+      <el-form-item v-if="queryConf.warq || queryConfFlag" label="委案日期：">
         <el-date-picker
           v-model="formInline.bailTime"
           type="daterange"
@@ -131,7 +131,7 @@
         >
         </el-date-picker>
       </el-form-item>
-      <el-form-item v-if="queryConf.yjtarq || queryConfFlag">
+      <el-form-item v-if="queryConf.yjtarq || queryConfFlag" label="预计退案日期：">
         <el-date-picker
           v-model="formInline.expectTime"
           type="daterange"

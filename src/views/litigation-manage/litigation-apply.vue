@@ -1,10 +1,10 @@
 <template>
   <div id="litigation-apply">
     <el-form ref="form" :model="form" :inline="true" class="query-wrap queryStyle">
-      <el-form-item>
+      <el-form-item label="案号：">
         <el-input v-model="form.legalNo" placeholder="请输入案号" clearable></el-input>
       </el-form-item>
-      <el-form-item>
+      <el-form-item label="姓名：">
         <el-input v-model="form.cstName" placeholder="请输入姓名" clearable></el-input>
       </el-form-item>
       <el-form-item>

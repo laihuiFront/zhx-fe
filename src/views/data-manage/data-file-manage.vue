@@ -6,19 +6,19 @@
        element-loading-spinner="el-icon-loading"
        element-loading-background="rgba(0, 0, 0, 0.7)">
     <el-form ref="form" :model="form" :inline="true" class="query-wrap queryStyle">
-      <el-form-item>
+      <el-form-item label="证件号：">
         <el-input v-model="form.identNo" placeholder="请输入证件号" clearable></el-input>
       </el-form-item>
-      <el-form-item>
+      <el-form-item label="姓名：">
         <el-input v-model="form.name" placeholder="请输入姓名" clearable></el-input>
       </el-form-item>
-      <el-form-item>
+      <el-form-item label="电话号码：">
         <el-input v-model="form.mobile" placeholder="请输入电话号码" clearable></el-input>
       </el-form-item>
-      <el-form-item>
+      <el-form-item label="地址：">
         <el-input v-model="form.address" placeholder="请输入地址" clearable></el-input>
       </el-form-item>
-      <el-form-item>
+      <el-form-item label="档案变更日期：">
         <el-date-picker
           v-model="form.time"
           type="daterange"

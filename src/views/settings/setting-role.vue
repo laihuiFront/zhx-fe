@@ -5,7 +5,7 @@
        element-loading-spinner="el-icon-loading"
        element-loading-background="rgba(0, 0, 0, 0.7)">
     <el-form ref="form" :model="queryForm" :inline="true" class="query-wrap queryStyle">
-      <el-form-item>
+      <el-form-item label="角色名称：">
         <el-input v-model="queryForm.roleName" clearable placeholder="请输入角色名称"></el-input>
       </el-form-item>
       <el-form-item>

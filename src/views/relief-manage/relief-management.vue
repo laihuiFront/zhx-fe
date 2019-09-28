@@ -6,16 +6,16 @@
        element-loading-spinner="el-icon-loading"
        element-loading-background="rgba(0, 0, 0, 0.7)">
     <el-form ref="form" :model="formInline" :inline="true" class="query-wrap queryStyle">
-      <el-form-item v-if="queryConf.pch || queryConfFlag">
+      <el-form-item v-if="queryConf.pch || queryConfFlag" label="批次号：">
         <el-input v-model="formInline.batchNo" clearable placeholder="请输入批次号"></el-input>
       </el-form-item>
-      <el-form-item v-if="queryConf.gaxlh || queryConfFlag">
+      <el-form-item v-if="queryConf.gaxlh || queryConfFlag" label="个案序列号：">
         <el-input v-model="formInline.seqno" clearable placeholder="请输入个案序列号"></el-input>
       </el-form-item>
-      <el-form-item v-if="queryConf.dxxm || queryConfFlag">
+      <el-form-item v-if="queryConf.dxxm || queryConfFlag" label="对象姓名：">
         <el-input v-model="formInline.targetName" clearable placeholder="请输入对象姓名"></el-input>
       </el-form-item>
-      <el-form-item v-if="queryConf.csqy || queryConfFlag">
+      <el-form-item v-if="queryConf.csqy || queryConfFlag" label="催收区域：">
         <el-select v-model="formInline.areas" clearable filterable collapse-tags multiple placeholder="请选择催收区域">
           <el-option
             v-for="item in areaList"
@@ -25,7 +25,7 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item v-if="queryConf.wtf || queryConfFlag">
+      <el-form-item v-if="queryConf.wtf || queryConfFlag" label="委托方：">
         <el-select v-model="formInline.clients" filterable collapse-tags multiple placeholder="请选择委托方" clearable>
           <el-option
             v-for="item in clientList"
@@ -35,7 +35,7 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item v-if="queryConf.yqzl || queryConfFlag">
+      <el-form-item v-if="queryConf.yqzl || queryConfFlag" label="逾期账龄：">
         <el-select v-model="formInline.accountAges" filterable collapse-tags multiple placeholder="请选择逾期账龄" clearable>
           <el-option
             v-for="item in accountAgeList"
@@ -45,7 +45,7 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item v-if="queryConf.jmzt || queryConfFlag">
+      <el-form-item v-if="queryConf.jmzt || queryConfFlag" label="减免状态：">
         <el-select v-model="formInline.reduceStatuss" filterable collapse-tags multiple placeholder="请选择减免状态" clearable>
           <el-option
             v-for="item in deleteStatusList"
@@ -55,7 +55,7 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item v-if="queryConf.cszt || queryConfFlag">
+      <el-form-item v-if="queryConf.cszt || queryConfFlag" label="催收状态：">
         <el-select v-model="formInline.collectStatuss" filterable collapse-tags multiple placeholder="请选择催收状态" clearable>
           <el-option
             v-for="item in collectStatusList"
@@ -65,7 +65,7 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item v-if="queryConf.tjrq || queryConfFlag">
+      <el-form-item v-if="queryConf.tjrq || queryConfFlag" label="提交日期：">
         <el-date-picker
           v-model="formInline.time1"
           type="daterange"
@@ -79,7 +79,7 @@
         >
         </el-date-picker>
       </el-form-item>
-      <el-form-item v-if="queryConf.yxrq || queryConfFlag">
+      <el-form-item v-if="queryConf.yxrq || queryConfFlag" label="有效日期：">
         <el-date-picker
           v-model="formInline.time2"
           type="daterange"
@@ -93,7 +93,7 @@
         >
         </el-date-picker>
       </el-form-item>
-      <el-form-item v-if="queryConf.wcrq || queryConfFlag">
+      <el-form-item v-if="queryConf.wcrq || queryConfFlag" label="完成日期：">
         <el-date-picker
           v-model="formInline.time3"
           type="daterange"

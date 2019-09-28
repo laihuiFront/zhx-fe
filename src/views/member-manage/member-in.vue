@@ -26,19 +26,19 @@
     </div>
     <div class="right-wrap">
       <el-form ref="form" :model="queryForm" :inline="true" class="query-wrap queryStyle">
-        <el-form-item>
+        <el-form-item label="员工ID：">
           <el-input type="textarea" v-model="queryForm.id" placeholder="请输入员工ID" rows="3"></el-input>
         </el-form-item>
-        <el-form-item>
+        <el-form-item label="账号：">
           <el-input v-model="queryForm.loginName" clearable placeholder="请输入账号"></el-input>
         </el-form-item>
-        <el-form-item>
+        <el-form-item label="员工姓名：">
           <el-input v-model="queryForm.userName" clearable placeholder="请输入员工姓名"></el-input>
         </el-form-item>
-        <el-form-item>
+        <el-form-item label="坐席号：">
           <el-input v-model="queryForm.officePhone" clearable placeholder="请输入坐席号"></el-input>
         </el-form-item>
-        <el-form-item>
+        <el-form-item label="账号状态：">
           <el-select v-model="queryForm.accountStatus" filterable placeholder="请选择账号状态" clearable>
             <el-option
               v-for="item in accountStatus"

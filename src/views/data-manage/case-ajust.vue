@@ -6,7 +6,7 @@
        element-loading-spinner="el-icon-loading"
        element-loading-background="rgba(0, 0, 0, 0.7)">
     <el-form ref="form" :model="formInline" :inline="true" class="query-wrap queryStyle">
-      <el-form-item v-if="queryConf.wtf || queryConfFlag">
+      <el-form-item v-if="queryConf.wtf || queryConfFlag" label="委托方：">
         <el-select v-model="formInline.clients" filterable collapse-tags multiple  placeholder="请选择委托方" clearable>
           <el-option
             v-for="item in clientList"
@@ -16,22 +16,22 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item v-if="queryConf.gaxlh || queryConfFlag">
+      <el-form-item v-if="queryConf.gaxlh || queryConfFlag" label="个案序列号：">
         <el-input type="textarea" v-model="formInline.seqNo" clearable placeholder="请输入个案序列号" style="width: 100%;"
                   rows="3"></el-input>
       </el-form-item>
-      <el-form-item v-if="queryConf.hth || queryConfFlag">
+      <el-form-item v-if="queryConf.hth || queryConfFlag" label="合同号：">
         <el-input v-model="formInline.contractNo" placeholder="请输入合同号" clearable></el-input>
       </el-form-item>
-      <el-form-item v-if="queryConf.zjh || queryConfFlag">
+      <el-form-item v-if="queryConf.zjh || queryConfFlag" label="证件号：">
         <el-input type="textarea" v-model="formInline.identNo" style="width: 100%;"  clearable placeholder="请输入证件号"
                   rows="3"></el-input>
       </el-form-item>
-      <el-form-item v-if="queryConf.xm || queryConfFlag">
+      <el-form-item v-if="queryConf.xm || queryConfFlag" label="姓名：">
         <el-input type="textarea" v-model="formInline.name" placeholder="请输入姓名" clearable style="width: 100%;"
                   rows="3"></el-input>
       </el-form-item>
-      <el-form-item v-if="queryConf.ajzt || queryConfFlag">
+      <el-form-item v-if="queryConf.ajzt || queryConfFlag" label="案件状态：">
         <el-select v-model="formInline.statuss" filterable collapse-tags multiple placeholder="请选择案件状态" clearable>
           <el-option
             v-for="item in caseStatusList"
@@ -41,7 +41,7 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item v-if="queryConf.cszt || queryConfFlag">
+      <el-form-item v-if="queryConf.cszt || queryConfFlag" label="催收状态：">
         <el-select v-model="formInline.collectStatuss" filterable collapse-tags multiple placeholder="请选择催收状态" clearable>
           <el-option
             v-for="item in collectStatusList"
@@ -51,10 +51,10 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item v-if="queryConf.csy || queryConfFlag">
+      <el-form-item v-if="queryConf.csy || queryConfFlag" label="催收员：">
         <el-input v-model="formInline.odvNames" width="160" @focus="onClickSelectUser2" clearable placeholder="请选择催收员"></el-input>
       </el-form-item>
-      <el-form-item v-if="queryConf.warq || queryConfFlag">
+      <el-form-item v-if="queryConf.warq || queryConfFlag" label="操作时间：">
         <el-date-picker
           v-model="formInline.createTime"
           type="daterange"
@@ -68,13 +68,13 @@
         >
         </el-date-picker>
       </el-form-item>
-      <el-form-item v-if="queryConf.bm || queryConfFlag">
+      <el-form-item v-if="queryConf.bm || queryConfFlag" label="部门：">
         <el-input v-model="deptName" width="200" @focus="onClickSelectDept" clearable placeholder="请选择部门"></el-input>
       </el-form-item>
-      <el-form-item v-if="queryConf.csy || queryConfFlag">
+      <el-form-item v-if="queryConf.csy || queryConfFlag" label="操作员：">
         <el-input v-model="formInline.odvNameFiter" width="160" @focus="onClickSelectUser3" clearable placeholder="请选择操作员"></el-input>
       </el-form-item>
-      <el-form-item v-if="queryConf.warq || queryConfFlag">
+      <el-form-item v-if="queryConf.warq || queryConfFlag" label="委案日期：">
         <el-date-picker
           v-model="formInline.time2"
           type="daterange"
@@ -88,7 +88,7 @@
         >
         </el-date-picker>
       </el-form-item>
-      <el-form-item v-if="queryConf.yjtarq || queryConfFlag">
+      <el-form-item v-if="queryConf.yjtarq || queryConfFlag" label="预计退案日期：">
         <el-date-picker
           v-model="formInline.time3"
           type="daterange"

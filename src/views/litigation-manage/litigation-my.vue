@@ -3,7 +3,7 @@
   	 <el-tabs v-model="activeName2" class="tabs-wrap">
     <el-tab-pane label="我的诉讼案件" name="first">
       <el-form ref="form" :model="form" :inline="true" class="query-wrap queryStyle">
-        <el-form-item>
+        <el-form-item label="案件状态：">
           <el-select v-model="form.legalStatus" filterable collapse-tags multiple  placeholder="请选择案件状态" clearable>
             <el-option
               v-for="item in legalStatusMsgList"
@@ -13,10 +13,10 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item>
+        <el-form-item label="案号：">
           <el-input v-model="form.legalNo" placeholder="请输入案号" clearable></el-input>
         </el-form-item>
-        <el-form-item>
+        <el-form-item label="姓名：">
           <el-input v-model="form.cstName" placeholder="请输入姓名" clearable></el-input>
         </el-form-item>
         <el-form-item>
@@ -495,8 +495,8 @@
 </el-dialog>
     </el-tab-pane>
     <el-tab-pane label="全部诉讼案件" name="second">
-      <el-form ref="form" :model="form2" :inline="true" class="query-wrap">
-        <el-form-item>
+      <el-form ref="form" :model="form2" :inline="true" class="query-wrap queryStyle">
+        <el-form-item label="案件状态：">
           <el-select v-model="form2.legalStatus" filterable collapse-tags multiple  placeholder="请选择案件状态" clearable>
             <el-option
               v-for="item in legalStatusMsgList"
@@ -506,10 +506,10 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item>
+        <el-form-item label="案号：">
           <el-input v-model="form2.legalNo" placeholder="请输入案号" clearable></el-input>
         </el-form-item>
-        <el-form-item>
+        <el-form-item label="姓名：">
           <el-input v-model="form2.cstName" placeholder="请输入姓名" clearable></el-input>
         </el-form-item>
         <el-form-item>

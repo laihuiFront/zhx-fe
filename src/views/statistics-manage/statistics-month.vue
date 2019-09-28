@@ -9,7 +9,7 @@
     :style="{minWidth:pageWidth}"
   >
     <el-form ref="form" :model="formInline" :inline="true" class="query-wrap queryStyle">
-      <el-form-item>
+      <el-form-item label="催收员：">
         <el-input
           v-model="odvName"
           @focus="onClickSelectUser"
@@ -17,7 +17,7 @@
           placeholder="请选择催收员"
         ></el-input>
       </el-form-item>
-      <el-form-item>
+      <el-form-item label="催收区域：">
         <el-select
           v-model="formInline.areas"
           placeholder="请选择催收区域"
@@ -33,7 +33,7 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item>
+      <el-form-item label="委托方：">
         <el-select
           v-model="formInline.clients"
           placeholder="请选择委托方"
@@ -49,7 +49,7 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item>
+      <el-form-item label="催收月份开始：">
           <el-date-picker
           v-model="formInline.time"
           type="month"
@@ -58,7 +58,7 @@
         >
         </el-date-picker>
       </el-form-item>
-      <el-form-item>
+      <el-form-item label="催收月份结束：">
         <el-date-picker
           v-model="formInline.time2"
           type="month"

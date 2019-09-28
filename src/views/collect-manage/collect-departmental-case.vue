@@ -50,16 +50,16 @@
                 :inline="true"
                 ref="form"
                 :model="form"
-                label-width="20px"
                 class="query-wrap queryStyle"
               >
-                <el-form-item prop="val31" v-if="queryConf.bm || queryConfFlag">
+                <!-- label-width="20px" -->
+                <el-form-item prop="val31" v-if="queryConf.bm || queryConfFlag" label="部门：">
                   <!-- <el-input v-model="deptName" width="200" @focus="onClickSelectUser" clearable placeholder="请选择部门"></el-input> -->
                    <el-autocomplete v-model="deptName" width="200" clearable placeholder="请输入部门" :fetch-suggestions="showDeptName" @select="selectDept">
                      <el-button slot="append" icon="el-icon-search" @click="onClickSelectDept"></el-button>
                    </el-autocomplete>
                 </el-form-item>
-                <el-form-item prop="val32" v-if="queryConf.csy || queryConfFlag">
+                <el-form-item prop="val32" v-if="queryConf.csy || queryConfFlag" label="催收员：">
 
                 <!-- <el-input v-model="form.odvNameFiter" width="200" @focus="onClickSelectUser3" clearable placeholder="请选择催收员"></el-input>  -->
                  <el-autocomplete v-model="form.odvNameFiter" width="160" clearable placeholder="请输入催收员" :fetch-suggestions="showOdvName" @select="selectOdv">
@@ -67,7 +67,7 @@
                   </el-autocomplete>
                 </el-form-item>
 
-                <el-form-item prop="val0" v-if="queryConf.wtf || queryConfFlag">
+                <el-form-item prop="val0" v-if="queryConf.wtf || queryConfFlag" label="委托方：">
                   <el-select
                     v-model="form.val0"
                     placeholder="请选择委托方"
@@ -85,7 +85,7 @@
                     </el-option>
                   </el-select>
                 </el-form-item>
-                <el-form-item prop="val1" v-if="queryConf.pch || queryConfFlag">
+                <el-form-item prop="val1" v-if="queryConf.pch || queryConfFlag" label="批次号：">
                   <el-select
                     v-model="form.val1"
                     multiple
@@ -103,7 +103,7 @@
                     </el-option>
                   </el-select>
                 </el-form-item>
-                <el-form-item prop="val3" v-if="queryConf.gaxlh || queryConfFlag">
+                <el-form-item prop="val3" v-if="queryConf.gaxlh || queryConfFlag" label="个案序列号：">
                   <el-input
                     type="textarea"
                     rows="3"
@@ -114,7 +114,7 @@
                   >
                   </el-input>
                 </el-form-item>
-                <el-form-item prop="val2" v-if="queryConf.xcgjrq || queryConfFlag">
+                <el-form-item prop="val2" v-if="queryConf.xcgjrq || queryConfFlag" label="下次跟进日期：">
                   <el-date-picker
                     v-model="form.val2"
                     value-format="yyyy-MM-dd"
@@ -139,7 +139,7 @@
                        height="12"
                        alt="更多"
                        slot="reference">-->
-                <el-form-item prop="val4" v-if="queryConf.dq || queryConfFlag">
+                <el-form-item prop="val4" v-if="queryConf.dq || queryConfFlag" label="地区：">
                   <!-- <el-cascader
                      :options="val4_data"
                      clearable
@@ -162,7 +162,7 @@
                     ></el-option>
                   </el-select>
                 </el-form-item>
-                <el-form-item prop="val5" v-if="queryConf.xm || queryConfFlag">
+                <el-form-item prop="val5" v-if="queryConf.xm || queryConfFlag" label="姓名：">
                   <el-input
                     type="textarea"
                     rows="3"
@@ -172,7 +172,7 @@
                     clearable
                   ></el-input>
                 </el-form-item>
-                <el-form-item prop="val6" v-if="queryConf.zjh || queryConfFlag">
+                <el-form-item prop="val6" v-if="queryConf.zjh || queryConfFlag" label="证件号：">
                   <el-input
                     type="textarea"
                     rows="3"
@@ -183,7 +183,7 @@
                   ></el-input>
                 </el-form-item>
 
-                <el-form-item prop="val8" v-if="queryConf.yqzl || queryConfFlag">
+                <el-form-item prop="val8" v-if="queryConf.yqzl || queryConfFlag" label="逾期账龄：">
                   <el-select
                     v-model="form.val8"
                     multiple
@@ -200,7 +200,7 @@
                     </el-option>
                   </el-select>
                 </el-form-item>
-                <el-form-item prop="val9" v-if="queryConf.ajzt || queryConfFlag">
+                <el-form-item prop="val9" v-if="queryConf.ajzt || queryConfFlag" label="案件状态：">
                   <el-select
                     v-model="form.val9"
                     multiple
@@ -217,7 +217,7 @@
                     </el-option>
                   </el-select>
                 </el-form-item>
-                <el-form-item prop="val10" v-if="queryConf.cszt || queryConfFlag">
+                <el-form-item prop="val10" v-if="queryConf.cszt || queryConfFlag" label="催收状态：">
                   <el-select
                     v-model="form.val10"
                     multiple
@@ -234,7 +234,7 @@
                     </el-option>
                   </el-select>
                 </el-form-item>
-                <el-form-item prop="val11" v-if="queryConf.ajlx || queryConfFlag">
+                <el-form-item prop="val11" v-if="queryConf.ajlx || queryConfFlag" label="案件类型：">
                   <el-select
                     v-model="form.val11"
                     multiple
@@ -251,7 +251,7 @@
                     </el-option>
                   </el-select>
                 </el-form-item>
-                <el-form-item prop="val29" v-if="queryConf.waje || queryConfFlag">
+                <el-form-item prop="val29" v-if="queryConf.waje || queryConfFlag" label="委案金额下限：">
                   <el-input
                     v-model="form.val29"
                     type="number"
@@ -259,7 +259,7 @@
                     clearable
                   ></el-input>
                 </el-form-item>
-                <el-form-item prop="val13" v-if="queryConf.waje || queryConfFlag">
+                <el-form-item prop="val13" v-if="queryConf.waje || queryConfFlag" label="委案金额上限：">
                   <el-input
                     v-model="form.val13"
                     type="number"
@@ -267,13 +267,13 @@
                     clearable
                   ></el-input>
                 </el-form-item>
-                <el-form-item v-if="queryConf.yqts || queryConfFlag">
+                <el-form-item v-if="queryConf.yqts || queryConfFlag" label="逾期天数下限：">
                   <el-input v-model="form.overdueDaysStart" type="number" placeholder="请输入逾期天数下限" clearable></el-input>
                 </el-form-item>
-                <el-form-item v-if="queryConf.yqts || queryConfFlag">
+                <el-form-item v-if="queryConf.yqts || queryConfFlag" label="逾期天数上限：">
                   <el-input v-model="form.overdueDaysEnd" type="number" placeholder="请输入逾期天数上限" clearable></el-input>
                 </el-form-item>
-                <el-form-item prop="val14" v-if="queryConf.bszt || queryConfFlag">
+                <el-form-item prop="val14" v-if="queryConf.bszt || queryConfFlag" label="标色状态：">
                   <el-select
                     v-model="form.val14"
                     collapse-tags multiple
@@ -289,7 +289,7 @@
                     </el-option>
                   </el-select>
                 </el-form-item>
-                <el-form-item prop="val15" v-if="queryConf.kh || queryConfFlag">
+                <el-form-item prop="val15" v-if="queryConf.kh || queryConfFlag" label="卡号：">
                   <el-input
                     type="textarea"
                     rows="3"
@@ -299,7 +299,7 @@
                     clearable
                   ></el-input>
                 </el-form-item>
-                <el-form-item prop="val16" v-if="queryConf.dah || queryConfFlag">
+                <el-form-item prop="val16" v-if="queryConf.dah || queryConfFlag" label="档案号：">
                   <el-input
                     type="textarea"
                     rows="3"
@@ -309,7 +309,7 @@
                     clearable
                   ></el-input>
                 </el-form-item>
-                <el-form-item prop="val30" v-if="queryConf.gjcs || queryConfFlag">
+                <el-form-item prop="val30" v-if="queryConf.gjcs || queryConfFlag" label="跟进次数下限：">
                   <el-input
                     v-model="form.val30"
                     type="number"
@@ -317,7 +317,7 @@
                     clearable
                   ></el-input>
                 </el-form-item>
-                <el-form-item prop="val18" v-if="queryConf.gjcs || queryConfFlag">
+                <el-form-item prop="val18" v-if="queryConf.gjcs || queryConfFlag" label="跟进次数上限：">
                   <el-input
                     v-model="form.val18"
                     type="number"
@@ -326,7 +326,7 @@
                   ></el-input>
                 </el-form-item>
 
-                <el-form-item prop="val19" v-if="queryConf.sfxfp || queryConfFlag">
+                <el-form-item prop="val19" v-if="queryConf.sfxfp || queryConfFlag" label="是否新分配：">
                   <el-select
                     v-model="form.val19"
                     placeholder="请选择是否新分配"
@@ -341,7 +341,7 @@
                     </el-option>
                   </el-select>
                 </el-form-item>
-                <el-form-item prop="val20" v-if="queryConf.hkqk || queryConfFlag">
+                <el-form-item prop="val20" v-if="queryConf.hkqk || queryConfFlag" label="还款情况：">
                   <el-select
                     v-model="form.val20"
                     placeholder="请选择还款情况"
@@ -357,21 +357,21 @@
                   </el-select>
                 </el-form-item>
 
-                <el-form-item prop="val22" v-if="queryConf.zdyxx || queryConfFlag">
+                <el-form-item prop="val22" v-if="queryConf.zdyxx || queryConfFlag" label="自定义信息：">
                   <el-input
                     v-model="form.val22"
                     placeholder="请输入自定义信息"
                     clearable
                   ></el-input>
                 </el-form-item>
-                <el-form-item prop="val23" v-if="queryConf.csfl || queryConfFlag">
+                <el-form-item prop="val23" v-if="queryConf.csfl || queryConfFlag" label="催收分类：">
                   <el-input
                     v-model="form.val23"
                     placeholder="请输入催收分类"
                     clearable
                   ></el-input>
                 </el-form-item>
-                <el-form-item prop="val24" v-if="queryConf.jmzt || queryConfFlag">
+                <el-form-item prop="val24" v-if="queryConf.jmzt || queryConfFlag" label="减免状态：">
                   <el-select
                     v-model="form.val24"
                     multiple
@@ -388,7 +388,7 @@
                     </el-option>
                   </el-select>
                 </el-form-item>
-                <el-form-item prop="val25" v-if="queryConf.bbzt || queryConfFlag">
+                <el-form-item prop="val25" v-if="queryConf.bbzt || queryConfFlag" label="报备状态：">
                   <el-select
                     v-model="form.val25"
                     multiple
@@ -405,21 +405,21 @@
                     </el-option>
                   </el-select>
                 </el-form-item>
-                <el-form-item prop="val27" v-if="queryConf.dhhm || queryConfFlag">
+                <el-form-item prop="val27" v-if="queryConf.dhhm || queryConfFlag" label="电话号码：">
                   <el-input
                     v-model="form.val27"
                     placeholder="请输入电话号码"
                     clearable
                   ></el-input>
                 </el-form-item>
-                <el-form-item prop="val28" v-if="queryConf.csjl || queryConfFlag">
+                <el-form-item prop="val28" v-if="queryConf.csjl || queryConfFlag" label="催收记录：">
                   <el-input
                     v-model="form.val28"
                     placeholder="请输入催收记录"
                     clearable
                   ></el-input>
                 </el-form-item>
-                <el-form-item prop="val33" v-if="queryConf.ajfprq || queryConfFlag">
+                <el-form-item prop="val33" v-if="queryConf.ajfprq || queryConfFlag" label="案件分配日期：">
                   <el-date-picker
                     v-model="form.val33"
                     value-format="yyyy-MM-dd"
@@ -432,7 +432,7 @@
                   >
                   </el-date-picker>
                 </el-form-item>
-                <el-form-item prop="val21" v-if="queryConf.yjtarq || queryConfFlag">
+                <el-form-item prop="val21" v-if="queryConf.yjtarq || queryConfFlag" label="预计退案日期：">
                   <el-date-picker
                     v-model="form.val21"
                     value-format="yyyy-MM-dd"
@@ -445,7 +445,7 @@
                   >
                   </el-date-picker>
                 </el-form-item>
-                <el-form-item prop="val17" v-if="queryConf.zhgjrq || queryConfFlag">
+                <el-form-item prop="val17" v-if="queryConf.zhgjrq || queryConfFlag" label="最后跟进日期：">
                   <el-date-picker
                     v-model="form.val17"
                     value-format="yyyy-MM-dd"
@@ -458,7 +458,7 @@
                   >
                   </el-date-picker>
                 </el-form-item>
-                <el-form-item prop="val12" v-if="queryConf.hkrq || queryConfFlag">
+                <el-form-item prop="val12" v-if="queryConf.hkrq || queryConfFlag" label="还款日期：">
                   <el-date-picker
                     v-model="form.val12"
                     value-format="yyyy-MM-dd"
@@ -471,7 +471,7 @@
                   >
                   </el-date-picker>
                 </el-form-item>
-                <el-form-item prop="val7"  v-if="queryConf.warq || queryConfFlag">
+                <el-form-item prop="val7"  v-if="queryConf.warq || queryConfFlag" label="委案日期：">
                   <el-date-picker
                     v-model="form.val7"
                     type="daterange"

@@ -5,8 +5,9 @@
   >
     <el-tabs v-model="activeName" @tab-click="handleClick" class="tabs-wrap statistics">
       <el-tab-pane label="当日电催跟进量" name="first">
-        <el-form :inline="true" ref="form1" :model="form1" label-width="80px">
-          <el-form-item prop="val1">
+        <el-form :inline="true" ref="form1" :model="form1" class="queryStyle">
+          <!-- label-width="80px" -->
+          <el-form-item prop="val1" label="催收日期：">
             <el-date-picker
               v-model="form1.val1"
               type="daterange"
@@ -47,8 +48,9 @@
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="催收状态统计" name="second">
-        <el-form :inline="true" ref="form2" :model="form2" label-width="80px" class="queryStyle">
-          <el-form-item prop="val1">
+        <!-- label-width="80px" -->
+        <el-form :inline="true" ref="form2" :model="form2"  class="queryStyle">
+          <el-form-item prop="val1" label="委托方：">
             <el-select
               v-model="form2.val1"
               placeholder="请选择委托方"
@@ -65,7 +67,7 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item prop="val2">
+          <el-form-item prop="val2" label="催收状态：">
             <el-select v-model="form2.val2" placeholder="请选择催收状态"
                        collapse-tags
                        multiple clearable>
@@ -77,7 +79,7 @@
               ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item prop="val3">
+          <el-form-item prop="val3" label="逾期账龄：">
             <el-select
               v-model="form2.val3"
               placeholder="请选择逾期账龄"
@@ -121,8 +123,9 @@
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="批次分类统计" name="third">
-        <el-form :inline="true" ref="form3" :model="form3" label-width="80px" class="queryStyle">
-          <el-form-item prop="val1">
+        <!-- label-width="80px" -->
+        <el-form :inline="true" ref="form3" :model="form3"  class="queryStyle">
+          <el-form-item prop="val1" label="委托方：">
             <el-select
               v-model="form3.val1"
               placeholder="请选择委托方"
@@ -139,7 +142,7 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item prop="val2">
+          <el-form-item prop="val2" label="批次号：">
             <el-select
               v-model="form3.val2"
               multiple
@@ -157,7 +160,7 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item prop="val3">
+          <el-form-item prop="val3" label="逾期账龄：">
             <el-select
               v-model="form3.val3"
               placeholder="请选择逾期账龄"
