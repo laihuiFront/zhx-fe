@@ -202,7 +202,7 @@
           <el-input v-model="memberInfo.mobile" placeholder="请输入手机号"></el-input>
         </el-form-item>
         <el-form-item label="呼叫中心" prop="callCenter">
-          <el-select v-model="memberInfo.callCenter" clearable placeholder="请选择呼叫中心" @change="callCenterChanged">
+          <el-select v-model="memberInfo.callCenter" clearable placeholder="请选择呼叫中心" @change="callCenterChanged" @clear="callCenterCleared">
             <el-option
               v-for="item in callCenters"
               :key="item.id"
@@ -805,9 +805,8 @@
               this.returnName = null
               let { ...resultData } = this.memberInfo
               resultData.roleList = resultData.roleList.map(item => { return { id: item } })
+              resultData.callcenterid = resultData.callCenter
               if (this.dialogData.type === 'add') {
-                resultData.callcenterid=resultData.callCenter
-                delete resultData.callCenter
                 addMember(resultData).then(response => {
                   this.onClickQuery()
                   this.onClickCancel()
@@ -840,6 +839,9 @@
       },
       callCenterChanged(callCenterID){
         this.$set(this.memberInfo, 'callCenter', callCenterID)
+      },
+      callCenterCleared(){
+        this.$set(this.memberInfo, 'callCenter', null)
       }
     }
   }

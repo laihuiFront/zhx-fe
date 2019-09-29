@@ -38,7 +38,7 @@
                       { red: caseDetail.color === 'RED' }
                     ]">{{ caseDetail.name}}{{caseDetail.gender ? `（${caseDetail.gender}）` : ''}}</span>
             </div>
-     </div>     
+     </div>
             <!-- <div class="sub-title">委托方</div> -->
         <div class="itemStyle">
           <el-form-item label="委托方" class="lableStyle">
@@ -64,7 +64,7 @@
               <span>{{ caseDetail.caseDate }}</span>
             </div>
        </div>
-       <div class="itemStyle">        
+       <div class="itemStyle">
           <el-form-item label="证件号" class="lableStyle">
           </el-form-item>
             <div
@@ -77,7 +77,7 @@
                       { red: caseDetail.color === 'RED' }
                     ]">{{ caseDetail.identNo }}</span>
             </div>
-       </div>        
+       </div>
          <div class="itemStyle">
            <el-form-item label="卡号" class="lableStyle">
           </el-form-item>
@@ -117,7 +117,7 @@
               :disabled="true"
                class="fixwidth"
             ></el-input>
-         </div>         
+         </div>
          <div class="itemStyle">
           <el-form-item label="地区" class="lableStyle">
            </el-form-item>
@@ -266,9 +266,9 @@
          </div>
       <div class="pinyu1">
          <div class="commentStyle">
-           <div class="pinyu">          
+           <div class="pinyu">
           <el-form-item label="最新评语" class="whole">
-          </el-form-item>           
+          </el-form-item>
             <div class="content-wrap">
               <el-popover
                 placement="bottom-start"
@@ -278,7 +278,7 @@
                 trigger="click"
                 v-model="addCommentVisible"
               >
-                <div>             
+                <div>
                   <el-radio-group
                     v-model="commentAddColor"
                     style="margin-top:10px;"
@@ -333,12 +333,12 @@
                     type="textarea"
                     :rows="1"
                     placeholder="请输入评语"
-                    v-model="commentAddContent" 
-                    class="inputStyle"                 
+                    v-model="commentAddContent"
+                    class="inputStyle"
                   >
                   </el-input>
               </div>
-            </div>         
+            </div>
          </div>
     </div>
             <!--<el-input v-model="caseDetail.area" :disabled="true"></el-input>-->
@@ -391,12 +391,12 @@
             <div class="itemStyle">
             <el-form-item label="合同编号" class="lableStyle">
             </el-form-item>
-              <el-input v-model="caseDetail.contractNo" :disabled="true" class="fixwidth"></el-input>             
+              <el-input v-model="caseDetail.contractNo" :disabled="true" class="fixwidth"></el-input>
             </div>
             <div class="itemStyle">
               <el-form-item label="人民币" class="lableStyle">
               </el-form-item>
-              <el-input v-model="caseDetail.rmb" :disabled="true" class="fixwidth"></el-input>             
+              <el-input v-model="caseDetail.rmb" :disabled="true" class="fixwidth"></el-input>
             </div>
             <div class="itemStyle">
               <el-form-item label="港币" class="lableStyle">
@@ -630,7 +630,7 @@
                 class="fixwidth"
               ></el-input>
             </div>
-            <div class="itemStyle">             
+            <div class="itemStyle">
             <el-form-item label="手机" class="lableStyle">
             </el-form-item>
               <el-input v-model="caseDetail.tel" :disabled="true" class="fixwidth"></el-input>
@@ -1158,7 +1158,7 @@
                   class="fixwidth"
                 ></el-input>
             </div>
-        
+
             <div class="itemStyle">
               <el-form-item label="社保电脑号" class="lableStyle">
               </el-form-item>
@@ -1285,7 +1285,7 @@
             </div>
             <div class="itemStyle">
               <el-form-item label="联系人2手机" class="lableStyle">
-              </el-form-item>             
+              </el-form-item>
                 <el-input
                   v-model="caseDetail.contactMobile2"
                   :disabled="true"
@@ -1593,7 +1593,7 @@
                   <span>{{ caseDetail.remark6}}</span>
                 </div>
             </div>
-            </div>              
+            </div>
             <div class="fujian">
                   <el-form-item label="附件" class="upload-wrap">
                     <el-popover
@@ -1637,7 +1637,7 @@
                       >
                     </el-popover>
                   </el-form-item>
-            </div>         
+            </div>
           </el-form>
         </div>
       </el-collapse-item>
@@ -1692,7 +1692,7 @@
                   <el-button
                     class="addPhoneStyle btn"
                     type="primary"
-                    @click="addPhone"                   
+                    @click="addPhone"
                   >新增电话
                     <!-- v-if=" caseDetail.currentuser || mycaseFlag" -->
                   </el-button
@@ -1750,13 +1750,8 @@
               <el-table
                 highlight-current-row
                 @selection-change="onSelectPhoneRow"
-                border
-                stripe
-                height="1"
                 :data="caseDetail.dataCaseTelEntityList"
                 :row-class-name="telTableRowClassName"
-                style="width: 100%;min-height: 200px;"
-                class="table-wrap"
               >
                 <el-table-column type="selection" width="55">
                 </el-table-column>
@@ -1884,13 +1879,8 @@
               <el-table
                 highlight-current-row
                 v-if="letterVisible2"
-                border
-                stripe
-                height="1"
                 @selection-change="onSelectAddrRow"
                 :data="addrList"
-                style="width: 100%;min-height: 200px;"
-                class="table-wrap"
               >
                 <el-table-column type="selection" width="55">
                 </el-table-column>
@@ -2014,11 +2004,7 @@
               <el-table
                 highlight-current-row
                 :data="letterList"
-                border
-                stripe
                 v-if="letterVisible"
-                style="width: 100%"
-                class="table-wrap"
               >
                 <el-table-column type="selection" width="55">
                 </el-table-column>
@@ -2101,11 +2087,6 @@
               <el-table
                 highlight-current-row
                 :data="dataList"
-                border
-                stripe
-                height="1"
-                style="width: 100%;min-height: 200px;"
-                class="table-wrap"
               >
                 <el-table-column
                   prop="name"
@@ -2158,27 +2139,18 @@
                     type="primary"
                     @click="addDataCollect"
                     v-if=" caseDetail.currentuser || mycaseFlag"
-                  >添加辅助催记
-                  </el-button
-                  >
+                  >添加催记</el-button>
                   <el-button
                     class="btn"
                     type="primary"
                     @click="_expDataCollect"
                     v-if=" caseDetail.currentuser || mycaseFlag"
-                  >导出本案催记
-                  </el-button
-                  >
+                  >导出催记</el-button>
                 </div>
               </div>
               <el-table
                 highlight-current-row
                 :data="memorizeList"
-                style="width: 100%; min-height: 200px;"
-                height="1"
-                border
-                stripe
-                class="table-wrap"
               >
 
                 <el-table-column
@@ -2279,14 +2251,10 @@
                       type="text"
                       @click="editDataCollect(scope.row)"
                       v-if=" caseDetail.currentuser || mycaseFlag"
-                    >编辑
-                    </el-button
-                    >
+                    >编辑</el-button >
                     <el-button type="text" v-if=" caseDetail.currentuser || mycaseFlag"
                                @click="delDataCollect(scope.row)"
-                    >删除
-                    </el-button
-                    >
+                    >删除</el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -2295,11 +2263,6 @@
               <el-table
                 highlight-current-row
                 :data="commentList"
-                border
-                stripe
-                height="1"
-                style="width: 100%;min-height: 200px;"
-                class="table-wrap"
               >
                 <el-table-column
                   prop="comment"
@@ -2385,11 +2348,6 @@
               <el-table
                 highlight-current-row
                 :data="rateUpdateList"
-                border
-                stripe
-                height="1"
-                style="width: 100%;min-height: 200px;"
-                class="table-wrap"
               >
                 <el-table-column
                   prop="currency"
@@ -2478,7 +2436,7 @@
             >
               <div class="first">
                 <p style="line-height: 30px">承诺还款记录</p>
-                <el-table highlight-current-row width="100%" border stripe show-overflow-tooltip :data="memorizeList2">
+                <el-table highlight-current-row show-overflow-tooltip :data="memorizeList2">
                   <el-table-column
                     prop="repayAmtMsg"
                     show-overflow-tooltip
@@ -2602,11 +2560,6 @@
               <el-table
                 highlight-current-row
                 :data="syncList"
-                height="1"
-                style="width: 100%;min-height: 200px;"
-                border
-                stripe
-                class="table-wrap"
               >
                 <el-table-column
                   prop="statusMsg"
@@ -2662,11 +2615,6 @@
               <el-table
                 highlight-current-row
                 :data="caseSameList"
-                height="1"
-                style="width: 100%;min-height: 200px;"
-                border
-                stripe
-                class="table-wrap"
               >
                 <el-table-column
                   prop="batchNo"
@@ -2747,8 +2695,6 @@
               <el-table
                 highlight-current-row
                 :data="logList"
-                border
-                stripe
               >
                 <el-table-column
                   prop="opTime"
@@ -2805,12 +2751,7 @@
               </div>
               <el-table
                 highlight-current-row
-                border
-                stripe
                 :data="legalList"
-                height="1"
-                style="width: 100%;margin-top:5px;min-height: 200px;"
-                class="table-wrap"
               >
                 <el-table-column
                   prop="legalStatusMsg"
@@ -2901,19 +2842,12 @@
                     type="primary"
                     v-if=" caseDetail.currentuser || mycaseFlag"
                     @click="showadddialogVisible"
-                  >添加减免申请
-                  </el-button
-                  >
+                  >添加减免申请</el-button>
                 </div>
               </div>
               <el-table
                 highlight-current-row
                 :data="reduceApplyList"
-                height="1"
-                style="width: 100%; min-height:200px;"
-                border
-                stripe
-                class="table-wrap"
               >
                 <el-table-column
                   prop="reduceType"
@@ -3078,7 +3012,7 @@
             label-width="120px"
             class="demo-ruleForm"
           >
-          <div class="rowStyle">         
+          <div class="rowStyle">
             <div class="itemStyle2">
                 <el-form-item label="电话" prop="mobile" class="lableStyle2_phone">
                     <img src="./bohao1.png" style="padding-left:7px;margin-top: 0px;cursor: pointer;" @click="sendTel2"/>
@@ -3096,20 +3030,20 @@
               <!-- </el-col>
               <el-col :span="4"> -->
               <!-- </el-col>            -->
-            
+
             </div>
             <div class="itemStyle2">
               <el-form-item label="姓名" prop="targetName" class="lableStyle2">
-              </el-form-item>             
+              </el-form-item>
                 <el-input
                   v-model="batchForm.targetName" clearable
                   placeholder="请输入姓名"
                   class="fixwidth2"
                 ></el-input>
-            </div>        
+            </div>
             <div class="itemStyle2">
               <el-form-item label="关系" prop="relation" class="lableStyle2">
-              </el-form-item>           
+              </el-form-item>
                 <el-input
                   v-model="batchForm.relation" clearable
                   placeholder="请输入关系"
@@ -3155,7 +3089,7 @@
                   v-model="batchForm.repayAmt" clearable
                   placeholder="请输入承诺还款金额"
                   class="fixwidth2"
-                ></el-input>              
+                ></el-input>
              </div>
              <div class="itemStyle2">
               <el-form-item label="承诺还款日期" prop="repayTime" class="lableStyle2">
@@ -3167,7 +3101,7 @@
                   placeholder="请输入承诺还款日期"
                   class="fixwidth2"
                 ></el-date-picker>
-             </div>         
+             </div>
              <div class="itemStyle2">
                 <el-form-item label="通话记录" prop="collectInfo" class="lableStyle2" :rules="{required: true, message: '通话记录不能为空', trigger: 'blur'}">
                 </el-form-item>
@@ -3203,9 +3137,7 @@
                   v-model="batchForm.sType"
                   :true-label="1"
                   :false-label="0"
-                >更新批次共债案件催收状态
-                </el-checkbox
-                >
+                >更新批次共债案件催收状态</el-checkbox>
              </div>
              <div class="itemStyle2">
               <el-form-item label="下次跟进日期" prop="nextFollDate" class="lableStyle2">
@@ -3218,15 +3150,13 @@
                   placeholder="请选择下次跟进日期"
                   class="fixwidth2"
                 ></el-date-picker>
-             </div>            
+             </div>
           </div>
           </el-form>
           <div class="operation">
             <el-button type="primary" @click="onClickSaveCollection('batchForm')"
             class="btn"
-            >保存
-            </el-button
-            >
+            >保存</el-button>
             <el-button @click="batchForm = { sType: 0,targetName:'',mobile:'',relation:'',collectInfo:'' };$nextTick(()=>{
                 if($refs['batchForm']) {
                   $refs['batchForm'].resetFields()
@@ -3238,9 +3168,6 @@
           <el-table
             highlight-current-row
             :data="syncMemorizeList"
-            style="width: 97%"
-            border
-            stripe
           >
             <el-table-column
               prop="createTime"
@@ -3503,7 +3430,7 @@
       </span>
     </el-dialog>
     <el-dialog
-      title="添加辅助催记"
+      :title="collectTitle"
       :visible.sync="dialogDataCollectVisible"
       width="45%"
       append-to-body
@@ -3560,6 +3487,15 @@
             v-model="dataCollectInfo.relation"
             placeholder="请输入关系"
           ></el-input>
+        </el-form-item>
+        <el-form-item label="催收时间" v-if="dataCollectEditType==='edit'">
+          <el-date-picker
+            v-model="dataCollectInfo.collectTime"
+            type="datetime"
+            placeholder="选择催收时间"
+            value-format="yyyy-MM-dd HH:mm"
+            format="yyyy-MM-dd HH:mm">
+          </el-date-picker>
         </el-form-item>
         <el-form-item label="催收内容" class="whole">
           <el-input
@@ -5166,7 +5102,16 @@
     //   }
     // },
     computed: {
-      ...mapGetters(["userInfo"])
+      ...mapGetters(["userInfo"]),
+      collectTitle(){
+        let title = ""
+        if(this.dataCollectEditType === "add"){
+          title = "添加催记"
+        }else if(this.dataCollectEditType === "edit"){
+          title = "编辑催记"
+        }
+        return title
+      }
     },
     data() {
       return {
@@ -5305,7 +5250,8 @@
         ptpList: [],
         $routeKey: '',
         caseType: null,
-        telhistoryLoading: false
+        telhistoryLoading: false,
+        dataCollectEditType: null
       };
     },
 
@@ -6002,7 +5948,7 @@
             });
             this.$message({
               type: "success",
-              message: "新增辅助催记成功"
+              message: "催记保存成功"
             });
           } else {
             getCollectDetail(this.id, this.memorizeType).then(data => {
@@ -6010,10 +5956,15 @@
             });
             this.$message({
               type: "success",
-              message: "修改辅助催记成功"
+              message: "催记保存成功"
             });
           }
           this.dialogDataCollectVisible = false;
+        }).catch(() => {
+          this.$message({
+            type: "error",
+            message: "催记保存失败"
+          });
         });
       },
       editDataCollect(row, index) {
@@ -6531,7 +6482,6 @@
           //催記
           this.memorizeType = 1;
           getCollectDetail(this.id, 1).then(data => {
-            console.info(data);
             this.memorizeList = data;
           });
         } else if (ind == "评语") {
@@ -6748,7 +6698,7 @@
     // }
     .basic-info{
       .title-box{
-        display: flex;       
+        display: flex;
         .title1{
           width: 40%;
           padding-left: 24px;
@@ -6759,9 +6709,9 @@
           height: 48px;
           display: flex;
           align-items: center;
-          border-radius: 3px;           
+          border-radius: 3px;
           &:nth-child(1){
-            margin-right: 24px; 
+            margin-right: 24px;
           }
         }
         .title2{
@@ -6770,13 +6720,13 @@
           padding-left: 24px;
           color: #fff;
           // margin:12px 0;
-          border-radius: 3px; 
-          background:linear-gradient(to right,#4F6CFA,#5AA6F9);          
+          border-radius: 3px;
+          background:linear-gradient(to right,#4F6CFA,#5AA6F9);
           height: 48px;
           display: flex;
-          align-items: center;          
+          align-items: center;
           &:nth-child(1){
-            margin-right: 24px; 
+            margin-right: 24px;
           }
         }
       }
@@ -6843,24 +6793,24 @@
         }
         .style1{
           display: contents;
-        }  
+        }
         .itemStyle{
           display:inline-block;
           margin-left: 25px;
-          margin-top: 15px; 
+          margin-top: 15px;
           .lableStyle_name{
             display: contents;
-            .el-form-item__label{                                 
+            .el-form-item__label{
               text-align: left;
               width: 100%;
               padding-left: 10px;
               margin-bottom: 5px;
               border-radius: 3px;
-            } 
+            }
           }
           .lableStyle_blue{
             display: contents;
-            .el-form-item__label{        
+            .el-form-item__label{
               background: #EDF0FF;
               color: #a0b3fb;
               text-align: left;
@@ -6868,11 +6818,11 @@
               padding-left: 10px;
               margin-bottom: 5px;
               border-radius: 3px;
-            } 
+            }
           }
           .lableStyle_riqi{
             display: contents;
-            .el-form-item__label{        
+            .el-form-item__label{
               background: #FFF5ED;
               color: #f8aa70;
               text-align: left;
@@ -6880,11 +6830,11 @@
               padding-left: 10px;
               margin-bottom: 5px;
               border-radius: 3px;
-            } 
+            }
           }
           .lableStyle_date{
             display: contents;
-            .el-form-item__label{       
+            .el-form-item__label{
               background: #EDF0FF;
               color: #a0b3fb;
               text-align: left;
@@ -6892,11 +6842,11 @@
               padding-left: 10px;
               margin-bottom: 5px;
               border-radius: 3px;
-            } 
+            }
           }
           .lableStyle{
             display: contents;
-             .el-form-item__label{       
+             .el-form-item__label{
               text-align: left;
               width: 100%;
               padding-left: 10px;
@@ -7117,26 +7067,26 @@
             }
             .lableStyle2_phone{
                 display: contents;
-              .el-form-item__label{        
+              .el-form-item__label{
                 text-align: left;
                 width: 30px;
                 padding-left: 10px;
                 margin-bottom: 5px;
                 border-radius: 3px;
-              } 
+              }
               .el-form-item__content{
                 text-align: right;
               }
             }
             .lableStyle2{
               display: contents;
-              .el-form-item__label{        
+              .el-form-item__label{
                 text-align: left;
                 width: 100%;
                 padding-left: 10px;
                 margin-bottom:5px;
-              } 
-            }           
+              }
+            }
           }
         }
 
@@ -7170,10 +7120,10 @@
 
         .operation {
           margin-top: 10px;
-          text-align: center;         
+          text-align: center;
             .btn{
                background: #5175FA;
-            }         
+            }
         }
       }
 
@@ -7185,7 +7135,7 @@
 
     .phoneNumber input{
       padding: 0 15px;
-    } 
+    }
   }
   .case-dialog-wrap {
 
@@ -7284,7 +7234,7 @@
     min-height: 28px;
     border-radius: 4px;
     border: 1px solid #dcdfe6;
-    display: inline-block;   
+    display: inline-block;
     font-size: inherit;
     padding: 0 15px;
     width: 100%;
