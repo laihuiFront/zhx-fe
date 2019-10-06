@@ -21,7 +21,7 @@
           @click="onClickAdd"
           v-has="'新增'"
         >新增</el-button>
-        <!-- <el-button type="primary" :disabled="disableSave" @click="onclickSave" v-has="'保存'">保存</el-button> -->
+        <el-button type="primary" :disabled="disableSave" v-if="currentEnum.name && currentEnum.name !== '地区'" @click="onclickSave" v-has="'保存'">保存</el-button>
         <el-button
           type="primary"
           @click="onClickSave"
