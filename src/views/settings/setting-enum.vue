@@ -21,7 +21,7 @@
           @click="onClickAdd"
           v-has="'新增'"
         >新增</el-button>
-        <el-button type="primary" :disabled="disableSave" v-if="currentEnum.name && currentEnum.name !== '地区'" @click="onclickSave" v-has="'保存'">保存</el-button>
+        <el-button type="primary" :disabled="disableSave" v-if="currentEnum.name && currentEnum.name !== '地区'" @click="onclickSave1" v-has="'保存'">保存</el-button>
         <el-button
           type="primary"
           @click="onClickSave"
@@ -368,52 +368,52 @@ export default {
         sysFlag:1
       })
     },
-    // onclickSave () {
-    //   if (this.currentEnum.name === '地区') {
-    //     insertConfigData(this.configData).then(() => {
-    //       this.$message('保存成功')
-    //       this.tableLoad = true
-    //       getConfigList(this.currentEnum.id).then(response => {
-    //         this.configData = response
-    //         this.tableLoad = false
-    //       })
-    //     })
-    //   } else {
-    //     const toSaveList = this.configData.filter(item => item.editType === 'add' || item.editType === 'edit')
-    //     const hasEmpty = toSaveList.some(item => {
-    //       if (this.currentEnum.name === '催收模板') {
-    //         return !(item.tempName && item.tempDescription)
-    //       } else {
-    //         return !item.tempName
-    //       }
-    //     })
-    //     if (hasEmpty) {
-    //       this.$message('修改或删除的配置项含有空值，请修改后重新提交')
-    //       return
-    //     }
-    //     const data = toSaveList.map((item) => {
-    //       return {
-    //         type: 0,
-    //         id: item.id,
-    //         name: item.tempName,
-    //         status: item.tempStatus,
-    //         sysFlag:item.tempSysFlag,
-    //         description: item.tempDescription,
-    //         parent: {
-    //           id: this.currentEnum.id
-    //         }
-    //       }
-    //     })
-    //     insertConfigData(data).then(() => {
-    //       this.$message('保存成功')
-    //       this.tableLoad = true
-    //       getConfigList(this.currentEnum.id).then(response => {
-    //         this.configData = response
-    //         this.tableLoad = false
-    //       })
-    //     })
-    //   }
-    // },
+    onclickSave1 () {
+      if (this.currentEnum.name === '地区') {
+        insertConfigData(this.configData).then(() => {
+          this.$message('保存成功')
+          this.tableLoad = true
+          getConfigList(this.currentEnum.id).then(response => {
+            this.configData = response
+            this.tableLoad = false
+          })
+        })
+      } else {
+        const toSaveList = this.configData.filter(item => item.editType === 'add' || item.editType === 'edit')
+        const hasEmpty = toSaveList.some(item => {
+          if (this.currentEnum.name === '催收模板') {
+            return !(item.tempName && item.tempDescription)
+          } else {
+            return !item.tempName
+          }
+        })
+        if (hasEmpty) {
+          this.$message('修改或删除的配置项含有空值，请修改后重新提交')
+          return
+        }
+        const data = toSaveList.map((item) => {
+          return {
+            type: 0,
+            id: item.id,
+            name: item.tempName,
+            status: item.tempStatus,
+            sysFlag:item.tempSysFlag,
+            description: item.tempDescription,
+            parent: {
+              id: this.currentEnum.id
+            }
+          }
+        })
+        insertConfigData(data).then(() => {
+          this.$message('保存成功')
+          this.tableLoad = true
+          getConfigList(this.currentEnum.id).then(response => {
+            this.configData = response
+            this.tableLoad = false
+          })
+        })
+      }
+    },
     onClickEdit (row) {
       this.$set(row, 'tempName', row.name)
       this.$set(row, 'tempDescription', row.description)
