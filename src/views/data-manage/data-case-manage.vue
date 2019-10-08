@@ -1134,6 +1134,7 @@
         <el-checkbox v-model="exportCollectConf.minimumPayment" label="5">最低还款额</el-checkbox>
         <el-checkbox v-model="exportCollectConf.creditLine" label="5">信用额度</el-checkbox>
         <el-checkbox v-model="exportCollectConf.module" label="5">催收模板</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.collectTime" label="5">催收时间</el-checkbox>
       </el-row>
       <span slot="footer" class="footer">
         <el-button @click="showExportCollectConfVisible = false">取 消</el-button>
