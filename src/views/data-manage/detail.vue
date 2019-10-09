@@ -267,9 +267,8 @@
       <div class="pinyu1">
          <div class="commentStyle">
            <div class="pinyu">
-          <el-form-item label="最新评语" class="whole">
-          </el-form-item>
-            <div class="content-wrap">
+            <el-form-item label="最新评语" class="whole">
+            </el-form-item>          
               <el-popover
                 placement="bottom-start"
                 title="添加评语"
@@ -279,6 +278,13 @@
                 v-model="addCommentVisible"
               >
                 <div>
+                  <el-input
+                    type="textarea"
+                    :rows="4"
+                    placeholder="请输入评语"
+                    v-model="commentAddContent"
+                  >
+                  </el-input>
                   <el-radio-group
                     v-model="commentAddColor"
                     style="margin-top:10px;"
@@ -311,7 +317,8 @@
                   title="添加"
                   slot="reference"
                 ></el-button>
-              </el-popover>
+              </el-popover>          
+          </div>
               <ul class="comments-wrap">
                 <li
                   v-for="item in commentList"
@@ -326,18 +333,6 @@
                   {{ item.comment }}
                 </li>
               </ul>
-            </div>
-          </div>
-          <div>
-                 <el-input
-                    type="textarea"
-                    :rows="1"
-                    placeholder="请输入评语"
-                    v-model="commentAddContent"
-                    class="inputStyle"
-                  >
-                  </el-input>
-              </div>
             </div>
          </div>
     </div>
@@ -6786,6 +6781,32 @@
              }
            }
         }
+           .comments-wrap {
+              flex: 1;
+              border: 1px solid #dcdfe6;
+              border-radius: 5px;
+              padding: 8px;
+              min-height: 30px;
+
+              .item {
+                margin-bottom: 4px;
+                line-height: 1;
+                color: #000;
+
+                &.blue {
+                  color: #5175FA;
+                }
+
+                &.red {
+                  color: red;
+                }
+
+                &:last-child {
+                  margin-bottom: 0;
+                }
+              }
+           }
+        
         .itemStyle_fujian{
           .el-form-item__label{
             width: 50px !important;
