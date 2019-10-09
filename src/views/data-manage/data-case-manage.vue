@@ -484,6 +484,15 @@
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
+          min-width="180"
+          prop="expectTime"
+          sortable="custom"
+          :sort-orders="['ascending','descending']"
+          align="center"
+          label="预计退案日期"
+          show-overflow-tooltip>
+        </el-table-column>
+        <el-table-column
           min-width="120"
           prop="name"
           sortable="custom"
@@ -571,15 +580,6 @@
           :sort-orders="['ascending','descending']"
           label="闲置天数"
           align="center"
-          show-overflow-tooltip>
-        </el-table-column>
-        <el-table-column
-          min-width="180"
-          prop="expectTime"
-          sortable="custom"
-          :sort-orders="['ascending','descending']"
-          align="center"
-          label="预计退案日期"
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
