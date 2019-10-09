@@ -688,6 +688,7 @@
       v-dialogDrag
     >
       <el-tree
+        :show-checkbox="true"
         v-if="departmentTree.length>0"
         ref="tree"
         :data="departmentTree"
@@ -697,8 +698,8 @@
         class="tree-wrap"
         width="200px"
         :props="defaultProps"
-        show-checkbox
         @check="onSelectDepartment"
+        @node-click="dbConfirm"
       >
         <!-- @node-click="onSelectDepartment" -->
         <!-- :default-expanded-keys="[departmentTree[0].id]" -->
@@ -968,7 +969,8 @@
           sort:'desc'
         },
         pageLoading:false,
-        selectDataArr:[]
+        selectDataArr:[],
+        t1:[]
       };
     },
     computed: {
@@ -1460,6 +1462,28 @@
       selectMethod(param){
         this._selectAllInit('queryConf');
         Object.keys(this.queryConf).map(x=>this.queryConf[x]=param)
+      }, 
+      dbConfirm(data,node){
+        console.log(data,node)
+          this.selectDataArr = this.$refs.tree.getCurrentNode()
+        this.t1.push( new Date().getTime())
+        if(this.t1.length==2){
+          let val=this.t1[1]-this.t1[0]
+          this.t1=[]
+          if(val<500){
+            this.onClickSaveDept2()
+          }
+        }             
+      },
+      onClickSaveDept2(){
+        if (this.selectDataArr.length == 0){
+          return
+        }
+        const nodesId=this.selectDataArr.id
+        const nodesName  =this.selectDataArr.orgName
+        this.$set(this, 'deptName', nodesName)
+        this.$set(this.form, 'val31', nodesId)
+        this.departmentVisible = false       
       }
     },
     mounted(){
