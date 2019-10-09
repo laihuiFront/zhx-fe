@@ -170,7 +170,7 @@ return download({
        cardNo:  cardNo ,
        collectInfo:  collectInfo ,
        colors:  colors ,
-       seqno:  seqno ,
+       seqno:  seqno==null?"":seqno.replace(/[\n\r\v\s↵]/g,","),
        bailStartDate:  bailStartDate ,
        bailEndDate:  bailEndDate ,
        expectStartTime:  expectStartTime ,
