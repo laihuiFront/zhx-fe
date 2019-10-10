@@ -3488,8 +3488,8 @@
             v-model="dataCollectInfo.collectTime"
             type="datetime"
             placeholder="选择催收时间"
-            value-format="yyyy-MM-dd HH:mm"
-            format="yyyy-MM-dd HH:mm">
+            value-format="yyyy-MM-dd HH:mm:ss"
+            format="yyyy-MM-dd HH:mm:ss">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="催收内容" class="whole">
