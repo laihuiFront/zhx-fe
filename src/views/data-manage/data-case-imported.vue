@@ -900,6 +900,14 @@
             this.tableLoad = false
           })
         } else {
+          dataList().then((response) => {
+            this.DataList = response.pageInfo.list
+            //this.pages = response.pages
+            this.total = response.total
+            this.loading2 = false
+            this.fullscreenLoading = false
+            this.tableLoad = false
+          })
           this.ImportdialogVisible = true
           this.ImportMsg = res.msg
         }
