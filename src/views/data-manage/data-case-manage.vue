@@ -430,6 +430,7 @@
                 @selection-change="handleSelectionChange"
                 @row-dblclick="showCase"
                 @sort-change="handleSort"
+                border
       >
         <el-table-column
           width="55"
