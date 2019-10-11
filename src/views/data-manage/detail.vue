@@ -2146,6 +2146,7 @@
               <el-table
                 highlight-current-row
                 :data="memorizeList"
+                border               
               >
 
                 <el-table-column
@@ -2154,93 +2155,108 @@
                   sortable
                   :sort-orders="['ascending','descending']"
                   label="时间"
+                  align="center"
                 >
                 </el-table-column>
                 <el-table-column
                   prop="targetName"
                   show-overflow-tooltip
                   label="对象姓名"
+                  align="center"
                 >
                 </el-table-column>
                 <el-table-column
                   prop="relation"
                   show-overflow-tooltip
                   label="关系"
+                  align="center"
                 >
                 </el-table-column>
                 <el-table-column
                   prop="mobile"
                   show-overflow-tooltip
                   label="电话/地址"
+                  align="center"
                 >
                 </el-table-column>
                 <el-table-column
                   prop="telType"
                   show-overflow-tooltip
                   label="类型"
+                  align="center"
                 >
                 </el-table-column>
                 <el-table-column
                   prop="collectInfo"
                   show-overflow-tooltip
                   label="催收信息"
+                  align="center"
                 >
                 </el-table-column>
                 <el-table-column
                   prop="result"
                   show-overflow-tooltip
                   label="催收结果"
+                  align="center"
                 >
                 </el-table-column>
                 <el-table-column
                   prop="targetName"
                   show-overflow-tooltip
                   label="催收对象"
+                  align="center"
                 >
                 </el-table-column>
                 <el-table-column
                   prop="methodMsg"
                   show-overflow-tooltip
                   label="谈判方式"
+                  align="center"
                 >
                 </el-table-column>
                 <el-table-column
                   prop="repayTime"
                   show-overflow-tooltip
                   label="承诺日期"
+                  align="center"
                 >
                 </el-table-column>
                 <el-table-column
                   prop="repayAmtMsg"
                   show-overflow-tooltip
                   label="承诺金额"
+                  align="center"
                 >
                 </el-table-column>
                 <el-table-column
                   prop="reduceAmtMsg"
                   show-overflow-tooltip
                   label="减免金额"
+                  align="center"
                 >
                 </el-table-column>
                 <el-table-column
                   prop="reduceStatusMsg"
                   show-overflow-tooltip
                   label="减免状态"
+                  align="center"
                 >
                 </el-table-column>
                 <el-table-column
                   prop="odv"
                   show-overflow-tooltip
                   label="催收人"
+                  align="center"
                 >
                 </el-table-column>
                 <el-table-column
                   prop="collectStatusMsg"
                   show-overflow-tooltip
                   label="催收状态"
+                  align="center"
                 >
                 </el-table-column>
-                <el-table-column label="操作" width="100">
+                <el-table-column label="操作" width="100" align="center">
                   <template slot-scope="scope">
                     <el-button
                       type="text"

@@ -444,6 +444,11 @@ export default {
           prop: "confimTime"
         },
         {
+          'min-width': 180,
+          label: "催收员",
+          prop: "odv"
+        },
+        {
           'min-width': 100,
           label: "备注",
           prop: "remark"
