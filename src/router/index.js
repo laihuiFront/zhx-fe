@@ -290,14 +290,14 @@ export default new Router({
         },
 
         // 电催统计-每日动作统计
-        {
-          path: 'statistics-day-action',
-          component: resolve => {
-            spinRoute.show();
-            require(['@/views/statistics-manage/statistics-day-action'], spinRoute.resolve(resolve))
-          },
-          name: 'statistics-day-action'
-        },
+        // {
+        //   path: 'statistics-day-action',
+        //   component: resolve => {
+        //     spinRoute.show();
+        //     require(['@/views/statistics-manage/statistics-day-action'], spinRoute.resolve(resolve))
+        //   },
+        //   name: 'statistics-day-action'
+        // },
         // ****************** 统计报表 ******************
 
         // ****************** 系统设置 ******************

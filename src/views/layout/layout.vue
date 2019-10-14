@@ -1,7 +1,14 @@
 <template>
   <div id="layout">
-    <top-menu class="menu"></top-menu>
-    <div class="page">
+    <top-menu class="menu" :class="{'is-active':isActive}"></top-menu>
+      <div class="arrowBtn">
+        <el-button 
+          icon="el-icon-d-arrow-left" 
+          :class="{'is-active':isActive}"
+          @click="hideClick"
+        ></el-button>
+      </div>
+    <div class="page" :class="{'is-active':isActive}">
       <tab-menu class="tab-wrap"></tab-menu>
       <section class="page-wrap">
         <keep-alive :exclude="exclude">
@@ -22,7 +29,7 @@ export default {
   name: 'layout',
   data(){
     return{
-
+      isActive:false
     }
   },
   components: {
@@ -30,7 +37,14 @@ export default {
     TabMenu
   },
   methods:{
-    ...mapMutations(['SET_CACHEFLUSHFLAG'])
+    ...mapMutations(['SET_CACHEFLUSHFLAG']),
+    hideClick() {
+      if(this.isActive==true){
+        this.isActive=false
+      }else{
+        this.isActive=true
+      }
+    }
   },
   watch:{
     exclude(n){
@@ -61,8 +75,14 @@ export default {
     width: 210px;
     height: 100%;
   }
+  .menu.is-active{
+    display: none;
+  }
   .page{
     width: calc(100% - 210px);
+  }
+  .page.is-active {
+    width: calc(100%);
   }
   .page-wrap{
     width: 100%;
@@ -79,6 +99,21 @@ export default {
       border-radius: 3px;
       position: relative;
     }
+  }
+  .arrowBtn{
+    margin-top: 230px;
+    .el-button{
+      width: 30px;
+      padding: unset;
+      height: 50px;      
+      background: #edf0ff;
+    }
+    .el-button.is-active {
+        transform: rotate(180deg);
+    }
+     .el-icon-d-arrow-left{
+       font-size: 20px;
+     }
   }
 }
 </style>

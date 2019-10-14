@@ -73,7 +73,12 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            {{scope.row.list[0].countConPhoneNum}}
+            <el-button
+              type="text"
+              size="small"
+              @click="showCase(scope.row,time0,1)"
+            >{{scope.row.list[0].countConPhoneNum}}
+            </el-button>     
           </template>
         </el-table-column>
         <el-table-column
@@ -84,7 +89,12 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            {{scope.row.list[0].countPhoneNum}}
+            <el-button
+              type="text"
+              size="small"
+              @click="showCase(scope.row,time0,2)"
+            >{{scope.row.list[0].countPhoneNum}}
+            </el-button> 
           </template>
         </el-table-column>
         <el-table-column
@@ -108,7 +118,12 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            {{scope.row.list[1].countConPhoneNum}}
+            <el-button
+              type="text"
+              size="small"
+              @click="showCase(scope.row,time1,3)"
+            >{{scope.row.list[1].countConPhoneNum}}
+            </el-button> 
           </template>
         </el-table-column>
         <el-table-column
@@ -119,7 +134,12 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            {{scope.row.list[1].countPhoneNum}}
+            <el-button
+              type="text"
+              size="small"
+              @click="showCase(scope.row,time1,4)"
+            >{{scope.row.list[1].countPhoneNum}}
+            </el-button> 
           </template>
         </el-table-column>
         <el-table-column
@@ -143,7 +163,12 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            {{scope.row.list[2].countConPhoneNum}}
+            <el-button
+              type="text"
+              size="small"
+              @click="showCase(scope.row,time2,5)"
+            >{{scope.row.list[2].countConPhoneNum}}
+            </el-button> 
           </template>
         </el-table-column>
         <el-table-column
@@ -154,7 +179,12 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            {{scope.row.list[2].countPhoneNum}}
+            <el-button
+              type="text"
+              size="small"
+              @click="showCase(scope.row,time2,6)"
+            >{{scope.row.list[2].countPhoneNum}}
+            </el-button> 
           </template>
         </el-table-column>
         <el-table-column
@@ -178,7 +208,12 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            {{scope.row.list[3].countConPhoneNum}}
+            <el-button
+              type="text"
+              size="small"
+              @click="showCase(scope.row,time3,7)"
+            >{{scope.row.list[3].countConPhoneNum}}
+            </el-button> 
           </template>
         </el-table-column>
         <el-table-column
@@ -189,7 +224,12 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            {{scope.row.list[3].countPhoneNum}}
+            <el-button
+              type="text"
+              size="small"
+              @click="showCase(scope.row,time3,8)"
+            >{{scope.row.list[3].countPhoneNum}}
+            </el-button> 
           </template>
         </el-table-column>
         <el-table-column
@@ -262,6 +302,97 @@
         <el-button type="primary" @click="onClickSaveUser">保 存</el-button>
       </span>
     </el-dialog>
+
+    <el-dialog
+      title="催记详情"
+      :visible.sync="dialogDetailsVisible"
+      width="60%"
+      v-dialogDrag
+      class="dialog-wrap"
+      :close-on-click-modal="false"
+    >
+  <el-table
+      v-loading="tableLoad"
+      stripe
+      border
+      :data="tableDataDetails"
+      highlight-current-row     
+    >
+      <el-table-column
+        min-width="4"
+        label="通话时间"
+        align="center"
+        prop="collectTime"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        min-width="3"
+        label="通话对象"
+        align="center"
+        prop="targetName"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        min-width="4"
+        label="电话号码"
+        align="center"
+        prop="mobile"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        min-width="3"
+        label="电话类型"
+        align="center"
+        prop="telType"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        min-width="5"
+        label="通话类容"
+        align="center"
+        prop="collectInfo"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        min-width="3"
+        label="通话结果"
+        align="center"
+        prop="result"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        min-width="4"
+        label="承诺日期"
+        align="center"
+        prop="repayTime"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        min-width="4"
+        label="承诺金额"
+        align="center"
+        prop="repayAmt"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        min-width="4"
+        label="催收员"
+        align="center"
+        prop="odv"
+        show-overflow-tooltip
+      />
+    </el-table>
+    <el-pagination
+      @size-change="handleSizeChange2"
+      @current-change="handleCurrentChange2"
+      :current-page.sync="currentPage5"
+      :page-sizes="pageSizes"
+      :page-size="pages2"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total2">
+    </el-pagination>
+
+    </el-dialog>
   </div>
 </template>
 
@@ -272,7 +403,8 @@
     clientList,
     PersonList,
     dataList,
-    selectDataCaseExport
+    selectDataCaseExport,
+    getCollectionDayDetails
   } from '@/common/js/statistics-day.js'
    import {pageSizes} from "@/common/js/const"
 
@@ -306,7 +438,21 @@
         areaList: [],
         clientList: [],
         tableData3: [],
-        pageSizes
+        pageSizes,
+        time0:'00:00:00-08:00:00',
+        time1:'08:00:00-12:00:00',
+        time2:'12:00:00-18:00:00',
+        time3:'18:00:00-23:59:59',
+        tableDataDetails:[],
+        dialogDetailsVisible:false,
+        total2:0,
+        pages2:1,
+        currentPage5:1,
+        pageSize2:100,
+        pageNum2:1,
+        rowinfo:'',
+        timeinfo:'',
+        statusinfo:''
       }
     },
     methods: {
@@ -455,7 +601,38 @@
        /* setTimeout(() => {
           this.tableLoad = false;
         }, 2000);*/
-      }
+      },
+      showCase2(row,time,status){
+        this.rowinfo =row
+        this.timeinfo=time
+        this.statusinfo=status
+        getCollectionDayDetails(this.formInline,row.id,time,status,this.pageSize2, this.pageNum2).then((data)=>{
+          this.tableDataDetails=data.list
+          this.total2=data.total
+          this.dialogDetailsVisible=true
+        })
+      },
+      showCase(row,time,status){
+        this.rowinfo =row
+        this.timeinfo=time
+        this.statusinfo=status
+        getCollectionDayDetails(this.formInline,row.id,time,status,this.pageSize2, 1).then((data)=>{
+          this.currentPage5=1
+          this.tableDataDetails=data.list
+          this.total2=data.total
+          this.dialogDetailsVisible=true
+        })
+      },
+      handleSizeChange2(val) {
+        this.pageSize2 = val
+        this.currentPage5=1
+        this.pageNum2=1
+        this.showCase2(this.rowinfo,this.timeinfo,this.statusinfo)
+      },
+      handleCurrentChange2(val) {
+        this.pageNum2 = val;
+        this.showCase2(this.rowinfo,this.timeinfo,this.statusinfo)
+      },    
     },
     created() {
  /*     areaList().then((response) => {

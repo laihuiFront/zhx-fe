@@ -564,6 +564,7 @@
                   @selection-change="handleSelectionChange"
                   @row-dblclick="showCase"
                   @sort-change="sortHandle"
+                  border
         >
           <el-table-column
             type="selection"

@@ -7,9 +7,9 @@
       <!-- <img src="./logo_1 .png"> -->
     </div>
     <div class="navMenu">
-      <el-menu :router="true" :default-active="currentRoute" background-color="#001529" text-color="#A6ADB4" active-text-color="#fff" class="el-menu-demo">
+      <el-menu :router="true" :collapse="isCollapse" :default-active="currentRoute" background-color="#001529" text-color="#A6ADB4" active-text-color="#fff" class="el-menu-demo" mode="vertical">
         <NavMenu :navMenus="menu"></NavMenu>
-      </el-menu>
+      </el-menu>    
     </div>
   </div>
 </template>
@@ -32,7 +32,8 @@
     },
     data() {
       return {
-        currentRoute: null
+        currentRoute: null,
+        isCollapse:false
       }
     },
     created() {
