@@ -531,6 +531,7 @@
           @row-dblclick="showCase"
           @selection-change="handleSelectionChange"
           @sort-change="sortHandle"
+          border
         >
           <el-table-column type="selection" width="55"></el-table-column>
           <el-table-column
@@ -541,7 +542,7 @@
             sortable="custom"
             :sort-orders="['ascending', 'descending']"
             header-align="center"
-            align="center"
+            align="center"           
           >
             <template slot-scope="scope">
               <el-button v-if="scope.row.caseStatus==3" type="text" style ="color:#999999;" size="small"  @click="showCase(scope.row)">

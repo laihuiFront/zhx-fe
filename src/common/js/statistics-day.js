@@ -64,3 +64,19 @@ export const getUserTree = function(){
     method: 'post'
   })
 }
+
+export const getCollectionDayDetails = function(form,odv,time,status,pageSize,pageNum) {
+  return request({
+      url: '/statistics/collection/day/details',
+      method: 'post',
+      data: {       
+        dateSearchStart:form.time[0],
+        dateSearchEnd:form.time[1],
+        odv:odv,
+        time:time,
+        status:status,
+        pageSize:pageSize, 
+        pageNum:pageNum
+      }
+    })
+  }
