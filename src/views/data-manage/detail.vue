@@ -1809,12 +1809,14 @@
                            <!-- (caseDetail.currentuser || mycaseFlag) && -->
                     </el-button
                     >
+                    <!-- userInfo.loginName=='admin' -->
                     <el-button
                       class="fontColor"
                       type="text"
                       v-if="
-                            scope.row.telStatusMsg !== '停止跟进'
+                            scope.row.telStatusMsg !== '停止跟进' 
                         "
+                   v-show="res1"
 
                       @click="stopTel(scope.row.id)"
                     >停止跟进
@@ -1827,6 +1829,7 @@
                       v-if="
                             scope.row.telStatusMsg == '停止跟进'
                         "
+                       v-show="res2"
                       @click="resetTel(scope.row.id)"
                     >恢复跟进
                            <!-- (caseDetail.currentuser || mycaseFlag) && -->
@@ -5102,6 +5105,7 @@
   import {getEnum} from "@/common/js/api-sync";
   import {baseURL} from "@/common/js/request.js";
   import axios from 'axios'
+  import {list} from '@/common/js/setting-tel-btn';
   const md5 = require('js-md5')
   const resetObj = {currentuser: false, seqNo: "", name: "", city: {name: ""}, province: {name: ""}, county: {name: ""}}
   export default {
@@ -5262,7 +5266,9 @@
         $routeKey: '',
         caseType: null,
         telhistoryLoading: false,
-        dataCollectEditType: null
+        dataCollectEditType: null,
+        res1:true,
+        res2:true
       };
     },
 
@@ -6673,6 +6679,13 @@
       // window.addEventListener("beforeunload", () => {
       //   localStorage.clear();
       // });
+
+        list().then((data)=>{
+        if(data[0].status==2){  
+            this.res1=this.$store.getters.userInfo.loginName=='admin'
+            this.res2=this.$store.getters.userInfo.loginName=='admin'
+        }        
+      });
       this.queryDetail();
       this.batchForm = {sType: 0};
       areaStepList("地区").then((response) => {

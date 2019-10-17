@@ -472,6 +472,15 @@ export default new Router({
           },
           name: 'synergistic-canceld'
         },
+        // 跟进按钮显示/隐藏
+        {
+          path: 'setting-tel-btn',
+          component: resolve => {
+            spinRoute.show();
+            require(['@/views/settings/setting-tel-btn'], spinRoute.resolve(resolve))
+          },
+          name: 'setting-tel-btn'
+        },
       ]
     },
     {
