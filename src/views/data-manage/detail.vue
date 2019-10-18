@@ -5105,7 +5105,7 @@
   import {getEnum} from "@/common/js/api-sync";
   import {baseURL} from "@/common/js/request.js";
   import axios from 'axios'
-  import {list} from '@/common/js/setting-tel-btn';
+  import {find} from '@/common/js/setting-tel-btn';
   const md5 = require('js-md5')
   const resetObj = {currentuser: false, seqNo: "", name: "", city: {name: ""}, province: {name: ""}, county: {name: ""}}
   export default {
@@ -6680,8 +6680,8 @@
       //   localStorage.clear();
       // });
 
-        list().then((data)=>{
-        if(data[0].status==2){  
+        find().then((data)=>{
+        if(data.status==2){  
             this.res1=this.$store.getters.userInfo.loginName=='admin'
             this.res2=this.$store.getters.userInfo.loginName=='admin'
         }        

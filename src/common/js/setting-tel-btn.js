@@ -1,8 +1,8 @@
 import request from '@/common/js/request'
 //列表
-export function list() {
+export function find() {
   return request({
-    url: '/followUp/list',
+    url: '/followUp/find',
     method: 'post'  
   })
 }
