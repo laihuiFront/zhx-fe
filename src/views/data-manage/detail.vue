@@ -341,7 +341,22 @@
       </div>
     </div>
     <el-collapse v-model="activeNames">
-      <el-collapse-item title="同批次共债案件" name="1" class="titleStyle">
+      <el-collapse-item class="titleStyle">
+        <template slot="title" >
+          同批次共债案件 
+          <div class="calStyle">
+            <span>同批次共债案件 共</span>{{sameBatchCaseSum}}<span>件（包含本案件），</span>     
+            <span>
+              <span >委案金额：{{moneyTotal}}，</span>
+              <span >CP：{{cpstr}}，</span>
+              <span >已还款：{{enRepayAmtstr}}，</span>
+            （<span >未退案：{{noReturnCaseTotal}}件，</span>
+              <span >委案金额：{{moneyTotal2}}，</span>
+              <span >CP：{{cpstr2}}，</span>
+              <span >已还款：{{enRepayAmtstr2}}</span>）
+            </span>
+          </div>
+        </template> 
         <el-table
           highlight-current-row
           :data="dependCase"
@@ -2436,7 +2451,7 @@
                 >
                 </el-table-column>
                 <el-table-column
-                  prop="content"
+                  prop="createTime"
                   show-overflow-tooltip
                   label="导入时间"
                 >
@@ -5268,7 +5283,15 @@
         telhistoryLoading: false,
         dataCollectEditType: null,
         res1:true,
-        res2:true
+        res2:true,
+        sameBatchCaseSum:'',
+        moneyTotal:0,
+        cpstr:0,
+        enRepayAmtstr:0,
+        noReturnCaseTotal:0,
+        moneyTotal2:0,
+        cpstr2:0,
+        enRepayAmtstr2:0,
       };
     },
 
@@ -6442,7 +6465,16 @@
           this.syncMemorizeList = data;
         });
         getSameBatchCase(this.id).then(data => {
-          this.dependCase = data;
+          this.dependCase = data.list;
+          // 案件数加上本案件
+          this.sameBatchCaseSum=data.sameBatchCaseSum
+          this.moneyTotal=data.moneyTotal
+          this.cpstr=data.cp
+          this.enRepayAmtstr=data.enRepayAmt
+          this.noReturnCaseTotal=data.noReturnCaseTotal
+          this.moneyTotal2=data.moneyTotal2
+          this.cpstr2=data.cp2
+          this.enRepayAmtstr2=data.enRepayAmt2
         });
         getCommentDetail(this.id).then(data => {
           this.commentList = data;
@@ -6707,6 +6739,10 @@
     padding: 10px;
     overflow-x: hidden;
     background: #F0F2F5;
+    .calStyle{
+      font-size: 12px;
+      margin-left: 30px;
+    }
       .titleStyle .el-collapse-item__header{
         background:linear-gradient(to right,#4F6CFA,#5AA6F9);
         margin-top:24px;
