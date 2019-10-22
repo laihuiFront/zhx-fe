@@ -79,10 +79,10 @@ export default {
     display: none;
   }
   .page{
-    width: calc(100% - 210px);
+    width: calc(100% - 240px);
   }
   .page.is-active {
-    width: calc(100%);
+    width: calc(100% - 30px);
   }
   .page-wrap{
     width: 100%;
