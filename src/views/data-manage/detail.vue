@@ -3197,6 +3197,7 @@
           <el-table
             highlight-current-row
             :data="syncMemorizeList"
+            border
           >
             <el-table-column
               prop="createTime"
@@ -3205,12 +3206,14 @@
               width="130"
               label="催收时间"
               show-overflow-tooltip
+              align="center"
             ></el-table-column>
             <el-table-column
               prop="targetName"
               width="120"
               label="对象姓名"
               show-overflow-tooltip
+              align="center"
             ></el-table-column>
 
             <el-table-column
@@ -3218,23 +3221,27 @@
               width="120"
               label="关系"
               show-overflow-tooltip
+              align="center"
             ></el-table-column>
             <el-table-column
               prop="mobile"
               width="120"
               label="电话"
               show-overflow-tooltip
+              align="center"
             ></el-table-column>
             <el-table-column
               prop="collectInfo"
               label="催收记录"
               show-overflow-tooltip
+              align="center"
             ></el-table-column>
             <el-table-column
               prop="odv"
               width="120"
               label="催收员"
               show-overflow-tooltip
+              align="center"
             ></el-table-column>
           </el-table>
         </div>
