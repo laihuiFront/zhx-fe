@@ -73,7 +73,7 @@
             :headers="header"
             :show-file-list=false
             :on-success="uploadSuccess"
-            :on-progress="onProgress"
+            :before-upload="beforeUpload"
             accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           >
             <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入更新案件'">导入更新案件
@@ -85,7 +85,7 @@
             :headers="header"
             :show-file-list=false
             :on-success="uploadSuccess"
-            :on-progress="onProgress"
+            :before-upload="beforeUpload"
             accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           >
             <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入案件评语'">导入案件评语
@@ -97,7 +97,7 @@
             :headers="header"
             :show-file-list=false
             :on-success="uploadSuccess"
-            :on-progress="onProgress"
+            :before-upload="beforeUpload"
             accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           >
             <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入案件利息'">导入案件利息
@@ -109,7 +109,7 @@
             :headers="header"
             :show-file-list=false
             :on-success="uploadSuccess"
-            :on-progress="onProgress"
+            :before-upload="beforeUpload"
             accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           >
             <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入案件电话'">导入案件电话
@@ -121,7 +121,7 @@
             :headers="header"
             :show-file-list=false
             :on-success="uploadSuccess"
-            :on-progress="onProgress"
+            :before-upload="beforeUpload"
             accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           >
             <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入案件地址'">导入案件地址
@@ -133,7 +133,7 @@
             :headers="header"
             :show-file-list=false
             :on-success="uploadSuccess"
-            :on-progress="onProgress"
+            :before-upload="beforeUpload"
             accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           >
             <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入案件记录'">导入催收记录
@@ -239,7 +239,7 @@
             :show-file-list=false
             :on-success="uploadSuccess"
             :data="{batchNo:scope.row.batchNo}"
-            :on-progress="onProgress"
+            :before-upload="beforeUpload"
             accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           >
             <el-button type="text" size="small" v-has="'导入'">导入</el-button>
@@ -862,10 +862,6 @@
         this.fullscreenLoading = false
         this.ImportdialogVisible = false
       },
-      onProgress() {
-        this.loading2 = true
-        this.fullscreenLoading = true
-      },
       backForm() {
         this.dialogVisible = false;
         this.formInline = {
@@ -900,17 +896,24 @@
             this.tableLoad = false
           })
         } else {
-          dataList().then((response) => {
-            this.DataList = response.pageInfo.list
-            //this.pages = response.pages
-            this.total = response.total
-            this.loading2 = false
-            this.fullscreenLoading = false
-            this.tableLoad = false
-          })
+          // dataList().then((response) => {
+          //   this.DataList = response.pageInfo.list
+          //   //this.pages = response.pages
+          //   this.total = response.total
+          //   this.loading2 = false
+          //   this.fullscreenLoading = false
+          //   this.tableLoad = false
+          // })
           this.ImportdialogVisible = true
           this.ImportMsg = res.msg
+          this.loading2 = false
+          this.fullscreenLoading = false
         }
+      },
+      beforeUpload(){
+        this.loading2 = true
+        this.fullscreenLoading = true
+        return true
       },
       deleteMessage(id,batchNo) {
         let arry = [{id: id,batchNo:batchNo}]
