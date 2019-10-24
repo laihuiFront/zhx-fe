@@ -477,9 +477,21 @@ export function getHistoryAddrList(caseId){
   })
 }
 
-export function expDataCollect(data){
+export function expDataCollect(id,exportCollectConf){
   return download({
-    url: '/dataCollect/selectDataCollectExport',
+    url: '/dataCollect/detailCollectExport',
+    data:{
+      caseId:id,
+      exportConf:exportCollectConf
+    }
+  })
+}
+
+//保存查询配置
+export function selectByModule(data={}) {
+  return request({
+    method:'post',
+    url:'/selectByModule',
     data
   })
 }

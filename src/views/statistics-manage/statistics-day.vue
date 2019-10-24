@@ -81,6 +81,23 @@
             </el-button>     
           </template>
         </el-table-column>
+
+        <el-table-column
+          prop="countInvalidPhoneNum"
+          label="未接通"
+          align="center"
+          min-width="80"
+          show-overflow-tooltip
+        >
+          <template slot-scope="scope">
+            <el-button
+              type="text"
+              size="small"
+              @click="showCase(scope.row,time0,2)"
+            >{{scope.row.list[0].countInvalidPhoneNum}}
+            </el-button> 
+          </template>
+        </el-table-column>
         <el-table-column
           prop="countPhoneNum"
           label="总通电量"
@@ -92,7 +109,7 @@
             <el-button
               type="text"
               size="small"
-              @click="showCase(scope.row,time0,2)"
+              @click="showCase(scope.row,time0,3)"
             >{{scope.row.list[0].countPhoneNum}}
             </el-button> 
           </template>
@@ -121,8 +138,25 @@
             <el-button
               type="text"
               size="small"
-              @click="showCase(scope.row,time1,3)"
+              @click="showCase(scope.row,time1,1)"
             >{{scope.row.list[1].countConPhoneNum}}
+            </el-button> 
+          </template>
+        </el-table-column>
+
+           <el-table-column
+          prop="countInvalidPhoneNum"
+          label="未接通"
+          align="center"
+          min-width="80"
+          show-overflow-tooltip
+        >
+          <template slot-scope="scope">
+            <el-button
+              type="text"
+              size="small"
+              @click="showCase(scope.row,time1,2)"
+            >{{scope.row.list[1].countInvalidPhoneNum}}
             </el-button> 
           </template>
         </el-table-column>
@@ -137,7 +171,7 @@
             <el-button
               type="text"
               size="small"
-              @click="showCase(scope.row,time1,4)"
+              @click="showCase(scope.row,time1,3)"
             >{{scope.row.list[1].countPhoneNum}}
             </el-button> 
           </template>
@@ -166,8 +200,25 @@
             <el-button
               type="text"
               size="small"
-              @click="showCase(scope.row,time2,5)"
+              @click="showCase(scope.row,time2,1)"
             >{{scope.row.list[2].countConPhoneNum}}
+            </el-button> 
+          </template>
+        </el-table-column>
+
+           <el-table-column
+          prop="countInvalidPhoneNum"
+          label="未接通"
+          align="center"
+          min-width="80"
+          show-overflow-tooltip
+        >
+          <template slot-scope="scope">
+            <el-button
+              type="text"
+              size="small"
+              @click="showCase(scope.row,time2,2)"
+            >{{scope.row.list[2].countInvalidPhoneNum}}
             </el-button> 
           </template>
         </el-table-column>
@@ -182,7 +233,7 @@
             <el-button
               type="text"
               size="small"
-              @click="showCase(scope.row,time2,6)"
+              @click="showCase(scope.row,time2,3)"
             >{{scope.row.list[2].countPhoneNum}}
             </el-button> 
           </template>
@@ -211,8 +262,24 @@
             <el-button
               type="text"
               size="small"
-              @click="showCase(scope.row,time3,7)"
+              @click="showCase(scope.row,time3,1)"
             >{{scope.row.list[3].countConPhoneNum}}
+            </el-button> 
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="countInvalidPhoneNum"
+          label="未接通"
+          align="center"
+          min-width="80"
+          show-overflow-tooltip
+        >
+          <template slot-scope="scope">
+            <el-button
+              type="text"
+              size="small"
+              @click="showCase(scope.row,time3,2)"
+            >{{scope.row.list[3].countInvalidPhoneNum}}
             </el-button> 
           </template>
         </el-table-column>
@@ -227,7 +294,7 @@
             <el-button
               type="text"
               size="small"
-              @click="showCase(scope.row,time3,8)"
+              @click="showCase(scope.row,time3,3)"
             >{{scope.row.list[3].countPhoneNum}}
             </el-button> 
           </template>
@@ -248,6 +315,14 @@
         <el-table-column
           prop="sumConPhoneNum"
           label="有效通电"
+          align="center"
+          min-width="80"
+          show-overflow-tooltip
+        >
+        </el-table-column>
+        <el-table-column
+          prop="sumInvalidPhoneNum"
+          label="未接通"
           align="center"
           min-width="80"
           show-overflow-tooltip
@@ -486,7 +561,7 @@
         const {columns, data} = param;
         const sums = [];
         let step = 0;
-        let y = num => num % 3 === 0;
+        let y = num => num % 4 === 0;
         columns.forEach((column, index) => {
           if (index === 0) {
             sums[index] = '合计';
