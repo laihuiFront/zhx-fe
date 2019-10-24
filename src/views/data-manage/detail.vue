@@ -1,5 +1,10 @@
 <template>
-  <div id="case-detail">
+  <div id="case-detail" v-loading="listLoad"
+       v-loading.fullscreen.lock="fullscreenLoading"
+       element-loading-text="正在加载中"
+       element-loading-spinner="el-icon-loading"
+       element-loading-background="rgba(0, 0, 0, 0.7)"
+  >
     <div class="basic-info">
       <div class="title-info">
         <div class="txt" :class="[
@@ -227,6 +232,15 @@
               class="fixwidth"
             ></el-input>
          </div>
+          <div class="itemStyle">
+            <el-form-item label="逾期利息" class="lableStyle">
+            </el-form-item>
+              <el-input
+                v-model="caseDetail.overdueInterest"
+                :disabled="true"
+                class="fixwidth"
+              ></el-input>
+          </div>
          <div class="itemStyle">
           <el-form-item label="每月还款" class="lableStyle">
           </el-form-item>
@@ -509,15 +523,6 @@
               </el-form-item>
               <el-input
                 v-model="caseDetail.overduePrinciple"
-                :disabled="true"
-                class="fixwidth"
-              ></el-input>
-            </div>
-            <div class="itemStyle">
-              <el-form-item label="逾期利息" class="lableStyle">
-              </el-form-item>
-              <el-input
-                v-model="caseDetail.overdueInterest"
                 :disabled="true"
                 class="fixwidth"
               ></el-input>
@@ -5050,6 +5055,67 @@
         <el-button type="primary" @click="saveCase">确 定</el-button>
       </span>
     </el-dialog>
+
+    <el-dialog
+      title="导出选择"
+      :visible.sync="showExportCollectConfVisible"
+      width="60%"
+      center
+      :close-on-click-modal="false"
+      v-dialogDrag
+      class="dialog-wrap"
+    >
+      <div style="margin-bottom: 10px;"><span @click="selectAllCollectExport" style="cursor: pointer;">全选</span><span @click="selectUnAllCollectExport" style="cursor: pointer;margin-left:10px;">反选</span></div>
+      <el-row class="pad" ref="boxWrapper">
+
+        <el-checkbox v-model="exportCollectConf.name" label="2">姓名</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.account" label="3">账号</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.cardNo" label="3">卡号</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.identNo" label="3">证件号</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.archiveNo" label="1">档案号</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.seqNo" label="1">个案序列号</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.accountAge" label="4">逾期账龄</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.money" label="5">委案金额</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.residualPrinciple" label="2">欠款余额</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.targetName" label="4">对象姓名</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.relation" label="5">关系</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.collectPhoneAddr" label="5">电话/地址</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.contractType" label="5">联络类型</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.result" label="5">催收内容</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.odv" label="5">催收人员</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.method" label="5">谈判方式</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.collectStatus" label="5">催收状态</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.proRepayDate" label="5">承诺日期</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.proRepayAmt" label="5">承诺金额</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.reduceAmt" label="5">减免金额</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.reduceStatus" label="5">减免状态</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.collectInfo" label="5">催收小结</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.overDays" label="5">逾期天数</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.batchNo" label="5">批次号</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.caseDate" label="5">委案日期</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.expectTime" label="5">预计退案日期</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.newMoney" label="5">最新欠款</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.province" label="5">省份</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.city" label="5">城市</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.county" label="5">区县</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.currencyType" label="5">币种</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.applyOrderNo" label="5">申请单号</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.overdueMoney" label="5">逾期金额</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.remark" label="5">自定义信息</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.odv2" label="5">催收员</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.collectStatus2" label="5">催收状态</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.nextFollDate" label="5">下次跟进日期</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.minimumPayment" label="5">最低还款额</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.creditLine" label="5">信用额度</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.module" label="5">催收模板</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.collectTime" label="5">催收时间</el-checkbox>
+      </el-row>
+      <span slot="footer" class="footer">
+        <el-button @click="showExportCollectConfVisible = false">取 消</el-button>
+        <el-button type="primary" @click="exportCollect">确 定</el-button>
+      </span>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -5122,7 +5188,8 @@
     sendTelBatch,
     areaStepList,
     getRepayType,
-    saveBank
+    saveBank,
+    selectByModule
   } from "@/common/js/api-detail";
   import {getEnum} from "@/common/js/api-sync";
   import {baseURL} from "@/common/js/request.js";
@@ -5299,6 +5366,10 @@
         moneyTotal2:0,
         cpstr2:0,
         enRepayAmtstr2:0,
+        listLoad:false,
+        fullscreenLoading:false,
+        showExportCollectConfVisible:false,
+        exportCollectConf:{}
       };
     },
 
@@ -5641,13 +5712,66 @@
       //
       //
       //  },
-      _expDataCollect() {
-        expDataCollect([{id: this.id}]).then(() => {
-          this.$message({
-            type: "success",
-            message: "导出成功"
-          });
+
+      // 全选
+      selectAllCollectExport(){
+        this._selectAllInit('exportCollectConf');
+        for(var p in this.exportCollectConf){//遍历json对象的每个key/value对,p为key
+          this.exportCollectConf[p] = true;
+        }
+      },
+      // 反选
+      selectUnAllCollectExport(){
+        this._selectAllInit('exportCollectConf');
+        for(var p in this.exportCollectConf){//遍历json对象的每个key/value对,p为key
+          this.exportCollectConf[p] = false;
+        }
+      },
+      queryExportCollectConfList() {
+        let queryObj = {module: "detail-exportCollect", menu: this.exportCollectConf}
+        selectByModule(queryObj).then(data => {
+          if (data) {
+            this.exportCollectConf = JSON.parse(data.menu);
+          }
         });
+      },
+      _expDataCollect() {
+        this.queryExportCollectConfList();
+        this.showExportCollectConfVisible=true
+        // expDataCollect(this.id).then(() => {
+        //   this.$message({
+        //     type: "success",
+        //     message: "导出成功"
+        //   });
+        // });
+      },
+
+      exportCollect() {
+        let successNum = 0;
+        for (var p in this.exportCollectConf) {//遍历json对象的每个key/value对,p为key
+          if (this.exportCollectConf[p]) {
+            successNum = successNum + 1;
+          }
+        }
+        if (successNum == 0) {
+          this.$message({
+            type: 'error',
+            message: '请先选择导出项!'
+          });
+          this.fullscreenLoading = false
+          this.loading2 = false
+          return;
+        }
+          let _self = this;
+          this.loading2 = true
+          this.fullscreenLoading = true
+          expDataCollect(this.id,this.exportCollectConf).then((response) => {
+            this.loading2 = false
+            this.fullscreenLoading = false
+            this.$message.success("导出成功")
+          })
+          this.saveExportCollectConf();
+        this.showExportCollectConfVisible = false
       },
       selectCollectModule() {
         let dicId = this.batchForm.module;
@@ -5834,6 +5958,8 @@
               });
               return;
             }*/
+            this.listLoad = true
+            this.fullscreenLoading=true
             dataCollectionSave(this.batchForm).then(data => {
               this.$message({
                 type: "success",
@@ -5855,9 +5981,11 @@
                   this.$refs['batchForm'].resetFields()
                 }
               });*/
+              this.listLoad=false
+              this.fullscreenLoading=false
             });
-          } else {
-            return false;
+          } else {           
+            return false;          
           }
         });
 
@@ -6746,6 +6874,14 @@
     padding: 10px;
     overflow-x: hidden;
     background: #F0F2F5;
+
+
+    .pad {
+      .el-checkbox {
+        width: 24%;
+        margin-right: 0px;
+      }
+    }
     .calStyle{
       font-size: 12px;
       margin-left: 30px;
