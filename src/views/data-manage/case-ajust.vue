@@ -430,7 +430,7 @@
           label: 'orgName'
         },
         deleteStatusList: [],
-        pageSize: 5,
+        pageSize: 100,
         pageNum: 1,
         clientList: [],
         total: 0,
