@@ -5770,7 +5770,6 @@
             this.fullscreenLoading = false
             this.$message.success("导出成功")
           })
-          this.saveExportCollectConf();
         this.showExportCollectConfVisible = false
       },
       selectCollectModule() {
