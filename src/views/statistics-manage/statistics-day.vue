@@ -67,7 +67,7 @@
       <el-table-column label="8:00以前" align="center">
         <el-table-column
           prop="countConPhoneNum"
-          label="有效通电"
+          label="已接通"
           align="center"
           min-width="80"
           show-overflow-tooltip
@@ -129,7 +129,7 @@
       <el-table-column label="8:00-12:00" align="center">
         <el-table-column
           prop="countConPhoneNum"
-          label="有效通电"
+          label="已接通"
           align="center"
           min-width="80"
           show-overflow-tooltip
@@ -191,7 +191,7 @@
       <el-table-column label="12:00-18:00" align="center">
         <el-table-column
           prop="countConPhoneNum"
-          label="有效通电"
+          label="已接通"
           align="center"
           min-width="80"
           show-overflow-tooltip
@@ -253,7 +253,7 @@
       <el-table-column label="18:00以后" align="center">
         <el-table-column
           prop="countConPhoneNum"
-          label="有效通电"
+          label="已接通"
           align="center"
           min-width="80"
           show-overflow-tooltip
@@ -314,7 +314,7 @@
       <el-table-column label="合计" align="center">
         <el-table-column
           prop="sumConPhoneNum"
-          label="有效通电"
+          label="已接通"
           align="center"
           min-width="80"
           show-overflow-tooltip
