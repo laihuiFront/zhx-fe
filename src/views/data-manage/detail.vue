@@ -356,21 +356,11 @@
     </div>
     <el-collapse v-model="activeNames">
       <el-collapse-item class="titleStyle">
-        <template slot="title" >
-          同批次共债案件 
-          <div class="calStyle">
-            <span>同批次共债案件 共</span>{{sameBatchCaseSum}}<span>件（包含本案件），</span>     
-            <span>
-              <span >委案金额：{{moneyTotal}}，</span>
-              <span >CP：{{cpstr}}，</span>
-              <span >已还款：{{enRepayAmtstr}}，</span>
-            （<span >未退案：{{noReturnCaseTotal}}件，</span>
-              <span >委案金额：{{moneyTotal2}}，</span>
-              <span >CP：{{cpstr2}}，</span>
-              <span >已还款：{{enRepayAmtstr2}}</span>）
-            </span>
+      <template slot="title">
+        同批次共债案件<div class="calStyle">
+            <span>{{titleMsg}}</span>          
           </div>
-        </template> 
+      </template>
         <el-table
           highlight-current-row
           :data="dependCase"
@@ -5215,6 +5205,17 @@
           title = "编辑催记"
         }
         return title
+      },
+      titleMsg(){
+        const title=`同批次共债案件 共${this.sameBatchCaseSum}件（包含本案件），
+                委案金额：${this.moneyTotal}，
+                CP：${this.cpstr}，
+                已还款：${this.enRepayAmtstr}
+                （未退案：${this.noReturnCaseTotal}件，
+                委案金额：${this.moneyTotal2}，
+                CP：${this.cpstr2}，
+                已还款：${this.enRepayAmtstr2}）`   
+        return title
       }
     },
     data() {
@@ -6884,6 +6885,9 @@
     .calStyle{
       font-size: 12px;
       margin-left: 30px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
       .titleStyle .el-collapse-item__header{
         background:linear-gradient(to right,#4F6CFA,#5AA6F9);
@@ -6892,6 +6896,9 @@
         font-size: 16px;
         color: #fff;
         padding-left: 24px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     // .el-table__body tr.current-row > td{

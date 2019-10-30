@@ -70,29 +70,8 @@
           <el-form-item>
             <el-button type="primary" @click="onClickModuleImport">导入模板下载</el-button>
           </el-form-item>
-          <el-form-item>
-            <el-upload
-              :action="action+'/user/import'"
-              :headers="header"
-              :show-file-list=false
-              :on-success="uploadSuccess"
-              :on-progress="onProgress"
-              accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-            >
-              <el-button type="primary">导入员工信息</el-button>
-            </el-upload>
-          </el-form-item>
-          <el-form-item>
-            <el-upload
-              :action="action+'/user/simpleImport'"
-              :headers="header"
-              :show-file-list=false
-              :on-success="uploadSuccess"
-              :on-progress="onProgress"
-              accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-            >
-              <el-button type="primary">导入企业员工信息</el-button>
-            </el-upload>
+           <el-form-item>
+            <el-button type="primary" @click="onClickMergeImport">合并导入员工信息以及导入企业员工信息</el-button>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="onClickImport">导出员工信息</el-button>
@@ -298,6 +277,87 @@
           <el-button type="primary" @click="updateDept">确 定</el-button>
         </span>
     </el-dialog>
+    <el-dialog title="员工导入及架构调整" 
+      class="dialog-wrap" 
+      :visible.sync="showMergeImportDialog" 
+      width="40%" 
+      v-dialogDrag 
+      :close-on-click-modal="false">
+			<el-form
+				ref="form_update"
+				:model="form_update"
+				label-position="right"
+        :inline="true" 
+			>
+				<!-- label-width="100px" -->
+				<el-form-item>
+            <el-upload
+              :action="action+'/user/simpleImport'"
+              :headers="header"
+              :show-file-list=false
+              :on-success="uploadSuccess"
+              :on-progress="onProgress"
+              :data="form_update"
+              accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            >
+              <el-button type="primary">请选择文件</el-button>
+            </el-upload>
+				</el-form-item>
+        <el-form-item label="用户数据重复时是否更新">
+        <el-switch
+          v-model="form_update.updateStatus"
+          active-value="1"
+          inactive-value="2"
+          >
+        </el-switch>  
+        </el-form-item>
+			</el-form>
+		</el-dialog>
+     <el-dialog title="导入结果明细" 
+      class="dialog-wrap" 
+      :visible.sync="showResultTable" 
+      width="60%" 
+      v-dialogDrag 
+      :close-on-click-modal="false">
+      <el-table 
+        highlight-current-row 
+        v-loading="tableLoad"
+        :data="tableData"
+        tooltip-effect="dark" 
+        :row-class-name="tableRowClassName"     
+        >
+       <el-table-column
+        prop="department"
+        align="center"
+        label="部门"
+        show-overflow-tooltip>
+      </el-table-column>
+       <el-table-column
+        prop="loginName"
+        align="center"
+        label="用户名"
+        show-overflow-tooltip>
+      </el-table-column>
+       <el-table-column
+        prop="username"
+        align="center"
+        label="姓名"
+        show-overflow-tooltip>
+      </el-table-column>
+       <el-table-column
+        prop="role"
+        align="center"
+        label="角色"
+        show-overflow-tooltip>
+      </el-table-column>
+       <el-table-column
+        prop="result"
+        align="center"
+        label="信息"
+        show-overflow-tooltip>
+      </el-table-column>
+      </el-table>	
+		</el-dialog>
   </div>
 </template>
 
@@ -359,7 +419,14 @@
         positionList: [],
         multipleSelection:[],
         returnName: null,
-        callCenters: []
+        callCenters: [],
+        showMergeImportDialog:false,
+        form_update:{},
+        showResultTable:false,
+        tableData:[],
+        form_update:{
+          updateStatus:'2'
+        }
       }
     },
     created () {
@@ -397,8 +464,11 @@
         if (res.code ==100){
           this.$message({
             type: 'success',
-            message: "导入成功"
+            message: "操作成功"
           });
+            this.tableData=res.data        
+            this.showMergeImportDialog=false
+            this.showResultTable=true
           getDepartmentTree().then(data => {
             this.departmentTree = data
             this.queryDepartment = data[0]
@@ -842,6 +912,14 @@
       },
       callCenterCleared(){
         this.$set(this.memberInfo, 'callCenter', null)
+      },
+      onClickMergeImport(){
+        this.showMergeImportDialog=true
+      },
+      tableRowClassName({row, rowIndex}) {       
+        if (row.colorStatus === 0) {
+          return 'warning-row';
+        } 
       }
     }
   }
@@ -932,6 +1010,9 @@
             }
           }
         }
+      }
+      .el-table .warning-row {
+        color: red;
       }
     }
   }
