@@ -385,6 +385,7 @@
             </el-button>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="exportTotalCase">查询结果</el-dropdown-item>
+              <el-dropdown-item command="exportTotalCase1">查询结果（CSV）</el-dropdown-item>
               <el-dropdown-item command="exportSelectCase">所选案件</el-dropdown-item>
               <el-dropdown-item command="exportTel">所选电话</el-dropdown-item>
               <el-dropdown-item command="exportCollect">所选催记</el-dropdown-item>
@@ -1417,6 +1418,7 @@
     pageDataExport,
     selectDataCaseExport,
     totalDataBatchExport,
+    totalDataBatchExport1,
     queryDept,
     queryOdv
   } from '@/common/js/data-case-manage.js'
@@ -2109,6 +2111,9 @@
         if (command === "exportTotalCase") {
           //this.dialogVisibleCase = true
           this.changeRadio();
+        } else if (command === "exportTotalCase1") {
+          this.exportType = 4
+          this.queryExportCaseConfList()
         } else if (command === "exportSelectCase") {
           if (this.deleteList.length >= 1) {
             this.queryExportCaseConfList();
@@ -2246,6 +2251,21 @@
           });
         })
       },
+      totalDataExport1() {
+        this.loading2 = true
+        this.fullscreenLoading = true
+        let startTime = this.formInline.time2[0]
+        let endTime = this.formInline.time2[1]
+        this.formInline.exportConf = this.exportConf
+        totalDataBatchExport1(this.formInline).then((response) => {
+          this.loading2 = false
+          this.fullscreenLoading = false
+          this.$message({
+            type: 'success',
+            message: '导出成功!'
+          });
+        })
+      },
       formatMoney(value, places, symbol, thousand, decimal) {
         var placesTemp = 0 ;
         value = parseFloat(value).toString();
@@ -2313,6 +2333,8 @@
             this.totalDataExport();
           }else if (this.exportType == 3){
             this.pageDataExport();
+          }else if (this.exportType == 4){
+            this.totalDataExport1();
           }
           this.showExportConfVisible = false;
       },
