@@ -365,11 +365,15 @@
           highlight-current-row
           :data="dependCase"
           border
-          stripe
-          style="width: 100%"
-          class="table-wrap"
+          @row-dblclick="showCase"
         >
-          <el-table-column prop="seqNo" label="个案序列号"></el-table-column>
+          <el-table-column prop="seqNo" label="个案序列号">
+            <template slot-scope="scope">
+              <el-button type="text" size="small" @click="showCase(scope.row)">
+                {{scope.row.seqNo}}
+              </el-button>
+            </template>
+          </el-table-column>
           <el-table-column prop="cardNo" label="卡号"></el-table-column>
           <el-table-column prop="account" label="账号"></el-table-column>
           <el-table-column prop="moneyMsg" label="委案金额"></el-table-column>
@@ -2639,6 +2643,7 @@
               <el-table
                 highlight-current-row
                 :data="caseSameList"
+                @row-dblclick="showCase"
               >
                 <el-table-column
                   prop="batchNo"
@@ -2651,6 +2656,11 @@
                   show-overflow-tooltip
                   label="个案序列号"
                 >
+                  <template slot-scope="scope">
+                    <el-button type="text" size="small" @click="showCase(scope.row)">
+                      {{scope.row.seqNo}}
+                    </el-button>
+                  </template>
                 </el-table-column>
                 <el-table-column
                   prop="caseDate"
@@ -7033,7 +7043,10 @@
               this.$message("该电话已恢复跟进");
             }).catch(() => {
           });
-      }
+      },
+      showCase(row) {
+        window.open(`#/zhx/case-detail?id=${row.id}`)
+      },
     },
     // watch: {
     //   $route: {
