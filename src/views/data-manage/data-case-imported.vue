@@ -2,7 +2,7 @@
   <div id="data-case-imported"
        v-loading="loading2"
        v-loading.fullscreen.lock="fullscreenLoading"
-       element-loading-text="拼命加载中"
+       :element-loading-text="loadingText"
        element-loading-spinner="el-icon-loading"
        element-loading-background="rgba(0, 0, 0, 0.7)">
     <el-form ref="form" :model="form" :inline="true" class="query-wrap queryStyle">
@@ -63,83 +63,97 @@
       <el-row>
         <el-form-item>
           <el-button type="primary" icon="el-icon-search" @click=search>查询</el-button>
+        </el-form-item>
+        <el-form-item>
           <el-button type="primary" icon="el-icon-refresh" @click="resetForm()">重置</el-button>
+        </el-form-item>
+        <el-form-item>
           <el-button type="primary" @click="downLoadZip">导入模板下载</el-button>
+        </el-form-item>
+        <el-form-item>
           <el-button type="primary" @click="addBatch" v-has="'新增批次'">新增批次</el-button>
+        </el-form-item>
+        <el-form-item>
           <el-button type="primary" @click="open7" v-has="'删除批次'">删除批次</el-button>
+        </el-form-item>
+        <el-form-item>
           <el-upload
             class="upload-demo"
             :action="action+'/updateCase/import'"
             :headers="header"
             :show-file-list=false
             :on-success="uploadSuccess"
-            :before-upload="beforeUpload"
+            :on-error="uploadError"
+            :before-upload="beforeUpload1"
             accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           >
-            <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入更新案件'">导入更新案件
-            </el-button>
+            <el-button size="small" type="primary" v-has="'导入更新案件'">导入更新案件</el-button>
           </el-upload>
+        </el-form-item>
+        <el-form-item>
           <el-upload
             class="upload-demo"
             :action="action+'/comment/import'"
             :headers="header"
             :show-file-list=false
             :on-success="uploadSuccess"
-            :before-upload="beforeUpload"
+            :before-upload="beforeUpload2"
             accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           >
-            <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入案件评语'">导入案件评语
-            </el-button>
+            <el-button size="small" type="primary" v-has="'导入案件评语'">导入案件评语</el-button>
           </el-upload>
+        </el-form-item>
+        <el-form-item>
           <el-upload
             class="upload-demo"
             :action="action+'/interest/import'"
             :headers="header"
             :show-file-list=false
             :on-success="uploadSuccess"
-            :before-upload="beforeUpload"
+            :before-upload="beforeUpload3"
             accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           >
-            <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入案件利息'">导入案件利息
-            </el-button>
+            <el-button size="small" type="primary" v-has="'导入案件利息'">导入案件利息</el-button>
           </el-upload>
+        </el-form-item>
+        <el-form-item>
           <el-upload
             class="upload-demo"
             :action="action+'/tel/import'"
             :headers="header"
             :show-file-list=false
             :on-success="uploadSuccess"
-            :before-upload="beforeUpload"
+            :before-upload="beforeUpload4"
             accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           >
-            <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入案件电话'">导入案件电话
-            </el-button>
+            <el-button size="small" type="primary" v-has="'导入案件电话'">导入案件电话</el-button>
           </el-upload>
+        </el-form-item>
+        <el-form-item>
           <el-upload
             class="upload-demo"
             :action="action+'/address/import'"
             :headers="header"
             :show-file-list=false
             :on-success="uploadSuccess"
-            :before-upload="beforeUpload"
+            :before-upload="beforeUpload5"
             accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           >
-            <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入案件地址'">导入案件地址
-            </el-button>
+            <el-button size="small" type="primary" v-has="'导入案件地址'">导入案件地址</el-button>
           </el-upload>
+        </el-form-item>
+        <el-form-item>
           <el-upload
             class="upload-demo"
             :action="collectAction+'/dataCollect/import'"
             :headers="header"
             :show-file-list=false
             :on-success="uploadSuccess"
-            :before-upload="beforeUpload"
+            :before-upload="beforeUpload6"
             accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           >
-            <el-button size="small" style="padding: 7px 15px;margin-left:10px;" type="primary" v-has="'导入案件记录'">导入催收记录
-            </el-button>
+            <el-button size="small" type="primary" v-has="'导入案件记录'">导入催收记录</el-button>
           </el-upload>
-
         </el-form-item>
       </el-row>
     </el-form>
@@ -244,17 +258,13 @@
           >
             <el-button type="text" size="small" v-has="'导入'">导入</el-button>
           </el-upload>
-          <el-button type="text" size="small" v-if="scope.row.batchStatus!=0" @click="showExport(scope.row)"
-                     v-has="'下载'">下载
-          </el-button>
+          <el-button type="text" size="small" v-if="scope.row.batchStatus!=0" @click="showExport(scope.row)" v-has="'下载'">下载</el-button>
           <el-button type="text" size="small" @click="editMessage(scope.row)" v-has="'编辑'">编辑</el-button>
-          <el-button type="text" size="small" @click="deleteMessage(scope.row.id,scope.row.batchNo)" v-has="'删除批次'">删除
-          </el-button>
+          <el-button type="text" size="small" @click="deleteMessage(scope.row.id,scope.row.batchNo)" v-has="'删除批次'">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
     <el-pagination
-      class="pagination-wrap"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage4"
@@ -476,7 +486,6 @@
               </el-form-item>
             </div>
           </el-col>
-
         </el-row>
         <el-row :gutter="24">
           <el-col :span="15">
@@ -792,7 +801,8 @@
           clients: [],
           batchNos: [],
         },
-        clientValue: ''
+        clientValue: '',
+        loadingText: '正在加载中'
       }
     },
     methods: {
@@ -881,6 +891,7 @@
         }
       },
       uploadSuccess(res, file, fileList) {
+        this.loadingText = "正在加载中"
         if (res.code == 100) {
           this.$message({
             type: 'success',
@@ -910,10 +921,34 @@
           this.fullscreenLoading = false
         }
       },
-      beforeUpload(){
+      uploadError(){
+        this.loadingText = "正在加载中"
+      },
+      beforeUpload(type = null){
+        if(type){
+          this.loadingText = `${type} 正在导入，请稍等`
+        }
         this.loading2 = true
         this.fullscreenLoading = true
         return true
+      },
+      beforeUpload1(){
+        this.beforeUpload('更新案件')
+      },
+      beforeUpload2(){
+        this.beforeUpload('案件评语')
+      },
+      beforeUpload3(){
+        this.beforeUpload('案件利息')
+      },
+      beforeUpload4(){
+        this.beforeUpload('案件电话')
+      },
+      beforeUpload5(){
+        this.beforeUpload('案件地址')
+      },
+      beforeUpload6(){
+        this.beforeUpload('催收记录')
       },
       deleteMessage(id,batchNo) {
         let arry = [{id: id,batchNo:batchNo}]
@@ -950,6 +985,7 @@
         });
       },
       queryExportCaseConfList() {
+        this.loadingText = "正在加载中"
         this.$set(this, 'loading2', true)
         this.$set(this, 'fullscreenLoading', true)
         let queryObj = {module: "data-case-import-exportCase", menu: this.exportConf}
@@ -995,6 +1031,7 @@
           this.loading2 = false
           return;
         }
+        this.loadingText = "正在加载中"
         this.loading2 = true
         this.fullscreenLoading = true
         downCaseModule(this.currentBatchNo,this.exportConf).then((response) => {
@@ -1149,6 +1186,9 @@
           this.$refs["formInline"].clearValidate();
         }
         this.dialogVisible=true
+      },
+      updateCaseImport(){
+
       }
     },
     created() {
