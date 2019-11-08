@@ -53,7 +53,7 @@
           ></el-input>
         </el-form-item>
         <el-form-item label="数据权限" prop="dataAuth">
-          <el-select v-model="roleInfo.dataAuth" filterable  placeholder="请选择数据权限" clearable>
+          <el-select v-model="roleInfo.dataAuth" filterable  placeholder="请选择数据权限" clearable :disabled="dialogData.type === 'query'">
             <el-option
               v-for="item in dataAuthList"
               :key="item.id"
@@ -63,7 +63,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="业务权限" prop="busiAuth">
-          <el-select v-model="roleInfo.busiAuth" filterable  placeholder="请选择业务权限" clearable>
+          <el-select v-model="roleInfo.busiAuth" filterable  placeholder="请选择业务权限" clearable :disabled="dialogData.type === 'query'">
             <el-option
               v-for="item in busiAuthList"
               :key="item.id"
@@ -73,7 +73,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="删除日志权限" prop="deleteAuth">
-          <el-select v-model="roleInfo.deleteAuth" filterable  placeholder="请选择删除日志权限" clearable>
+          <el-select v-model="roleInfo.deleteAuth" filterable  placeholder="请选择删除日志权限" clearable :disabled="dialogData.type === 'query'">
             <el-option
               v-for="item in deleteAuthList"
               :key="item.id"
@@ -101,9 +101,12 @@
           :key="item.id"
         ></component>
       </ul>
-      <span slot="footer" class="footer">
+      <span slot="footer" class="footer" v-if="dialogData.type !== 'query'">
         <el-button @click="onClickCancel">取 消</el-button>
-        <el-button type="primary" @click="onClickSave" v-if="dialogData.type !== 'query'">保 存</el-button>
+        <el-button type="primary" @click="onClickSave">保 存</el-button>
+      </span>
+      <span slot="footer" class="footer" v-else>
+        <el-button @click="onClickCancel">确 定</el-button>
       </span>
     </el-dialog>
   </div>

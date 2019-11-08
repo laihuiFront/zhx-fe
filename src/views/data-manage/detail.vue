@@ -16,10 +16,10 @@
         <div style="text-align: right; margin-right:20px;" >
           <el-button type="primary" class="btn" align="right" size="mini" @click="lastCase" v-if="showNext">上条</el-button>
           <el-button type="primary" class="btn" align="right" size="mini" @click="nextCase"  v-if="showNext">下条</el-button>
-          <el-button type="primary" class="btn" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showEdit">编辑</el-button>
-          <el-button type="primary" class="btn" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showCommentVisible=true">评语</el-button>
-          <el-button type="primary" class="btn" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showWarningVisible=true">警告</el-button>
-          <el-button type="primary" class="btn" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showCollectInfo">催收小结</el-button>
+          <el-button type="primary" class="btn" align="right" size="mini" v-if="buttonAuth" @click="showEdit">编辑</el-button>
+          <el-button type="primary" class="btn" align="right" size="mini" v-if="buttonAuth" @click="showCommentVisible=true">评语</el-button>
+          <el-button type="primary" class="btn" align="right" size="mini" v-if="buttonAuth" @click="showWarningVisible=true">警告</el-button>
+          <el-button type="primary" class="btn" align="right" size="mini" v-if="buttonAuth" @click="showCollectInfo">催收小结</el-button>
         </div>
       </div>
       <div class="items-wrap">
@@ -5228,6 +5228,9 @@
                 CP：${this.cpstr2}，
                 已还款：${this.enRepayAmtstr2}）`
         return title
+      },
+      buttonAuth(){
+        return this.$store.getters.userInfo.busiData
       }
     },
     data() {
@@ -7085,7 +7088,6 @@
       // window.addEventListener("beforeunload", () => {
       //   localStorage.clear();
       // });
-
         find().then((data)=>{
         if(data.status==2){
             this.res1=this.$store.getters.userInfo.loginName=='admin'

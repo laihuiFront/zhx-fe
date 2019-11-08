@@ -1,5 +1,5 @@
 <template>
-  <div id="collect-my-case" v-loading="pageLoading" element-loading-text="拼命加载中">
+  <div id="collect-my-case" v-loading="pageLoading" element-loading-text="拼命加载中" v-bind:class="{widthFit : colWidthMode==='fit'}">
     <el-tabs v-model="activeName" :class="{tab2:tabnum}" class="tabs-wrap">
       <el-tab-pane label="我的案件" style="height: 100%" name="tab1">
         <el-dialog
@@ -503,6 +503,13 @@
                     >申请协催</el-button
                   >
                 </el-form-item>
+                <el-form-item>
+                  <el-button
+                    @click="adjustColWidth"
+                    type="primary"
+                    >调整列宽</el-button
+                  >
+                </el-form-item>
                 </el-row>
               </el-form>
             </div>
@@ -535,14 +542,14 @@
         >
           <el-table-column type="selection" width="55"></el-table-column>
           <el-table-column
-            min-width="180"
+            :min-width="colWidthConfig.seqno"
             label="个案序列号"
             prop="seqno"
             show-overflow-tooltip
             sortable="custom"
             :sort-orders="['ascending', 'descending']"
             header-align="center"
-            align="center"           
+            align="center"
           >
             <template slot-scope="scope">
               <el-button v-if="scope.row.caseStatus==3" type="text" style ="color:#999999;" size="small"  @click="showCase(scope.row)">
@@ -565,6 +572,7 @@
             :sort-orders="['ascending', 'descending']"
             header-align="center"
             align="center"
+            :min-width="colWidthConfig[item.prop]"
           ></el-table-column>
         </el-table>
         <el-pagination
@@ -851,7 +859,8 @@ export default {
       },
       ops: { scrollParent: "window" },
       deleteList:[],
-      pageLoading:false
+      pageLoading:false,
+      colWidthMode: 'auto'
     };
   },
   computed: {
@@ -933,6 +942,20 @@ export default {
         orderBy: this.sort.orderBy,
         sort: this.sort.sort
       };
+    },
+    colWidthConfig() {
+      const cols = {
+        seqno : 180
+      }
+      for (const col in this.tableCol_data) {
+        cols[this.tableCol_data[col]["prop"]] = this.tableCol_data[col]["min-width"]
+      }
+      if(this.colWidthMode === 'fit'){
+        for (const key in cols) {
+          cols[key] = cols[key] / 100
+        }
+      }
+      return cols
     }
   },
   watch: {
@@ -1241,6 +1264,9 @@ export default {
     selectMethod(param){
       this._selectAllInit('queryConf');
       Object.keys(this.queryConf).map(x=>this.queryConf[x]=param)
+    },
+    adjustColWidth(){
+      this.colWidthMode = (this.colWidthMode === 'fit' ? 'auto' : 'fit')
     }
   },
 
@@ -1325,6 +1351,10 @@ body #collect-my-case .tab2{
 
 #collect-my-case {
   min-width: 2200px !important;
+
+  &.widthFit{
+    min-width: unset !important;
+  }
 
   .el-table th.gutter{
     display: table-cell!important;
