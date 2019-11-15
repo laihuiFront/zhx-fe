@@ -3147,6 +3147,8 @@
                     placeholder="请输入通话记录"
                     v-model="batchForm.collectInfo"
                     class="fixwidth2_info"
+                    maxlength="30"
+                    show-word-limit
                   >
                   </el-input>
              </div>
@@ -6200,9 +6202,10 @@
                   this.$refs['batchForm'].resetFields()
                 }
               });*/
+            }).catch(() => {}).finally(() => {
               this.listLoad=false
               this.fullscreenLoading=false
-            });
+            })
           } else {
             return false;
           }
