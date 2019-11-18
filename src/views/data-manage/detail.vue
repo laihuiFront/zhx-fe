@@ -16,10 +16,10 @@
         <div style="text-align: right; margin-right:20px;" >
           <el-button type="primary" class="btn" align="right" size="mini" @click="lastCase" v-if="showNext">上条</el-button>
           <el-button type="primary" class="btn" align="right" size="mini" @click="nextCase"  v-if="showNext">下条</el-button>
-          <el-button type="primary" class="btn" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showEdit">编辑</el-button>
-          <el-button type="primary" class="btn" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showCommentVisible=true">评语</el-button>
-          <el-button type="primary" class="btn" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showWarningVisible=true">警告</el-button>
-          <el-button type="primary" class="btn" align="right" size="mini" v-if=" caseDetail.currentuser || mycaseFlag" @click="showCollectInfo">催收小结</el-button>
+          <el-button type="primary" class="btn" align="right" size="mini" v-if="buttonAuth" @click="showEdit">编辑</el-button>
+          <el-button type="primary" class="btn" align="right" size="mini" v-if="buttonAuth" @click="showCommentVisible=true">评语</el-button>
+          <el-button type="primary" class="btn" align="right" size="mini" v-if="buttonAuth" @click="showWarningVisible=true">警告</el-button>
+          <el-button type="primary" class="btn" align="right" size="mini" v-if="buttonAuth" @click="showCollectInfo">催收小结</el-button>
         </div>
       </div>
       <div class="items-wrap">
@@ -282,7 +282,7 @@
          <div class="commentStyle">
            <div class="pinyu">
             <el-form-item label="最新评语" class="whole">
-            </el-form-item>          
+            </el-form-item>
               <el-popover
                 placement="bottom-start"
                 title="添加评语"
@@ -331,7 +331,7 @@
                   title="添加"
                   slot="reference"
                 ></el-button>
-              </el-popover>          
+              </el-popover>
           </div>
               <ul class="comments-wrap">
                 <li
@@ -356,30 +356,24 @@
     </div>
     <el-collapse v-model="activeNames">
       <el-collapse-item class="titleStyle">
-        <template slot="title" >
-          同批次共债案件 
-          <div class="calStyle">
-            <span>同批次共债案件 共</span>{{sameBatchCaseSum}}<span>件（包含本案件），</span>     
-            <span>
-              <span >委案金额：{{moneyTotal}}，</span>
-              <span >CP：{{cpstr}}，</span>
-              <span >已还款：{{enRepayAmtstr}}，</span>
-            （<span >未退案：{{noReturnCaseTotal}}件，</span>
-              <span >委案金额：{{moneyTotal2}}，</span>
-              <span >CP：{{cpstr2}}，</span>
-              <span >已还款：{{enRepayAmtstr2}}</span>）
-            </span>
+      <template slot="title">
+        同批次共债案件<div class="calStyle">
+            <span>{{titleMsg}}</span>
           </div>
-        </template> 
+      </template>
         <el-table
           highlight-current-row
           :data="dependCase"
           border
-          stripe
-          style="width: 100%"
-          class="table-wrap"
+          @row-dblclick="showCase"
         >
-          <el-table-column prop="seqNo" label="个案序列号"></el-table-column>
+          <el-table-column prop="seqNo" label="个案序列号">
+            <template slot-scope="scope">
+              <el-button type="text" size="small" @click="showCase(scope.row)">
+                {{scope.row.seqNo}}
+              </el-button>
+            </template>
+          </el-table-column>
           <el-table-column prop="cardNo" label="卡号"></el-table-column>
           <el-table-column prop="account" label="账号"></el-table-column>
           <el-table-column prop="moneyMsg" label="委案金额"></el-table-column>
@@ -1834,7 +1828,7 @@
                       class="fontColor"
                       type="text"
                       v-if="
-                            scope.row.telStatusMsg !== '停止跟进' 
+                            scope.row.telStatusMsg !== '停止跟进'
                         "
                    v-show="res1"
 
@@ -2169,7 +2163,7 @@
               <el-table
                 highlight-current-row
                 :data="memorizeList"
-                border               
+                border
               >
 
                 <el-table-column
@@ -2649,6 +2643,7 @@
               <el-table
                 highlight-current-row
                 :data="caseSameList"
+                @row-dblclick="showCase"
               >
                 <el-table-column
                   prop="batchNo"
@@ -2661,6 +2656,11 @@
                   show-overflow-tooltip
                   label="个案序列号"
                 >
+                  <template slot-scope="scope">
+                    <el-button type="text" size="small" @click="showCase(scope.row)">
+                      {{scope.row.seqNo}}
+                    </el-button>
+                  </template>
                 </el-table-column>
                 <el-table-column
                   prop="caseDate"
@@ -3024,6 +3024,8 @@
             <el-input
               type="textarea"
               :rows="8"
+              show-word-limit
+              maxlength="30"
               v-model="caseDetail.selfInfo"
             ></el-input>
           </el-card>
@@ -3145,6 +3147,8 @@
                     placeholder="请输入通话记录"
                     v-model="batchForm.collectInfo"
                     class="fixwidth2_info"
+                    maxlength="30"
+                    show-word-limit
                   >
                   </el-input>
              </div>
@@ -5215,6 +5219,20 @@
           title = "编辑催记"
         }
         return title
+      },
+      titleMsg(){
+        const title=`同批次共债案件 共${this.sameBatchCaseSum}件（包含本案件），
+                委案金额：${this.moneyTotal}，
+                CP：${this.cpstr}，
+                已还款：${this.enRepayAmtstr}
+                （未退案：${this.noReturnCaseTotal}件，
+                委案金额：${this.moneyTotal2}，
+                CP：${this.cpstr2}，
+                已还款：${this.enRepayAmtstr2}）`
+        return title
+      },
+      buttonAuth(){
+        return this.$store.getters.userInfo.busiData
       }
     },
     data() {
@@ -5369,7 +5387,211 @@
         listLoad:false,
         fullscreenLoading:false,
         showExportCollectConfVisible:false,
-        exportCollectConf:{}
+        exportCollectConf:{},
+        forbiddenWords:[
+          "起诉",
+          "qs",
+          "起酥",
+          "q苏",
+          "启s",
+          "上苏",
+          "立案",
+          "la",
+          "李安",
+          "开庭",
+          "开t",
+          "kt",
+          "开会",
+          "凯田",
+          "开林",
+          "開t",
+          "凯停",
+          "开慧",
+          "判决",
+          "pj",
+          "盼绝",
+          "盼觉书",
+          "潘觉书",
+          "法院",
+          "fy",
+          "f源",
+          "发源",
+          "撤诉",
+          "cs",
+          "撤案",
+          "撤",
+          "ca",
+          "测a",
+          "答辩状",
+          "搭边",
+          "dbz",
+          "搭边壮",
+          "函件",
+          "hj",
+          "诉讼",
+          "ss",
+          "ssaj",
+          "书宋",
+          "宿松",
+          "速s",
+          "酥松",
+          "苏s",
+          "素宋",
+          "传票",
+          "cp",
+          "船票",
+          "票",
+          "赖",
+          "la",
+          "油",
+          "傻",
+          "沙比",
+          "煞笔",
+          "比比",
+          "领取",
+          "领取判决书",
+          "判决书",
+          "领p",
+          "pjs",
+          "坐牢",
+          "联系方式",
+          "手机号",
+          "原告方",
+          "原告",
+          "原",
+          "元高方",
+          "被告",
+          "北高",
+          "怼",
+          "法庭",
+          "ft",
+          "司法",
+          "sf",
+          "sfcx",
+          "暂缓",
+          "律师",
+          "绿诗",
+          "应诉",
+          "ys",
+          "因素准备",
+          "记录",
+          "记",
+          "移交",
+          "传唤",
+          "报案",
+          "投诉",
+          "t素",
+          "头数",
+          "报警",
+          "bj",
+          "举报",
+          "拿j",
+          "发j",
+          "一申",
+          "一身",
+          "2沈",
+          "二审",
+          "2身",
+          "二s",
+          "二婶形式",
+          "结果书",
+          "涉嫌诈",
+          "一批",
+          "告法",
+          "经真",
+          "形式书",
+          "删除",
+          "196",
+          "5年",
+          "2万左右fj",
+          "微信",
+          "排期",
+          "缺席",
+          "刑拘",
+          "中级立",
+          "民转刑",
+          "全年走民",
+          "民事",
+          "现在走行",
+          "包庇",
+          "短信",
+          "追究形是",
+          "罚",
+          "追究书",
+          "偷安自收",
+          "涉嫌",
+          "出庭",
+          "ct",
+          "限高",
+          "刑事",
+          "型事",
+          "上诉",
+          "冻",
+          "强制",
+          "胖觉书",
+          "聚义",
+          "拘役",
+          "速前",
+          "逃避",
+          "确认名单",
+          "庭前",
+          "司法程序",
+          "宝安",
+          "强制",
+          "追究",
+          "刑事",
+          "强执",
+          "涉嫌合伙诈骗",
+          "zp",
+          "辩护",
+          "嫌疑",
+          "执行",
+          "一匹",
+          "候s",
+          "累",
+          "翻倍",
+          "集体",
+          "来汉",
+          "印s",
+          "总部",
+          "拒执",
+          "xs",
+          "责任书",
+          "冻结",
+          "拍卖",
+          "制裁",
+          "走法",
+          "应s",
+          "居留",
+          "抓",
+          "恶意",
+          "听前准备",
+          "实心名单",
+          "北京去电",
+          "fj",
+          "罚金",
+          "稽查",
+          "恶意",
+          "特么",
+          "我去",
+          "催记",
+          "不撤是退赃不退罪",
+          "笔录",
+          "拒执z",
+          "保全",
+          "告知196要1年6个月",
+          "合同203",
+          "法律条文",
+          "取保候审",
+          "上门",
+          "公诉",
+          "船换",
+          "定",
+          "形式责任追究书",
+          "排气候审",
+          "供认不讳",
+          "楷婷"
+        ]
       };
     },
 
@@ -5980,11 +6202,12 @@
                   this.$refs['batchForm'].resetFields()
                 }
               });*/
+            }).catch(() => {}).finally(() => {
               this.listLoad=false
               this.fullscreenLoading=false
-            });
-          } else {           
-            return false;          
+            })
+          } else {
+            return false;
           }
         });
 
@@ -6069,15 +6292,35 @@
         });
       },
       saveSelfInfo() {
-        updateRemark({
-          id: this.id,
-          remark: this.caseDetail.selfInfo
-        }).then(res => {
+        // 屏蔽敏感字
+        const remark = this.caseDetail.selfInfo
+
+        let err = null
+        for (const i in this.forbiddenWords) {
+          if(remark.includes(this.forbiddenWords[i])){
+            err = this.forbiddenWords[i]
+            break
+          }
+        }
+        if(err){
           this.$message({
-            type: "success",
-            message: "修改自定义信息成功"
-          });
-        });
+            type: "error",
+            message: `自定义信息无法记录[${err}]内容，保存失败，请修改`
+          })
+        }else{
+          this.fullscreenLoading = true
+          updateRemark({
+            id: this.id,
+            remark
+          }).then(res => {
+            this.$message({
+              type: "success",
+              message: "修改自定义信息成功"
+            })
+          }).catch(() => {}).finally(() => {
+            this.fullscreenLoading = false
+          })
+        }
       },
       applyLetter(row) {
         // letterCount
@@ -6806,7 +7049,10 @@
               this.$message("该电话已恢复跟进");
             }).catch(() => {
           });
-      }
+      },
+      showCase(row) {
+        window.open(`#/zhx/case-detail?id=${row.id}`)
+      },
     },
     // watch: {
     //   $route: {
@@ -6845,12 +7091,11 @@
       // window.addEventListener("beforeunload", () => {
       //   localStorage.clear();
       // });
-
         find().then((data)=>{
-        if(data.status==2){  
+        if(data.status==2){
             this.res1=this.$store.getters.userInfo.loginName=='admin'
             this.res2=this.$store.getters.userInfo.loginName=='admin'
-        }        
+        }
       });
       this.queryDetail();
       this.batchForm = {sType: 0};
@@ -6884,6 +7129,9 @@
     .calStyle{
       font-size: 12px;
       margin-left: 30px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
       .titleStyle .el-collapse-item__header{
         background:linear-gradient(to right,#4F6CFA,#5AA6F9);
@@ -6892,6 +7140,9 @@
         font-size: 16px;
         color: #fff;
         padding-left: 24px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     // .el-table__body tr.current-row > td{
@@ -7013,7 +7264,7 @@
                 }
               }
            }
-        
+
         .itemStyle_fujian{
           .el-form-item__label{
             width: 50px !important;

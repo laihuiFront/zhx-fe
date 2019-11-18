@@ -1,5 +1,5 @@
 <template>
-  <div id="collect-departmental-case" v-loading="pageLoading" element-loading-text="拼命加载中">
+  <div id="collect-departmental-case" v-loading="pageLoading" element-loading-text="拼命加载中" v-bind:class="{widthFit : colWidthMode==='fit'}">
     <el-tabs v-model="activeName"  :class="{tab2:tabnum}" class="tabs-wrap">
       <el-tab-pane label="部门案件" name="tab1" style="height: 100%">
         <el-dialog
@@ -537,6 +537,13 @@
                   <el-form-item>
                     <el-button type="primary" v-has="'申请协催'" @click="applyUrge">申请协催</el-button>
                   </el-form-item>
+                  <el-form-item>
+                  <el-button
+                    @click="adjustColWidth"
+                    type="primary"
+                    >调整列宽</el-button
+                  >
+                </el-form-item>
                 </el-row>
               </el-form>
             </div>
@@ -575,7 +582,7 @@
             label="跟进次数"
             prop="countFollow"
             sortable="custom"
-            min-width="120"
+            :min-width="colWidthConfig.countFollow"
             :sort-orders="['ascending', 'descending']"
             header-align="center"
             show-overflow-tooltip
@@ -586,7 +593,7 @@
             label="个案序列号"
             prop="seqno"
             sortable="custom"
-            min-width="180"
+            :min-width="colWidthConfig.seqno"
             :sort-orders="['ascending', 'descending']"
             header-align="center"
             show-overflow-tooltip
@@ -613,6 +620,7 @@
             show-overflow-tooltip
             :sort-orders="['ascending','descending']"
             align="center"
+            :min-width="colWidthConfig[item.prop]"
           ></el-table-column>
         </el-table>
         <el-pagination
@@ -971,7 +979,8 @@
         },
         pageLoading:false,
         selectDataArr:[],
-        t1:[]
+        t1:[],
+        colWidthMode: 'auto'
       };
     },
     computed: {
@@ -1061,6 +1070,21 @@
           orderBy: this.sort.orderBy,
           sort: this.sort.sort,
         };
+      },
+      colWidthConfig() {
+        const cols = {
+          countFollow : 100,
+          seqno : 180
+        }
+        for (const col in this.tableCol_data) {
+          cols[this.tableCol_data[col]["prop"]] = this.tableCol_data[col]["min-width"]
+        }
+        if(this.colWidthMode === 'fit'){
+          for (const key in cols) {
+            cols[key] = cols[key] / 100
+          }
+        }
+        return cols
       }
     },
     watch: {
@@ -1463,7 +1487,7 @@
       selectMethod(param){
         this._selectAllInit('queryConf');
         Object.keys(this.queryConf).map(x=>this.queryConf[x]=param)
-      }, 
+      },
       dbConfirm(data,node){
         this.selectDataArr = this.$refs.tree.getCurrentNode()
         this.t1.push( new Date().getTime())
@@ -1473,7 +1497,7 @@
           if(val<500){
             this.onClickSaveDept2()
           }
-        }             
+        }
       },
       onClickSaveDept2(){
         if (this.selectDataArr.length == 0){
@@ -1484,7 +1508,10 @@
         const nodesName  =this.selectDataArr.orgName
         this.$set(this, 'deptName', nodesName)
         this.$set(this.form, 'val31', nodesId)
-        this.departmentVisible = false       
+        this.departmentVisible = false
+      },
+      adjustColWidth(){
+        this.colWidthMode = (this.colWidthMode === 'fit' ? 'auto' : 'fit')
       }
     },
     mounted(){
@@ -1542,6 +1569,10 @@
 
   #collect-departmental-case {
     min-width: 2630px !important;
+
+    &.widthFit{
+      min-width: unset !important;
+    }
 
     .tab2{
       .el-table .el-table__body-wrapper{

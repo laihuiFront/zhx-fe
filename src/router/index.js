@@ -481,6 +481,16 @@ export default new Router({
           },
           name: 'setting-tel-btn'
         },
+
+        // 屏蔽词设置
+        {
+          path: 'setting-forbiddenwords',
+          component: resolve => {
+            spinRoute.show();
+            require(['@/views/settings/setting-forbiddenwords'], spinRoute.resolve(resolve))
+          },
+          name: 'setting-forbiddenwords'
+        },
       ]
     },
     {
