@@ -159,3 +159,12 @@ export function selectByModule(data={}) {
     data
   })
 }
+
+//保存查询配置
+export function selectByModule2(data={}) {
+  return request({
+    method:'post',
+    url:'/selectByModule2',
+    data
+  })
+}

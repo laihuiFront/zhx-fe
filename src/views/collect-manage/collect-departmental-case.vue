@@ -751,7 +751,7 @@
 
 <script>
   import tab2 from "./collect-departmental-statistics";
-  import { pageMyCase,getEnum,markColor ,saveSelectFilter,selectByModule,addSynergy,batchNo,addCollectStatus,listOrganization,clientCurrent} from
+  import { pageMyCase,getEnum,markColor ,saveSelectFilter,selectByModule,selectByModule2,addSynergy,batchNo,addCollectStatus,listOrganization,clientCurrent} from
       "@/common/js/collect-my-case";
   import {role,getUserTree,queryDept,queryOdv} from '@/common/js/collect-departmental-case'
   import {pageSizes} from "@/common/js/const"
@@ -1519,15 +1519,15 @@
         this.pageLoading = true;
         this.colWidthModeName = (this.colWidthMode === 'fit' ? 'auto' : 'fit')
         let val={name:this.colWidthModeName}
-        this.tableWidthInformation={module:"colWidthMode",menu:JSON.stringify(val)}
+        this.tableWidthInformation={menu:JSON.stringify(val)}
         updateTableStatus(this.tableWidthInformation).then(() => {
           this.queryConfList2()
-          }).catch(() => {
-            this.pageLoading = false;
-        });
+          }).catch(() => {}).finally(() => {
+            this.pageLoading = false
+        })
       },
       queryConfList2(){
-        let queryObj = {module:"colWidthMode",menu:this.tableStatus}
+        let queryObj = {menu:this.tableStatus}
         this.pageLoading = true;
         selectByModule(queryObj).then(data => {
           if (data){
@@ -1535,10 +1535,9 @@
           }else{
             this.colWidthMode='auto'
           }               
-          this.pageLoading=false;
-        }).catch(() => {
+        }).catch(() => {}).finally(() => {
           this.pageLoading = false
-        });
+        })
       }
     },
     mounted(){

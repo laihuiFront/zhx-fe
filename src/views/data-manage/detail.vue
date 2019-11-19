@@ -7416,12 +7416,9 @@
         .fontColor{
           color: #5175FA;
         }
-         .fontColorTel{
+        .fontColorTel{
           color: #FF9900;
         }
-
-
-
         .el-tabs {
           .el-tabs__item {
             padding: 0 8px;

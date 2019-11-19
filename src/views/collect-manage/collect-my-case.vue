@@ -652,6 +652,7 @@ import {
   pageMyCase,
   saveSelectFilter,
   selectByModule,
+  selectByModule2,
   getEnum,
   markColor,
   addSynergy,
@@ -1273,26 +1274,25 @@ export default {
       this.pageLoading=true
       this.colWidthModeName = (this.colWidthMode === 'fit' ? 'auto' : 'fit')
       let val={name:this.colWidthModeName}
-      this.tableWidthInformation={module:"colWidthMode",menu:JSON.stringify(val)}
+      this.tableWidthInformation={menu:JSON.stringify(val)}
       updateTableStatus(this.tableWidthInformation).then(() => {
         this.queryConfList2()
-        }).catch(() => {
+        }).catch(() => {}).finally(() => {
           this.pageLoading = false
-      });
+      })
     },
     queryConfList2(){
-      let queryObj = {module:"colWidthMode",menu:this.tableStatus}
+      let queryObj = {menu:this.tableStatus}
       this.pageLoading=true
-      selectByModule(queryObj).then(data => {
+      selectByModule2(queryObj).then(data => {
         if (data){
           this.colWidthMode = JSON.parse(data.menu).name
         }else{
           this.colWidthMode='auto'
         }               
-        this.pageLoading=false;
-      }).catch(() => {
+      }).catch(() => {}).finally(() => {
         this.pageLoading = false
-      });
+      })
     }
   },
 
