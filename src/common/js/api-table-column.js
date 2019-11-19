@@ -16,3 +16,11 @@ export function saveTableInformation(data) {
       }
     })
   }
+
+  export function updateTableStatus(data) {
+    return request({
+      url: '/updateModule',
+      method: 'post',
+      data
+    })
+  }

@@ -660,7 +660,7 @@ import {
   addCollectStatus
 } from "@/common/js/collect-my-case";
 import {pageSizes} from "@/common/js/const"
-
+import {updateTableStatus} from "@/common/js/api-table-column";
 export default {
   components: {
     tab2,
@@ -860,7 +860,10 @@ export default {
       ops: { scrollParent: "window" },
       deleteList:[],
       pageLoading:false,
-      colWidthMode: 'auto'
+      colWidthMode: 'auto',
+      tableWidthInformation:{},
+      tableStatus:{},
+      colWidthModeName:''
     };
   },
   computed: {
@@ -943,7 +946,7 @@ export default {
         sort: this.sort.sort
       };
     },
-    colWidthConfig() {
+    colWidthConfig() {     
       const cols = {
         seqno : 180
       }
@@ -972,6 +975,7 @@ export default {
   created() {
     this.searchHandle();
     this.queryConfList();
+    this.queryConfList2();
     batchNo().then((data)=>{
       this.val1_data = data.reduce((acc,item)=>{
         acc.push({
@@ -1266,7 +1270,29 @@ export default {
       Object.keys(this.queryConf).map(x=>this.queryConf[x]=param)
     },
     adjustColWidth(){
-      this.colWidthMode = (this.colWidthMode === 'fit' ? 'auto' : 'fit')
+      this.pageLoading=true
+      this.colWidthModeName = (this.colWidthMode === 'fit' ? 'auto' : 'fit')
+      let val={name:this.colWidthModeName}
+      this.tableWidthInformation={module:"colWidthMode",menu:JSON.stringify(val)}
+      updateTableStatus(this.tableWidthInformation).then(() => {
+        this.queryConfList2()
+        }).catch(() => {
+          this.pageLoading = false
+      });
+    },
+    queryConfList2(){
+      let queryObj = {module:"colWidthMode",menu:this.tableStatus}
+      this.pageLoading=true
+      selectByModule(queryObj).then(data => {
+        if (data){
+          this.colWidthMode = JSON.parse(data.menu).name
+        }else{
+          this.colWidthMode='auto'
+        }               
+        this.pageLoading=false;
+      }).catch(() => {
+        this.pageLoading = false
+      });
     }
   },
 

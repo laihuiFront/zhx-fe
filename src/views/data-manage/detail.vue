@@ -1769,7 +1769,7 @@
                 <el-table-column prop="tel" label="电话">
                   <template slot-scope="scope">
                     <el-button
-                      class="fontColor"
+                      :class="scope.row.colorStatus==1?'fontColor':'fontColorTel'"
                       type="text"
                       size="small"
                       @click="
@@ -7416,6 +7416,11 @@
         .fontColor{
           color: #5175FA;
         }
+         .fontColorTel{
+          color: #FF9900;
+        }
+
+
 
         .el-tabs {
           .el-tabs__item {

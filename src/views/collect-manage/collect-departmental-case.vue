@@ -755,6 +755,7 @@
       "@/common/js/collect-my-case";
   import {role,getUserTree,queryDept,queryOdv} from '@/common/js/collect-departmental-case'
   import {pageSizes} from "@/common/js/const"
+  import {updateTableStatus} from "@/common/js/api-table-column";
 
   export default {
     components: {
@@ -980,7 +981,10 @@
         pageLoading:false,
         selectDataArr:[],
         t1:[],
-        colWidthMode: 'auto'
+        colWidthMode: 'auto',
+        tableStatus:{},
+        tableWidthInformation:{},
+        colWidthModeName:''
       };
     },
     computed: {
@@ -1098,6 +1102,7 @@
     },
     created(){
       this.queryConfList();
+      this.queryConfList2();
       this.init();
       listOrganization().then((data)=>{
         this.departmentTree = data;
@@ -1511,7 +1516,29 @@
         this.departmentVisible = false
       },
       adjustColWidth(){
-        this.colWidthMode = (this.colWidthMode === 'fit' ? 'auto' : 'fit')
+        this.pageLoading = true;
+        this.colWidthModeName = (this.colWidthMode === 'fit' ? 'auto' : 'fit')
+        let val={name:this.colWidthModeName}
+        this.tableWidthInformation={module:"colWidthMode",menu:JSON.stringify(val)}
+        updateTableStatus(this.tableWidthInformation).then(() => {
+          this.queryConfList2()
+          }).catch(() => {
+            this.pageLoading = false;
+        });
+      },
+      queryConfList2(){
+        let queryObj = {module:"colWidthMode",menu:this.tableStatus}
+        this.pageLoading = true;
+        selectByModule(queryObj).then(data => {
+          if (data){
+            this.colWidthMode = JSON.parse(data.menu).name
+          }else{
+            this.colWidthMode='auto'
+          }               
+          this.pageLoading=false;
+        }).catch(() => {
+          this.pageLoading = false
+        });
       }
     },
     mounted(){
