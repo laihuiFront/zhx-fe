@@ -3147,7 +3147,7 @@
                     placeholder="请输入通话记录"
                     v-model="batchForm.collectInfo"
                     class="fixwidth2_info"
-                    maxlength="30"
+                    maxlength="70"
                     show-word-limit
                   >
                   </el-input>
