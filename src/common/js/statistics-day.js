@@ -80,3 +80,10 @@ export const getCollectionDayDetails = function(form,odv,time,status,pageSize,pa
       }
     })
   }
+
+  export const getUserRoleTree = function(){
+    return request({
+      url: 'user/select/userRoleTree',
+      method: 'post'
+    })
+  }

@@ -363,7 +363,11 @@
       width="600px"
       v-dialogDrag
     >
+    <el-radio v-model="radio" label="1" fixed>按部门分组</el-radio>
+    <el-radio v-model="radio" label="2" fixed>按角色分组</el-radio>
+    <div class="treeHeight">
       <el-tree
+        v-show="radio=='1'"
         :data="selectUserTree"
         show-checkbox
         default-expand-all
@@ -372,6 +376,17 @@
         highlight-current
         :props="defaultProps">
       </el-tree>
+      <el-tree
+        v-show="radio=='2'"
+        :data="selectUserRoleTree"
+        show-checkbox
+        default-expand-all
+        node-key="id"
+        ref="tree2"
+        highlight-current
+        :props="defaultProps">
+      </el-tree>
+    </div>
       <span slot="footer" class="footer">
         <el-button @click="selectUserVisible = false">取 消</el-button>
         <el-button type="primary" @click="onClickSaveUser">保 存</el-button>
@@ -479,7 +494,8 @@
     PersonList,
     dataList,
     selectDataCaseExport,
-    getCollectionDayDetails
+    getCollectionDayDetails,
+    getUserRoleTree
   } from '@/common/js/statistics-day.js'
    import {pageSizes} from "@/common/js/const"
 
@@ -527,21 +543,28 @@
         pageNum2:1,
         rowinfo:'',
         timeinfo:'',
-        statusinfo:''
+        statusinfo:'',
+        selectUserRoleTree:[],
+        selectDataArr:[],
+        radio:'1'
       }
     },
     methods: {
       onClickSaveUser() {
-        let selectDataArr = this.$refs.tree.getCheckedNodes()
+        if(this.radio == '1'){
+          this.selectDataArr = this.$refs.tree.getCheckedNodes()
+        }else{
+          this.selectDataArr = this.$refs.tree2.getCheckedNodes()
+        }
         let selectUserNames = ''
         let selectUserIds = []
-        if (selectDataArr.length > 0) {
-          selectUserNames = selectDataArr.filter((item) => {
+        if (this.selectDataArr.length > 0) {
+          selectUserNames = this.selectDataArr.filter((item) => {
             return item.type === 'user'
           }).map((item) => {
             return item.name
           })
-          selectUserIds = selectDataArr.filter((item) => {
+          selectUserIds = this.selectDataArr.filter((item) => {
             return item.type === 'user'
           }).map((item) => {
             return item.id
@@ -552,10 +575,8 @@
         this.selectUserVisible = false
       },
       onClickSelectUser() {
-        this.selectUserVisible = true
-        this.$nextTick(() => {
-          this.$refs.tree.setCheckedKeys(this.formInline.odv);
-        })
+        this.radio = '1'
+        this.selectUserVisible = true 
       },
       getSummaries(param) {
         const {columns, data} = param;
@@ -666,6 +687,9 @@
         }
         this.loading = true;
         this.fullscreenLoading = true;
+        // 去重
+        let s1=new Set(this.formInline.odv)
+        this.formInline.odv=[...s1]
         dataList(this.formInline,this.pageSize, 1).then((response) => {
           this.tableData3 = response.list
           this.total=response.total
@@ -707,7 +731,7 @@
       handleCurrentChange2(val) {
         this.pageNum2 = val;
         this.showCase2(this.rowinfo,this.timeinfo,this.statusinfo)
-      },    
+      }   
     },
     created() {
  /*     areaList().then((response) => {
@@ -724,18 +748,20 @@
       getUserTree().then(data => {
         this.selectUserTree = [data]
       })
-      //  this.tableLoad = true
-      //      dataList(this.formInline).then((response)=>{
-      //    this.tableData3=response.list
-      //    this.tableLoad = false
-      //    this.total=response.totalNum
-      //  })
-    },
+      // 按角色分组的树
+      getUserRoleTree().then(data => {
+        this.selectUserRoleTree = data
+      })
+    }
   }
 </script>
 
 <style lang="scss">
   #statistics-day {
     min-width: 1400px !important;
+    .treeHeight{
+      height: 500px;
+      overflow:auto;
+    }
   }
 </style>
