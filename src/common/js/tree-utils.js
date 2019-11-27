@@ -6,10 +6,10 @@
  * @LastEditTime: 2019-02-19 13:50:21
  */
 export default {
-    getTreeData,
-    each
-  };
-  /*
+  getTreeData,
+  each
+}
+/*
   each(arr, (item, children) => {
       item.value = xx;
       // 该item 包含children，因此直接赋值,不需要单独处理children里面的值
@@ -24,23 +24,23 @@ export default {
           item.value = xx;
       });
    */
-  export function each(data, callback, childName = "children") {
-    let current;
-    let children;
-    for (let i = 0, len = data.length; i < len; i++) {
-      current = data[i];
-      children = [];
-      if (current[childName] && current[childName].length > 0) {
-        children = current[childName];
-      }
-      callback && callback(current, children);
-      if (children.length > 0) {
-        each(children, callback, childName);
-      }
+export function each(data, callback, childName = 'children') {
+  let current
+  let children
+  for (let i = 0, len = data.length; i < len; i++) {
+    current = data[i]
+    children = []
+    if (current[childName] && current[childName].length > 0) {
+      children = current[childName]
+    }
+    callback && callback(current, children)
+    if (children.length > 0) {
+      each(children, callback, childName)
     }
   }
-  
-  /**
+}
+
+/**
    * @Author yihuang",
    * @param data     数据
    * @param id       要比对的名称
@@ -56,23 +56,23 @@ export default {
    * 返回所有匹配的数据
    * let arr=utils.getTreeData(arr, 'flowId', item.decategoryId, 'name','children',true);
    */
-  export function getTreeData(
+export function getTreeData(
+  data,
+  id = 'id',
+  val = '',
+  name = 'name',
+  children = 'children',
+  isRow = false
+) {
+  const arr = []
+  each(
     data,
-    id = "id",
-    val = "",
-    name = "name",
-    children = "children",
-    isRow = false
-  ) {
-    let arr = [];
-    each(
-      data,
-      item => {
-        if (item[id] === val) {
-          arr.push(item);
-        }
-      },
-      children
-    );
-    return arr.length > 0 ? (isRow ? arr : arr[0][name]) : null;
-  }
+    item => {
+      if (item[id] === val) {
+        arr.push(item)
+      }
+    },
+    children
+  )
+  return arr.length > 0 ? (isRow ? arr : arr[0][name]) : null
+}

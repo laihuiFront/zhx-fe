@@ -1,23 +1,23 @@
 import axios from 'axios'
-import { Message, MessageBox } from 'element-ui'
+import { Message } from 'element-ui'
 import store from '../../store'
 import router from '../../router'
-import { localCache, removeCache } from '@/common/js/auth'
+import { localCache } from '@/common/js/auth'
 
 export const baseURL = process.env.baseURL
 
 // 创建axios实例
 const service = axios.create({
   baseURL,
-  //timeout: 10000, // 请求超时时间,
-  responseType :'blob',
-  method:'POST'
+  // timeout: 10000, // 请求超时时间,
+  responseType: 'blob',
+  method: 'POST'
 })
 
 // request拦截器
 service.interceptors.request.use(config => {
-  if(!config.url.includes('login')){
-      config.headers['Authorization'] = localCache('token')
+  if (!config.url.includes('login')) {
+    config.headers['Authorization'] = localCache('token')
   }
   return config
 }, error => {
@@ -38,24 +38,24 @@ service.interceptors.response.use(
         duration: 5 * 1000
       })
 
-      if(responseInfo.code === '400'){
-        store.dispatch('fedLogOut').then(()=>{
+      if (responseInfo.code === '400') {
+        store.dispatch('fedLogOut').then(() => {
           router.replace('/login')
         })
       }
       return Promise.reject('error')
     } else {
-        let url = window.URL.createObjectURL(new Blob([res]))
-        let link = document.createElement('a')
-        link.style.display = 'none'
-        link.href = url
+      const url = window.URL.createObjectURL(new Blob([res]))
+      const link = document.createElement('a')
+      link.style.display = 'none'
+      link.href = url
 
-        link.setAttribute('download', responseInfo.data)
+      link.setAttribute('download', responseInfo.data)
 
-        document.body.appendChild(link)
-        link.click()
-        return true
-      }
+      document.body.appendChild(link)
+      link.click()
+      return true
+    }
   },
   error => {
     console.log('err' + error)// for debug

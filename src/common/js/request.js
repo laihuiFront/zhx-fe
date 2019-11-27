@@ -1,21 +1,21 @@
 import axios from 'axios'
-import { Message, MessageBox } from 'element-ui'
+import { Message } from 'element-ui'
 import store from '../../store'
 import router from '../../router'
-import { localCache, removeCache } from '@/common/js/auth'
+import { localCache } from '@/common/js/auth'
 
 export const baseURL = process.env.baseURL
 
-//// 创建axios实例
+// // 创建axios实例
 const service = axios.create({
   baseURL
-  //timeout: 10000 // 请求超时时间
+  // timeout: 10000 // 请求超时时间
 })
 
 // request拦截器
 service.interceptors.request.use(config => {
-  if(!config.url.includes('login')){
-      config.headers['Authorization'] = localCache('token')
+  if (!config.url.includes('login')) {
+    config.headers['Authorization'] = localCache('token')
   }
   return config
 }, error => {
@@ -34,8 +34,8 @@ service.interceptors.response.use(
         duration: 5 * 1000
       })
 
-      if(res.code === '400'){
-        store.dispatch('fedLogOut').then(()=>{
+      if (res.code === '400') {
+        store.dispatch('fedLogOut').then(() => {
           router.replace('/login')
         })
       }
@@ -55,4 +55,4 @@ service.interceptors.response.use(
   }
 )
 
-export default service;
+export default service

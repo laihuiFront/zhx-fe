@@ -1,6 +1,7 @@
 import request from '@/common/js/request'
 import download from '@/common/js/download'
-export function listMember(data){
+
+export function listMember(data) {
   return request({
     url: '/user/select/list',
     method: 'post',
@@ -64,12 +65,12 @@ export function getLoginName(name) {
     url: '/user/getLoginName',
     method: 'post',
     data: {
-     userName:name
+      userName: name
     }
   })
 }
 
-export function changeStatus(data){
+export function changeStatus(data) {
   return request({
     url: '/user/update/status',
     method: 'post',
@@ -77,7 +78,7 @@ export function changeStatus(data){
   })
 }
 
-export function changeBatchStatus(data){
+export function changeBatchStatus(data) {
   return request({
     url: '/user/update/batchStatus',
     method: 'post',
@@ -85,7 +86,7 @@ export function changeBatchStatus(data){
   })
 }
 
-export function addMember(data){
+export function addMember(data) {
   return request({
     url: '/user/insert',
     method: 'post',
@@ -93,7 +94,7 @@ export function addMember(data){
   })
 }
 
-export function updateMember(data){
+export function updateMember(data) {
   return request({
     url: '/user/update',
     method: 'post',
@@ -101,7 +102,7 @@ export function updateMember(data){
   })
 }
 
-export function getUserById(id){
+export function getUserById(id) {
   return request({
     url: '/user/select/id',
     method: 'post',
@@ -111,18 +112,16 @@ export function getUserById(id){
   })
 }
 
-export function getPositionList(){
+export function getPositionList() {
   return request({
     url: '/user/select/position',
     method: 'post'
   })
-
 }
 
-export function getUserHomeInfo(){
+export function getUserHomeInfo() {
   return request({
     url: '/user/userHomeInfo',
     method: 'post'
   })
-
 }

@@ -1,18 +1,18 @@
 <template>
   <div id="layout">
-    <top-menu class="menu" :class="{'is-active':isActive}"></top-menu>
-      <div class="arrowBtn">
-        <el-button 
-          icon="el-icon-d-arrow-left" 
-          :class="{'is-active':isActive}"
-          @click="hideClick"
-        ></el-button>
-      </div>
+    <top-menu class="menu" :class="{'is-active':isActive}" />
+    <div class="arrowBtn">
+      <el-button
+        icon="el-icon-d-arrow-left"
+        :class="{'is-active':isActive}"
+        @click="hideClick"
+      />
+    </div>
     <div class="page" :class="{'is-active':isActive}">
-      <tab-menu class="tab-wrap"></tab-menu>
+      <tab-menu class="tab-wrap" />
       <section class="page-wrap">
         <keep-alive :exclude="exclude">
-          <router-view/>
+          <router-view />
         </keep-alive>
         <!--<router-view/>-->
       </section>
@@ -21,45 +21,41 @@
 </template>
 
 <script>
-import {mapState,mapMutations} from 'vuex';
+import { mapState, mapMutations } from 'vuex'
 
 const TopMenu = () => import('@/components/top-menu/top-menu')
 const TabMenu = () => import('@/components/tab-menu/tab-menu')
 export default {
-  name: 'layout',
-  data(){
-    return{
-      isActive:false
-    }
-  },
+  name: 'Layout',
   components: {
     TopMenu,
     TabMenu
   },
-  methods:{
-    ...mapMutations(['SET_CACHEFLUSHFLAG']),
-    hideClick() {
-      if(this.isActive==true){
-        this.isActive=false
-      }else{
-        this.isActive=true
+  data() {
+    return {
+      isActive: false
+    }
+  },
+  computed: {
+    ...mapState(['cacheflushFlag']),
+    exclude() {
+      return this.cacheflushFlag ? /.+/ : ''
+    }
+  },
+  watch: {
+    exclude(n) {
+      if (n) {
+        this.$nextTick(() => {
+          this.SET_CACHEFLUSHFLAG(false)
+        })
       }
     }
   },
-  watch:{
-    exclude(n){
-      if (n) {
-        this.$nextTick(()=>{
-          this.SET_CACHEFLUSHFLAG(false);
-        })
-      }
-    },
-  },
-  computed:{
-    ...mapState(['cacheflushFlag']),
-    exclude(){
-      return this.cacheflushFlag ? /.+/ : '';
-    },
+  methods: {
+    ...mapMutations(['SET_CACHEFLUSHFLAG']),
+    hideClick() {
+      this.isActive = !this.isActive
+    }
   }
 }
 </script>
@@ -101,11 +97,13 @@ export default {
     }
   }
   .arrowBtn{
-    margin-top: 230px;
+    display: flex;
+    align-items: center;
+
     .el-button{
       width: 30px;
       padding: unset;
-      height: 50px;      
+      height: 50px;
       background: #edf0ff;
     }
     .el-button.is-active {

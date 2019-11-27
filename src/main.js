@@ -1,23 +1,23 @@
-//import 'babel-polyfill'
+// import 'babel-polyfill'
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-import Vue from "vue";
-import App from "./App";
-import store from "./store";
-import router from "./router";
+import Vue from 'vue'
+import App from './App'
+import store from './store'
+import router from './router'
 
-import "@/common/scss/index";
-import ElementUI from "element-ui";
-import { Message, MessageBox } from "element-ui";
-import "element-ui/lib/theme-chalk/index.css";
-import "@/common/scss/element-variables.scss";
-import { localCache } from "@/common/js/auth";
-import "@/common/js/directives";
+import '@/common/scss/index'
+import ElementUI from 'element-ui'
+import { Message } from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+import '@/common/scss/element-variables.scss'
+import { localCache } from '@/common/js/auth'
+import '@/common/js/directives'
 
-Vue.use(ElementUI, { size: "mini" });
+Vue.use(ElementUI, { size: 'mini' })
 
 var com = {
-  nane: "ElTableBody",
+  nane: 'ElTableBody',
   extends: ElementUI.Table.components.TableBody,
   props: {
     highlight: {
@@ -26,24 +26,24 @@ var com = {
     highlightCurrentRow: {
       default: true
     }
-  },
- /* methods: {
+  }
+  /* methods: {
     handleEvent(a, b) {
       this.$parent.setCurrentRow(b);
     }
   }*/
-};
+}
 Vue.component(
-  "ElTable",
+  'ElTable',
   Vue.extend({
-    extends: ElementUI.Table,
     components: {
       TableBody: com
-    }
+    },
+    extends: ElementUI.Table
   })
-);
+)
 Vue.component(
-  "ElDialog",
+  'ElDialog',
   Vue.extend({
     extends: ElementUI.Dialog,
     props: {
@@ -52,9 +52,9 @@ Vue.component(
       }
     }
   })
-);
+)
 
-Vue.config.productionTip = false;
+Vue.config.productionTip = false
 Vue.mixin({
   beforeRouteLeave: function(to, from, next) {
     if (this.$route.meta.cacheflush) {
@@ -70,88 +70,88 @@ Vue.mixin({
                 ? this.$vnode.componentOptions.Ctor.cid +
                   (this.$vnode.componentOptions.tag
                     ? `::${this.$vnode.componentOptions.tag}`
-                    : "")
-                : this.$vnode.key;
-            var cache = this.$vnode.parent.componentInstance.cache;
-            var keys = this.$vnode.parent.componentInstance.keys;
+                    : '')
+                : this.$vnode.key
+            var cache = this.$vnode.parent.componentInstance.cache
+            var keys = this.$vnode.parent.componentInstance.keys
             if (cache[key]) {
               if (keys.length) {
-                var index = keys.indexOf(key);
+                var index = keys.indexOf(key)
                 if (index > -1) {
-                  keys.splice(index, 1);
+                  keys.splice(index, 1)
                 }
               }
-              delete cache[key];
+              delete cache[key]
             }
           }
         }
       }
-      this.$route.meta.cacheflush = false;
-      this.$destroy();
+      this.$route.meta.cacheflush = false
+      this.$destroy()
     }
-    next();
+    next()
   },
   methods: {
     _selectAllInit(target) {
-      let o = {};
+      const o = {}
       this.$refs.boxWrapper.$children.forEach(item => {
-        if (item.$options._componentTag === "el-checkbox") {
-          o[item.$vnode.data.model.expression.split(".")[1]] = false;
+        if (item.$options._componentTag === 'el-checkbox') {
+          o[item.$vnode.data.model.expression.split('.')[1]] = false
         }
-      });
-      this[target] = Object.assign({}, o, this[target]);
+      })
+      this[target] = Object.assign({}, o, this[target])
     }
   }
-});
-const whiteList = ["/login"];
+})
+const whiteList = ['/login']
 router.beforeEach((to, from, next) => {
-  if (localCache("token")) {
-    if (to.path === "/login") {
-      next({ path: "/" });
+  if (localCache('token')) {
+    if (to.path === '/login') {
+      next({ path: '/' })
     } else {
       store.dispatch('loadByTypeAction')
       if (!store.getters.menu.length) {
         store
-          .dispatch("getUserInfoAction")
+          .dispatch('getUserInfoAction')
           .then(() => {
-            store.dispatch("getUserMenu").then(() => {
+            store.dispatch('getUserMenu').then(() => {
               // if (to.path.includes("case-detail")) {
               //   store.dispatch("initCaseDetailPage", to.query);
               // } else {
-                store.dispatch("initPageMenu", to.path);
+              store.dispatch('initPageMenu', to.path)
               // }
-              next();
-            });
+              next()
+            })
           })
           .catch(err => {
-            store.dispatch("fedLogOut").then(() => {
-              Message.error(err || "权限错误，请重新登录");
-              next({ path: "/" });
-            });
-          });
+            store.dispatch('fedLogOut').then(() => {
+              Message.error(err || '权限错误，请重新登录')
+              next({ path: '/' })
+            })
+          })
       } else {
-        if (to.path.includes("case-detail")) {
-          store.dispatch("initCaseDetailPage", to.query);
+        if (to.path.includes('case-detail')) {
+          store.dispatch('initCaseDetailPage', to.query)
         } else {
-          store.dispatch("initPageMenu", to.path);
+          store.dispatch('initPageMenu', to.path)
         }
-        next();
+        next()
       }
     }
   } else {
     if (whiteList.indexOf(to.path) !== -1) {
-      next();
+      next()
     } else {
-      next("/login");
+      next('/login')
     }
   }
-});
+})
 
 /* eslint-disable no-new */
 new Vue({
-  el: "#app",
+  el: '#app',
   router,
   store,
   components: { App },
-  template: "<App/>"
-});
+  template: '<App/>'
+})
