@@ -11,23 +11,23 @@ export function getCaseDetail(id) {
   })
 }
 
-export function sendTel(context,address) {
+export function sendTel(context, address) {
   return request({
     url: '/telIp/send',
     method: 'post',
     data: {
-      context:context,
-      address:address
+      context: context,
+      address: address
     }
   })
 }
-export function sendTelBatch(context,address) {
+export function sendTelBatch(context, address) {
   return request({
     url: '/telIp/sendBatch',
     method: 'post',
     data: {
-      context:context,
-      address:address
+      context: context,
+      address: address
     }
   })
 }
@@ -36,18 +36,18 @@ export function getSameBatchCollect(id) {
     url: '/case/batch/idno',
     method: 'post',
     data: {
-      "caseId":id
+      'caseId': id
     }
   })
 }
 
-export function saveCollectInfo(id,collectInfo) {
+export function saveCollectInfo(id, collectInfo) {
   return request({
     url: '/dataCase/updateCollectInfo',
     method: 'post',
     data: {
-      "id":id,
-      "collectInfo":collectInfo
+      'id': id,
+      'collectInfo': collectInfo
     }
   })
 }
@@ -57,7 +57,7 @@ export function DeteleData(id) {
     url: '/reduce/apply/update/status',
     method: 'post',
     data: {
-      "id":id
+      'id': id
     }
   })
 }
@@ -76,7 +76,7 @@ export function getLetterList(id) {
     url: '/letter/getLetterListByCaseId',
     method: 'post',
     data: {
-      "caseId":id
+      'caseId': id
     }
   })
 }
@@ -84,11 +84,11 @@ export const PhonetypeList = function() {
   return request({
     url: '/sys/dictionary/select/list/name',
     method: 'post',
-    data:{name:"电话类型"}
+    data: { name: '电话类型' }
   })
 }
 
-//地址
+// 地址
 export function getAddressDetail(id) {
   return request({
     url: '/dataCase/detail/addressList',
@@ -99,8 +99,8 @@ export function getAddressDetail(id) {
   })
 }
 
-//催记
-export function getCollectDetail(caseId,batchNo,identNo,cardNo,detaiType) {
+// 催记
+export function getCollectDetail(caseId, batchNo, identNo, cardNo, detaiType) {
   return request({
     url: '/dataCollect/detailCollect',
     method: 'post',
@@ -114,7 +114,7 @@ export function getCollectDetail(caseId,batchNo,identNo,cardNo,detaiType) {
   })
 }
 
-export function getCollectDetail2(caseId,batchNo,identNo,cardNo,detaiType) {
+export function getCollectDetail2(caseId, batchNo, identNo, cardNo, detaiType) {
   return request({
     url: '/dataCollect/detailCollect2',
     method: 'post',
@@ -127,18 +127,18 @@ export function getCollectDetail2(caseId,batchNo,identNo,cardNo,detaiType) {
     }
   })
 }
-//案人信息
+// 案人信息
 export function getArchiveDetail(id) {
   return request({
     url: '/detai/archive/list',
     method: 'post',
     data: {
-      "caseId":id
+      'caseId': id
     }
   })
 }
 
-//评语
+// 评语
 export function getCommentDetail(id) {
   return request({
     url: '/dataCase/listComment',
@@ -149,7 +149,7 @@ export function getCommentDetail(id) {
   })
 }
 
-export function updateDataComment(data){
+export function updateDataComment(data) {
   return request({
     url: '/dataCase/updateComment',
     method: 'post',
@@ -157,31 +157,31 @@ export function updateDataComment(data){
   })
 }
 
-export function delDataComment(id){
+export function delDataComment(id) {
   return request({
     url: '/dataCase/delComment',
     method: 'post',
-    data:{id}
+    data: { id }
   })
 }
 
-export function delDataCollect(id){
+export function delDataCollect(ids) {
   return request({
     url: '/dataCollection/detailDel',
     method: 'post',
-    data:{id}
+    data: { ids }
   })
 }
 
-export function delOplog(id){
+export function delOplog(id) {
   return request({
     url: '/dataLog/delete',
     method: 'post',
-    data:{id}
+    data: { id }
   })
 }
 
-//利息
+// 利息
 export function getInterestDetail(id) {
   return request({
     url: '/dataCase/listInterest',
@@ -192,16 +192,16 @@ export function getInterestDetail(id) {
   })
 }
 
-//协催
-export function getSynergyDetail(id,applyStatus,finishStatus) {
+// 协催
+export function getSynergyDetail(id, applyStatus, finishStatus) {
   return request({
     url: '/synergistic/list',
     method: 'post',
     data: {
       pageSize: 10000,
       pageNum: 1,
-      applyStatus:applyStatus,
-      finishStatus:finishStatus,
+      applyStatus: applyStatus,
+      finishStatus: finishStatus,
       dataCase: {
         id
       }
@@ -209,7 +209,7 @@ export function getSynergyDetail(id,applyStatus,finishStatus) {
   })
 }
 
-export function updateRemark(data){
+export function updateRemark(data) {
   return request({
     url: '/dataCase/updateRemak',
     method: 'post',
@@ -217,7 +217,7 @@ export function updateRemark(data){
   })
 }
 
-export function saveCaseTel(data){
+export function saveCaseTel(data) {
   return request({
     url: '/dataCase/saveCaseTel',
     method: 'post',
@@ -225,23 +225,23 @@ export function saveCaseTel(data){
   })
 }
 
-export function getTelList(id){
+export function getTelList(id) {
   return request({
     url: '/dataCase/detail/telList',
     method: 'post',
-    data:{id}
+    data: { id }
   })
 }
 
-export function delTel(id){
+export function delTel(id) {
   return request({
     url: '/dataCase/delCaseTel',
     method: 'post',
-    data:{id}
+    data: { id }
   })
 }
 
-export function updateTelStatus(data){
+export function updateTelStatus(data) {
   return request({
     url: '/tel/updateStatus',
     method: 'post',
@@ -249,15 +249,15 @@ export function updateTelStatus(data){
   })
 }
 
-export function synchroSameTel(id){
+export function synchroSameTel(id) {
   return request({
     url: 'dataCase/synchroSameTel',
     method: 'post',
-    data:{id}
+    data: { id }
   })
 }
 
-export function addComment(data){
+export function addComment(data) {
   return request({
     url: '/dataCase/addComment',
     method: 'post',
@@ -265,7 +265,7 @@ export function addComment(data){
   })
 }
 
-export function addWarning(data){
+export function addWarning(data) {
   return request({
     url: '/dataCase/addWarning',
     method: 'post',
@@ -273,15 +273,15 @@ export function addWarning(data){
   })
 }
 
-export function listComment(id){
+export function listComment(id) {
   return request({
     url: '/dataCase/listComment',
     method: 'post',
-    data:{id}
+    data: { id }
   })
 }
 
-export function addBatchCaseTel(data){
+export function addBatchCaseTel(data) {
   return request({
     url: 'dataCase/addBatchCaseTel',
     method: 'post',
@@ -289,7 +289,7 @@ export function addBatchCaseTel(data){
   })
 }
 
-export function saveCaseAddress(data){
+export function saveCaseAddress(data) {
   return request({
     url: '/dataCase/saveCaseAddress',
     method: 'post',
@@ -297,15 +297,15 @@ export function saveCaseAddress(data){
   })
 }
 
-export function delAddr(id){
+export function delAddr(id) {
   return request({
     url: '/dataCase/delCaseAddress',
     method: 'post',
-    data:{id}
+    data: { id }
   })
 }
 
-export function updateAddrStatus(data){
+export function updateAddrStatus(data) {
   return request({
     url: 'address/updateStatus',
     method: 'post',
@@ -313,7 +313,7 @@ export function updateAddrStatus(data){
   })
 }
 
-export function pageDataLog(data){
+export function pageDataLog(data) {
   return request({
     url: 'dataLog/pageDataLog',
     method: 'post',
@@ -321,7 +321,7 @@ export function pageDataLog(data){
   })
 }
 
-export function updateDataLog(data){
+export function updateDataLog(data) {
   return request({
     url: '/dataLog/update',
     method: 'post',
@@ -329,23 +329,23 @@ export function updateDataLog(data){
   })
 }
 
-export function delDataLog(id){
+export function delDataLog(id) {
   return request({
     url: '/dataLog/delete',
     method: 'post',
-    data:{id}
+    data: { id }
   })
 }
 
-export function sameCaseList(id){
+export function sameCaseList(id) {
   return request({
     url: '/dataCase/sameCaseList',
     method: 'post',
-    data:{id}
+    data: { id }
   })
 }
 
-export function dataCollectionSave(data){
+export function dataCollectionSave(data) {
   return request({
     url: '/dataCollection/save',
     method: 'post',
@@ -353,9 +353,7 @@ export function dataCollectionSave(data){
   })
 }
 
-
-
-export function addLetter(data){
+export function addLetter(data) {
   return request({
     url: '/letter/addLetter',
     method: 'post',
@@ -363,28 +361,27 @@ export function addLetter(data){
   })
 }
 
-export function getReduceApplyList(caseId){
+export function getReduceApplyList(caseId) {
   return request({
     url: '/reduce/apply/page',
     method: 'post',
-    data:{caseId}
+    data: { caseId }
   })
 }
 
-export function pageDataFile(caseId){
+export function pageDataFile(caseId) {
   return request({
     url: 'dataLFile/pageDataFile',
     method: 'post',
-    data:{caseId}
+    data: { caseId }
   })
 }
 
-
-export function getLegalList(caseId){
+export function getLegalList(caseId) {
   return request({
     url: '/legal/listLegal',
     method: 'post',
-    data:{caseId}
+    data: { caseId }
   })
 }
 
@@ -392,7 +389,7 @@ export const getSynergyTypeList = function() {
   return request({
     url: '/sys/dictionary/select/list/name',
     method: 'post',
-    data:{name:"协催类型"}
+    data: { name: '协催类型' }
   })
 }
 
@@ -400,7 +397,7 @@ export const getSynergyContextList = function() {
   return request({
     url: '/sys/dictionary/select/list/name',
     method: 'post',
-    data:{name:"申请协催内容"}
+    data: { name: '申请协催内容' }
   })
 }
 
@@ -408,7 +405,7 @@ export const getRepayRemark = function() {
   return request({
     url: '/sys/dictionary/select/list/name',
     method: 'post',
-    data:{name:"还款备注"}
+    data: { name: '还款备注' }
   })
 }
 
@@ -416,11 +413,11 @@ export const getRepayType = function() {
   return request({
     url: '/sys/dictionary/select/list/name',
     method: 'post',
-    data:{name:"还款方式"}
+    data: { name: '还款方式' }
   })
 }
 
-export function detailTelCurrentCollect(data){
+export function detailTelCurrentCollect(data) {
   return request({
     url: 'dataCollect/tel/detailTelCurentCollect',
     method: 'post',
@@ -428,32 +425,32 @@ export function detailTelCurrentCollect(data){
   })
 }
 
-export function AddtableList(id,form){
+export function AddtableList(id, form) {
   return request({
     url: '/reduce/apply/add',
     method: 'post',
-    data:{
-    	id:form.id,
-    	caseId:id,
-      payer:form.payer,
-      relation:form.relation,
-      contactWay:form.contactWay,
-      sex:form.sex,
-      age:form.age,
-      visitFlag:form.visitFlag,
-      joinFlag:form.joinFlag,
-      connectFlag:form.connectFlag,
-      enRepayAmt:form.enRepayAmt,
-      repayAmt:form.repayAmt,
-      repayTime:form.repayTime,
-      reduceReason:form.reduceReason,
-      reduceData:form.reduceData,
-      remark:form.remark,
+    data: {
+      id: form.id,
+      caseId: id,
+      payer: form.payer,
+      relation: form.relation,
+      contactWay: form.contactWay,
+      sex: form.sex,
+      age: form.age,
+      visitFlag: form.visitFlag,
+      joinFlag: form.joinFlag,
+      connectFlag: form.connectFlag,
+      enRepayAmt: form.enRepayAmt,
+      repayAmt: form.repayAmt,
+      repayTime: form.repayTime,
+      reduceReason: form.reduceReason,
+      reduceData: form.reduceData,
+      remark: form.remark
     }
   })
 }
 
-export function saveArchive(data){
+export function saveArchive(data) {
   return request({
     url: 'detai/archive/save',
     method: 'post',
@@ -461,7 +458,7 @@ export function saveArchive(data){
   })
 }
 
-export function saveLegal(data){
+export function saveLegal(data) {
   return request({
     url: '/legal/save',
     method: 'post',
@@ -469,34 +466,34 @@ export function saveLegal(data){
   })
 }
 
-export function getHistoryAddrList(caseId){
+export function getHistoryAddrList(caseId) {
   return request({
     url: 'dataLog/listDataAddressLog',
     method: 'post',
-    data:{caseId}
+    data: { caseId }
   })
 }
 
-export function expDataCollect(id,exportCollectConf){
+export function expDataCollect(id, exportCollectConf) {
   return download({
     url: '/dataCollect/detailCollectExport',
-    data:{
-      caseId:id,
-      exportConf:exportCollectConf
+    data: {
+      caseId: id,
+      exportConf: exportCollectConf
     }
   })
 }
 
-//保存查询配置
-export function selectByModule(data={}) {
+// 保存查询配置
+export function selectByModule(data = {}) {
   return request({
-    method:'post',
-    url:'/selectByModule',
+    method: 'post',
+    url: '/selectByModule',
     data
   })
 }
 
-export function saveDataCollectDetail(data){
+export function saveDataCollectDetail(data) {
   return request({
     url: 'dataCollection/detailSave',
     method: 'post',
@@ -508,12 +505,11 @@ export const PersonList = function() {
   return request({
     url: '/user/select/roleList',
     method: 'post',
-    data:{role:"催收员"}
+    data: { role: '催收员' }
   })
 }
 
-
-export function saveApply(data){
+export function saveApply(data) {
   return request({
     url: '/synergistic/saveApply',
     method: 'post',
@@ -521,8 +517,7 @@ export function saveApply(data){
   })
 }
 
-
-export function saveResult(data){
+export function saveResult(data) {
   return request({
     url: '/synergistic/saveResult',
     method: 'post',
@@ -530,11 +525,11 @@ export function saveResult(data){
   })
 }
 
-export function getCPList(caseId){
+export function getCPList(caseId) {
   return request({
     url: 'bankReconciliation/listByCaseId',
     method: 'post',
-    data:{
+    data: {
       dataCase: {
         id: caseId
       }
@@ -592,8 +587,8 @@ export const areaStepList = function(name) {
   return request({
     url: '/sys/dictionary/select/list/name',
     method: 'post',
-    data:{
-      name:name
+    data: {
+      name: name
     }
   })
 }

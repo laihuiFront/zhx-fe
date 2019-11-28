@@ -342,23 +342,23 @@
           border
           @row-dblclick="showCase"
         >
-          <el-table-column prop="seqNo" label="个案序列号">
+          <el-table-column prop="seqNo" label="个案序列号" align="center" show-overflow-tooltip>
             <template slot-scope="scope">
               <el-button type="text" size="small" @click="showCase(scope.row)">
                 {{ scope.row.seqNo }}
               </el-button>
             </template>
           </el-table-column>
-          <el-table-column prop="cardNo" label="卡号" />
-          <el-table-column prop="account" label="账号" />
-          <el-table-column prop="moneyMsg" label="委案金额" />
-          <el-table-column prop="currencyType" label="币种" />
-          <el-table-column prop="proRepayAmtMsg" label="承诺还款金额" />
-          <el-table-column prop="bankAmtMsg" label="待银行查账金额" />
-          <el-table-column prop="enRepayAmtMsg" label="已还款" />
-          <el-table-column prop="accountAge" label="逾期账龄" />
-          <el-table-column prop="collectDate" label="上次通电" />
-          <el-table-column prop="collectTimes" label="通电次数" />
+          <el-table-column prop="cardNo" label="卡号" align="center" show-overflow-tooltip />
+          <el-table-column prop="account" label="账号" align="center" show-overflow-tooltip />
+          <el-table-column prop="moneyMsg" label="委案金额" align="center" show-overflow-tooltip />
+          <el-table-column prop="currencyType" label="币种" align="center" show-overflow-tooltip />
+          <el-table-column prop="proRepayAmtMsg" label="承诺还款金额" align="center" show-overflow-tooltip />
+          <el-table-column prop="bankAmtMsg" label="待银行查账金额" align="center" show-overflow-tooltip />
+          <el-table-column prop="enRepayAmtMsg" label="已还款" align="center" show-overflow-tooltip />
+          <el-table-column prop="accountAge" label="逾期账龄" align="center" show-overflow-tooltip />
+          <el-table-column prop="collectDate" label="上次通电" align="center" show-overflow-tooltip />
+          <el-table-column prop="collectTimes" label="通电次数" align="center" show-overflow-tooltip />
         </el-table>
       </el-collapse-item>
       <el-collapse-item title="其他信息" name="2" class="titleStyle">
@@ -1497,45 +1497,15 @@
             <el-tab-pane label="电话" name="1" class="tabs-wrap telPanel">
               <div class="operation">
                 <div class="left-oper">
-                  <el-button
-                    @click="changePhoneStatus('有效')"
-                  >标记为有效
-                    <!-- v-if=" caseDetail.currentuser || mycaseFlag" -->
-                  </el-button>
-                  <el-button
-                    @click="changePhoneStatus('未知')"
-                  >标记为未知
-                    <!-- v-if=" caseDetail.currentuser || mycaseFlag" -->
-                  </el-button>
-                  <el-button
-                    @click="changePhoneStatus('无效')"
-                  >标记为无效
-                    <!-- v-if=" caseDetail.currentuser || mycaseFlag" -->
-                  </el-button>
+                  <el-button @click="changePhoneStatus('有效')">标记为有效</el-button>
+                  <el-button @click="changePhoneStatus('未知')">标记为未知</el-button>
+                  <el-button @click="changePhoneStatus('无效')">标记为无效</el-button>
                   <el-button @click="showAllTel">显示全部电话</el-button>
                 </div>
                 <div class="right-oper">
-                  <el-button
-                    type="primary"
-                    class="btn"
-                    @click="sendTelBatch"
-                  >手机批量呼出
-                    <!-- v-if=" caseDetail.currentuser || mycaseFlag" -->
-                  </el-button>
-                  <el-button
-                    class="sendTel4Style btn"
-                    type="primary"
-                    @click="sendTelBatch2"
-                  >座机批量呼出
-                    <!-- v-if=" caseDetail.currentuser || mycaseFlag" -->
-                  </el-button>
-                  <el-button
-                    class="addPhoneStyle btn"
-                    type="primary"
-                    @click="addPhone"
-                  >新增电话
-                    <!-- v-if=" caseDetail.currentuser || mycaseFlag" -->
-                  </el-button>
+                  <el-button type="primary" class="btn" @click="sendTelBatch">手机批量呼出</el-button>
+                  <el-button type="primary" class="sendTel4Style btn" @click="sendTelBatch2">座机批量呼出</el-button>
+                  <el-button type="primary" class="addPhoneStyle btn" @click="addPhone">新增电话</el-button>
                   <el-popover
                     v-model="batchAddTelVisible"
                     placement="bottom-end"
@@ -1543,55 +1513,28 @@
                     width="500"
                     trigger="click"
                   >
-                    <!-- v-if=" caseDetail.currentuser || mycaseFlag" -->
                     <div>
-                      <el-input
-                        v-model="batchAddTelContent"
-                        type="textarea"
-                        :rows="4"
-                        placeholder="请按照'关系-姓名-电话'的格式输入,多个条目以/隔开"
-                      />
+                      <el-input v-model="batchAddTelContent" type="textarea" :rows="4" placeholder="请按照'关系-姓名-电话'的格式输入,多个条目以/隔开" />
                     </div>
                     <div style="text-align: right; margin-top: 12px">
-                      <el-button
-                        size="mini"
-                        type="text"
-                        @click="batchAddTelVisible = false"
-                      >取消
-                      </el-button>
-                      <el-button
-                        type="primary"
-                        size="mini"
-                        @click="onClickBatchAddTel"
-                      >确定
-                      </el-button>
+                      <el-button type="text" size="mini" @click="batchAddTelVisible = false">取消</el-button>
+                      <el-button type="primary" size="mini" @click="onClickBatchAddTel">确定</el-button>
                     </div>
-                    <el-button
-                      slot="reference"
-                      type="primary"
-                      class="btn"
-                    >批量新增电话
-                    </el-button>
+                    <el-button slot="reference" type="primary" class="btn">批量新增电话</el-button>
                   </el-popover>
-                  <!-- <el-button type="primary">批量电催</el-button> -->
-                  <el-button
-                    v-if=" caseDetail.currentuser || mycaseFlag"
-                    type="primary"
-                    class="btn"
-                    @click="_synchroSameTel"
-                  >同步共债
-                  </el-button>
+                  <el-button v-if="caseDetail.currentuser || mycaseFlag" type="primary" class="btn" @click="_synchroSameTel">同步共债</el-button>
                 </div>
               </div>
               <el-table
                 highlight-current-row
                 :data="caseDetail.dataCaseTelEntityList"
                 :row-class-name="telTableRowClassName"
+                border
                 @selection-change="onSelectPhoneRow"
               >
                 <el-table-column type="selection" width="55" />
-                <el-table-column prop="telStatusMsg" label="状态" />
-                <el-table-column prop="tel" label="电话">
+                <el-table-column prop="telStatusMsg" label="状态" align="center" />
+                <el-table-column prop="tel" label="电话" align="center">
                   <template slot-scope="scope">
                     <el-button
                       :class="scope.row.colorStatus==1?'fontColor':'fontColorTel'"
@@ -1609,63 +1552,44 @@
                     </el-button>
                   </template>
                 </el-table-column>
-                <el-table-column prop="name" label="姓名" />
-                <el-table-column prop="relation" label="关系" />
-                <el-table-column prop="typeMsg" label="类型" />
-                <el-table-column prop="remark" label="备注" />
-                <el-table-column label="操作" width="250">
+                <el-table-column prop="name" label="姓名" align="center" />
+                <el-table-column prop="relation" label="关系" align="center" />
+                <!-- <el-table-column prop="typeMsg" label="类型" align="center" /> -->
+                <el-table-column prop="remark" label="备注" align="center" />
+                <el-table-column label="操作" width="250" align="center">
                   <template slot-scope="scope">
                     <el-button
                       slot="reference"
                       type="text"
                       class="fontColor"
                       @click="showHistoryTel(scope.row)"
-                    >历史记录
-                    </el-button>
+                    >历史记录</el-button>
                     <el-button
-                      v-if="
-                        scope.row.telStatusMsg !== '停止跟进'
-                      "
+                      v-if="scope.row.telStatusMsg !== '停止跟进'"
                       class="fontColor"
                       type="text"
                       @click="editPhone(scope.row)"
-                    >编辑
-                      <!-- (caseDetail.currentuser || mycaseFlag) && -->
-                    </el-button>
+                    >编辑</el-button>
                     <el-button
-                      v-if="
-                        scope.row.telStatusMsg !== '停止跟进'
-                      "
+                      v-if="scope.row.telStatusMsg !== '停止跟进'"
                       class="fontColor"
                       type="text"
                       @click="deleteTel(scope.row.id)"
-                    >删除
-                      <!-- (caseDetail.currentuser || mycaseFlag) && -->
-                    </el-button>
-                    <!-- userInfo.loginName=='admin' -->
+                    >删除</el-button>
                     <el-button
-                      v-if="
-                        scope.row.telStatusMsg !== '停止跟进'
-                      "
+                      v-if="scope.row.telStatusMsg !== '停止跟进'"
                       v-show="res1"
                       class="fontColor"
                       type="text"
-
                       @click="stopTel(scope.row.id)"
-                    >停止跟进
-                      <!-- (caseDetail.currentuser || mycaseFlag) && -->
-                    </el-button>
+                    >停止跟进</el-button>
                     <el-button
-                      v-if="
-                        scope.row.telStatusMsg == '停止跟进'
-                      "
+                      v-if="scope.row.telStatusMsg == '停止跟进'"
                       v-show="res2"
                       class="fontColor"
                       type="text"
                       @click="resetTel(scope.row.id)"
-                    >恢复跟进
-                      <!-- (caseDetail.currentuser || mycaseFlag) && -->
-                    </el-button>
+                    >恢复跟进</el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -1676,18 +1600,15 @@
                   <el-button
                     v-if=" caseDetail.currentuser || mycaseFlag"
                     @click="changeAddrStatus('有效')"
-                  >标记为有效
-                  </el-button>
+                  >标记为有效</el-button>
                   <el-button
                     v-if=" caseDetail.currentuser || mycaseFlag"
                     @click="changeAddrStatus('未知')"
-                  >标记为未知
-                  </el-button>
+                  >标记为未知</el-button>
                   <el-button
                     v-if=" caseDetail.currentuser || mycaseFlag"
                     @click="changeAddrStatus('无效')"
-                  >标记为无效
-                  </el-button>
+                  >标记为无效</el-button>
                   <!-- <el-button @click="saveAddr">显示全部地址</el-button> -->
                   <el-button @click="showLetterList">查看信函记录</el-button>
                 </div>
@@ -1697,14 +1618,14 @@
                     class="btn"
                     type="primary"
                     @click="addAddr"
-                  >新增地址
-                  </el-button>
+                  >新增地址</el-button>
                 </div>
               </div>
               <el-table
                 v-if="letterVisible2"
                 highlight-current-row
                 :data="addrList"
+                border
                 @selection-change="onSelectAddrRow"
               >
                 <el-table-column type="selection" width="55" />
@@ -1712,41 +1633,49 @@
                   prop="status"
                   show-overflow-tooltip
                   label="状态"
+                  align="center"
                 />
                 <el-table-column
                   prop="name"
                   show-overflow-tooltip
                   label="姓名"
+                  align="center"
                 />
                 <el-table-column
                   prop="relation"
                   show-overflow-tooltip
                   label="关系"
+                  align="center"
                 />
                 <el-table-column
                   prop="address"
                   show-overflow-tooltip
                   label="地址"
+                  align="center"
                 />
                 <el-table-column
                   prop="type"
                   show-overflow-tooltip
                   label="类型"
+                  align="center"
                 />
                 <el-table-column
                   prop="remark"
                   show-overflow-tooltip
                   label="备注"
+                  align="center"
                 />
                 <el-table-column
                   prop="letterCount"
                   show-overflow-tooltip
                   label="信函次数"
+                  align="center"
                 />
                 <el-table-column
                   v-if="letterVisible2"
                   label="操作"
                   width="250"
+                  align="center"
                 >
                   <template slot-scope="scope">
                     <el-popover
@@ -1781,35 +1710,30 @@
                         <el-button
                           type="primary"
                           @click="$set(scope.row, 'showHistory', false)"
-                        >关闭
-                        </el-button>
+                        >关闭</el-button>
                       </div>
                       <el-button
                         v-if="letterVisible2"
                         slot="reference"
                         type="text"
                         @click="showHistoryAddr(scope.row)"
-                      >历史记录
-                      </el-button>
+                      >历史记录</el-button>
                     </el-popover>
                     <el-button
                       v-if=" (caseDetail.currentuser || mycaseFlag) && letterVisible2"
                       type="text"
                       @click="applyLetter(scope.row)"
-                    >申请信函
-                    </el-button>
+                    >申请信函</el-button>
                     <el-button
                       v-if="(caseDetail.currentuser || mycaseFlag) && letterVisible2"
                       type="text"
                       @click="editAddr(scope.row)"
-                    >编辑
-                    </el-button>
+                    >编辑</el-button>
                     <el-button
                       v-if="(caseDetail.currentuser || mycaseFlag) && letterVisible2"
                       type="text"
                       @click="deleteAddr(scope.row.id)"
-                    >删除
-                    </el-button>
+                    >删除</el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -1880,38 +1804,43 @@
                     type="primary"
                     class="btn"
                     @click="onClickAddArchive"
-                  >新增案人数据
-                  </el-button>
+                  >新增案人数据</el-button>
                 </div>
               </div>
               <el-table
                 highlight-current-row
                 :data="dataList"
+                border
               >
                 <el-table-column
                   prop="name"
                   show-overflow-tooltip
                   label="姓名"
+                  align="center"
                 />
                 <el-table-column
                   prop="msgType"
                   show-overflow-tooltip
                   label="信息类型"
+                  align="center"
                 />
                 <el-table-column
                   prop="msgContext"
                   show-overflow-tooltip
                   label="信息内容"
+                  align="center"
                 />
                 <el-table-column
                   prop="remark"
                   show-overflow-tooltip
                   label="备注"
+                  align="center"
                 />
                 <el-table-column
                   prop="createTime"
                   show-overflow-tooltip
                   label="导入时间"
+                  align="center"
                 />
               </el-table>
             </el-tab-pane>
@@ -1948,7 +1877,6 @@
                 :data="memorizeList"
                 border
               >
-
                 <el-table-column
                   prop="collectTime"
                   show-overflow-tooltip
@@ -1956,11 +1884,12 @@
                   :sort-orders="['ascending','descending']"
                   label="时间"
                   align="center"
+                  width="140"
                 />
                 <el-table-column
                   prop="targetName"
                   show-overflow-tooltip
-                  label="对象姓名"
+                  label="姓名"
                   align="center"
                 />
                 <el-table-column
@@ -1972,19 +1901,19 @@
                 <el-table-column
                   prop="mobile"
                   show-overflow-tooltip
-                  label="电话/地址"
+                  label="电话"
                   align="center"
                 />
-                <el-table-column
+                <!-- <el-table-column
                   prop="telType"
                   show-overflow-tooltip
                   label="类型"
                   align="center"
-                />
+                /> -->
                 <el-table-column
                   prop="collectInfo"
                   show-overflow-tooltip
-                  label="催收信息"
+                  label="通话记录"
                   align="center"
                 />
                 <el-table-column
@@ -1994,30 +1923,18 @@
                   align="center"
                 />
                 <el-table-column
-                  prop="targetName"
-                  show-overflow-tooltip
-                  label="催收对象"
-                  align="center"
-                />
-                <el-table-column
-                  prop="methodMsg"
-                  show-overflow-tooltip
-                  label="谈判方式"
-                  align="center"
-                />
-                <el-table-column
                   prop="repayTime"
                   show-overflow-tooltip
-                  label="承诺日期"
+                  label="承诺还款日期"
                   align="center"
                 />
                 <el-table-column
                   prop="repayAmtMsg"
                   show-overflow-tooltip
-                  label="承诺金额"
+                  label="承诺还款金额"
                   align="center"
                 />
-                <el-table-column
+                <!-- <el-table-column
                   prop="reduceAmtMsg"
                   show-overflow-tooltip
                   label="减免金额"
@@ -2028,11 +1945,11 @@
                   show-overflow-tooltip
                   label="减免状态"
                   align="center"
-                />
+                /> -->
                 <el-table-column
                   prop="odv"
                   show-overflow-tooltip
-                  label="催收人"
+                  label="催收员"
                   align="center"
                 />
                 <el-table-column
@@ -2061,28 +1978,33 @@
               <el-table
                 highlight-current-row
                 :data="commentList"
+                border
               >
                 <el-table-column
                   prop="comment"
                   show-overflow-tooltip
                   label="评语内容"
+                  align="center"
                 />
                 <el-table-column
                   prop="creatUserName"
                   show-overflow-tooltip
                   width="150"
                   label="提交人"
+                  align="center"
                 />
                 <el-table-column
                   prop="createTime"
                   show-overflow-tooltip
                   width="150"
+                  align="center"
                   label="提交时间"
                 />
                 <el-table-column
                   v-if="letterVisible2"
                   label="操作"
                   width="150"
+                  align="center"
                 >
                   <template slot-scope="scope">
                     <el-popover
@@ -2104,32 +2026,26 @@
                         <el-button
                           size="mini"
                           type="text"
-                          @click="
-                            $set(scope.row, 'editCommentVisible', false)
-                          "
-                        >取消
-                        </el-button>
+                          @click="$set(scope.row, 'editCommentVisible', false)"
+                        >取消</el-button>
                         <el-button
                           type="primary"
                           size="mini"
                           @click="onClickSaveComment"
-                        >确定
-                        </el-button>
+                        >确定</el-button>
                       </div>
                       <el-button
-                        v-if=" caseDetail.currentuser || mycaseFlag"
+                        v-if="caseDetail.currentuser || mycaseFlag"
                         slot="reference"
                         type="text"
                         @click="editComment(scope.row)"
-                      >修改
-                      </el-button>
+                      >修改</el-button>
                     </el-popover>
                     <el-button
-                      v-if=" caseDetail.currentuser || mycaseFlag"
+                      v-if="caseDetail.currentuser || mycaseFlag"
                       type="text"
                       @click="_deleteComment(scope.row.id)"
-                    >删除
-                    </el-button>
+                    >删除</el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -2138,71 +2054,85 @@
               <el-table
                 highlight-current-row
                 :data="rateUpdateList"
+                border
               >
                 <el-table-column
                   prop="currency"
                   show-overflow-tooltip
                   label="币种"
+                  align="center"
                 />
                 <el-table-column
                   prop="lastestDebt"
                   show-overflow-tooltip
                   label="总欠款金额"
+                  align="center"
                 />
                 <el-table-column
                   prop="endDate"
                   show-overflow-tooltip
                   label="截止日期"
+                  align="center"
                 />
                 <el-table-column
                   prop="principal"
                   show-overflow-tooltip
                   label="本金"
+                  align="center"
                 />
                 <el-table-column
                   prop="interest"
                   show-overflow-tooltip
                   label="利息"
+                  align="center"
                 />
                 <el-table-column
                   prop="penalty"
                   show-overflow-tooltip
                   label="违约金"
+                  align="center"
                 />
                 <el-table-column
                   prop="lateFee"
                   show-overflow-tooltip
                   label="滞纳金"
+                  align="center"
                 />
                 <el-table-column
                   prop="overrunFee"
                   show-overflow-tooltip
                   label="超限费"
+                  align="center"
                 />
                 <el-table-column
                   prop="serivceFee"
                   show-overflow-tooltip
                   label="服务费"
+                  align="center"
                 />
                 <el-table-column
                   prop="yearFee"
                   show-overflow-tooltip
                   label="年费"
+                  align="center"
                 />
                 <el-table-column
                   prop="elseFee"
                   show-overflow-tooltip
                   label="其他费用"
+                  align="center"
                 />
                 <el-table-column
                   prop="sheetFee"
                   show-overflow-tooltip
                   label="表外息"
+                  align="center"
                 />
                 <el-table-column
                   prop="createTime"
                   show-overflow-tooltip
                   label="导入时间"
+                  align="center"
                 />
               </el-table>
             </el-tab-pane>
@@ -2236,7 +2166,7 @@
               </div>
               <div class="second">
                 <p style="line-height: 30px">
-                  待银行查账记录
+                  <span>待银行查账记录</span>
                   <el-button type="text" class="fontColor" @click="addCpInfo">新增</el-button>
                 </p>
                 <el-table highlight-current-row border stripe show-overflow-tooltip :data="cpList">
@@ -2310,60 +2240,67 @@
                     class="btn"
                     type="primary"
                     @click="showSynergyApply"
-                  >添加协催申请
-                  </el-button>
+                  >添加协催申请</el-button>
                   <el-button
                     v-if=" caseDetail.currentuser || mycaseFlag"
                     class="btn"
                     type="primary"
                     @click="showSynergyResult"
-                  >添加协催记录
-                  </el-button>
+                  >添加协催记录</el-button>
                 </div>
               </div>
               <el-table
                 highlight-current-row
                 :data="syncList"
+                border
               >
                 <el-table-column
                   prop="statusMsg"
                   show-overflow-tooltip
                   label="状态"
+                  align="center"
                 />
                 <el-table-column
                   prop="synergisticType.name"
                   show-overflow-tooltip
                   label="协催类型"
+                  align="center"
                 />
                 <el-table-column
                   prop="applyContent"
                   show-overflow-tooltip
                   label="申请内容"
+                  align="center"
                 />
                 <el-table-column
                   prop="applyTime"
                   show-overflow-tooltip
                   label="申请时间"
+                  align="center"
                 />
                 <el-table-column
                   prop="applyUser.userName"
                   show-overflow-tooltip
                   label="申请人"
+                  align="center"
                 />
                 <el-table-column
                   prop="synergisticTime"
                   show-overflow-tooltip
                   label="协催时间"
+                  align="center"
                 />
                 <el-table-column
                   prop="synergisticUser.userName"
                   show-overflow-tooltip
                   label="协催人"
+                  align="center"
                 />
                 <el-table-column
                   prop="synergisticResult"
                   show-overflow-tooltip
                   label="协催结果"
+                  align="center"
                 />
               </el-table>
             </el-tab-pane>
@@ -2371,63 +2308,72 @@
               <el-table
                 highlight-current-row
                 :data="caseSameList"
+                border
                 @row-dblclick="showCase"
               >
                 <el-table-column
                   prop="batchNo"
                   show-overflow-tooltip
                   label="批次号"
+                  align="center"
                 />
                 <el-table-column
                   prop="seqNo"
                   show-overflow-tooltip
                   label="个案序列号"
+                  align="center"
                 >
                   <template slot-scope="scope">
-                    <el-button type="text" size="small" @click="showCase(scope.row)">
-                      {{ scope.row.seqNo }}
-                    </el-button>
+                    <el-button type="text" size="small" @click="showCase(scope.row)">{{ scope.row.seqNo }}</el-button>
                   </template>
                 </el-table-column>
                 <el-table-column
                   prop="caseDate"
                   show-overflow-tooltip
                   label="委托日期"
+                  align="center"
                 />
                 <el-table-column
                   prop="name"
                   show-overflow-tooltip
                   label="姓名"
+                  align="center"
                 />
                 <el-table-column
                   prop="cardNo"
                   show-overflow-tooltip
                   label="卡号"
+                  align="center"
                 />
                 <el-table-column
                   prop="client"
                   show-overflow-tooltip
                   label="委托方"
+                  align="center"
                 />
                 <el-table-column
                   prop="moneyMsg"
                   show-overflow-tooltip
                   label="委案金额"
+                  align="center"
                 />
                 <el-table-column
                   prop="collectStatusMsg"
                   show-overflow-tooltip
                   label="催收状态"
+                  align="center"
                 />
                 <el-table-column
                   prop="enRepayAmtMsg"
                   show-overflow-tooltip
                   label="已还款"
+                  align="center"
                 />
                 <el-table-column
                   prop="odv"
                   show-overflow-tooltip
                   label="催收员"
+                  align="center"
                 />
               </el-table>
             </el-tab-pane>
@@ -2447,39 +2393,43 @@
               <el-table
                 highlight-current-row
                 :data="logList"
+                border
               >
                 <el-table-column
                   prop="opTime"
                   width="150"
                   show-overflow-tooltip
                   label="时间"
+                  align="center"
                 />
                 <el-table-column
                   prop="type"
                   width="150"
                   show-overflow-tooltip
                   label="类别"
+                  align="center"
                 />
                 <el-table-column
                   prop="context"
                   show-overflow-tooltip
                   label="操作内容"
+                  align="center"
                 />
                 <el-table-column
                   prop="operName"
                   width="100"
                   show-overflow-tooltip
                   label="操作人"
+                  align="center"
                 />
-                <el-table-column label="操作" width="100">
+                <el-table-column label="操作" width="100" align="center">
                   <template slot-scope="scope">
                     <el-button
                       v-if="caseDetail.deleteAuth"
                       type="text"
                       class="fontColor"
                       @click="delOpLog(scope.row)"
-                    >删除
-                    </el-button>
+                    >删除</el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -2493,78 +2443,91 @@
                     class="btn"
                     type="primary"
                     @click="litigationApply"
-                  >申请诉讼
-                  </el-button>
+                  >申请诉讼</el-button>
                 </div>
               </div>
               <el-table
                 highlight-current-row
                 :data="legalList"
+                border
               >
                 <el-table-column
                   prop="legalStatusMsg"
                   show-overflow-tooltip
                   label="案件状态"
+                  align="center"
                 />
                 <el-table-column
                   prop="progressMsg"
                   show-overflow-tooltip
                   label="办案进度"
+                  align="center"
                 />
                 <el-table-column
                   prop="legalType"
                   show-overflow-tooltip
                   label="案件类型"
+                  align="center"
                 />
                 <el-table-column
                   prop="cstName"
                   show-overflow-tooltip
                   label="客户姓名"
+                  align="center"
                 />
                 <el-table-column
                   prop="legalDate"
                   show-overflow-tooltip
                   label="委案日期"
+                  align="center"
                 />
                 <el-table-column
                   prop="clientele"
                   show-overflow-tooltip
                   label="委托人"
+                  align="center"
                 />
                 <el-table-column
                   prop="accused"
                   show-overflow-tooltip
                   label="被告人"
+                  align="center"
                 />
                 <el-table-column
                   prop="tital"
                   show-overflow-tooltip
                   label="标的"
+                  align="center"
                 />
                 <el-table-column
                   prop="cost"
                   show-overflow-tooltip
                   label="费用"
+                  align="center"
                 />
                 <el-table-column
                   prop="owner"
                   show-overflow-tooltip
                   label="所属人"
+                  align="center"
                 />
                 <el-table-column
                   prop="court"
                   show-overflow-tooltip
                   label="受案法院"
+                  align="center"
                 />
                 <el-table-column
                   prop="legalNo"
                   show-overflow-tooltip
                   label="案号"
+                  align="center"
                 />
                 <el-table-column
                   prop="remark"
                   show-overflow-tooltip
                   label="备注"
+                  align="center"
                 />
               </el-table>
             </el-tab-pane>
@@ -2583,16 +2546,19 @@
               <el-table
                 highlight-current-row
                 :data="reduceApplyList"
+                border
               >
                 <el-table-column
                   prop="reduceType"
                   show-overflow-tooltip
                   label="类型"
+                  align="center"
                 />
                 <el-table-column
                   prop="applyStatusMsg"
                   show-overflow-tooltip
                   label="处理状态"
+                  align="center"
                 >
                   <template slot-scope="scope">
                     {{
@@ -2608,88 +2574,78 @@
                   prop="applyStatusMsg"
                   show-overflow-tooltip
                   label="减免/报备状态"
+                  align="center"
                 />
                 <el-table-column
                   prop="applyTime"
                   show-overflow-tooltip
                   label="申请日期"
+                  align="center"
                 />
                 <el-table-column
                   prop="applyUser"
                   show-overflow-tooltip
                   label="减免申请人"
+                  align="center"
                 />
                 <el-table-column
                   prop="auditTime"
                   show-overflow-tooltip
                   label="审核日期"
+                  align="center"
                 />
                 <el-table-column
                   prop="createTime"
                   show-overflow-tooltip
                   label="提交日期"
+                  align="center"
                 />
                 <el-table-column
                   prop="completeTime"
                   show-overflow-tooltip
                   label="完成日期"
+                  align="center"
                 />
                 <el-table-column
                   prop="completeUser"
                   show-overflow-tooltip
                   label="完成人"
+                  align="center"
                 />
                 <el-table-column
                   prop="reduceResult"
                   show-overflow-tooltip
                   label="减免/报备结果"
+                  align="center"
                 />
                 <el-table-column
                   prop="user"
                   show-overflow-tooltip
                   label="是否报备"
+                  align="center"
                 />
                 <el-table-column
                   show-overflow-tooltip
                   width="120"
                   label="操作"
+                  align="center"
                 >
                   <template slot-scope="scope">
-                    <!--<el-upload
-                      class="upload-demo"
-                      :action="action + '/reduce/save/import'"
-                      :headers="header"
-                      :show-file-list="false"
-                      :data="fileNames"
-                      :on-change="handleChange"
-                      :on-success="uploadSuccess2"
-                    >
-                      <el-button
-                        size="small"
-                        @click="moreId(scope.row.id)"
-                        type="text"
-                      >上传
-                      </el-button
-                      >
-                    </el-upload>-->
                     <el-button
                       type="text"
                       size="small"
                       @click="moreId(scope.row)"
-                    >上传
-                    </el-button>
+                    >上传</el-button>
                     <el-button
                       type="text"
                       size="small"
                       @click="editData(scope.row)"
-                    >修改
-                    </el-button>
+                    >修改</el-button>
                     <el-button
                       type="text"
                       size="small"
                       @click="deteleData(scope.row.id)"
-                    >删除
-                    </el-button>
+                    >删除</el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -2705,8 +2661,7 @@
                 type="text"
                 class="btn"
                 @click="saveSelfInfo"
-              >保存
-              </el-button>
+              >保存</el-button>
             </div>
             <el-input
               v-model="caseDetail.selfInfo"
@@ -2718,17 +2673,11 @@
           </el-card>
         </div>
       </div>
-      <!--  </el-collapse-item>-->
     </div>
     <div class="basic-info">
-      <!-- <el-collapse-item title="催记信息" name="4">-->
-      <div class="title-box">
-        <p class="title1">催记信息</p>
-        <p class="title2">同批次共债催记</p>
-      </div>
-
       <div class="memorize-wrap">
         <div class="left-panel">
+          <p class="title">催记信息</p>
           <el-form
             ref="batchForm"
             :model="batchForm"
@@ -2888,11 +2837,22 @@
           </div>
         </div>
         <div class="right-panel">
+          <p class="title">同批次共债催记</p>
+          <div v-if="hasCollectionAuth" class="buttons">
+            <el-button type="primary" @click="deleteMultiCollection">批量删除</el-button>
+          </div>
           <el-table
+            ref="sameBatchCollectionTable"
             highlight-current-row
             :data="syncMemorizeList"
             border
+            @selection-change="onSelectSameBatchCollection"
           >
+            <el-table-column
+              v-if="hasCollectionAuth"
+              type="selection"
+              width="50"
+            />
             <el-table-column
               prop="createTime"
               sortable
@@ -2909,7 +2869,6 @@
               show-overflow-tooltip
               align="center"
             />
-
             <el-table-column
               prop="relation"
               width="120"
@@ -2926,7 +2885,7 @@
             />
             <el-table-column
               prop="collectInfo"
-              label="催收记录"
+              label="通话记录"
               show-overflow-tooltip
               align="center"
             />
@@ -2937,10 +2896,23 @@
               show-overflow-tooltip
               align="center"
             />
+            <el-table-column
+              v-if="hasCollectionAuth"
+              width="120"
+              label="操作"
+              show-overflow-tooltip
+              align="center"
+            >
+              <template slot-scope="scope">
+                <div>
+                  <el-button type="text" @click="editCollection(scope.row)">编辑</el-button>
+                  <el-button type="text" @click="deleteCollection(scope.row.id)">删除</el-button>
+                </div>
+              </template>
+            </el-table-column>
           </el-table>
         </div>
       </div>
-      <!-- </el-collapse-item>-->
     </div>
     <el-dialog
       v-dialogDrag
@@ -3164,12 +3136,13 @@
       :close-on-click-modal="false"
     >
       <el-form
+        ref="dataCollectInfoForm"
         :inline="true"
         :model="dataCollectInfo"
         class="address-form"
         label-width="100px"
       >
-        <el-form-item label="催收措施">
+        <!-- <el-form-item label="催收措施">
           <el-select
             v-model="dataCollectInfo.measure"
             placeholder="请选择催收措施"
@@ -3179,20 +3152,20 @@
             <el-option :key="2" label="信函" value="信函" />
             <el-option :key="3" label="辅助渠道" value="辅助渠道" />
           </el-select>
-        </el-form-item>
-        <el-form-item label="电话">
+        </el-form-item> -->
+        <el-form-item label="电话" prop="mobile" :rules="{required: true, message: '电话不能为空', trigger: 'blur'}">
           <el-input
             v-model="dataCollectInfo.mobile"
             placeholder="请输入电话"
           />
         </el-form-item>
-        <el-form-item label="姓名">
+        <el-form-item label="姓名" prop="targetName" :rules="{required: true, message: '姓名不能为空', trigger: 'blur'}">
           <el-input
             v-model="dataCollectInfo.targetName"
             placeholder="请输入姓名"
           />
         </el-form-item>
-        <el-form-item label="类型">
+        <!-- <el-form-item label="类型">
           <el-select
             v-model="dataCollectInfo.telType"
             placeholder="请选择类型"
@@ -3205,14 +3178,14 @@
               :value="item.id + ''"
             />
           </el-select>
-        </el-form-item>
-        <el-form-item label="关系">
+        </el-form-item> -->
+        <el-form-item label="关系" prop="relation" :rules="{required: true, message: '关系不能为空', trigger: 'blur'}">
           <el-input
             v-model="dataCollectInfo.relation"
             placeholder="请输入关系"
           />
         </el-form-item>
-        <el-form-item v-if="dataCollectEditType==='edit'" label="催收时间">
+        <el-form-item v-if="dataCollectEditType==='edit'" label="催收时间" prop="collectTime" :rules="{required: true, message: '催收时间不能为空', trigger: 'blur'}">
           <el-date-picker
             v-model="dataCollectInfo.collectTime"
             type="datetime"
@@ -3221,11 +3194,13 @@
             format="yyyy-MM-dd HH:mm:ss"
           />
         </el-form-item>
-        <el-form-item label="催收内容" class="whole">
+        <el-form-item label="通话记录" prop="collectInfo" class="whole" :rules="{required: true, message: '通话记录不能为空', trigger: 'blur'}">
           <el-input
             v-model="dataCollectInfo.collectInfo"
             type="textarea"
             :row="4"
+            :maxlength="limits.collection"
+            show-word-limit
           />
         </el-form-item>
       </el-form>
@@ -3442,7 +3417,6 @@
           </el-col>
         </el-row>
         <el-row :gutter="24">
-
           <el-col :span="12">
             <div class="grid-content bg-purple">
               <el-form-item label="已还款">
@@ -3517,8 +3491,7 @@
                 v-model="messageForm.remark"
                 type="textarea"
                 style="width: 200%;"
-              >>
-              </el-input>
+              />
             </el-form-item>
           </el-col>
         </el-row>
@@ -4002,14 +3975,12 @@
           size="mini"
           type="text"
           @click="showWarningVisible = false"
-        >取消
-        </el-button>
+        >取消</el-button>
         <el-button
           type="primary"
           size="mini"
           @click="onClickAddWarning"
-        >确定
-        </el-button>
+        >确定</el-button>
       </div>
     </el-dialog>
     <el-dialog
@@ -4071,8 +4042,7 @@
         <el-button
           type="primary"
           @click="showHistory=false"
-        >关闭
-        </el-button>
+        >关闭</el-button>
       </div>
     </el-dialog>
     <el-dialog
@@ -4096,8 +4066,7 @@
           size="small"
           type="primary"
           style="text-align: right;"
-        >上传
-        </el-button>
+        >上传</el-button>
       </el-upload>
       <el-table
         highlight-current-row
@@ -4108,7 +4077,6 @@
         <el-table-column
           prop="fileName"
           align="center"
-
           label="附件名称"
         />
         <el-table-column
@@ -4730,7 +4698,7 @@
         <el-checkbox v-model="exportCollectConf.residualPrinciple" label="2">欠款余额</el-checkbox>
         <el-checkbox v-model="exportCollectConf.targetName" label="4">对象姓名</el-checkbox>
         <el-checkbox v-model="exportCollectConf.relation" label="5">关系</el-checkbox>
-        <el-checkbox v-model="exportCollectConf.collectPhoneAddr" label="5">电话/地址</el-checkbox>
+        <el-checkbox v-model="exportCollectConf.collectPhoneAddr" label="5">电话</el-checkbox>
         <el-checkbox v-model="exportCollectConf.contractType" label="5">联络类型</el-checkbox>
         <el-checkbox v-model="exportCollectConf.result" label="5">催收内容</el-checkbox>
         <el-checkbox v-model="exportCollectConf.odv" label="5">催收人员</el-checkbox>
@@ -4766,7 +4734,6 @@
         <el-button type="primary" @click="exportCollect">确 定</el-button>
       </span>
     </el-dialog>
-
   </div>
 </template>
 
@@ -4894,7 +4861,7 @@ export default {
       dataList: [], // 案人信息
       rateUpdateList: [], // 利息
       syncList: [], // 协催
-      dependCase: [], // 同批次公债案件
+      dependCase: [], // 同批次共债案件
       activeNames: ['3', '4', '5'],
       otherActiveName: '1',
       showNext: false,
@@ -4997,7 +4964,10 @@ export default {
         collection: 30,
         // 自定义信息
         selfInfo: 70
-      }
+      },
+      selectedSameBatchCollectionIds: [],
+      currentPanel: null,
+      collectionEditType: null // 催记标签页:1 同批次共债催记:2
     }
   },
   computed: {
@@ -5024,6 +4994,9 @@ export default {
     },
     buttonAuth() {
       return this.$store.getters.userInfo.busiData
+    },
+    hasCollectionAuth() {
+      return this.$store.getters.userInfo.hasCollectionAuth
     }
   },
   created() {
@@ -5600,6 +5573,7 @@ export default {
       const batchNo = this.caseDetail.batchNo
       const identNo = this.caseDetail.identNo
       const cardNo = this.caseDetail.cardNo
+      this.memorizeType = val
       getCollectDetail(this.id, batchNo, identNo, cardNo, val).then(data => {
         this.memorizeList = data
       })
@@ -5773,41 +5747,52 @@ export default {
       })
     },
     saveDataCollect() {
-      const result = this.dataCollectInfo
-      result.caseId = this.id
-      if (this.dataCollectEditType === 'add') {
-        result.id = 0
-      }
-      saveDataCollectDetail(result).then(res => {
-        if (this.dataCollectEditType === 'add') {
-          getCollectDetail(this.id, this.memorizeType).then(data => {
-            this.memorizeList = data
-          })
-          this.$message({
-            type: 'success',
-            message: '催记保存成功'
-          })
-        } else {
-          getCollectDetail(this.id, this.memorizeType).then(data => {
-            this.memorizeList = data
-          })
-          this.$message({
-            type: 'success',
-            message: '催记保存成功'
+      this.$refs.dataCollectInfoForm.validate((valid) => {
+        if (valid) {
+          const result = this.dataCollectInfo
+          result.caseId = this.id
+          if (this.dataCollectEditType === 'add') {
+            result.id = 0
+          }
+          saveDataCollectDetail(result).then(res => {
+            if (this.dataCollectEditType === 'add') {
+              getCollectDetail(this.id, this.caseDetail.batchNo, this.caseDetail.identNo, this.caseDetail.cardNo, this.memorizeType).then(data => {
+                this.memorizeList = data
+              })
+              this.$message({
+                type: 'success',
+                message: '催记保存成功'
+              })
+            } else {
+              this.$message({
+                type: 'success',
+                message: '催记保存成功'
+              })
+              if (this.collectionEditType === 1) {
+                getCollectDetail(this.id, this.caseDetail.batchNo, this.caseDetail.identNo, this.caseDetail.cardNo, this.memorizeType).then(data => {
+                  this.memorizeList = data
+                }).catch(() => {})
+              } else {
+                getSameBatchCollect(this.id).then(data => {
+                  this.syncMemorizeList = data
+                }).catch(() => {})
+              }
+            }
+            this.dialogDataCollectVisible = false
+          }).catch(() => {
+            this.$message({
+              type: 'error',
+              message: '催记保存失败'
+            })
           })
         }
-        this.dialogDataCollectVisible = false
-      }).catch(() => {
-        this.$message({
-          type: 'error',
-          message: '催记保存失败'
-        })
       })
     },
     editDataCollect(row, index) {
       this.dataCollectInfo = { ...row }
       this.dataCollectEditType = 'edit'
       this.dialogDataCollectVisible = true
+      this.collectionEditType = 1
     },
     delOpLog(row) {
       this.$confirm('此操作将删除该信息且无法恢复,是否继续？', {
@@ -5834,15 +5819,15 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          delDataCollect(row.id).then(data => {
+          delDataCollect([row.id]).then(() => {
             getCollectDetail(this.id, 1).then(data => {
               this.memorizeList = data
-            })
+            }).catch(() => {})
             this.$message({
               type: 'success',
               message: '删除成功'
             })
-          })
+          }).catch(() => {})
         })
     },
     addDataCollect() {
@@ -6283,7 +6268,8 @@ export default {
       this.repayRemarkList = this.$store.getters.caseType.还款备注
     },
     showPanel(tab, e) {
-      var ind = tab.label
+      const ind = tab.label
+      this.currentPanel = ind
       if (ind === '地址') {
         getAddressDetail(this.id).then(data => {
           this.addrList = data
@@ -6312,7 +6298,6 @@ export default {
         })
       } else if (ind === '案件登帐') {
         // 案件登帐
-        this.memorizeType = 1
         getCollectDetail2(this.id, 1).then(data => {
           this.memorizeList2 = data
         })
@@ -6442,6 +6427,49 @@ export default {
     },
     showCase(row) {
       window.open(`#/zhx/case-detail?id=${row.id}`)
+    },
+    editCollection(row) {
+      this.dataCollectInfo = { ...row, collectTime: row.createTime }
+      this.dataCollectEditType = 'edit'
+      this.dialogDataCollectVisible = true
+      this.collectionEditType = 2
+    },
+    deleteCollection(id) {
+      this._deleteCollection([id])
+    },
+    deleteMultiCollection() {
+      this._deleteCollection(this.selectedSameBatchCollectionIds)
+    },
+    _deleteCollection(ids) {
+      if (ids.length === 0) {
+        return
+      }
+      this.$confirm('此操作将删除所选择的催记，是否继续？', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        delDataCollect(ids).then(() => {
+          this.$message({
+            type: 'success',
+            message: '删除成功'
+          })
+          this.fullscreenLoading = true
+          getSameBatchCollect(this.id).then(data => {
+            this.syncMemorizeList = data
+          }).catch(() => {}).finally(() => {
+            this.fullscreenLoading = false
+          })
+          if (this.currentPanel === '催记') {
+            getCollectDetail(this.id, this.caseDetail.batchNo, this.caseDetail.identNo, this.caseDetail.cardNo, this.memorizeType).then(data => {
+              this.memorizeList = data
+            }).catch(() => {})
+          }
+        }).catch(() => {})
+      }).catch(() => {})
+    },
+    onSelectSameBatchCollection(selection) {
+      this.selectedSameBatchCollectionIds = selection.map(x => x.id)
     }
   }
 }
@@ -6486,36 +6514,6 @@ export default {
     .basic-info{
       .title-box{
         display: flex;
-        .title1{
-          width: 40%;
-          padding-left: 24px;
-          color: #fff;
-          // margin:12px 0;
-          margin-top: 24px;
-          background:linear-gradient(to right,#4F6CFA,#5AA6F9);
-          height: 48px;
-          display: flex;
-          align-items: center;
-          border-radius: 3px;
-          &:nth-child(1){
-            margin-right: 24px;
-          }
-        }
-        .title2{
-          width: calc(100% - 40% - 24px);
-          margin-top: 24px;
-          padding-left: 24px;
-          color: #fff;
-          // margin:12px 0;
-          border-radius: 3px;
-          background:linear-gradient(to right,#4F6CFA,#5AA6F9);
-          height: 48px;
-          display: flex;
-          align-items: center;
-          &:nth-child(1){
-            margin-right: 24px;
-          }
-        }
       }
       .title-info{
         padding-left: 24px;
@@ -6524,12 +6522,9 @@ export default {
         justify-content: space-between;
         align-items: center;
         background: #fff;
-         border-left:3px solid #5175FA;
+        border-left:3px solid #5175FA;
         height:40px;
         border-radius:0px 3px 3px 0px;
-        .btn{
-          background: #5175FA;
-        }
       }
       .blue {
         // color: #409eff;
@@ -6744,9 +6739,6 @@ export default {
         flex: 1;
         overflow: hidden;
         border-radius:3px;
-        .btn{
-          background: #5175FA;
-        }
         .fontColor{
           color: #5175FA;
         }
@@ -6797,7 +6789,6 @@ export default {
               flex-wrap: nowrap;
 
               .first {
-                flex: 0 0 35%;
                 width: 35%;
                 .el-table__body-wrapper{
                   overflow-y: auto;
@@ -6836,9 +6827,6 @@ export default {
       .right-wrap {
         width: 250px;
         margin-left: 20px;
-        .btn{
-          color: #5175FA;
-        }
         .el-card {
           .el-card__header {
             padding: 10px;
@@ -6852,15 +6840,27 @@ export default {
     }
 
     .memorize-wrap {
+      margin-top: 20px;
       display: flex;
+
+      .title{
+        height: 48px;
+        display: flex;
+        align-items: center;
+        padding-left: 24px;
+        border-radius: 3px;
+        color: #fff;
+        background:linear-gradient(to right,#4F6CFA,#5AA6F9);
+      }
+
       .left-panel {
-        padding: 12px;
-        flex: 0 0 40%;
-        width: 40%;
-        margin-right: 24px;
+        border-radius: 3px;
+        // padding: 12px;
+        flex: 0 0 35%;
+        width: 35%;
         border: 1px solid #d1d1d1;
-        box-sizing: border-box;
         background: #fff;
+
         .rowStyle{
           display: contents;
           .itemStyle2{
@@ -6934,17 +6934,19 @@ export default {
         }
 
         .operation {
-          margin-top: 10px;
+          margin: 10px 0;
           text-align: center;
-            .btn{
-               background: #5175FA;
-            }
         }
       }
 
       .right-panel {
-        flex: 0 0 60%;
-        width: 60%;
+        flex: 1;
+        margin-left: 24px;
+        background-color: #fff;
+
+        .buttons{
+          margin: 5px;
+        }
       }
     }
 
@@ -6953,7 +6955,6 @@ export default {
     }
   }
   .case-dialog-wrap {
-
     .el-dialog__body {
       overflow: auto;
       .el-form {

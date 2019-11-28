@@ -19,14 +19,14 @@ export function getUserInfo(id) {
   })
 }
 
-export function logout(){
+export function logout() {
   return request({
     url: '/logout',
     method: 'post'
   })
 }
 
-export function getTreeAllMenusByToken(){
+export function getTreeAllMenusByToken() {
   return request({
     url: '/menu/treeAllMenusWithButtonByToken',
     method: 'post'

@@ -21,17 +21,17 @@
     </ul> -->
     <div class="leftPanel">
       <el-breadcrumb>
-        <el-breadcrumb-item v-for="item in breadcrumb" :key="item.id">{{item.label}}</el-breadcrumb-item>
+        <el-breadcrumb-item v-for="item in breadcrumb" :key="item.id">{{ item.label }}</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="rightPanel">
       <div class="message" @click="showRemindList">
         <img :src="require('./collect-manage.png')">
-        <span>{{remindNum}}</span>
+        <span>{{ remindNum }}</span>
       </div>
-      <el-dropdown trigger="click" @command="handleCommand" class="userCommand">
-        <span class="el-dropdown-link">{{userInfo.userName}}
-          <i class="el-icon-arrow-down"></i>
+      <el-dropdown trigger="click" class="userCommand" @command="handleCommand">
+        <span class="el-dropdown-link">{{ userInfo.userName }}
+          <i class="el-icon-arrow-down" />
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="editPassword">修改密码</el-dropdown-item>
@@ -49,15 +49,15 @@
       class="dialog-wrap"
       :close-on-click-modal="false"
     >
-      <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
+      <el-form ref="ruleForm2" :model="ruleForm2" status-icon :rules="rules2" label-width="100px" class="demo-ruleForm">
         <el-form-item label="旧密码" prop="oldPassword">
-          <el-input type="password" v-model="ruleForm2.oldPassword" autocomplete="off"></el-input>
+          <el-input v-model="ruleForm2.oldPassword" type="password" autocomplete="off" />
         </el-form-item>
         <el-form-item label="新密码" prop="pass">
-          <el-input type="password" v-model="ruleForm2.pass" autocomplete="off"></el-input>
+          <el-input v-model="ruleForm2.pass" type="password" autocomplete="off" />
         </el-form-item>
         <el-form-item label="确认新密码" prop="checkPass">
-          <el-input type="password" v-model="ruleForm2.checkPass" autocomplete="off"></el-input>
+          <el-input v-model="ruleForm2.checkPass" type="password" autocomplete="off" />
         </el-form-item>
       </el-form>
       <span slot="footer" class="footer">
@@ -67,26 +67,26 @@
     </el-dialog>
 
     <el-dialog
+      v-dialogDrag
       title="修改坐席设置"
       :visible.sync="dialogHomePhoneVisible"
       width="400px"
-      v-dialogDrag
       class="dialog-wrap"
       :close-on-click-modal="false"
     >
-      <el-form :model="ruleForm3" status-icon :rules="rules3" ref="ruleForm3" label-width="80px" class="ruleForm3">
+      <el-form ref="ruleForm3" :model="ruleForm3" status-icon :rules="rules3" label-width="80px" class="ruleForm3">
         <el-form-item label="呼叫中心" prop="callCenter">
           <el-select v-model="ruleForm3.callCenter" clearable placeholder="请选择呼叫中心" @change="callCenterChanged">
             <el-option
               v-for="item in callCenters"
               :key="item.id"
               :label="item.name"
-              :value="item.id">
-            </el-option>
+              :value="item.id"
+            />
           </el-select>
         </el-form-item>
         <el-form-item label="坐席号" prop="officePhone">
-          <el-input v-model="ruleForm3.officePhone"></el-input>
+          <el-input v-model="ruleForm3.officePhone" />
         </el-form-item>
       </el-form>
       <span slot="footer" class="footer">
@@ -96,87 +96,75 @@
     </el-dialog>
 
     <el-dialog
+      v-dialogDrag
       title="提醒消息列表"
       class="dialog-wrap"
       :visible.sync="detailVisible"
       :close-on-click-modal="false"
       width="800px"
-      v-dialogDrag
     >
-      <el-table highlight-current-row
-                :data="remindList"
-                border
-                stripe
+      <el-table
+        highlight-current-row
+        :data="remindList"
+        border
+        stripe
       >
         <el-table-column
           prop="createTime"
           align="center"
           width="140"
           label="发送时间"
-        >
-        </el-table-column>
+        />
         <el-table-column
           prop="sendUserName"
           label="发送人"
           width="140"
           align="center"
-        >
-        </el-table-column>
+        />
         <el-table-column
           prop="context"
           label="内容"
           align="center"
-        >
-        </el-table-column>
+        />
         <el-table-column
           prop="viewMsg"
           label="是否阅览"
           width="80"
           align="center"
-        >
-        </el-table-column>
+        />
       </el-table>
       <el-pagination
-        @size-change="showRemindList"
-        @current-change="showRemindList"
         :current-page.sync="pageNum"
         :page-size.sync="pageSize"
         :page-sizes="pageSizes"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
         class="pagination-wrap"
-      ></el-pagination>
+        @size-change="showRemindList"
+        @current-change="showRemindList"
+      />
     </el-dialog>
   </div>
 </template>
 
 <script>
-import {mapGetters, mapMutations, mapActions} from 'vuex'
-import {resetPassword, initMind, remindList,updatePhone,findMine} from '@/store/actions.js'
-import {queryCallCenters} from '@/common/js/api-tel.js'
-import {pageSizes} from "@/common/js/const"
+import { mapGetters, mapMutations, mapActions } from 'vuex'
+import { resetPassword, initMind, remindList, findMine } from '@/store/actions.js'
+import { queryCallCenters } from '@/common/js/api-tel.js'
+import { pageSizes } from '@/common/js/const'
 
 export default {
-  name: 'tabMenu',
-  computed: {
-    ...mapGetters([
-      'menu',
-      'userInfo',
-      'tabMenus',
-      'currentMenu',
-      'breadcrumb'
-    ])
-  },
-  data(){
+  name: 'TabMenu',
+  data() {
     const validatePass = (rule, value, callback) => {
-      if(value === ''){
+      if (value === '') {
         callback(new Error('请再次输入新密码'))
-      }else if (value !== this.ruleForm2.pass) {
-        callback(new Error('两次输入的新密码不一致'));
+      } else if (value !== this.ruleForm2.pass) {
+        callback(new Error('两次输入的新密码不一致'))
       } else {
-        callback();
+        callback()
       }
-    };
+    }
     return {
       dialogVisible: false,
       ruleForm2: {
@@ -193,22 +181,22 @@ export default {
         ],
         checkPass: [
           { required: true, validator: validatePass, trigger: 'blur' }
-        ],
+        ]
       },
-      ruleForm3:{
+      ruleForm3: {
         callCenter: null,
-        oldOfficePhone:'',
-        officePhone:''
+        oldOfficePhone: '',
+        officePhone: ''
       },
-      rules3:{
+      rules3: {
         callCenter: [
           { required: true, message: '请选择呼叫中心', trigger: 'blur' }
         ],
         officePhone: [
           { required: true, message: '请输入坐席号', trigger: 'blur' }
-        ],
+        ]
       },
-      dialogHomePhoneVisible:false,
+      dialogHomePhoneVisible: false,
       callCenters: [],
       pageSizes,
       pageNum: 0,
@@ -218,19 +206,28 @@ export default {
       remindNum: null,
       detailVisible: false,
 
-      visible:false,
+      visible: false,
       top: 0,
       left: 0,
       selectedTab: {}
     }
   },
+  computed: {
+    ...mapGetters([
+      'menu',
+      'userInfo',
+      'tabMenus',
+      'currentMenu',
+      'breadcrumb'
+    ])
+  },
   watch: {
-    tabMenus(){
-      setTimeout(()=>{
-        if(this.$refs.tabList){
+    tabMenus() {
+      setTimeout(() => {
+        if (this.$refs.tabList) {
           this.$refs.tabList.scrollTo(this.$refs.tabList.scrollWidth, 0)
         }
-      },250)
+      }, 250)
     },
     visible(value) {
       if (value) {
@@ -249,40 +246,40 @@ export default {
       this.remindNum = data
     })
   },
-  methods:{
+  methods: {
     handleCommand(command) {
       if (command === 'editPassword') {
         this.editPassword()
-      }else if(command === 'editHomePhone') {
+      } else if (command === 'editHomePhone') {
         this.editHomePhone()
-      }else if(command === 'logOut') {
+      } else if (command === 'logOut') {
         this.logOut()
       }
     },
-    editPassword(){
-      const form = this.$refs["ruleForm2"]
-      if(form){
+    editPassword() {
+      const form = this.$refs['ruleForm2']
+      if (form) {
         form.resetFields()
       }
       this.dialogVisible = true
     },
-    editHomePhone(){
+    editHomePhone() {
       findMine().then((response) => {
         this.$set(this.ruleForm3, 'officePhone', response.officePhone)
         this.$set(this.ruleForm3, 'oldOfficePhone', response.officePhone)
         this.$set(this.ruleForm3, 'callCenter', response.callcenterid)
         this.dialogHomePhoneVisible = true
       })
-      queryCallCenters().then((response)=>{
+      queryCallCenters().then((response) => {
         this.callCenters = response
       })
     },
     ...mapActions([
-      'logoutAction',
+      'logoutAction'
     ]),
-    logOut(){
+    logOut() {
       this.logoutAction().then(() => {
-        this.$router.replace({path: '/login'})
+        this.$router.replace({ path: '/login' })
       })
     },
     submitForm(formName) {
@@ -296,28 +293,28 @@ export default {
             this.dialogVisible = false
           }).catch(() => {})
         }
-      });
+      })
     },
-    callCenterChanged(callCenterID){
+    callCenterChanged(callCenterID) {
       this.$set(this.ruleForm3, 'callCenter', callCenterID)
     },
     showRemindList() {
-      const data = {pageNum: this.pageNum, pageSize: this.pageSize}
-      this.detailVisible = true;
+      const data = { pageNum: this.pageNum, pageSize: this.pageSize }
+      this.detailVisible = true
       remindList(data).then(data => {
-        this.remindList = data.list;
-        this.total = data.total;
+        this.remindList = data.list
+        this.total = data.total
       })
     },
-    onClickLeft(){
+    onClickLeft() {
       // this.$refs.tabList.scrollTo(this.$refs.tabList.scrollWidth, 0)
       // console.log(this.$refs.tabList.scrollLeft)
       this.$refs.tabList.scrollLeft = this.$refs.tabList.scrollLeft - 50
     },
-    onClickRight(){
+    onClickRight() {
       this.$refs.tabList.scrollLeft = this.$refs.tabList.scrollLeft + 50
     },
-    openMenu(tab, e){
+    openMenu(tab, e) {
       const menuMinWidth = 105
       const offsetLeft = this.$el.getBoundingClientRect().left // container margin left
       const offsetWidth = this.$el.offsetWidth // container width
@@ -337,63 +334,62 @@ export default {
     closeMenu() {
       this.visible = false
     },
-    closeOthersTags(){
+    closeOthersTags() {
       this.gotoPage(this.selectedTab)
       this.removeOtherTab(this.selectedTab.id)
     },
-    //关闭所有就回到首页，第一个一定是首页
-    closeAllTags(){
+    // 关闭所有就回到首页，第一个一定是首页
+    closeAllTags() {
       this.gotoPage(this.tabMenus[0])
       this.removeOtherTab()
     },
-    gotoPage(menu){
-      if(menu.isDetail){
+    gotoPage(menu) {
+      if (menu.isDetail) {
         this.$router.push({
-          path:'case-detail',
+          path: 'case-detail',
           query: menu.query
         })
-      }else{
+      } else {
         this.$router.push('/zhx' + menu.menuUrl)
       }
     },
-    closeTab(menu){
-      this.$route.meta.cacheflush=true;
+    closeTab(menu) {
+      this.$route.meta.cacheflush = true
       const tabIndex = this.$store.getters.getTabIndex(menu.id)
       let nextPath = null
       let nextMenu = null
       if (menu.id === this.currentMenu.id) {
         if (this.tabMenus.length > 1) {
-          if(tabIndex===0){
+          if (tabIndex === 0) {
             nextMenu = this.tabMenus[1]
-          }else{
-            nextMenu = this.tabMenus[tabIndex-1]
+          } else {
+            nextMenu = this.tabMenus[tabIndex - 1]
           }
           nextPath = nextMenu.menuUrl
         } else {
-          this.$router.push('/zhx'+'/home-page')
+          this.$router.push('/zhx' + '/home-page')
           return
         }
       }
       this.removeTab(menu.id)
 
-      if(nextMenu){
-        if(nextMenu.isDetail){
+      if (nextMenu) {
+        if (nextMenu.isDetail) {
           this.$router.push({
-            path:'case-detail',
+            path: 'case-detail',
             query: nextMenu.query
           })
-        }else{
-
-          this.$router.push('/zhx'+nextPath)
-          if(menu.isDetail){
-            sessionStorage.removeItem(menu.query.id);
+        } else {
+          this.$router.push('/zhx' + nextPath)
+          if (menu.isDetail) {
+            sessionStorage.removeItem(menu.query.id)
           }
         }
       }
     },
     ...mapMutations({
-      removeTab:'REMOVE_TAB_MENUS',
-      removeOtherTab:'REMOVE_TAB_OTHER'
+      removeTab: 'REMOVE_TAB_MENUS',
+      removeOtherTab: 'REMOVE_TAB_OTHER'
     })
   }
 }

@@ -1,11 +1,11 @@
 const state = {
   userInfo: {},
-  menu:[],
+  menu: [],
   tabMenus: [],
   currentMenu: {},
-  cacheflushFlag:false,
+  cacheflushFlag: false,
   caseType: {},
-  breadcrumb: [],
+  breadcrumb: []
 }
 
 export default state
