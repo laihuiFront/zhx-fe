@@ -1,11 +1,11 @@
 import request from '@/common/js/request'
-export function getConfigList(id = 0,type) {
+export function getConfigList(id = 0, type) {
   return request({
     url: '/sys/dictionary/select/list',
     method: 'post',
     data: {
-      parent:{id},
-      type:type
+      parent: { id },
+      type: type
     }
   })
 }
@@ -18,7 +18,7 @@ export function insertConfigData(data) {
   })
 }
 
-export function deleteConfigData(id){
+export function deleteConfigData(id) {
   return request({
     url: '/sys/dictionary/delete/id',
     method: 'post',
@@ -28,14 +28,14 @@ export function deleteConfigData(id){
   })
 }
 
-export function getLogType(){
+export function getLogType() {
   return request({
     url: '/operationLog/logType',
     method: 'post'
   })
 }
 
-export function getOperationLog(data){
+export function getOperationLog(data) {
   return request({
     url: '/operationLog/pageLogs',
     method: 'post',
@@ -43,23 +43,23 @@ export function getOperationLog(data){
   })
 }
 
-export function deleteLogs(ids){
+export function deleteLogs(ids) {
   return request({
     url: '/operationLog/batchDelete',
     method: 'post',
-    data: {ids}
+    data: { ids }
   })
 }
 
-export function getDepartmentTree(){
+export function getDepartmentTree() {
   return request({
     url: '/organization/treeOrganization',
     method: 'post',
-    data:{}
+    data: {}
   })
 }
 
-export function saveDepartment(data){
+export function saveDepartment(data) {
   return request({
     url: '/organization/save',
     method: 'post',
@@ -67,44 +67,44 @@ export function saveDepartment(data){
   })
 }
 
-export function getRoleList(roleName = null){
+export function getRoleList(roleName = null) {
   return request({
     url: '/role/listRole',
     method: 'post',
-    data:{
+    data: {
       roleName
     }
   })
 }
 
-export function deleteRole(id){
+export function deleteRole(id) {
   return request({
     url: '/role/delete',
     method: 'post',
-    data:{
+    data: {
       id
     }
   })
 }
 
-export function listAuth(id = null){
+export function listAuth(id = null) {
   return request({
     url: '/role/listAuth',
     method: 'post',
-    data:{
+    data: {
       id
     }
   })
 }
 
-export function saveRole(data){
+export function saveRole(data) {
   return request({
     url: '/role/save',
     method: 'post',
     data
   })
 }
-export function saveAuth(data){
+export function saveAuth(data) {
   return request({
     url: '/role/auth',
     method: 'post',
@@ -112,20 +112,18 @@ export function saveAuth(data){
   })
 }
 
-export function upDownMethod(id,sort,id1,sort1){
+export function upDownMethod(id, id1) {
   return request({
     url: '/organization/moveUpDown',
     method: 'post',
-    params:{
+    params: {
       id,
-      sort,
-      id1,
-      sort1
+      id1
     }
   })
 }
 
-export function deletMethod(data){
+export function deletMethod(data) {
   return request({
     url: '/organization/delete',
     method: 'post',
@@ -133,11 +131,11 @@ export function deletMethod(data){
   })
 }
 
-export function findTableData(id){
+export function findTableData(id) {
   return request({
     url: '/organization/findTableData',
     method: 'post',
-    params:{
+    params: {
       id
     }
   })
@@ -151,22 +149,22 @@ export function addDeptMethod(data) {
   })
 }
 
-export function moveToTargetDepartment(id,pid){
+export function moveToTargetDepartment(id, pid) {
   return request({
     url: '/organization/moveToTargetDepartment',
     method: 'post',
-    params:{
+    params: {
       id,
       pid
     }
   })
 }
 
-export function findAreaTableData(id){
+export function findAreaTableData(id) {
   return request({
     url: '/sys/dictionary/findAreaTableData',
     method: 'post',
-    params:{
+    params: {
       id
     }
   })
@@ -180,7 +178,7 @@ export function addAreaMethod(data) {
   })
 }
 
-export function saveAreaMethod(data){
+export function saveAreaMethod(data) {
   return request({
     url: '/sys/dictionary/saveArea',
     method: 'post',
@@ -188,7 +186,7 @@ export function saveAreaMethod(data){
   })
 }
 
-export function deleteAreaMethod(data){
+export function deleteAreaMethod(data) {
   return request({
     url: '/sys/dictionary/deleteArea',
     method: 'post',
@@ -196,3 +194,9 @@ export function deleteAreaMethod(data){
   })
 }
 
+export function listAllOrgsWithUserNum() {
+  return request({
+    url: '/organization/listAllOrgsWithUserNum',
+    method: 'post'
+  })
+}
